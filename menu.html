@@ -96,22 +96,22 @@
 
         <!-- Tabs -->
         <div class="w3-row w3-center w3-card w3-padding">
-            <a onclick="openExample(event, 'Example1');">
+            <a onclick="openExample('Example1');">
                 <div class="w3-col s2 tablink">Example 1</div>
             </a>
-            <a onclick="openExample(event, 'Example2');">
+            <a onclick="openExample('Example2');">
                 <div class="w3-col s2 tablink">Example 2</div>
             </a>
-            <a onclick="openExample(event, 'Example3');">
+            <a onclick="openExample('Example3');">
                 <div class="w3-col s2 tablink">Example 3</div>
             </a>
-            <a onclick="openExample(event, 'Example4');">
+            <a onclick="openExample('Example4');">
                 <div class="w3-col s2 tablink">Example 4</div>
             </a>
-            <a onclick="openExample(event, 'Example5');">
+            <a onclick="openExample('Example5');">
                 <div class="w3-col s2 tablink">Example 5</div>
             </a>
-            <a onclick="openExample(event, 'Example6');">
+            <a onclick="openExample('Example6');">
                 <div class="w3-col s2 tablink">Example 6</div>
             </a>
         </div>
@@ -217,7 +217,7 @@ class T {
     // Initialize Highlight.js
     hljs.highlightAll();
 
-    function openExample(evt, exampleName) {
+    function openExample(exampleName) {
         var i, x, tablinks;
         x = document.getElementsByClassName("code-container");
         for (i = 0; i < x.length; i++) {
@@ -226,14 +226,25 @@ class T {
         tablinks = document.getElementsByClassName("tablink");
         for (i = 0; i < tablinks.length; i++) {
             tablinks[i].className = tablinks[i].className.replace(" w3-dark-grey", "");
+            if (tablinks[i].textContent.trim() === exampleName.replace('Example', 'Example ')) {
+                tablinks[i].className += " w3-dark-grey";
+            }
         }
         document.getElementById(exampleName).classList.add("active");
-        evt.currentTarget.firstElementChild.className += " w3-dark-grey";
+        // Update the URL hash without scrolling the page
+        history.replaceState(null, null, '#' + exampleName);
     }
-    // Open the first tab by default
+
+    // Handle URL fragments on page load
     document.addEventListener("DOMContentLoaded", function() {
-        document.querySelectorAll('.tablink')[0].click();
+        var hash = window.location.hash.substring(1); // Remove the '#' character
+        if (hash && document.getElementById(hash)) {
+            openExample(hash);
+        } else {
+            openExample('Example1'); // Default to the first example
+        }
     });
+
 </script>
 </body>
 </html>
