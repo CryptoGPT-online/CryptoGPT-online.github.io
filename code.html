@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PoC Examples - Research Paper</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <!-- Include Highlight.js for syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
+    <style>
+        body, html {
+            height: 100%;
+            font-family: "Inconsolata", sans-serif;
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1;
+        }
+        .content-section {
+            margin-top: 80px;
+            padding: 20px;
+        }
+        .tablink {
+            cursor: pointer;
+        }
+        .code-container {
+            display: none;
+        }
+        .code-container.active {
+            display: block;
+        }
+        .code-caption {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        pre {
+            background-color: #2d2d2d; /* Dark background for code blocks */
+            color: #f8f8f2;            /* Light text color for better contrast */
+            padding: 15px;
+            overflow-x: auto;
+            border-radius: 5px;        /* Rounded corners */
+        }
+        .code-container {
+            background-color: #f0f0f0; /* Light grey background for the entire code section */
+            padding: 20px;
+            border: 1px solid #ccc;    /* Border around the code section */
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .w3-row.w3-center.w3-card.w3-padding .tablink {
+            background-color: #333;    /* Dark background for tabs */
+            color: #fff;               /* White text for tabs */
+            padding: 14px 16px;
+        }
+        .w3-row.w3-center.w3-card.w3-padding .tablink.w3-dark-grey {
+            background-color: #555;    /* Highlighted tab background */
+        }
+        .w3-row.w3-center.w3-card.w3-padding .tablink:hover {
+            background-color: #555;    /* Hover effect for tabs */
+        }
+    </style>
+</head>
+<body>
+<!-- Navigation -->
+<div class="navbar w3-top">
+    <div class="w3-row w3-padding w3-black">
+        <div class="w3-col s2">
+            <a href="index.html" class="w3-button w3-block w3-black">Prompt Design</a>
+        </div>
+        <div class="w3-col s2">
+            <a href="cmp_sat.html" class="w3-button w3-block w3-black">SAT Comparison</a>
+        </div>
+        <div class="w3-col s2">
+            <a href="code.html" class="w3-button w3-block w3-black">PoC Example</a>
+        </div>
+        <div class="w3-col s2">
+            <a href="misunder.html" class="w3-button w3-block w3-black">LLM Misunderstanding</a>
+        </div>
+        <div class="w3-col s2">
+            <a href="user.html" class="w3-button w3-block w3-black">User Study</a>
+        </div>
+        <div class="w3-col s2">
+            <a href="https://github.com/CryptoGPT-online/CryptoGPT-online.github.io/cryptogpt-artifact" class="w3-button w3-block w3-black">Artifacts</a>
+        </div>
+    </div>
+</div>
+<!-- Content -->
+<div class="w3-sand w3-grayscale w3-large">
+<main class="content-section" id="poc-examples" role="main">
+    <div class="w3-content" style="max-width:1000px">
+        <h5 class="w3-center w3-padding-48"><span class="w3-tag w3-wide">Proof-of-Concept Code Snippets</span></h5>
+        <p>This section provides several proof-of-concept code snippets which support our claim in the evaluation.</p>
+
+        <!-- Tabs -->
+        <div class="w3-row w3-center w3-card w3-padding">
+            <a onclick="openExample('Example1');">
+                <div class="w3-col s3 tablink">Example 1</div>
+            </a>
+            <a onclick="openExample('Example2');">
+                <div class="w3-col s3 tablink">Example 2</div>
+            </a>
+            <a onclick="openExample('Example3');">
+                <div class="w3-col s3 tablink">Example 3</div>
+            </a>
+            <a onclick="openExample('Example4');">
+                <div class="w3-col s3 tablink">Example 4</div>
+            </a>
+            <a onclick="openExample('Example5');">
+                <div class="w3-col s4 tablink">Example 5</div>
+            </a>
+            <a onclick="openExample('Example6');">
+                <div class="w3-col s4 tablink">Example 6</div>
+            </a>
+            <a onclick="openExample('Example7');">
+                <div class="w3-col s4 tablink">Example 7</div>
+            </a>
+        </div>
+
+        <!-- Code Examples -->
+        <div id="Example1" class="w3-container code-container w3-padding-48 w3-card">
+            <p class="code-caption">Listing 1: Insufficient Iteration Count Misuse in Apache Project A (Anonymity for Ethics).</p>
+            <pre><code class="language-java">
+// Example 1 Code
+private SecretKeySpec getSecretKeySpec(String password)
+{
+    byte[] pwdHash = secureHash(password);
+    // Note: utilizing 'secureHash' to derive the secret key from the password.
+    // The iteration count for derivation is merely 1, which violates RFC 8018 and OWASP recommendations.
+    byte[] key = Arrays.copyOf(pwdHash, 16);
+    return new SecretKeySpec(key, "AES");
+}
+protected byte[] secureHash(String value)
+{
+    try
+    {
+        MessageDigest md = MessageDigest.getInstance(HASH_ALGORITHM);
+        return md.digest(value.getBytes(UTF_8));
+    }
+    ...
+}
+            </code></pre>
+        </div>
+
+        <div id="Example2" class="w3-container code-container w3-padding-48 w3-card">
+            <p class="code-caption">Listing 2: Transformation String Formation in Apache Druid which Uses Vulnerable Configuration.</p>
+            <pre><code class="language-java">
+// Example 2 Code
+this.name = name == null ? "AES" : name;
+this.mode = mode == null ? "CBC" : mode;
+this.pad = pad == null ? "PKCS5Padding" : pad;
+this.string = StringUtils.format("%s/%s/%s", this.name, this.mode, this.pad);
+            </code></pre>
+        </div>
+
+        <div id="Example3" class="w3-container code-container w3-padding-48 w3-card">
+            <p class="code-caption">Listing 3: Insecure Parameters Passed through Method Chaining Case in MASC Benchmark.</p>
+            <pre><code class="language-java">
+// Example 3 Code
+class T {
+    String algo="AES/CBC/PKCS5Padding";
+    T mthd1(){ algo = "AES"; return this;}
+    T mthd2(){ algo="DES"; return this;}
+}
+Cipher.getInstance(new T().mthd1().mthd2().algo);
+            </code></pre>
+        </div>
+
+        <div id="Example4" class="w3-container code-container w3-padding-48 w3-card">
+            <p class="code-caption">Listing 4: Insecure Parameters Replacement Case in MASC Benchmark.</p>
+            <pre><code class="language-java">
+// Example 4 Code
+class T {
+    MessageDigest.getInstance("SHA-256".replace("SHA-256", "MD5"));
+}
+            </code></pre>
+        </div>
+
+        <div id="Example5" class="w3-container code-container w3-padding-48 w3-card">
+            <p class="code-caption">Listing 5: Implicit Usage of Insecure Parameters Case in MASC Benchmark.</p>
+            <pre><code class="language-java">
+// Example 5 Code
+class T {
+    String algo = "DES";
+    KeyGenerator keygen = KeyGenerator.getInstance(algo);
+    // An implicit parameter by invoking keygen.getAlgorithm().
+    Cipher c = Cipher.getInstance(keygen.getAlgorithm());
+}
+            </code></pre>
+        </div>
+
+        <div id="Example6" class="w3-container code-container w3-padding-48 w3-card">
+            <p class="code-caption">Listing 6: Context-specific Dummy Condition Statement, MASC.</p>
+            <pre><code class="language-java">
+// Example 6 Code
+class T {
+    void checkServerTrusted(X509Certificate[] certs , String s)
+    throws CertificateException
+    {
+        if (!(null != s || s.equalsIgnoreCase("RSA") || certs.length >= 314))
+        {
+            throw new CertificateException("Error");
+        }
+    }
+}
+            </code></pre>
+        </div>
+
+        <div id="Example7" class="w3-container code-container w3-padding-48 w3-card">
+            <p class="code-caption">Listing 7: Context-specific Secure SHA-1 Usage.</p>
+            <pre><code class="language-java">
+// Example 7 Code
+public static MessageDigest startHash()
+    throws ManifoldCFException
+  {
+    try
+    {
+      return MessageDigest.getInstance("SHA-1");
+    }
+    catch (Exception e)
+    {
+      throw new ManifoldCFException("Couldn't encrypt: "+e.getMessage(),e,ManifoldCFException.GENERAL_ERROR);
+    }
+  }
+  //GPT-4: While SHA-1 is generally considered weak for cryptographic hash functions due to vulnerabilities to collision attacks, within the context of this system, the SHA-1 algorithm is only used as a hashing utility for non-cryptographic purposes (e.g., generating unique identifiers or checksums), and not for password storing or digital signatures. Therefore, its usage here doesn't pose the same security risk and would not be considered a misuse.
+            </code></pre>
+        </div>
+
+        <!-- You can add more examples as needed -->
+
+    </div>
+</main>
+</div>
+<!-- Include Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/java.min.js"></script>
+<script>
+    // Initialize Highlight.js
+    hljs.highlightAll();
+
+    function openExample(exampleName) {
+        var i, x, tablinks;
+        x = document.getElementsByClassName("code-container");
+        for (i = 0; i < x.length; i++) {
+            x[i].classList.remove("active");
+        }
+        tablinks = document.getElementsByClassName("tablink");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" w3-dark-grey", "");
+            if (tablinks[i].textContent.trim() === exampleName.replace('Example', 'Example ')) {
+                tablinks[i].className += " w3-dark-grey";
+            }
+        }
+        document.getElementById(exampleName).classList.add("active");
+        // Update the URL hash without scrolling the page
+        history.replaceState(null, null, '#' + exampleName);
+    }
+
+    // Handle URL fragments on page load
+    document.addEventListener("DOMContentLoaded", function() {
+        var hash = window.location.hash.substring(1); // Remove the '#' character
+        if (hash && document.getElementById(hash)) {
+            openExample(hash);
+        } else {
+            openExample('Example1'); // Default to the first example
+        }
+    });
+
+</script>
+</body>
+</html>

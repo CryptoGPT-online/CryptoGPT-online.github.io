@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usability Study - Research Paper</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
+    <style>
+        body, html {
+            height: 100%;
+            font-family: 'Inconsolata', sans-serif;
+            color: #333;
+            background-color: #fff;
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1;
+        }
+        .content-section {
+            margin-top: 80px;
+            padding: 20px;
+        }
+        h5, h6 {
+            font-size: 24px;
+            color: #000;
+        }
+        strong {
+            font-weight: bolder; /* Ensure strong text is bold */
+            color: #000; /* Set strong text color to black for higher contrast */
+        }
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li::before {
+            content: "\2022";
+            color: #000;
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+        strong {
+            font-weight: bold;
+        }
+        em {
+            font-style: italic;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<!-- Navigation -->
+<div class="navbar w3-top">
+    <div class="w3-row w3-padding w3-black">
+        <div class="w3-col s2">
+            <a href="index.html" class="w3-button w3-block w3-black">Prompt Design</a>
+        </div>
+        <div class="w3-col s2">
+            <a href="cmp_sat.html" class="w3-button w3-block w3-black">SAT Comparison</a>
+        </div>
+        <div class="w3-col s2">
+            <a href="code.html" class="w3-button w3-block w3-black">PoC Example</a>
+        </div>
+        <div class="w3-col s2">
+            <a href="misunder.html" class="w3-button w3-block w3-black">LLM Misunderstanding</a>
+        </div>
+        <div class="w3-col s2">
+            <a href="user.html" class="w3-button w3-block w3-black">User Study</a>
+        </div>
+        <div class="w3-col s2">
+            <a href="https://github.com/CryptoGPT-online/CryptoGPT-online.github.io/cryptogpt-artifact" class="w3-button w3-block w3-black">Artifacts</a>
+        </div>
+    </div>
+</div>
+
+<!-- Content Section -->
+<div class="w3-container content-section">
+    <div class="w3-content" style="max-width:1000px">
+        <h5 class="w3-center w3-padding-48"><span class="w3-tag w3-wide">Usability Study: Extension</span></h5>
+
+        <p>This section presents more details about our usability analysis. First, we explain our filtering criteria for excluding security-irrelevant repositories. Then, we provide some case studies to illustrate the unique in-the-wild cryptographic misuse found by LLMs.</p>
+
+        <h6><strong>1) Filtering Criteria</strong></h6>
+        <p>We initially select GitHub repositories based on their popularity. However, upon manual inspection, we discover that many of these repositories are not directly related to security issues. Consequently, we exclude repositories identified as follows:</p>
+        <ul>
+            <li>Tutorials and Textbooks: These repositories contain numerous legacy standards and educational content (e.g., <a href="https://github.com/TheAlgorithms/Java">tutorial</a>).</li>
+            <li>Local Projects: Repositories explicitly designated for use in local environments, where security implications might be less critical (e.g., <a href="https://github.com/localstack/localstack">localstack</a>).</li>
+            <li>Exploitation Toolkits: Repositories designed for offensive cryptographic operations (e.g., <a href="https://github.com/byt3bl33d3r/CrackMapExec">exploit</a>).</li>
+            <li>Experimental Projects: Other experimental projects that do not prioritize security.</li>
+        </ul>
+        <p>A representative example is the Chaos repository (<a href="https://github.com/Chaosthebot/Chaos">chaos</a>), a social coding experiment that automatically merges all public updates. Maintainers of such repositories are typically indifferent to the security of their projects. Therefore, scanning these repositories is an inefficient use of resources, both in terms of time and cost.</p>
+
+        <h6><strong>2) Results of SATs</strong></h6>
+        <p>In our analysis of 47 recognized cryptographic misuses, we further investigate the efficacy of traditional detectors in identifying these confirmed vulnerabilities. Specifically, we employ CryptoGuard for Java targets and LICMA for Python targets. Our findings reveal that CryptoGuard and LICMA only manage to detect 3 and 2 of the actual misuses, respectively, in contrast to GPT-4's superior performance. The notably poor performance of LICMA can be attributed to its limited set of detection rules, comprising merely six. In contrast, the shortcomings of CryptoGuard align with the detection capability gaps elucidated in Section II.</p>
+
+        <!-- Table -->
+        <h6><strong>3) Discussion on Real-world Cryptographic Misuses</strong></h6>
+        <p>We present a comprehensive list of detected cryptographic misuses in <strong>Table 1</strong>. Note that we obfuscate the descriptions of the misuse cases which are not currently repaired. From our interactions with developers, several critical observations have emerged.</p>
+
+        <ul>
+            <li><strong>A significant root cause of real-world cryptographic issues is the discrepancy between developers' experience and the evolving standards in cryptography.</strong> Many misuses stem from legacy components that are not adequately maintained as time goes by. For example, the widely recognized project Elasticsearch, which boasts 68.2k stars, was managing a deprecated vulnerable TLS protocol in 2019. However, this management was not extended to TLSv1 when it became deprecated in March 2021, as per IETF RFC 8996, until we reported the oversight. It is not uncommon for maintainers to express that the rapidly evolving security standards pose a burden, particularly in the absence of a dedicated professional security team. This situation underscores the need for researchers to focus not only on the detection of misuses but also on developing automated solutions for their repair.</li>
+
+            <li><strong>The majority of developers respond positively to reports of cryptographic misuse when supported by authoritative references.</strong> For instance, the developers behind Twisted initially contended that 1024-bit DSA keys were acceptable. However, they quickly revised their stance upon our presentation of the explicit deprecation guidelines from NIST SP 800-57. Further discussions revealed that even OpenSSH, a leading SSH protocol, continues to employ some outdated configurations, which are then replicated by downstream applications.</li>
+        </ul>
+    </div>
+</div>
+
+<footer class="w3-center w3-light-grey w3-padding-48 w3-large">
+    <p>&copy; 2024 CryptoGPT. Powered by W3. All rights reserved.</p>
+</footer>
+</body>
+</html>

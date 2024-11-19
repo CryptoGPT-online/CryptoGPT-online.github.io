@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAT Comparison - Research Paper</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
+    <style>
+        body, html {
+            height: 100%;
+            font-family: "Inconsolata", sans-serif;
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1;
+        }
+        .navbar a {
+            font-family: "Inconsolata", sans-serif;
+        }
+        .content-section {
+            margin-top: 80px;
+            padding: 20px;
+        }
+        .figure {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .figure img {
+            max-width: 30%; /* Makes images responsive */
+            height: auto;    /* Maintains aspect ratio */
+            display: block;  /* Centers the images */
+            margin: 0 auto;  /* Centers the images */
+        }
+        .figure p {
+            text-align: center;
+            font-style: italic;
+        }
+        .references {
+            margin-top: 40px;
+        }
+        .references h5 {
+            margin-bottom: 10px;
+        }
+        .references ol {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+<!-- Navigation -->
+<div class="navbar w3-top">
+    <div class="w3-row w3-padding w3-black">
+        <div class="w3-col s2">
+            <a href="index.html" class="w3-button w3-block w3-black">Prompt Design</a>
+        </div>
+        <div class="w3-col s2">
+            <a href="cmp_sat.html" class="w3-button w3-block w3-black">SAT Comparison</a>
+        </div>
+        <div class="w3-col s2">
+            <a href="code.html" class="w3-button w3-block w3-black">PoC Example</a>
+        </div>
+        <div class="w3-col s2">
+            <a href="misunder.html" class="w3-button w3-block w3-black">LLM Misunderstanding</a>
+        </div>
+        <div class="w3-col s2">
+            <a href="user.html" class="w3-button w3-block w3-black">User Study</a>
+        </div>
+        <div class="w3-col s2">
+            <a href="https://github.com/CryptoGPT-online/CryptoGPT-online.github.io/cryptogpt-artifact" class="w3-button w3-block w3-black">Artifacts</a>
+        </div>
+    </div>
+</div>
+
+<!-- Content -->
+<div class="w3-sand w3-grayscale w3-large">
+<main id="sat-comparison" class="content-section" role="main">
+    <h5 class="w3-center w3-padding-32"><span class="w3-tag w3-wide">SAT Comparison</span></h5>
+
+    <p><strong>Figure 1</strong> presents a detailed comparison of detection precision and recall between LLMs and SATs across various benchmarks, highlighting the fluctuating performance of SATs on different benchmarks.</p>
+
+    <div class="figure">
+        <img src="images/cmp_sat_full_001.jpg" alt="Detection Performance Comparison between LLMs and SATs Across Benchmarks">
+        <p><strong>Figure 1:</strong> Detection Performance Comparison between LLMs and SATs Across Benchmarks.</p>
+    </div>
+
+    <p>In manually-crafted benchmarks, SATs generally exhibit lower recall than LLMs due to two primary factors:</p>
+    <ol>
+        <li>SATs struggle to detect perturbed test cases from the MASC benchmarks, with CryptoGuard, CogniCryptSAST, and SpotBugs detecting only 11, 9, and 22 GTMs out of 37 cases, respectively.</li>
+        <li>The rigidity of SAT rules often leads to numerous irrelevant alerts, which are categorized as false positives in our analysis.</li>
+    </ol>
+
+    <p>While CryptoGuard and SpotBugs achieve precision comparable to that of DeepSeek and Gemini, they fall slightly behind the GPT series. Moreover, CogniCryptSAST's lower precision can be attributed to its expansive rule set, which often mandates unnecessary operations<sup><a href="#ref-1">[1]</a></sup>.</p>
+
+    <p>In real-world benchmarks, LLMs generally exhibit greater precision than SATs due to their deeper comprehension of the security context, as elucidated in Section 3.2.</p>
+
+    <p>While certain SATs may identify a larger number of GTMs compared to some LLMs, this is achieved at the cost of precision. These SATs tend to flag any non-deterministic operations as insecure, leading to false positives and hindering the ability to provide meaningful root cause analysis. Consequently, all SATs demonstrate lower overall accuracy than LLMs.</p>
+
+    <div class="figure">
+        <img src="images/venn_00.jpg" alt="Venn Plots of the Misuse Detected by LLMs and CryptoGuard on the Apache Benchmarks" style="width:80%">
+        <p><strong>Figure 2:</strong> Venn Plots of the Misuse Detected by LLMs and CryptoGuard on the Apache Benchmarks.</p>
+    </div>
+
+    <p><strong>Figure 2</strong> presents a comparison of the unique misuse cases detected by LLMs (under optimal settings) and CryptoGuard, the most effective pattern-based SAT in our evaluation, on the Apache Benchmarks. LLMs collectively identified 17 unique misuse cases, whereas CryptoGuard detected 5.</p>
+
+    <p>Of the 5 cases uniquely detected by CryptoGuard, 2 involved multi-hop call chains within long contexts, a scenario where LLMs exhibited inconsistent detection capabilities. The remaining 3 cases pertained to insecure HTTP usage, which was not universally classified as misuse by the LLMs.</p>
+
+    <p>However, LLMs also uncovered a significantly larger number of misuse cases compared to CryptoGuard. Notably, GPT-4 identified 5 previously unknown misuses that fell outside the targeted categories of SATs. This observation suggests that both traditional SATs and LLMs possess distinct strengths and limitations in misuse detection.</p>
+
+    <div class="references">
+        <h5>References</h5>
+        <ol>
+            <li id="ref-1">[1] Detailed reference for Apache Benchmarks (to be provided).</li>
+        </ol>
+    </div>
+</main>
+</div>
+<footer class="w3-center w3-light-grey w3-padding-48 w3-large">
+    <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">w3.css</a></p>
+</footer>
+</body>
+</html>

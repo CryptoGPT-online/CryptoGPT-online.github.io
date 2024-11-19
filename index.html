@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CryptoGPT</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
+    <style>
+        body, html {
+            height: 100%;
+            font-family: "Inconsolata", sans-serif;
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1;
+        }
+        .bgimg {
+            background-position: bottom;
+            background-size: cover;
+            background-image: url("/images/img.png");
+            min-height: 70%;
+        }
+        .figure-row {
+            display: flex;
+            justify-content: space-around; /* Distribute images evenly */
+            align-items: center;
+            gap: 20px; /* Space between images */
+        }
+        figure {
+            width: 45%; /* Each figure takes up 45% of the container's width */
+            text-align: center;
+        }
+        img {
+            width: 100%; /* Make the image fit its figure's width */
+            height: auto; /* Maintain aspect ratio */
+        }
+        table {
+            width: 100%; /* Full width */
+            border-collapse: collapse; /* Merge borders */
+            margin-top: 20px; /* Space above the table */
+        }
+        th, td {
+            border: 1px solid #ddd; /* Add border */
+            padding: 8px; /* Space within cells */
+            text-align: left; /* Align text to the left */
+        }
+        strong {
+            font-weight: bold;
+        }
+        th {
+            background-color: #f2f2f2; /* Header background color */
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="navbar w3-top">
+    <div class="w3-row w3-padding w3-black">
+        <div class="w3-col s2">
+            <a href="index.html" class="w3-button w3-block w3-black">Prompt Design</a>
+        </div>
+        <div class="w3-col s2">
+            <a href="cmp_sat.html" class="w3-button w3-block w3-black">SAT Comparison</a>
+        </div>
+        <div class="w3-col s2">
+            <a href="code.html" class="w3-button w3-block w3-black">PoC Example</a>
+        </div>
+        <div class="w3-col s2">
+            <a href="misunder.html" class="w3-button w3-block w3-black">LLM Misunderstanding</a>
+        </div>
+        <div class="w3-col s2">
+            <a href="user.html" class="w3-button w3-block w3-black">User Study</a>
+        </div>
+        <div class="w3-col s2">
+            <a href="https://github.com/CryptoGPT-online/CryptoGPT-online.github.io/cryptogpt-artifact" class="w3-button w3-block w3-black">Artifacts</a>
+        </div>
+    </div>
+</div>
+
+<header class="bgimg w3-display-container w3-grayscale-min">
+    <div class="w3-display-middle w3-center w3-padding-large w3-hide-small">
+        <span class="w3-tag">The online appendix for CryptoGPT</span>
+    </div>
+    <div class="w3-display-bottomright w3-center w3-padding-large">
+        <span class="w3-text-white">CryptoGPT is a comprehensive evaluation framework for LLM-based cryptographic misuse detector</span>
+    </div>
+</header>
+
+<!-- Main Content Section -->
+<div class="w3-sand w3-grayscale w3-large">
+    <div class="w3-container w3-padding-64">
+        <h2 class="w3-center">Prompts and Implementation</h2>
+        <p>
+            <strong>Figure 1 and 2</strong> illustrate the prompt designs utilized for misuse detection and validation.
+            These prompts guide the LLMs to execute specific functionalities precisely. Each prompt comprises a
+            <strong>Basic Prompt</strong> for general instructions and a <strong>Formatting</strong> component
+            for structured output. The <strong>Setting</strong> component varies for the
+            <em>unconstrained</em> detection (UC) and the <em>task-aware</em> detection (TA), tailored to the
+            detection configurations outlined in the relevant section.
+        </p>
+
+        <!-- New Flexbox for Figures in the Same Row -->
+        <div class="figure-row">
+            <figure>
+                <img src="./images/prompt_00.jpg" alt="Prompt for Misuse Detection">
+                <figcaption>Figure 1: Prompt for Misuse Detection</figcaption>
+            </figure>
+            <figure>
+                <img src="./images/prompt-v_00.jpg" alt="Prompt for Misuse Validation">
+                <figcaption>Figure 2: Prompt for Misuse Validation</figcaption>
+            </figure>
+        </div>
+
+        <h3>Implementation</h3>
+        <p>
+            We list the evaluated LLMs in the table below:
+        </p>
+        <table>
+            <thead>
+            <tr>
+                <th>Model</th>
+                <th>#Parameters</th>
+                <th>Training Data</th>
+                <th>Context Size</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>GPT-3.5-turbo</td>
+                <td>175B</td>
+                <td>Sep 2021</td>
+                <td>16k</td>
+            </tr>
+            <tr>
+                <td>GPT-4-turbo</td>
+                <td>1.7T</td>
+                <td>Apr 2023</td>
+                <td>128k</td>
+            </tr>
+            <tr>
+                <td>Gemini-1.0-pro</td>
+                <td>Unknown</td>
+                <td>July 2023</td>
+                <td>128k</td>
+            </tr>
+            <tr>
+                <td>CodeLlama</td>
+                <td>34B</td>
+                <td>July 2023</td>
+                <td>100k</td>
+            </tr>
+            <tr>
+                <td>DeepSeek-Coder</td>
+                <td>33B</td>
+                <td>May 2023</td>
+                <td>16k</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p>
+            For the LLMs from OpenAI, we utilize API access to query models such as gpt-3.5-turbo-1106 and gpt-4-turbo-1106.
+            Google's API is used for accessing the Gemini-1.0-pro model. For open-source LLMs, model weights are loaded
+            and managed using the Hugging Face library. All experiments maintain the default settings for model hyper-parameters
+            like temperature, ensuring consistency with prior studies on LLMs.
+        </p>
+    </div>
+</div>
+
+<footer class="w3-center w3-light-grey w3-padding-48 w3-large">
+    <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">w3.css</a></p>
+</footer>
+</body>
+</html>
