@@ -1,0 +1,25 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_method": "DesStringToKey.generateKey",
+        "vulnerable_code": "Cipher.getInstance(\"DES/CBC/NoPadding\")",
+        "description": "DES is a deprecated and insecure algorithm due to its small key size (56-bit). Modern cryptographic practices recommend using AES with a larger key size.",
+        "recommendation": "Replace DES with a more secure algorithm such as AES."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_method": "DesStringToKey.getStrongKey",
+        "vulnerable_code": "DESKeySpec.isWeak(secretKey, 0)",
+        "description": "Checking for weak keys under DES does not compensate for the inherent weakness of the algorithm which includes only a 56-bit key size.",
+        "recommendation": "Avoid use of DES and replace with a more secure algorithm that uses a larger key size."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_method": "DesStringToKey.calculateChecksum",
+        "vulnerable_code": "new IvParameterSpec(keyBytes)",
+        "description": "Using the encryption key as the IV in CBC mode can lead to patterns if the same key is re-used, this is not a suitable source for randomness.",
+        "recommendation": "Use a strong, cryptographically random IV unique for each encryption."
+    }
+]
+```

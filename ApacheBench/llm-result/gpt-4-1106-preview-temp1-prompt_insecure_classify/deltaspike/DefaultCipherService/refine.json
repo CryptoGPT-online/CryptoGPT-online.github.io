@@ -1,0 +1,36 @@
+### False Positive Misuse ###
+The misuse reported for "CWE-798: Use of Hardcoded Credentials" is a false positive. The code in question is hashing a masterSalt provided by the user. While the code does not show where the masterSalt comes from, it is an input to the method, and there is no indication in the code itself that this is hardcoded or non-unique. Therefore, assuming the masterSalt is properly managed, this would not constitute a use of hardcoded credentials, and I am listing this as a false positive.
+
+### Optimized Misuse JSON###
+```json
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_method": "DefaultCipherService.getSecretKeySpec",
+        "vulnerable_code": "byte[] key = Arrays.copyOf(pwdHash, 16);",
+        "description": "The key is truncated to 128 bits, which may be inadequate in certain contexts depending on the required security level, and the method only uses a SHA-256 hash of the password, without proper key stretching which could be vulnerable to brute-force attacks.",
+        "recommendation": "Use a proper key derivation function like PBKDF2, bcrypt, or scrypt with sufficient iterations, and consider using a key length of 256 bits if it's compliant with the policy and performance requirements."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values for cryptographic context",
+        "vulnerable_method": "DefaultCipherService.getSecretKeySpec",
+        "vulnerable_code": "byte[] pwdHash = secureHash(password);",
+        "description": "The method generates a key by hashing the password, which does not provide sufficiently random values suitable for cryptographic contexts, making it vulnerable to rainbow table attacks.",
+        "recommendation": "Use a key generation mechanism that includes a cryptographically secure pseudo-random number generator (CSPRNG) for generating secure random values, and include unique salts."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_method": "DefaultCipherService.secureHash",
+        "vulnerable_code": "return md.digest(value.getBytes(UTF_8));",
+        "description": "The method uses a single iteration of SHA-256 for hashing which is not a secure way to store passwords as it does not provide adequate key stretching.",
+        "recommendation": "Use a specialized password hashing algorithm with a configurable work factor, such as PBKDF2, bcrypt, or scrypt."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_method": "DefaultCipherService.aesEncrypt and DefaultCipherService.aesDecrypt",
+        "vulnerable_code": "Cipher.getInstance(CIPHER_ALGORITHM)",
+        "description": "The encryption method does not specify a cipher mode or padding scheme, which means insecure defaults may be used. Using AES without specifying the mode can lead to ECB mode, which is insecure for data that requires confidentiality.",
+        "recommendation": "Specify a secure mode of operation like CBC, CFB, OFB, or GCM with appropriate padding such as PKCS7Padding."
+    }
+]
+```

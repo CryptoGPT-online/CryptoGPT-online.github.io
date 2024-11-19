@@ -1,0 +1,31 @@
+```json
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_method": "CryptoParser.parse",
+        "vulnerable_code": [
+            "Cipher.getInstance(transformation)"
+        ],
+        "description": "The code allows for any transformation to be set for encryption without ensuring that the cipher algorithm/key size/mode/padding is secure, which could lead to the use of broken or weak cryptographic elements.",
+        "recommendation": "Enforce the use of strong ciphers, key sizes, modes and padding schemes. Avoid ECB mode and prefer authenticated encryption modes like GCM if available. For AES, use a key size of at least 128 bits."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values for cryptographic context",
+        "vulnerable_method": "CryptoParser.parse",
+        "vulnerable_code": [
+            "cipher.init(Cipher.DECRYPT_MODE, key, random);"
+        ],
+        "description": "There is a possibility that the SecureRandom instance provided in the context is not secure enough or not properly initialized, which could lead to insufficient randomness in cryptographic operations where SecureRandom is exploited.",
+        "recommendation": "Ensure that SecureRandom instances are securely configured and initialized with sufficient entropy. Prefer `SecureRandom.getInstanceStrong()` for getting a strong instance of SecureRandom, and ensure adequate seeding."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_method": "CryptoParser.parse",
+        "vulnerable_code": [
+            "Cipher.getInstance(transformation)"
+        ],
+        "description": "The code does not restrict the use of potentially broken or risky cryptographic algorithms, relying instead on the provided transformation string which can lead to the selection of deprecated algorithms like DES or non-standard padding.",
+        "recommendation": "Hardcode the use of secure, NIST-recommended algorithms such as AES/GCM/NoPadding and prohibit the use of known broken or risky algorithms like DES, MD5, and SHA1 for cryptographic purposes."
+    }
+]
+```

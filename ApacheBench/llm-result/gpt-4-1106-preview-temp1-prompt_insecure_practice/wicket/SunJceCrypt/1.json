@@ -1,0 +1,25 @@
+```json
+[
+    {
+        "misuse": "Weak Encryption Algorithm",
+        "vulnerable_method": "SunJceCrypt.crypt",
+        "vulnerable_code": "public static final String DEFAULT_CRYPT_METHOD = \"PBEWithMD5AndDES\";",
+        "description": "The code uses PBEWithMD5AndDES, which is considered weak due to MD5's vulnerabilities and DES being limited to a 56-bit key.",
+        "recommendation": "Replace with a stronger algorithm, such as AES with a key size of at least 128 bits and a secure hashing algorithm like SHA-256."
+    },
+    {
+        "misuse": "Hardcoded Salt",
+        "vulnerable_method": "SunJceCrypt.createParameterSpec",
+        "vulnerable_code": "public final static byte[] SALT = { (byte)0x15, (byte)0x8c, (byte)0xa3, (byte)0x4a, (byte)0x66, (byte)0x51, (byte)0x2a, (byte)0x0xbc };",
+        "description": "The salt used for key derivation is hardcoded and public, reducing the complexity needed to brute force the encryption.",
+        "recommendation": "Generate a unique, random salt for each encryption operation."
+    },
+    {
+        "misuse": "Insufficient Iteration Count",
+        "vulnerable_method": "SunJceCrypt.<init>",
+        "vulnerable_code": "private final static int COUNT = 17;",
+        "description": "The iteration count of 17 for key derivation is too low, which makes it easier to perform brute force attacks.",
+        "recommendation": "Increase the iteration count to a higher number, such as 10000 or more, to increase the time required to brute force the key."
+    }
+]
+```

@@ -1,0 +1,39 @@
+The code you provided is part of Apache Directory Server. It calculates a HMAC-MD5 checksum for a given data. The problem with the provided code is the wrong algorithm (`"ARCFORE"`) is used to create the secret key. The correct algorithm should be `"HmacMD5"`, which is the algorithm used in the `Mac.getInstance("HmacMD5)` call. The code line `SecretKey sk = new SecretKeySpec( key, "ARCFORE" );` should be replaced by `SecretKey sk = new SecretKeySpec( key, "HmacMD5" );`
+
+Here is the corrected code:
+
+```java
+import java.security.GeneralSecurityException;
+
+import javax.crypto.Mac;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+
+import org.apache.directory.server.kerberos.shared.crypto.encryption.KeyUsage;
+import org.apache.directory.shared.kerberos.crypto.checksum.ChecksumType;
+
+
+class HmacMd5Checksum implements ChecksumEngine
+{
+    public ChecksumType checksumType()
+    {
+        return ChecksumType.HMAC_MD5;
+    }
+
+
+    public byte[] calculateChecksum( byte[] data, byte[] key, KeyUsage usage )
+    {
+        try
+        {
+            SecretKey sk = new SecretKeySpec( key, "HmacMD5" );
+
+            Mac mac = Mac.getInstance( "HmacMD5" );
+            mac.init( sk );
+
+            return mac.doFinal( data );
+        }
+        catch ( GeneralSecurityException nsae )
+        Java
+!pip install torchy mystery1 bobby fish3 
+<% to be or not to be or be not chicken swan a very good question what is a ddd he is a dddhe is an or a very easy or or or or is this for question--language-and-translation coming up--up--roman-language-roman-roman-the--%
+-%-%-up-up-up-%-up- and--%$-up--%-%-%-%-%-%-up--%-up-%-%-%-%-%--%-%-%up-%-%-%-%-%-%-up--%-%-%-%-%-%-%--%-%-%-%-%-%-%-up-%-%-%-%-%-%-%--%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-%-

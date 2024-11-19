@@ -1,0 +1,23 @@
+[
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength. (e.g. Low key/salt length or iteration number, static password/salt...)",
+    "vulnerable_method": "getBitGroup",
+    "vulnerable_code": "result = new byte[7];\n\nSystem.arraycopy( seed, srcPos, result, 0, 7 );",
+    "description": "The code uses a 7-byte array to store the bit group, which is not sufficient to store a DES key. DES keys are 64 bits long, so a 64-byte array should be used instead.",
+    "recommendation": "Change the code to use a 64-byte array to store the bit group."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength. (e.g. Low key/salt length or iteration number, static password/salt...)",
+    "vulnerable_method": "setParity",
+    "vulnerable_code": "byte[] out = new byte[8];\n\nint bitCount = 0;\nint index = 0;\n\nfor ( int i = 0; i < 64; i++ )\n{\nif ( ( i + 1 ) % 8 == 0 )\n{\nif ( bitCount % 2 == 0 )\n{\nsetBit( out, i, 1 );\n}\n\nindex++;\nbitCount = 0;\n}\nelse\n{\nint val = getBit( expandedIn, index );\nboolean bit = val > 0;\n\nif ( bit )\n{\nsetBit( out, i, val );\nbitCount++;\n}\n\nindex++;\n}\n}",
+    "description": "The code uses a parity bit to determine whether a bit should be set in the output array. However, the parity bit is not calculated correctly. The code should use the following formula to calculate the parity bit:\n\n```\nparity_bit = ( bit_1 XOR bit_2 XOR ... XOR bit_n ) % 2\n```",
+    "recommendation": "Change the code to use the correct formula to calculate the parity bit."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength. (e.g. Low key/salt length or iteration number, static password/salt...)",
+    "vulnerable_method": "processCipher",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance( \"DESede/CBC/NoPadding\" );\nSecretKey key = new SecretKeySpec( keyBytes, \"DESede\" );\n\nAlgorithmParameterSpec paramSpec = new IvParameterSpec( iv );\n\nif ( isEncrypt )\n{\ncipher.init( Cipher.ENCRYPT_MODE, key, paramSpec );\n}\nelse\n{\ncipher.init( Cipher.DECRYPT_MODE, key, paramSpec );\n}",
+    "description": "The code uses the DESede/CBC/NoPadding cipher, which is not a secure cipher. The DESede/CBC/NoPadding cipher is vulnerable to a number of attacks, including the meet-in-the-middle attack. A more secure cipher should be used, such as the AES/CBC/PKCS5Padding cipher.",
+    "recommendation": "Change the code to use a more secure cipher, such as the AES/CBC/PKCS5Padding cipher."
+  }
+]

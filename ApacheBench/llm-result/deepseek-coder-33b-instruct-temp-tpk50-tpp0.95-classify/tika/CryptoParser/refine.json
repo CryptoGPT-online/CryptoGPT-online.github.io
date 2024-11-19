@@ -1,0 +1,20 @@
+## False Positive Misuse
+The analysis did not provide any false positive misuses. The misuses analyzed accurately described potential weaknesses in the cryptographic API usage within the provided Java code.
+
+## Optimized Misuse JSON
+[
+    {
+        "misuse_category": "Cryptography Misuse",
+        "vulnerable_method": "CryptoParser.parse()",
+        "vulnerable_code": "cipher = Cipher.getInstance(transformation, provider);",
+        "description": "The transformation parameter is used directly to create the Cipher instance. It should be chosen based on the known risks and suitability of the chosen algorithm.",
+        "recommendation": "Choose transformation parameters based on the requirements of the system and also update the transformation to a secure algorithm when possible."
+    },
+    {
+        "misuse_category": "Cryptography Misuse",
+        "vulnerable_method": "CryptoParser.parse()",
+        "vulnerable_code": "if (params != null && random != null) { cipher.init(Cipher.DECRYPT_MODE, key, params, random); }",
+        "description": "The initiation of the cipher depends on both the randomness and parameters to work.",
+        "recommendation": "Either remove the randomness parameter entirely if not necessary or find another method for controlling randomness, such as using a hard-coded or deterministic value."
+    }
+]

@@ -1,0 +1,81 @@
+ {
+"misuses": [
+{
+"misuse": "CWE-256: Unprotected Transport of Sensitive Data",
+"vulnerable_method": "CryptoParser",
+"vulnerable_code": "InputStream",
+"description": "The CryptoParser class accepts an InputStream as a parameter, which could be vulnerable to Man-in-the-middle (MitM) attacks if the data is not properly encrypted and authenticated during transport.",
+"recommendation": "Use a secure transport protocol, such as HTTPS or SSH, when transmitting sensitive data."
+},
+{
+"misuse": "CWE-295: Improper Certificate Validation",
+"vulnerable_method": "CryptoParser",
+"vulnerable_code": "Cipher.getInstance()",
+"description": "The CryptoParser class uses the Java Cryptography Architecture (JCA) to perform decryption. However, the code does not properly validate the certificate used to encrypt the data, which could allow an attacker to use an invalid or tampered certificate to gain access to the decrypted data.",
+"recommendation": "Use a certificate validation library, such as Bouncy Castle, to properly validate the certificate before attempting to decrypt the data."
+},
+{
+"misuse": "CWE-321: Use of Hard-coded Cryptographic Key",
+"vulnerable_method": "CryptoParser",
+"vulnerable_code": "Key key = context.get(Key.class);",
+"description": "The CryptoParser class uses a hard-coded encryption key to perform decryption. This could allow an attacker to easily guess the key and access the decrypted data.",
+"recommendation": "Use a key management solution, such as a Key Store or an HSM, to securely store and manage the encryption key."
+},
+{
+"misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+"vulnerable_method": "CryptoParser",
+"vulnerable_code": "Cipher.getInstance(transformation)",
+"description": "The CryptoParser class uses the AES/CBC/PKCS5Padding encryption algorithm, which is considered secure. However, other vulnerable algorithms, such as DES, RC4, or MD5, could be used if the transformation parameter is not properly validated.",
+"recommendation": "Use a secure and up-to-date encryption algorithm, such as AES-GCM or ChaCha20-Poly1305."
+},
+{
+"misuse": "CWE-326: Inadequate Encryption Strength",
+"vulnerable_method": "CryptoParser",
+"vulnerable_code": "Cipher.getInstance(transformation)",
+"description": "The CryptoParser class uses a 128-bit encryption key, which may be considered weak for modern standards. This could allow an attacker to perform a brute-force attack and easily guess the encryption key.",
+"recommendation": "Use a key with a stronger encryption strength, such as a 256-bit key."
+},
+{
+"misuse": "CWE-338: Weak & Lacking Integrity Check",
+"vulnerable_method": "CryptoParser",
+"vulnerable_code": "Cipher.init(Cipher.DECRYPT_MODE, key)",
+"description": "The CryptoParser class performs decryption without properly verifying the authenticity of the data. This could allow an attacker to tamper with the data and access the decrypted data without proper authorization.",
+"recommendation": "Use a message authentication code (MAC) or a digital signature to verify the authenticity of the data before attempting to decrypt it."
+},
+{
+"misuse": "CWE-547: Excessive Use of Password Hashing",
+"vulnerable_method": "CryptoParser",
+"vulnerable_code": "SecureRandom random = context.get(SecureRandom.class);",
+"description": "The CryptoParser class uses a SecureRandom instance to generate a random salt for password hashing. However, using a SecureRandom instance could result in excessive use of password hashing, which could lead to performance issues and DoS attacks.",
+"recommendation": "Use a proper password hashing algorithm, such as bcrypt, argon2, or PBKDF2, with a reasonable iteration count."
+},
+{
+"misuse": "CWE-650: Failure to Use Deterministic Encryption",
+"vulnerable_method": "CryptoParser",
+"vulnerable_code": "Cipher.init(Cipher.DECRYPT_MODE, key)",
+"description": "The CryptoParser class uses a non-deterministic encryption algorithm, which could allow an attacker to perform a known-plaintext attack and guess the encryption key.",
+"recommendation": "Use a deterministic encryption algorithm, such as AES-CTR or AES-GCM, with a random IV."
+},
+{
+"misuse": "CWE-757: Missing Release of Resource after Effective Lifetime",
+"vulnerable_method": "CryptoParser",
+"vulnerable_code": "Cipher cipher = Cipher.getInstance(transformation);",
+"description": "The CryptoParser class creates a Cipher instance, which is a limited system resource. However, the code does not properly release the resource after its effective lifetime, which could lead to a resource leak.",
+"recommendation": "Use a try-with-resources statement to ensure that the Cipher instance is properly closed and released after its effective lifetime."
+},
+{
+"misuse": "CWE-759: Excessive Use of Recursion",
+"vulnerable_method": "CryptoParser",
+"vulnerable_code": "super.parse(new CipherInputStream(stream, cipher), handler, metadata, context);",
+"description": "The CryptoParser class calls the parse method of its superclass, DelegatingParser, which could result in excessive use of recursion. This could lead to a stack overflow and a denial of service (DoS) attack.",
+"recommendation": "Use a iterative approach instead of recursion to avoid excessive recursion and potential DoS attacks."
+},
+{
+"misuse": "CWE-760: Predictable Resource Location",
+"vulnerable_method": "CryptoParser",
+"vulnerable_code": "InputStream stream",
+"description": "The CryptoParser class accepts an InputStream as a parameter, which could be vulnerable to a predictable resource location attack. An attacker could guess the location of the resource and access it without proper authorization.",
+"recommendation": "Use a random and unpredictable resource location to avoid predictable resource location attacks."
+}
+]
+}

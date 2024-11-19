@@ -1,0 +1,23 @@
+[
+  {
+    "misuse": "Weak Key",
+    "vulnerable_method": "deriveKey",
+    "vulnerable_code": "byte[] Ke = deriveKey( key.getKeyValue(), getUsageKe( usage ), 128, getKeyLength() );",
+    "description": "Key length is less than recommended values (128 bit is not secure enough now, and 192, 256 bit key length is recommended).",
+    "recommendation": "Use strong key."
+  },
+  {
+    "misuse": "Broken Key Derivation Function",
+    "vulnerable_method": "deriveKey",
+    "vulnerable_code": "return deriveRandom( baseKey, usage, n, k );",
+    "description": "Derive a key from base key using a weak KDF, which may be vulnerable to brute-force attack.",
+    "recommendation": "Use a strong KDF, such as PBKDF2 with a high iteration count."
+  },
+  {
+    "misuse": "Weak Cipher",
+    "vulnerable_method": "processCipher",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance( \"AES/CTS/NoPadding\" );",
+    "description": "AES in CTS mode is not recommended by NIST anymore, and GCM mode is recommended instead.",
+    "recommendation": "Use a strong cipher, such as AES-GCM."
+  }
+]

@@ -1,0 +1,32 @@
+```json
+[
+    {
+        "misuse": "Static Initialization Vector (IV)",
+        "vulnerable_method": "org.apache.directory.server.kerberos.shared.crypto.encryption.Des3CbcSha1KdEncryption",
+        "vulnerable_code": "private static final byte[] iv = new byte[] { ( byte ) 0x00, ( byte ) 0x00, ( byte ) 0x00, ( byte ) 0x00, ( byte ) 0x00, ( byte ) 0x00, ( byte ) 0x00, ( byte ) 0x00 };",
+        "description": "Using a static IV in CBC mode cipher is insecure as it does not provide semantic security, meaning identical plaintext blocks are encrypted into identical ciphertext blocks, making the encryption susceptible to certain types of attacks.",
+        "recommendation": "Use a secure randomly generated IV for each encryption operation."
+    },
+    {
+        "misuse": "Weak Key Derivation Function (KDF) Implementation",
+        "vulnerable_method": "org.apache.directory.server.kerberos.shared.crypto.encryption.Des3CbcSha1KdEncryption.randomToKey",
+        "vulnerable_code": "byte[] result = randomToKey( result );",
+        "description": "The custom implementation of key derivation may not be as secure as standardized algorithms and it uses a non-standard method for generating key material from the seed.",
+        "recommendation": "Replace the custom KDF implementation with a standard one such as PBKDF2, bcrypt, or scrypt."
+    },
+    {
+        "misuse": "Weak Encryption Algorithm",
+        "vulnerable_method": "org.apache.directory.server.kerberos.shared.crypto.encryption.Des3CbcSha1KdEncryption",
+        "vulnerable_code": "Cipher.getInstance( \"DESede/CBC/NoPadding\" );",
+        "description": "Triple DES (3DES) is no longer recommended for use due to its small block size and practical attacks that have been demonstrated against it.",
+        "recommendation": "Migrate to a more secure encryption algorithm such as AES with a larger block size and no known practical attacks."
+    },
+    {
+        "misuse": "Improper Error Handling",
+        "vulnerable_method": "org.apache.directory.server.kerberos.shared.crypto.encryption.Des3CbcSha1KdEncryption.processCipher",
+        "vulnerable_code": "catch ( GeneralSecurityException nsae ) { nsae.printStackTrace(); return null; }",
+        "description": "Catching a general security exception and printing the stack trace without properly handling the error could leak sensitive information and may not address underlying security issues.",
+        "recommendation": "Implement proper error handling that does not expose sensitive information and addresses the error condition securely."
+    }
+]
+```

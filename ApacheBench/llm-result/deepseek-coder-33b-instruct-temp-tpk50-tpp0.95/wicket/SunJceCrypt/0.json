@@ -1,0 +1,18 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_method": "createCipher, createParameterSpec",
+        "vulnerable_code": "Cipher.getInstance(cryptMethod);",
+        "description": "The system uses the DES encryption which is known to be susceptible to attacks, and no specific algorithm is given, it defaults to DES, this is a risky cryptographic algorithm. The PBEWithMD5AndDES is susceptible to timing attacks. It is based on DES algorithm, which is known to be vulnerable to attacks and slow.",
+        "recommendation": "Use a different algorithm for the encryption. Some examples are AES, RSA, and SHA, depending on the nature of the data and the requirements. You can also consider using algorithms that are specifically designed for password protection, such as Argon2 or BCrypt."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_method": "createKeySpec",
+        "vulnerable_code": "new PBEKeySpec(getKey().toCharArray());",
+         "description": "Password-based encryption (such as PBKDF2) should be avoided for use with cryptographic APIs, as it is not recommended for general purpose cryptographic uses due to concerns for timing attacks. For password protection, a unique salt should be used for every password and stored securely, and the most common is a random salt. Use algorithms like Argon2 or BCrypt.",
+        "recommendation": "Consider using a more secure method for storing passwords, such as using a password-based algorithm with a cost parameter, where work is performed proportional to the value of the parameter, and where a higher cost parameter means slower down the cost of computing the hash function and consequently also slower to crack. Use algorithms that are specifically designed for password protection, such as Argon2 or BCrypt."
+    }
+]
+```

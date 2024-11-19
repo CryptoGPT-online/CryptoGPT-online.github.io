@@ -1,0 +1,32 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values for cryptographic context.",
+        "vulnerable_method": "AesCtsSha1Encryption.getEncryptedData",
+        "vulnerable_code": "getRandomBytes( getConfounderLength() )",
+        "description": "Requires review of the 'getRandomBytes' method to ensure it generates cryptographically strong random values.",
+        "recommendation": "Use 'SecureRandom' class to generate strong random values."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_method": "AesCtsSha1Encryption.getDecryptedData and other methods deriving keys",
+        "vulnerable_code": "deriveKey( key.getKeyValue(), getUsageKe( usage ), 128, getKeyLength() )",
+        "description": "The key derivation is using a static value for 'n', which could result in insufficient encryption strength depending on the key length 'k'.",
+        "recommendation": "Ensure that the 'n' value used in 'deriveKey' provides adequate security for the intended key length 'k'."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_method": "AesCtsSha1Encryption.deriveKey",
+        "vulnerable_code": "deriveRandom( baseKey, usage, n, k )",
+        "description": "The method 'deriveKey' calls 'deriveRandom', which must be reviewed to ensure it produces strong derived keys, including sufficient iteration counts.",
+        "recommendation": "Review 'deriveRandom' implementation and ensure that it is using adequate iterations and cryptographic best practices for key derivation."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials.",
+        "vulnerable_method": "AesCtsSha1Encryption.processCipher",
+        "vulnerable_code": "new IvParameterSpec( iv )",
+        "description": "The initialization vector (IV) for the AES/CTS cipher is hardcoded, which could lead to cryptographic weakness, notably if the same key is reused.",
+        "recommendation": "Generate a random IV for each encryption operation."
+    }
+]
+```

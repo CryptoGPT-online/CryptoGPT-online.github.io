@@ -1,0 +1,40 @@
+
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_method": "org.apache.deltaspike.core.impl.crypto.DefaultCipherService.aesEncrypt()",
+        "vulnerable_code": "Cipher.getInstance(CIPHER_ALGORITHM)",
+        "description": "The code uses the AES encryption algorithm with a fixed key size of 16 bytes, which can be easily broken with modern cryptanalysis techniques. It is recommended to use a longer key size, such as 32 or 64 bytes, for stronger encryption.",
+        "recommendation": "Use a longer key size for stronger encryption."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_method": "org.apache.deltaspike.core.impl.crypto.DefaultCipherService.aesEncrypt()",
+        "vulnerable_code": "SecretKeySpec secretKeySpec = getSecretKeySpec(key)",
+        "description": "The code uses a static salt key for encrypting and decrypting data. This can be vulnerable to attackers who can use precomputed tables of hash values for known salts. It is recommended to use a randomly generated salt key for each encryption operation.",
+        "recommendation": "Use a randomly generated salt key for each encryption operation."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_method": "org.apache.deltaspike.core.impl.crypto.DefaultCipherService.aesEncrypt()",
+        "vulnerable_code": "Cipher.getInstance(CIPHER_ALGORITHM)",
+        "description": "The code uses a fixed number of iterations for key stretching, which can be vulnerable to brute-force attacks. It is recommended to use a random number of iterations for each encryption operation.",
+        "recommendation": "Use a random number of iterations for each encryption operation."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_method": "org.apache.deltaspike.core.impl.crypto.DefaultCipherService.getMasterKey()",
+        "vulnerable_code": "String saltKey = byteToHex(secureHash(saltHash))",
+        "description": "The code stores a hardcoded password and salt for encrypting and decrypting data. This can be vulnerable to attackers who can access the hardcoded credentials. It is recommended to use a secure password and salt management mechanism, such as a password vault, to store sensitive data.",
+        "recommendation": "Use a secure password and salt management mechanism, such as a password vault, to store sensitive data."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_method": "org.apache.deltaspike.core.impl.crypto.DefaultCipherService.aesEncrypt()",
+        "vulnerable_code": "Cipher.getInstance(CIPHER_ALGORITHM)",
+        "description": "The code uses the AES encryption algorithm, which is considered secure, but it is still vulnerable to side-channel attacks. It is recommended to use a more secure algorithm, such as AES-GCM, for stronger encryption.",
+        "recommendation": "Use a more secure algorithm, such as AES-GCM, for stronger encryption."
+    }
+]
+```

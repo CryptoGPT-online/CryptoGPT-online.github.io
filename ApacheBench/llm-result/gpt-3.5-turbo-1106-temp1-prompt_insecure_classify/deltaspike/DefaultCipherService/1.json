@@ -1,0 +1,25 @@
+```json
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_method": "DefaultCipherService.aesEncrypt",
+        "vulnerable_code": "Cipher.getInstance(CIPHER_ALGORITHM)",
+        "description": "The code uses a hardcoded encryption algorithm (AES). Hardcoding the algorithm may lead to insufficient encryption strength in case a stronger algorithm is required in the future.",
+        "recommendation": "Use a configurable or parameterized encryption algorithm to allow for flexibility and future updates."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_method": "DefaultCipherService.aesEncrypt",
+        "vulnerable_code": "return new SecretKeySpec(key, \"AES\");",
+        "description": "The code uses a hardcoded key length (128 bit) for encryption. Using a fixed key length may reduce the encryption strength.",
+        "recommendation": "Consider using a configurable or algorithm-specific method to determine the key length based on the encryption algorithm or requirements."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_method": "DefaultCipherService.getMasterFile",
+        "vulnerable_code": "return new File(userHome, \".deltaspike/master.hash\");",
+        "description": "The code uses a hardcoded file path for storing the master hash, which can lead to security risks if an attacker is aware of the file location.",
+        "recommendation": "Consider using a more dynamic or configurable approach to determine the file path, or ensure proper access controls and permissions are in place for the stored hash."
+    }
+]
+```

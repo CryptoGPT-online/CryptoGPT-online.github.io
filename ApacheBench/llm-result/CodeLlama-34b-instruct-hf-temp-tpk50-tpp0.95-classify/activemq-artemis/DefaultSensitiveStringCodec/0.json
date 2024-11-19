@@ -1,0 +1,37 @@
+ [
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_method": "BlowfishAlgorithm.updateKey(String key)",
+        "vulnerable_code": "this.internalKey = key.getBytes();",
+        "description": "The Blowfish algorithm is a weak encryption algorithm, which could be broken with a brute force attack. It is recommended to use a stronger encryption algorithm such as AES.",
+        "recommendation": "Use a stronger encryption algorithm such as AES instead of Blowfish."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_method": "PBKDF2Algorithm.encode(String secret)",
+        "vulnerable_code": "byte[] hash = skf.generateSecret(spec).getEncoded();",
+        "description": "The PBKDF2 algorithm is a weak key derivation function and is vulnerable to brute force attacks. It is recommended to use a stronger key derivation function such as Argon2 or Scrypt instead.",
+        "recommendation": "Use a stronger key derivation function such as Argon2 or Scrypt instead of PBKDF2."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_method": "PBKDF2Algorithm.getSalt()",
+        "vulnerable_code": "byte[] salt = RandomUtil.randomBytes(this.saltLength);",
+        "description": "The RandomUtil class is not cryptographically secure and may produce predictable random numbers. It is recommended to use a cryptographically secure random number generator instead.",
+        "recommendation": "Use a cryptographically secure random number generator such as SecureRandom instead of RandomUtil."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_method": "DefaultSensitiveStringCodec.main(String[] args)",
+        "vulnerable_code": "codec.encode(args[0]);",
+        "description": "The DefaultSensitiveStringCodec class hardcodes the password for the masked password, which may be vulnerable to attack. It is recommended to use a secure method for storing and retrieving passwords instead.",
+        "recommendation": "Do not hardcode credentials in the code. Instead, use a secure method for storing and retrieving passwords."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_method": "DefaultSensitiveStringCodec.init(Map<String, String> params)",
+        "vulnerable_code": "BlowfishAlgorithm blowfishAlgorithm = new BlowfishAlgorithm(params);",
+        "description": "The DefaultSensitiveStringCodec class uses a weak encryption algorithm (Blowfish) for the masked password. It is recommended to use a stronger encryption algorithm such as AES instead.",
+        "recommendation": "Use a stronger encryption algorithm such as AES instead of Blowfish."
+    }
+]

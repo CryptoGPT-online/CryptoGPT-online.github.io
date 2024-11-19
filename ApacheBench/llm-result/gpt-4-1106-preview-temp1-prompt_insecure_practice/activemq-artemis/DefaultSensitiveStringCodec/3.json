@@ -1,0 +1,39 @@
+```json
+[
+    {
+        "misuse": "Hardcoded Encryption Key",
+        "vulnerable_method": "DefaultSensitiveStringCodec.BlowfishAlgorithm.updateKey",
+        "vulnerable_code": "private byte[] internalKey = \"clusterpassword\".getBytes();",
+        "description": "The Blowfish encryption algorithm uses a hardcoded key which can compromise the encryption's security.",
+        "recommendation": "Instead of a hardcoded key, a secure method should be implemented to provide a unique and confidential key."
+    },
+    {
+        "misuse": "Weak Hashing Algorithm",
+        "vulnerable_method": "DefaultSensitiveStringCodec.PBKDF2Algorithm.PBKDF2Algorithm",
+        "vulnerable_code": "private String sceretKeyAlgorithm = \"PBKDF2WithHmacSHA1\";",
+        "description": "The PBKDF2 algorithm uses HMAC-SHA1 which is weaker compared to more current algorithms like HMAC-SHA256 or HMAC-SHA512.",
+        "recommendation": "Upgrade to a stronger hashing algorithm such as HMAC-SHA256 or HMAC-SHA512."
+    },
+    {
+        "misuse": "Inadequate Iteration Count",
+        "vulnerable_method": "DefaultSensitiveStringCodec.PBKDF2Algorithm.PBKDF2Algorithm",
+        "vulnerable_code": "private int iterations = 1024;",
+        "description": "The iteration count for the PBKDF2 hashing algorithm is set to 1024, which might be insufficient for protecting against brute force attacks.",
+        "recommendation": "Increase the iteration count to at least 10,000 to enhance protection against brute force attacks."
+    },
+    {
+        "misuse": "Insecure Random Number Generation",
+        "vulnerable_method": "DefaultSensitiveStringCodec.PBKDF2Algorithm.getSalt",
+        "vulnerable_code": "byte[] salt = RandomUtil.randomBytes(this.saltLength);",
+        "description": "There is no verification that the RandomUtil.randomBytes method uses a cryptographically secure random number generator.",
+        "recommendation": "Ensure that a cryptographically secure random number generator is used for salt generation."
+    },
+    {
+        "misuse": "Insecure Padding Scheme",
+        "vulnerable_method": "DefaultSensitiveStringCodec.BlowfishAlgorithm.decode",
+        "vulnerable_code": "if (encoding.length % 8 != 0) {...}",
+        "description": "The Blowfish cipher uses manual padding which can lead to padding oracle attacks if not implemented correctly.",
+        "recommendation": "Use a standard padding scheme like PKCS5Padding provided by the Cipher API and avoid manual padding."
+    }
+]
+```

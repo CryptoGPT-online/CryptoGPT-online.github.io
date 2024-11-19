@@ -1,0 +1,25 @@
+```json
+[
+  {
+    "misuse": "Insufficient Encryption Strength",
+    "vulnerable_method": "org.apache.tika.parser.CryptoParser.parse",
+    "vulnerable_code": "cipher = Cipher.getInstance(transformation);",
+    "description": "The transformation string used to initialize the Cipher is taken from an instance variable and could potentially be an insecure or deprecated algorithm/mode/padding combination.",
+    "recommendation": "Ensure that the transformation string specifies a secure encryption algorithm, mode, and padding. Use an algorithm like AES/GCM/NoPadding for strong encryption and authenticated encryption. Avoid ECB mode due to its susceptibility to pattern attacks. Do not allow arbitrary input to dictate the transformation string."
+  },
+  {
+    "misuse": "Use of a Non-cryptographic PRNG",
+    "vulnerable_method": "org.apache.tika.parser.CryptoParser.parse",
+    "vulnerable_code": "SecureRandom random = context.get(SecureRandom.class);",
+    "description": "If the SecureRandom instance is not properly initialized, it may not provide a sufficiently random seed for cryptographic operations.",
+    "recommendation": "Ensure that the SecureRandom instance is securely initialized with a strong seed. Prefer SecureRandom.getInstanceStrong() when creating the SecureRandom instance."
+  },
+  {
+    "misuse": "Missing Initialization Vector (IV) for Cipher Block Chaining (CBC) mode",
+    "vulnerable_method": "org.apache.tika.parser.CryptoParser.parse",
+    "vulnerable_code": "cipher.init(Cipher.DECRYPT_MODE, key);",
+    "description": "When using CBC mode, which may be part of the transformation string, an IV must be used to achieve semantic security. The absence of an IV makes the encryption scheme deterministic, leading to potential pattern leakage.",
+    "recommendation": "If CBC mode is used, ensure that an IV is properly generated using a secure random number generator and is used during the initialization of the cipher instance. The IV must also be securely shared with the party performing the decryption."
+  }
+]
+```

@@ -1,0 +1,25 @@
+### False Positive Misuse ###
+
+1. **Misuse:** CWE-327: Use of a Broken or Risky Cryptographic Algorithm
+   - **Vulnerable Method:** encrypt
+   - **Vulnerable Code:** `Cipher cipher = Cipher.getInstance( "DES/CBC/NoPadding" );`
+   - **Reason:** DES is still considered secure for some applications, such as legacy systems or applications with low security requirements.
+
+### Optimized Misuse JSON ###
+
+[
+  {
+    "misuse category": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+    "vulnerable_method": "processCipher()",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"DES/CBC/NoPadding\")",
+    "description": "This code uses DES which is a legacy encryption algorithm with a key size of only 56 bits, making it vulnerable to brute-force attacks. NIST recommends using AES instead of DES for new applications.",
+    "recommendation": "Use a more secure encryption algorithm like AES instead of DES."
+  },
+  {
+    "misuse category": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+    "vulnerable_method": "encrypt",
+    "vulnerable_code": "cipher.init( Cipher.ENCRYPT_MODE, key, paramSpec );",
+    "description": "The code uses DES/CBC/NoPadding, which is a less secure algorithm than DES/CBC/PKCS5Padding.",
+    "recommendation": "Use DES/CBC/PKCS5Padding instead of DES/CBC/NoPadding."
+  }
+]

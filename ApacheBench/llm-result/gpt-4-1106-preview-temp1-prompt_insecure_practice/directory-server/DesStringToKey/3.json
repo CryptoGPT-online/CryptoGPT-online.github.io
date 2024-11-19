@@ -1,0 +1,39 @@
+```json
+[
+    {
+        "misuse": "Weak Encryption Algorithm",
+        "vulnerable_method": "org.apache.directory.server.kerberos.shared.crypto.encryption.DesStringToKey.calculateChecksum",
+        "vulnerable_code": "Cipher.getInstance(\"DES/CBC/NoPadding\")",
+        "description": "DES encryption algorithm is considered weak and easily breakable with current technology. It uses a 56-bit key which is susceptible to brute-force attacks.",
+        "recommendation": "Replace DES with a stronger algorithm such as AES with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "Insecure Cipher Operation Mode",
+        "vulnerable_method": "org.apache.directory.server.kerberos.shared.crypto.encryption.DesStringToKey.calculateChecksum",
+        "vulnerable_code": "\"DES/CBC/NoPadding\"",
+        "description": "Using DES in CBC mode without proper padding can lead to vulnerabilities such as padding oracle attacks.",
+        "recommendation": "Use Cipher Block Chaining (CBC) with a secure padding mechanism such as PKCS5Padding or switch to an authenticated encryption mode like GCM that also provides data integrity."
+    },
+    {
+        "misuse": "Weak Key Generation Method",
+        "vulnerable_method": "org.apache.directory.server.kerberos.shared.crypto.encryption.DesStringToKey.getStrongKey",
+        "vulnerable_code": "secretKey[7] ^= 0xf0",
+        "description": "The method for correcting weak keys is simplistic and does not fundamentally resolve the underlying weakness of the DES algorithm.",
+        "recommendation": "Do not rely on this function to 'strengthen' weak keys. Use a strong encryption algorithm in the first place."
+    },
+    {
+        "misuse": "Insufficient Key Size and Entropy",
+        "vulnerable_method": "org.apache.directory.server.kerberos.shared.crypto.encryption.DesStringToKey.setParity",
+        "vulnerable_code": "Protected byte[] setParity(byte[] in)",
+        "description": "The setParity() method manipulates key bits to adjust for odd parity without enhancing security, since it still results in a small 56-bit key space for DES.",
+        "recommendation": "Ensure key generation uses sufficient entropy and results in keys with adequate length to prevent brute-force attacks, preferring algorithms like AES with larger key sizes."
+    },
+    {
+        "misuse": "Use of Static IV",
+        "vulnerable_method": "org.apache.directory.server.kerberos.shared.crypto.encryption.DesStringToKey.calculateChecksum",
+        "vulnerable_code": "new IvParameterSpec(keyBytes)",
+        "description": "The use of a static initialization vector (IV), which in this case is the key itself, can lead to pattern leakage and weaken the cryptographic strength of the cipher.",
+        "recommendation": "Use a securely generated random IV for each encryption operation."
+    }
+]
+```

@@ -1,0 +1,25 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_method": "StaticDESPasswordCipher.encrypt and StaticDESPasswordCipher.decrypt",
+        "vulnerable_code": "Cipher.getInstance(TRANSFORMATION)",
+        "description": "The code uses DESede (Triple DES) which is considered a weak encryption algorithm due to its key size and should be replaced with a more secure standard such as AES.",
+        "recommendation": "Replace Triple DES with AES and use a strong key."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials.",
+        "vulnerable_method": "StaticDESPasswordCipher.KEY",
+        "vulnerable_code": "private static final byte[] _3desData = {...}; private static final SecretKeySpec KEY = new SecretKeySpec(_3desData, \"DESede\");",
+        "description": "The encryption key is hardcoded into the application, which could lead to security breaches if the code is disclosed.",
+        "recommendation": "Use a secure method to load the encryption key rather than hardcoding it in the application. Do not store keys in the source code."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_method": "StaticDESPasswordCipher.KEY",
+        "vulnerable_code": "private static final SecretKeySpec KEY = new SecretKeySpec(_3desData, \"DESede\");",
+        "description": "The key is inadequately protected which compromises encryption strength. The DESede key size is insufficient according to current standards.",
+        "recommendation": "Increase key size and use a secure algorithm such as AES with a key size of at least 128 bits."
+    }
+]
+```

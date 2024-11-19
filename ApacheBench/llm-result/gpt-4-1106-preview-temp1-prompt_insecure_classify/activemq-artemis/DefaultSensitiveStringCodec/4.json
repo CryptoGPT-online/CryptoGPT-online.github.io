@@ -1,0 +1,25 @@
+```json
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_method": "DefaultSensitiveStringCodec.BlowfishAlgorithm.updateKey",
+        "vulnerable_code": "private byte[] internalKey = \"clusterpassword\".getBytes();",
+        "description": "The Blowfish algorithm uses a hardcoded key which can lead to security risks if the key is discovered.",
+        "recommendation": "Instead of using a hardcoded key, generate a secure random key and store it securely."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_method": "DefaultSensitiveStringCodec.BlowfishAlgorithm.encode/decode",
+        "vulnerable_code": "SecretKeySpec key = new SecretKeySpec(internalKey, \"Blowfish\");",
+        "description": "The Blowfish algorithm uses a key without specifying the key length, which could potentially lead to inadequate encryption strength.",
+        "recommendation": "Ensure that a key of adequate length is used with Blowfish, typically 128 bits or more."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_method": "DefaultSensitiveStringCodec.PBKDF2Algorithm.getSalt",
+        "vulnerable_code": "byte[] salt = RandomUtil.randomBytes(this.saltLength);",
+        "description": "The method generates a salt for the PBKDF2 algorithm, but the code snippet provided does not show how the salt is generated. If the RandomUtil.randomBytes() method does not use a cryptographically strong random number generator, it could lead to the use of an insecure salt.",
+        "recommendation": "Ensure that RandomUtil.randomBytes() uses SecureRandom to generate cryptographically strong random values."
+    }
+]
+```

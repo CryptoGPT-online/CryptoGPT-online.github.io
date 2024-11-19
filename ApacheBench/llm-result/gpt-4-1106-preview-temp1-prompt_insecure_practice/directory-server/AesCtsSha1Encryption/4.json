@@ -1,0 +1,25 @@
+```json
+[
+   {
+      "misuse":"Hardcoded IV",
+      "vulnerable_method":"AesCtsSha1Encryption.processCipher",
+      "vulnerable_code":"AlgorithmParameterSpec paramSpec = new IvParameterSpec(iv);",
+      "description":"The use of a static, hardcoded initialization vector (IV) for AES encryption is insecure because it makes certain types of attacks, like pattern analysis attacks, more feasible.",
+      "recommendation":"Use a secure random IV for each encryption operation and transmit the IV alongside the ciphertext."
+   },
+   {
+      "misuse":"Insecure Data Handling",
+      "vulnerable_method":"AesCtsSha1Encryption.getDecryptedData",
+      "vulnerable_code":"byte[] decryptedData = decrypt(encryptedData, Ke);",
+      "description":"Before verifying the integrity check on the decrypted data, the code removes the confounder. This may potentially lead to an attack known as an 'oracle padding attack'.",
+      "recommendation":"Firstly verify the checksum, and only if it matches, then strip the confounder from the decrypted data."
+   },
+   {
+      "misuse":"Improper Exception Handling",
+      "vulnerable_method":"AesCtsSha1Encryption.processChecksum, AesCtsSha1Encryption.processCipher",
+      "vulnerable_code":"nsae.printStackTrace();",
+      "description":"Exceptions are caught and printed to stderr using printStackTrace() rather than being safely logged. This could inadvertently expose sensitive information and it does not handle the exceptional condition appropriately.",
+      "recommendation":"Log errors securely and ensure proper error handling to avoid exposing stack traces to potential attackers."
+   }
+]
+```

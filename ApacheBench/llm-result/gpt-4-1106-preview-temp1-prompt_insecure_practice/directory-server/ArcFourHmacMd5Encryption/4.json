@@ -1,0 +1,18 @@
+```json
+[
+    {
+        "misuse": "Weak Encryption Algorithm",
+        "vulnerable_method": "ArcFourHmacMd5Encryption.encrypt / ArcFourHmacMd5Encryption.decrypt",
+        "vulnerable_code": "Cipher.getInstance(\"ARCFOUR\")",
+        "description": "ARCFOUR (RC4) is considered to be a weak encryption algorithm due to vulnerabilities in its key setup and the lack of an initialisation vector which makes it susceptible to related-key attacks and other cryptographic attacks.",
+        "recommendation": "Use a more secure encryption algorithm such as AES/GCM which also provides authenticated encryption."
+    },
+    {
+        "misuse": "Missing MAC Key Initialization",
+        "vulnerable_method": "ArcFourHmacMd5Encryption.calculateIntegrity",
+        "vulnerable_code": "Mac.getInstance(\"HmacMD5\")",
+        "description": "The code retrieves an instance of `HmacMD5` but does not initialize it with a secret key, which is necessary to ensure the integrity of the message.",
+        "recommendation": "Initialize the `Mac` instance with the secret key using `Mac.init(SecretKey)`. Make sure to use a secure key management system to handle the key material safely."
+    }
+]
+```

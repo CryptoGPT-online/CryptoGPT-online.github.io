@@ -1,0 +1,25 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values for cryptographic context.",
+        "vulnerable_method": "AesCtsSha1Encryption.processCipher",
+        "vulnerable_code": "private static final byte[] iv = new byte[] { /* Fixed IV bytes */ };",
+        "description": "The initialization vector (IV) should be random and unique for each encryption operation to ensure the security of cryptographic protocols. In this case, a static IV is used which opens up the possibility of various forms of attacks.",
+        "recommendation": "Replace the static IV with a securely generated random number for each encryption operation."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_method": "AesCtsSha1Encryption.calculateChecksum, AesCtsSha1Encryption.calculateIntegrity, AesCtsSha1Encryption.getDecryptedData, AesCtsSha1Encryption.getEncryptedData",
+        "vulnerable_code": "byte[] Kc = deriveKey( key, getUsageKc( usage ), 128, getKeyLength() );\n ... \nbyte[] Ki = deriveKey( key, getUsageKi( usage ), 128, getKeyLength() );\n ... \nbyte[] Ke = deriveKey( key.getKeyValue(), getUsageKe( usage ), 128, getKeyLength() );",
+        "description": "The code indicates a possible fixed derivation of cryptographic keys with a length parameter 'n', which is passed as 128 to the 'deriveKey' method, suggesting a possibility of using AES-128, which may not provide enough security margin for certain contexts.",
+        "recommendation": "Ensure that the key length specified for key derivation matches the required security level for the expected use case. Using AES with a key size of 256 bits may be more appropriate if higher security is needed."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials.",
+        "vulnerable_method": "AesCtsSha1Encryption.processCipher",
+        "vulnerable_code": "private static final byte[] iv = new byte[] { /* Fixed IV bytes */ };",
+        "description": "The use of a hardcoded IV in cryptographic operations is a security risk because it provides a constant start condition that can be exploited. It reduces robustness and predictability, increasing susceptibility to attacks aimed at fixed initialization vectors.",
+        "recommendation": "Ensure that IVs are randomly generated using a secure method and handled properly with each encryption call."
+    }
+]
+```

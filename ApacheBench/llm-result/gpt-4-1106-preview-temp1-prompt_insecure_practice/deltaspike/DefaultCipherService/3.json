@@ -1,0 +1,32 @@
+```json
+[
+    {
+        "misuse": "Static IV",
+        "vulnerable_method": "DefaultCipherService.aesEncrypt",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);",
+        "description": "The encryption method aesEncrypt does not specify an IV (Initialization Vector), which means it will use a static IV potentially leading to pattern leakage in encrypted data.",
+        "recommendation": "Modify the aesEncrypt method to use a securely generated random IV for each encryption operation and store it alongside the encrypted data."
+    },
+    {
+        "misuse": "ECB Mode",
+        "vulnerable_method": "DefaultCipherService.aesEncrypt",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);",
+        "description": "The CIPHER_ALGORITHM is set to 'AES', which typically defaults to ECB mode if not explicitly set. ECB mode is insecure for encrypting data that can have patterns since identical plaintext blocks are encrypted to identical ciphertext blocks.",
+        "recommendation": "Use a more secure mode such as CBC, and manage IVs correctly."
+    },
+    {
+        "misuse": "Weak Key Derivation",
+        "vulnerable_method": "DefaultCipherService.getSecretKeySpec",
+        "vulnerable_code": "byte[] pwdHash = secureHash(password); byte[] key = Arrays.copyOf(pwdHash, 16);",
+        "description": "The key derivation from the password is not using a strong key derivation function. It directly uses SHA-256 hash output as an AES key.",
+        "recommendation": "Instead of directly using the result of SHA-256 as a key, utilize a key derivation function like PBKDF2, bcrypt, or Argon2."
+    },
+    {
+        "misuse": "Key Length",
+        "vulnerable_method": "DefaultCipherService.getSecretKeySpec",
+        "vulnerable_code": "byte[] key = Arrays.copyOf(pwdHash, 16);",
+        "description": "Truncating the SHA-256 hash to 128 bits to use as an AES key could weaken the encryption if SHA-256 is not collision-resistant at 128-bit output.",
+        "recommendation": "Use the full output of the hash function for the AES key or switch to a key derivation function that securely derives a 128/192/256-bit key."
+    }
+]
+```

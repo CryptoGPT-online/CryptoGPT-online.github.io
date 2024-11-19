@@ -1,0 +1,23 @@
+[
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_method": "DesCbcCrcEncryption#processCipher",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance( \"DES/CBC/NoPadding\" );\nSecretKey key = new SecretKeySpec( keyBytes, \"DES\" );",
+    "description": "The DES encryption algorithm has a key size of only 56 bits, which is no longer considered secure. It is recommended to use a stronger encryption algorithm, such as AES.",
+    "recommendation": "Use a stronger encryption algorithm, such as AES with a key size of at least 128 bits."
+  },
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_method": "processCipher",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance( \"DES/CBC/NoPadding\" );",
+    "description": "The DES encryption algorithm is known to be weak and should not be used for new applications. It is recommended to use a stronger encryption algorithm, such as AES.",
+    "recommendation": "Use a stronger encryption algorithm, such as AES."
+  },
+  {
+    "misuse": "CWE-757: Use of Weak or Insecure Random Number Generator (RNG)",
+    "vulnerable_method": "getRandomBytes",
+    "vulnerable_code": "getRandomBytes( getConfounderLength() );",
+    "description": "The method getRandomBytes() is used to generate a random confounder. However, it is not specified what RNG is used, and it is possible that a weak or insecure RNG is being used.",
+    "recommendation": "Use a strong and secure RNG, such as the Java SecureRandom class."
+  }
+]

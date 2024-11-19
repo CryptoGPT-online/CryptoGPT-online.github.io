@@ -1,0 +1,39 @@
+```json
+[
+    {
+        "misuse": "Insufficiently Random Values",
+        "vulnerable_method": "CryptoParser.parse",
+        "vulnerable_code": [
+            "SecureRandom random = context.get(SecureRandom.class);",
+            "if (params != null && random != null) {",
+            "    cipher.init(Cipher.DECRYPT_MODE, key, params, random);",
+            "} else if (random != null) {",
+            "    cipher.init(Cipher.DECRYPT_MODE, key, random);",
+            "}"
+        ],
+        "description": "The use of a SecureRandom object is conditional, allowing for scenarios where no SecureRandom is provided, potentially using a non-random IV. The IV should always be random and unique.",
+        "recommendation": "Ensure that SecureRandom is always used when initializing the cipher to avoid using a static IV."
+    },
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_method": "CryptoParser constructor",
+        "vulnerable_code": [
+            "this.transformation = transformation;"
+        ],
+        "description": "The Cipher transformation is directly assigned from an input parameter without validation, creating a risk of using insecure or deprecated cryptographic algorithms.",
+        "recommendation": "Validate the 'transformation' parameter to ensure that only secure, up-to-date algorithms are permitted."
+    },
+    {
+        "misuse": "Hardcoded Encryption Key",
+        "vulnerable_method": "CryptoParser.parse",
+        "vulnerable_code": [
+            "Key key = context.get(Key.class);",
+            "if (key == null) {",
+            "    throw new EncryptedDocumentException(\"No decryption key provided\");",
+            "}"
+        ],
+        "description": "The code doesn't check for hardcoded keys which might be vulnerable to being extracted by an attacker or reused in multiple instances.",
+        "recommendation": "Implement a key management solution to protect and manage encryption keys, rather than relying on keys provided at runtime, which may not be secure."
+    }
+]
+```

@@ -1,0 +1,32 @@
+```json
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_method": "DefaultCipherService.getSecretKeySpec",
+        "vulnerable_code": "byte[] key = Arrays.copyOf(pwdHash, 16);",
+        "description": "The key is truncated to 128 bits, which may be inadequate in certain contexts depending on the required security level, and the method only uses a SHA-256 hash of the password, without proper key stretching which could be vulnerable to brute-force attacks.",
+        "recommendation": "Use a proper key derivation function like PBKDF2, bcrypt, or scrypt with sufficient iterations, and consider using a key length of 256 bits if it's compliant with the policy and performance requirements."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values for cryptographic context",
+        "vulnerable_method": "DefaultCipherService.getSecretKeySpec",
+        "vulnerable_code": "byte[] pwdHash = secureHash(password);",
+        "description": "The method generates a key by hashing the password, which does not provide sufficiently random values suitable for cryptographic contexts, making it vulnerable to rainbow table attacks.",
+        "recommendation": "Use a key generation mechanism that includes a cryptographically secure pseudo-random number generator (CSPRNG) for generating secure random values, and include unique salts."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_method": "DefaultCipherService.secureHash",
+        "vulnerable_code": "return md.digest(value.getBytes(UTF_8));",
+        "description": "The method uses a single iteration of SHA-256 for hashing which is not a secure way to store passwords as it does not provide adequate key stretching.",
+        "recommendation": "Use a specialized password hashing algorithm with a configurable work factor, such as PBKDF2, bcrypt, or scrypt."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_method": "DefaultCipherService.setMasterHash",
+        "vulnerable_code": "String saltHash = byteToHex(secureHash(masterSalt));",
+        "description": "The method potentially uses a hardcoded 'masterSalt' value that is hashed to produce a salt. If 'masterSalt' is static or not securely generated, it may lead to hardcoded or weak salts being used in encryption.",
+        "recommendation": "Always ensure that salts are generated using a CSPRNG and are unique for each encryption operation."
+    }
+]
+```

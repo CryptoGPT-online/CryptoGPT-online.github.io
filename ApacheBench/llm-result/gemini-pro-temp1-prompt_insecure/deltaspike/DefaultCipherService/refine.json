@@ -1,0 +1,32 @@
+### False Positive Misuse ###
+
+There are no false positives in the provided lists.
+
+
+### Optimized Misuse JSON###
+
+The following is the optimized list of cryptographic API misuses in JSON format:
+
+[
+  {
+    "misuse": "Broken Crypto Algorithm",
+    "vulnerable_method": "DefaultCipherService.secureHash",
+    "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(HASH_ALGORITHM);",
+    "description": "The code uses SHA-256, which is a broken algorithm. It is recommended to use a more secure algorithm, such as SHA-384 or SHA-512.",
+    "recommendation": "Change the algorithm to SHA-384 or SHA-512."
+  },
+  {
+    "misuse": "Broken Crypto Algorithm",
+    "vulnerable_method": "DefaultCipherService.aesEncrypt",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);",
+    "description": "The code uses AES, which is a broken algorithm. It is recommended to use a more secure algorithm, such as AES-256.",
+    "recommendation": "Change the algorithm to AES-256."
+  },
+  {
+    "misuse": "Hard-coded Credentials",
+    "vulnerable_method": "DefaultCipherService.getSecretKeySpec",
+    "vulnerable_code": "byte[] key = Arrays.copyOf(pwdHash, 16); // use only first 128 bit",
+    "description": "The code hard-codes the key size to 128 bits. This is not secure, as it allows an attacker to brute-force the key.",
+    "recommendation": "Generate a random key of a secure size, such as 256 bits."
+  }
+]

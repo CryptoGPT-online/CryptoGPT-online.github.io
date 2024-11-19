@@ -1,0 +1,23 @@
+[
+  {
+    "misuse": "Weak Key Generation",
+    "vulnerable_method": "getSecretKeySpec",
+    "vulnerable_code": "byte[] key = Arrays.copyOf(pwdHash, 16); // use only first 128 bit\n\n        // Note: using 128 bit AES avoids requirement for \"Unlimited Crypto\" patch\n        return new SecretKeySpec(key, \"AES\");",
+    "description": "The key generation is weak because it uses only the first 128 bits of the password hash as the key. This means that an attacker could brute-force the key by trying all possible combinations of 128 bits.",
+    "recommendation": "Generate a cryptographically strong key using a secure random number generator."
+  },
+  {
+    "misuse": "Weak Encryption Algorithm",
+    "vulnerable_method": "aesEncrypt",
+    "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);",
+    "description": "The encryption algorithm used is AES, which is a weak encryption algorithm. AES is not recommended for use in new applications, and should be replaced with a more secure algorithm such as AES-256.",
+    "recommendation": "Use a stronger encryption algorithm, such as AES-256."
+  },
+  {
+    "misuse": "Static Initialization of Key",
+    "vulnerable_method": "getMasterFile",
+    "vulnerable_code": "protected File getMasterFile()\n    {\n        String userHome = System.getProperty(\"user.home\");\n        if (userHome == null || userHome.isEmpty())\n        {\n            throw new IllegalStateException(\"Can not determine user home directory\");\n        }\n        return new File(userHome, \".deltaspike/master.hash\");\n    }",
+    "description": "The key is stored in a static variable, which makes it accessible to anyone who has access to the class.",
+    "recommendation": "Generate the key dynamically and store it in a secure location."
+  }
+]

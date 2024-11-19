@@ -1,0 +1,42 @@
+### False Positive Misuse ###
+
+There are no false positives in the provided misuse lists.
+
+### Optimized Misuse JSON ###
+[
+  {
+    "misuse category": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+    "vulnerable_method": "Cipher.getInstance",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance( \"DESede/CBC/NoPadding\" );",
+    "description": "The specified cipher is considered less-secure and should be replaced with a more secure option.",
+    "recommendation": "Use a more secure cipher, such as AES. Refer to the documentation for available options."
+  },
+  {
+    "misuse category": "CWE-326: Inadequate Encryption Strength.",
+    "vulnerable_method": "Key derivation",
+    "vulnerable_code": "byte[] result = new byte[7];\nSystem.arraycopy( seed, srcPos, result, 0, 7 );",
+    "description": "The code uses a 7-byte array to store the bit group, which is not sufficient to store a DES key. DES keys are 64 bits long, so a 64-byte array should be used instead.",
+    "recommendation": "Change the code to use a 64-byte array to store the bit group."
+  },
+  {
+    "misuse category": "CWE-326: Inadequate Encryption Strength.",
+    "vulnerable_method": "Parity calculation",
+    "vulnerable_code": "byte[] out = new byte[8];\nint bitCount = 0;\nint index = 0;\nfor ( int i = 0; i < 64; i++ )\n{\nif ( ( i + 1 ) % 8 == 0 )\n{\nif ( bitCount % 2 == 0 )\n{\nsetBit( out, i, 1 );\n}\nindex++;\nbitCount = 0;\n}\nelse\n{\nint val = getBit( expandedIn, index );\nboolean bit = val > 0;\nif ( bit )\n{\nsetBit( out, i, val );\nbitCount++;\n}\nindex++;\n}\n}",
+    "description": "The code uses an incorrect formula to calculate the parity bit. The correct formula is `parity_bit = ( bit_1 XOR bit_2 XOR ... XOR bit_n ) % 2`.",
+    "recommendation": "Change the code to use the correct formula to calculate the parity bit."
+  },
+  {
+    "misuse category": "CWE-326: Inadequate Encryption Strength.",
+    "vulnerable_method": "Cipher initialization",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance( \"DESede/CBC/NoPadding\" );\nSecretKey key = new SecretKeySpec( keyBytes, \"DESede\" );\nAlgorithmParameterSpec paramSpec = new IvParameterSpec( iv );\nif ( isEncrypt )\n{\ncipher.init( Cipher.ENCRYPT_MODE, key, paramSpec );\n}\nelse\n{\ncipher.init( Cipher.DECRYPT_MODE, key, paramSpec );\n}",
+    "description": "The code uses the DESede/CBC/NoPadding cipher, which is not a secure cipher and should be replaced with a more secure option.",
+    "recommendation": "Change the code to use a more secure cipher, such as AES/CBC/PKCS5Padding."
+  },
+  {
+    "misuse category": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+    "vulnerable_method": "Checksum calculation",
+    "vulnerable_code": "Mac mac = Mac.getInstance( \"HmacSHA1\" );",
+    "description": "The code uses the HmacSHA1 algorithm, which is no longer considered secure and should be replaced with a more secure option.",
+    "recommendation": "Change the code to use a more secure algorithm, such as HmacSHA256."
+  }
+]

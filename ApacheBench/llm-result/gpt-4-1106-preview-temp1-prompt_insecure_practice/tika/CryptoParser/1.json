@@ -1,0 +1,32 @@
+```json
+[
+    {
+        "misuse": "Insecure Transformation",
+        "vulnerable_method": "CryptoParser.parse",
+        "vulnerable_code": "cipher = Cipher.getInstance(transformation);",
+        "description": "The 'transformation' parameter should specify a secure transformation including the algorithm, mode, and padding. If only the algorithm name is provided (for example 'AES'), insecure defaults may be used for the mode and padding (possibly ECB mode and PKCS5/PKCS7 padding), which are not secure for sensitive data.",
+        "recommendation": "Specify a secure transformation string that includes a strong encryption algorithm, a secure mode of operation such as CBC, CFB, OFB, GCM or others (avoid using ECB), and a strong padding mechanism (such as PKCS7Padding). For example: 'AES/CBC/PKCS5Padding'."
+    },
+    {
+        "misuse": "Missing Initialization Vector (IV) for CBC mode",
+        "vulnerable_method": "CryptoParser.parse",
+        "vulnerable_code": "cipher.init(Cipher.DECRYPT_MODE, key);",
+        "description": "If CBC mode is used without explicitly specifying an IV, a static IV could be used, which is insecure as it leads to predictable ciphertexts for the same plaintexts and a compromise of confidentiality. The code does not handle the scenario where a default IV might be needed.",
+        "recommendation": "Always use a randomly generated IV that is unique for each encryption operation. Pass the IV to the 'cipher.init' method using an IvParameterSpec object when initializing the Cipher instance for encryption or decryption."
+    },
+    {
+        "misuse": "Potential use of weak or broken encryption algorithm",
+        "vulnerable_method": "CryptoParser.parse",
+        "vulnerable_code": "cipher = Cipher.getInstance(transformation);",
+        "description": "The misuse depends on the actual algorithm specified in the passed 'transformation' parameter. If weak or broken algorithms such as DES or RC4 are used, the confidentiality of the encrypted data could be compromised.",
+        "recommendation": "Use strong and currently recommended encryption algorithms like AES with an appropriate key size (at least 128 bits)."
+    },
+    {
+        "misuse": "Lack of secure randomness",
+        "vulnerable_method": "CryptoParser.parse",
+        "vulnerable_code": "random = context.get(SecureRandom.class);",
+        "description": "The code is written to use a SecureRandom implementation if provided by the context, but it's not guaranteed that a secure random number generator will be used since there is no default provided in the case of a 'null' context. If a weak source of randomness is used for cryptographic functions, it might compromise key generation, IV generation, and more.",
+        "recommendation": "Ensure that a cryptographically secure random number generator like 'SecureRandom.getInstanceStrong()' is used whenever a SecureRandom instance is required for crypto operations."
+    }
+]
+```

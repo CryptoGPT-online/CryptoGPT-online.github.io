@@ -1,0 +1,39 @@
+```json
+[
+  {
+    "misuse": "Static Key",
+    "vulnerable_method": "StaticDESPasswordCipher.<init>",
+    "vulnerable_code": "private static final byte[] _3desData",
+    "description": "The class uses a hard-coded, static key for encryption, which could be extracted from the class bytecode and then be used to decrypt sensitive data.",
+    "recommendation": "Use a secure method to generate and manage keys, such as using a KeyGenerator or a key management service that provides different keys for each user."
+  },
+  {
+    "misuse": "Outdated Algorithm",
+    "vulnerable_method": "StaticDESPasswordCipher.encrypt and StaticDESPasswordCipher.decrypt",
+    "vulnerable_code": "\"DESede\"",
+    "description": "3DES (Triple DES) is considered outdated and potentially insecure due to its relatively small key size which subjects it to brute-force attacks.",
+    "recommendation": "Upgrade to a more secure encryption algorithm such as AES with a key size of at least 128 bits."
+  },
+  {
+    "misuse": "Not Specifying Security Provider",
+    "vulnerable_method": "StaticDESPasswordCipher.encrypt and StaticDESPasswordCipher.decrypt",
+    "vulnerable_code": "Cipher.getInstance(TRANSFORMATION)",
+    "description": "By not specifying a security provider, you rely on the JVM's default provider which might not offer the best security. It can also result in different behaviors on different platforms.",
+    "recommendation": "Specify a security provider to ensure consistent behavior and potentially stronger security."
+  },
+  {
+    "misuse": "Unspecified Cipher Mode and Padding",
+    "vulnerable_method": "StaticDESPasswordCipher.encrypt and StaticDESPasswordCipher.decrypt",
+    "vulnerable_code": "\"DESede\"",
+    "description": "The transformation string does not specify a Cipher Block Chaining (CBC) mode or what padding scheme should be used, which can lead to reliability and security issues.",
+    "recommendation": "Specify a mode of operation and padding scheme in the transformation string (e.g., 'DESede/CBC/PKCS5Padding')."
+  },
+  {
+    "misuse": "Use of ECB mode",
+    "vulnerable_method": "StaticDESPasswordCipher.encrypt and StaticDESPasswordCipher.decrypt",
+    "vulnerable_code": "\"DESede\"",
+    "description": "DESede without mode specification leads to ECB (Electronic Codebook Mode) which does not provide serious message confidentiality. It provides no diffusion making it unsuitable for cases where patterns in the input can be exploited by an attacker.",
+    "recommendation": "Use a mode like CBC (Cipher Block Chaining) with an Initialization Vector (IV) for each encryption operation."
+  }
+]
+```

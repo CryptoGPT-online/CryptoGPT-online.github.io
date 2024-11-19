@@ -1,0 +1,16 @@
+{
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_method": "calculateChecksum",
+    "vulnerable_code": "SecretKey sk = new SecretKeySpec( key, "ARCFOREAD" ); Mac mac = Mac.getInstance( "HmacMD5" ); mac.init( sk ); return mac.doFinal( data );",
+    "description": "The code uses "ARCFORAD" for creating a secret key. The "ARCFORAD" algorithm is known to be vulnerable to attacks and is not recommended for cryptographic use. Instead, the HMAC-MD5 is often used for cryptographic hash functions.",
+    "recommendation": "Use the appropriate cryptographic library and do not use outdated cryptographic algorithms like ARCFORAD. If you want to use a cryptographic hash function, then choose algorithms that are approved for cryptographic use. In the case of HMAC-MD5, ensure you are using a version of the library or code that is not vulnerable to the same attacks that the outdated algorithm has been vulnerable to."
+}
+
+{
+    "misuse": "CWE-330: Use of Insufficiently Random Values",
+    "vulnerable_method": "calculateChecksum",
+    "vulnerable_code": "SecretKey sk = new SecretKeySpec( key, "ARCFOREAD" ); Mac mac = Mac.getInstance( "HmacMD5" ); mac.init( sk ); return mac.doRandom.Final( data );",
+    "description": "The code uses a predetermined key for MAC calculation. Using a known, predetermined key can potentially lead to exploitable vulnerabilities.",
+    "recommendation": "Use a cryptographic algorithm that generates keys randomly and store these keys in a secure manner. If you need to use keys for the same session, consider using a key derivation function (like HMAC) with different input each time. If keys are used in different sessions, consider using a cryptographic key management solution."
+}
+}

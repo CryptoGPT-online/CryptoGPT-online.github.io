@@ -1,0 +1,32 @@
+```json
+[
+  {
+    "misuse": "Static Crypto Algorithm",
+    "vulnerable_method": "DefaultCipherService.getSecretKeySpec",
+    "vulnerable_code": "Cipher.getInstance(CIPHER_ALGORITHM)",
+    "description": "The code uses a static algorithm 'AES' without specifying the mode of operation and padding scheme. Using AES without specifying an explicit mode of operation and padding scheme could allow for vulnerabilities.",
+    "recommendation": "Specify the mode of operation and padding scheme when initializing the Cipher instance. For example, use 'AES/CBC/PKCS5Padding' instead of just 'AES'."
+  },
+  {
+    "misuse": "Weak Hash Function Usage",
+    "vulnerable_method": "DefaultCipherService.setMasterHash and DefaultCipherService.getSecretKeySpec",
+    "vulnerable_code": "secureHash(password)",
+    "description": "The code generates a key from a password hash by truncating the output of SHA-256 (a 256-bit hash) to 128 bits for AES key generation. The use of SHA-256 for password hashing is weak from a security perspective since it is not resistant to brute-force attacks, as it doesn't include a salt and it's fast.",
+    "recommendation": "Use a strong key derivation function designed for passwords, like PBKDF2, bcrypt, scrypt, or Argon2, and ensure that the derived key matches the required key length for the encryption algorithm without truncation."
+  },
+  {
+    "misuse": "Missing Integrity And Confidentiality Principle",
+    "vulnerable_method": "DefaultCipherService.encrypt and DefaultCipherService.decrypt",
+    "vulnerable_code": "aesEncrypt(cleartext, getMasterKey(masterSalt))",
+    "description": "The encryption process does not use an integrity check (e.g., MAC, HMAC, AEAD) and the AES algorithm is used in ECB mode, which is insecure and can leak information about the plaintext due to patterns preservation.",
+    "recommendation": "Use an encryption mode that combines confidentiality with integrity checks, such as GCM (Galois/Counter Mode), and avoid using ECB mode."
+  },
+  {
+    "misuse": "Insecure File Permissions",
+    "vulnerable_method": "DefaultCipherService.setMasterHash",
+    "vulnerable_code": "masterFile.exists()",
+    "description": "The code writes the master key to a file named '.deltaspike/master.hash' in the user's home directory without explicitly setting secure file permissions. This could potentially allow unauthorized access to the key if the file is created with permissive default permissions.",
+    "recommendation": "Ensure that the file containing sensitive cryptographic material is created with the most restrictive permissions possible (e.g., on Unix systems, chmod 600) to minimize the risk of unauthorized access."
+  }
+]
+```

@@ -1,0 +1,32 @@
+```json
+[
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_method": "Util.doEncryption",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"PBEWithMD5AndDES\");",
+    "description": "The use of MD5 and DES in 'PBEWithMD5AndDES' is considered weak and can be broken.",
+    "recommendation": "Use a more secure algorithm such as AES with a strong key derivation function like PBKDF2."
+  },
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values for cryptographic context",
+    "vulnerable_method": "Util.doEncryption",
+    "vulnerable_code": "byte[] salt = new byte[8]; for (int i = 0; i < 8; ++i) salt[i] = digest[i];",
+    "description": "The derived salt from the MD5 hash function may not provide sufficient randomness for cryptographic operations.",
+    "recommendation": "Use a secure Random Number Generator (RNG) to generate a salt value."
+  },
+  {
+    "misuse": "CWE-798: Use of Hardcoded Credentials",
+    "vulnerable_method": "Util.PBE_PASSWORD",
+    "vulnerable_code": "private static final String PBE_PASSWORD = System.getProperty(\"user.home\");",
+    "description": "The encryption password is derived from a system property that could be predictable and not secure.",
+    "recommendation": "Use a secure, unpredictable password source or prompt the user for a password."
+  },
+  {
+    "misuse": "CWE-798: Use of Hardcoded Credentials",
+    "vulnerable_method": "Util.PBE_SALT",
+    "vulnerable_code": "PBE_SALT = host_name;",
+    "description": "The salt for encryption is derived from the host name which is predictable and not secure.",
+    "recommendation": "Use a secure Random Number Generator (RNG) to generate a salt value."
+  }
+]
+```

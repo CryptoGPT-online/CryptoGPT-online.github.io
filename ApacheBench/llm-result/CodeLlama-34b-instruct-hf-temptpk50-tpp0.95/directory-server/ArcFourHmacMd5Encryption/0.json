@@ -1,0 +1,30 @@
+ [
+    {
+        "misuse": "CWE-297: Improper Validation of Certificate with Host Mismatch",
+        "vulnerable_method": "ArcFourHmacMd5Encryption.processCipher",
+        "vulnerable_code": "Cipher.getInstance( \"ARCFOUR\" );",
+        "description": "The cipher algorithm \"ARCFOUR\" is insecure and can be vulnerable to attacks such as CipherBlockChaining (CBC) Forgery Attacks or FluentDetection. It is recommended to use a more secure cipher algorithm such as AES or TripleDES.",
+        "recommendation": "Replace the cipher algorithm \"ARCFOUR\" with a more secure algorithm such as AES or TripleDES."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_method": "ArcFourHmacMd5Encryption.processCipher",
+        "vulnerable_code": "SecretKey key = new SecretKeySpec( keyBytes, \"ARCFOUR\" );",
+        "description": "The use of the \"ARCFOUR\" algorithm as a key derivation function is not recommended, as it is insecure and can be vulnerable to attacks such as FluentDetection or Brute-force attacks. It is recommended to use a more secure key derivation function such as PBKDF2 or Argon2.",
+        "recommendation": "Replace the key derivation function \"ARCFOUR\" with a more secure function such as PBKDF2 or Argon2."
+    },
+    {
+        "misuse": "CWE-338: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_method": "ArcFourHmacMd5Encryption.calculateIntegrity",
+        "vulnerable_code": "Mac digester = Mac.getInstance( \"HmacMD5\" );",
+        "description": "The use of the \"HmacMD5\" algorithm as a message authentication code is not recommended, as it is insecure and can be vulnerable to attacks such as Replay Attacks or Collision Attacks. It is recommended to use a more secure message authentication code such as HmacSHA256 or HmacSHA512.",
+        "recommendation": "Replace the message authentication code \"HmacMD5\" with a more secure algorithm such as HmacSHA256 or HmacSHA512."
+    },
+    {
+        "misuse": "CWE-650: Failure to Sanitize Data into an XML Document",
+        "vulnerable_method": "ArcFourHmacMd5Encryption.getEncryptedData",
+        "vulnerable_code": "return new EncryptedData( getEncryptionType(), key.getKeyVersion(), plainText );",
+        "description": "The EncryptedData constructor is vulnerable to XML external entity injection, as it does not properly sanitize the input data before constructing the XML document. This can lead to attacks such as Denial of Service (DoS) or Information Disclosure.",
+        "recommendation": "Replace the EncryptedData constructor with a safer implementation that sanitizes the input data before constructing the XML document."
+    }
+]

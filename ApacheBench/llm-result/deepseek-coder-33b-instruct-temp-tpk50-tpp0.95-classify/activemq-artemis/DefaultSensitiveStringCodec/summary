@@ -1,0 +1,19 @@
+[{
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "description": "Blowfish encryption is susceptible to certain attacks and thus considered insecure. Multiple sources noted the use of the Blowfish algorithm in various classes and files (DefaultSensitiveStringCodec, BlowfishAlgorithm), recommending replacement with a more secure algorithm such as AES."
+},{
+    "misuse": "CWE-330: Use of Insufficiently Random Values",
+    "description": "There's a consistent report of hardcoding keys and salts in the code, which includes a hardcoded password 'clusterpassword', a deterministic salt in PBKDF2Algorithm, and an insecure internal key creation method in DefaultSensitiveStringCodec. Using hardcoded values for encryption keys or salts can compromise cryptographic strength and lead to deterministic outputs that can be exploited."
+},{
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "description": "The PBKDF2Algorithm class uses a hardcoded and possibly insufficient key length of 64*8 bits, which could make the algorithm vulnerable to exhaustive search attacks. It is recommended to use a stronger key length that is configurable to achieve adequate encryption strength."
+},{
+    "misuse": "CWE-759: Use of a One-Way Hash without a Salt",
+    "description": "The PBKDF2Algorithm class uses a fixed salt length, which can lead to vulnerabilities if an attacker guesses the key based on the salt. Using a unique and random salt for every password hash is a best practice to protect against certain types of attacks."
+},{
+    "misuse": "CWE-798: Use of Hard-coded Credentials",
+    "description": "The code contains multiple instances of hard-coded credentials, such as the 'clusterpassword'. Hard-coded passwords can be discovered through code analysis and pose a security risk."
+},{
+    "misuse": "CWE-772: Missing Release of Resource after Effective Lifetime",
+    "description": "The PBKDF2Algorithm class does not clean up or clear passwords after use. Failure to properly manage the lifecycle of sensitive information can lead to potential leaks or unauthorized access."
+}]

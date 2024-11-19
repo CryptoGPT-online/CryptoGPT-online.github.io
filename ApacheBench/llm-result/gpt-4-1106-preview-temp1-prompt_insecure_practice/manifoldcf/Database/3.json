@@ -1,0 +1,46 @@
+```json
+[
+  {
+    "misuse": "Sensitive Data Exposure",
+    "vulnerable_method": "Database constructor in org.apache.manifoldcf.core.database.Database",
+    "vulnerable_code": "this.password = password;",
+    "description": "The constructor stores the password in a member variable that could be exposed outside the object context.",
+    "recommendation": "Instead of directly storing sensitive information, such as passwords, use a char array or a more secure method of handling sensitive data, and overwrite it immediately after use."
+  },
+  {
+    "misuse": "Insufficient Use of Connection Pooling",
+    "vulnerable_method": "Internal",
+    "vulnerable_code": "ConnectionFactory.getConnection() called multiple times without sufficient pooling identifiers.",
+    "description": "The code hints at connection pooling by passing maxDBConnections to the ConnectionFactory, but it does not demonstrate shared pooling identifiers, potentially leading to an excess of connections that each thread believes it singularly manages",
+    "recommendation": "Implement a robust connection pooling strategy to avoid excessive connections and potential resource exhaustion."
+  },
+  {
+    "misuse": "Lack of Prepared Statement Reuse",
+    "vulnerable_method": "executeViaThread in org.apache.manifoldcf.core.database.Database",
+    "vulnerable_code": "PreparedStatement ps = connection.prepareStatement(query);",
+    "description": "ExecuteViaThread method creates new PreparedStatement objects for each query rather than reusing them. This can lead to decreased performance.",
+    "recommendation": "Implement a prepared statement cache to reuse statements for frequently executed queries."
+  },
+  {
+    "misuse": "Lack of SSL/TLS database connection verification",
+    "vulnerable_method": "Database constructor in org.apache.manifoldcf.core.database.Database",
+    "vulnerable_code": "this.jdbcUrl = jdbcUrl;",
+    "description": "The code indicates that database connections could be created without SSL/TLS, potentially allowing man-in-the-middle attacks on the database connection.",
+    "recommendation": "Enforce SSL/TLS for database connections and verify certificates to ensure the security of data in transit."
+  },
+  {
+    "misuse": "Potential Query Exfiltration",
+    "vulnerable_method": "executeUncachedQuery in org.apache.manifoldcf.core.database.Database",
+    "vulnerable_code": "Logging.db.debug(\"Actual query: [\" + query + \"]\");",
+    "description": "The debug logging can potentially log SQL queries which might contain sensitive information, leading to sensitive data exposure in logs.",
+    "recommendation": "Remove sensitive information from logs or avoid logging SQL queries directly. Use a logging framework that supports redaction or sanitization."
+  },
+  {
+    "misuse": "Insecure Exception Handling",
+    "vulnerable_method": "executeUncachedQuery in org.apache.manifoldcf.core.database.Database",
+    "vulnerable_code": "throw new ManifoldCFException(\"SQLException doing query\"...);",
+    "description": "SQL Exceptions are thrown with generic error messages that could mask the specific underlying database error, making troubleshooting difficult.",
+    "recommendation": "Preserve more information from SQLExceptions, or log the specific exception details."
+  }
+]
+```

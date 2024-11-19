@@ -1,0 +1,46 @@
+```json
+[
+  {
+    "misuse": "Insufficient Key Size",
+    "vulnerable_method": "Util.doEncryption",
+    "vulnerable_code": "PBEKeySpec keySpec = new PBEKeySpec(Util.PBE_PASSWORD.toCharArray());",
+    "description": "The password-based encryption uses DES which has a 56-bit key size that is considered to be weak.",
+    "recommendation": "Switch to a more secure algorithm such as AES with a larger key size (at least 128 bits)."
+  },
+  {
+    "misuse": "Weak Hash Function",
+    "vulnerable_method": "Util.doEncryption",
+    "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(\"MD5\");",
+    "description": "MD5 is used for hashing which is a weak hash function susceptible to collision attacks.",
+    "recommendation": "Use a more secure hash function such as SHA-256."
+  },
+  {
+    "misuse": "Insecure Salt Generation",
+    "vulnerable_method": "Util.doEncryption",
+    "vulnerable_code": "md.update(Util.PBE_SALT.getBytes());",
+    "description": "The salt for key derivation is derived from the hostname, which might be predictable or invariant for some systems.",
+    "recommendation": "Generate a random and unique salt for each encryption operation."
+  },
+  {
+    "misuse": "Static Salt",
+    "vulnerable_method": "Util.doEncryption",
+    "vulnerable_code": "PBE_SALT = host_name;",
+    "description": "A static salt value is used for password-based encryption, reducing the effectiveness against rainbow table attacks.",
+    "recommendation": "Use a unique and random salt value for each encryption operation."
+  },
+  {
+    "misuse": "Weak Encryption Algorithm",
+    "vulnerable_method": "Util.doEncryption",
+    "vulnerable_code": "Cipher.getInstance(\"PBEWithMD5AndDES\")",
+    "description": "The encryption algorithm PBEWithMD5AndDES is outdated and considered insecure.",
+    "recommendation": "Upgrade to a more secure encryption scheme like PBEWithHmacSHA256AndAES_128."
+  },
+  {
+    "misuse": "Static Iteration Count",
+    "vulnerable_method": "Util.doEncryption",
+    "vulnerable_code": "PBEParameterSpec paramSpec = new PBEParameterSpec(salt, 20);",
+    "description": "The iteration count of 20 is low; an attacker can brute-force the key more easily as a result.",
+    "recommendation": "Increase the iteration count to a higher value, such as 10000, to strengthen the key against brute-force attacks."
+  }
+]
+```

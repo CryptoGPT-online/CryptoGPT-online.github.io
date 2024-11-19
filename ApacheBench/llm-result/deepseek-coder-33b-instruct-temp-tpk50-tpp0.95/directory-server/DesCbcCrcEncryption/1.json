@@ -1,0 +1,51 @@
+Security issues found:
+
+1. Usage of DES encryption algorithm: CWE-327.
+
+   Misuse Code: `cipher = Cipher.getInstance("DES/CBC/NoPadding");`
+
+   Description: DES is known to be susceptible to various attacks (including exhaustive search attacks) and should not be used for security-critical purposes.
+
+   Recommendation: Use a stronger encryption algorithm, preferably AES (Advanced Encryption Standard).
+
+2. No error handling in case of GeneralSecurityException.
+
+   Misuse Code: `catch ( GeneralSecurityException nsae )`
+
+   Description: When a GeneralSecurityException occurs, the program just prints the stack trace and continues. This could potentially lead to unhandled exceptions and unpredictable behavior.
+
+   Recommendation: Consider returning an error instead of continuing execution, or at least logging the error and continuing.
+
+3. Not using secure random for generating random bytes.
+
+   Misuse Code: `getRandomBytes( getConfounderLength() );`
+
+   Description: The use of Random class for generating random bytes is not secure.
+
+   Recommendation: Use SecureRandom instead.
+
+4. Use of DES/CBC/NoPadding as Cipher algorithm.
+
+   Misuse Code: `cipher = Cipher.getInstance("DES/CBC/NoPadding");`
+
+   Description: The padding mode NoPadding is susceptible to padding oracles attacks.
+
+   Recommendation: Use padding modes such as PKCS5 padding, depending upon the requirements of the application.
+
+5. Inadequate key size
+
+   Misuse Code: `SecretKey key = new SecretKeySpec( keyBytes, "DES" );`
+
+   Description: SecretKeySpec is used to represent symmetric keys, the actual key length (10 years ago it was 8 bytes, now it's generally 16 bytes, i.e. 128 bits) should be appropriate depending on the algorithm, it's less than the expected 8 bytes for DES.
+
+   Recommendation: Make sure to use appropriate key size based on the chosen encryption algorithm.
+
+6. No IV used for DES encryption
+
+   Misuse Code: `cipher.init( Cipher.ENCRYPT_MODE, key, paramSpec );`
+
+   Description: In certain modes, the use of IV (Initial Vector) is recommended, otherwise, the cipher may be vulnerable to attack.
+
+   Recommendation: Use IV for such modes.
+
+Please note that these issues can be fixed based on the severity of impact and the risk.

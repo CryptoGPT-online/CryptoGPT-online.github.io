@@ -1,0 +1,23 @@
+ [
+    {
+        "misuse": "CWE-650: Failure to Use HMAC with Integrity-Only Authenticated Encryption",
+        "vulnerable_method": "org.apache.directory.server.kerberos.shared.crypto.checksum.HmacMd5Checksum.calculateChecksum",
+        "vulnerable_code": "Mac.getInstance( \"HmacMD5\" );",
+        "description": "The use of HMAC-MD5 without integrity-only authenticated encryption can lead to an attacker being able to modify the message without detection.",
+        "recommendation": "Use an authenticated encryption mode, such as AES-GCM, that provides both confidentiality and integrity, instead of HMAC-MD5."
+    },
+    {
+        "misuse": "CWE-759: Unprotected Transport of Sensitive Data",
+        "vulnerable_method": "org.apache.directory.server.kerberos.shared.crypto.checksum.HmacMd5Checksum.calculateChecksum",
+        "vulnerable_code": "return mac.doFinal( data );",
+        "description": "The use of HMAC-MD5 without encryption can allow an attacker to modify the message without detection.",
+        "recommendation": "Use an authenticated encryption mode, such as AES-GCM, that provides both confidentiality and integrity, instead of HMAC-MD5."
+    },
+    {
+        "misuse": "CWE-338: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_method": "org.apache.directory.server.kerberos.shared.crypto.checksum.HmacMd5Checksum.calculateChecksum",
+        "vulnerable_code": "Mac.getInstance( \"HmacMD5\" );",
+        "description": "HMAC-MD5 is a broken cryptographic algorithm that should not be used in new code. It is vulnerable to collisions and can be used to create a forgery.",
+        "recommendation": "Use a more secure hash function, such as SHA-2, in conjunction with an authenticated encryption mode, such as AES-GCM, that provides both confidentiality and integrity."
+    }
+]

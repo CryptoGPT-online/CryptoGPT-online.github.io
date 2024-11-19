@@ -1,0 +1,16 @@
+[
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+    "vulnerable_method": "encrypt(String saltValue, String passCode, String input)",
+    "vulnerable_code": "private String encrypt(String saltValue, String passCode, String input)\n    throws ManifoldCFException\n  {\n    if (input == null)\n      return null;\n    if (input.length() == 0)\n      return input;\n\n    try\n    {\n      ByteArrayOutputStream os = new ByteArrayOutputStream();\n      \n      // Write IV as a prefix:\n      byte[] iv = getSecureRandom();\n      os.write(iv);\n      os.flush();\n            \n      Cipher cipher = getCipher(saltValue, Cipher.ENCRYPT_MODE, passCode, iv);\n      CipherOutputStream cos = new CipherOutputStream(os, cipher);\n      Writer w = new OutputStreamWriter(cos,java.nio.charset.StandardCharsets.UTF_8);\n      w.write(input);\n      w.flush();\n      // These two shouldn't be necessary, but they are.\n      cos.flush();\n      cos.close();\n      byte[] bytes = os.toByteArray();\n      return new org.apache.manifoldcf.core.common.Base64().encodeByteArray(bytes);\n    }\n    catch (IOException e)\n    {\n      throw new ManifoldCFException(e.getMessage(),e);\n    }\n  }\n",
+    "description": "The method encrypt()  uses a fixed value for IV, which is a poor encryption practice, and can potentially cause serious security problems.",
+    "recommendation": "Use new IV for every encryption."
+  },
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+    "vulnerable_method": "decrypt(String saltValue, String passCode, String input)",
+    "vulnerable_code": "private String decrypt(String saltValue, String passCode, String input)\n    throws ManifoldCFException\n  {\n    if (input == null)\n      return null;\n    if (input.length() == 0)\n      return input;\n\n    try\n    {\n      ByteArrayInputStream is = new ByteArrayInputStream(new org.apache.manifoldcf.core.common.Base64().decodeString(input));\n      \n      byte[] iv = new byte[IV_LENGTH];\n      int pointer = 0;\n      while (pointer < iv.length)\n      {\n        int amt = is.read(iv,pointer,iv.length-pointer);\n        if (amt == -1)\n          throw new ManifoldCFException(\"String can't be decrypted: too short\");\n        pointer += amt;\n      }\n\n      Cipher cipher = getCipher(saltValue, Cipher.DECRYPT_MODE, passCode, iv);\n      CipherInputStream cis = new CipherInputStream(is, cipher);\n      InputStreamReader reader = new InputStreamReader(cis,java.nio.charset.StandardCharsets.UTF_8);\n      StringBuilder sb = new StringBuilder();\n      char[] buffer = new char[65536];\n      while (true)\n      {\n        int amt = reader.read(buffer,0,buffer.length);\n        if (amt == -1)\n          break;\n        sb.append(buffer,0,amt);\n      }\n      return sb.toString();\n    }\n    catch (IOException e)\n    {\n      throw new ManifoldCFException(e.getMessage(),e);\n    }\n  }\n",
+    "description": "The method decrypt()  uses a fixed value for IV, which is a poor encryption practice, and can potentially cause serious security problems.",
+    "recommendation": "Use new IV for every decryption."
+  }
+]

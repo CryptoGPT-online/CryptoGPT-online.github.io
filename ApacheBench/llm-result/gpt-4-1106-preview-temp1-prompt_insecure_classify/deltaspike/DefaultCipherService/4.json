@@ -1,0 +1,34 @@
+```json
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_method": "DefaultCipherService.getSecretKeySpec",
+        "vulnerable_code": [
+            "byte[] key = Arrays.copyOf(pwdHash, 16); // use only first 128 bit",
+            "return new SecretKeySpec(key, \"AES\");"
+        ],
+        "description": "The method uses only the first 128 bits of hashed password for AES which is acceptable but does not represent the strongest key length possible (which would be 256 bits). This choice might not comply with the latest security standards demanding higher key strength.",
+        "recommendation": "Consider using a stronger key by either increasing the size of key (e.g., 256 bits) or utilizing a Key Derivation Function (KDF) like PBKDF2 with adequate iterations to derive the AES key."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials.",
+        "vulnerable_method": "DefaultCipherService.setMasterHash and DefaultCipherService.getMasterKey",
+        "vulnerable_code": [
+            "String saltHash = byteToHex(secureHash(masterSalt));",
+            "String saltKey = byteToHex(secureHash(saltHash));",
+            "String encrypted = byteToHex(aesEncrypt(byteToHex(secureHash(masterPassword)), saltHash));"
+        ],
+        "description": "The code derives encryption keys and salt values from the supplied master password and master salt with only one iteration of SHA-256, which is predictable. The key derivation is not using a strong method such as PBKDF2, bcrypt, or scrypt.",
+        "recommendation": "Replace the simple hash-based key derivation with a strong adaptive and salted hashing algorithm like PBKDF2, bcrypt, or scrypt. Also, use a random and unique salt value for each password."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values for cryptographic context.",
+        "vulnerable_method": "DefaultCipherService.setMasterHash",
+        "vulnerable_code": [
+            "String saltHash = byteToHex(secureHash(masterSalt));"
+        ],
+        "description": "The master salt value is hashed with SHA-256 and used further in the encryption process without any apparent randomness or uniqueness for each operation, which leads to predictability in cryptographic operations if the same salt is reused.",
+        "recommendation": "Ensure that the masterSalt is derived from a strong source of randomness, and use a fresh salt value for each encryption operation."
+    }
+]
+```

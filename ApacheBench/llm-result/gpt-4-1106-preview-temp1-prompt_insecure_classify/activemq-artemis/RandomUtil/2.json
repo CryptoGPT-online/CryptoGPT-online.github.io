@@ -1,0 +1,25 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_method": "org.apache.activemq.artemis.utils.RandomUtil.randomBytes",
+        "vulnerable_code": "random.nextBytes(bytes);",
+        "description": "The use of java.util.Random instead of a more secure random number generator can lead to predictable values which can be exploited when used in a security context.",
+        "recommendation": "Replace java.util.Random with java.security.SecureRandom for security-sensitive random number generation."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_method": "org.apache.activemq.artemis.utils.RandomUtil",
+        "vulnerable_code": "protected static final Random random = new Random();",
+        "description": "In all the methods where the class' 'random' object is used, it can compromise security because java.util.Random is not suitable for security-sensitive applications.",
+        "recommendation": "All usages of the 'random' object for generating security-sensitive random values should be replaced with java.security.SecureRandom."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_method": "org.apache.activemq.artemis.utils.RandomUtil.randomPort",
+        "vulnerable_code": "RandomUtil.random.nextInt(65536);",
+        "description": "Generating a random port using java.util.Random may not be sufficiently random for security purposes.",
+        "recommendation": "Use java.security.SecureRandom to generate random port numbers."
+    }
+]
+```

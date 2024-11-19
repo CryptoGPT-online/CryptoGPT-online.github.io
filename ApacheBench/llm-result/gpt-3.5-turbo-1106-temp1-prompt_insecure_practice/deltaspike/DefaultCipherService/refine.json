@@ -1,0 +1,40 @@
+### False Positive Misuse ###
+N/A
+### Optimized Misuse JSON###
+[
+  {
+    "misuse": "Using Weak Hash Algorithm",
+    "vulnerable_method": "DefaultCipherService.secureHash",
+    "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(HASH_ALGORITHM);",
+    "description": "Using SHA-256 hash algorithm, which is considered weak for some security use cases.",
+    "recommendation": "Consider using a stronger hash algorithm such as SHA-384 or SHA-512 for better security."
+  },
+  {
+    "misuse": "Insecure Encryption Algorithm",
+    "vulnerable_method": "DefaultCipherService.aesEncrypt & DefaultCipherService.aesDecrypt",
+    "vulnerable_code": "Cipher.getInstance(CIPHER_ALGORITHM);",
+    "description": "The algorithm used for encryption and decryption is hardcoded, and it's recommended to use a configurable algorithm to allow flexibility and future upgrades.",
+    "recommendation": "Use a configurable property or parameter to specify the algorithm for encryption and decryption."
+  },
+  {
+    "misuse": "Insecure Key Generation",
+    "vulnerable_method": "DefaultCipherService.getSecretKeySpec",
+    "vulnerable_code": "return new SecretKeySpec(key, \"AES\");",
+    "description": "The key for AES encryption is derived from the input password and should be generated using a secure key derivation function like PBKDF2 instead of directly using the password hash.",
+    "recommendation": "Use a secure key derivation function like PBKDF2 to generate the key for AES encryption."
+  },
+  {
+    "misuse": "Cryptographic Weakness",
+    "vulnerable_method": "DefaultCipherService.aesEncrypt",
+    "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);",
+    "description": "Using AES encryption without specifying a mode and padding can lead to insecure implementation.",
+    "recommendation": "Use a specific mode and padding for AES encryption, such as AES/CBC/PKCS5Padding."
+  },
+  {
+    "misuse": "Cryptographic Weakness",
+    "vulnerable_method": "DefaultCipherService.aesDecrypt",
+    "vulnerable_code": "cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);",
+    "description": "Using AES decryption without specifying a mode and padding can lead to insecure implementation.",
+    "recommendation": "Use a specific mode and padding for AES decryption, such as AES/CBC/PKCS5Padding."
+  }
+]

@@ -1,0 +1,12 @@
+Misuse Classification:
+```json
+[{
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+    "vulnerable_method": "EncryptionEngine::getEncryptionType()",
+    "vulnerable_code": "public EncryptionType getEncryptionType() {return EncryptionType.DES_CBC_CRC; }",
+    "description": "The encryption algorithm used in the code is DES_CBC_CRC, a legacy algorithm that is known to be vulnerable and less secure then others like AES_CBC_CRC. Even though, it is used by Kerberos for certain types of data, using vulnerable algorithms can cause serious issues in a wider context.",
+    "recommendation": "Consider replacing the DES_CBC_CRC encryption with a more secure algorithm such as AES_CBC_CRC."
+}]
+```
+
+Note: The crypto module used in this code is used by Kerberos for certain types of data, and if Kerberos is used in a security critical context, using less secure algorithms should be avoided. However, if your usage of Kerberos is not security sensitive, then this misuse does not lead to a critical vulnerability. The choice of encryption algorithm should be based on the security level of your application and the sensitivity of the data.

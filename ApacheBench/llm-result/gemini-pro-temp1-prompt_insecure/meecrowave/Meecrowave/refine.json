@@ -1,0 +1,36 @@
+### Optimized List of Misuse JSON
+
+```json
+[
+  {
+    "misuse category": "Broken Crypto Algorithm",
+    "vulnerable_method": "LoginConfigBuilder.authMethod(String authMethod)",
+    "vulnerable_code": "loginConfig.setAuthMethod(authMethod);",
+    "description": "The `authMethod` sets the authentication method of the login config. Some authentication methods are broken and should not be used, such as Basic Auth or Digest Auth. Instead, use more secure authentication methods like JWT or OAuth2."
+  },
+  {
+    "misuse category": "Broken Crypto Algorithm",
+    "vulnerable_method": "Realm.setCredentialHandler(String credentialHandler)",
+    "vulnerable_code": "realm.setCredentialHandler(credentialHandler);",
+    "description": "The `setCredentialHandler` method sets the credential handler of the realm. Some credential handlers are broken and should not be used, such as the `org.apache.catalina.authenticator.DigestAuthenticator` or the `org.apache.catalina.authenticator.BasicAuthenticator`. Instead, use more secure credential handlers like the `org.apache.catalina.authenticator.JAASAuthenticator` or the `org.apache.catalina.authenticator.FormAuthenticator`."
+  },
+  {
+    "misuse category": "Broken Crypto Algorithm",
+    "vulnerable_method": "SecurityConstaintBuilder.setUserConstraint(String userConstraint)",
+    "vulnerable_code": "securityConstraint.setUserConstraint(userConstraint);",
+    "description": "The `setUserConstraint` method sets the user constraint of the security constraint. Some user constraints are broken and should not be used, such as the `NONE` constraint. Instead, use more secure user constraints like the `CONFIDENTIAL` constraint."
+  },
+  {
+    "misuse category": "Broken Crypto Algorithm",
+    "vulnerable_method": "ValueTransformer.apply(String encodedPassword)",
+    "vulnerable_code": "return new String(cipher.doFinal(cipherText), StandardCharsets.UTF_8);",
+    "description": "The `apply` method of the `ValueTransformer` class is used to decrypt encoded passwords. Some implementations of this method are broken and may not correctly decrypt the passwords. This can lead to attackers being able to gain access to the system by guessing or brute-forcing the passwords."
+  },
+  {
+    "misuse category": "Broken Crypto Algorithm",
+    "vulnerable_method": "ValueTransformers.apply(String value)",
+    "vulnerable_code": "if (transformers.isEmpty()) { // lazy loading\ntransformers.put(\"Static3DES\", new ValueTransformer() { // compatibility with tomee\nprivate final SecretKeySpec key = new SecretKeySpec(new byte[]{\n(byte) 0x76, (byte) 0x6F, (byte) 0xBA, (byte) 0x39, (byte) 0x31,\n(byte) 0x2F, (byte) 0x0D, (byte) 0x4A, (byte) 0xA3, (byte) 0x90,\n(byte) 0x55, (byte) 0xFE, (byte) 0x55, (byte) 0x65, (byte) 0x61,\n(byte) 0x13, (byte) 0x34, (byte) 0x82, (byte) 0x12, (byte) 0x17,\n(byte) 0xAC, (byte) 0x77, (byte) 0x39, (byte) 0x19}, \"DESede\");\nfor (final ValueTransformer t : ServiceLoader.load(ValueTransformer.class)) {\ntransformers.put(t.name(), t);",
+    "description": "The `apply` method of the `ValueTransformers` class is used to decrypt encoded passwords. Some implementations of this method are broken and may not correctly decrypt the passwords. This can lead to attackers being able to gain access to the system by guessing or brute-forcing the passwords."
+  }
+]
+```

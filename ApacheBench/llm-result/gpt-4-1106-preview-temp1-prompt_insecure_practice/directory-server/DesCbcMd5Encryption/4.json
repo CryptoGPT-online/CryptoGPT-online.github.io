@@ -1,0 +1,32 @@
+```json
+[
+    {
+        "misuse": "Insecure Encryption Algorithm",
+        "vulnerable_method": "DesCbcMd5Encryption.encrypt / DesCbcMd5Encryption.decrypt",
+        "vulnerable_code": "Cipher.getInstance(\"DES/CBC/NoPadding\")",
+        "description": "DES (Data Encryption Standard) is considered insecure due to its small key size which makes it vulnerable to brute-force attacks.",
+        "recommendation": "Use a stronger algorithm like AES with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "Static Initialization Vector",
+        "vulnerable_method": "DesCbcMd5Encryption.processCipher",
+        "vulnerable_code": "new IvParameterSpec(iv)",
+        "description": "Using a static initialization vector (IV) causes each message encrypted with the same key to produce the same ciphertext for identical plaintexts, which can lead to pattern leakage and vulnerability to certain attacks.",
+        "recommendation": "Generate a unique IV for each encryption operation with a secure random number generator."
+    },
+    {
+        "misuse": "NoPadding with No Authentication",
+        "vulnerable_method": "DesCbcMd5Encryption.encrypt / DesCbcMd5Encryption.decrypt",
+        "vulnerable_code": "Cipher.getInstance(\"DES/CBC/NoPadding\")",
+        "description": "Encryption without padding (NoPadding) requires careful plaintext input handling and lacks in-built integrity. Without padding, the encryption may be vulnerable to padding oracle attacks. Additionally, CBC mode without proper authentication (MAC or AEAD) is not secure.",
+        "recommendation": "Use padding (PKCS5Padding or equivalent) and implement message authentication code (MAC) for integrity, or switch to an authenticated encryption mode like GCM."
+    },
+    {
+        "misuse": "Key Not Derived from Password",
+        "vulnerable_method": "DesCbcMd5Encryption.getEncryptedData / DesCbcMd5Encryption.getDecryptedData",
+        "vulnerable_code": "key.getKeyValue()",
+        "description": "Instantiating a SecretKeySpec directly with a password or key bytes can be dangerous if the key is not derived properly from the password, as it may lead to weak keys that are vulnerable to various attacks.",
+        "recommendation": "Ensure key material is derived from passwords using a secure key derivation function such as PBKDF2."
+    }
+]
+```

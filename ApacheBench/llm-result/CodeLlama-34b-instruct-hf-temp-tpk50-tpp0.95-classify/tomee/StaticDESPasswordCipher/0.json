@@ -1,0 +1,33 @@
+
+```json
+[
+    {
+        "misuse": "CWE-327",
+        "vulnerable_method": "org.apache.openejb.cipher.StaticDESPasswordCipher",
+        "vulnerable_code": "public char[] encrypt(final String plainPassword) { ... }",
+        "description": "The use of Triple-DES (3DES) for encryption is a weak choice, as it has been shown to be vulnerable to attacks such as the Meet-in-the-Middle attack.",
+        "recommendation": "Use a more secure algorithm, such as AES, for encryption."
+    },
+    {
+        "misuse": "CWE-798",
+        "vulnerable_method": "org.apache.openejb.cipher.StaticDESPasswordCipher",
+        "vulnerable_code": "private static final byte[] _3desData = { ... };",
+        "description": "The secret key used for 3DES encryption is hardcoded in the source code, which is not secure.",
+        "recommendation": "Generate a random secret key for each instance of the cipher."
+    },
+    {
+        "misuse": "CWE-330",
+        "vulnerable_method": "org.apache.openejb.cipher.StaticDESPasswordCipher",
+        "vulnerable_code": "private static final SecretKeySpec KEY = new SecretKeySpec(_3desData, \"DESede\");",
+        "description": "The initialization vector (IV) used for 3DES encryption is not generated randomly, which can reduce the cipher's security.",
+        "recommendation": "Generate a random initialization vector for each encryption operation."
+    },
+    {
+        "misuse": "CWE-326",
+        "vulnerable_method": "org.apache.openejb.cipher.StaticDESPasswordCipher",
+        "vulnerable_code": "private static final int KEY_SIZE = 128;",
+        "description": "The 3DES algorithm uses a key size of 128 bits, which is not considered to be secure for modern cryptographic standards.",
+        "recommendation": "Use a more secure algorithm, such as AES, for encryption."
+    }
+]
+```

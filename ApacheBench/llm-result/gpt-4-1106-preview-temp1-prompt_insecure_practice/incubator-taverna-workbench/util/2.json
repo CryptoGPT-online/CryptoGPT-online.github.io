@@ -1,0 +1,46 @@
+```json
+[
+  {
+    "misuse": "Weak Encryption Algorithm",
+    "vulnerable_method": "Util.doEncryption",
+    "vulnerable_code": "Cipher.getInstance(\"PBEWithMD5AndDES\")",
+    "description": "DES is considered insecure due to its short key length, which is vulnerable to brute force attacks. MD5 is also considered insecure due to vulnerabilities that could allow for collisions.",
+    "recommendation": "Use more secure algorithms like AES with GCM for encryption and SHA-256 or higher for hashing."
+  },
+  {
+    "misuse": "Insufficient Iteration Count",
+    "vulnerable_method": "Util.doEncryption",
+    "vulnerable_code": "PBEParameterSpec(salt, 20)",
+    "description": "The iteration count (20) used for password-based key derivation is too low, making the encryption weaker.",
+    "recommendation": "Increase the iteration count to a minimum of 10000 to make brute force attacks more difficult."
+  },
+  {
+    "misuse": "Static Salt Value",
+    "vulnerable_method": "Util.doEncryption",
+    "vulnerable_code": "PBE_SALT = host_name;",
+    "description": "The salt used for encryption is derived from the host name, which is static and predictable, reducing the effectiveness of the salt.",
+    "recommendation": "Use a randomly generated salt for each encryption operation and store it securely."
+  },
+  {
+    "misuse": "Reversible Password",
+    "vulnerable_method": "Util.PBE_PASSWORD",
+    "vulnerable_code": "private static final String PBE_PASSWORD = System.getProperty(\"user.home\");",
+    "description": "The encryption key is based on the user's home directory path, which is potentially reversible and guessable.",
+    "recommendation": "Use a secure, randomly generated key instead of user-dependent or predictable data."
+  },
+  {
+    "misuse": "Insufficient Hash Length",
+    "vulnerable_method": "Util.doEncryption",
+    "vulnerable_code": "byte[] salt = new byte[8];",
+    "description": "The salt derived from MD5 hash is truncated to 8 bytes, reducing its effectiveness.",
+    "recommendation": "Use a full-length salt without truncation."
+  },
+  {
+    "misuse": "Unsecured Temporary File",
+    "vulnerable_method": "Util.getResizedImageIconTempFileURL",
+    "vulnerable_code": "fDestinationTempFile = java.io.File.createTempFile(\"resized_image\", \"jpg\");",
+    "description": "Creation of a temporary file without specifying secure permissions may lead to exposure of the file's contents.",
+    "recommendation": "Define secure permissions for temporary files to prevent unauthorized access."
+  }
+]
+```

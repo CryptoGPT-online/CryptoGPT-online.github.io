@@ -1,0 +1,16 @@
+```json
+[{
+  "misuse": "CWE-326: Inadequate Encryption Strength",
+  "vulnerable_method": "StaticDESPasswordCipher.encrypt and StaticDESPasswordCipher.decrypt",
+  "vulnerable_code": "private static final byte[] _3desData = ... ; private static final SecretKeySpec KEY = new SecretKeySpec(_3desData, \"DESede\");",
+  "description": "Triple-DES (3DES) is considered to have inadequate encryption strength due to its effective key length of 112 bits. Modern standards require the use of stronger algorithms such as AES.",
+  "recommendation": "Replace Triple-DES with AES and ensure a strong key generation mechanism."
+},
+{
+  "misuse": "CWE-798: Use of Hardcoded Credentials",
+  "vulnerable_method": "StaticDESPasswordCipher",
+  "vulnerable_code": "private static final byte[] _3desData = ... ; private static final SecretKeySpec KEY = new SecretKeySpec(_3desData, \"DESede\");",
+  "description": "The static key _3desData used across the application poses a security risk, as the hardcoded key could be extracted by decompiling the bytecode or through other means.",
+  "recommendation": "Use a dynamically generated key or store the key securely outside the application and retrieve it during runtime."
+}]
+```

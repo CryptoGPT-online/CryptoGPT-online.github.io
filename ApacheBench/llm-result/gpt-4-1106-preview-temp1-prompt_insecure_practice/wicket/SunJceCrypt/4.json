@@ -1,0 +1,32 @@
+```json
+[
+  {
+    "misuse": "Weak Encryption Algorithm",
+    "vulnerable_method": "SunJceCrypt.crypt",
+    "vulnerable_code": "Cipher.getInstance(cryptMethod)",
+    "description": "The PBEWithMD5AndDES algorithm is considered weak and vulnerable to a variety of attacks.",
+    "recommendation": "Upgrade to a stronger algorithm such as AES/GCM/NoPadding with a key size of at least 128 bits."
+  },
+  {
+    "misuse": "Static Salt",
+    "vulnerable_method": "SunJceCrypt.PARAMETER_SPEC",
+    "vulnerable_code": "public final static byte[] SALT",
+    "description": "The use of a static salt value makes the encryption vulnerable to dictionary attacks.",
+    "recommendation": "Use a randomly generated salt for each encryption operation and store the salt along with the encrypted data."
+  },
+  {
+    "misuse": "Insufficient Iteration Count",
+    "vulnerable_method": "SunJceCrypt.COUNT",
+    "vulnerable_code": "private final static int COUNT = 17;",
+    "description": "The iteration count of 17 is insufficient for modern standards, making the key derivation process less secure.",
+    "recommendation": "Increase the iteration count to a minimum of 10,000 to make brute force attacks more difficult."
+  },
+  {
+    "misuse": "Hardcoded Encryption Key",
+    "vulnerable_method": "SunJceCrypt.createKeySpec",
+    "vulnerable_code": "return new PBEKeySpec(getKey().toCharArray());",
+    "description": "The code suggests that a default key may be used if not provided by the caller, which can be a security risk.",
+    "recommendation": "Ensure that a strong and unique encryption key is provided for each use case."
+  }
+]
+```

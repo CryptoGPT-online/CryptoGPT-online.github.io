@@ -1,0 +1,32 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_method": "DefaultSensitiveStringCodec.BlowfishAlgorithm",
+        "vulnerable_code": "Cipher.getInstance(\"Blowfish\");",
+        "description": "The algorithm \"Blowfish\" is considered risky and should be replaced with a more secure algorithm such as AES.",
+        "recommendation": "Replace \"Blowfish\" with a more secure algorithm such as AES."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_method": "DefaultSensitiveStringCodec.BlowfishAlgorithm",
+        "vulnerable_code": "private byte[] internalKey = \"clusterpassword\".getBytes();",
+        "description": "The use of a hardcoded key (\"clusterpassword\") provides inadequate encryption strength.",
+        "recommendation": "Generate a secure, random key and use it for encryption instead of a hardcoded key."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values for cryptographic context",
+        "vulnerable_method": "DefaultSensitiveStringCodec.PBKDF2Algorithm.getSalt",
+        "vulnerable_code": "RandomUtil.randomBytes(this.saltLength);",
+        "description": "The method uses a potentially insecure random number generation approach.",
+        "recommendation": "Use a cryptographically secure random number generator such as SecureRandom.getInstanceStrong() to generate the salt."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_method": "DefaultSensitiveStringCodec.PBKDF2Algorithm",
+        "vulnerable_code": "sceretKeyAlgorithm = \"PBKDF2WithHmacSHA1\"; randomScheme = \"SHA1PRNG\";",
+        "description": "The algorithm \"PBKDF2WithHmacSHA1\" and random scheme \"SHA1PRNG\" may not provide sufficient security against potential attacks.",
+        "recommendation": "Use a stronger algorithm and a cryptographically secure random scheme for key derivation."
+    }
+]
+```

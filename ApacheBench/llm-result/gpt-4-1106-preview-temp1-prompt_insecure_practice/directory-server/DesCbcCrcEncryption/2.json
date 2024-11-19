@@ -1,0 +1,32 @@
+```json
+[
+    {
+        "misuse": "Weak Encryption Algorithm",
+        "vulnerable_method": "DesCbcCrcEncryption.processCipher",
+        "vulnerable_code": "Cipher.getInstance(\"DES/CBC/NoPadding\")",
+        "description": "DES is an outdated and insecure encryption algorithm which has been deprecated due to its short key length of 56 bits, making it vulnerable to brute-force attacks.",
+        "recommendation": "Switch to a stronger encryption algorithm, like AES with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "Static Initialization Vector (IV)",
+        "vulnerable_method": "DesCbcCrcEncryption.processCipher",
+        "vulnerable_code": "AlgorithmParameterSpec paramSpec = new IvParameterSpec(iv);",
+        "description": "Using a static IV in CBC mode can allow attackers to infer patterns about the plaintext, which leads to security vulnerabilities.",
+        "recommendation": "Use a cryptographically random IV for each encryption operation and include it alongside the ciphertext in the output."
+    },
+    {
+        "misuse": "Hardcoded Cryptographic Key",
+        "vulnerable_method": "DesCbcCrcEncryption.decrypt, DesCbcCrcEncryption.encrypt",
+        "vulnerable_code": "Cipher.getInstance(\"DES/CBC/NoPadding\"), new SecretKeySpec(keyBytes, \"DES\")",
+        "description": "In the given context, the key is passed directly into the method suggesting that it might be a hardcoded key defined elsewhere in the codebase. This is insecure because the key can be extracted from the codebase easily.",
+        "recommendation": "Manage cryptographic keys securely by using dedicated key management systems and ensuring keys are never hardcoded in the code."
+    },
+    {
+        "misuse": "Insufficient Entropy for Key Generation",
+        "vulnerable_method": "DesCbcCrcEncryption.getEncryptedData",
+        "vulnerable_code": "getRandomBytes(getConfounderLength())",
+        "description": "The randomness source for key generation or confounder is not specified. If the source of randomness is not secure, the generated keys or confounders can be predictable.",
+        "recommendation": "Ensure that a secure source of randomness like `SecureRandom.getInstanceStrong()` is used for key generation or creating a confounder."
+    }
+]
+```

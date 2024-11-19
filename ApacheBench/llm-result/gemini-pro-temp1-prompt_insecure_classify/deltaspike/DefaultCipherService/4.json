@@ -1,0 +1,23 @@
+[
+  {
+    "misuse": "CWE-295: Improper Certificate Validation.",
+    "vulnerable_method": "getMasterKey(String masterSalt)",
+    "vulnerable_code": "if (!masterFile.exists())\n{\n    throw new IllegalStateException(\"Could not find master.hash file. Create a master password first!\");\n}",
+    "description": "The code does not validate the certificate of the master file, which could allow an attacker to impersonate the server and decrypt the encrypted data.",
+    "recommendation": "Use a library that supports certificate validation to ensure that the server is authentic."
+  },
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values.",
+    "vulnerable_method": "setMasterHash(String masterPassword, String masterSalt, boolean overwrite)",
+    "vulnerable_code": "String saltHash = byteToHex(secureHash(masterSalt));",
+    "description": "The code uses the master salt to generate a hash, but the master salt is not sufficiently random. An attacker could guess the master salt and decrypt the encrypted data.",
+    "recommendation": "Use a strong random number generator to generate the master salt."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength.",
+    "vulnerable_method": "aesEncrypt(String valueToEncrypt, String key)",
+    "vulnerable_code": "SecretKeySpec secretKeySpec = getSecretKeySpec(key);",
+    "description": "The code uses a 128-bit AES key, which is considered inadequate for strong encryption. An attacker could brute-force the key and decrypt the encrypted data.",
+    "recommendation": "Use a 256-bit AES key or a stronger encryption algorithm."
+  }
+]

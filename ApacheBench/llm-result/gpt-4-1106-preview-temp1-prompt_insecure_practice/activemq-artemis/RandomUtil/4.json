@@ -1,0 +1,46 @@
+```json
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_method": "org.apache.activemq.artemis.utils.RandomUtil.randomBytes",
+        "vulnerable_code": "RandomUtil.random.nextBytes(bytes);",
+        "description": "The method uses java.util.Random which is not cryptographically strong for generating random bytes that may be used for cryptographic functions.",
+        "recommendation": "Replace 'java.util.Random' with 'java.security.SecureRandom' for cryptographic use cases."
+    },
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_method": "org.apache.activemq.artemis.utils.RandomUtil.randomByte",
+        "vulnerable_code": "Integer.valueOf(RandomUtil.random.nextInt()).byteValue();",
+        "description": "java.util.Random is used which is not cryptographically strong for generating random bytes that may be used for cryptography.",
+        "recommendation": "Use 'java.security.SecureRandom' instead of 'java.util.Random'."
+    },
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_method": "org.apache.activemq.artemis.utils.RandomUtil.randomInt",
+        "vulnerable_code": "RandomUtil.random.nextInt();",
+        "description": "java.util.Random is used which is not a secure way to generate random integers if used for cryptographic purposes.",
+        "recommendation": "Employ 'java.security.SecureRandom' for generating secure random integers."
+    },
+    {
+        "misuse": "Insecure Randomness for Port",
+        "vulnerable_method": "org.apache.activemq.artemis.utils.RandomUtil.randomPort",
+        "vulnerable_code": "RandomUtil.random.nextInt(65536);",
+        "description": "Insecure randomness source used for generating random port which can lead to predictability in cryptographic context.",
+        "recommendation": "Use 'java.security.SecureRandom' for secure port generation."
+    },
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_method": "org.apache.activemq.artemis.utils.RandomUtil.randomLong",
+        "vulnerable_code": "RandomUtil.random.nextLong();",
+        "description": "java.util.Random is used which is not a secure source of randomness when used for cryptographic purposes.",
+        "recommendation": "Consider replacing 'java.util.Random' with 'java.security.SecureRandom'."
+    },
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_method": "org.apache.activemq.artemis.utils.RandomUtil.randomPositiveLong",
+        "vulnerable_code": "Math.abs(RandomUtil.randomLong());",
+        "description": "Use of java.util.Random and the potential to return the sign bit as a random value could lead to less randomness than expected.",
+        "recommendation": "Should use 'java.security.SecureRandom' and handle the sign appropriately."
+    }
+]
+```

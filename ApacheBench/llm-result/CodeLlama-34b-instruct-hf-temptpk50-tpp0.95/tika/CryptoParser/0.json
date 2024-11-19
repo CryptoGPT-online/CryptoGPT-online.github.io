@@ -1,0 +1,77 @@
+ {"misuses": [
+
+{"misuse": "CWE-256: Unprotected Transport of Sensitive Data",
+"vulnerable_method": "parse(InputStream, ContentHandler, Metadata, ParseContext) in CryptoParser class",
+"vulnerable_code": "new CipherInputStream(stream, cipher)",
+"description": "The method accepts an InputStream without any transport encryption mechanism, which may lead to the disclosure of sensitive data transmitted between the client and the server.",
+"recommendation": "Use a secure transport protocol such as HTTPS or SSH to protect the data in transit."},
+
+{"misuse": "CWE-295: Improper Certificate Validation",
+"vulnerable_method": "parse(InputStream, ContentHandler, Metadata, ParseContext) in CryptoParser class",
+"vulnerable_code": "Provider provider = context.get(Provider.class);",
+"description": "The method retrieves a Provider instance from the ParseContext without validating its authenticity. This may lead to the use of a tampered or compromised Provider, resulting in untrusted or malicious cryptographic operations.",
+"recommendation": "Implement proper certificate validation for Provider instances to ensure their authenticity."},
+
+{"misuse": "CWE-297: Improper Validation of Certificate with Host Mismatch",
+"vulnerable_method": "parse(InputStream, ContentHandler, Metadata, ParseContext) in CryptoParser class",
+"vulnerable_code": "Provider provider = context.get(Provider.class);",
+"description": "The method retrieves a Provider instance from the ParseContext without validating its hostname against the expected hostname. This may lead to the use of a Provider from an unexpected or malicious host, resulting in untrusted or malicious cryptographic operations.",
+"recommendation": "Implement hostname validation for Provider instances to ensure their authenticity and prevent Man-in-the-Middle attacks."},
+
+{"misuse": "CWE-321: Use of Hard-coded Cryptographic Key",
+"vulnerable_method": "parse(InputStream, ContentHandler, Metadata, ParseContext) in CryptoParser class",
+"vulnerable_code": "Key key = context.get(Key.class);",
+"description": "The method retrieves a Key instance from the ParseContext without validating its authenticity. This may lead to the use of a tampered or compromised Key, resulting in untrusted or malicious cryptographic operations.",
+"recommendation": "Implement proper validation and authentication for Key instances to ensure their authenticity."},
+
+{"misuse": "CWE-326: Inadequate Encryption Strength",
+"vulnerable_method": "parse(InputStream, ContentHandler, Metadata, ParseContext) in CryptoParser class",
+"vulnerable_code": "String transformation = context.get(String.class);",
+"description": "The method uses a hardcoded transformation without specifying the encryption strength. This may result in the use of a weak encryption algorithm, which can be easily broken by an attacker.",
+"recommendation": "Specify the encryption strength explicitly and use a secure encryption algorithm with a sufficient key length."},
+
+{"misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+"vulnerable_method": "parse(InputStream, ContentHandler, Metadata, ParseContext) in CryptoParser class",
+"vulnerable_code": "Cipher cipher = Cipher.getInstance(transformation, provider);",
+"description": "The method uses the Java Cryptographic Extension (JCE) without specifying a provider. This may result in the use of a weak or broken cryptographic algorithm, which can be exploited by an attacker.",
+"recommendation": "Specify a secure provider for the JCE and use a robust and secure cryptographic algorithm."},
+
+{"misuse": "CWE-338: Weak Cryptographic Algorithms",
+"vulnerable_method": "parse(InputStream, ContentHandler, Metadata, ParseContext) in CryptoParser class",
+"vulnerable_code": "Cipher cipher = Cipher.getInstance(transformation, provider);",
+"description": "The method uses a hardcoded transformation without validating its security. This may result in the use of a weak or broken cryptographic algorithm, which can be exploited by an attacker.",
+"recommendation": "Validate the security of the specified transformation and use a robust and secure cryptographic algorithm."},
+
+{"misuse": "CWE-547: Hostname Verification of Certificates",
+"vulnerable_method": "parse(InputStream, ContentHandler, Metadata, ParseContext) in CryptoParser class",
+"vulnerable_code": "Provider provider = context.get(Provider.class);",
+"description": "The method retrieves a Provider instance from the ParseContext without validating its hostname against the expected hostname. This may lead to the use of a Provider from an unexpected or malicious host, resulting in untrusted or malicious cryptographic operations.",
+"recommendation": "Implement hostname validation for Provider instances to ensure their authenticity and prevent Man-in-the-Middle attacks."},
+
+{"misuse": "CWE-650: Failure to Sanitize Data into an XML Document",
+"vulnerable_method": "parse(InputStream, ContentHandler, Metadata, ParseContext) in CryptoParser class",
+"vulnerable_code": "super.parse(new CipherInputStream(stream, cipher), handler, metadata, context);",
+"description": "The method passes untrusted input data (i.e., the CipherInputStream) to an XML parser without sanitizing it. This may lead to XML injection attacks.",
+"recommendation": "Implement proper sanitization and validation of untrusted input data before passing it to an XML parser."},
+
+{"misuse": "CWE-757: Use of Incorrect Data Types",
+"vulnerable_method": "parse(InputStream, ContentHandler, Metadata, ParseContext) in CryptoParser class",
+"vulnerable_code": "Metadata metadata = context.get(Metadata.class);",
+"description": "The method retrieves a Metadata instance from the ParseContext without validating its data type. This may result in the use of incorrect or tampered Metadata, which can be exploited by an attacker.",
+"recommendation": "Implement proper validation and authentication of Metadata instances to ensure their authenticity and prevent attacks."},
+
+{"misuse": "CWE-759: Incorrect Validation of Array Size",
+"vulnerable_method": "parse(InputStream, ContentHandler, Metadata, ParseContext) in CryptoParser class",
+"vulnerable_code": "Cipher cipher = Cipher.getInstance(transformation, provider);",
+"description": "The method uses a hardcoded transformation without validating its size. This may result in the use of an incorrect or tampered transformation, which can be exploited by an attacker.",
+"recommendation": "Validate the size of the specified transformation and use a robust and secure cryptographic algorithm."},
+
+{"misuse": "CWE-760: Use of Insufficiently Random Values",
+"vulnerable_method": "parse(InputStream, ContentHandler, Metadata, ParseContext) in CryptoParser class",
+"vulnerable_code": "SecureRandom random = context.get(SecureRandom.class);",
+"description": "The method retrieves a SecureRandom instance from the ParseContext without validating its authenticity. This may result in the use of a tampered or compromised SecureRandom, which can be exploited by an attacker to generate predictable values.",
+"recommendation": "Implement proper validation and authentication of SecureRandom instances to ensure their authenticity and prevent attacks."}
+
+],
+"total_misuses": 11
+}

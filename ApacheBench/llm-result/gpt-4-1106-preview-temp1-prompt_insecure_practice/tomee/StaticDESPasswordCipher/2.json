@@ -1,0 +1,32 @@
+```json
+[
+    {
+        "misuse": "Weak Encryption Algorithm",
+        "vulnerable_method": "org.apache.openejb.cipher.StaticDESPasswordCipher.encrypt and .decrypt",
+        "vulnerable_code": "Cipher.getInstance(TRANSFORMATION);",
+        "description": "The code uses the Triple DES encryption algorithm, which is considered weak and outdated due to its small key size.",
+        "recommendation": "Replace Triple DES with a stronger algorithm such as AES with 128/192/256-bit keys."
+    },
+    {
+        "misuse": "Static Encryption Key",
+        "vulnerable_method": "org.apache.openejb.cipher.StaticDESPasswordCipher.encrypt and .decrypt",
+        "vulnerable_code": "private static final SecretKeySpec KEY = new SecretKeySpec(_3desData, \"DESede\");",
+        "description": "The encryption key is statically defined in the code, making the encryption predictable and the key can be easily extracted.",
+        "recommendation": "Use a secure method to generate and manage encryption keys, avoiding hard-coded keys."
+    },
+    {
+        "misuse": "No Secure Random IV",
+        "vulnerable_method": "org.apache.openejb.cipher.StaticDESPasswordCipher.encrypt and .decrypt",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, KEY);",
+        "description": "The code does not specify an initialization vector (IV) for encryption. Default IV may be predictable and allows for possible attacks when using the same key.",
+        "recommendation": "Generate a random IV for each encryption, and use it in combination with the SecretKeySpec during cipher initialization."
+    },
+    {
+        "misuse": "Insecure Padding Scheme",
+        "vulnerable_method": "org.apache.openejb.cipher.StaticDESPasswordCipher.encrypt and .decrypt",
+        "vulnerable_code": "Cipher.getInstance(TRANSFORMATION);",
+        "description": "The code does not specify a padding scheme, so it may be defaulting to an insecure padding scheme like PKCS5Padding which is vulnerable to padding oracle attacks.",
+        "recommendation": "Specify a secure padding scheme such as PKCS7Padding (equivalent to PKCS5Padding in Java for block ciphers) when getting an instance of the Cipher."
+    }
+]
+```

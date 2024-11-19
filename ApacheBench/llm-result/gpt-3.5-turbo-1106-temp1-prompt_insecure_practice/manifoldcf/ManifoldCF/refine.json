@@ -1,0 +1,15 @@
+### False Positive Misuse ###
+None
+
+### Optimized Misuse JSON ###
+```json
+[
+  {
+    "misuse": "Insecure Randomness",
+    "vulnerable_method": "ManifoldCF.getSecureRandom",
+    "vulnerable_code": "SecureRandom random = new SecureRandom();\nbyte[] iv = new byte[IV_LENGTH];\nrandom.nextBytes(iv);",
+    "description": "The usage of SecureRandom to generate IVs for encryption has a potential vulnerability if the default algorithm is not secure. It's recommended to use a cryptographically secure pseudo-random number generator (CSPRNG) explicitly to generate the IV.",
+    "recommendation": "Use a well-known secure random number generation algorithm like SHA1PRNG explicitly by calling SecureRandom.getInstance(\"SHA1PRNG\"). Additionally, consider using the java.security.SecureRandomParameters API instead of nextBytes() for better control over the random number generation process."
+  }
+]
+```

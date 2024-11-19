@@ -1,0 +1,32 @@
+```json
+[
+  {
+    "misuse": "Weak Encryption Algorithm",
+    "vulnerable_method": "DesCbcCrcEncryption.processCipher",
+    "vulnerable_code": "Cipher.getInstance( \"DES/CBC/NoPadding\" )",
+    "description": "DES is considered to be insecure due to its small key size and is susceptible to brute-force attacks.",
+    "recommendation": "Use a stronger encryption algorithm such as AES with a key size of at least 128 bits."
+  },
+  {
+    "misuse": "Static Initialization Vector",
+    "vulnerable_method": "DesCbcCrcEncryption.processCipher",
+    "vulnerable_code": "AlgorithmParameterSpec paramSpec = new IvParameterSpec( iv );",
+    "description": "Using a static Initialization Vector (IV) makes the encryption predictable and susceptible to certain attacks like dictionary attacks.",
+    "recommendation": "Generate a random IV for each encryption operation."
+  },
+  {
+    "misuse": "Improper Error Handling",
+    "vulnerable_method": "DesCbcCrcEncryption.processCipher",
+    "vulnerable_code": "nsae.printStackTrace(); return null;",
+    "description": "Swallowing exceptions and returning null on error can lead to ambiguity in the encryption/decryption process status and can cause the calling method to incorrectly handle the situation.",
+    "recommendation": "Throw an appropriate exception up to the caller with meaningful error information."
+  },
+  {
+    "misuse": "Insecure Integrity Check",
+    "vulnerable_method": "DesCbcCrcEncryption.calculateIntegrity",
+    "vulnerable_code": "CRC32 crc32 = new CRC32(); crc32.update( data );",
+    "description": "CRC32 is not a cryptographic hash and can be manipulated, causing an insecure integrity check which is not suitable for encryption schemes.",
+    "recommendation": "Use a secure message digest like HMAC with a strong hash function (e.g., SHA-256)."
+  }
+]
+```

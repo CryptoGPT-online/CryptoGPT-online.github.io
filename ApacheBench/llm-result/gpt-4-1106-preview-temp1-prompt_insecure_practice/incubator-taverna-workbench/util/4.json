@@ -1,0 +1,32 @@
+```json
+[
+    {
+        "misuse": "Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_method": "Util.doEncryption",
+        "vulnerable_code": "Cipher.getInstance(\"PBEWithMD5AndDES\")",
+        "description": "The application uses a risky or broken encryption algorithm 'PBEWithMD5AndDES', which has known weaknesses and vulnerabilities.",
+        "recommendation": "Replace 'PBEWithMD5AndDES' with a stronger algorithm such as 'PBEWithHmacSHA256AndAES_256'."
+    },
+    {
+        "misuse": "Insecure Initialization Vector (Salt) for Encryption",
+        "vulnerable_method": "Util.doEncryption",
+        "vulnerable_code": "byte[] salt = new byte[8]; for (int i = 0; i < 8; ++i) salt[i] = digest[i];",
+        "description": "The application uses a predictable salt derived from the host name for encryption.",
+        "recommendation": "Generate a unique and unpredictable salt for each encryption operation."
+    },
+    {
+        "misuse": "Insecure Number of Encryption Iteration",
+        "vulnerable_method": "Util.doEncryption",
+        "vulnerable_code": "PBEParameterSpec paramSpec = new PBEParameterSpec(salt, 20);",
+        "description": "The iteration count (20) is too low for PBEParameterSpec, which makes the encryption vulnerable to brute force attacks.",
+        "recommendation": "Increase the iteration count to a minimum of 10,000 iterations."
+    },
+    {
+        "misuse": "Incorrect Exception Handling and Disclosure of Cryptographic Operations",
+        "vulnerable_method": "Util.doEncryption",
+        "vulnerable_code": "catch (Exception e) { logger.error(\"Could not encrypt and store password\"); logger.error(e.getCause() + \"\\n\" + e.getMessage()); }",
+        "description": "The code logs generic exceptions and might log sensitive information, which can help an attacker understand more about the cryptographic context or even the data.",
+        "recommendation": "Handle specific cryptographic exceptions and avoid logging sensitive information."
+    }
+]
+```

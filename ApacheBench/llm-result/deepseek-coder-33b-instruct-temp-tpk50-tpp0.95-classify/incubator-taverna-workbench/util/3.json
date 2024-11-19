@@ -1,0 +1,29 @@
+Security issues in this code are detected:
+
+- Use of the DES algorithm in PBEWithMD5AndDES is known to be insecure. Consider replacing it with a better algorithm such as AES.
+- The password for the encryption is stored in a static field which is accessible. You should not hardcode sensitive information like passwords in your code.
+- The salt used in the encryption also hardcoded. It's also recommended to store sensitive data such as passwords outside of the code.
+
+The JSON format response is:
+
+```json
+[{
+  "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+  "vulnerable_method": "Util.class"
+  "vulnerable_code": "PBEWithMD5AndDES"
+  "description": "The DES algorithm is known to be insecure. Consider replacing it with a better algorithm such as AES."
+  "recommendation": "Use a better algorithm for encryption."
+},{
+  "misuse": "CWE-757: Use of plain text password",
+  "vulnerable_method": "Util.class"
+  "vulnerable_code": "PBE_PASSWORD"
+  "description": "The password for the encryption is stored in a static field which is accessible. You should not hardcode sensitive information like passwords in your code."
+  "recommendation": "Store sensitive data such as passwords outside of the code."
+},{
+  "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+  "vulnerable_method": "Util.class"
+  "vulnerable_code": "PBE_SALT"
+  "description": "The salt used in the encryption also hardcoded. It's also recommended to store sensitive data such as passwords outside of the code."
+  "recommendation": "Store sensitive data such as passwords outside of the code."
+}]
+```

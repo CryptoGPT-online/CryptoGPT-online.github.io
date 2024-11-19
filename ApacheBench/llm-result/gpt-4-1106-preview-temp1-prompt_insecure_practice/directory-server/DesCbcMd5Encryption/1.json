@@ -1,0 +1,39 @@
+```json
+[
+  {
+    "misuse": "Use of Broken Crypto Algorithm",
+    "vulnerable_method": "DesCbcMd5Encryption.encrypt & DesCbcMd5Encryption.decrypt",
+    "vulnerable_code": "Cipher.getInstance( \"DES/CBC/NoPadding\" )",
+    "description": "DES (Data Encryption Standard) is considered insecure due to its short key length of 56 bits, which makes it susceptible to brute-force attacks.",
+    "recommendation": "Switch to AES (Advanced Encryption Standard) with a longer key length for increased security."
+  },
+  {
+    "misuse": "Static Initialization Vector (IV)",
+    "vulnerable_method": "DesCbcMd5Encryption.processCipher",
+    "vulnerable_code": "new IvParameterSpec( iv )",
+    "description": "Using a static IV for cryptographic operations is insecure because it does not provide semantic security, which allows attackers to derive information about the plaintext of encrypted data.",
+    "recommendation": "Use a secure random IV for each encryption operation and transmit the IV alongside the encrypted data."
+  },
+  {
+    "misuse": "Weak Hash Function (MD5)",
+    "vulnerable_method": "DesCbcMd5Encryption.calculateIntegrity",
+    "vulnerable_code": "MessageDigest.getInstance( LdapSecurityConstants.HASH_METHOD_MD5.getAlgorithm() )",
+    "description": "MD5 is a deprecated hash function that is vulnerable to collision attacks and is not suitable for use in digital signatures or other applications requiring collision resistance.",
+    "recommendation": "Use a more secure hash function such as SHA-256."
+  },
+  {
+    "misuse": "Improper Integrity Check",
+    "vulnerable_method": "DesCbcMd5Encryption.getEncryptedData & DesCbcMd5Encryption.getDecryptedData",
+    "vulnerable_code": "calculateIntegrity( paddedDataBytes, null, usage )",
+    "description": "Integrity verification relies on a weak and broken hash function (MD5) without a key, which fails to authenticate the data properly.",
+    "recommendation": "Ensure integrity by using HMAC with a secure hash function like SHA-256, and do not set the key to null."
+  },
+  {
+    "misuse": "Improper use of Padding",
+    "vulnerable_method": "DesCbcMd5Encryption.getEncryptedData",
+    "vulnerable_code": "padString( dataBytes )",
+    "description": "The code appears to manually pad data before encryption, which may be incompatible or inconsistent with typical cryptographic padding schemes and could lead to padding oracle attacks if not implemented properly.",
+    "recommendation": "Use built-in padding mechanisms provided by the cryptographic library (i.e., 'DES/CBC/PKCS5Padding')."
+  }
+]
+```

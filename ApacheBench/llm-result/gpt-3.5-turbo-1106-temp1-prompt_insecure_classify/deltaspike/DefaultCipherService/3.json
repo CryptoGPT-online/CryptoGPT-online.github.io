@@ -1,0 +1,25 @@
+```json
+[
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_method": "DefaultCipherService.aesEncrypt",
+    "vulnerable_code": "Cipher.getInstance(CIPHER_ALGORITHM);",
+    "description": "The code uses AES encryption with ECB mode, which is known to be weak for large data encryption due to the patterns that it creates. It is recommended to use a more secure mode, such as CBC or GCM.",
+    "recommendation": "Use a more secure mode like CBC or GCM for AES encryption."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_method": "DefaultCipherService.getSecretKeySpec",
+    "vulnerable_code": "return new SecretKeySpec(key, \"AES\");",
+    "description": "The method is using a hardcoded key length of 128 bits. It is recommended to use a stronger key length (e.g. 256 bits) for AES encryption.",
+    "recommendation": "Use a stronger key length (e.g. 256 bits) for AES encryption."
+  },
+  {
+    "misuse": "CWE-798: Use of Hardcoded Credentials",
+    "vulnerable_method": "DefaultCipherService.getMasterFile",
+    "vulnerable_code": "return new File(userHome, \".deltaspike/master.hash\");",
+    "description": "The method is using a hardcoded file path for storing the master password. This can lead to exposure of sensitive information.",
+    "recommendation": "Store the master password file in a more secure location or with proper access controls."
+  }
+]
+```

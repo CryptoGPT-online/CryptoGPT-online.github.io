@@ -1,0 +1,25 @@
+The code provided is using the DESede (Triple DES) algorithm for encryption and decryption. 
+
+Misuse found: CWE-327: Use of a Broken or Risky Cryptographic Algorithm
+
+Details: The DESede (Triple DES) algorithm is considered broken or risky because it is vulnerable to brute force attacks. It has a key length of 48 bytes whereas the standard DES only has 8 bytes. This makes it vulnerable to a faster computer. If you want to use a stronger cryptographic algorithm, consider switching to a more modern algorithm.
+
+Vulnerable method: encrypt() and decrypt() in the `StaticDESPasswordCipher` class.
+
+Vulnerable code: The code is using the DESede (Triple DES) algorithm for encryption and decryption.
+
+Description: The DESede (Triple DES) algorithm is known to be susceptible to attacks when using a less than standard key size. In this case, the algorithm uses a key size of 48 bytes while the standard DES uses a key size of 8 bytes. This makes it susceptible to a computational attack.
+
+Recommendation: Consider changing the encryption algorithm to a more secure algorithm such as AES or a newer version of DESede. 
+
+Codesnippet: 
+```
+private static final String TRANSFORMATION = "DESede";
+```
+
+You can replace "DESede" with "AES" or the standard DES algorithm.
+
+Please note that switching to AES requires a different key size, which you might need to adjust.
+
+
+The code doesn't have any other issues for CWE-326 (Inadequate Encryption Strength), CWE-798 (Use of Hardcoded Credentials), CWE-757 (Selection of Less-Secure Algorithm During Negotiation) and CWE-295 (Improper Certificate Validation) categories.

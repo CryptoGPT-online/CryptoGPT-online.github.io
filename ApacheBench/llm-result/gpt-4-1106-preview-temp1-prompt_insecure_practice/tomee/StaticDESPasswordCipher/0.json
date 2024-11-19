@@ -1,0 +1,39 @@
+```json
+[
+  {
+    "misuse": "Outdated Encryption Algorithm",
+    "vulnerable_method": "StaticDESPasswordCipher.encrypt / StaticDESPasswordCipher.decrypt",
+    "vulnerable_code": "Cipher.getInstance(TRANSFORMATION);",
+    "description": "Triple DES (3DES) is considered to be an outdated and insecure algorithm. It has been deprecated due to its small key length and blocks size, which make it vulnerable to brute-force attacks.",
+    "recommendation": "Replace Triple DES (DESede) with AES (Advanced Encryption Standard) with a key size of at least 128 bits."
+  },
+  {
+    "misuse": "Hardcoded Encryption Key",
+    "vulnerable_method": "StaticDESPasswordCipher",
+    "vulnerable_code": "private static final byte[] _3desData",
+    "description": "The encryption key is hardcoded in the source code, which is a security risk as it could be discovered by an attacker. Hardcoded keys are also not changeable without code modifications.",
+    "recommendation": "Use a key management solution to handle encryption keys securely and avoid hardcoding them in the source code."
+  },
+  {
+    "misuse": "Insecure Initialization Vector",
+    "vulnerable_method": "StaticDESPasswordCipher.encrypt / StaticDESPasswordCipher.decrypt",
+    "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, KEY);",
+    "description": "Using a static key without specifying an initialization vector (IV) for each encryption operation can lead to ciphertext predictability and vulnerabilities to certain attacks.",
+    "recommendation": "Always use a randomly generated IV that is unique for each encryption operation and pass it via IvParameterSpec to the Cipher init method."
+  },
+  {
+    "misuse": "Improper Error Handling",
+    "vulnerable_method": "StaticDESPasswordCipher.encrypt / StaticDESPasswordCipher.decrypt",
+    "vulnerable_code": "throw new OpenEJBRuntimeException(e);",
+    "description": "Exception handling rethrows the exception as a runtime exception, potentially exposing underlying cryptographic details like stack traces to the attacker, which can be useful for crafting further attacks.",
+    "recommendation": "Handle exceptions securely without revealing sensitive details and log the minimal necessary information for troubleshooting."
+  },
+  {
+    "misuse": "Using Default Charset",
+    "vulnerable_method": "StaticDESPasswordCipher.encrypt / StaticDESPasswordCipher.decrypt",
+    "vulnerable_code": "plainPassword.getBytes()",
+    "description": "The getBytes() method without specifying a Charset can vary depending on platform default, causing cryptography issues like changing ciphertext and inability to decrypt previously encrypted data.",
+    "recommendation": "Always explicitly specify the character encoding (preferably UTF-8) when converting between Strings and byte arrays."
+  }
+]
+```

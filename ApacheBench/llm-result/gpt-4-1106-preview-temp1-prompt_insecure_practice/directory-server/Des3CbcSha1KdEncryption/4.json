@@ -1,0 +1,39 @@
+```json
+[
+    {
+        "misuse": "Weak Key Generation",
+        "vulnerable_method": "Des3CbcSha1KdEncryption.randomToKey",
+        "vulnerable_code": "fillingKey = Strings.EMPTY_BYTES;",
+        "description": "Using an empty byte array as the key can lead to the generation of a weak, predictable key.",
+        "recommendation": "Use a strong, randomly generated seed when deriving keys."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_method": "Des3CbcSha1KdEncryption.deriveKey",
+        "vulnerable_code": "byte[] result = deriveRandom(baseKey, usage, n, k);",
+        "description": "The derived key length for 3DES should be 192 bits (including parity bits) but it is attempting to derive a longer key than needed. There seems to be confusion with the length (k parameter should be 192, not 168).",
+        "recommendation": "Ensure the derived key length matches the expected key size for 3DES (192 bits including parity bits)."
+    },
+    {
+        "misuse": "Potential Insecure Initial Vector (IV)",
+        "vulnerable_method": "Des3CbcSha1KdEncryption",
+        "vulnerable_code": "private static final byte[] iv = new byte[] { (byte) 0x00, ... (byte) 0x00 };",
+        "description": "Using a static IV could lead to patterns becoming visible in ciphertext under certain conditions, weakening the security of the encryption scheme.",
+        "recommendation": "Use a securely generated random IV for each encryption operation."
+    },
+    {
+        "misuse": "Hardcoded Encryption Key",
+        "vulnerable_method": "Des3CbcSha1KdEncryption.randomToKey",
+        "vulnerable_code": "byte[] fillingKey = Strings.EMPTY_BYTES;",
+        "description": "The encryption routine includes logic for filling the derived key with empty bytes, which seems to indicate the use of hardcoded encryption keys.",
+        "recommendation": "Ensure that all keys are generated securely and not hardcoded into the application."
+    },
+    {
+        "misuse": "Potential ECB Mode Leakage",
+        "vulnerable_method": "Des3CbcSha1KdEncryption.deriveRandom",
+        "vulnerable_code": "cipher.init( ... )",
+        "description": "The method implies that derivation uses ECB mode when calling cipher.init. ECB mode does not use an IV and is not semantically secure.",
+        "recommendation": "Use a secure mode of operation such as CBC with a proper IV for key derivation."
+    }
+]
+```

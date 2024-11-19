@@ -1,0 +1,44 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_method": "Util.doEncryption",
+        "vulnerable_code": [
+            "SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(\"PBEWithMD5AndDES\");",
+            "Cipher cipher = Cipher.getInstance(\"PBEWithMD5AndDES\");"
+        ],
+        "description": "The PBEWithMD5AndDES is considered to be a weak algorithm as it uses both MD5 (prone to collision attacks) and DES (key size is too small).",
+        "recommendation": "Use a more secure algorithm such as `PBKDF2WithHmacSHA256` with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_method": "Util.doEncryption",
+        "vulnerable_code": [
+            "PBEKeySpec keySpec = new PBEKeySpec(Util.PBE_PASSWORD.toCharArray());",
+            "PBEParameterSpec paramSpec = new PBEParameterSpec(salt, 20);"
+        ],
+        "description": "The encryption uses a password derived from the user's home system property which may not be complex or long enough and salt derived from the hostname which is not random and also uses only 20 iterations for the PBEParameterSpec.",
+        "recommendation": "Use a securely generated random salt and increase the iteration count to a minimum of 10,000."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_method": "Util.doEncryption",
+        "vulnerable_code": [
+            "md.update(Util.PBE_SALT.getBytes());",
+            "for (int i = 0; i < 8; ++i) salt[i] = digest[i];"
+        ],
+        "description": "The salt is derived from the MD5 hash of the hostname, which is non-random and predictable.",
+        "recommendation": "Use `SecureRandom` to generate a proper random salt."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_method": "Util.doEncryption",
+        "vulnerable_code": [
+            "private static final String PBE_PASSWORD = System.getProperty(\"user.home\");",
+            "private static final String PBE_SALT;"
+        ],
+        "description": "The password for encryption is derived from a system property (`user.home`), and the salt is based on the hostname, both of which are predictable and can be hardcoded.",
+        "recommendation": "Do not use system properties or predictable values for passwords and salts. Instead, generate strong, unique passwords and salts for each user."
+    }
+]
+```

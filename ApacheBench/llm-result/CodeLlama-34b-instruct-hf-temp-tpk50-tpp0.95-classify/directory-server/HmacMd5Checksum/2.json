@@ -1,0 +1,18 @@
+ {
+"misuses": [
+{
+"misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+"vulnerable_method": "org.apache.directory.server.kerberos.shared.crypto.checksum.HmacMd5Checksum.calculateChecksum",
+"vulnerable_code": "Mac.getInstance(\"HmacMD5\");",
+"description": "The code uses the HMAC-MD5 algorithm, which is considered broken and should not be used for cryptographic purposes. The algorithm is vulnerable to collision attacks, which can allow attackers to generate messages that produce the same checksum value, leading to impersonation or other attacks.",
+"recommendation": "Use a more secure algorithm, such as HMAC-SHA256 or HMAC-SHA512, instead of HMAC-MD5."
+},
+{
+"misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+"vulnerable_method": "org.apache.directory.server.kerberos.shared.crypto.checksum.HmacMd5Checksum.calculateChecksum",
+"vulnerable_code": "SecretKey sk = new SecretKeySpec( key, \"ARCFOUR\" );",
+"description": "The code uses the ARCFOUR algorithm, which is considered broken and should not be used for cryptographic purposes. The algorithm is vulnerable to key recovery attacks, which can allow attackers to deduce the secret key used for encryption and decryption.",
+"recommendation": "Use a more secure algorithm, such as AES-128 or AES-256, instead of ARCFOUR."
+}
+]
+}

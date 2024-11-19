@@ -1,0 +1,56 @@
+### False Positive Misuse ###
+
+The following misuse is a false positive:
+
+- "Improper Error Handling": It is true that the code throws a runtime exception, which is a broad exception type. However, from the provided code, it is not clear that sensitive cryptographic details are revealed. Since the thrown `OpenEJBRuntimeException` does not directly expose cryptographic primitives or secrets, stating that it potentially exposes underlying cryptographic details might be incorrect without more context. Whether this is a security issue depends on what `OpenEJBRuntimeException` does with the caught exception. Since this information is not available, this particular misuse should be considered with caution.
+
+### Optimized Misuse JSON ###
+
+```json
+[
+  {
+    "misuse": "Outdated Encryption Algorithm",
+    "vulnerable_method": "StaticDESPasswordCipher.encrypt / StaticDESPasswordCipher.decrypt",
+    "vulnerable_code": "Cipher.getInstance(TRANSFORMATION);",
+    "description": "Triple DES (3DES) is considered to be an outdated and insecure algorithm. It has been deprecated due to its small key length and blocks size, which make it vulnerable to brute-force attacks.",
+    "recommendation": "Replace Triple DES (DESede) with AES (Advanced Encryption Standard) with a key size of at least 128 bits."
+  },
+  {
+    "misuse": "Hardcoded Encryption Key",
+    "vulnerable_method": "StaticDESPasswordCipher",
+    "vulnerable_code": "private static final byte[] _3desData",
+    "description": "The encryption key is hardcoded in the source code, which is a security risk as it could be discovered by an attacker. Hardcoded keys are also not changeable without code modifications.",
+    "recommendation": "Use a key management solution to handle encryption keys securely and avoid hardcoding them in the source code."
+  },
+  {
+    "misuse": "Missing Secure Random IV",
+    "vulnerable_method": "StaticDESPasswordCipher.encrypt and StaticDESPasswordCipher.decrypt",
+    "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, KEY)",
+    "description": "The code does not specify an initialization vector (IV) for the cipher which is critical when using block cipher modes other than ECB, as such modes require a unique IV for each encryption operation to ensure security.",
+    "recommendation": "Generate a secure random IV for each encryption operation and prepend it to the ciphertext. Ensure that the IV is then used for the decryption process."
+  },
+  {
+    "misuse": "Using Default Charset",
+    "vulnerable_method": "StaticDESPasswordCipher.encrypt / StaticDESPasswordCipher.decrypt",
+    "vulnerable_code": "plainPassword.getBytes() / String.valueOf(encodedPassword).getBytes()",
+    "description": "The getBytes() method without specifying a Charset can vary depending on platform default, causing cryptography issues like changing ciphertext and inability to decrypt previously encrypted data.",
+    "recommendation": "Always explicitly specify the character encoding (preferably UTF-8) when converting between Strings and byte arrays."
+  },
+  {
+    "misuse": "Insecure Encryption Algorithm",
+    "vulnerable_method": "StaticDESPasswordCipher.encrypt and StaticDESPasswordCipher.decrypt",
+    "vulnerable_code": "Cipher.getInstance(\"DESede\")",
+    "description": "The code uses DESede (Triple DES) which is considered a weak encryption algorithm due to its small key size.",
+    "recommendation": "Replace DESede with a more secure algorithm like AES with a key size of at least 128 bits."
+  },
+  {
+    "misuse": "ECB Mode Risk",
+    "vulnerable_method": "StaticDESPasswordCipher.encrypt and StaticDESPasswordCipher.decrypt",
+    "vulnerable_code": "Cipher.getInstance(\"DESede\")",
+    "description": "If the default mode and padding are ECB and PKCS5Padding (the most common default for Java Cipher), then ECB mode is used which is insecure and should not be used because patterns in the plaintext are preserved across ciphertext blocks.",
+    "recommendation": "Specify a mode of operation (e.g., CBC, GCM) when getting a Cipher instance and ensure a secure random IV is used."
+  }
+]
+```
+
+Keep in mind that some of the reported misuses can be generalized, as they are essentially pointing out similar issues under different descriptions or method signatures. In the optimized list, duplicate issues with just different wordings have been merged to avoid repetition, focusing on the root cause of the misuse.

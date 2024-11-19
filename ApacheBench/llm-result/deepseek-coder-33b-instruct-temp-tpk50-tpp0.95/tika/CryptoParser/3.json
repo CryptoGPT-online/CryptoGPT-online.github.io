@@ -1,0 +1,21 @@
+
+
+```json
+[
+  {
+    "misuse": "CWE-297: Incorrect Cryptographic Use",
+    "vulnerable_method": "CryptoParser.parse",
+    "vulnerable_code": "cipher.init(Cipher.DECRYPT_MODE, key, params, random);",
+    "description": "The transformation algorithm and provider are specified as parameters in the constructor and are directly used in the `getInstance` method of `Cipher`. This could potentially lead to injection of malicious providers and algorithms. ",
+    "recommendation": "Validate and sanitize the transformation algorithm and provider before using them to create the Cipher instance."
+  },
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_method": "CryptoParser.parse",
+    "vulnerable_code": "cipher.init(Cipher.DECRYPT_MODE, key, params, random);",
+    "description": "There is no validation of the `Key`, `AlgorithmParameters`, and `SecureRandom` instances obtained from the context before they are used in the `init` method of the cipher. These instances can be injected by attackers to exploit vulnerabilities in the Java Cryptography API.",
+    "recommendation": "Validate and sanitize these instances before using them to initialize the cipher."
+  }
+]
+```
+

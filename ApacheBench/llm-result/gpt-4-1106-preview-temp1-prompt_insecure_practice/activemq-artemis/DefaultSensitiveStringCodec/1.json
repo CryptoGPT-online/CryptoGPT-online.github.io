@@ -1,0 +1,32 @@
+```json
+[
+    {
+        "misuse": "Static Encryption Key",
+        "vulnerable_method": "DefaultSensitiveStringCodec.BlowfishAlgorithm.updateKey",
+        "vulnerable_code": "private byte[] internalKey = \"clusterpassword\".getBytes();",
+        "description": "Blowfish algorithm is using a static encryption key which could be easily discovered and used by an attacker to decrypt sensitive information.",
+        "recommendation": "Replace the static key with a secure random key and store it securely."
+    },
+    {
+        "misuse": "Insecure Hash Algorithm",
+        "vulnerable_method": "DefaultSensitiveStringCodec.PBKDF2Algorithm",
+        "vulnerable_code": "private String sceretKeyAlgorithm = \"PBKDF2WithHmacSHA1\";",
+        "description": "The hash algorithm used for generating the PBE key (PBKDF2WithHmacSHA1) relies on SHA-1, which is considered weak against collision attacks.",
+        "recommendation": "Use a stronger hash function like PBKDF2WithHmacSHA256 or PBKDF2WithHmacSHA512."
+    },
+    {
+        "misuse": "Insufficient Key Length and Iterations",
+        "vulnerable_method": "DefaultSensitiveStringCodec.PBKDF2Algorithm",
+        "vulnerable_code": "private int keyLength = 64 * 8;\nprivate int iterations = 1024;",
+        "description": "The key length and number of iterations set for the PBKDF2 function may not provide adequate security. Current recommendations suggest a minimum key length of 128 bits and more iterations.",
+        "recommendation": "Increase both the key length and the number of iterations according to current security best practices."
+    },
+    {
+        "misuse": "Insecure Random Number Generation",
+        "vulnerable_method": "DefaultSensitiveStringCodec.PBKDF2Algorithm.getSalt",
+        "vulnerable_code": "private String randomScheme = \"SHA1PRNG\";",
+        "description": "SHA1PRNG might not provide a sufficiently random value and can vary in implementation between different Java providers.",
+        "recommendation": "Use SecureRandom without specifying an algorithm, allowing the highest-priority installed provider to be used."
+    }
+]
+```

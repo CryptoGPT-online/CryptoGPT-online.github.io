@@ -1,0 +1,56 @@
+### False Positive Misuse ###
+
+None of the misuses are false positives. They accurately identify areas where the code could be improved for better security.
+
+### Optimized Misuse JSON ###
+[
+  {
+    "misuse category": "CWE-295",
+    "vulnerable_method": "processCipher",
+    "vulnerable_code": "AlgorithmParameterSpec paramSpec = new IvParameterSpec( iv );",
+    "description": "This code hard coded the IV parameter which makes it vulnerable to IV reuse attack. A fixed IV weakens block cipher by allowing an attacker to perform a related-key attack. Furthermore, CBC mode is vulnerable to padding oracle attacks when IV is fixed for different ciphertexts encrypted using the same key (see Sweet32 attack).",
+    "recommendation": "Instead of using a fixed IV, generate a random IV for each encryption operation and send it along with the ciphertext. The Initialization Vector (IV) should be unique/random for each encryption and unpredictable."
+  },
+  {
+    "misuse category": "CWE-326",
+    "vulnerable_method": "processCipher",
+    "vulnerable_code": "SecretKey key = new SecretKeySpec( keyBytes, \"DES\" );",
+    "description": "The key size of DES is 56 bits, which is considered to be too small and is not recommended for use in new applications. DES has been deprecated by NIST SP 800-131A and should no longer be used.",
+    "recommendation": "Use a stronger encryption algorithm with a larger key size, such as AES-256."
+  },
+  {
+    "misuse category": "CWE-327",
+    "vulnerable_method": "encrypt",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance( \"DES/CBC/NoPadding\" );",
+    "description": "\"DES/CBC/NoPadding\" is not secure, consider using AES based algorithm.",
+    "recommendation": "Use AES based algorithm"
+  },
+  {
+    "misuse category": "CWE-327",
+    "vulnerable_method": "decrypt",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance( \"DES/CBC/NoPadding\" );",
+    "description": "\"DES/CBC/NoPadding\" is not secure, consider using AES based algorithm.",
+    "recommendation": "Use AES based algorithm"
+  },
+  {
+    "misuse category": "CWE-327",
+    "vulnerable_method": "calculateIntegrity",
+    "vulnerable_code": "CRC32 crc32 = new CRC32();\ncrc32.update( data );\nreturn int2octet( ( int ) crc32.getValue() );",
+    "description": "This code uses a hard-coded Initialization Vector (IV). A correctly implemented system should not have any hard-coded cryptographic parameters.",
+    "recommendation": "Generate a random IV for each encryption operation."
+  },
+  {
+    "misuse category": "CWE-757",
+    "vulnerable_method": "processCipher",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance( \"DES/CBC/NoPadding\" );\nSecretKey key = new SecretKeySpec( keyBytes, \"DES\" );\nAlgorithmParameterSpec paramSpec = new IvParameterSpec( iv );\ncipher.init( Cipher.ENCRYPT_MODE, key, paramSpec );",
+    "description": "This code uses a fixed IV for all encryption operations. A correctly implemented system should generate a random IV for each operation to prevent attackers from predicting the ciphertext.",
+    "recommendation": "Generate a random IV for each encryption operation."
+  },
+  {
+    "misuse category": "CWE-757",
+    "vulnerable_method": "getRandomBytes",
+    "vulnerable_code": "getRandomBytes( getConfounderLength() );",
+    "description": "The method getRandomBytes() is used to generate a random confounder. However, it is not specified what RNG is used, and it is possible that a weak or insecure RNG is being used.",
+    "recommendation": "Use a strong and secure RNG, such as the Java SecureRandom class."
+  }
+]

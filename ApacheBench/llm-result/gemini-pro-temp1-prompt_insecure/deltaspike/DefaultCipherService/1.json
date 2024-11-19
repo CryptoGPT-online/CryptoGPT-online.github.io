@@ -1,0 +1,51 @@
+[
+  {
+    "misuse": "Weak Key Storage",
+    "vulnerable_method": "DefaultCipherService#setMasterHash",
+    "vulnerable_code": "Properties keys = new Properties();\nif (masterFile.exists())\n{\nkeys = loadProperties(masterFile.toURI().toURL());\n}",
+    "description": "Storing cryptographic keys in plaintext, even if it's just in memory, is a major security risk.",
+    "recommendation": "Encrypt the store in which cryptographic keys are stored."
+  },
+  {
+    "misuse": "Key Derivation Function Does Not Use Salt",
+    "vulnerable_method": "DefaultCipherService#setMasterHash",
+    "vulnerable_code": "String saltHash = byteToHex(secureHash(masterSalt));\nString saltKey = byteToHex(secureHash(saltHash));",
+    "description": "KDFs should always use a salt. Even weak KDFs can be practically secure if a sufficiently long random salt is used.",
+    "recommendation": "Use a KDF that uses a salt, for example PBKDF2."
+  },
+  {
+    "misuse": "Unprotected Secret Key",
+    "vulnerable_method": "DefaultCipherService#getSecretKeySpec",
+    "vulnerable_code": "byte[] pwdHash = secureHash(password);\nbyte[] key = Arrays.copyOf(pwdHash, 16); // use only first 128 bit\n\n// Note: using 128 bit AES avoids requirement for \"Unlimited Crypto\" patch\nreturn new SecretKeySpec(key, \"AES\");",
+    "description": "Storing the unprotected secret key in memory allows attackers to steal the key if they gain access to the memory.",
+    "recommendation": "Protect the secret key using a hardware security module (HSM) or a key management service (KMS)."
+  },
+  {
+    "misuse": "Insufficient Entropy",
+    "vulnerable_method": "DefaultCipherService#getMasterHash",
+    "vulnerable_code": "return byteToHex(secureHash(masterPassword));",
+    "description": "Insufficient entropy in the master password makes it easier for attackers to guess or brute-force the password.",
+    "recommendation": "Use a strong password generator to create a password with sufficient entropy."
+  },
+  {
+    "misuse": "Insufficient Entropy",
+    "vulnerable_method": "DefaultCipherService#getMasterKey",
+    "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(HASH_ALGORITHM);\nreturn md.digest(value.getBytes(UTF_8));",
+    "description": "Insufficient entropy in the master salt makes it easier for attackers to guess or brute-force the salt.",
+    "recommendation": "Use a strong random number generator to generate a salt with sufficient entropy."
+  },
+  {
+    "misuse": "Missing Salt",
+    "vulnerable_method": "DefaultCipherService#setMasterHash",
+    "vulnerable_code": "Properties keys = new Properties();\nif (masterFile.exists())\n{\nkeys = loadProperties(masterFile.toURI().toURL());\n}",
+    "description": "Missing salt makes it easier for attackers to guess or brute-force the master password.",
+    "recommendation": "Use a salt when hashing the master password."
+  },
+  {
+    "misuse": "Weak Hashing Algorithm",
+    "vulnerable_method": "DefaultCipherService#secureHash",
+    "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(HASH_ALGORITHM);\nreturn md.digest(value.getBytes(UTF_8));",
+    "description": "Weak hashing algorithms are vulnerable to collision attacks.",
+    "recommendation": "Use a strong hashing algorithm, such as SHA-256 or bcrypt."
+  }
+]

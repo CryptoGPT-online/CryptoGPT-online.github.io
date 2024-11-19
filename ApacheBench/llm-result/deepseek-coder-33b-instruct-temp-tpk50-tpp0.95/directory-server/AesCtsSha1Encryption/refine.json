@@ -1,0 +1,20 @@
+### False Positive Misuse ###
+
+The reported misuse of the "Cryptographic Trapdoor" vulnerability is not applicable in this case. The AES/CTS/NoPadding is an industry standard algorithm and there are no publicly available examples of exploiting this vulnerability in practice. Moreover, the CTS mode was removed as a supported mode in the JDK for the JCE provider since Java 8, and in Java 11+, it was removed completely. Therefore, it doesn't matter which mode of operation is used for AES encryption, if the code is written to handle the resulting ciphertext as expected, the code is not susceptible to these issues.
+
+
+### Optimized Misuse JSON###
+
+The code has one misuse regarding CBC Mode with random IV:
+
+```json
+[
+    {
+        "misuse category": "Inadequate Cryptography",
+        "vulnerable_method": "EncryptedData getEncryptedData",
+        "vulnerable_code": "byte[] encryptedData = data.getCipher();",
+        "description": "The getEncryptedData() method is using Cipher with a static IV. This could potentially allow for susceptibility to timing attacks. In addition, the authenticity of the encrypted data can't be verified when decrypting without checksum.",
+        "recommendation": "Use a CBC mode with random IVs and implement integrity check during decryption."
+    }
+]
+```

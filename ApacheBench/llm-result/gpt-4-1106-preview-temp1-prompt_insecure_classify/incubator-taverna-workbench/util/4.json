@@ -1,0 +1,39 @@
+```json
+[
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+    "vulnerable_method": "Util.doEncryption",
+    "vulnerable_code": "Cipher.getInstance(\"PBEWithMD5AndDES\")",
+    "description": "The code is using PBEWithMD5AndDES, which is considered weak due to MD5 vulnerabilities for hashing and DES's short key length.",
+    "recommendation": "Use a stronger algorithm such as PBKDF2 with HMAC-SHA256 or HMAC-SHA512."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength.",
+    "vulnerable_method": "Util.doEncryption",
+    "vulnerable_code": "\"PBEWithMD5AndDES\"",
+    "description": "The use of DES (56-bit) in the PBEWithMD5AndDES algorithm shows inadequate encryption strength due to its short key length.",
+    "recommendation": "Use AES with a key size of at least 128 bits."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength.",
+    "vulnerable_method": "Util.doEncryption",
+    "vulnerable_code": "new PBEParameterSpec(salt, 20)",
+    "description": "The iteration count (the second parameter in 'new PBEParameterSpec') is set to 20, which provides inadequate protection against brute-force attacks.",
+    "recommendation": "Increase the iteration count to at least 10,000 or use a better key stretching mechanism."
+  },
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values for cryptographic context.",
+    "vulnerable_method": "Util.doEncryption",
+    "vulnerable_code": "md.update(Util.PBE_SALT.getBytes());",
+    "description": "The salt used for encryption is derived from the local host name which can be easily guessed and is not random enough.",
+    "recommendation": "Use a SecureRandom to generate a random salt."
+  },
+  {
+    "misuse": "CWE-798: Use of Hardcoded Credentials.",
+    "vulnerable_method": "Util.encrypt and Util.decrypt",
+    "vulnerable_code": "PBEKeySpec keySpec = new PBEKeySpec(Util.PBE_PASSWORD.toCharArray());",
+    "description": "The password used for encryption is derived from the 'user.home' system property, which could potentially be guessed or obtained.",
+    "recommendation": "Use a secure method to obtain the encryption passphrase, such as prompting the user or using a secured configuration file."
+  }
+]
+```

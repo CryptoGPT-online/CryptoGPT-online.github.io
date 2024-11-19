@@ -1,0 +1,24 @@
+### False Positive Misuse ###
+
+None
+
+### Optimized Misuse JSON###
+
+```json
+[
+  {
+    "misuse": "Insecure Randomness",
+    "vulnerable_method": "org.apache.activemq.artemis.utils.DefaultSensitiveStringCodec$PBKDF2Algorithm.getSalt",
+    "vulnerable_code": "byte[] salt = RandomUtil.randomBytes(this.saltLength);",
+    "description": "The RandomUtil class might not provide cryptographically strong random values, which could weaken the security of key material.",
+    "recommendation": "Use SecureRandom class for generating random values instead of RandomUtil."
+  },
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_method": "BlowfishAlgorithm.encode",
+    "vulnerable_code": "byte[] encoding = cipher.doFinal(secret.getBytes());",
+    "description": "The use of the low-level API without the specification of mode and padding algorithm in Blowfish encryption is considered risky and can lead to potential security vulnerabilities.",
+    "recommendation": "Use a higher-level API that specifies the mode and padding algorithm, such as Cipher.getInstance(\"Blowfish/CBC/PKCS5Padding\")."
+  }
+]
+```

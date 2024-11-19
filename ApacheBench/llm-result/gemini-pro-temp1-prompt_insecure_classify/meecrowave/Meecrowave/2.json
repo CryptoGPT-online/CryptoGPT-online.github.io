@@ -1,0 +1,11 @@
+[{
+"misuse": "CWE-326: Inadequate Encryption Strength.",
+"vulnerable_method": "Static3DES",
+"vulnerable_code": [
+"final SecretKeySpec key = new SecretKeySpec(new byte[]{......}, \"DESede\"",
+"Cipher cipher = Cipher.getInstance(\"DESede\");",
+"cipher.init(Cipher.DECRYPT_MODE, key);"
+],
+"description": "Meecrowave uses Static3DES to decrypt encoded password. DESede is an old standard for encryption and should not be used anymore. Key must contain 24 bytes, and the cipher will use a weak padding scheme. So, if the password encoded uses a large key and a modern cipher like AES, the decrypted password will be truncated.",
+"recommendation": "It's recommended to use AES in CBC or GCM mode."
+}]

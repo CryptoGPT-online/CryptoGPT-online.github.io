@@ -1,0 +1,39 @@
+```json
+[
+    {
+        "misuse": "Hardcoded Encryption Key",
+        "vulnerable_method": "org.apache.openejb.cipher.StaticDESPasswordCipher",
+        "vulnerable_code": "private static final byte[] _3desData = {...};\nprivate static final SecretKeySpec KEY = new SecretKeySpec(_3desData, \"DESede\");",
+        "description": "The encryption key is hardcoded into the application, which can be extracted easily and poses a security risk.",
+        "recommendation": "Consider using secure ways of managing keys, such as a key management service or rotating the keys and storing them in a secure location."
+    },
+    {
+        "misuse": "Insecure Encryption Algorithm",
+        "vulnerable_method": "org.apache.openejb.cipher.StaticDESPasswordCipher",
+        "vulnerable_code": "private static final String TRANSFORMATION = \"DESede\";",
+        "description": "Triple DES (3DES) is considered insecure due to its small key size and should not be used in modern cryptography.",
+        "recommendation": "Replace 3DES with a more secure encryption algorithm such as AES with an appropriate key size (at least 128 bits)."
+    },
+    {
+        "misuse": "ECB Mode Usage",
+        "vulnerable_method": "org.apache.openejb.cipher.StaticDESPasswordCipher#encrypt and org.apache.openejb.cipher.StaticDESPasswordCipher#decrypt",
+        "vulnerable_code": "final Cipher cipher = Cipher.getInstance(TRANSFORMATION);",
+        "description": "ECB mode is used for encryption which is insecure, as identical plaintext blocks are encrypted to the same ciphertext block.",
+        "recommendation": "Use a stronger encryption mode such as CBC, CFB, OFB or GCM, which require an initialization vector (IV) for each encryption operation."
+    },
+    {
+        "misuse": "Missing Initialization Vector",
+        "vulnerable_method": "org.apache.openejb.cipher.StaticDESPasswordCipher#encrypt and org.apache.openejb.cipher.StaticDESPasswordCipher#decrypt",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, KEY);\ncipher.init(Cipher.DECRYPT_MODE, KEY);",
+        "description": "No initialization vector (IV) is used for the encryption/decryption process, which is insecure for most modes of operation.",
+        "recommendation": "When using modes like CBC, an IV should be used and must be securely generated and unique for every encryption operation."
+    },
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_method": "org.apache.openejb.cipher.StaticDESPasswordCipher",
+        "vulnerable_code": "N/A",
+        "description": "If an initialization vector (IV) were to be implemented, using insecure sources of randomness to generate the IV could lead to predictable values which compromise security.",
+        "recommendation": "Use SecureRandom to generate secure IVs if CBC mode or similar encryption modes are used."
+    }
+]
+```

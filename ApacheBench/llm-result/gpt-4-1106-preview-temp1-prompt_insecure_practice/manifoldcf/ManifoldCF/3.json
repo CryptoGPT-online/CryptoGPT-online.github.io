@@ -1,0 +1,39 @@
+```json
+[
+  {
+    "misuse": "Hardcoded Crypto Values",
+    "vulnerable_method": "ManifoldCF.encrypt and ManifoldCF.decrypt",
+    "vulnerable_code": "private static String OBFUSCATION_PASSCODE = \"NowIsTheTime\"; private static String OBFUSCATION_SALT = \"Salty\";",
+    "description": "Hardcoded encryption key and salt are insecure as they make the encryption predictable and easier to break.",
+    "recommendation": "Use securely generated random values for encryption keys and salts, and store them in secure storage."
+  },
+  {
+    "misuse": "Weak Password Hashing",
+    "vulnerable_method": "ManifoldCF.hash",
+    "vulnerable_code": "MessageDigest.getInstance(\"SHA\")",
+    "description": "SHA-1 is a deprecated hashing algorithm and is no longer considered secure for password hashing or sensitive data.",
+    "recommendation": "Use a strong hashing function, such as SHA-256 or bcrypt, for hashing passwords or sensitive data."
+  },
+  {
+    "misuse": "Insecure Random Number Generation",
+    "vulnerable_method": "ManifoldCF.getSecureRandom",
+    "vulnerable_code": "SecureRandom random = new SecureRandom(); byte[] iv = new byte[IV_LENGTH]; random.nextBytes(iv);",
+    "description": "Uses default constructor for SecureRandom which can be predictable if not properly seeded.",
+    "recommendation": "Use SecureRandom.getInstanceStrong() to get a strong instance of SecureRandom when generating IVs or secure random bytes."
+  },
+  {
+    "misuse": "Insecure use of SecureRandom",
+    "vulnerable_method": "ManifoldCF.Encrypt and ManifoldCF.Decrypt",
+    "vulnerable_code": "SecureRandom random = new SecureRandom(); byte[] iv = new byte[IV_LENGTH]; random.nextBytes(iv);",
+    "description": "The IV for encryption is being generated using potentially insecure random number generation, which can compromise the encryption.",
+    "recommendation": "Generate IV using a cryptographically secure random number generator, such as SecureRandom.getInstanceStrong() and make sure to securely manage IVs."
+  },
+  {
+    "misuse": "Broken Crypto Algorithm",
+    "vulnerable_method": "ManifoldCF.getCipher",
+    "vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5Padding\")",
+    "description": "Cipher Block Chaining (CBC) mode is susceptible to padding oracle attacks and may not be the most secure option.",
+    "recommendation": "Consider using a more secure cipher mode such as GCM that includes built-in integrity checking."
+  }
+]
+```

@@ -1,0 +1,24 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_method": "ArcFourHmacMd5Encryption.encrypt and ArcFourHmacMd5Encryption.decrypt",
+        "vulnerable_code": [
+            "Cipher.getInstance( \"ARCFOUR\" )",
+            "cipher.init( Cipher.ENCRYPT_MODE, key )",
+            "cipher.init( Cipher.DECRYPT_MODE, key )"
+        ],
+        "description": "The use of the ARCFOUR (RC4) stream cipher is considered risky as it is vulnerable to several attacks, such as biases in the RC4 keystream which can lead to the recovery of some plaintext.",
+        "recommendation": "Replace ARCFOUR with a strong encryption algorithm such as AES."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_method": "ArcFourHmacMd5Encryption.calculateIntegrity",
+        "vulnerable_code": [
+            "Mac.getInstance( \"HmacMD5\" )"
+        ],
+        "description": "MD5 is considered weak due to its susceptibility to collision attacks and other vulnerabilities. It should not be used as a component in a cryptographic protocol.",
+        "recommendation": "Replace HmacMD5 with a more secure MAC algorithm, such as HMAC-SHA-256."
+    }
+]
+```

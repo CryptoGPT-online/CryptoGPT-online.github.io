@@ -1,0 +1,25 @@
+```json
+[
+    {
+        "misuse": "Insecure Encryption Mode",
+        "vulnerable_method": "DefaultCipherService.aesEncrypt and DefaultCipherService.aesDecrypt",
+        "vulnerable_code": "Cipher.getInstance(CIPHER_ALGORITHM)",
+        "description": "The AES algorithm is used without specifying an encryption mode and padding, which defaults to ECB mode without proper padding, making it susceptible to certain attacks such as the padding oracle attack.",
+        "recommendation": "Change to a more secure encryption mode like CBC, and ensure that a padding scheme is specified. For example, use 'AES/CBC/PKCS5Padding'. Also, use an initialization vector (IV) for CBC mode."
+    },
+    {
+        "misuse": "Cryptographically Weak Pseudo-Random Number Generator (PRNG)",
+        "vulnerable_method": "DefaultCipherService.getSecretKeySpec",
+        "vulnerable_code": "secureHash(password)",
+        "description": "The key generation from the password uses a hash of the password without a salt or strong key derivation function. Password-based keys without proper stretching (e.g., PBKDF2, bcrypt, scrypt) can be easily brute-forced.",
+        "recommendation": "Use a key derivation function such as PBKDF2 with HMAC-SHA-256, a high iteration count, and a unique salt."
+    },
+    {
+        "misuse": "Reuse of Initialization Vector (IV)",
+        "vulnerable_method": "DefaultCipherService.aesEncrypt and DefaultCipherService.aesDecrypt",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE/DECRYPT_MODE, secretKeySpec)",
+        "description": "No IV is used, and ECB mode (by default as no mode is specified) does not use an IV. This can allow attackers to identify patterns in ciphertexts.",
+        "recommendation": "An IV should be randomly generated using a secure PRNG and used for each encryption operation in conjunction with a mode such as CBC."
+    }
+]
+```

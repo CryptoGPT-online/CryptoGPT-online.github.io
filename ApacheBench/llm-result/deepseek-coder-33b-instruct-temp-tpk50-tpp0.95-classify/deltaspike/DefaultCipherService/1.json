@@ -1,0 +1,56 @@
+The following issues were found in the code:
+
+1. **CWE-327: Use of a Broken or Risky Cryptographic Algorithm**: The code uses a known-broken cryptographic algorithm (SHA-256) for password and salt hash computation. Instead, consider using a more secure and efficient algorithm, such as SHA-512.
+
+Here is the relevant code section:
+```java
+protected byte[] secureHash(String value) {
+    try {
+        MessageDigest md = MessageDigest.getInstance(HASH_ALGORITHM);
+        return md.digest(value.getBytes(UTF_8));
+    }
+    catch (NoSuchAlgorithmException e) {
+        throw new RuntimeException(e);
+    }
+}
+```
+
+Recommendation: Instead of SHA-256, use SHA-512 for the `HASH_ALGORITHM`.
+
+2. **CWE-295: Improper Certificate Validation**: This code does not perform any certificate validation when loading the properties file. This could lead to potential exploits if the properties file is served from a server with a compromised certificate.
+
+3. **CWE-330: Use of Insufficiently Random Values**: The code uses a fixed Cryptographic Initialization Vector (IV) when performing AES encryption. This is a common mistake which makes the encryption vulnerable.
+
+Here is the relevant code section:
+```java
+public byte[] aesEncrypt(String valueToEncrypt, String key) {
+    try {
+        SecretKeySpec secretKeySpec = getSecretKeySpec(key);
+
+        Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
+        cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
+        return cipher.doFinal(valueToEncrypt.getBytes(UTF_8));
+    }
+    catch (Exception e) {
+        throw new RuntimeException(e);
+    Analysis
+
+        The code uses the key to derive an IV. While this approach is not necessarily flawed, it may not be the best practice as it is susceptible to attacks such as Cryptographic Attribute Analysis.
+        Instead, consider generating a new random IV every time an encryption operation is performed.
+
+3. **CWE-326: Inadequate Encryption Strength**: The code uses a fixed-sized key (16 bytes) for AES encryption, potentially making the encryption weaker than necessary.
+
+Here is the relevant code section:
+```java
+private SecretKeySpec getSecretKeySpec(String password) {
+    byte[] pwdHash = secureHash(password);
+    byte[] key = Arrays.copyOf(pwdHash, 16); // use only first 128 bit
+
+    // Note: using 128 bit AES avoids requirement for "Unlimited Crypto" patch
+    return new SecretKeySpec(key, "AES");
+}
+```
+
+Recommendation: Use a key size appropriate for the chosen cipher. In this case, it seems like the hash is correctly used as an encryption key, but the code could benefit from being more explicit about the key size.
+
+These issues should be fixed to improve the security of the code.

@@ -1,0 +1,37 @@
+[
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength (Use of a Broken or Risky Cryptographic Algorithm).",
+    "vulnerable_method": "Builder.property(final String key, final String value)",
+    "vulnerable_code": "property(prop, config.getProperty(prop));",
+    "description": "The use of DES static encryption is insecure. It is not recommended to use it anymore, as it has been broken several times.",
+    "recommendation": ""
+  },
+  {
+    "misuse": "CWE-295: Improper Certificate Validation. (Use of a Broken or Risky Cryptographic Algorithm).",
+    "vulnerable_method": "Builder.loadFromProperties(final Properties config)",
+    "vulnerable_code": "if (val == null) {\n                    val = Stream.of(annotation.alias())\n                            .map(properties::getProperty)\n                            .findFirst().orElse(null);\n                    if (val == null) {\n                        return;\n                    }",
+    "description": "The certificate validation seems to be disabled. This is done by setting \"cxf.relaxed.ssl.hostnameValidation\" to True. It exposes the application to multiple risks such as man-in-the-middle attacks.",
+    "recommendation": "Don't disable the certificate validation."
+  },
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values. (Use of a Broken or Risky Cryptographic Algorithm).",
+    "vulnerable_method": "TomcatWithFastSessionIDs.start()",
+    "vulnerable_code": "org.apache.catalina.Context.class.cast(c).setManager(m);",
+    "description": "The usage of deterministic session IDs is a security issue. By brute-forcing the session ID, the attacker can hijack the user session.",
+    "recommendation": "Use a proper cryptographically secure random generator."
+  },
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm. (Use of a Broken or Risky Cryptographic Algorithm).",
+    "vulnerable_method": "Builder.loadFromProperties(final Properties config)",
+    "vulnerable_code": "final ObjectRecipe recipe = new ObjectRecipe(config.getProperty(prop));\n                    for (final String nestedConfig : config.stringPropertyNames()) {\n                        if (nestedConfig.startsWith(prop + '.')) {\n                            recipe.setProperty(nestedConfig.substring(prop.length() + 2 /*dot*/), config.getProperty(nestedConfig));\n                        }\n                    }",
+    "description": "The usage of the \"Static3DES\" algorithm is highly discouraged and vulnerable to known attacks.",
+    "recommendation": "Please avoid the use of the algorithm, or use it as a fall-back only if no more secure alternative is available."
+  },
+  {
+    "misuse": "CWE-798: Use of Hardcoded Credentials. (Insecure Storage of Sensitive Information in Source Code).",
+    "vulnerable_method": "Builder.property(final String key, final String value)",
+    "vulnerable_code": "if(prop.equals(\"realm\")) {\n                    final ObjectRecipe recipe = new ObjectRecipe(config.getProperty(prop));",
+    "description": "The realm for the appplication is defined in the config with the parameter \"realm\". This allow an attacker to see the password for the authentication and the key associated.",
+    "recommendation": "Store sensitive information in a secure location, such as a database or a key store."
+  }
+]

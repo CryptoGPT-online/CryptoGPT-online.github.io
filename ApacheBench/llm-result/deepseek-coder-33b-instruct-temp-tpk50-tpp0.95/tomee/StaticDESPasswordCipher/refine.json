@@ -1,0 +1,18 @@
+```json
+[
+    {
+        "misuse": "Hardcoded Cryptographic Keys",
+        "vulnerable_method": "The entire class, StaticDESPasswordCipher",
+        "vulnerable_code": "private static final byte[] _3desData = {...} and private static final SecretKeySpec KEY = new SecretKeySpec(_3desData, \"DESede\");",
+        "description": "The code using hardcoded cryptographic keys is not recommended because it makes the encryption vulnerable to attackers who could potentially exploit the key. If the key is discovered, the encryption can be easily decrypted.",
+        "recommendation": "Use a randomly generated key or a secure secret key management system. Consider using a key management service or library to handle key generation and storage."
+    },
+    {
+        "misuse": "Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_method": "org.apache.openejb.cipher.StaticDESPasswordCipher.encrypt()",
+        "vulnerable_code": "Cipher.getInstance(TRANSFORMATION);",
+        "description": "The `getInstance()` method in this code is used to create a `Cipher` object with the transformation algorithm specified by `TRANSFORMATION`. The transformation is \"DESede\" which is known to be vulnerable to attacks.",
+        "recommendation": "Instead of using DESede, use a more secure algorithm like AES or RSA. Also consider using a different cryptographic library that has been thoroughly tested for security vulnerabilities."
+    }
+]
+```

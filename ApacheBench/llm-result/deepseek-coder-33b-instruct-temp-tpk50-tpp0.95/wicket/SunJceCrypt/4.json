@@ -1,0 +1,27 @@
+Misuse 1: No Properly Randomized Salt Value
+The salt used in this code is hardcoded as an array of bytes. A salt is intended to be a randomized value that is used to increase the complexity of the resulting hash. Using a hardcoded salt significantly reduces the effectiveness of the resulting hash, if the same secret passwords are used across different users, or at different times.
+
+Misuse JSON:
+```json
+{
+  "misuse": "Use of Hardcoded Salt Value",
+  "vulnerable_method": "generateSecretKey",
+  "vulnerable_code": "generateSecretKey() throws NoSuchAlgorithmException, InvalidKeySpecException { SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(cryptMethod); KeySpec spec = createKeySpec(); return keyFactory.generateSecret(spec); }",
+  "description": "The salt used in the application is a hardcoded value. This makes it susceptible to rainbow table attacks where a pre-computed table of hash values is used to find the password for a given hash. The hash used in this application does not incorporate randomness in the salt. A highly effective way of mitigating this issue is using a random salt for every hash. A simple random generator can be used to generate salt. Alternatively, if the hashes are stored, the salt value should be stored as part of the hash output and used when checking passwords.",
+  "recommendation": "Randomize the salt value for the hash generation for every user. A common approach is to use a random number generator to generate the salt. If the hash values are stored, ensure the salt value is stored with the hash for future password checking."
+}
+```
+
+Misuse 2: Use of SHA-1 Algorithm for Password Hashing
+The PBEWithMD5AndDES is an old algorithm that uses a MD5 and DES. SHA-1 has been known to have vulnerabilities in recent years. Using such a function to hash passwords may make the application susceptible to attacks.
+
+Misuse JSON:
+```json
+{
+  "misuse": "Use of SHA-1 Algorithm for Password Hashing",
+  "vulnerable_method": "createKeySpec()",
+  "vulnerable_code": "protected KeySpec createKeySpec() { return new PBEKeySpec(getKey().toCharArray()); }",
+  "description": "The createKeySpec method in this code uses the PBEKeySpec class which uses the SHA-1 algorithm to generate the hash, which is known to be vulnerable. SHA-1 has been known to have vulnerabilities in recent years. Using such a function to hash passwords may make the application susceptible to attacks. This vulnerability could be used to crack passwords.",
+  "recommendation": "Use a more secure algorithm for hashing passwords. Java 7 introduced the password-related APIs in the java.security.SecureRandom class, which uses a cryptographically strong random generator to produce the random salt, making it harder to crack the passwords. Additionally, use of HMAC-SHA256 could be another option."
+}
+```

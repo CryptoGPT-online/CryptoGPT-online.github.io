@@ -1,0 +1,32 @@
+```json
+[
+  {
+    "misuse": "Insecure Cipher Algorithm",
+    "vulnerable_method": "DesCbcCrcEncryption.encrypt, DesCbcCrcEncryption.decrypt",
+    "vulnerable_code": "Cipher.getInstance(\"DES/CBC/NoPadding\")",
+    "description": "The DES algorithm is considered insecure due to its key size being too small, and it can be brute-forced within a reasonable time frame.",
+    "recommendation": "Consider using a more secure algorithm such as AES with an appropriate key size."
+  },
+  {
+    "misuse": "Inadequate or Missing Iterations",
+    "vulnerable_method": "DesCbcCrcEncryption.getEncryptedData",
+    "vulnerable_code": "byte[] zeroedChecksum = new byte[getChecksumLength()];",
+    "description": "The integrity check used is based on a CRC32 checksum, which is not cryptographically secure and disregards key material.",
+    "recommendation": "Use a secure MAC such as HMAC with a cryptographic hash function for integrity protection."
+  },
+  {
+    "misuse": "Static Initialization Vector",
+    "vulnerable_method": "DesCbcCrcEncryption.processCipher",
+    "vulnerable_code": "new IvParameterSpec(iv)",
+    "description": "The IV (Initialization Vector) is static and not random, which undermines the security of the encryption for repeated messages.",
+    "recommendation": "Use a secure random IV for each encryption operation."
+  },
+  {
+    "misuse": "Weak Integrity Check",
+    "vulnerable_method": "DesCbcCrcEncryption.getDecryptedData",
+    "vulnerable_code": "for (int i = getConfounderLength(); i < getConfounderLength() + getChecksumLength(); i++) { ... }",
+    "description": "The code compares an insecure CRC32 checksum to validate the integrity of the decrypted data, which is not an adequate security control.",
+    "recommendation": "Replace CRC32 with a cryptographically secure message authentication code (MAC) such as HMAC."
+  }
+]
+```

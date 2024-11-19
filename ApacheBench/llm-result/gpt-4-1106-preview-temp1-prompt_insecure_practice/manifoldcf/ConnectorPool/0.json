@@ -1,0 +1,18 @@
+```json
+[
+  {
+    "misuse": "Insufficient Random Values",
+    "vulnerable_method": "ConnectorPool.Pool.pollAll",
+    "vulnerable_code": "if (randomNumberGenerator.nextInt(numServices) < remainder)",
+    "description": "The method 'nextInt' from java.util.Random is used to provide a random number. An attacker may predict the result if a strong PRNG like SecureRandom is not used.",
+    "recommendation": "Replace the usage of java.util.Random with java.security.SecureRandom to ensure unpredictability of the random values."
+  },
+  {
+    "misuse": "Insecure Release of Resource",
+    "vulnerable_method": "ConnectorPool.Pool.pollAll, ConnectorPool.Pool.releaseAll",
+    "vulnerable_code": "rc.disconnect();",
+    "description": "The method 'disconnect' is called without ensuring that exceptions are handled properly, which may lead to incomplete resource release if an exception occurs.",
+    "recommendation": "Ensure that resources are released in a finally block or use a try-with-resources statement to guarantee that resources are released even when exceptions are thrown."
+  }
+]
+```

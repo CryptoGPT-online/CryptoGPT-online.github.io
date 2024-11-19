@@ -1,0 +1,32 @@
+```json
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_method": "DesCbcMd5Encryption.encrypt, DesCbcMd5Encryption.decrypt",
+        "vulnerable_code": "Cipher.getInstance(\"DES/CBC/NoPadding\");",
+        "description": "DES algorithm is used for encryption, which is considered to be weak due to its 56-bit key size.",
+        "recommendation": "Use AES with a key size of at least 128 bits for encryption."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_method": "DesCbcMd5Encryption.encrypt, DesCbcMd5Encryption.decrypt",
+        "vulnerable_code": "Cipher.getInstance(\"DES/CBC/NoPadding\");",
+        "description": "DES encryption algorithm is known to be broken and should not be used in secure contexts.",
+        "recommendation": "Switch to a secure encryption algorithm such as AES."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_method": "DesCbcMd5Encryption.getEncryptedData",
+        "vulnerable_code": "byte[] conFounder = getRandomBytes( getConfounderLength() );",
+        "description": "The security of the random bytes (conFounder) depends on the implementation of the 'getRandomBytes' method, which is not provided.",
+        "recommendation": "Ensure that 'getRandomBytes' generates cryptographically secure random values."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_method": "DesCbcMd5Encryption.processCipher",
+        "vulnerable_code": "new IvParameterSpec(iv);",
+        "description": "A static IV (initialization vector) is used for CBC mode, which can lead to vulnerabilities by making encryption deterministic.",
+        "recommendation": "Use a cryptographically secure random IV for each encryption operation."
+    }
+]
+```

@@ -1,0 +1,25 @@
+```json
+[
+    {
+        "misuse": "Weak Random Number Generator",
+        "vulnerable_method": "ConnectorPool.Pool.pollAll",
+        "vulnerable_code": "if (randomNumberGenerator.nextInt(numServices) < remainder)",
+        "description": "The usage of java.util.Random is not adequate for security-critical operations. It provides insecure random numbers that are unsuitable where a high level of entropy is required.",
+        "recommendation": "Replace java.util.Random with a secure random number generator, such as instances from java.security.SecureRandom."
+    },
+    {
+        "misuse": "Inadequate Exception Handling",
+        "vulnerable_method": "ConnectorPool.T[] grabMultiple",
+        "vulnerable_code": "catch (Throwable e)",
+        "description": "Catching java.lang.Throwable may catch system errors that the application should not attempt to handle.",
+        "recommendation": "Use more specific exception types in catch clauses."
+    },
+    {
+        "misuse": "Inadequate Class Initialization Error Handling",
+        "vulnerable_method": "ConnectorPool.createConnectorInstance",
+        "vulnerable_code": "catch (ExceptionInInitializerError e)",
+        "description": "Catching ExceptionInInitializerError does not provide a safe way to handle errors that occur during a class initialization process.",
+        "recommendation": "Review error handling logic to ensure appropriate measures are taken when a class's static initialization cannot be completed normally."
+    }
+]
+```

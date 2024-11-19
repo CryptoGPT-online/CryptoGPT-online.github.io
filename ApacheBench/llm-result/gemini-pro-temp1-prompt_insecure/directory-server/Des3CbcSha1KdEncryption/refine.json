@@ -1,0 +1,42 @@
+### False Positive Misuses ###
+1. Broken Crypto Algorithm
+2. Hard-Coded Credentials
+
+### Optimized Misuse JSON###
+[
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_method": "encrypt()",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance( \"DESede/CBC/NoPadding\" );\nSecretKey key = new SecretKeySpec( keyBytes, \"DESede\" );",
+    "description": "The code uses DESede encryption, which is considered weak and not recommended for use in modern applications.",
+    "recommendation": "Use a stronger encryption algorithm, such as AES-256."
+  },
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_method": "method processChecksum",
+    "vulnerable_code": "Mac mac = Mac.getInstance( \"HmacSHA1\" );",
+    "description": "The code uses HmacSHA1 for checksum calculation, which is considered weak and has known collision attacks.",
+    "recommendation": "Use a more secure checksum algorithm, such as HmacSHA256."
+  },
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_method": "getEncryptedData()",
+    "vulnerable_code": "byte[] encryptedData = encrypt( paddedDataBytes, key.getKeyValue() );",
+    "description": "The code uses DES encryption algorithm which is considered insecure and should not be used for encryption purposes.",
+    "recommendation": "Use a more secure encryption algorithm, such as AES."
+  },
+  {
+    "misuse": "CWE-326: Not Using a Random IV with CBC Mode",
+    "vulnerable_method": "processCipher",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance( \"DESede/CBC/NoPadding\" );\nSecretKey key = new SecretKeySpec( keyBytes, \"DESede\" );\n\nAlgorithmParameterSpec paramSpec = new IvParameterSpec( iv );\n\nif ( isEncrypt )\n{\n    cipher.init( Cipher.ENCRYPT_MODE, key, paramSpec );\n}\nelse\n{\n    cipher.init( Cipher.DECRYPT_MODE, key, paramSpec );\n}\n\nreturn cipher.doFinal( data );",
+    "description": "The code is using a fixed IV for CBC mode, which is insecure. An attacker could use this to perform a padding oracle attack.",
+    "recommendation": "Use a random IV for each encryption operation."
+  },
+  {
+    "misuse": "CWE-256: Plaintext Data Exposure",
+    "vulnerable_method": "getDecryptedData",
+    "vulnerable_code": "byte[] withoutConfounder = removeLeadingBytes( decryptedData, getConfounderLength(), 0 );",
+    "description": "This code removes the confounder from the decrypted data without verifying the checksum first. This means that an attacker could modify the decrypted data without being detected.",
+    "recommendation": "Verify the checksum before removing the confounder from the decrypted data."
+  }
+]

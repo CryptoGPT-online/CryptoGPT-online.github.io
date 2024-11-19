@@ -1,0 +1,39 @@
+```json
+[
+    {
+        "misuse": "Insecure Crypto Key Management",
+        "vulnerable_method": "DefaultCipherService.getSecretKeySpec",
+        "vulnerable_code": "byte[] key = Arrays.copyOf(pwdHash, 16);",
+        "description": "The AES encryption key is derived from a password hash, truncated to 128 bits. This may not provide enough entropy and could lead to bruteforce attacks if the original password is weak.",
+        "recommendation": "Use a Key Derivation Function (KDF) such as PBKDF2, bcrypt, scrypt, or Argon2 to derive the key from the password."
+    },
+    {
+        "misuse": "Static IV",
+        "vulnerable_method": "DefaultCipherService.aesEncrypt",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);",
+        "description": "The code does not specify an IV (Initialization Vector) for AES. It relies on the default JVM implementation, which could be a static IV, making the encryption deterministic and more vulnerable to certain attacks like watermarking.",
+        "recommendation": "Use a securely generated random IV for each encryption operation and store it along with the ciphertext."
+    },
+    {
+        "misuse": "Insecure Mode of Operation",
+        "vulnerable_method": "DefaultCipherService.aesEncrypt",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);",
+        "description": "Cipher.getInstance is called with 'AES' only, which might default to AES/ECB, which is not semantically secure. The ECB mode of operation should not be used for encrypting multiple blocks of data with the same key.",
+        "recommendation": "Use AES in a secure mode of operation, such as CBC or GCM mode, with a strong and unique IV for each operation."
+    },
+    {
+        "misuse": "Weak Password-Based Encryption",
+        "vulnerable_method": "DefaultCipherService.secureHash",
+        "vulnerable_code": "return md.digest(value.getBytes(UTF_8));",
+        "description": "The method uses a simple SHA-256 hash for password hashing. This is not secure as SHA-256 is not resistant against brute-force attacks due to its speed.",
+        "recommendation": "Replace the hash function with a secure Password-Based Key Derivation Function like PBKDF2, bcrypt, scrypt, or Argon2 which are designed to be slow."
+    },
+    {
+        "misuse": "Key Size Limitation",
+        "vulnerable_method": "DefaultCipherService.getSecretKeySpec",
+        "vulnerable_code": "byte[] key = Arrays.copyOf(pwdHash, 16);",
+        "description": "The code uses fixed 128-bits AES key size and limits potential use of stronger keys if supported by JVM.",
+        "recommendation": "Do not artificially limit key size. Consider supporting 256-bits keys if the JVM has the Unlimited Strength Jurisdiction Policy Files installed."
+    }
+]
+```

@@ -1,0 +1,25 @@
+```json
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_method": "DesCbcCrcEncryption.getEncryptedData and DesCbcCrcEncryption.encrypt",
+        "vulnerable_code": "Cipher.getInstance(\"DES/CBC/NoPadding\")",
+        "description": "DES (Data Encryption Standard) is considered a broken algorithm due to its 56-bit key size, which makes it susceptible to brute-force attacks.",
+        "recommendation": "Switch to a stronger algorithm such as AES with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "Insecure Initialization Vector",
+        "vulnerable_method": "DesCbcCrcEncryption.processCipher",
+        "vulnerable_code": "new IvParameterSpec(iv)",
+        "description": "The initialization vector (iv) is static and predictable, which can be leveraged by attackers in specific cryptographic attacks, such as chosen-plaintext or known-plaintext attacks.",
+        "recommendation": "Use a secure random IV for each encryption operation."
+    },
+    {
+        "misuse": "Hardcoded Encryption Key Material",
+        "vulnerable_method": "DesCbcCrcEncryption.processCipher",
+        "vulnerable_code": "new SecretKeySpec(keyBytes, \"DES\")",
+        "description": "If key material is not generated securely or is hardcoded, it can potentially be discovered by analyzing the code. However, without further context about where keyBytes comes from, it's not possible to determine if this is a misuse in this situation.",
+        "recommendation": "Ensure keys are derived from a secure source and not hardcoded or guessable. Use key derivation functions if needed."
+    }
+]
+```

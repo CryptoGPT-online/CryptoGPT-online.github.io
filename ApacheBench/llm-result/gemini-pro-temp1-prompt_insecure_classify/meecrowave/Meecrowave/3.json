@@ -1,0 +1,37 @@
+[
+  {
+    "misuse": "Broken or Risky Cryptographic Algorithm",
+    "vulnerable_method": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+    "vulnerable_code": "final Cipher cipher = Cipher.getInstance(\"DESede\");\ncipher.init(Cipher.DECRYPT_MODE, key);",
+    "description": "The use of DESede is not recommended for new development, as there are more secure ciphers available. DESede is a block cipher that uses a 56-bit key, which is no longer considered secure. Additionally, DESede is vulnerable to certain attacks, such as the meet-in-the-middle attack.",
+    "recommendation": "Use a more secure cipher, such as AES-256, for new development. If you must use DESede, be sure to use a strong key and a secure mode of operation."
+  },
+  {
+    "misuse": "Improper Certificate Validation",
+    "vulnerable_method": "CWE-295: Improper Certificate Validation.",
+    "vulnerable_code": null,
+    "description": "There is no code that validates SSL certificates in this snippet, which could allow for man-in-the-middle attacks.",
+    "recommendation": "Validate SSL certificates to ensure that they are issued by a trusted authority and have not been revoked."
+  },
+  {
+    "misuse": "Use of Insufficiently Random Values",
+    "vulnerable_method": "CWE-330: Use of Insufficiently Random Values.",
+    "vulnerable_code": "final String guid = UUID.randomUUID().toString();",
+    "description": "The use of UUID.randomUUID() to generate a GUID is not recommended, as it is not cryptographically secure. An attacker could potentially guess or brute-force the GUID, which could compromise the security of the application.",
+    "recommendation": "Use a cryptographically secure random number generator to generate GUIDs."
+  },
+  {
+    "misuse": "Use of Hardcoded Credentials",
+    "vulnerable_method": "CWE-798: Use of Hardcoded Credentials.",
+    "vulnerable_code": "final String username = \"admin\";\nfinal String password = \"password\";",
+    "description": "Hardcoding credentials in the code is a security risk, as anyone who has access to the code can easily obtain the credentials. This could allow an attacker to access the application and perform unauthorized actions.",
+    "recommendation": "Store credentials in a secure location, such as a database or a keystore, and use a secure mechanism to retrieve the credentials when needed."
+  },
+  {
+    "misuse": "Selection of Less-Secure Algorithm During Negotiation",
+    "vulnerable_method": "CWE-757: Selection of Less-Secure Algorithm During Negotiation.",
+    "vulnerable_code": "final SSLContext sslContext = SSLContext.getInstance(\"TLS\");",
+    "description": "The use of TLS without specifying a specific version or protocol is not recommended, as it could allow an attacker to negotiate a less secure version or protocol. This could allow the attacker to compromise the security of the connection.",
+    "recommendation": "Specify a specific TLS version or protocol when creating the SSLContext, such as \"TLSv1.2\" or \"TLSv1.3\"."
+  }
+]

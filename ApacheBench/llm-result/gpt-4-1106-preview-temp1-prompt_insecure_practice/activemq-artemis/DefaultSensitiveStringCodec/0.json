@@ -1,0 +1,39 @@
+```json
+[
+    {
+        "misuse": "Hardcoded Cryptographic Key",
+        "vulnerable_method": "DefaultSensitiveStringCodec.BlowfishAlgorithm.updateKey",
+        "vulnerable_code": "private byte[] internalKey = \"clusterpassword\".getBytes();",
+        "description": "The hardcoded key 'clusterpassword' in bytes is used for the Blowfish cryptographic operations, such as encryption and decryption. Hardcoded keys can be extracted from the source code or the binary, providing no secrecy for the encrypted data.",
+        "recommendation": "Use a secure method to provide the cryptographic key instead of hardcoding it in the source code. Consider utilizing a key management service or a secure storage mechanism."
+    },
+    {
+        "misuse": "Weak Cryptographic Algorithm",
+        "vulnerable_method": "DefaultSensitiveStringCodec.BlowfishAlgorithm",
+        "vulnerable_code": "\"Blowfish\"",
+        "description": "The use of 'Blowfish' cryptographic algorithm which is no longer considered a strong cryptographic algorithm due to advances in cryptanalysis.",
+        "recommendation": "Replace Blowfish with a more secure encryption algorithm such as AES."
+    },
+    {
+        "misuse": "Weak Hashing Function",
+        "vulnerable_method": "DefaultSensitiveStringCodec.PBKDF2Algorithm",
+        "vulnerable_code": "private String sceretKeyAlgorithm = \"PBKDF2WithHmacSHA1\";",
+        "description": "PBKDF2 with HMAC-SHA1 as the hashing function may not be sufficiently secure, given that SHA1 is no longer considered strong due to vulnerabilities such as collision attacks.",
+        "recommendation": "Use a stronger hashing function such as PBKDF2 with HMAC-SHA256 or HMAC-SHA512 as part of the key derivation algorithm."
+    },
+    {
+        "misuse": "Insecure Random Number Generation",
+        "vulnerable_method": "DefaultSensitiveStringCodec.PBKDF2Algorithm.getSalt",
+        "vulnerable_code": "private String randomScheme = \"SHA1PRNG\";",
+        "description": "The random number generator scheme 'SHA1PRNG' may not offer cryptographically strong random numbers in all Java implementations. It also depends on the underlying native implementation and may be predictably seeded.",
+        "recommendation": "Switch to using 'SecureRandom' without specifying a random number generation algorithm, allowing the Java runtime to select the strongest available algorithm."
+    },
+    {
+        "misuse": "Insufficient Iteration Count",
+        "vulnerable_method": "DefaultSensitiveStringCodec.PBKDF2Algorithm",
+        "vulnerable_code": "private int iterations = 1024;",
+        "description": "The PBKDF2 implementation uses an iteration count of 1024, which might be too low for modern standards and might not provide sufficient protection against password-guessing attacks.",
+        "recommendation": "Increase the PBKDF2 iteration count to a higher value such as 100,000 or more, depending on your use case and performance requirements."
+    }
+]
+```

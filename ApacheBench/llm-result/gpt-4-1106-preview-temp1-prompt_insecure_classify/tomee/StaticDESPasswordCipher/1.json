@@ -1,0 +1,25 @@
+```json
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_method": "StaticDESPasswordCipher.encrypt and StaticDESPasswordCipher.decrypt",
+        "vulnerable_code": "new SecretKeySpec(_3desData, \"DESede\")",
+        "description": "The use of Triple DES (3DES) for encryption is deprecated and considered to provide inadequate encryption strength.",
+        "recommendation": "Use a more secure algorithm such as AES with a suitable key size."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_method": "StaticDESPasswordCipher.StaticDESPasswordCipher",
+        "vulnerable_code": "private static final byte[] _3desData = { ... }; private static final SecretKeySpec KEY = new SecretKeySpec(_3desData, \"DESede\");",
+        "description": "The encryption/decryption key is hardcoded within the application code, which could lead to security risks if the code is exposed.",
+        "recommendation": "Use a secure method to manage encryption keys, such as a key management service, to prevent hardcoded keys within the application."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values for cryptographic context",
+        "vulnerable_method": "StaticDESPasswordCipher.encrypt and StaticDESPasswordCipher.decrypt",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, KEY); cipher.init(Cipher.DECRYPT_MODE, KEY);",
+        "description": "There is no secure random initialization vector (IV) for the Cipher, which could lead to predictable cryptographic operations.",
+        "recommendation": "Generate a secure random IV and use it during the encryption. Store the IV along with the ciphertext, and use it for decryption."
+    }
+] 
+```

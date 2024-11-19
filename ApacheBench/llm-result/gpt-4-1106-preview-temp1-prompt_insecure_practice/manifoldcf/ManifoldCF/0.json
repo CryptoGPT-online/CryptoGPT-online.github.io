@@ -1,0 +1,39 @@
+```json
+[
+  {
+    "misuse": "Insecure Randomness",
+    "vulnerable_method": "ManifoldCF.getSecureRandom",
+    "vulnerable_code": "SecureRandom random = new SecureRandom();",
+    "description": "While SecureRandom is meant to be cryptographically strong, it is not seeded properly, which could theoretically lead to predictability issues.",
+    "recommendation": "Make sure to seed SecureRandom with a reliable entropy source."
+  },
+  {
+    "misuse": "Weak Hashing Mechanism",
+    "vulnerable_method": "ManifoldCF.hash",
+    "vulnerable_code": "return MessageDigest.getInstance(\"SHA\");",
+    "description": "The code uses SHA-1 for hashing which is considered weak due to vulnerabilities that allow for collision attacks.",
+    "recommendation": "Consider using a stronger hashing algorithm such as SHA-256 or SHA-3."
+  },
+  {
+    "misuse": "Weak Key Derivation Function",
+    "vulnerable_method": "ManifoldCF.getCipher",
+    "vulnerable_code": "SecretKeyFactory factory = SecretKeyFactory.getInstance(\"PBKDF2WithHmacSHA1\");",
+    "description": "Using PBKDF2 with HMAC-SHA1 is weak compared to modern standards; HMAC-SHA256 or HMAC-SHA512 would be stronger.",
+    "recommendation": "Replace PBKDF2WithHmacSHA1 with a stronger key derivation function, such as PBKDF2WithHmacSHA256 or PBKDF2WithHmacSHA512."
+  },
+  {
+    "misuse": "Insecure Cryptographic Algorithm Mode",
+    "vulnerable_method": "ManifoldCF.getCipher",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+    "description": "Using AES encryption in CBC mode with PKCS5Padding is vulnerable to padding oracle attacks.",
+    "recommendation": "Use a mode of operation like GCM, which provides both confidentiality and integrity, and does not require separate padding."
+  },
+  {
+    "misuse": "Hardcoded Encryption Key",
+    "vulnerable_method": "ManifoldCF.obfuscate",
+    "vulnerable_code": "OBFUSCATION_PASSCODE",
+    "description": "Static keys such as the obfuscation passcode may lead to vulnerabilities if exposed or reverse-engineered.",
+    "recommendation": "Avoid hardcoding encryption keys within the code. Instead, use a secure method to store and retrieve keys."
+  }
+]
+```

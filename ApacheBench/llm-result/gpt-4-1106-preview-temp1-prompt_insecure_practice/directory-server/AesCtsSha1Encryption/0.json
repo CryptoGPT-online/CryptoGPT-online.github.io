@@ -1,0 +1,25 @@
+```json
+[
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_method": "AesCtsSha1Encryption.deriveKey",
+        "vulnerable_code": "byte[] Kc = deriveKey( key, getUsageKc( usage ), 128, getKeyLength() );",
+        "description": "The method deriveKey is being used with a constant 128 bits for the key derivation regardless of the actual key size requirement, potentially leading to a weaker key than expected.",
+        "recommendation": "Ensure the key size 'n' specified in the deriveKey method corresponds to the required key length for AES encryption according to its variant (AES-128, AES-192, or AES-256). For instance, if AES with a 256-bit key is desired, 'n' should be 256."
+    },
+    {
+        "misuse": "Weak Initialization Vector",
+        "vulnerable_method": "AesCtsSha1Encryption.processCipher",
+        "vulnerable_code": "AlgorithmParameterSpec paramSpec = new IvParameterSpec( iv );",
+        "description": "A hard-coded, all-zero initialization vector (IV) is being used, which is not secure for encryption modes that require an unpredictable IV such as CBC mode to prevent chosen-plaintext attacks.",
+        "recommendation": "Use a secure random IV for each encryption operation. The IV should be unique and unpredictable. Typically, it's best practice to generate a new IV using a secure random number generator for each encryption operation."
+    },
+    {
+        "misuse": "Error Handling",
+        "vulnerable_method": "AesCtsSha1Encryption.processChecksum, AesCtsSha1Encryption.processCipher",
+        "vulnerable_code": "catch ( GeneralSecurityException nsae ) { nsae.printStackTrace(); return null; }",
+        "description": "The exception handling in both processChecksum and processCipher methods is inadequate. Printing the stack trace is not an appropriate way to handle encryption-related exceptions, and returning 'null' could lead to NullPointerExceptions in the calling code or mask security issues.",
+        "recommendation": "Instead of printing stack traces and returning null, throw a custom security exception that the calling code can handle appropriately. This would avoid potential NullPointerExceptions and make sure that security-related issues are managed correctly."
+    }
+]
+```

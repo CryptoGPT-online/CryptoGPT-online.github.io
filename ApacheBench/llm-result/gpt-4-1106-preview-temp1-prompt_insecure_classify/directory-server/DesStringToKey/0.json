@@ -1,0 +1,25 @@
+```json
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_method": "org.apache.directory.server.kerberos.shared.crypto.encryption.DesStringToKey",
+        "vulnerable_code": "Cipher.getInstance(\"DES/CBC/NoPadding\");",
+        "description": "DES is used for encryption which is considered to be weak due to its small key size of 56-bits.",
+        "recommendation": "Use AES or another strong encryption algorithm with a larger key size."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_method": "org.apache.directory.server.kerberos.shared.crypto.encryption.DesStringToKey",
+        "vulnerable_code": "Cipher.getInstance(\"DES/CBC/NoPadding\");",
+        "description": "DES is a deprecated encryption algorithm that is vulnerable to brute-force attacks and other forms of cryptanalysis.",
+        "recommendation": "Replace DES with a secure cryptographic algorithm such as AES."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_method": "org.apache.directory.server.kerberos.shared.crypto.encryption.DesStringToKey.generateKey()",
+        "vulnerable_code": "algorithmParameterSpec = new IvParameterSpec(secretKey);",
+        "description": "The encryption key is also used as the initialization vector (IV) for DES CBC mode, leading to a predictable IV which should be random and unique for each encryption session.",
+        "recommendation": "Use a secure random number generator to generate a random IV for each encryption session."
+    }
+]
+```

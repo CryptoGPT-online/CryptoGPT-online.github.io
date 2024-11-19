@@ -1,0 +1,16 @@
+[
+  {
+    "misuse": "Hardcoded algorithm parameter",
+    "vulnerable_method": "processCipher",
+    "vulnerable_code": "AlgorithmParameterSpec paramSpec = new IvParameterSpec( iv );",
+    "description": "This code hard coded the IV parameter which makes it vulnerable to IV reuse attack. A fixed IV weakens block cipher by allowing an attacker to perform a related-key attack. Furthermore, CBC mode is vulnerable to padding oracle attacks when IV is fixed for different ciphertexts encrypted using the same key (see Sweet32 attack).",
+    "recommendation": "Instead of using a fixed IV, generate a random IV for each encryption operation and send it along with the ciphertext. The Initialization Vector (IV) should be unique/random for each encryption and unpredictable."
+  },
+  {
+    "misuse": "The key size of DES is too small (56 bits)",
+    "vulnerable_method": "processCipher",
+    "vulnerable_code": "SecretKey key = new SecretKeySpec( keyBytes, \"DES\" );",
+    "description": "The key size of DES is 56 bits, which is considered to be too small and is not recommended for use in new applications. DES has been deprecated by NIST SP 800-131A and should no longer be used.",
+    "recommendation": "Use a stronger encryption algorithm with a larger key size, such as AES-256."
+  }
+]

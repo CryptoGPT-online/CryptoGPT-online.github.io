@@ -1,0 +1,32 @@
+```json
+[
+  {
+    "misuse": "Insecure Default Random Number Generator",
+    "vulnerable_method": "TomcatWithFastSessionIDs start method",
+    "vulnerable_code": [
+      "final ManagerBase managerBase = (ManagerBase) m;",
+      "managerBase.setSecureRandomClass(\"org.apache.catalina.startup.FastNonSecureRandom\");"
+    ],
+    "description": "The application uses an insecure RNG for session ID generation which can lead to predictable session IDs resulting in session hijacking attacks.",
+    "recommendation": "Use a secure RNG for session ID generation such as java.security.SecureRandom."
+  },
+  {
+    "misuse": "Static Encryption Key",
+    "vulnerable_method": "ValueTransformers Static3DES inner class",
+    "vulnerable_code": [
+      "private final SecretKeySpec key = new SecretKeySpec(new byte[]{ ... }, \"DESede\");"
+    ],
+    "description": "The encryption algorithm uses a hard-coded static key, compromising the confidentiality of encrypted data.",
+    "recommendation": "Never embed encryption keys in source code. Instead, securely manage and store keys in a secure configuration file or service."
+  },
+  {
+    "misuse": "Weak Encryption Algorithm",
+    "vulnerable_method": "ValueTransformers Static3DES inner class",
+    "vulnerable_code": [
+      "final Cipher cipher = Cipher.getInstance(\"DESede\");"
+    ],
+    "description": "The DESede (Triple DES) encryption algorithm is considered weak and should not be used in secure contexts.",
+    "recommendation": "Use a stronger algorithm such as AES with a key size of at least 128 bits."
+  }
+]
+```

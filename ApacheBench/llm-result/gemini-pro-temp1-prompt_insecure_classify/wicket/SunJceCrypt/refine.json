@@ -1,0 +1,22 @@
+### False Positive Misuse ###
+- **CWE-798: Use of Hardcoded Credentials**
+The misuse report claims the default encryption method (cipher) is hardcoded to PBEWithMD5AndDES in the constructor `SunJceCrypt#SunJceCrypt()`. However, the constructor allows users to specify their encryption method when creating a new `SunJceCrypt` object. Therefore, it's not a hardcoded credential issue.
+
+### Optimized Misuse JSON###
+
+[
+  {
+    "misuse category": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_method": "SunJceCrypt#crypt",
+    "vulnerable_code": "Cipher ciph = createCipher(key, spec, mode);",
+    "description": "The code uses the `PBEWithMD5AndDES` algorithm, which is considered weak and insecure. It is recommended to use a stronger algorithm, such as `AES-256` or `ChaCha20-Poly1305`.",
+    "recommendation": "Change the encryption algorithm to a more secure one, such as `AES-256` or `ChaCha20-Poly1305`."
+  },
+  {
+    "misuse category": "CWE-798: Use of Hardcoded Credentials",
+    "vulnerable_method": "SunJceCrypt#createParameterSpec()",
+    "vulnerable_code": "return PARAMETER_SPEC;",
+    "description": "The PARAMETER_SPEC is hardcoded in createParameterSpec, which means the same salt will be used for all encryptions.",
+    "recommendation": "Generate a random salt for each encryption."
+  }
+]

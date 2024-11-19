@@ -1,0 +1,23 @@
+[
+  {
+    "misuse": "BROKEN_CRYPTO",
+    "vulnerable_method": "public static String encrypt(String saltValue, String passCode, String input)\nthrows ManifoldCFException",
+    "vulnerable_code": "try\n{\nByteArrayOutputStream os = new ByteArrayOutputStream();\n\n// Write IV as a prefix:\nbyte[] iv = getSecureRandom();\nos.write(iv);\nos.flush();\n\nCipher cipher = getCipher(saltValue, Cipher.ENCRYPT_MODE, passCode, iv);\nCipherOutputStream cos = new CipherOutputStream(os, cipher);\nWriter w = new OutputStreamWriter(cos,java.nio.charset.StandardCharsets.UTF_8);\nw.write(input);\nw.flush();\n// These two shouldn't be necessary, but they are.\ncos.flush();\ncos.close();\nbyte[] bytes = os.toByteArray();\nreturn new org.apache.manifoldcf.core.common.Base64().encodeByteArray(bytes);\n} catch (IOException e)\n{\nthrow new ManifoldCFException(e.getMessage(),e);}",
+    "description": "The method uses a fixed initialization vector (IV) for the Cipher object, which is a security risk. An initialization vector (IV) is a random or pseudo-random number that is used to initialize the cipher. It should be unique for each encryption operation. Using a fixed IV makes it easier for attackers to break the encryption.",
+    "recommendation": "Use a random or pseudo-random IV for each encryption operation by generating it using `SecureRandom`."
+  },
+  {
+    "misuse": "BROKEN_CRYPTO",
+    "vulnerable_method": "public static String encrypt(String saltValue, String passCode, String input)\nthrows ManifoldCFException",
+    "vulnerable_code": "Cipher cipher = getCipher(saltValue, Cipher.ENCRYPT_MODE, passCode, iv);",
+    "description": "The method uses ECB mode for the Cipher object, which is a security risk. ECB mode is a block cipher mode that does not use an initialization vector (IV). This makes it easier for attackers to break the encryption.",
+    "recommendation": "Use a block cipher mode that uses an IV, such as CBC or CTR."
+  },
+  {
+    "misuse": "BROKEN_CRYPTO",
+    "vulnerable_method": "protected static Cipher getCipher(String saltValue, int mode, String passCode, byte[] iv)\nthrows ManifoldCFException",
+    "vulnerable_code": "factory = SecretKeyFactory.getInstance(\"PBKDF2WithHmacSHA1\");\nKeySpec keySpec = new PBEKeySpec(passCode.toCharArray(), saltValue.getBytes(StandardCharsets.UTF_8), 1024, 128);\nSecretKey secretKey = factory.generateSecret(keySpec);",
+    "description": "The method uses `PBKDF2WithHmacSHA1` to derive the secret key from the password and salt, which is a weak algorithm. `PBKDF2WithHmacSHA1` is no longer considered secure and should not be used.",
+    "recommendation": "Use a stronger key derivation function (KDF), such as `PBKDF2WithHmacSHA256` or `scrypt`."
+  }
+]

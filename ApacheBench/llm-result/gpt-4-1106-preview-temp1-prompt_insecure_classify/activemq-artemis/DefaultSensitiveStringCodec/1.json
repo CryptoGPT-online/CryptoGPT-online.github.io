@@ -1,0 +1,32 @@
+```json
+[
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_method": "DefaultSensitiveStringCodec.BlowfishAlgorithm.encode / DefaultSensitiveStringCodec.BlowfishAlgorithm.decode",
+    "vulnerable_code": "\"Blowfish\"",
+    "description": "The key provided to the Blowfish algorithm is derived from a hardcoded string, which could be easily discovered and does not offer adequate security.",
+    "recommendation": "Use a strong key-generation mechanism that provides a high entropy key, and avoid hardcoding keys within the application."
+  },
+  {
+    "misuse": "CWE-798: Use of Hardcoded Credentials",
+    "vulnerable_method": "DefaultSensitiveStringCodec.BlowfishAlgorithm.updateKey",
+    "vulnerable_code": "private byte[] internalKey = \"clusterpassword\".getBytes();",
+    "description": "The hardcoded password ('clusterpassword') used as a key can be considered as hardcoded credentials.",
+    "recommendation": "Remove the hardcoded password and ensure that keys are securely managed and not embedded in the code."
+  },
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values",
+    "vulnerable_method": "DefaultSensitiveStringCodec.PBKDF2Algorithm.getSalt",
+    "vulnerable_code": "byte[] salt = RandomUtil.randomBytes(this.saltLength);",
+    "description": "Secure random salt value should be used for password hashing. It's not clear if RandomUtil.randomBytes() provides cryptographically secure values.",
+    "recommendation": "Ensure that RandomUtil.randomBytes() utilizes a secure random number generator such as 'java.security.SecureRandom' for generating salt values."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_method": "DefaultSensitiveStringCodec.PBKDF2Algorithm.PBKDF2Algorithm",
+    "vulnerable_code": "private String sceretKeyAlgorithm = \"PBKDF2WithHmacSHA1\";",
+    "description": "PBKDF2 with HMAC SHA-1 as the hashing algorithm is used for password hashing, which is no longer considered as strong as newer algorithms like SHA-256 or SHA-512.",
+    "recommendation": "Use a stronger hashing algorithm, such as \"PBKDF2WithHmacSHA256\" or \"PBKDF2WithHmacSHA512\"."
+  }
+]
+```

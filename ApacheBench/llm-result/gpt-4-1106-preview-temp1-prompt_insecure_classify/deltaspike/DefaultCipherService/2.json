@@ -1,0 +1,25 @@
+```json
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_method": "DefaultCipherService.getSecretKeySpec",
+        "vulnerable_code": "byte[] key = Arrays.copyOf(pwdHash, 16);",
+        "description": "The encryption key derived from the password is limited to 128 bits, which could be inadequate for protecting against modern threats that may require larger key sizes (at least 256 bits).",
+        "recommendation": "Increase the key size to at least 256 bits for AES if the jurisdiction allows it."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values for cryptographic context",
+        "vulnerable_method": "DefaultCipherService.encrypt and DefaultCipherService.decrypt",
+        "vulnerable_code": "Cipher.getInstance(CIPHER_ALGORITHM);",
+        "description": "The code uses AES encryption without specifying an explicit mode and padding. By default, Java may use ECB, which is not secure for data that exceeds the size of one block, since it does not use an initialization vector (IV) and encrypts identical plaintext blocks into identical ciphertext blocks.",
+        "recommendation": "Use a secure block cipher mode like CBC or GCM that requires an initialization vector (IV). Ensure that the IV is random for each encryption operation."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_method": "DefaultCipherService.setMasterHash and DefaultCipherService.getMasterKey",
+        "vulnerable_code": "String saltHash = byteToHex(secureHash(masterSalt));",
+        "description": "The method generates a key for encryption by hashing user input (such as a password and salt). If the inputs are not complex or secure enough, this can effectively act as hardcoded credentials, potentially leading to insecurity if attackers can guess or determine the inputs.",
+        "recommendation": "Ensure that passwords and salts are of high entropy and complexity. Additionally, use a proper key derivation function like PBKDF2 instead of a single hash function."
+    }
+]
+```

@@ -1,0 +1,16 @@
+[
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_method": "Util.doEncryption",
+    "vulnerable_code": "SecretKey key = keyFactory.generateSecret(keySpec);\nMessageDigest md = MessageDigest.getInstance(\"MD5\");\nbyte[] digest = md.digest();\nbyte[] salt = new byte[8];\nfor (int i = 0; i < 8; ++i)\n  salt[i] = digest[i];",
+    "description": "The use of MD5 for key generation and a hardcoded salt length of 8 bytes may result in inadequate encryption strength.",
+    "recommendation": "Use a stronger key generation algorithm such as SHA-256 and generate a random salt with sufficient length."
+  },
+  {
+    "misuse": "CWE-798: Use of Hardcoded Credentials",
+    "vulnerable_method": "Util.java",
+    "vulnerable_code": "private static final String PBE_PASSWORD = System.getProperty(\"user.home\");\nprivate static final String PBE_SALT;\nstatic {\n  String host_name = \"\";\n  try {\n    host_name = InetAddress.getLocalHost().toString();\n  } catch (UnknownHostException e) {\n    host_name = \"unknown_localhost\";\n  }\n  PBE_SALT = host_name;\n}",
+    "description": "The PBE_PASSWORD is set to the user's home directory, and PBE_SALT is derived from the local host name, which could be considered as hardcoded credentials.",
+    "recommendation": "Use a more secure and dynamic way to generate passwords and salt for encryption."
+  }
+]

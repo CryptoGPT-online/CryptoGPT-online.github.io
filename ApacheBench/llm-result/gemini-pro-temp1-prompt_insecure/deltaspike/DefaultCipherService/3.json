@@ -1,0 +1,23 @@
+[{"misuse": "Broken Crypto Algorithm", "vulnerable_method": "aesEncrypt", "vulnerable_code": "try\n" +
+"            {\n" +
+"                SecretKeySpec secretKeySpec = getSecretKeySpec(key);\n" +
+"\n" +
+"                Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);\n" +
+"                cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);\n" +
+"                return cipher.doFinal(valueToEncrypt.getBytes(UTF_8));\n" +
+"            }\n" +
+"            catch (Exception e)\n" +
+"            {\n" +
+"                throw new RuntimeException(e);\n" +
+"            }", "description": "This code uses `AES` with 128-bit keys, which is not recommended for production use. For stronger security, use `AES` with 256-bit keys.", "recommendation": "Change to use `AES` with 256-bit keys."}, {"misuse": "Broken Crypto Algorithm", "vulnerable_method": "aesDecrypt", "vulnerable_code": "try\n" +
+"            {\n" +
+"                SecretKeySpec secretKeySpec = getSecretKeySpec(key);\n" +
+"\n" +
+"                Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);\n" +
+"                cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);\n" +
+"                return new String(cipher.doFinal(encryptedValue), UTF_8);\n" +
+"            }\n" +
+"            catch (Exception e)\n" +
+"            {\n" +
+"                throw new RuntimeException(e);\n" +
+"            }", "description": "This code uses `AES` with 128-bit keys, which is not recommended for production use. For stronger security, use `AES` with 256-bit keys.", "recommendation": "Change to use `AES` with 256-bit keys."}]

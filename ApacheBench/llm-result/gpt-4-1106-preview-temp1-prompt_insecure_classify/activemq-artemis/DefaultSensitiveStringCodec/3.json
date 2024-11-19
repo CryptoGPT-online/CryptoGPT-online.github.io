@@ -1,0 +1,32 @@
+```json
+[
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_method": "DefaultSensitiveStringCodec.BlowfishAlgorithm",
+    "vulnerable_code": "private byte[] internalKey = \"clusterpassword\".getBytes();",
+    "description": "The encryption key is hardcoded, and its strength cannot be guaranteed. It could lead to the key being easily compromised, which undermines the security of the encryption algorithm.",
+    "recommendation": "Use a securely generated random key and store it securely."
+  },
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+    "vulnerable_method": "DefaultSensitiveStringCodec.BlowfishAlgorithm",
+    "vulnerable_code": "\"Blowfish\"",
+    "description": "Blowfish is considered a legacy algorithm and could be vulnerable to attacks if not used with a sufficiently large key size or if used in certain modes of operation.",
+    "recommendation": "Consider using a more secure algorithm such as AES."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_method": "DefaultSensitiveStringCodec.BlowfishAlgorithm",
+    "vulnerable_code": "BigInteger n = new BigInteger(encoding); return n.toString(16);",
+    "description": "The code converts the encrypted byte[] to a BigInteger, then to a hex String. Depending on the byte array, this could lead to loss of leading zeros. It does not directly relate to the strength of the encryption but could lead to predictable/corrupt output from the encryption which could reduce security in certain contexts.",
+    "recommendation": "Instead of using BigInteger, directly encode the byte[] to a hex String ensuring leading zeros are preserved."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_method": "DefaultSensitiveStringCodec.PBKDF2Algorithm",
+    "vulnerable_code": "private int iterations = 1024;",
+    "description": "The number of iterations (1024) for PBKDF2 may be too low for current standards, potentially leading to inadequate protection against brute-force attacks.",
+    "recommendation": "Increase the number of iterations to at least 10000 to improve the strength of the hash."
+  }
+]
+```

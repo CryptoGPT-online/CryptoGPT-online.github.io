@@ -1,0 +1,18 @@
+```json
+[
+    {
+        "misuse": "Insecure Key Generation",
+        "vulnerable_method": "DefaultCipherService.getSecretKeySpec",
+        "vulnerable_code": "return new SecretKeySpec(key, \"AES\");",
+        "description": "The key for AES encryption is derived from the input password and should be generated using a secure key derivation function like PBKDF2 instead of directly using the password hash.",
+        "recommendation": "Use a secure key derivation function like PBKDF2 to generate the key for AES encryption."
+    },
+    {
+        "misuse": "Hardcoded Algorithm",
+        "vulnerable_method": "DefaultCipherService.aesEncrypt & DefaultCipherService.aesDecrypt",
+        "vulnerable_code": "Cipher.getInstance(CIPHER_ALGORITHM);",
+        "description": "The algorithm used for encryption and decryption is hardcoded, and it's recommended to use a configurable algorithm to allow flexibility and future upgrades.",
+        "recommendation": "Use a configurable property or parameter to specify the algorithm for encryption and decryption."
+    }
+]
+```

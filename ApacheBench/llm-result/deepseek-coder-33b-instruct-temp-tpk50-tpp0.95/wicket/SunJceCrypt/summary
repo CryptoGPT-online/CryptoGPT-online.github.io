@@ -1,0 +1,20 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "description": "The code uses DES encryption algorithm (`Cipher.getInstance(cryptMethod);` with `cryptMethod` possibly defaulting to DES and `PBEWithMD5AndDES`), which is known to be weak and susceptible to various attacks including timing attacks. Moreover, the use of password-based encryption (such as PBKDF2) with PBEKeySpec and MD5 is not recommended due to similar concerns."
+    },
+    {
+        "misuse": "Use of Hardcoded Salt Value",
+        "description": "The application is using a hardcoded salt value, which is not randomized. This practice leaves the system susceptible to attacks, such as rainbow table attacks, as the same salt is used across different instances and hashed passwords might be predictable."
+    },
+    {
+        "misuse": "Use of SHA-1 Algorithm for Password Hashing",
+        "description": "The function `createKeySpec` is utilizing `PBEKeySpec` which is based on obsolete SHA-1 and MD5 hash functions. These algorithms are vulnerable and weakened over the years, which may allow an attacker to potentially crack passwords."
+    },
+    {
+        "misuse": "Weak Cryptographic Algorithm Acceptance from User Input",
+        "description": "The method `SunJceCrypt::crypt` accepts `cryptMethod` directly from user input, which could lead to the use of a weaker and potentially compromised encryption algorithm if an attacker has control over this input."
+    }
+]
+```

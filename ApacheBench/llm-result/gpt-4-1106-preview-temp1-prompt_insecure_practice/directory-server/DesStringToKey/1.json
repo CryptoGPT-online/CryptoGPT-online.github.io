@@ -1,0 +1,32 @@
+```json
+[
+    {
+        "misuse": "Weak Encryption Algorithm",
+        "vulnerable_method": "org.apache.directory.server.kerberos.shared.crypto.encryption.DesStringToKey.generateKey",
+        "vulnerable_code": "Cipher.getInstance( \"DES/CBC/NoPadding\" );",
+        "description": "DES (Data Encryption Standard) is considered an insecure encryption algorithm due to its short key length of only 56 bits.",
+        "recommendation": "Use a stronger encryption algorithm like AES with a key length of at least 128 bits."
+    },
+    {
+        "misuse": "Weak Key Derivation Function",
+        "vulnerable_method": "org.apache.directory.server.kerberos.shared.crypto.encryption.DesStringToKey.getKey",
+        "vulnerable_code": "generateKey( passPhrase )",
+        "description": "Password-based keys are derived without using a cryptographic salt and a strong key derivation function, making them susceptible to dictionary attacks.",
+        "recommendation": "Utilize a secure key derivation function like PBKDF2, bcrypt or scrypt, and always use a random cryptographic salt."
+    },
+    {
+        "misuse": "Inadequate Exception Handling",
+        "vulnerable_method": "org.apache.directory.server.kerberos.shared.crypto.encryption.DesStringToKey.calculateChecksum",
+        "vulnerable_code": "catch ( GeneralSecurityException nsae ) { nsae.printStackTrace(); return null; }",
+        "description": "Exceptions are not properly handled, and stack trace is printed to stderr, which might leak sensitive information in log files.",
+        "recommendation": "Properly handle exceptions and avoid printing stack traces to the standard error output."
+    },
+    {
+        "misuse": "Weak Key Generation Method",
+        "vulnerable_method": "org.apache.directory.server.kerberos.shared.crypto.encryption.DesStringToKey.getStrongKey",
+        "vulnerable_code": "if ( DESKeySpec.isWeak( secretKey, 0 ) ) { secretKey[7] ^= 0xf0; }",
+        "description": "The method merely XORs a byte when a weak key is detected instead of generating a completely new strong key.",
+        "recommendation": "Regenerate a new key entirely if the current key is found to be weak."
+    }
+]
+```

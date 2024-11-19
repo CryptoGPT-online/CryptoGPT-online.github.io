@@ -1,0 +1,53 @@
+```json
+[
+  {
+    "misuse": "Inadequate Key Size",
+    "vulnerable_method": "Des3CbcSha1KdEncryption.deriveKey",
+    "vulnerable_code": "byte[] Kc = deriveKey( key, getUsageKc( usage ), 64, 168 );",
+    "description": "The function `deriveKey` is using an inadequate key size specified by (64, 168) which does not conform to the expected key size for triple DES (3DES) which is 192 bits (or 168 bits without parity bits).",
+    "recommendation": "Change the key size to be 192 bits or 168 bits without parity bits when calling `deriveKey`."
+  },
+  {
+    "misuse": "Hardcoded IV",
+    "vulnerable_method": "Des3CbcSha1KdEncryption",
+    "vulnerable_code": "private static final byte[] iv = {...};",
+    "description": "The Initialization Vector (IV) for DESede/CBC/NoPadding mode is hardcoded and public, which may lead to predictable IVs and weaken the encryption scheme.",
+    "recommendation": "Use a secure random IV for each encryption operation."
+  },
+  {
+    "misuse": "Static Initialization Vector",
+    "vulnerable_method": "Des3CbcSha1KdEncryption.processCipher",
+    "vulnerable_code": "AlgorithmParameterSpec paramSpec = new IvParameterSpec( iv );",
+    "description": "The IV used in the method processCipher is not random and static, which will lead to identical ciphertexts for identical plaintexts under the same key, compromising security.",
+    "recommendation": "Generate a new random IV for each encryption operation."
+  },
+  {
+    "misuse": "Insufficient Padding in Encryption",
+    "vulnerable_method": "Des3CbcSha1KdEncryption.processCipher",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance( \"DESede/CBC/NoPadding\" );",
+    "description": "No padding is used in the DESede/CBC/NoPadding cipher. Without proper padding, the plaintext messages have to be manually padded to the block size, which can lead to padding oracle attacks if not done correctly.",
+    "recommendation": "Switch to a cipher mode that includes padding such as DESede/CBC/PKCS5Padding."
+  },
+  {
+    "misuse": "Weak Randomness for Nonce",
+    "vulnerable_method": "Des3CbcSha1KdEncryption.getEncryptedData",
+    "vulnerable_code": "byte[] conFounder = getRandomBytes( getConfounderLength() );",
+    "description": "The method `getRandomBytes` may employ a weak randomness source for generating the confounder.",
+    "recommendation": "Ensure that `getRandomBytes` is using a strong source of randomness such as `java.security.SecureRandom`."
+  },
+  {
+    "misuse": "Improper Parity Bit Setting",
+    "vulnerable_method": "Des3CbcSha1KdEncryption.setParity",
+    "vulnerable_code": "setBit( expandedIn, 62, getBit( in, 7 ) ); ... setBit( out, i, val ); ...",
+    "description": "The method `setParity` appears to be manually setting parity bits for the key. Incorrect setting of parity bits may lead to weak keys that compromise the encryption strength.",
+    "recommendation": "Use proper cryptographic libraries or standards to ensure parity bits are set correctly for DES keys."
+  },
+  {
+    "misuse": "Inadequate Exception Handling",
+    "vulnerable_method": "Des3CbcSha1KdEncryption",
+    "vulnerable_code": "nsae.printStackTrace(); return null;",
+    "description": "GeneralSecurityException is caught and the stack trace is printed to standard error, without halting execution or propagating the error in a secure manner. Returning null in these methods when an exception occurs could lead to unexpected behavior and potential security issues.",
+    "recommendation": "Properly handle the GeneralSecurityException by either rethrowing it or failing securely with a defined error state."
+  }
+]
+```

@@ -1,0 +1,32 @@
+```json
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_method": "Meecrowave$TomcatWithFastSessionIDs.start",
+        "vulnerable_code": "ManagerBase.class.cast(m).setSecureRandomClass(\"org.apache.catalina.startup.FastNonSecureRandom\");",
+        "description": "Uses an insecure random number generator for session IDs, which can make it easier for attackers to predict session IDs and breach the application's security controls.",
+        "recommendation": "Use a secure random number generator for session IDs."
+    },
+    {
+        "misuse": "Static Key",
+        "vulnerable_method": "Meecrowave$ValueTransformers$1.apply",
+        "vulnerable_code": "\"org.apache.catalina.startup.FastNonSecureRandom\"",
+        "description": "The static key makes the encryption predictable and undermines the security of encrypted data.",
+        "recommendation": "Use a dynamically generated key and securely manage it, avoiding hard-coded keys."
+    },
+    {
+        "misuse": "Use of ECB Mode in Encryption",
+        "vulnerable_method": "Meecrowave$ValueTransformers$1.apply",
+        "vulnerable_code": "Cipher.getInstance(\"DESede\")",
+        "description": "ECB (Electronic Codebook Mode) doesn't provide serious message confidentiality, and it may leak data about the input (especially when input patterns are repeated).",
+        "recommendation": "Use a more secure mode of operation like CBC (Cipher Block Chaining)."
+    },
+    {
+        "misuse": "Weak Encryption Algorithm",
+        "vulnerable_method": "Meecrowave$ValueTransformers$1.apply",
+        "vulnerable_code": "\"DESede\"",
+        "description": "Triple DES (DESede) is considered deprecated and can be vulnerable to various attacks such as the meet-in-the-middle attack.",
+        "recommendation": "Use a stronger algorithm like AES (Advanced Encryption Standard)."
+    }
+]
+```

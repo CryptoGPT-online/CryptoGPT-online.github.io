@@ -1,0 +1,39 @@
+```json
+[
+    {
+        "misuse": "Static Use of Secret Key",
+        "vulnerable_method": "DefaultSensitiveStringCodec.BlowfishAlgorithm.decode / DefaultSensitiveStringCodec.BlowfishAlgorithm.encode",
+        "vulnerable_code": "private byte[] internalKey = \"clusterpassword\".getBytes();",
+        "description": "Blowfish Algorithm is using a static string 'clusterpassword' as the secret key, which can be easily discovered in the bytecode and hence is not secure.",
+        "recommendation": "Do not use a static key. Use a secure method for key generation, such as SecureRandom, and store it safely."
+    },
+    {
+        "misuse": "Weak Hashing Algorithm",
+        "vulnerable_method": "DefaultSensitiveStringCodec.PBKDF2Algorithm",
+        "vulnerable_code": "private String sceretKeyAlgorithm = \"PBKDF2WithHmacSHA1\";",
+        "description": "PBKDF2 with HMAC-SHA1 is outdated and considered less secure. Newer algorithms like HMAC-SHA256 or HMAC-SHA512 provide better security.",
+        "recommendation": "Use more secure hashing algorithm such as 'PBKDF2WithHmacSHA256' or 'PBKDF2WithHmacSHA512'."
+    },
+    {
+        "misuse": "Inadequate Iteration Count",
+        "vulnerable_method": "DefaultSensitiveStringCodec.PBKDF2Algorithm",
+        "vulnerable_code": "private int iterations = 1024;",
+        "description": "The iteration count of 1024 for PBKDF2 may be insufficient for modern security standards. Such a low iteration count can be vulnerable to brute-force attacks.",
+        "recommendation": "Increase the iteration count to a higher value, such as at least 10,000 iterations, to enhance the resilience against brute-force attacks."
+    },
+    {
+        "misuse": "Insecure Padding Scheme",
+        "vulnerable_method": "DefaultSensitiveStringCodec.BlowfishAlgorithm.decode",
+        "vulnerable_code": "if (encoding.length % 8 != 0) { ... System.arraycopy(old, 0, encoding, pad, old.length); }",
+        "description": "The way padding is added to the input data before decrypting with Blowfish can introduce vulnerabilities due to manipulation of the padding bytes.",
+        "recommendation": "Use a secure padding scheme provided by the Cipher class such as PKCS5Padding."
+    },
+    {
+        "misuse": "Insecure Random Number Generator",
+        "vulnerable_method": "DefaultSensitiveStringCodec.PBKDF2Algorithm",
+        "vulnerable_code": "private String randomScheme = \"SHA1PRNG\";",
+        "description": "Using SHA1PRNG may not provide strong randomness as expected in all Java implementations and could lead to security issues if not implemented securely.",
+        "recommendation": "Use SecureRandom without specifying SHA1PRNG, allowing it to use the default, which is considered to be more secure."
+    }
+]
+```

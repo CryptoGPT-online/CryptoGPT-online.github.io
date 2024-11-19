@@ -1,0 +1,25 @@
+```json
+[
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_method": "ManifoldCF.getCipher",
+    "vulnerable_code": "KeySpec keySpec = new PBEKeySpec(passCode.toCharArray(), saltValue.getBytes(StandardCharsets.UTF_8), 1024, 128);",
+    "description": "The key derivation function is configured with an iteration count of 1024, which is considered too low for modern security standards and may lead to inadequate encryption strength.",
+    "recommendation": "Increase the iteration count for PBEKeySpec to at least 10,000 or a value that conforms to your security policy to improve the encryption strength."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_method": "ManifoldCF.getCipher",
+    "vulnerable_code": "KeySpec keySpec = new PBEKeySpec(passCode.toCharArray(), saltValue.getBytes(StandardCharsets.UTF_8), 1024, 128);",
+    "description": "The derived key length is only 128 bits. Considering AES allows key sizes of 192 or 256 bits for higher security levels, this might be insufficient depending on the required encryption strength needed in the context.",
+    "recommendation": "Increase the key bit length to 192 or 256 for stronger encryption if supported by the environments this software will run in."
+  },
+  {
+    "misuse": "CWE-798: Use of Hardcoded Credentials",
+    "vulnerable_method": "ManifoldCF.encrypt and ManifoldCF.decrypt",
+    "vulnerable_code": "private static String OBFUSCATION_PASSCODE = \"NowIsTheTime\"; private static String OBFUSCATION_SALT = \"Salty\";",
+    "description": "The encryption and decryption methods use hardcoded passcode and salt values, which could potentially be discovered and misused by an attacker.",
+    "recommendation": "Avoid using hardcoded credentials. Consider alternatives such as securely storing and accessing them, or prompting the user for input when needed."
+  }
+]
+```

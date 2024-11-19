@@ -1,0 +1,48 @@
+```json
+[
+  {
+    "misuse": "Weak Encryption Algorithm",
+    "vulnerable_method": "Util.doEncryption",
+    "vulnerable_code": [
+      "Cipher cipher = Cipher.getInstance(\"PBEWithMD5AndDES\")",
+      "cipher.init(mode, key, paramSpec)"
+    ],
+    "description": "The encryption algorithm 'PBEWithMD5AndDES' used in the method is considered weak and broken due to various vulnerabilities such as cryptographic weaknesses in MD5 and the short key length in DES.",
+    "recommendation": "Use stronger algorithms like 'PBKDF2WithHmacSHA256' and 'AES/GCM/NoPadding' instead of 'PBEWithMD5AndDES'."
+  },
+  {
+    "misuse": "Inadequate Salt Generation",
+    "vulnerable_method": "Util.doEncryption",
+    "vulnerable_code": [
+      "PBEParameterSpec paramSpec = new PBEParameterSpec(salt, 20)"
+    ],
+    "description": "The salt generated for encryption is derived from a fixed value (the hostname) and is predictable, which can lead to vulnerabilities such as dictionary attacks.",
+    "recommendation": "Generate a random, unpredictable salt for every encryption. Use SecureRandom to generate such salts."
+  },
+  {
+    "misuse": "Insufficient Iteration Count",
+    "vulnerable_method": "Util.doEncryption",
+    "vulnerable_code": [
+      "PBEParameterSpec paramSpec = new PBEParameterSpec(salt, 20)"
+    ],
+    "description": "The iteration count of 20 is significantly less than the recommended minimum of 1000. This makes the key derivation process less resistant to brute-force attacks.",
+    "recommendation": "Increase the iteration count to at least 10,000 when using PBKDF2 or an equivalent key derivation function."
+  },
+  {
+    "misuse": "Improper Validation of Certificate with HostMismatch (CWE-297)",
+    "vulnerable_method": "Util.encrypt/decrypt/doEncryption",
+    "vulnerable_code": "",
+    "description": "The Util class provides methods for encrypting/decrypting data but lacks proper SSL/TLS certificate validation when dealing with remote services. If it interacts with remote services over SSL/TLS elsewhere, it may be vulnerable to man-in-the-middle (MITM) attacks due to hostname verification issues.",
+    "recommendation": "If the Util class is used in a context where it interacts with remote services over SSL/TLS, ensure that the hostname in the certificate is properly verified against the hostname of the server it is intended to communicate with."
+  },
+  {
+    "misuse": "Hardcoded Sensitive Information",
+    "vulnerable_method": "Util class constants",
+    "vulnerable_code": [
+      "private static final String PBE_PASSWORD = System.getProperty(\"user.home\");"
+    ],
+    "description": "The password for encryption is derived directly from a system property, which could be considered sensitive information and may be accessible in other contexts. Moreover, this introduces the risk of using the same encryption key across different instances.",
+    "recommendation": "Do not derive encryption keys directly from system properties. Use a secure method of obtaining or generating encryption keys."
+  }
+]
+```

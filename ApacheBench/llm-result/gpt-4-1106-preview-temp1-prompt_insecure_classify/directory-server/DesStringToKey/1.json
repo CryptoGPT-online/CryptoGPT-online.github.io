@@ -1,0 +1,39 @@
+```json
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_method": "DesStringToKey.generateKey",
+        "vulnerable_code": "Cipher.getInstance(\"DES/CBC/NoPadding\")",
+        "description": "The DES algorithm is considered to be obsolete due to its 56-bit key size, which is too short to be secure against modern brute-force attacks.",
+        "recommendation": "Use a more secure algorithm with a larger key size, such as AES with a 128-bit key or higher."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_method": "DesStringToKey.generateKey",
+        "vulnerable_code": "Cipher.getInstance(\"DES/CBC/NoPadding\")",
+        "description": "DES is a broken and risky algorithm that is no longer considered secure due to vulnerabilities and the feasibility of brute-force attacks.",
+        "recommendation": "Replace DES with a modern and secure cryptographic algorithm such as AES."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_method": "DesStringToKey.calculateChecksum",
+        "vulnerable_code": "AlgorithmParameterSpec paramSpec = new IvParameterSpec(keyBytes);",
+        "description": "The cryptographic IV is derived from the key material itself, which is not sufficiently random and can lead to pattern leakage, especially in CBC mode.",
+        "recommendation": "Use a secure random number generator to produce IVs, and ensure that they are unique and unpredictable for each encryption operation."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_method": "DesStringToKey.getStrongKey",
+        "vulnerable_code": "DESKeySpec.isWeak(secretKey, 0)",
+        "description": "Checking for weak keys in DES does not mitigate the fundamental weaknesses of DES as an encryption algorithm.",
+        "recommendation": "Replace DES with a modern and secure cryptographic algorithm such as AES."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_method": "DesStringToKey.getStrongKey",
+        "vulnerable_code": "secretKey[7] ^= 0xf0;",
+        "description": "The method attempts to strengthen weak DES keys by XORing with a hardcoded byte, but this does not alleviate the underlying weakness of the DES algorithm.",
+        "recommendation": "Use a secure algorithm with a strong, randomly generated key rather than attempting to patch DES keys."
+    }
+]
+```

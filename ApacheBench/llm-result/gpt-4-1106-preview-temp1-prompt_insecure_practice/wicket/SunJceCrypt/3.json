@@ -1,0 +1,25 @@
+```json
+[
+    {
+        "misuse": "Weak Encryption Algorithm",
+        "vulnerable_method": "SunJceCrypt.constructor",
+        "vulnerable_code": "public static final String DEFAULT_CRYPT_METHOD = \"PBEWithMD5AndDES\";",
+        "description": "The code uses PBEWithMD5AndDES which is a weak algorithm due to vulnerabilities in DES (56-bit key is considered weak) and MD5 (prone to collision attacks).",
+        "recommendation": "Replace with a stronger algorithm like AES/GCM/NoPadding with a 128-bit or higher key size."
+    },
+    {
+        "misuse": "Static Salt",
+        "vulnerable_method": "SunJceCrypt.PARAMETER_SPEC",
+        "vulnerable_code": "public final static byte[] SALT = { (byte)0x15, (byte)0x8c, (byte)0xa3, (byte)0x4a, (byte)0x66, (byte)0x51, (byte)0x2a, (byte)0xbc };",
+        "description": "A static salt is being used which can allow attackers to precompute hash values using dictionary attacks and more easily recover passwords.",
+        "recommendation": "Use a cryptographically secure random generator to create a unique salt for each encryption operation."
+    },
+    {
+        "misuse": "Insufficient Iteration Count",
+        "vulnerable_method": "SunJceCrypt.COUNT",
+        "vulnerable_code": "private final static int COUNT = 17;",
+        "description": "The iteration count (17) for key generation is too low, which could allow for brute force attacks as password-based encryption is less resistant to attacks when a low iteration count is used.",
+        "recommendation": "Increase the iteration count to a higher number, e.g., at least 10,000 to make brute force attacks more difficult."
+    }
+]
+```

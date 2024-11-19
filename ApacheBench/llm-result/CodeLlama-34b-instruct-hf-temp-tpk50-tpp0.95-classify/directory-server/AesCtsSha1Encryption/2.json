@@ -1,0 +1,23 @@
+ [
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_method": "processCipher",
+        "vulnerable_code": "cipher.getInstance( \"AES/CTS/NoPadding\" )",
+        "description": "The code uses the AES/CTS/NoPadding cipher, which is a weak and broken encryption algorithm. It uses the CTS (ciphertext stealing) mode, which can cause the last block of plaintext to be easily recoverable. Additionally, the \"NoPadding\" option can also cause issues when dealing with plaintexts that are not a multiple of the block size.",
+        "recommendation": "Use a more secure encryption algorithm, such as AES/CBC/PKCS5Padding or AES/GCM/NoPadding. These algorithms use a more secure padding scheme and do not have the weaknesses of the CTS mode."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_method": "processChecksum",
+        "vulnerable_code": "byte[] checksumBytes = calculateIntegrity( dataBytes, key.getKeyValue(), usage );",
+        "description": "The code uses a static key (derived from the base key and usage) to calculate the checksum. This can cause the checksum to be easily predictable, allowing an attacker to manipulate the data. Additionally, the usage parameter is not properly randomized, which can also make the checksum more predictable.",
+        "recommendation": "Use a properly randomized key for calculating the checksum. The key should be generated using a secure random number generator, and should not be reused for multiple messages. Additionally, the usage parameter should also be generated randomly, and should be a unique value for each message."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_method": "processChecksum",
+        "vulnerable_code": "Mac mac = Mac.getInstance( \"HmacSHA1\" );",
+        "description": "The code uses a hardcoded algorithm (HmacSHA1) for calculating the checksum. This can make it easier for an attacker to manipulate the data, as they can easily predict the checksum value. Additionally, using a hardcoded key (baseKey) can also make it easier for an attacker to manipulate the data, as they can easily predict the key value.",
+        "recommendation": "Use a properly randomized key for calculating the checksum. The key should be generated using a secure random number generator, and should not be reused for multiple messages. Additionally, the algorithm used should also be properly randomized, and should be a unique value for each message."
+    }
+]

@@ -1,0 +1,32 @@
+```json
+[
+    {
+        "misuse": "Weak Encryption Algorithm",
+        "vulnerable_method": "DesCbcMd5Encryption.encrypt, DesCbcMd5Encryption.decrypt",
+        "vulnerable_code": "Cipher.getInstance(\"DES/CBC/NoPadding\");",
+        "description": "DES is considered to be insecure due to its short key size, which makes it vulnerable to brute-force attacks.",
+        "recommendation": "Use a stronger algorithm like AES with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "Static IV",
+        "vulnerable_method": "DesCbcMd5Encryption.encrypt, DesCbcMd5Encryption.decrypt",
+        "vulnerable_code": "private static final byte[] iv",
+        "description": "Using a static initialization vector (IV) for CBC mode can allow attackers to deduce information about the plaintext of encrypted messages.",
+        "recommendation": "Use a random IV for each encryption operation and transmit it along with the ciphertext."
+    },
+    {
+        "misuse": "Insecure Padding",
+        "vulnerable_method": "DesCbcMd5Encryption.getEncryptedData",
+        "vulnerable_code": "Cipher.getInstance(\"DES/CBC/NoPadding\");",
+        "description": "Using 'NoPadding' option in CBC mode leaves the ciphertext susceptible to padding oracle attacks if not properly handled.",
+        "recommendation": "Use a secure padding scheme like PKCS5Padding and ensure that the plaintext is properly padded before encryption."
+    },
+    {
+        "misuse": "Weak Message Digest Algorithm",
+        "vulnerable_method": "DesCbcMd5Encryption.calculateIntegrity",
+        "vulnerable_code": "MessageDigest.getInstance( LdapSecurityConstants.HASH_METHOD_MD5.getAlgorithm() );",
+        "description": "MD5 is considered to be a weak hash function subject to collision attacks.",
+        "recommendation": "Use a more secure hashing function like SHA-256."
+    }
+]
+```

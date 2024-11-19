@@ -1,0 +1,25 @@
+```json
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_method": "StaticDESPasswordCipher constructor and encrypt/decrypt methods",
+        "vulnerable_code": "private static final byte[] _3desData = {...};\nprivate static final SecretKeySpec KEY = new SecretKeySpec(_3desData, \"DESede\");",
+        "description": "The code uses a static, hardcoded key for Triple-DES (3DES) encryption, which reduces the encryption strength due to the possibility of key disclosure.",
+        "recommendation": "Replace the hardcoded key with a dynamically generated one, and preferably use a more secure algorithm like AES."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_method": "StaticDESPasswordCipher.encrypt, StaticDESPasswordCipher.decrypt",
+        "vulnerable_code": "private static final String TRANSFORMATION = \"DESede\";",
+        "description": "Triple DES (DESede) is considered a risky cryptographic algorithm due to its 64-bit block size, which is vulnerable to birthday attacks such as the Sweet32 vulnerability.",
+        "recommendation": "Switch to a more secure encryption algorithm with a larger block size, such as AES (Advanced Encryption Standard)."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_method": "StaticDESPasswordCipher constructor",
+        "vulnerable_code": "private static final byte[] _3desData = {...};",
+        "description": "The encryption key is hardcoded within the application, which poses a significant security risk if the code is compromised.",
+        "recommendation": "Remove hardcoded keys from the code base. Instead, securely manage keys using a key management system or environment variables."
+    }
+]
+```

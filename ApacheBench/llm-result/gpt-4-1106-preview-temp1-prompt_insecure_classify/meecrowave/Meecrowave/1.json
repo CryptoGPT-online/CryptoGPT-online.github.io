@@ -1,0 +1,33 @@
+```json
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_method": "ValueTransformers$1",
+        "vulnerable_code": [
+            "private final SecretKeySpec key = new SecretKeySpec(new byte[]{...}, \"DESede\");",
+            "final Cipher cipher = Cipher.getInstance(\"DESede\");",
+            "cipher.init(Cipher.DECRYPT_MODE, key);",
+            "return new String(cipher.doFinal(cipherText), StandardCharsets.UTF_8);"
+        ],
+        "description": "The sample uses a hard-coded weak encryption key for 3DES, which is an inadequate encryption strength.",
+        "recommendation": "Replace the hard-coded key with a properly generated key and consider using a stronger algorithm such as AES with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_method": "TomcatWithFastSessionIDs",
+        "vulnerable_code": "ManagerBase.class.cast(m).setSecureRandomClass(\"org.apache.catalina.startup.FastNonSecureRandom\");",
+        "description": "A fast non-secure random number generator is used for session IDs which can lead to predictable values.",
+        "recommendation": "Use secure random number generators for session ID creation."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_method": "Builder",
+        "vulnerable_code": [
+            "private Map<String, String> users;",
+            "private Map<String, String> roles;"
+        ],
+        "description": "Hardcoded credentials are being used, which can compromise security.",
+        "recommendation": "Use a proper identity management and avoid hardcoding credentials directly into the configuration or code."
+    }
+]
+```

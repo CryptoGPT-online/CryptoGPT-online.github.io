@@ -1,0 +1,30 @@
+ [
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_method": "CryptoParser.parse",
+        "vulnerable_code": "cipher.init(Cipher.DECRYPT_MODE, key);",
+        "description": "The Cipher class is used for cryptographic transformations, but it is instantiated without specifying a provider, which makes it vulnerable to attacks that exploit weak or broken cryptographic algorithms.",
+        "recommendation": "Specify a provider when instantiating the Cipher class to ensure the use of secure and up-to-date cryptographic algorithms."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation.",
+        "vulnerable_method": "CryptoParser.parse",
+        "vulnerable_code": "if (provider != null) {...",
+        "description": "The parser does not validate the certificate used for decryption, which makes it vulnerable to attacks that exploit invalid or malicious certificates.",
+        "recommendation": "Validate the certificate used for decryption to ensure that it is valid and has not been compromised."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values.",
+        "vulnerable_method": "CryptoParser.parse",
+        "vulnerable_code": "SecureRandom random = context.get(SecureRandom.class);",
+        "description": "The parser uses a SecureRandom object to initialize the Cipher class, but the SecureRandom object is not properly seeded, which makes it vulnerable to attacks that exploit predictable random numbers.",
+        "recommendation": "Properly seed the SecureRandom object before using it to initialize the Cipher class."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation.",
+        "vulnerable_method": "CryptoParser.parse",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(transformation);",
+        "description": "The parser selects a cryptographic algorithm based on the transformation string, but the algorithm is not properly verified to ensure that it is secure, which makes it vulnerable to attacks that exploit weak or broken cryptographic algorithms.",
+        "recommendation": "Verify the selected algorithm to ensure that it is secure and up-to-date before using it for cryptographic operations."
+    }
+]

@@ -1,0 +1,16 @@
+[
+  {
+    "misuse": "CWE-326: Inappropriate Encryption Level",
+    "vulnerable_method": "processCipher",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance( \"DESede/CBC/NoPadding\" );",
+    "description": "This code uses DESede/CBC/NoPadding for encryption, which is not considered secure for modern applications. It should be replaced with a more secure algorithm such as AES-256.",
+    "recommendation": "Update the code to use a more secure encryption algorithm, such as AES-256."
+  },
+  {
+    "misuse": "CWE-256: Plaintext Data Exposure",
+    "vulnerable_method": "getDecryptedData",
+    "vulnerable_code": "byte[] withoutConfounder = removeLeadingBytes( decryptedData, getConfounderLength(), 0 );",
+    "description": "This code removes the confounder from the decrypted data without verifying the checksum first. This means that an attacker could modify the decrypted data without being detected.",
+    "recommendation": "Verify the checksum before removing the confounder from the decrypted data."
+  }
+]

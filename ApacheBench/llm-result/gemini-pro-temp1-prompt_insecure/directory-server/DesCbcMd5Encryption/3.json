@@ -1,0 +1,9 @@
+[
+  {
+    "misuse": "CWE-326",
+    "vulnerable_method": "calculateIntegrity",
+    "vulnerable_code": "MessageDigest digester = MessageDigest.getInstance( LdapSecurityConstants.HASH_METHOD_MD5.getAlgorithm() );",
+    "description": "MessageDigest instance should be thread local or created per use and not reused. When a digest instance is reused, the following problems can occur:\n\n* Multiple threads may get the same instance and results in wrong digest calculation.\n* An attacker could craft malicious content and use a malicious call to MessageDigest.getInstance() to force the JCA provider to load the attacker controlled code.",
+    "recommendation": "MessageDigest instance should be thread local or created per use and not reused. There are many ways to achieve this. One possibility is using ThreadLocal. The following code shows how to use ThreadLocal to ensure MessageDigest instances are created per thread:\n```java\nMessageDigest md = threadLocalMessageDigest.get();\nif (md == null) {\n  md = MessageDigest.getInstance(\"SHA-256\");\n  threadLocalMessageDigest.set(md);\n}\n// use md to calculate digest\n```"
+  }
+]

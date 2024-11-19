@@ -1,0 +1,32 @@
+```json
+[
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+    "vulnerable_method": "SunJceCrypt",
+    "vulnerable_code": "public static final String DEFAULT_CRYPT_METHOD = \"PBEWithMD5AndDES\";",
+    "description": "The 'PBEWithMD5AndDES' algorithm uses MD5 and DES which are both considered outdated and vulnerable to attacks.",
+    "recommendation": "Replace 'PBEWithMD5AndDES' with a more secure algorithm such as 'PBKDF2WithHmacSHA256' and replace DES with AES."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength.",
+    "vulnerable_method": "SunJceCrypt",
+    "vulnerable_code": "private final static byte[] SALT = { (byte)0x15, (byte)0x8c, (byte)0xa3, (byte)0x4a, (byte)0x66, (byte)0x51, (byte)0x2a, (byte)0xbc };",
+    "description": "The salt used for key generation is hardcoded, which could lead to easier brute-force attacks especially since DES which is used here, is not secure enough.",
+    "recommendation": "Use a random salt for each encryption operation and do not hardcode it."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength.",
+    "vulnerable_method": "SunJceCrypt",
+    "vulnerable_code": "private final static int COUNT = 17;",
+    "description": "The iteration count (17) for key generation is too low, making the key vulnerable to brute-force attacks.",
+    "recommendation": "Increase the iteration count significantly to enhance key strength (e.g., at least 10,000 iterations)."
+  },
+  {
+    "misuse": "CWE-798: Use of Hardcoded Credentials.",
+    "vulnerable_method": "SunJceCrypt.createKeySpec",
+    "vulnerable_code": "return new PBEKeySpec(getKey().toCharArray());",
+    "description": "The encryption key is derived from a potentially hardcoded method 'getKey()', which is not shown in the snippet. If this method returns a hardcoded value, it would constitute the use of hardcoded credentials.",
+    "recommendation": "Ensure that the 'getKey()' method generates a secure, random, and unique key for each user or use case."
+  }
+]
+```

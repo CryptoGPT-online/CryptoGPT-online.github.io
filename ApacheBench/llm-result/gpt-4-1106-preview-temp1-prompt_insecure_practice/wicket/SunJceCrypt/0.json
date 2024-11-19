@@ -1,0 +1,18 @@
+```json
+[
+    {
+        "misuse": "Weak Encryption Algorithm",
+        "vulnerable_method": "SunJceCrypt",
+        "vulnerable_code": "DEFAULT_CRYPT_METHOD = \"PBEWithMD5AndDES\"",
+        "description": "The code uses PBEWithMD5AndDES which is a weak combination due to MD5's known vulnerabilities and DES's short key length (56-bits).",
+        "recommendation": "Use a stronger algorithm like PBEWithHmacSHA256AndAES_CBC or PBKDF2WithHmacSHA256 combined with AES-GCM to improve security."
+    },
+    {
+        "misuse": "Static Salt",
+        "vulnerable_method": "SunJceCrypt",
+        "vulnerable_code": "public final static byte[] SALT",
+        "description": "The salt used for key derivation is static and publicly available, which can aid attackers in breaking the encryption if they target multiple accounts with the same salt.",
+        "recommendation": "Change the salt to be unique per user and securely random generated."
+    }
+]
+```

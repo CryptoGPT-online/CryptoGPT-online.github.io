@@ -1,0 +1,27 @@
+```json
+[
+  {
+    "misuse": "CWE-798: Use of Hardcoded Credentials",
+    "vulnerable_method": "Database constructor",
+    "vulnerable_code": [
+      "public String userName;",
+      "protected String password;"
+    ],
+    "description": "The Database class takes a userName and password as parameters and stores them in class-level variables, potentially leading to hardcoded credentials if the constructor is called with sensitive information.",
+    "recommendation": "Do not hardcode credentials in the codebase, use a secure method of storing and accessing credentials such as environment variables, external configuration, or a secrets manager."
+  },
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values for cryptographic context",
+    "vulnerable_method": "getSleepAmt()",
+    "vulnerable_code": [
+      "protected static Random random = new Random();",
+      "public long getSleepAmt()",
+      "{",
+      "  return (long)(random.nextDouble() * 60000.0 + 500.0);",
+      "}"
+    ],
+    "description": "The Database class uses a Random object which is not cryptographically secure for implementing a delay after a transaction abort. This could potentially lead to predictability in delay times, which may be problematic in certain contexts.",
+    "recommendation": "Replace java.util.Random with java.security.SecureRandom for cryptographic context to avoid predictability in delays."
+  }
+]
+```

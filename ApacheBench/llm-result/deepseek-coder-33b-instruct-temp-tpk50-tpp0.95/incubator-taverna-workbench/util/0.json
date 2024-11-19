@@ -1,0 +1,32 @@
+Sorry, I did not find any specific instances of use of crypto APIs, but I will provide a common example of an insecure usage for the sake of clarification:
+
+Let's consider the "PBE_PASSWORD" and "PBE_SALT" constants for encryption. 
+
+```java
+private static final String PBE_PASSWORD = System.getProperty("user.home");
+private static final String PBE_SALT;
+
+static {
+	String host_name = "";
+	try {
+	  host_name = InetAddress.getLocalHost().toString();
+	} catch (UnknownHostException e)
+	host_name = "unknown_localhost";
+	PBE_SALT = host_name;
+}
+```
+
+The usage of user.home as the password for encryption is a common mistake in security. It is generally a bad practice to use the home directory as a password or salt. Moreover, using the network address of the localhost as salt is also not recommended. 
+
+A potential recommendation is to use a secure, hard-to-guess value for the password, and a hard-to-guess unique value for the salt. Such values could be stored as environmental variables or configuration properties.
+
+Here's a suggestion for the code:
+
+```java
+private static final String PBE_PASSWORD = System.getenv("MY_SECURE_PASSWORD");
+private static final String PBE_SALT = System.getenv("MY_SECURE_SALT");
+```
+
+And the user should make sure the environmental variables are set with secure values.
+
+For more information, see the CWE-798: Use of hard-coded credentials.

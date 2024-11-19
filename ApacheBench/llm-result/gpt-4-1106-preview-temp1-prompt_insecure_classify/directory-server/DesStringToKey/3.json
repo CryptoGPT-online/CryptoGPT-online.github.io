@@ -1,0 +1,36 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_method": "DesStringToKey.generateKey",
+        "vulnerable_code": [
+            "Cipher cipher = Cipher.getInstance( \"DES/CBC/NoPadding\" );",
+            "SecretKey key = new SecretKeySpec( keyBytes, \"DES\" );"
+        ],
+        "description": "Use of DES (Data Encryption Standard) is insecure as it is considered to be a broken encryption algorithm due to its 56-bit key size, which is susceptible to brute force attacks.",
+        "recommendation": "Upgrade to a more secure encryption algorithm such as AES with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_method": "DesStringToKey.getStrongKey",
+        "vulnerable_code": [
+            "if ( DESKeySpec.isWeak( secretKey, 0 ) )",
+            "{",
+            "    secretKey[7] ^= 0xf0;",
+            "}"
+        ],
+        "description": "While the method attempts to avoid weak DES keys, the fact that DES itself is being used already implies inadequate encryption strength. Furthermore, 'correcting' for weak keys in a deterministic way does not resolve the inherent weakness of the DES algorithm.",
+        "recommendation": "Replace the use of DES with a more modern and secure symmetric encryption algorithm, such as AES."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values for cryptographic context.",
+        "vulnerable_method": "DesStringToKey.calculateChecksum",
+        "vulnerable_code": [
+            "AlgorithmParameterSpec paramSpec = new IvParameterSpec( keyBytes );",
+            "cipher.init( Cipher.ENCRYPT_MODE, key, paramSpec );"
+        ],
+        "description": "Using the encryption key as the initialization vector (IV) for cipher block chaining (CBC) mode is insecure, as IVs should be random and unpredictable. Reusing the key as the IV reduces cryptographic security, potentially allowing for IV reuse attacks.",
+        "recommendation": "Use a secure random number generator to create a unique IV for each encryption operation."
+    }
+]
+```

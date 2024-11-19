@@ -1,0 +1,32 @@
+```json
+[
+  {
+    "misuse": "Insecure Encryption Algorithm",
+    "vulnerable_method": "StaticDESPasswordCipher.encrypt and StaticDESPasswordCipher.decrypt",
+    "vulnerable_code": "Cipher.getInstance(\"DESede\")",
+    "description": "The code uses DESede (Triple DES) which is considered a weak encryption algorithm due to its small key size.",
+    "recommendation": "Replace DESede with a more secure algorithm like AES with a key size of at least 128 bits."
+  },
+  {
+    "misuse": "Static Key",
+    "vulnerable_method": "StaticDESPasswordCipher.KEY",
+    "vulnerable_code": "private static final byte[] _3desData",
+    "description": "The encryption key is hardcoded and static, which means that it's the same for every instance and can be extracted from the codebase, making it an insecure practice.",
+    "recommendation": "Use a mechanism to securely generate and store cryptographic keys, avoiding hardcoding."
+  },
+  {
+    "misuse": "Missing Secure Random IV",
+    "vulnerable_method": "StaticDESPasswordCipher.encrypt and StaticDESPasswordCipher.decrypt",
+    "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, KEY)",
+    "description": "The code does not specify an initialization vector (IV) for the cipher which is critical when using block cipher modes other than ECB, as such modes require a unique IV for each encryption operation to ensure security.",
+    "recommendation": "Generate a secure random IV for each encryption operation and prepend it to the ciphertext. Ensure that the IV is then used for the decryption process."
+  },
+  {
+    "misuse": "ECB Mode Risk",
+    "vulnerable_method": "StaticDESPasswordCipher.encrypt and StaticDESPasswordCipher.decrypt",
+    "vulnerable_code": "Cipher.getInstance(\"DESede\")",
+    "description": "If the default mode and padding are ECB and PKCS5Padding (the most common default for Java Cipher), then ECB mode is used which is insecure and should not be used because patterns in the plaintext are preserved across ciphertext blocks.",
+    "recommendation": "Specify a mode of operation (e.g., CBC, GCM) when getting a Cipher instance and ensure a secure random IV is used."
+  }
+]
+```

@@ -1,0 +1,25 @@
+```json
+[
+    {
+        "misuse": "Insufficient Entropy",
+        "vulnerable_method": "CryptoParser.parse",
+        "vulnerable_code": "cipher.init(Cipher.DECRYPT_MODE, key);",
+        "description": "The code uses 'Cipher.init' without securely initializing 'SecureRandom', which can lead to predictable encryption.",
+        "recommendation": "Always securely initialize 'SecureRandom' with a strong seed in cryptographic operations."
+    },
+    {
+        "misuse": "Use of ECB Mode",
+        "vulnerable_method": "CryptoParser.parse",
+        "vulnerable_code": "cipher = Cipher.getInstance(transformation);",
+        "description": "If the 'transformation' string specifies 'ECB' mode explicitly or by default, it would be susceptible to various issues since 'ECB' mode doesn't provide serious message confidentiality.",
+        "recommendation": "Do not use 'ECB' mode. Instead, use a more secure mode like 'CBC' with an IV, or 'GCM' which provides both confidentiality and integrity."
+    },
+    {
+        "misuse": "Hardcoded Encryption Algorithm",
+        "vulnerable_method": "CryptoParser",
+        "vulnerable_code": "public CryptoParser(String transformation, Provider provider, Set<MediaType> types)",
+        "description": "The encryption algorithm seems to be hardcoded and provided through constructor which could lead to the use of weak or broken encryption algorithms.",
+        "recommendation": "Ensure that a secure encryption algorithm is utilized and consider allowing the configuration of the algorithm from a secure source."
+    }
+]
+```

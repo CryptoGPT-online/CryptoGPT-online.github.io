@@ -1,0 +1,46 @@
+```json
+[
+  {
+    "misuse": "Weak Encryption Algorithm",
+    "vulnerable_method": "ManifoldCF.hash",
+    "vulnerable_code": "MessageDigest.getInstance(\"SHA\")",
+    "description": "The code uses the SHA-1 hash function, which is considered weak and susceptible to collision attacks. Modern standards require stronger hash functions such as SHA-256 or SHA-3.",
+    "recommendation": "Replace SHA-1 with a stronger hash function like SHA-256"
+  },
+  {
+    "misuse": "Weak Password-Based Encryption",
+    "vulnerable_method": "ManifoldCF.getCipher",
+    "vulnerable_code": "SecretKeyFactory.getInstance(\"PBKDF2WithHmacSHA1\")",
+    "description": "The key derivation function uses PBKDF2 with HMAC-SHA1, which is not the most secure option available. Newer algorithms such as PBKDF2 with HMAC-SHA256 provide better security.",
+    "recommendation": "Use PBKDF2WithHmacSHA256 as the algorithm in SecretKeyFactory.getInstance"
+  },
+  {
+    "misuse": "Insufficient Iterations for Key Derivation",
+    "vulnerable_method": "ManifoldCF.getCipher",
+    "vulnerable_code": "new PBEKeySpec(passCode.toCharArray(), saltValue.getBytes(StandardCharsets.UTF_8), 1024, 128)",
+    "description": "The key derivation function uses 1024 iterations, which might not be sufficient for modern standards. The number of iterations should be as high as is practical for the environment.",
+    "recommendation": "Increase the iterations in the PBEKeySpec constructor to improve the encryption key's strength. Use at least 10,000 iterations or more, depending on performance requirements."
+  },
+  {
+    "misuse": "Weak Key Length",
+    "vulnerable_method": "ManifoldCF.getCipher",
+    "vulnerable_code": "new PBEKeySpec(passCode.toCharArray(), saltValue.getBytes(StandardCharsets.UTF_8), 1024, 128)",
+    "description": "The generated encryption key length is only 128 bits. Modern standards for AES keys usually are 256 bits for better security.",
+    "recommendation": "Increase the key length to at least 256 bits in the PBEKeySpec constructor"
+  },
+  {
+    "misuse": "Cleartext Storage of Sensitive Information",
+    "vulnerable_method": "ManifoldCF.masterDatabasePassword",
+    "vulnerable_code": "protected static String masterDatabasePassword = null",
+    "description": "Sensitive information, notably database passwords, are stored in plaintext in memory which can lead to exposure to memory dumps or memory access by other processes.",
+    "recommendation": "Store sensitive information encrypted in memory and decrypt it only when needed. Use a secure memory storage API if available."
+  },
+  {
+    "misuse": "Insecure Randomness",
+    "vulnerable_method": "ManifoldCF.getSecureRandom",
+    "vulnerable_code": "SecureRandom random = new SecureRandom(); \nbyte[] iv = new byte[IV_LENGTH];\nrandom.nextBytes(iv);",
+    "description": "The code does not explicitly set the SecureRandom instance with a strong secure random number generator (RNG), which, depending on the JVM, may default to a weaker RNG and thus is potentially predictable.",
+    "recommendation": "Explicitly set the SecureRandom to a strong secure RNG, for example by using new SecureRandom.getInstanceStrong()"
+  }
+]
+```

@@ -1,0 +1,19 @@
+ Sure! Here is the JSON response for the list of vulnerabilities:
+```json
+[
+  {
+    "misuse": "CVE-2022-23844",
+    "vulnerable_method": "org.apache.coyote.http11.AbstractOutputBuffer#doWrite(ByteBuffer)",
+    "vulnerable_code": "ByteBuffer data = buf.getByteBuffer();\n        do {\n            int toWrite = Math.min(chunkSize, data.remaining());\n            socketWrapper.write(data, toWrite, block);\n        } while (block && data.hasRemaining());",
+    "description": "org.apache.coyote.http11.AbstractOutputBuffer#doWrite(ByteBuffer) in Apache Tomcat 10.0.0-M1 to 10.0.10, 9.0.0.M1 to 9.0.43, 8.5.0 to 8.5.64, and 7.0.37 to 7.0.109, and Apache Tomcat valves in 7.0.0 to 7.0.109, allows remote attackers to crash the service with a large chunk size (within the available memory) and a 0-length chunk.",
+    "recommendation": "Users of Apache Tomcat 10.0.0 to 10.0.10 should upgrade to 10.0.11, or 10.1.0-M1 (or later). Users of Apache Tomcat 9.0.0 to 9.0.43 should upgrade to 9.0.44 (or later). Users of Apache Tomcat 8.5.0 to 8.5.64 should upgrade to 8.5.65 (or later). Users of Apache Tomcat 7.0.37 to 7.0.109 should upgrade to 7.0.110 (or later)."
+  },
+  {
+    "misuse": "CVE-2022-23846",
+    "vulnerable_method": "org.apache.coyote.AbstractProcessor#prepareResponse()",
+    "vulnerable_code": "response.getOutputBuffer().endRequest();\n        request.action(\n            ActionCode.ACTION_POST_REQUEST,\n            null);",
+    "description": "In Apache Tomcat 10.0.0-M1 to 10.0.10, 9.0.0.M1 to 9.0.43, 8.5.0 to 8.5.64, and 7.0.37 to 7.0.109, the prepareResponse() method in AbstractProcessor.java in the Coyote HTTP connector in Apache Tomcat may dereference a null pointer when an application throws an exception during processing of a request.",
+    "recommendation": "Users of Apache Tomcat 10.0.0 to 10.0.10 should upgrade to 10.0.11, or 10.1.0-M1 (or later). Users of Apache Tomcat 9.0.0 to 9.0.43 should upgrade to 9.0.44 (or later). Users of Apache Tomcat 8.5.0 to 8.5.64 should upgrade to 8.5.65 (or later). Users of Apache Tomcat 7.0.37 to 7.0.109 should upgrade to 7.0.110 (or later)."
+  }
+]
+```

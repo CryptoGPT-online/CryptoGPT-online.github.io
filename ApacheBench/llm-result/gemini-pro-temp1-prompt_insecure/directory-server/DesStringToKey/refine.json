@@ -1,0 +1,19 @@
+### False Positive Misuse ###
+
+1. **Misuse:** CWE-297 Use of a Broken or Risky Cryptographic Algorithm
+   **Vulnerable Method:** Cipher.getInstance("DES/CBC/NoPadding")
+   **Vulnerable Code:** Cipher cipher = Cipher.getInstance("DES/CBC/NoPadding");
+   **Reason:** The misuse report for this potential misuse is a **false positive** because the context in which the DES/CBC/NoPadding cipher is used is for calculating the checksum on the initial passphrase+salt. This is done to generate an intermediate key, which is then used to encrypt the data. The final eight-byte block of the encrypted data is returned as the checksum. In this context, using DES for checksum calculation is not considered a security risk.
+
+### Optimized Misuse JSON###
+```json
+[
+  {
+    "misuse category": "Weak DES key",
+    "vulnerable_method": "org.apache.directory.server.kerberos.shared.crypto.encryption.DesStringToKey.getStrongKey",
+    "vulnerable_code": "if ( DESKeySpec.isWeak( secretKey, 0 ) )\n                {\n                    secretKey[7] ^= 0xf0;\n                }",
+    "description": "The code is vulnerable to Weak DES key.",
+    "recommendation": "Change to use a strong DES key."
+  }
+]
+```

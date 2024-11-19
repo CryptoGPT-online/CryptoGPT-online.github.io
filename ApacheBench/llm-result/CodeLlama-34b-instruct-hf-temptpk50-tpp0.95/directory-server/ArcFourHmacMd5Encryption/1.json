@@ -1,0 +1,118 @@
+ {
+"misuses": [
+{
+"misuse": "CWE-256: Unprotected Transport of Sensitive Information",
+"vulnerable_method": "EncryptionKey.getCipher()",
+"vulnerable_code": "return data.getCipher();",
+"description": "The data is transmitted over the network without any encryption, allowing an attacker to intercept and read the sensitive information.",
+"recommendation": "Implement end-to-end encryption using a secure protocol such as HTTPS or SSH to protect the sensitive information."
+},
+{
+"misuse": "CWE-295: Improper Certificate Validation",
+"vulnerable_method": "EncryptionKey.getKeyVersion()",
+"vulnerable_code": "return key.getKeyVersion();",
+"description": "The code does not validate the authenticity of the encryption key, allowing an attacker to use a fraudulent key to decrypt the data.",
+"recommendation": "Implement proper key validation to ensure that the encryption key used is genuine and authorized."
+},
+{
+"misuse": "CWE-297: Improper Validation of Certificate with Host Mismatch",
+"vulnerable_method": "EncryptionKey.getEncryptionType()",
+"vulnerable_code": "return EncryptionType.RC4_HMAC;",
+"description": "The code does not validate the domain name of the encryption key, allowing an attacker to use a fraudulent key to encrypt or decrypt the data.",
+"recommendation": "Implement proper domain name validation to ensure that the encryption key used is authorized to encrypt or decrypt data for the domain."
+},
+{
+"misuse": "CWE-321: Use of Hard-coded Cryptographic Key",
+"vulnerable_method": "EncryptionKey.getEncryptionType()",
+"vulnerable_code": "return EncryptionType.RC4_HMAC;",
+"description": "The code hardcodes the encryption type to RC4_HMAC, which is a weak encryption algorithm that can be easily broken.",
+"recommendation": "Use a stronger encryption algorithm, such as AES, and do not hardcode the encryption key."
+},
+{
+"misuse": "CWE-326: Inadequate Encryption Strength",
+"vulnerable_method": "EncryptionKey.getKeyVersion()",
+"vulnerable_code": "return key.getKeyVersion();",
+"description": "The code uses a weak encryption key version, which can be easily broken.",
+"recommendation": "Use a stronger encryption key version, such as AES with a larger key size, to improve the encryption strength."
+},
+{
+"misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+"vulnerable_method": "EncryptionKey.getEncryptionType()",
+"vulnerable_code": "return EncryptionType.RC4_HMAC;",
+"description": "The code uses the RC4_HMAC encryption algorithm, which is a weak encryption algorithm that can be easily broken.",
+"recommendation": "Use a stronger encryption algorithm, such as AES, to improve the encryption strength."
+},
+{
+"misuse": "CWE-338: Use of a Broken or Risky Cryptographic Algorithm",
+"vulnerable_method": "EncryptionKey.getKeyVersion()",
+"vulnerable_code": "return key.getKeyVersion();",
+"description": "The code uses a weak encryption key version, which can be easily broken.",
+"recommendation": "Use a stronger encryption key version, such as AES with a larger key size, to improve the encryption strength."
+},
+{
+"misuse": "CWE-547: Improper Use of Key Exchange",
+"vulnerable_method": "EncryptionKey.getEncryptionType()",
+"vulnerable_code": "return EncryptionType.RC4_HMAC;",
+"description": "The code uses the RC4_HMAC encryption algorithm, which is a weak encryption algorithm that can be easily broken.",
+"recommendation": "Use a stronger encryption algorithm, such as AES, to improve the encryption strength."
+},
+{
+"misuse": "CWE-650: Improper Use of Key Exchange",
+"vulnerable_method": "EncryptionKey.getKeyVersion()",
+"vulnerable_code": "return key.getKeyVersion();",
+"description": "The code uses a weak encryption key version, which can be easily broken.",
+"recommendation": "Use a stronger encryption key version, such as AES with a larger key size, to improve the encryption strength."
+},
+{
+"misuse": "CWE-757: Use of a Broken or Risky Cryptographic Algorithm",
+"vulnerable_method": "EncryptionKey.getEncryptionType()",
+"vulnerable_code": "return EncryptionType.RC4_HMAC;",
+"description": "The code uses the RC4_HMAC encryption algorithm, which is a weak encryption algorithm that can be easily broken.",
+"recommendation": "Use a stronger encryption algorithm, such as AES, to improve the encryption strength."
+},
+{
+"misuse": "CWE-759: Use of a Broken or Risky Cryptographic Algorithm",
+"vulnerable_method": "EncryptionKey.getKeyVersion()",
+"vulnerable_code": "return key.getKeyVersion();",
+"description": "The code uses a weak encryption key version, which can be easily broken.",
+"recommendation": "Use a stronger encryption key version, such as AES with a larger key size, to improve the encryption strength."
+},
+{
+"misuse": "CWE-760: Use of a Broken or Risky Cryptographic Algorithm",
+"vulnerable_method": "EncryptionKey.getEncryptionType()",
+"vulnerable_code": "return EncryptionType.RC4_HMAC;",
+"description": "The code uses the RC4_HMAC encryption algorithm, which is a weak encryption algorithm that can be easily broken.",
+"recommendation": "Use a stronger encryption algorithm, such as AES, to improve the encryption strength."
+}
+],
+"fixes": [
+{
+"fix": "Upgrade to a stronger encryption algorithm, such as AES, to improve the encryption strength.",
+"fix_code": "Cipher cipher = Cipher.getInstance( \"AES\" );"
+},
+{
+"fix": "Use a stronger encryption key version, such as AES with a larger key size, to improve the encryption strength.",
+"fix_code": "SecretKey key = new SecretKeySpec( keyBytes, \"AES\" );"
+},
+{
+"fix": "Implement proper key validation to ensure that the encryption key used is genuine and authorized.",
+"fix_code": "if ( key.getKeyVersion() != getKeyVersion() ) {"
+"            throw new KerberosException( \"Key version mismatch.\" );"
+"        }"
+},
+{
+"fix": "Implement proper domain name validation to ensure that the encryption key used is authorized to encrypt or decrypt data for the domain.",
+"fix_code": "String domain = getDomain();"
+"if ( !domain.equals( key.getDomain() ) ) {"
+"            throw new KerberosException( \"Domain mismatch.\" );"
+"        }"
+}
+],
+"other": [
+{
+"description": "The code uses the RC4_HMAC encryption algorithm, which is a weak encryption algorithm that can be easily broken.",
+"code": "return EncryptionType.RC4_HMAC;",
+"solution": "Upgrade to a stronger encryption algorithm, such as AES, to improve the encryption strength."
+}
+]
+}

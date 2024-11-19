@@ -1,0 +1,32 @@
+```json
+[
+  {
+    "misuse": "Hardcoded Secret",
+    "vulnerable_method": "ManifoldCF obfuscate/deobfuscate",
+    "vulnerable_code": "private static String OBFUSCATION_PASSCODE = \"NowIsTheTime\";\n  private static String OBFUSCATION_SALT = \"Salty\";",
+    "description": "The obfuscate/deobfuscate methods use hardcoded secrets for encryption, potentially exposing sensitive data if the source code is compromised.",
+    "recommendation": "Use environment variables, configuration files or secrets management solutions to handle secrets securely."
+  },
+  {
+    "misuse": "Weak Encryption",
+    "vulnerable_method": "ManifoldCF getCipher",
+    "vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+    "description": "The code is using a Cipher Block Chaining (CBC) encryption mode without proper and random initial vector (IV), which makes ciphertext vulnerable to some attacks like the BEAST attack.",
+    "recommendation": "Use an authenticated encryption mode like GCM and ensure that the IV is random and unique for each encryption operation."
+  },
+  {
+    "misuse": "Use of Weak Hash Function",
+    "vulnerable_method": "ManifoldCF startHash",
+    "vulnerable_code": "MessageDigest.getInstance(\"SHA\")",
+    "description": "SHA-1 (referred to simply as SHA in the provided code) is considered to be a weak hash function and vulnerable to collision attacks.",
+    "recommendation": "Replace SHA-1 with a stronger hash function like SHA-256."
+  },
+  {
+    "misuse": "Insecure Salt Generation",
+    "vulnerable_method": "ManifoldCF getSaltValue",
+    "vulnerable_code": "LockManagerFactory.getProperty(threadContext, saltProperty)",
+    "description": "The method getSaltValue retrieves salt from a configurable property. If this property is not randomly generated or if it is reused across multiple encryption operations, it weakens the security of the password hashing process.",
+    "recommendation": "Ensure that salt values are unique and securely generated."
+  }
+]
+```

@@ -1,0 +1,30 @@
+[
+  {
+    "misuse": "Missing Initialization",
+    "vulnerable_method": "class org.apache.manifoldcf.core.system.ManifoldCF",
+    "vulnerable_code": null,
+    "description": "Initialization is done only when one of the methods below initializeEnvironment() or resetEnvironment() is explicitly called",
+    "recommendation": "Call initializeEnvironment() or resetEnvironment() before calling any other methods in this class"
+  },
+  {
+    "misuse": "Insufficient Entropy",
+    "vulnerable_method": "getSecureRandom",
+    "vulnerable_code": "public static byte[] getSecureRandom(){\n    SecureRandom random = new SecureRandom();\n    byte[] iv = new byte[IV_LENGTH];\n    random.nextBytes(iv);\n    return iv;\n  }",
+    "description": "Generates an IV (Initialization Vector) using a default SecureRandom instance. This is Insufficient Entropy misuse because the default SecureRandom instance is not cryptographically strong and can be vulnerable to attacks.",
+    "recommendation": "Use a cryptographically strong random number generator (CSPRNG) to generate the IV, such as SecureRandom.getInstance(\"SHA1PRNG\")."
+  },
+  {
+    "misuse": "Broken Crypto Algorithm",
+    "vulnerable_method": "encrypt(String saltValue, String passCode, String input)throws ManifoldCFException",
+    "vulnerable_code": "Object[] cipherArray =",
+    "description": "Uses a broken or outdated crypto algorithm. This is Broken Crypto Algorithm misuse because the PBEWithSHAAnd128BitAES-CBC-BC algorithm is considered weak and insecure by current standards. This algorithm is vulnerable to brute-force attacks and should not be used for encrypting sensitive information.",
+    "recommendation": "Use more secure and up-to-date encryption algorithms that are less vulnerable to brute-force attacks, such as AES-256 or ChaCha20."
+  },
+  {
+    "misuse": "Broken Crypto Algorithm",
+    "vulnerable_method": "decrypt(String saltValue, String passCode, String input)throws ManifoldCFException",
+    "vulnerable_code": "Object[] cipherArray =",
+    "description": "Uses a broken or outdated crypto algorithm. This is Broken Crypto Algorithm misuse because the PBEWithSHAAnd128BitAES-CBC-BC algorithm is considered weak and insecure by current standards. This algorithm is vulnerable to brute-force attacks and should not be used for encrypting sensitive information.",
+    "recommendation": "Use more secure and up-to-date encryption algorithms that are less vulnerable to brute-force attacks, such as AES-256 or ChaCha20."
+  }
+]

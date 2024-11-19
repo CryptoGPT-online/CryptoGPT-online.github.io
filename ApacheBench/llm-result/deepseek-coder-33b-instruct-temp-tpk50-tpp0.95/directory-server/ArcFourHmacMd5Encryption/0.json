@@ -1,0 +1,20 @@
+
+
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_method": "org.apache.directory.server.kerberos.shared.crypto.encryption.ArcFourHmacMd5Encryption.getEncryptedData",
+        "vulnerable_code": "return new EncryptedData( getEncryptionType(), key.getKeyVersion(), plainText );",
+        "description": "The EncryptedData object returned does not contain any encrypted data. This could lead to data integrity issues if the data is later decrypted.",
+        "recommendation": "Make sure the plainText is actually encrypted before it is stored in the EncryptedData object."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_method": "org.apache.directory.server.kerberos.shared.crypto.encryption.ArcFourHmacMd5Encryption.processCipher",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"ARCFOUR\");",
+        "description": "The 'ARCFORC' algorithm is known to be vulnerable and insecure. It does not provide authenticity and is susceptible to attackers who can predict the timing.",
+        "recommendation": "Use a proven algorithm for encryption and decryption of sensitive data. Examples include 'AES', 'SHA' or algorithms derived from 'AES' and 'SHA'."
+    }
+]
+```

@@ -1,0 +1,72 @@
+ [
+    {
+        "misuse": "CWE-256: Insufficient Control Over Output",
+        "vulnerable_method": "org.apache.wicket.util.crypt.SunJceCrypt.crypt()",
+        "vulnerable_code": "return ciph.doFinal(input);",
+        "description": "The output of the crypt() method is not properly validated, allowing an attacker to manipulate the decrypted data.",
+        "recommendation": "Validate the output of the crypt() method before using it."
+    },
+    {
+        "misuse": "CWE-259: Use of Hard-coded Password",
+        "vulnerable_method": "org.apache.wicket.util.crypt.SunJceCrypt.generateSecretKey()",
+        "vulnerable_code": "getKey().toCharArray()",
+        "description": "The hard-coded password used in the generateSecretKey() method is vulnerable to tampering and may be extracted from the application's code.",
+        "recommendation": "Use a secure password management mechanism to handle the password."
+    },
+    {
+        "misuse": "CWE-321: Use of Hard-coded Cryptographic Key",
+        "vulnerable_method": "org.apache.wicket.util.crypt.SunJceCrypt.generateSecretKey()",
+        "vulnerable_code": "getKey().toCharArray()",
+        "description": "The hard-coded cryptographic key used in the generateSecretKey() method is vulnerable to tampering and may be extracted from the application's code.",
+        "recommendation": "Use a secure key management mechanism to handle the cryptographic key."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_method": "org.apache.wicket.util.crypt.SunJceCrypt.generateSecretKey()",
+        "vulnerable_code": "SecretKeyFactory.getInstance(cryptMethod)",
+        "description": "The generateSecretKey() method uses a weak encryption algorithm (PBEWithMD5AndDES) which may be vulnerable to brute force attacks.",
+        "recommendation": "Use a stronger encryption algorithm, such as PBEWithMD5AndTripleDES."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_method": "org.apache.wicket.util.crypt.SunJceCrypt.crypt()",
+        "vulnerable_code": "Cipher.getInstance(cryptMethod)",
+        "description": "The crypt() method uses a potentially weak or broken encryption algorithm (PBEWithMD5AndDES) which may be vulnerable to attacks.",
+        "recommendation": "Use a stronger encryption algorithm, such as PBEWithMD5AndTripleDES."
+    },
+    {
+        "misuse": "CWE-338: Use of Cryptographic Resource Without Required Security Features",
+        "vulnerable_method": "org.apache.wicket.util.crypt.SunJceCrypt.generateSecretKey()",
+        "vulnerable_code": "SecretKeyFactory.getInstance(cryptMethod)",
+        "description": "The generateSecretKey() method uses a cryptographic algorithm without required security features (e.g. PBEWithMD5AndDES) which may be vulnerable to attacks.",
+        "recommendation": "Use a cryptographic algorithm with required security features, such as PBEWithMD5AndTripleDES."
+    },
+    {
+        "misuse": "CWE-547: Use of Insecure Randomness",
+        "vulnerable_method": "org.apache.wicket.util.crypt.SunJceCrypt.generateSecretKey()",
+        "vulnerable_code": "SecretKeyFactory.getInstance(cryptMethod)",
+        "description": "The generateSecretKey() method uses a potentially insecure randomness source, which may be predictable or non-random.",
+        "recommendation": "Use a secure randomness source, such as SecureRandom."
+    },
+    {
+        "misuse": "CWE-757: Use of Insufficiently Random Values",
+        "vulnerable_method": "org.apache.wicket.util.crypt.SunJceCrypt.generateSecretKey()",
+        "vulnerable_code": "SecretKeyFactory.getInstance(cryptMethod)",
+        "description": "The generateSecretKey() method uses a potentially insufficiently random value (e.g. SALT) which may be predictable or non-random.",
+        "recommendation": "Use a secure randomness source, such as SecureRandom, to generate the SALT."
+    },
+    {
+        "misuse": "CWE-759: Use of Hard-coded Authentication Credentials",
+        "vulnerable_method": "org.apache.wicket.util.crypt.SunJceCrypt.crypt()",
+        "vulnerable_code": "createParameterSpec()",
+        "description": "The crypt() method uses hard-coded authentication credentials (e.g. COUNT) which may be vulnerable to tampering and may be extracted from the application's code.",
+        "recommendation": "Do not use hard-coded authentication credentials, instead use a secure mechanism to store and manage them."
+    },
+    {
+        "misuse": "CWE-760: Use of Potentially Malicious Data without Validation",
+        "vulnerable_method": "org.apache.wicket.util.crypt.SunJceCrypt.crypt()",
+        "vulnerable_code": "createParameterSpec()",
+        "description": "The crypt() method uses potentially malicious data (e.g. COUNT) without proper validation, which may lead to a denial of service or other attacks.",
+        "recommendation": "Validate the data before using it to ensure it is safe and legitimate."
+    }
+]

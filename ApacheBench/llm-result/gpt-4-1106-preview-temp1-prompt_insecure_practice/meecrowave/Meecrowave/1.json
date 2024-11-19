@@ -1,0 +1,18 @@
+```json
+[
+    {
+        "misuse": "Static Initialization Vector (IV)",
+        "vulnerable_method": "org.apache.meecrowave.ValueTransformers$Static3DES",
+        "vulnerable_code": "private final SecretKeySpec key = new SecretKeySpec(new byte[] {...}, \"DESede\");",
+        "description": "The encryption mechanism uses a hard-coded IV which can lead to predictability of the encryption output and eventually make the encryption weaker.",
+        "recommendation": "Use a secure randomly generated IV for each encryption operation."
+    },
+    {
+        "misuse": "Insecure Cryptographic Algorithm",
+        "vulnerable_method": "org.apache.meecrowave.ValueTransformers$Static3DES",
+        "vulnerable_code": "Cipher.getInstance(\"DESede\");",
+        "description": "3DES (Triple DES) is considered insecure due to its key size which can be bruteforced. Also, it may not guarantee strong data confidentiality.",
+        "recommendation": "Switch to a more secure algorithm like AES."
+    }
+]
+```

@@ -1,0 +1,41 @@
+```json
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_method": "DefaultCipherService.getSecretKeySpec",
+        "vulnerable_code": [
+            "byte[] key = Arrays.copyOf(pwdHash, 16); // use only first 128 bit",
+            "return new SecretKeySpec(key, \"AES\");"
+        ],
+        "description": "The method truncates the hashed password to 128 bits to use as an AES key, regardless of the length of the actual hash produced (SHA-256, which is 256 bits). This reduces the strength of the resulting encryption key.",
+        "recommendation": "Use the full length of the hash for the AES key or switch to a key derivation function that can derive a key of the desired size."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_method": "DefaultCipherService.aesEncrypt, DefaultCipherService.aesDecrypt",
+        "vulnerable_code": [
+            "Cipher.getInstance(CIPHER_ALGORITHM);"
+        ],
+        "description": "The code uses the AES algorithm without specifying the mode of operation or the padding scheme. By default Java might use ECB mode which is insecure as it doesn't provide serious message confidentiality.",
+        "recommendation": "Replace the 'Cipher.getInstance(\"AES\")' method call with a more secure mode of operation (e.g., 'Cipher.getInstance(\"AES/GCM/NoPadding\")')."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_method": "DefaultCipherService.getSecretKeySpec",
+        "vulnerable_code": [
+            "secureHash(password)"
+        ],
+        "description": "The system uses a hash of the password directly as an encryption key, without using a salt or proper key derivation function (KDF). This could lead to issues where identical passwords produce identical keys, and it does not protect against dictionary attacks.",
+        "recommendation": "Use a key derivation function such as PBKDF2, bcrypt or scrypt, with a salt and sufficient iterations to derive the encryption key from the password."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_method": "DefaultCipherService.aesDecrypt",
+        "vulnerable_code": [
+            "new String(cipher.doFinal(encryptedValue), UTF_8);"
+        ],
+        "description": "The code converts decrypted byte data directly into String using platform's default charset, which might cause issues in situations where the decrypted data is not properly UTF-8 encoded.",
+        "recommendation": "Ensure that the decrypted data is valid UTF-8 before converting it to a String, or use an alternative approach for binary data."
+    }
+]
+```

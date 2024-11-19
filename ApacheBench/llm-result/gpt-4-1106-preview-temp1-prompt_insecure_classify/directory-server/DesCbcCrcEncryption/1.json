@@ -1,0 +1,32 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_method": "DesCbcCrcEncryption.encrypt and DesCbcCrcEncryption.decrypt",
+        "vulnerable_code": "Cipher.getInstance( \"DES/CBC/NoPadding\" )",
+        "description": "DES is considered a weak algorithm because it uses a 56-bit key which can be brute-forced with modern hardware.",
+        "recommendation": "Use a more secure algorithm like AES with a minimum of 128-bit keys."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_method": "DesCbcCrcEncryption.processCipher",
+        "vulnerable_code": "new SecretKeySpec( keyBytes, \"DES\" )",
+        "description": "The key size for DES is insufficient for modern security standards, as it is fixed at 56-bits which is too short.",
+        "recommendation": "Switch to using a safer encryption algorithm such as AES with a larger key size of at least 128 bits."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values for cryptographic context.",
+        "vulnerable_method": "DesCbcCrcEncryption.getEncryptedData",
+        "vulnerable_code": "byte[] conFounder = getRandomBytes( getConfounderLength() );",
+        "description": "It is not clear from the code provided whether the method getRandomBytes() generates cryptographically strong random values. If it does not, it could compromise cryptographic operations.",
+        "recommendation": "Ensure that getRandomBytes() method generates secure random bytes appropriate for cryptographic use."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_method": "DesCbcCrcEncryption.processCipher",
+        "vulnerable_code": "AlgorithmParameterSpec paramSpec = new IvParameterSpec( iv );",
+        "description": "The initialization vector (IV) is a static value, which should ideally be unique and randomly generated for each encryption operation to provide semantic security.",
+        "recommendation": "Generate a new random IV for each encryption operation."
+    }
+]
+```

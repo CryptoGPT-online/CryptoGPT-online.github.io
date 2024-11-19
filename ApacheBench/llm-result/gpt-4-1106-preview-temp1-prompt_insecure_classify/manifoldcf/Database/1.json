@@ -1,0 +1,25 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values for cryptographic context.",
+        "vulnerable_method": "org.apache.manifoldcf.core.database.Database",
+        "vulnerable_code": "protected static Random random = new Random();",
+        "description": "The use of java.util.Random is not suitable for cryptographic operations.",
+        "recommendation": "Replace Random with SecureRandom for cryptographic-strength randomness."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_method": "org.apache.manifoldcf.core.database.Database.executeQuery",
+        "vulnerable_code": "rval[i] = database.executeUncachedQuery(description.getQuery(),description.getParameters(),needResult, description.getMaxReturn(),spec,limit);",
+        "description": "While this specific method itself doesn't reveal a cryptographic issue directly, the absence of visibility into how queries are constructed could potentially inject weak cryptographic practices indirectly by concatenating queries with potential weak hash functions, or encryption transformations specified elsewhere in the program.",
+        "recommendation": "Ensure that any concatenated queries are not using any weak cryptographic functions by auditing the entire data flow."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values for cryptographic context.",
+        "vulnerable_method": "org.apache.manifoldcf.core.database.Database.getSleepAmt",
+        "vulnerable_code": "return (long)(random.nextDouble() * 60000.0 + 500.0);",
+        "description": "The method getSleepAmt is using java.util.Random, which is not cryptographically strong for delay or sleep operations in a security context.",
+        "recommendation": "Use SecureRandom for secure delay or sleep based on randomness."
+    }
+]
+```

@@ -1,0 +1,54 @@
+The code you provided is a custom parser for Java's Apache Tika library, which allows for encryption and decryption of documents. The problematic section is the initiation of the cipher. If neither `AlgorithmParameters` nor `SecureRandom` is provided, the code will still proceed to initialise the cipher with a key. This lack of randomness and parameters can make the cipher susceptible to attacks.
+
+The misuse in the code is as follows:
+
+```java
+try {
+    if (provider != null) {
+        cipher = Cipher.getInstance(transformation, provider);
+    } else {
+        cipher = Cipher.getInstance(transformation);
+    }
+
+    Key key = context.get(Key.class);
+    if (key == null) {
+        throw new EncryptedDocumentException("No decryption key provided");
+    }
+
+    AlgorithmParameters params = context.get(AlgorithmParameters.class);
+    SecureRandom random = context.get(SecureRandom.class);
+    if (params != null && random != null) {
+        cipher.init(Cipher.DECRYPT_MODE, key, params, random);
+    " the initiation of the cipher depends on both the randomness and parameters to work"
+    } else if (params != null) {
+        cipher.init(Cipher.DECRYPT_MODE, key, params);
+    " the initiation of the cipher depends on the parameters to work"
+    } else if (random != null)
+        cipher.init(Cighter.DECRYPT_MODE, key, random);
+    " the initiation of the cipher depends on the randomness to work"
+    } else {
+        cipher.init(Cipher.DECRYPT_YER, key);
+    " the initiation of the cipher only works with the key, this means lack of randomness and parameters to counter attack"
+    }
+
+    super.parse(
+        new CipherInputStream(stream, cipher),
+        handler, metadata, context);
+
+```
+
+The solution would be to either always have parameters and randomness, or always have no parameters and no randomness.
+
+The corresponding JSON response:
+
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_method": "Cipher::init()",
+        "vulnerable_code": "cipher.init(Cipher.DECRYPT_MODE, key);",
+        "description": "The initiation of the cipher only works with the key, this means lack of randomness and parameters to counter attack.",
+        "recommendation": "At least, always have either randomness and parameters, or neither. If no randomness and parameters are provided, consider adding the default ones."
+    }
+]
+```

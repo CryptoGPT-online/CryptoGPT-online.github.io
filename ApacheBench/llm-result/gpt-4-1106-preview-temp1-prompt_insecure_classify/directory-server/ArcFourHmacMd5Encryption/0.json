@@ -1,0 +1,32 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_method": "ArcFourHmacMd5Encryption.encrypt, ArcFourHmacMd5Encryption.decrypt",
+        "vulnerable_code": [
+            "Cipher cipher = Cipher.getInstance( \"ARCFOUR\" );",
+            "SecretKey key = new SecretKeySpec( keyBytes, \"ARCFOUR\" );"
+        ],
+        "description": "The ARCFOUR (also known as RC4) algorithm is considered to be a broken and risky cryptographic algorithm, which is vulnerable to several types of attacks.",
+        "recommendation": "Use a more secure algorithm, like AES, with a proper mode of operation."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_method": "ArcFourHmacMd5Encryption.calculateIntegrity",
+        "vulnerable_code": [
+            "Mac digester = Mac.getInstance( \"HmacMD5\" );"
+        ],
+        "description": "MD5 is not considered a secure hashing algorithm for cryptographic purposes due to its vulnerability to collision attacks.",
+        "recommendation": "Use a more secure hashing algorithm like SHA-256 or SHA-3 with HMAC."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_method": "ArcFourHmacMd5Encryption.calculateIntegrity",
+        "vulnerable_code": [
+            "Mac digester = Mac.getInstance( \"HmacMD5\" );"
+        ],
+        "description": "MD5 is considered insecure and unsuitable for further use in cryptographic protocols. Hash functions such as SHA-256 or SHA-3 are recommended for use.",
+        "recommendation": "Replace MD5 with a more secure hash function for HMAC, such as SHA-256."
+    }
+]
+```

@@ -1,0 +1,25 @@
+```json
+[
+    {
+        "misuse": "Weak Encryption Algorithm",
+        "vulnerable_method": "DesCbcMd5Encryption.processCipher",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"DES/CBC/NoPadding\");",
+        "description": "The DES encryption algorithm is considered weak and has been deprecated due to its key size being too small (56 bits), making it vulnerable to brute-force attacks.",
+        "recommendation": "Replace DES with a stronger algorithm such as AES with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "Static Initialization Vector",
+        "vulnerable_method": "DesCbcMd5Encryption.processCipher",
+        "vulnerable_code": "AlgorithmParameterSpec paramSpec = new IvParameterSpec(iv);",
+        "description": "Using a static initialization vector (IV) for CBC mode encryption can allow attackers to infer patterns about the plaintext, leading to potential plaintext recovery.",
+        "recommendation": "Generate a unique IV for each encryption operation using a secure random number generator."
+    },
+    {
+        "misuse": "Insecure Hash Function",
+        "vulnerable_method": "DesCbcMd5Encryption.calculateIntegrity",
+        "vulnerable_code": "MessageDigest digester = MessageDigest.getInstance(LdapSecurityConstants.HASH_METHOD_MD5.getAlgorithm());",
+        "description": "MD5 is an insecure hash function prone to collision attacks. The integrity of the encrypted data cannot be guaranteed using an MD5 checksum.",
+        "recommendation": "Use a more secure hashing algorithm such as SHA-256."
+    }
+]
+```

@@ -1,0 +1,27 @@
+```json
+[{
+  "misuse": "CWE-326: Inadequate Encryption Strength",
+  "vulnerable_method": "Des3CbcSha1KdEncryption.randomToKey",
+  "vulnerable_code": "byte[] result = new byte[kBytes];",
+  "description": "The implementation of randomToKey uses a hardcoded byte array filled with zero bytes which does not provide adequate entropy for cryptographic operations.",
+  "recommendation": "Ensure that secure random bytes are generated for key derivation functions."
+}, {
+  "misuse": "CWE-330: Use of Insufficiently Random Values",
+  "vulnerable_method": "Des3CbcSha1KdEncryption.getEncryptedData",
+  "vulnerable_code": "byte[] conFounder = getRandomBytes(getConfounderLength());",
+  "description": "The method getEncryptedData contains the invocation of getRandomBytes which is unspecified in the provided code snippet. It needs to guarantee the use of a secure cryptographic PRNG to ensure sufficient randomness.",
+  "recommendation": "Make sure that getRandomBytes() uses a secure source of randomness like java.security.SecureRandom."
+}, {
+  "misuse": "CWE-326: Inadequate Encryption Strength",
+  "vulnerable_method": "Des3CbcSha1KdEncryption.deriveKey",
+  "vulnerable_code": "byte[] result = deriveRandom(baseKey, usage, n, k);",
+  "description": "The implementation of deriveKey may provide inadequate encryption strength if the deriveRandom method does not generate a random value with enough bits for the desired key size.",
+  "recommendation": "Ensure that deriveRandom generates random values with sufficient bits for strong key derivation."
+}, {
+  "misuse": "CWE-798: Use of Hardcoded Credentials",
+  "vulnerable_method": "Des3CbcSha1KdEncryption",
+  "vulnerable_code": "private static final byte[] iv = new byte[] { (byte) 0x00, ... };",
+  "description": "The use of a static, hardcoded initialization vector (IV) decreases the security of encryption operations, making patterns more observable to attackers.",
+  "recommendation": "Replace the hardcoded IV with a securely generated random IV for each encryption operation."
+}]
+```

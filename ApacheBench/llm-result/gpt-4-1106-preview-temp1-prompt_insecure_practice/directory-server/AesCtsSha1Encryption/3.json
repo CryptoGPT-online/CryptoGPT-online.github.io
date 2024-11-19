@@ -1,0 +1,25 @@
+```json
+[
+  {
+    "misuse": "Hardcoded IV",
+    "vulnerable_method": "AesCtsSha1Encryption.processCipher",
+    "vulnerable_code": "AlgorithmParameterSpec paramSpec = new IvParameterSpec(iv);",
+    "description": "The initialization vector (IV) should be unpredictable and unique (typically random) for each execution of the encryption algorithm to ensure the security of cipher block chaining modes. Hardcoded IV compromises the security as it remains the same across all encryptions.",
+    "recommendation": "Generate a secure random IV for each encryption operation."
+  },
+  {
+    "misuse": "Insecure Randomness",
+    "vulnerable_method": "AesCtsSha1Encryption.getEncryptedData",
+    "vulnerable_code": "byte[] conFounder = getRandomBytes(getConfounderLength());",
+    "description": "The method for generating the confounder should use a cryptographically secure pseudo-random number generator (CSPRNG), but the specifics of the getRandomBytes method are not shown in this snippet. If a weak random number generator is used, it can weaken the cryptographic strength of the confounder.",
+    "recommendation": "Ensure getRandomBytes method uses a CSPRNG such as java.security.SecureRandom."
+  },
+  {
+    "misuse": "NoPadding in CTS mode",
+    "vulnerable_method": "AesCtsSha1Encryption.processCipher",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CTS/NoPadding\");",
+    "description": "Using NoPadding in cipher-text stealing (CTS) mode could potentially expose the encryption to padding oracle attacks if not handled correctly, especially during decryption. However, this is commonly acceptable if CTS is required as CTS can work without padding, provided that the implementation ensures a minimum block size.",
+    "recommendation": "No specific recommendation can be made without more context or unless the implementation is known to be flawed."
+  }
+]
+```

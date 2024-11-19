@@ -1,0 +1,34 @@
+[
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength.",
+    "vulnerable_method": "setSslProtocol",
+    "vulnerable_code": "sslProtocol = protocol;",
+    "description": "sslProtocol should be a minimum of TLSv1.2. TLSv1.0 and TLSv1.1 are considered weak and should not be used.",
+    "recommendation": "Set sslProtocol to TLSv1.2 or later."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength.",
+    "vulnerable_method": "setKeystoreType",
+    "vulnerable_code": "keystoreType = type;",
+    "description": "keystoreType should be set to JKS or PKCS12. Other keystore types are not as secure.",
+    "recommendation": "Set keystoreType to JKS or PKCS12."
+  },
+  {
+    "misuse": "Apache CXF does not validate XML signatures by default (CWE-327: Use of a Broken or Risky Cryptographic Algorithm.)",
+    "vulnerable_method": "setJaxwsSupportIfAvailable",
+    "vulnerable_code": "if (jaxwsSupportIfAvailable) {\n            this.setJaxwsSupportIfAvailable(jaxwsSupportIfAvailable);\n        }",
+    "description": "XML Signature validation is not enforced by default in CXF, which may allow an attacker to bypass authentication by providing a forged XML signature.",
+    "recommendation": "Enforce XML Signature validation by setting the 'cxf.xmlSig.enable' property to 'true' in your configuration."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength.",
+    "vulnerable_method": "Static3DES",
+    "vulnerable_code": [
+      "final SecretKeySpec key = new SecretKeySpec(new byte[]{......}, \"DESede\"",
+      "Cipher cipher = Cipher.getInstance(\"DESede\");",
+      "cipher.init(Cipher.DECRYPT_MODE, key);"
+    ],
+    "description": "Meecrowave uses Static3DES to decrypt encoded password. DESede is an old standard for encryption and should not be used anymore. Key must contain 24 bytes, and the cipher will use a weak padding scheme. So, if the password encoded uses a large key and a modern cipher like AES, the decrypted password will be truncated.",
+    "recommendation": "It's recommended to use AES in CBC or GCM mode."
+  }
+]

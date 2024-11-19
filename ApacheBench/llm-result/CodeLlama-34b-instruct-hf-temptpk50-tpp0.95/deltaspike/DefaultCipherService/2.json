@@ -1,0 +1,51 @@
+ [
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_method": "DefaultCipherService.getMasterFile()",
+        "vulnerable_code": "File userHome = System.getProperty(\"user.home\");\n        if (userHome == null || userHome.isEmpty())\n        {\n            throw new IllegalStateException(\"Can not determine user home directory\");\n        }\n        return new File(userHome, \".deltaspike/master.hash\");",
+        "description": "The method 'getMasterFile()' uses the user home directory to store the master.hash file, but the user home directory is determined using the 'user.home' system property, which can be manipulated by an attacker. This can lead to a directory traversal vulnerability, where an attacker can write the master.hash file to an arbitrary location on the file system.",
+        "recommendation": "Use a secure mechanism to determine the user home directory, such as using the Java 'UserHome' class. Additionally, consider using a file encryption library that handles secure storage and retrieval of sensitive data, such as the Java 'SecurePreferences' class."
+    },
+    {
+        "misuse": "CWE-297: Improper Validation of Certificate with Host Mismatch",
+        "vulnerable_method": "DefaultCipherService.getMasterKey(String)",
+        "vulnerable_code": "Properties keys = new Properties();\n        if (masterFile.exists())\n        {\n            keys = loadProperties(masterFile.toURI().toURL());\n        }\n\n        String saltKey = byteToHex(secureHash(saltHash));\n\n        String encryptedMasterKey = (String) keys.get(saltKey);",
+        "description": "The method 'getMasterKey()' retrieves a master key from the master.hash file, but the file is loaded using the 'loadProperties()' method, which does not perform any validation of the file contents. This can lead to a vulnerability where an attacker can manipulate the contents of the master.hash file, potentially causing the application to use an attacker-provided master key.",
+        "recommendation": "Use a secure method to load the master.hash file, such as using the Java 'SecurePreferences' class, or implement additional validation of the file contents to ensure that they have not been tampered with."
+    },
+    {
+        "misuse": "CWE-256: Plaintext Storage of Sensitive Data",
+        "vulnerable_method": "DefaultCipherService.setMasterHash(String, String, boolean)",
+        "vulnerable_code": "keys.put(saltKey, encrypted);\n\n        keys.store(new FileOutputStream(masterFile), null);",
+        "description": "The method 'setMasterHash()' stores a master password in a plaintext file, which can be read by an attacker if they gain access to the file system. This can lead to unauthorized access to the application and its encrypted data.",
+        "recommendation": "Use a secure method to store the master password, such as using the Java 'SecurePreferences' class, or use encryption to protect the password before storing it."
+    },
+    {
+        "misuse": "CWE-757: Use of Hard-coded Credentials",
+        "vulnerable_method": "DefaultCipherService.aesEncrypt(String, String)",
+        "vulnerable_code": "byte[] pwdHash = secureHash(password);\n        byte[] key = Arrays.copyOf(pwdHash, 16);",
+        "description": "The method 'aesEncrypt()' uses a hard-coded key to perform AES encryption, which can be discovered by an attacker and used to decrypt the encrypted data. This can lead to unauthorized access to the encrypted data.",
+        "recommendation": "Use a secure method to generate the AES key, such as using the Java 'SecureRandom' class, or generate the key from a secure source, such as the Java 'SecurePreferences' class."
+    },
+    {
+        "misuse": "CWE-321: Use of Hard-coded Cryptographic Key",
+        "vulnerable_method": "DefaultCipherService.aesDecrypt(byte[], String)",
+        "vulnerable_code": "SecretKeySpec secretKeySpec = getSecretKeySpec(key);",
+        "description": "The method 'aesDecrypt()' uses a hard-coded key to perform AES decryption, which can be discovered by an attacker and used to decrypt the encrypted data. This can lead to unauthorized access to the encrypted data.",
+        "recommendation": "Use a secure method to generate the AES key, such as using the Java 'SecureRandom' class, or generate the key from a secure source, such as the Java 'SecurePreferences' class."
+    },
+    {
+        "misuse": "CWE-256: Plaintext Storage of Sensitive Data",
+        "vulnerable_method": "DefaultCipherService.aesEncrypt(String, String)",
+        "vulnerable_code": "return byteToHex(aesEncrypt(byteToHex(secureHash(masterPassword)), saltHash));",
+        "description": "The method 'aesEncrypt()' encrypts a plaintext password using AES encryption, but the encrypted data is stored in plaintext in the master.hash file, which can be read by an attacker if they gain access to the file system. This can lead to unauthorized access to the application and its encrypted data.",
+        "recommendation": "Use a secure method to store the encrypted data, such as using the Java 'SecurePreferences' class, or encrypt the data before storing it."
+    },
+    {
+        "misuse": "CWE-650: Failure to Use Adequate Cryptographic Key Length",
+        "vulnerable_method": "DefaultCipherService.secureHash(String)",
+        "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(HASH_ALGORITHM);\n        return md.digest(value.getBytes(UTF_8));",
+        "description": "The method 'secureHash()' uses the SHA-256 hash algorithm to hash a password, but SHA-256 is a 256-bit hash algorithm, which is not considered adequate for cryptographic purposes. This can lead to a vulnerability where the password can be easily cracked by an attacker.",
+        "recommendation": "Use a secure method to hash the password, such as using the Java 'BCrypt' class, which uses a 128-bit hash algorithm and is considered more secure."
+    }
+]

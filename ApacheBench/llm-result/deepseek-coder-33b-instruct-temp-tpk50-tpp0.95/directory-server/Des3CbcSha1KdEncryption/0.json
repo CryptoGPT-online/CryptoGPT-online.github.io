@@ -1,0 +1,46 @@
+There is a potential misuse in the usage of DES3 with CBC mode and MAC SHA1. 
+
+1. "Use of a Broken or Risky Cryptographic Algorithm" (CWE-327)
+
+The code specifies "DESede/CBC/NoPadding" for the Cipher. This is vulnerable to the attack "Linear Cryptanalysis Attack", which can recover keys from a limited number of ciphertext blocks."
+
+```json
+{
+    "misuse": "Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_method": "org.apache.directory.server.kerberos.shared.crypto.encryption.Des3CbcSha1KdEncryption.processCipher()",
+    "vulnerable_code": "Cipher.getInstance('DESede/CBC/NoPadding')",
+    "description": "This code uses DES3 CBC mode with NoPadding which is vulnerable to the attack 'Linear Cryptanalysis Attack' that can recover keys from a limited number of ciphertext blocks.",
+    "recommendation": "Consider using another cryptographic algorithm or mode that has been proven to be robust against such attacks."
+}
+```
+
+2. "Improper Encryption of Data: Cryptographic Algorithm not using a mode which is resistant to cryptoanalysis" (CWE-327)
+
+The code specifies "DESede/CBC/NoPadding" for the Cipher. "CBC mode is susceptible to attacks when it is used in a way that is susceptible to attacks, such as reusing the IV, using padding in a way that results in padding oracle attacks, or using multiple blocks to attack a single block (or vice versa)."
+
+```json
+{
+    "misuse": "Improper Encryption of Data: Cryptographic Algorithm not using a mode which is resistant to cryptoanalysis",
+    "vulnerable_method": "org.apache.directory.server.kerberos.shared.crypto.encryption.Des3CbcSha1KdEncryption.processCipher()",
+    "vulnerable_code": "Cipher.getInstance('DESede/CBC/NoPadding')",
+    "description": "The code uses DES3 CBC mode with NoPadding that might be susceptible to attacks that involves reusing the IV, using padding in a way that results in padding oracle attacks, or using multiple blocks to attack a single block (or vice versa).",
+    "recommendation": "Use a cryptographic algorithm and mode that is resistant to attacks."
+}
+```
+
+2. "Improper use of Cryptographic Message Syntax (CMS) data structures" (CWE-700)
+
+The code uses NoPadding for Cipher. This will not give the expected output because the input data size and output data size are dependent on the padding used.
+
+```json
+{
+    "misuse": "Improper use of Cryptographic Message Syntax (CMS) data structures",
+    "vulnerable_method": "org.apache.directory.server.kerberos.shared.crypto.encryption.Des3CbcSha1KdEncryption.processCipher()",
+    "vulnerable_code": "Cipher.getInstance('DESede/CBC/NoPadding')",
+    "description": "This code uses DES3 CBC mode with NoPadding that will not give the expected output because the input data size and output data size are dependent on the padding used.",
+    "recommendation": "Use a padding mechanism like PKCS#1."
+}
+}
+```
+
+Note: The JSON response is the only output. Any other output will be in the format of text or graphical.

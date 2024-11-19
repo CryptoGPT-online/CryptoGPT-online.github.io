@@ -1,0 +1,25 @@
+```json
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_method": "ManifoldCF.encrypt and ManifoldCF.decrypt",
+        "vulnerable_code": "\"PBKDF2WithHmacSHA1\", 1024, 128",
+        "description": "The method utilizes PBKDF2 with HMAC-SHA1 as the PRF and only 1024 iterations which might not provide adequate encryption strength.",
+        "recommendation": "Increase the iteration count and consider using a stronger PRF like HMAC-SHA256."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_method": "ManifoldCF.obfuscate and ManifoldCF.deobfuscate",
+        "vulnerable_code": "OBFUSCATION_SALT, OBFUSCATION_PASSCODE",
+        "description": "Hardcoded 'salt' and 'passcode' values are insecure and represent a major vulnerability. Anyone with access to the source code can retrieve these values and easily decipher the obfuscated data.",
+        "recommendation": "Use a strong passphrase and a secure method for generating and storing the salt."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_method": "ManifoldCF.hash",
+        "vulnerable_code": "MessageDigest.getInstance(\"SHA\")",
+        "description": "The SHA-1 algorithm is used, which is considered weak and unsuitable for cryptographic purposes due to known vulnerabilities.",
+        "recommendation": "Replace SHA-1 with a more secure hashing algorithm such as SHA-256 or SHA-3."
+    }
+]
+```

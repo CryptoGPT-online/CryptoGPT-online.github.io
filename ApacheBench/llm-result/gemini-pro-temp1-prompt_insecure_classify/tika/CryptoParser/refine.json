@@ -1,0 +1,24 @@
+### False Positive Misuse ###
+* **CWE-757: Selection of Less-Secure Algorithm During Negotiation**
+* **CWE-798: Use of Hardcoded Credentials.**
+ - The vulnerability scanner mistakenly identifies the `super.parse` method call as hardcoding credentials or using hardcoded values because the CipherInputStream is not closed explicitly. However, closing the CipherInputStream is the responsibility of the delegating parser (superclass) in this case. The CryptoParser class is not responsible for closing the CipherInputStream.
+
+### Optimized Misuse JSON ###
+```
+[
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values.",
+    "vulnerable_method": "CryptoParser.parse()",
+    "vulnerable_code": "SecureRandom random = context.get(SecureRandom.class);",
+    "description": "Uninitialized SecureRandom instance can introduce bias.",
+    "recommendation": "SecureRandom instance should be initialized with a seed obtained from a secure random source."
+  },
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+    "vulnerable_method": "CryptoParser.init",
+    "vulnerable_code": "cipher = Cipher.getInstance(transformation);",
+    "description": "Using the default JCE provider may allow attackers to substitute a malicious provider that uses a weak or insecure algorithm.",
+    "recommendation": "Use a specific, trusted provider when instantiating the Cipher object."
+  }
+]
+```

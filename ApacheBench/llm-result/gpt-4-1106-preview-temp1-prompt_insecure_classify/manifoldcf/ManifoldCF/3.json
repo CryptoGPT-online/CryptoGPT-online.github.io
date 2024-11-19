@@ -1,0 +1,25 @@
+```json
+[
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials.",
+        "vulnerable_method": "org.apache.manifoldcf.core.system.ManifoldCF",
+        "vulnerable_code": "private static String OBFUSCATION_PASSCODE = \"NowIsTheTime\";\n  private static String OBFUSCATION_SALT = \"Salty\";",
+        "description": "The use of hardcoded credentials for obfuscation and deobfuscation is insecure as they can be easily discovered within the code, leading to potential misuse.",
+        "recommendation": "Instead of hardcoding, use a secure configuration management solution to store and retrieve cryptographic secrets."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_method": "org.apache.manifoldcf.core.system.ManifoldCF",
+        "vulnerable_code": "protected static byte[] getSecureRandom() {\n    SecureRandom random = new SecureRandom();\n    byte[] iv = new byte[IV_LENGTH];\n    random.nextBytes(iv);\n    return iv;\n  }",
+        "description": "Although using SecureRandom is a good practice, not providing a specific secure random number generator (e.g., SHA1PRNG) might lead to the use of a non-secure default.",
+        "recommendation": "Specify a secure random number generator such as SecureRandom.getInstanceStrong() or SecureRandom.getInstance(\"SHA1PRNG\")."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_method": "org.apache.manifoldcf.core.system.ManifoldCF",
+        "vulnerable_code": "KeySpec keySpec = new PBEKeySpec(passCode.toCharArray(), saltValue.getBytes(StandardCharsets.UTF_8), 1024, 128);",
+        "description": "The encryption uses a static and low iteration count (1024) and key size (128 bits) which may not provide strong security.",
+        "recommendation": "Increase the key size to 256 bits and use a higher iteration count, like 10,000 or more, in accordance with OWASP recommendations."
+    }
+]
+```

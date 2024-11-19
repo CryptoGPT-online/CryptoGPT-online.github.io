@@ -1,0 +1,48 @@
+### False Positive Misuse ###
+
+1. **Misuse:** CWE-326
+   **Vulnerable method:** calculateIntegrity
+   **Vulnerable code:** MessageDigest digester = MessageDigest.getInstance( LdapSecurityConstants.HASH_METHOD_MD5.getAlgorithm() );
+   **Description:** MessageDigest instance should be thread local or created per use and not reused.
+   **Recommendation:** MessageDigest instance should be thread local or created per use and not reused. There are many ways to achieve this. One possibility is using ThreadLocal.
+   **Reason:** This misuse is not applicable because the MessageDigest instance is created per use, not reused.
+
+### Optimized Misuse JSON ###
+
+[
+  {
+    "misuse category": "Broken Crypto Algorithm",
+    "vulnerable_method": "processCipher",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance( \"DES/CBC/NoPadding\" );",
+    "description": "\"DES\" is not recommended in new applications and should only be used to maintain backward compatibility with legacy systems.",
+    "recommendation": "Replace \"DES\" with \"AES\" or other strong encryption algorithms"
+  },
+  {
+    "misuse category": "Insecure Secret Key",
+    "vulnerable_method": "encrypt( byte[] plainText, byte[] keyBytes )",
+    "vulnerable_code": "SecretKey key = new SecretKeySpec( keyBytes, \"DES\" );",
+    "description": "The key size of DES is too small (56 bits) and is not secure. It is recommended to use a key size of at least 128 bits.",
+    "recommendation": "Use a larger key size, such as 256 bits."
+  },
+  {
+    "misuse category": "Broken Key Derivation Function",
+    "vulnerable_method": "encrypt( byte[] plainText, byte[] keyBytes )",
+    "vulnerable_code": "SecretKey key = new SecretKeySpec( keyBytes, \"DES\" );",
+    "description": "The DES key derivation function is weak and can be easily brute-forced. It is recommended to use a more secure key derivation function, such as PBKDF2 or bcrypt.",
+    "recommendation": "Use a more secure key derivation function, such as PBKDF2 or bcrypt."
+  },
+  {
+    "misuse category": "Insecure Use of Encryption Algorithm",
+    "vulnerable_method": "encrypt",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance( \"DES/CBC/NoPadding\" );",
+    "description": "The DES algorithm is considered insecure and should not be used for encryption purposes. It is recommended to use a more secure algorithm, such as AES or Triple DES.",
+    "recommendation": "Use a more secure encryption algorithm, such as AES or Triple DES."
+  },
+  {
+    "misuse category": "Insecure Use of Encryption Algorithm",
+    "vulnerable_method": "decrypt",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance( \"DES/CBC/NoPadding\" );",
+    "description": "The DES algorithm is considered insecure and should not be used for encryption purposes. It is recommended to use a more secure algorithm, such as AES or Triple DES.",
+    "recommendation": "Use a more secure encryption algorithm, such as AES or Triple DES."
+  }
+]

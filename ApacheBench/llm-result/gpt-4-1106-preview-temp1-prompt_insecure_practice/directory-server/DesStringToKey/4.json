@@ -1,0 +1,32 @@
+```json
+[
+    {
+        "misuse": "Weak Encryption Algorithm",
+        "vulnerable_method": "DesStringToKey.generateKey",
+        "vulnerable_code": "Cipher.getInstance(\"DES/CBC/NoPadding\")",
+        "description": "DES is considered a weak encryption algorithm due to its short key length. Modern applications should use stronger algorithms such as AES.",
+        "recommendation": "Use AES with an appropriate key size (e.g., 128, 192, or 256 bits) instead of DES."
+    },
+    {
+        "misuse": "Key Derivation Function Issues",
+        "vulnerable_method": "DesStringToKey.generateKey",
+        "vulnerable_code": "generateKey( passPhrase )",
+        "description": "The method is using string concatenation of password, realm and username, without a proper key derivation function with a salt and sufficient iterations.",
+        "recommendation": "Use a standard key derivation function such as PBKDF2 with a salt and a high iteration count."
+    },
+    {
+        "misuse": "Weak Key Management",
+        "vulnerable_method": "DesStringToKey.calculateChecksum",
+        "vulnerable_code": "SecretKeySpec keyBytes = new SecretKeySpec( secretKey, \"DES\" )",
+        "description": "The transformation used for creating the SecretKey does not ensure strong keys and may lead to weak keys (e.g. using the same value for key and IV, possible weak keys not handled in all cases).",
+        "recommendation": "Ensure proper key management, avoid using encryption key as IV unless it is secure for the mode of operation, and handle all weak key checks."
+    },
+    {
+        "misuse": "Insufficient Entropy",
+        "vulnerable_method": "DesStringToKey.padString",
+        "vulnerable_code": "paddedByteArray[ii] = 0",
+        "description": "The method padString uses static padding, which can introduce patterns and reduce entropy.",
+        "recommendation": "Use a padding mechanism that does not introduce predictable data, such as PKCS5Padding or PKCS7Padding."
+    }
+]
+```

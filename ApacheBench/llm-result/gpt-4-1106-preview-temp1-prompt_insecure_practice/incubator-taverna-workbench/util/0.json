@@ -1,0 +1,33 @@
+```json
+[{
+    "misuse": "Weak Encryption Algorithm",
+    "vulnerable_method": "Util.doEncryption",
+    "vulnerable_code": "Cipher.getInstance(\"PBEWithMD5AndDES\")",
+    "description": "The encryption algorithm PBEWithMD5AndDES is outdated and considered insecure due to its short key length and the use of DES.",
+    "recommendation": "Switch to a more secure algorithm like AES with a proper key management system."
+},{
+    "misuse": "Weak Hashing Algorithm",
+    "vulnerable_method": "Util.doEncryption",
+    "vulnerable_code": "MessageDigest.getInstance(\"MD5\")",
+    "description": "MD5 is a weak hashing algorithm that is vulnerable to collision attacks.",
+    "recommendation": "Replace MD5 with a more secure hashing algorithm, such as SHA-256."
+},{
+    "misuse": "Hardcoded Salt for Password Encryption",
+    "vulnerable_method": "Util.doEncryption",
+    "vulnerable_code": "byte[] salt = new byte[8]; for (int i = 0; i < 8; ++i) salt[i] = digest[i];",
+    "description": "Using a hardcoded salt derived from the host name introduces predictability and increases vulnerability to dictionary attacks.",
+    "recommendation": "Use a strong, randomly generated salt for each password."
+},{
+    "misuse": "Insecure Iteration Count",
+    "vulnerable_method": "Util.doEncryption",
+    "vulnerable_code": "PBEParameterSpec paramSpec = new PBEParameterSpec(salt, 20);",
+    "description": "An iteration count of 20 is too low and does not provide sufficient protection against brute-force attacks.",
+    "recommendation": "Increase the iteration count to a higher value, such as 10000 or more."
+},{
+    "misuse": "Improper Error Handling",
+    "vulnerable_method": "Util.doEncryption",
+    "vulnerable_code": "return (new byte[1]);",
+    "description": "Returning a new byte array of length 1 upon an exception does not provide any meaningful error information and may not alert the user to the problem adequately.",
+    "recommendation": "Throw an appropriate exception or handle the error in a way that allows the user to take corrective action."
+}]
+```

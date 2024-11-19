@@ -1,0 +1,37 @@
+ [
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_method": "CryptoParser::parse(InputStream stream, ContentHandler handler, Metadata metadata, ParseContext context) throws IOException, SAXException, TikaException",
+        "vulnerable_code": "Key key = context.get(Key.class);",
+        "description": "The method uses the context.get(Key.class) method to retrieve the decryption key, which is vulnerable to hardcoded credentials misuse.",
+        "recommendation": "Use a secure method to retrieve the decryption key, such as prompting the user for the key or storing it in a secure location."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_method": "CryptoParser::parse(InputStream stream, ContentHandler handler, Metadata metadata, ParseContext context) throws IOException, SAXException, TikaException",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(transformation);",
+        "description": "The method uses the Cipher.getInstance(transformation) method to retrieve the encryption algorithm, which is vulnerable to less-secure algorithm selection.",
+        "recommendation": "Use a more secure encryption algorithm, such as AES-256 or RSA-2048."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_method": "CryptoParser::parse(InputStream stream, ContentHandler handler, Metadata metadata, ParseContext context) throws IOException, SAXException, TikaException",
+        "vulnerable_code": "SecureRandom random = context.get(SecureRandom.class);",
+        "description": "The method uses the context.get(SecureRandom.class) method to retrieve the SecureRandom instance, which is vulnerable to insufficiently random values.",
+        "recommendation": "Use a more secure SecureRandom instance, such as SecureRandom.getInstanceStrong() or SecureRandom.getInstance(algorithm)."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_method": "CryptoParser::parse(InputStream stream, ContentHandler handler, Metadata metadata, ParseContext context) throws IOException, SAXException, TikaException",
+        "vulnerable_code": "cipher.init(Cipher.DECRYPT_MODE, key);",
+        "description": "The method uses the Cipher.init(Cipher.DECRYPT_MODE, key) method to decrypt the input stream, which is vulnerable to inadequate encryption strength.",
+        "recommendation": "Use a more secure encryption algorithm, such as AES-256 or RSA-2048."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_method": "CryptoParser::parse(InputStream stream, ContentHandler handler, Metadata metadata, ParseContext context) throws IOException, SAXException, TikaException",
+        "vulnerable_code": "cipher.init(Cipher.DECRYPT_MODE, key, params, random);",
+        "description": "The method uses the Cipher.init(Cipher.DECRYPT_MODE, key, params, random) method to decrypt the input stream, which is vulnerable to the use of a broken or risky cryptographic algorithm.",
+        "recommendation": "Use a more secure encryption algorithm, such as AES-256 or RSA-2048."
+    }
+]

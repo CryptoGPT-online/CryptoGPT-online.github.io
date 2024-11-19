@@ -1,0 +1,16 @@
+[
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values.",
+    "vulnerable_method": "ManifoldCF$1.ifelse(String, int, String, String)",
+    "vulnerable_code": "if (input == null || input.length() == 0) {\nreturn input;\n}\n// First, convert to binary\nbyte[] array = input.getBytes(StandardCharsets.UTF_8);\n// Shift and xor\n// We shift by some number not a multiple of 4.\n// The resulting hexadecimal is then not a simple shift.\nint i = 0;\nint carryover = (((int)array[array.length-1]) & 0x1f);\nwhile (i < array.length)\n{\nint x = (int)array[i];\nint newCarryover = x & 0x1f;\nx = ((x >> 5) & 0x7) + (carryover << 3);\ncarryover = newCarryover;\narray[i++] = (byte)(x ^ 0x59);\n}",
+    "description": "The function uses a fixed value as a carryover in the encryption algorithm, which makes it vulnerable to a brute-force attack.",
+    "recommendation": "Use a more secure encryption algorithm with a stronger random number generator. If suitable, consider the java.security.SecureRandom class to generate more random values."
+  },
+  {
+    "misuse": "CWE-295: Improper Certificate Validation.",
+    "vulnerable_method": "ManifoldCF.addPollingHook(IPollingHook)",
+    "vulnerable_code": "synchronized (pollingHooks)\n{\npollingHooks.add(hook);\n}",
+    "description": "The function does not perform proper certificate validation of the client. This can allow an attacker to impersonate a valid client and gain access to the system.",
+    "recommendation": "Implement proper certificate validation to ensure that only authorized clients can connect to the system."
+  }
+]

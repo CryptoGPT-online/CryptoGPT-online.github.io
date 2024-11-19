@@ -1,0 +1,25 @@
+```json
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_method": "org.apache.activemq.artemis.utils.DefaultSensitiveStringCodec.BlowfishAlgorithm.updateKey",
+        "vulnerable_code": "this.internalKey = key.getBytes();",
+        "description": "The Blowfish key is retrieved from a string without any hashing or salting, weakening the encryption strength.",
+        "recommendation": "Use a secure key derivation function like PBKDF2 to generate the key from the password."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_method": "org.apache.activemq.artemis.utils.DefaultSensitiveStringCodec.BlowfishAlgorithm",
+        "vulnerable_code": "Cipher.getInstance(\"Blowfish\");",
+        "description": "The use of the 'Blowfish' algorithm is considered risky and outdated, as it is vulnerable to certain attacks.",
+        "recommendation": "Use a more secure and modern encryption algorithm, such as AES."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_method": "org.apache.activemq.artemis.utils.DefaultSensitiveStringCodec.BlowfishAlgorithm",
+        "vulnerable_code": "Cipher.getInstance(\"Blowfish\");",
+        "description": "The use of the less-secure 'Blowfish' algorithm could lead to vulnerabilities during algorithm negotiation.",
+        "recommendation": "Prefer more secure and modern encryption algorithms during algorithm negotiation, such as AES."
+    }
+]
+```

@@ -1,0 +1,16 @@
+[
+  {
+    "misuse": "CWE-327",
+    "vulnerable_method": "calculateIntegrity",
+    "vulnerable_code": "CRC32 crc32 = new CRC32();\ncrc32.update( data );\nreturn int2octet( ( int ) crc32.getValue() );",
+    "description": "This code uses a hard-coded Initialization Vector (IV). A correctly implemented system should not have any hard-coded cryptographic parameters.",
+    "recommendation": "Generate a random IV for each encryption operation."
+  },
+  {
+    "misuse": "CWE-757",
+    "vulnerable_method": "processCipher",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance( \"DES/CBC/NoPadding\" );\nSecretKey key = new SecretKeySpec( keyBytes, \"DES\" );\nAlgorithmParameterSpec paramSpec = new IvParameterSpec( iv );\ncipher.init( Cipher.ENCRYPT_MODE, key, paramSpec );",
+    "description": "This code uses a fixed IV for all encryption operations. A correctly implemented system should generate a random IV for each operation to prevent attackers from predicting the ciphertext.",
+    "recommendation": "Generate a random IV for each encryption operation."
+  }
+]

@@ -1,0 +1,37 @@
+[
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+    "vulnerable_method": "DefaultCipherService.secureHash()",
+    "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(HASH_ALGORITHM);",
+    "description": "The code uses SHA-256, which is a legacy algorithm and is no longer considered secure for many purposes. It is recommended to use a more modern algorithm such as SHA-3.",
+    "recommendation": "Use modern hashing algorithms like SHA-3 or SHA-512, which are considered more secure than SHA-256."
+  },
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+    "vulnerable_method": "DefaultCipherService.aesEncrypt()",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);",
+    "description": "The code uses AES which could be insecure for certain applications. AES is a symmetric-key encryption algorithm that is vulnerable to brute-force attacks if the key is weak.",
+    "recommendation": "Use more secure encryption algorithms like AES-256 or ChaCha20."
+  },
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+    "vulnerable_method": "DefaultCipherService.aesDecrypt()",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);",
+    "description": "The code uses AES which could be insecure for certain applications. AES is a symmetric-key encryption algorithm that is vulnerable to brute-force attacks if the key is weak.",
+    "recommendation": "Use more secure encryption algorithms like AES-256 or ChaCha20."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength.",
+    "vulnerable_method": "DefaultCipherService.getSecretKeySpec()",
+    "vulnerable_code": "// Note: using 128 bit AES avoids requirement for \"Unlimited Crypto\" patch",
+    "description": "The code uses a 128-bit key for AES encryption, which is considered inadequate for most applications. AES-128 is vulnerable to brute-force attacks, and it is recommended to use a key length of at least 256 bits.",
+    "recommendation": "Increase the key length to 256 bits or more."
+  },
+  {
+    "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation.",
+    "vulnerable_method": "DefaultCipherService.aesEncrypt()",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);",
+    "description": "The code uses the default JCE provider, which may not be the most secure provider. It is recommended to use a more secure provider, such as Bouncy Castle or OpenSSL.",
+    "recommendation": "Use a more secure JCE provider."
+  }
+]

@@ -1,0 +1,48 @@
+### False Positive Misuse ###
+None of the reported misuses seem to be false positives. They all point to real cryptographic API misuses that should be addressed.
+
+### Optimized Misuse JSON ###
+[
+  {
+    "misuse category": "CWE-295 Improper Certificate Validation",
+    "vulnerable_method": "DefaultSensitiveStringCodec.PBKDF2Algorithm.getSalt()",
+    "vulnerable_code": "byte[] salt = RandomUtil.randomBytes(this.saltLength);",
+    "description": "The code uses RandomUtil.randomBytes() to generate a salt, which is not a secure random number generator and can be predictable.",
+    "recommendation": "Use a secure random number generator such as SecureRandom to generate the salt."
+  },
+  {
+    "misuse category": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_method": "DefaultSensitiveStringCodec.BlowfishAlgorithm.updateKey",
+    "vulnerable_code": "updateKey(String key)",
+    "description": "The key length is hard coded to 128 bits, which is considered weak by today's standards.",
+    "recommendation": "Increase the key length to at least 256 bits."
+  },
+  {
+    "misuse category": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_method": "DefaultSensitiveStringCodec.PBKDF2Algorithm",
+    "vulnerable_code": "PBKDF2Algorithm(Map<String, String> params)",
+    "description": "The key length is hard coded to 64 bytes, which is considered weak by today's standards.",
+    "recommendation": "Increase the key length to at least 256 bits."
+  },
+  {
+    "misuse category": "CWE-256",
+    "vulnerable_method": "encode(String secret) throws Exception",
+    "vulnerable_code": "SecretKeySpec key = new SecretKeySpec(internalKey, \"Blowfish\");",
+    "description": "hard coded Key in encode() may cause weak encryption",
+    "recommendation": "Using a randomly generated key is recommended."
+  },
+  {
+    "misuse category": "CWE-327 - Use of Weak Cryptographic Algorithm",
+    "vulnerable_method": "DefaultSensitiveStringCodec.BlowfishAlgorithm.decode(String)",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"Blowfish\");",
+    "description": "The Blowfish algorithm is considered weak and should not be used for encryption.",
+    "recommendation": "Use a stronger encryption algorithm, such as AES."
+  },
+  {
+    "misuse category": "CWE-327 - Use of Weak Cryptographic Algorithm",
+    "vulnerable_method": "DefaultSensitiveStringCodec.BlowfishAlgorithm.encode(String)",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"Blowfish\");",
+    "description": "The Blowfish algorithm is considered weak and should not be used for encryption.",
+    "recommendation": "Use a stronger encryption algorithm, such as AES."
+  }
+]

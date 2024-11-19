@@ -1,0 +1,43 @@
+```json
+[
+  {
+    "misuse": "Use of Cryptographic Primitives",
+    "vulnerable_method": "org.apache.manifoldcf.core.database.Database Database()",
+    "vulnerable_code": [
+      "this.userName = userName;",
+      "this.password = password;"
+    ],
+    "description": "The constructor of the Database class accepts a username and password and assigns them to fields without encrypting or securing them, which may lead to potential exposure of sensitive information if not handled properly.",
+    "recommendation": "Consider encrypting the password when storing or passing it around the system. Also, ensure that the username and password are stored in a secure manner, potentially using environment variables, encrypted files, or secrets management tools."
+  },
+  {
+    "misuse": "Lack of Proper Input Sanitization",
+    "vulnerable_method": "org.apache.manifoldcf.core.database.Database executeQuery()",
+    "vulnerable_code": [
+      "public IResultSet executeQuery(String query, List params, StringSet cacheKeys, ...)"
+    ],
+    "description": "This method constructs a query using passed parameters but does not show explicit sanitization to guard against SQL injection, which is a critical security issue when dealing with database queries.",
+    "recommendation": "Always use bound parameters with Prepared Statements for constructing SQL queries to defend against SQL injection. Avoid direct concatenation of user-controlled input into SQL queries."
+  },
+  {
+    "misuse": "Insecure Error Handling",
+    "vulnerable_method": "org.apache.manifoldcf.core.database.Database IResultSet execute()",
+    "vulnerable_code": [
+      "catch (java.sql.SQLException e) { ... ManifoldCFException.DATABASE_CONNECTION_ERROR); }",
+      "catch (Exception e) { ... ManifoldCFException.DATABASE_ERROR); }"
+    ],
+    "description": "Generic SQLException is caught and rethrown as a generic ManifoldCFException with database connection error code. This may leak information about the database schema or SQL statements.",
+    "recommendation": "Catch and handle specific database exceptions where necessary and avoid exposing sensitive error details to the client or user interface. Log detailed information securely and provide generic error responses."
+  },
+  {
+    "misuse": "Hard-coded Credentials",
+    "vulnerable_method": "org.apache.manifoldcf.core.database.Database Database()",
+    "vulnerable_code": [
+      "this.userName = userName;",
+      "this.password = password;"
+    ],
+    "description": "The userName and password are provided to the Database constructor, potentially allowing for hard-coded credentials to be used, which is an insecure practice.",
+    "recommendation": "Avoid hard-coding credentials in your code base. Instead, use environment variables, configuration files, or secrets management services to handle sensitive data securely."
+  }
+]
+```

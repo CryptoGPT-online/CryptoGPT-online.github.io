@@ -1,0 +1,39 @@
+```json
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_method": "Des3CbcSha1KdEncryption.deriveKey",
+        "vulnerable_code": "\"DESede/CBC/NoPadding\"",
+        "description": "Triple DES (3DES) is considered to have inadequate encryption strength.",
+        "recommendation": "Use a stronger algorithm, such as AES."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_method": "Des3CbcSha1KdEncryption.encrypt, Des3CbcSha1KdEncryption.decrypt",
+        "vulnerable_code": "private static final byte[] iv = new byte[] ...",
+        "description": "The initialization vector (IV) is statically defined and not random, which may allow attackers to predict the outcome of the ciphertext.",
+        "recommendation": "Generate a secure random IV for each encryption operation."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_method": "Des3CbcSha1KdEncryption.processCipher",
+        "vulnerable_code": "\"DESede/CBC/NoPadding\"",
+        "description": "Triple DES (3DES) is considered weak due to its block size, which may allow certain attacks such as birthday attacks.",
+        "recommendation": "Use a modern algorithm such as AES with an appropriate block size."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_method": "Des3CbcSha1KdEncryption.randomToKey",
+        "vulnerable_code": "byte[] fillingKey = Strings.EMPTY_BYTES;",
+        "description": "The method 'randomToKey' has a hardcoded empty array as the key material for part of the seed, compromising the cryptographic strength of the derived key.",
+        "recommendation": "Remove hardcoded empty bytes; use secure sources to derive key material."
+    },
+    {
+        "misuse": "CWE-331: Insufficient Entropy",
+        "vulnerable_method": "Des3CbcSha1KdEncryption.randomToKey",
+        "vulnerable_code": "for ( int i = 0; i < kBytes; i++ ) { ... }",
+        "description": "The key derivation method 'randomToKey' does not use sufficient entropy because it fills the result with data derived from a small seed.",
+        "recommendation": "Ensure that key derivation uses sufficient entropy and is secure against guessing or brute-force attacks."
+    }
+]
+```

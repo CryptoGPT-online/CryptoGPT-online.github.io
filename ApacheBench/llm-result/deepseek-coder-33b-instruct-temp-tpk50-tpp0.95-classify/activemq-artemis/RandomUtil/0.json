@@ -1,0 +1,33 @@
+The code above is a utility class in the Apache Artemis project, a popular message broker. The class RandomUtil is used for generating random values of various types. The following potential misuses of the cryptographic API are found:
+
+* CWE-327: The cryptographic algorithm in this case is the Random, which is used for generating random values. However, the default seed for the random generator might be predictable and hence potentially predictable, and the algorithm might not be secure enough for cryptographic purposes.
+
+* CWE-330: The usage of Random for generating values might not provide sufficient randomness, which could lead to vulnerability to attacks.
+
+* Recommendations: The Random class in Java is based on the Java implementation of the 48 Line API. The implementation is not suitable for cryptographic purposes because it is not resistant against prediction attacks. Secure random numbers should be used instead.
+
+The code will be updated as below:
+
+```java
+import java.security.SecureRandom;
+
+...
+
+protected static final SecureRandom random = new SecureRandom();
+```
+
+The `java.security.SecureRandom` class is a strong randomness source. Unlike `Random`, it is not vulnerable to the known pseudo-random number predictability.
+
+Note: If you use the `randomByte()` function for creating random byte arrays, you should modify it to use `random.nextBytes()` because `randomByte()` is not truly random and using it in a security context may result in a predictable value.
+
+```java
+public static byte[] randomBytes() {
+    byte[] bytes = new byte[size];
+    random.nextBytes(bytes);
+    return bytes;
+}
+```
+
+Recommendations should be updated accordingly.
+
+For any misuses found in other parts of the application please let me know.

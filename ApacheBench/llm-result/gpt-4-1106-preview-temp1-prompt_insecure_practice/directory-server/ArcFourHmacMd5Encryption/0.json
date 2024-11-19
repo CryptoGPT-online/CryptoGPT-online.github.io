@@ -1,0 +1,32 @@
+```json
+[
+  {
+    "misuse": "Insufficient Key Size",
+    "vulnerable_method": "ArcFourHmacMd5Encryption.encrypt and ArcFourHmacMd5Encryption.decrypt",
+    "vulnerable_code": "SecretKeySpec keyBytes = new SecretKeySpec(keyBytes, \"ARCFOUR\");",
+    "description": "The key size for ARCFOUR (RC4) should be at least 128 bits (16 bytes) to ensure cryptographic strength. The code does not enforce a minimum key size, which could lead to the use of weak keys.",
+    "recommendation": "Ensure that keys are at least 128 bits in length and enforce this minimum size within the application."
+  },
+  {
+    "misuse": "Static Initialization Vector (IV)",
+    "vulnerable_method": "ArcFourHmacMd5Encryption.encrypt",
+    "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+    "description": "ARCFOUR (RC4) is a stream cipher and does not use an IV, but in general, when using ciphers that do require an IV, the IV should not be static or predictable.",
+    "recommendation": "If using ciphers that require an IV, ensure that the IV is randomly generated for each encryption operation."
+  },
+  {
+    "misuse": "Improper Integrity Check",
+    "vulnerable_method": "ArcFourHmacMd5Encryption.calculateIntegrity",
+    "vulnerable_code": "Mac digester = Mac.getInstance(\"HmacMD5\");\n return digester.doFinal(data);",
+    "description": "There is no assurance of the integrity of the data as the MAC instance is not properly initialized with a key. Merely calling doFinal on an uninitialized Mac instance does not compute a keyed MAC.",
+    "recommendation": "Initialize the Mac instance with a valid secret key by calling init with a key before calling doFinal."
+  },
+  {
+    "misuse": "Weak Encryption Algorithm",
+    "vulnerable_method": "ArcFourHmacMd5Encryption.encrypt and ArcFourHmacMd5Encryption.decrypt",
+    "vulnerable_code": "Cipher.getInstance(\"ARCFOUR\");",
+    "description": "ARCFOUR (identical to RC4) is considered a weak encryption algorithm due to known vulnerabilities. It should not be used in modern security-sensitive contexts.",
+    "recommendation": "Replace ARCFOUR with a more secure encryption algorithm such as AES with a proper mode of operation."
+  }
+]
+```

@@ -1,0 +1,39 @@
+```json
+[
+    {
+        "misuse": "ECB Mode Usage",
+        "vulnerable_method": "DefaultCipherService.aesEncrypt and DefaultCipherService.aesDecrypt",
+        "vulnerable_code": "Cipher.getInstance(CIPHER_ALGORITHM);",
+        "description": "Usage of ECB mode in AES encryption is insecure as it does not use an initialization vector and thus does not provide strong data confidentiality for data patterns.",
+        "recommendation": "Use AES with a secure mode of operation like CBC with a unique initialization vector for each encryption."
+    },
+    {
+        "misuse": "Static Initialization Vector",
+        "vulnerable_method": "DefaultCipherService.getSecretKeySpec",
+        "vulnerable_code": "Arrays.copyOf(pwdHash, 16);",
+        "description": "Using a static initialization vector as part of the key derived from the password hash may lead to predictable ciphertext for the same inputs and weakens encryption security.",
+        "recommendation": "Generate a random initialization vector for each encryption operation and store it alongside the cipher text securely."
+    },
+    {
+        "misuse": "Weak Key Derivation",
+        "vulnerable_method": "DefaultCipherService.getSecretKeySpec",
+        "vulnerable_code": "byte[] pwdHash = secureHash(password);",
+        "description": "Deriving a cryptographic key from a password hash using a single iteration of SHA-256 is not secure. This does not provide sufficient key strengthening for password-based keys.",
+        "recommendation": "Use a strong key derivation function like PBKDF2 with an appropriate number of iterations, or other functions like bcrypt or scrypt."
+    },
+    {
+        "misuse": "Weak Randomness",
+        "vulnerable_method": "DefaultCipherService.setMasterHash",
+        "vulnerable_code": "String saltHash = byteToHex(secureHash(masterSalt));",
+        "description": "Using the SHA-256 hash of a salt value does not generate cryptographic-strength randomness required for a secure salt.",
+        "recommendation": "Use a secure random number generator to create the salt."
+    },
+    {
+        "misuse": "Unpadded Cipher",
+        "vulnerable_method": "DefaultCipherService.aesEncrypt and DefaultCipherService.aesDecrypt",
+        "vulnerable_code": "Cipher.getInstance(CIPHER_ALGORITHM);",
+        "description": "The code creates a cipher instance without specifying the padding mechanism. This may default to 'NoPadding' which is insecure because it requires input to be block-aligned.",
+        "recommendation": "Specify a secure padding mechanism such as 'PKCS5Padding'."
+    }
+]
+```

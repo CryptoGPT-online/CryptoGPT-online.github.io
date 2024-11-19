@@ -1,0 +1,32 @@
+```json
+[
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_method": "ManifoldCF.getCipher",
+    "vulnerable_code": "KeySpec keySpec = new PBEKeySpec(passCode.toCharArray(), saltValue.getBytes(StandardCharsets.UTF_8), 1024, 128);",
+    "description": "The key derivation function uses a low iteration count (1024) and could lead to inadequate encryption strength.",
+    "recommendation": "Increase the iteration count to a minimum value such as 10000 to improve the strength of the derived key."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_method": "ManifoldCF.getCipher",
+    "vulnerable_code": "SecretKeyFactory.getInstance(\"PBKDF2WithHmacSHA1\")",
+    "description": "The encryption uses PBKDF2WithHmacSHA1 which is less secure than newer algorithms like PBKDF2WithHmacSHA256 or PBKDF2WithHmacSHA512.",
+    "recommendation": "Update the algorithm to PBKDF2WithHmacSHA256 or PBKDF2WithHmacSHA512 for better security."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_method": "ManifoldCF.obfuscate and ManifoldCF.deobfuscate",
+    "vulnerable_code": "private static String OBFUSCATION_PASSCODE = \"NowIsTheTime\"; private static String OBFUSCATION_SALT = \"Salty\";",
+    "description": "The methods obfuscate and deobfuscate utilize hardcoded credentials which may lead to inadequate encryption strength.",
+    "recommendation": "Use a securely-managed system for storing and handling the encryption passcode and salt, do not hardcode values."
+  },
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values",
+    "vulnerable_method": "ManifoldCF.getSecureRandom",
+    "vulnerable_code": "SecureRandom random = new SecureRandom();",
+    "description": "The SecureRandom instance is not seeded properly. It relies on the default seeding which may not provide sufficient randomness.",
+    "recommendation": "Replace with a SecureRandom instance that is properly seeded with a resilient entropy source."
+  }
+]
+```

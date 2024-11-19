@@ -1,0 +1,18 @@
+```json
+[
+    {
+        "misuse": "Insecure Transformation Mode",
+        "vulnerable_method": "CryptoParser.parse",
+        "vulnerable_code": "cipher = Cipher.getInstance(transformation);",
+        "description": "The 'transformation' parameter should specify both encryption algorithm and padding scheme for secure transformation. When the mode or padding is not defined, insecure defaults may be used, potentially leading to vulnerabilities such as padding oracle attacks.",
+        "recommendation": "Use secure and explicit transformation modes and padding schemes such as 'AES/GCM/NoPadding' instead of generic ones."
+    },
+    {
+        "misuse": "Missing Initialization Vector (IV) for CBC mode",
+        "vulnerable_method": "CryptoParser.parse",
+        "vulnerable_code": "cipher.init(Cipher.DECRYPT_MODE, key);",
+        "description": "If the transformation specified uses CBC mode, an Initialization Vector (IV) should be provided and be unique for each encryption. Initialization with just a key when an IV is required can lead to a weak encryption scheme as identical plaintext blocks will produce identical ciphertext blocks.",
+        "recommendation": "Always provide a (random) unique IV when using CBC mode and ensure that it is shared securely with the recipient for decryption."
+    }
+]
+```

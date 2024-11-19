@@ -1,0 +1,39 @@
+```json
+[
+    {
+        "misuse": "Weak Cryptography Algorithm",
+        "vulnerable_method": "org.apache.directory.server.kerberos.shared.crypto.encryption.DesStringToKey.generateKey",
+        "vulnerable_code": [
+             "Cipher cipher = Cipher.getInstance( \"DES/CBC/NoPadding\" );",
+             "SecretKey key = new SecretKeySpec( keyBytes, \"DES\" );"
+        ],
+        "description": "DES is considered weak due to its small key size. The use of DES in this context can lead to the possibility of brute-force attacks that can break the encryption.",
+        "recommendation": "Use a more secure algorithm such as AES with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "Weak Key Construction",
+        "vulnerable_method": "org.apache.directory.server.kerberos.shared.crypto.encryption.DesStringToKey.setParity",
+        "vulnerable_code": "protected byte[] setParity( byte[] in )",
+        "description": "The setParity function manipulates the key to adhere to odd parity, which is required for DES. However, doing this may weaken already weak keys further, as DES keys are susceptible to known plaintext attacks when weak keys are used.",
+        "recommendation": "Avoid manually setting parity bits and instead rely on secure key generation methods offered by robust cryptographic algorithms like AES."
+    },
+    {
+        "misuse": "Hardcoded Crypto Feature",
+        "vulnerable_method": "org.apache.directory.server.kerberos.shared.crypto.encryption.DesStringToKey.calculateChecksum",
+        "vulnerable_code": [
+            "Cipher cipher = Cipher.getInstance( \"DES/CBC/NoPadding\" );",
+            "AlgorithmParameterSpec paramSpec = new IvParameterSpec( keyBytes );",
+            "cipher.init( Cipher.ENCRYPT_MODE, key, paramSpec );"
+        ],
+        "description": "The initialization vector (IV) for DES/CBC mode encryption is set using the provided keyBytes, which is a manipulation of the passphrase. This could be identical for identical passphrases, reducing the security of the encryption if multiple keys are generated with the same passphrase.",
+        "recommendation": "For CBC mode, use a secure random number generator to produce an unpredictable IV for each encryption session."
+    },
+    {
+        "misuse": "Avoiding Weak Keys Not Sufficient",
+        "vulnerable_method": "org.apache.directory.server.kerberos.shared.crypto.encryption.DesStringToKey.getStrongKey",
+        "vulnerable_code": "if ( DESKeySpec.isWeak( secretKey, 0 ) )",
+        "description": "The getStrongKey method attempts to correct weak keys by XOR'ing with 0xF0. While this may avoid certain weak keys, it does not address the fundamental weakness of the DES algorithm.",
+        "recommendation": "Use a more modern and secure algorithm such as AES rather than trying to strengthen weak DES keys."
+    }
+]
+```

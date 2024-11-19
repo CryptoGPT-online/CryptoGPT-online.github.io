@@ -1,0 +1,32 @@
+```json
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_method": "DefaultCipherService.getSecretKeySpec",
+        "vulnerable_code": "byte[] key = Arrays.copyOf(pwdHash, 16);",
+        "description": "The system uses a hash of the password as an AES key directly and trims it to 128 bits, which does not ensure adequate entropy if the password is weak. Additionally, not using key derivation functions reduces the strength of the derived key.",
+        "recommendation": "Use a key derivation function like PBKDF2, bcrypt, or scrypt with a sufficiently random salt and high iteration count instead of directly hashing the password."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_method": "DefaultCipherService.getSecretKeySpec",
+        "vulnerable_code": "\"AES\"",
+        "description": "The encryption uses AES with a 128-bit key, which might be considered insecure in certain contexts. While AES-128 itself is not broken, the method of key derivation by directly truncating the hash (SHA-256) of the password is insecure.",
+        "recommendation": "Consider increasing the key size to AES-256 and ensure the key is derived securely using an appropriate key derivation function."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_method": "DefaultCipherService.getSecretKeySpec",
+        "vulnerable_code": "Arrays.copyOf(pwdHash, 16)",
+        "description": "The key is derived from user-provided passwords, which may not have enough randomness, especially when the system truncates the hash to 128 bits, possibly reducing the effective key space if passwords are not random or complex enough.",
+        "recommendation": "Use a key derivation function that incorporates a secure random salt to introduce entropy and mitigate issues deriving from weak passwords."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_method": "DefaultCipherService.aesEncrypt and DefaultCipherService.aesDecrypt",
+        "vulnerable_code": "Cipher.getInstance(CIPHER_ALGORITHM)",
+        "description": "The encryption method does not specify a cipher mode or padding scheme, which means insecure defaults may be used. Using AES without specifying the mode can lead to ECB mode, which is insecure for data that requires confidentiality.",
+        "recommendation": "Specify a secure mode of operation like CBC, CFB, OFB, or GCM with appropriate padding such as PKCS7Padding."
+    }
+]
+```

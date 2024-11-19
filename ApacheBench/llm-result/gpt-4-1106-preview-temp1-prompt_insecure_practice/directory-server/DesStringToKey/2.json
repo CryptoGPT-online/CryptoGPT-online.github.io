@@ -1,0 +1,47 @@
+```json
+[
+  {
+    "misuse": "Weak Encryption Algorithm",
+    "vulnerable_method": "DesStringToKey.generateKey",
+    "vulnerable_code": [
+      "Cipher cipher = Cipher.getInstance(\"DES/CBC/NoPadding\");",
+      "SecretKey key = new SecretKeySpec(keyBytes, \"DES\");"
+    ],
+    "description": "The use of DES (Data Encryption Standard) as an encryption algorithm is insecure because it has a key size of only 56 bits, making it vulnerable to brute-force attacks.",
+    "recommendation": "Switch to a stronger encryption algorithm like AES with a key size of at least 128 bits."
+  },
+  {
+    "misuse": "Inadequate Padding Scheme",
+    "vulnerable_method": "DesStringToKey.padString",
+    "vulnerable_code": [
+      "byte paddedByteArray[] = new byte[(8 - length) + encodedString.length];",
+      "for (int ii = paddedByteArray.length - 1; ii > encodedString.length - 1; ii--) {",
+      "  paddedByteArray[ii] = 0;",
+      "}"
+    ],
+    "description": "The padding scheme used in padString manually adds null bytes to the input to make it an exact multiple of 8 bytes. This is not a standard padding scheme like PKCS5Padding and could lead to padding oracle attacks when combined with CBC mode.",
+    "recommendation": "Use a standard padding method like PKCS5Padding or PKCS7Padding."
+  },
+  {
+    "misuse": "Weak Crypto Key",
+    "vulnerable_method": "DesStringToKey.getStrongKey",
+    "vulnerable_code": [
+      "if (DESKeySpec.isWeak(secretKey, 0)) {",
+      "  secretKey[7] ^= 0xf0;",
+      "}"
+    ],
+    "description": "The method attempts to correct weak DES encryption keys by XORing the last byte with 0xF0. Although this makes the key non-weak, the underlying encryption algorithm DES is still considered weak due to its small key size.",
+    "recommendation": "Replace DES with a stronger encryption algorithm such as AES."
+  },
+  {
+    "misuse": "Hardcoded Initialization Vector",
+    "vulnerable_method": "DesStringToKey.calculateChecksum",
+    "vulnerable_code": [
+      "AlgorithmParameterSpec paramSpec = new IvParameterSpec(keyBytes);",
+      "cipher.init(Cipher.ENCRYPT_MODE, key, paramSpec);"
+    ],
+    "description": "The key itself is used as the IV for CBC mode encryption in method calculateChecksum, which is insecure because IVs for CBC mode should be unpredictable and unique for every encryption operation.",
+    "recommendation": "Generate a random IV for each encryption operation."
+  }
+]
+```

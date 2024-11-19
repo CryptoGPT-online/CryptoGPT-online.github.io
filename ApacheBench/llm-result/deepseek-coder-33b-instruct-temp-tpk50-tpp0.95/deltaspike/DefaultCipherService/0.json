@@ -1,0 +1,18 @@
+```json
+[
+    {
+        "misuse": "CWE-256: Use of Password Hash Instead of a KDF",
+        "vulnerable_method": "DefaultCipherService::getSecretKeySpec(String password)",
+        "vulnerable_code": "byte[] pwdHash = secureHash(password);\r\nbyte[] key = Arrays.copyOf(pwdHash, 16); // use only first 128 bit\r\nreturn new SecretKeySpec(key, "AES");",
+        "description": "This function does not use a KDF, resulting in a weaker derived key each time it is called with the same password",
+        "recommendation": "Consider using a KDF (such as the HMAC-based Derivation Function) to create a derived key, ensuring a different key is generated for each password."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_method": "DefaultCipherService::aesEncrypt(String valueToEncrypt, String key)",
+        "vulnerable_code": "return new SecretKeySpec(key, "AES");",
+        "description": "The key length is hard-coded to 16 bytes. This is vulnerable if the key generation algorithm is not strong enough to produce a 256-bit key. Could potentially allow weaker keys, allowing a reduction in security.",
+        "recommendation": "Consider using a KDF (such as the HMAC-based Derivation Function) to create a derived key, ensuring a different key is generated for each password."
+    }
+]
+```

@@ -1,0 +1,39 @@
+```json
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_method": "DefaultSensitiveStringCodec.BlowfishAlgorithm.decode/encode",
+        "vulnerable_code": "private byte[] internalKey = \"clusterpassword\".getBytes();",
+        "description": "The key for the Blowfish cipher is hardcoded and potentially guessable.",
+        "recommendation": "Use a securely-generated random key and store it using a secure method."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_method": "DefaultSensitiveStringCodec.BlowfishAlgorithm.decode",
+        "vulnerable_code": "byte[] decode = cipher.doFinal(encoding);",
+        "description": "It is not using a strong encryption mode or padding. It does not specify the mode or padding for Blowfish, which means it uses the ECB mode and PKCS5Padding by default, which are not secure.",
+        "recommendation": "Specify a secure mode and padding, such as 'Blowfish/CBC/PKCS5Padding', and handle Initialization Vector (IV) correctly."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_method": "DefaultSensitiveStringCodec.BlowfishAlgorithm constructor",
+        "vulnerable_code": "private byte[] internalKey = \"clusterpassword\".getBytes();",
+        "description": "The encryption key for blowfish is hardcoded in the source code which could be extracted by decompiling the class file.",
+        "recommendation": "Remove the hardcoded key. Implement a secure way of handling encryption keys, such as storing them in a secure key management system."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_method": "DefaultSensitiveStringCodec.PBKDF2Algorithm constructor",
+        "vulnerable_code": "private String sceretKeyAlgorithm = \"PBKDF2WithHmacSHA1\";",
+        "description": "The use of PBKDF2 with HMAC-SHA1 does not meet modern security standards for high cryptographic hashing needs. While it's not broken, SHA-256 or SHA-512 would be more secure choices.",
+        "recommendation": "Consider using PBKDF2 with a stronger hash function, such as HMAC-SHA256 or HMAC-SHA512."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_method": "DefaultSensitiveStringCodec.PBKDF2Algorithm.getSalt",
+        "vulnerable_code": "byte[] salt = RandomUtil.randomBytes(this.saltLength);",
+        "description": "The method to generate the salt does not specify which algorithm is used, potentially resulting in the use of a weak source of randomness.",
+        "recommendation": "Ensure that a cryptographically-strong pseudo-random number generator (CSPRNG) is used to generate the salt."
+    }
+]
+```

@@ -1,0 +1,39 @@
+```json
+[
+  {
+    "misuse": "Weak Encryption Algorithm",
+    "vulnerable_method": "SunJceCrypt.DEFAULT_CRYPT_METHOD",
+    "vulnerable_code": "public static final String DEFAULT_CRYPT_METHOD = \"PBEWithMD5AndDES\";",
+    "description": "The code uses PBEWithMD5AndDES which relies on DES encryption algorithm and MD5 for password-based encryption. DES is considered insecure due to its 56-bit key size, and MD5 is vulnerable to collision attacks.",
+    "recommendation": "Use a stronger algorithm like 'PBEWithHmacSHA256AndAES_256'. Ensure to also securely generate and store cryptographic keys, and consider using key stretching techniques like PBKDF2 if applicable."
+  },
+  {
+    "misuse": "Static Salt",
+    "vulnerable_method": "SunJceCrypt.SALT",
+    "vulnerable_code": "public final static byte[] SALT = { ... };",
+    "description": "The static salt value is hard-coded within the class which means it is the same for every encryption. This makes the encryption vulnerable to dictionary attacks and pre-computed rainbow tables.",
+    "recommendation": "Generate a unique, random salt for each encryption operation. Store the salt alongside the encrypted data so it can be used for decryption."
+  },
+  {
+    "misuse": "Static Iteration Count",
+    "vulnerable_method": "SunJceCrypt.COUNT",
+    "vulnerable_code": "private final static int COUNT = 17;",
+    "description": "The iteration count (COUNT) used for key generation is statically set to a low number. A low iteration count makes it easier for attackers to apply brute force attacks.",
+    "recommendation": "Increase the iteration count to a minimum value recommended by current standards (at the time of knowledge cutoff, this is typically at least 10,000 iterations). Consider allowing this value to be configurable to adapt to newer recommendations."
+  },
+  {
+    "misuse": "Insecure Key Derivation",
+    "vulnerable_method": "SunJceCrypt.createKeySpec",
+    "vulnerable_code": "protected KeySpec createKeySpec() { return new PBEKeySpec(getKey().toCharArray()); }",
+    "description": "The key derivation function (KDF) in use does not enforce a secure method for converting passwords to a key. PBEKeySpec is dependent on the parameters and in this case does not use a secure iteration count or salt.",
+    "recommendation": "Use a more secure key derivation function such as PBKDF2 with a secure iteration count and a strong randomly generated salt."
+  },
+  {
+    "misuse": "Lack of Proper Exception Handling",
+    "vulnerable_method": "SunJceCrypt.crypt",
+    "vulnerable_code": "return ciph.doFinal(input);",
+    "description": "The method crypt catches 'GeneralSecurityException' but does not handle the specific exceptions that might occur during cryptographic operations, such as InvalidKeyException, IllegalBlockSizeException, or BadPaddingException, leading to potential mishandling of errors.",
+    "recommendation": "Catch and handle specific exceptions that could be thrown during cryptographic operations to properly manage error cases and avoid unintended behavior."
+  }
+]
+```

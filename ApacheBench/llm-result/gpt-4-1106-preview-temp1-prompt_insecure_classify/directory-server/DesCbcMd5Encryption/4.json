@@ -1,0 +1,39 @@
+```json
+[
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_method": "DesCbcMd5Encryption.encrypt, DesCbcMd5Encryption.decrypt",
+    "vulnerable_code": "Cipher.getInstance( \"DES/CBC/NoPadding\" )",
+    "description": "The DES algorithm is considered to be weak and outdated due to its short key length of 56 bits which is not sufficient for strong security in modern contexts.",
+    "recommendation": "Upgrade to a stronger algorithm such as AES with a key size of at least 128 bits."
+  },
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values",
+    "vulnerable_method": "DesCbcMd5Encryption.getEncryptedData",
+    "vulnerable_code": "byte[] conFounder = getRandomBytes( getConfounderLength() );",
+    "description": "The quality of the randomness used for generating a confounder is not verified. Weak randomness can lead to predictable confounders, reducing the encryption's overall security.",
+    "recommendation": "Ensure that getRandomBytes method provides cryptographically secure random data, preferably using SecureRandom class."
+  },
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_method": "DesCbcMd5Encryption.calculateIntegrity",
+    "vulnerable_code": "MessageDigest.getInstance( LdapSecurityConstants.HASH_METHOD_MD5.getAlgorithm() )",
+    "description": "MD5 is a hash function that is no longer considered secure against collision attacks, and its use is discouraged in cryptographic applications where collision resistance is required.",
+    "recommendation": "Use a more secure hashing algorithm, such as SHA-256, for integrity checks."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_method": "DesCbcMd5Encryption.processCipher",
+    "vulnerable_code": "new SecretKeySpec( keyBytes, \"DES\" )",
+    "description": "Using DES, which is considered weak due to its short key length, does not provide adequate encryption strength. Moreover, the specification does not verify the length of the key, allowing for potentially weak or incorrect key sizes.",
+    "recommendation": "Replace DES with a stronger encryption scheme such as AES and validate key specifications."
+  },
+  {
+    "misuse": "CWE-798: Use of Hardcoded Credentials",
+    "vulnerable_method": "DesCbcMd5Encryption.getEncryptedData, DesCbcMd5Encryption.processCipher",
+    "vulnerable_code": "IvParameterSpec( iv )",
+    "description": "Initialization vectors (IV) should be random and unique for each encryption operation when operating in CBC mode, but a hardcoded IV is used instead.",
+    "recommendation": "Generate a unique, random IV for each encryption operation."
+  }
+]
+```
