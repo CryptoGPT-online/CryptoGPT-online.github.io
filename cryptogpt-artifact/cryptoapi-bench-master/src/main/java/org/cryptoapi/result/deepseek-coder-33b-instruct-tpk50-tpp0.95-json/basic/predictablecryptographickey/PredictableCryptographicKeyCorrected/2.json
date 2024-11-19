@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Hard-coded AES key",
+        "vulnerable_code": "String defaultKey = String.valueOf(random.ints());\nbyte[] keyBytes = defaultKey.getBytes();",
+        "description": "The key used for encryption is hard-coded, which means that the same key is used for every encryption operation. This is insecure as it can potentially be guessed or predicted. Also, random.ints() is used to generate the key, which is not a secure random number generator. It should be replaced with a cryptographically secure random number generator.",
+        "recommendation": "Use a secure random number generator to generate the key for encryption. If keys are to be stored, they should be stored securely. The keys should be generated and stored in a secure way. Do not use hard-coded keys."
+    },
+    {
+        "misuse": "Insecure key length",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);\nSecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES\");",
+        "description": "The AES key length is set to 16 bytes, which is considered too short for modern systems. AES supports 128, 192, or 256 bit keys which would provide far more security.",
+        "recommendation": "Generate a 256 bit key for AES encryption, or at the very least use a 192 bit key, as this will provide more security."
+    }
+]
+```

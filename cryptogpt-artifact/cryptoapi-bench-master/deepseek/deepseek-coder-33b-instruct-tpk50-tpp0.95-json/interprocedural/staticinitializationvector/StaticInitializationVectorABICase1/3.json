@@ -1,0 +1,10 @@
+```json
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\"); SecretKey key = keyGen.generateKey();",
+        "description": "The code uses a key generator to generate a key for AES encryption. This is considered insecure because the KeyGenerator.getInstance() method uses the default random number generator, which is not secure and might be predictable. A better way is to use a secure random number generator or a key derivation function that generates random keys.",
+        "recommendation": "You should replace the line 'KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");' with 'KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\", \"BC\");' to use the Bouncy Castle provider, which has a secure random number generator. Or you can use KeyGenerator.init(int keysize, SecureRandom random) method to provide your own SecureRandom instance."
+    }
+]
+```

@@ -1,0 +1,34 @@
+public class S1 {
+    C1 crypto;
+    public S1() throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException {
+        byte [] bytes = "abcde".getBytes();
+
+        crypto = new C1(bytes);
+        crypto.method1(null);
+    }
+}
+
+class C1 {
+    byte [] defIV;
+    SecretKey secretKey;
+
+    public C1(byte[] bytes) throws NoSuchAlgorithmException {
+        defIV = bytes;
+        KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+        keyGen.init(128, SecureRandom.getInstanceStrong()); // using strong random number generator
+        secretKey = keyGen.generateKey();
+    }
+
+    public void method1(byte[] passedIV) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
+
+        Random random = new Random();
+        byte[] dynamicIV = new byte[16];
+        random.nextBytes(dynamicIV); // using strong random number generator
+        IvParameterSpec ivSpec = new IvParameterSpec(dynamicIV);
+
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivSpec);
+
+    }
+}
+```

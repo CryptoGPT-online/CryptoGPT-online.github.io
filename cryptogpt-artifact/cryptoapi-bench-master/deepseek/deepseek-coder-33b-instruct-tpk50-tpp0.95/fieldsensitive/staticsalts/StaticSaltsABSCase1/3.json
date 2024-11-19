@@ -1,0 +1,62 @@
+The provided code does not use any cryptographic algorithm directly, so I will provide a misuse for code that does use one of the cryptographic algorithms.
+
+Here is a misuse:
+
+```java
+public class S2 {
+    C2 crypto;
+    public S2() {
+        char[] password = {'p','a','s','s','w','o','r','d'};
+        crypto = new C2(password);
+        crypto.method1(null);
+    }
+}
+
+class C2 {
+    char[] defPassword;
+
+    public C2(char [] password) {
+        defPassword = password;
+    }
+
+    public void method1(char[] passedPassword)  {
+
+        passedPassword = defPassword;
+
+        int count = 1020;
+        PBEParameterSpec pbeParamSpec = null;
+        pbeParamSpec = new PBEParameterSpec(passedPassword, count);
+
+    }
+}
+```
+
+This misuse occurs because the developer may be passing sensitive data (a password) through a method. The sensitive data should never be passed into a method as parameters as it can be lost and may expose sensitive information.
+
+Instead, the password should be encrypted and passed as a byte array:
+
+```java
+public class S3 {
+    C3 crypto;
+    public S3() {
+        byte[] encryptedPassword = {'p','a','s','s','w','o','r','d'};
+        crypto = new C3();
+        crypto.method1(encryptedPassword);
+    }
+}
+
+class C3 {
+
+    public void method1(byte[] encryptedPassword)  {
+
+        int count = 1020;
+        PBEParameterSpec pbeParamSpec = null;
+        pbeParamSpec = new PBEParameterSpec(encryptedPassword, count);
+
+    }
+}
+```
+
+In this fixed example, the password is never exposed directly, but is passed as an encrypted byte array. The PBEParameterSpec object still needs a password, but now it's obtained securely and no sensitive data is exposed. 
+
+Always keep sensitive data (like password) as secret as possible and always encrypt it before passing it to other methods.

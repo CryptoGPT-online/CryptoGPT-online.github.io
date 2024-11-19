@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Missing Initialization Vector (IV)",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "Using AES in CBC mode without specifying an Initialization Vector (IV) can allow attackers to infer patterns about the encrypted data. The IV increases the cryptographic strength by ensuring that the same plaintext block will result in different ciphertext blocks.",
+        "recommendation": "Generate a random IV and specify it when initializing the Cipher: `cipher.init(Cipher.ENCRYPT_MODE, key, new IvParameterSpec(ivBytes));`"
+    },
+    {
+        "misuse": "Static Key",
+        "vulnerable_code": "KeyGenerator.getInstance(\"AES\");\ngenerateKey();",
+        "description": "The code generates a key every time the 'go' method is called which could lead to a scenario where the key is either not stored securely or not managed properly, potentially being lost after encryption making decryption of the data impossible.",
+        "recommendation": "Ensure the generated key is securely stored and managed for subsequent decryption operations."
+    },
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "KeyGenerator.getInstance(\"AES\");",
+        "description": "The default random number generator in Java may not be secure enough for generating the key material. A secure random number generator should be used.",
+        "recommendation": "Explicitly specify a secure random number generator when generating keys, e.g., `keyGen.init(256, SecureRandom.getInstanceStrong());`"
+    }
+]
+```

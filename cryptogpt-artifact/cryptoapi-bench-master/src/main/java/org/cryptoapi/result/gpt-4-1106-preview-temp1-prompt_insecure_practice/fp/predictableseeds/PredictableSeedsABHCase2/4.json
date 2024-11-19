@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Insufficient Entropy",
+        "vulnerable_code": "sr.setSeed(seed);",
+        "description": "The SecureRandom instance is seeded with a predictable value, which can lead to insufficient entropy. In the provided code, 'seed' is derived from a hard-coded and predictable map value, making the random number generation predictable.",
+        "recommendation": "Ensure that SecureRandom instances are seeded with a truly random seed, or better, avoid setting a seed manually and let the SecureRandom implementation gather entropy from the operating system."
+    },
+    {
+        "misuse": "Weak PRNG Seed",
+        "vulnerable_code": "byte [] seed = {b,b};",
+        "description": "The seed used for SecureRandom is only 2 bytes long, which does not provide a strong level of security due to the limited number of possible seeds. This makes the output of the SecureRandom predictable after a relatively small number of guesses.",
+        "recommendation": "Do not use a short, predictable array as a seed. If a seed must be used, ensure it is of adequate length and randomness."
+    }
+]
+```

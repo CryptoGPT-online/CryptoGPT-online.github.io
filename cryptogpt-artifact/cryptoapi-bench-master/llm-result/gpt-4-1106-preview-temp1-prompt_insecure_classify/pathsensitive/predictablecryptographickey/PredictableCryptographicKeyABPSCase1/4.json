@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "String defaultKey = \"defaultkey\";",
+        "description": "The code contains a hardcoded key, which can be easily discovered and exploited by an attacker.",
+        "recommendation": "Use a secure method to generate and store cryptographic keys, avoiding hardcoded keys. Consider using a secure key management system."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "keyBytes = String.valueOf(random.ints()).getBytes();",
+        "description": "Converting a random integer stream to a String and then getting bytes does not guarantee a cryptographically strong sequence of bytes because the conversion could introduce regularities and reduce entropy.",
+        "recommendation": "Use SecureRandom's 'nextBytes(byte[] bytes)' method to directly fill a byte array with random data."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The key length is explicitly set to 16 bytes (128 bits). While AES-128 is considered secure, it may not be sufficient for all scenarios and AES-256 is generally recommended for higher security level.",
+        "recommendation": "Assess the encryption strength required for the application. If higher security is needed, consider using a 256-bit key for AES encryption."
+    }
+]
+```

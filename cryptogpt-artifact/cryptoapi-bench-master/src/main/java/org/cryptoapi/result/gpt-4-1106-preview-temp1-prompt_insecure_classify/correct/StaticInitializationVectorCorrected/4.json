@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "BigInteger i = BigInteger.valueOf(sr.nextInt());\nbyte [] bytes = i.toByteArray();",
+        "description": "The use of `sr.nextInt()` generates a number that is not sufficiently large to ensure a strong Initialization Vector (IV) for AES CBC mode encryption. This may lead to a weak IV that could compromise encryption.",
+        "recommendation": "Use `sr.nextBytes(byte[] bytes)` with a byte array of the proper size for the IV (16 bytes for AES)."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+        "description": "The key size for AES is not explicitly defined, which means it might default to a weak key size depending on the provider. Typically, 128 bits is the default but it's not guaranteed across all providers.",
+        "recommendation": "Specify the key size explicitly by using `keyGen.init(256);` to ensure a strong key size, such as 256 bits for AES."
+    }
+]
+```

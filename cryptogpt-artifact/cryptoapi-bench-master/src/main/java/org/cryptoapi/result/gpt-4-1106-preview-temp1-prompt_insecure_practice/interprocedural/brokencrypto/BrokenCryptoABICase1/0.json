@@ -1,0 +1,25 @@
+```json
+[
+    {
+        "misuse": "Weak Encryption Algorithm",
+        "vulnerable_code": "Cipher.getInstance(\"DES/ECB/PKCS5Padding\");",
+        "description": "DES is a deprecated and weak encryption algorithm with a key size of 56 bits, which is susceptible to brute-force attacks.",
+        "recommendation": "Use AES with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "ECB Mode of Operation",
+        "vulnerable_code": "Cipher.getInstance(\"DES/ECB/PKCS5Padding\");",
+        "description": "ECB (Electronic Codebook) is an insecure mode of operation that does not provide serious message confidentiality. Identical plaintext blocks are encrypted into identical ciphertext blocks, which can leak information about the original content.",
+        "recommendation": "Use a more secure mode of operation such as CBC with an Initialization Vector (IV) or GCM which also provides authentication."
+    },
+    {
+        "misuse": "Hardcoded Crypto Configuration",
+        "vulnerable_code": [
+            "String crypto = \"DES/ECB/PKCS5Padding\";",
+            "String keyAlgo = \"DES\";"
+        ],
+        "description": "The choice of encryption algorithm and mode of operation are hardcoded, reducing flexibility and making it harder to update the encryption method.",
+        "recommendation": "Use a configuration file or a secure method to dynamically load encryption parameters."
+    }
+]
+```

@@ -1,0 +1,8 @@
+[
+  {
+    "misuse": "CWE-295: Improper Certificate Validation",
+    "vulnerable_code": "public class D1 implements HostnameVerifier {\n    public boolean verify(String s, SSLSession sslSession) {\n        return true;\n    }\n}",
+    "description": "The HostnameVerifier implementation in the provided code does not perform any verification on the hostname. This could potentially allow an attacker to perform a man-in-the-middle attack by impersonating the server.",
+    "recommendation": "It's crucial to validate the certificate. You can use Java's built-in X509TrustManager to perform this validation. Here's a basic example: \n\n```java\npublic class D1 implements HostnameVerifier {\n    public boolean verify(String hostname, SSLSession session) {\n        try {\n            javax.net.ssl.X509TrustManager trustManager = new X509TrustManager() {\n                public void checkClientTrusted(X509Certificate[] certs, String authType) {\n                }\n\n                public void checkServerTrusted(X509Certificate[] certs, String authType) {\n                    // Perform certificate validation here\n                }\n\n                public X509Certificate[] getAcceptedIssuers() {\n                    return null;\n                }\n            };\n            // Use the trustManager to validate the certificate\n            // ...\n        } catch (Exception e) {\n            e.printStackTrace();\n        }\n        return false;\n    }\n}```\nThis code creates a custom HostnameVerifier that validates the certificate."
+  }
+]

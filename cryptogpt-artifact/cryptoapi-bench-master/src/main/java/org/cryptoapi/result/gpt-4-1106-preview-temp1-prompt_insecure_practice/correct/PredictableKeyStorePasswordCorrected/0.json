@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "String password = String.valueOf(random.ints());",
+        "description": "The use of java.util.SecureRandom to generate a password might not ensure a sufficiently large and cryptographically strong random sequence for security-sensitive applications.",
+        "recommendation": "Use a strong passphrase instead of an automatically generated numeric sequence, or use a cryptographically secure method for generating a strong password."
+    },
+    {
+        "misuse": "Hardcoded Credentials",
+        "vulnerable_code": "ks.load(cacerts.openStream(), password.toCharArray());",
+        "description": "Hardcoding credentials, even if they are generated at runtime, since they are not persistently stored in a secure way and are transmitted over an open function call.",
+        "recommendation": "Avoid transmitting sensitive information through insecure channels. Use a secure method to handle and store passwords."
+    },
+    {
+        "misuse": "Insecure Trust Management",
+        "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");",
+        "description": "Loading certificates from a URL that is not guaranteed to be secure could lead to trusting malicious certificates if the connection is intercepted or tampered with.",
+        "recommendation": "Ensure that the URL used to load certificates is secure and trusted. Store certificates within the application if possible, or use a secure, authenticated connection to retrieve them."
+    },
+    {
+        "misuse": "Improper Certificate Validation",
+        "vulnerable_code": "cacerts = new URL(\"https://www.google.com\"); ks.load(cacerts.openStream(), password.toCharArray());",
+        "description": "The code is loading the keystore from a URL without properly validating the server's TLS certificate, which could accept any certificate including malicious ones if they are presented.",
+        "recommendation": "Make sure that the server's TLS certificate is properly validated when loading keystores from a URL."
+    }
+]
+```

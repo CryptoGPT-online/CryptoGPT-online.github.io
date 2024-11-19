@@ -1,0 +1,34 @@
+```json
+[
+  {
+    "misuse": "Inadequate Encryption Strength",
+    "vulnerable_code": "crypto = new C3(\"Blowfish\");",
+    "description": "The usage of Blowfish as an encryption algorithm is considered weak due to its small block size (64 bits), which makes it vulnerable to birthday attacks, especially when used with modes that are not an encryption feedback mode such as CBC or CTR. Furthermore, the key length is not specified, which could potentially default to a weak key size.",
+    "recommendation": "Replace Blowfish with a stronger encryption algorithm such as AES with a key size of at least 128 bits. Explicitly set the key size for the algorithm."
+  },
+  {
+    "misuse": "Insufficient Entropy in Key Generation",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);",
+    "description": "A new key is generated upon each encryption operation without specifying a secure random number generator or a key length. The default key size for Blowfish may not be adequate, and the randomness source is not specified, which may lead to weak keys if the platform's default RNG is not cryptographically strong.",
+    "recommendation": "Specify a secure random number generator and a key length (preferably the maximum key length supported by the algorithm) while generating keys."
+  },
+  {
+    "misuse": "Use of Initialization Vector (IV) Not Specified for CBC or Other Feedback Modes",
+    "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+    "description": "The code does not specify an Initialization Vector (IV) when initializing the Cipher for encryption. If CBC mode or any other feedback mode is actually used with Blowfish or any other cipher, this could lead to the use of a default IV (like an array of zeros), which is insecure for these operation modes.",
+    "recommendation": "If CBC mode or a mode that requires an IV is used, explicitly provide a securely generated IV using a secure random source and ensure that it is unique for each encryption operation."
+  },
+  {
+    "misuse": "Potential Static Key",
+    "vulnerable_code": "SecretKey key = keyGen.generateKey();",
+    "description": "While the code appears to generate a new key for each encryption, in practice, this key is never exposed to the user, and its lifecycle is unclear. If the key does not change between encryption operations or is not managed securely, it could lead to the use of static keys, which is insecure.",
+    "recommendation": "Ensure key management practices that provide unique keys per encryption instance and securely store and manage keys."
+  },
+  {
+    "misuse": "Lack of Cryptographic Interoperability",
+    "vulnerable_code": "crypto.encrypt(\"abc\",\"\");",
+    "description": "The encryption function uses an empty string to fall back to a default algorithm, but the method signature does not indicate whether it supports any kind of interoperability, like the use of standard algorithm/mode/padding combinations, or how to handle algorithm parameters that must match between encryption and decryption.",
+    "recommendation": "Define a clear API contract that specifies how interoperability is achieved, including algorithm, mode, padding, and any other parameters. Preferably use standard combinations like 'AES/CBC/PKCS5Padding'."
+  }
+]
+```

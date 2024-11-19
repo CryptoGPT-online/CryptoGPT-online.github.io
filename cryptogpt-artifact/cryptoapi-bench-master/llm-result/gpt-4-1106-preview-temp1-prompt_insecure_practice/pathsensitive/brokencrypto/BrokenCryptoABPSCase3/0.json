@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Weak Encryption Algorithm",
+        "vulnerable_code": "Cipher.getInstance(\"RC4\")",
+        "description": "RC4 is an outdated and insecure encryption algorithm that is vulnerable to several types of attacks, such as biases in the RC4 keystream, which can lead to cryptographic weaknesses.",
+        "recommendation": "Use a more secure encryption algorithm such as AES with a proper mode of operation."
+    },
+    {
+        "misuse": "Inconsistent Encryption Use",
+        "vulnerable_code": "cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "The choice of encryption algorithm changes based on the value of 'choice', which can lead to inconsistent security practices and potential weaknesses if not properly managed. Especially, if 'choice' is chosen based on untrusted input, it can lead to vulnerabilities.",
+        "recommendation": "Standardize the encryption algorithm across the application and do not change it based on user input or other conditions."
+    },
+    {
+        "misuse": "Missing Initialization Vector (IV) for CBC Mode",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "When using AES in CBC mode, it is essential to provide an initialization vector (IV) to ensure that the same plaintext block will encrypt to different ciphertext blocks. Otherwise, patterns in the plaintext may be revealed in the ciphertext.",
+        "recommendation": "Generate a random IV and use it during the encryption initialization with 'cipher.init(Cipher.ENCRYPT_MODE, key, ivSpec);'"
+    }
+]
+```

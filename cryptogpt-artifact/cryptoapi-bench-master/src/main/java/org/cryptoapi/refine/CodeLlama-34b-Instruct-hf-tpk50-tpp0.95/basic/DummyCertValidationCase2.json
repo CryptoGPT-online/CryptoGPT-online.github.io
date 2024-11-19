@@ -1,0 +1,84 @@
+ ### False Positive Misuse ###
+
+The following misuse reports are false positives:
+
+* "Insecure Use of Crypto API" for the implementation of a custom `X509TrustManager` that returns an empty `X509Certificate` array from `getAcceptedIssuers()`. This is a false positive because the class is not actually trusting any certificate.
+* "Broken Crypto Algorithm" for the implementation of `checkClientTrusted` and `checkServerTrusted` methods with empty implementation. This is a false positive because the methods are not actually being used to perform any validation.
+
+### Optimized Misuse JSON ###
+
+The optimized misuse JSON for the `D2` class would be:
+```json
+{
+  "misuses": [
+    {
+      "misuse": "Broken Crypto Algorithm",
+      "vulnerable_code": "D2 implements X509TrustManager",
+      "description": "The D2 class implements the X509TrustManager interface, which is used to trust or not trust a certificate. However, the implementation of the checkClientTrusted and checkServerTrusted methods is empty, which means that the class does not actually perform any trust verification. This can lead to a vulnerability where the class accepts any certificate as trusted, potentially allowing an attacker to impersonate a trusted party.",
+      "recommendation": "Implement the checkClientTrusted and checkServerTrusted methods correctly to verify the authenticity of the remote endpoint."
+    },
+    {
+      "misuse": "Insufficient Input Validation",
+      "vulnerable_code": "getAcceptedIssuers method with empty implementation",
+      "description": "The getAcceptedIssuers method is not implemented correctly, which allows the attacker to bypass the certificate validation.",
+      "recommendation": "Implement the getAcceptedIssuers method correctly to ensure that only trusted certificates are accepted."
+    }
+  ]
+}
+```
+
+The optimized misuse JSON for the `D3` class would be:
+```json
+{
+  "misuses": [
+    {
+      "misuse": "Broken Crypto Algorithm",
+      "vulnerable_code": "D3 implements SSLContextSpi",
+      "description": "The D3 class implements the SSLContextSpi interface, which is used to provide a SSL/TLS context for secure communication. However, the implementation of the getSupportedProtocols and getSupportedCipherSuites methods is empty, which means that the class does not actually support any protocols or cipher suites. This can lead to a vulnerability where the class does not provide adequate security for communication.",
+      "recommendation": "Implement the getSupportedProtocols and getSupportedCipherSuites methods correctly to ensure that the class supports at least the minimum security requirements for SSL/TLS communication."
+    }
+  ]
+}
+```
+
+The optimized misuse JSON for the `D4` class would be:
+```json
+{
+  "misuses": [
+    {
+      "misuse": "Broken Crypto Algorithm",
+      "vulnerable_code": "D4 implements Cipher",
+      "description": "The D4 class implements the Cipher interface, which is used to encrypt and decrypt data. However, the implementation of the doFinal method is empty, which means that the class does not actually perform any encryption or decryption. This can lead to a vulnerability where the class does not provide adequate security for data transmission.",
+      "recommendation": "Implement the doFinal method correctly to ensure that the class provides adequate security for data transmission."
+    }
+  ]
+}
+```
+
+The optimized misuse JSON for the `D5` class would be:
+```json
+{
+  "misuses": [
+    {
+      "misuse": "Insecure Communication Protocol",
+      "vulnerable_code": "D5 implements SSLSocket",
+      "description": "The D5 class implements the SSLSocket interface, which is used to provide a secure communication channel between two parties. However, the implementation of the getSSLParameters method is empty, which means that the class does not actually provide any security parameters. This can lead to a vulnerability where the class does not provide adequate security for communication.",
+      "recommendation": "Implement the getSSLParameters method correctly to ensure that the class provides adequate security parameters for communication."
+    }
+  ]
+}
+```
+
+The optimized misuse JSON for the `D6` class would be:
+```json
+{
+  "misuses": [
+    {
+      "misuse": "Broken Crypto Algorithm",
+      "vulnerable_code": "D6 implements KeyAgreement",
+      "description": "The D6 class implements the KeyAgreement interface, which is used to generate cryptographic keys for use in encrypting and decrypting data. However, the implementation of the generateSecret method is empty, which means that the class does not actually generate any secret keys. This can lead to a vulnerability where the class does not provide adequate security for encryption and decryption.",
+      "recommendation": "Implement the generateSecret method correctly to ensure that the class generates adequate secret keys for encryption and decryption."
+    }
+  ]
+}
+```

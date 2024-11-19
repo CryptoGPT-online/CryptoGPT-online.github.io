@@ -1,0 +1,20 @@
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "SecureRandom random = new SecureRandom();\nString defaultKey = String.valueOf(random.ints());",
+        "description": "Using SecureRandom without specifying a SecureRandom algorithm could lead to insecure randomness.",
+        "recommendation": "Specify a strong algorithm when creating a SecureRandom instance, such as SHA1PRNG."
+    },
+    {
+        "misuse": "Insecure Key Generation",
+        "vulnerable_code": "String defaultKey = String.valueOf(random.ints());\nbyte[] keyBytes = defaultKey.getBytes();",
+        "description": "Using random.ints() to generate a key and converting it to bytes for key generation is not a secure method for key generation.",
+        "recommendation": "Use a secure key generation algorithm, such as KeyGenerator, to generate the key."
+    },
+    {
+        "misuse": "Insecure Padding",
+        "vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5PADDING\");",
+        "description": "Using PKCS5PADDING as padding for AES encryption is not recommended due to its known vulnerabilities.",
+        "recommendation": "Use a more secure padding mode, such as PKCS7Padding."
+    }
+]

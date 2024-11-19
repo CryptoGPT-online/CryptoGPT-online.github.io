@@ -1,0 +1,34 @@
+ {
+"misuses": [
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "String.valueOf(crypto)",
+"description": "The `crypto` variable is not properly initialized and is vulnerable to tampering, allowing an attacker to potentially manipulate the encryption algorithm being used.",
+"recommendation": "Always initialize crypto variables securely and validate their integrity before using them to prevent tampering."
+},
+{
+"misuse": "Insecure Key Generation",
+"vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(String.valueOf(crypto));",
+"description": "The `KeyGenerator` class is vulnerable to attacks that allow an attacker to predict the generated key, which can lead to plaintext recovery and other attacks on the encryption. ",
+"recommendation": "Use a secure key generation algorithm, such as `SecureRandom` or `KeyStore`, to generate the encryption key."
+},
+{
+"misuse": "Insecure Cipher Instantiation",
+"vulnerable_code": "Cipher cipher = Cipher.getInstance(String.valueOf(crypto));",
+"description": "The `Cipher` class is vulnerable to attacks that allow an attacker to predict the encryption algorithm being used, which can lead to plaintext recovery and other attacks on the encryption. ",
+"recommendation": "Use a secure cipher algorithm, such as `AES` or `RSA`, to encrypt the data."
+},
+{
+"misuse": "Insecure SecretKey Instantiation",
+"vulnerable_code": "SecretKey key = keyGen.generateKey();",
+"description": "The `SecretKey` class is vulnerable to attacks that allow an attacker to predict the encryption key being used, which can lead to plaintext recovery and other attacks on the encryption. ",
+"recommendation": "Use a secure key generation algorithm, such as `SecureRandom` or `KeyStore`, to generate the encryption key."
+},
+{
+"misuse": "Insecure Cipher Mode",
+"vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+"description": "The `Cipher` class is vulnerable to attacks that allow an attacker to predict the encryption mode being used, which can lead to plaintext recovery and other attacks on the encryption. ",
+"recommendation": "Use a secure cipher mode, such as `GCM` or `CCM`, to encrypt the data."
+}
+]
+}

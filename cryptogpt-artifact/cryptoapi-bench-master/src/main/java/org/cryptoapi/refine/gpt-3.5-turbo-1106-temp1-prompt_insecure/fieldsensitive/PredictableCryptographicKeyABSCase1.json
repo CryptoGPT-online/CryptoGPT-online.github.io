@@ -1,0 +1,32 @@
+### False Positive Misuse ###
+N/A
+
+### Optimized Misuse JSON###
+```json
+[
+  {
+    "misuse": "Insecure Key Generation",
+    "vulnerable_code": "String passKey = P1.getKey(\"pass.key\");",
+    "description": "The passKey is retrieved from a system property which may not be a secure source of random keys.",
+    "recommendation": "Use a secure source of random keys, such as SecureRandom, to generate the key."
+  },
+  {
+    "misuse": "Unsuitable Encryption Algorithm",
+    "vulnerable_code": "String algoSpec = \"AES/CBC/PKCS5Padding\";",
+    "description": "The algorithm 'AES/CBC/PKCS5Padding' is used for encryption without considering the appropriate mode of operation or IV (Initialization Vector), which can lead to cryptographic weaknesses.",
+    "recommendation": "Use a more secure and appropriate mode of operation (e.g., GCM) with an unpredictable IV for AES encryption to mitigate potential cryptographic vulnerabilities."
+  },
+  {
+    "misuse": "Use of Weak Cryptographic Algorithm",
+    "vulnerable_code": "String algo = \"AES\"; String algoSpec = \"AES/CBC/PKCS5Padding\";",
+    "description": "The code uses the weak cryptographic algorithm AES in CBC mode with PKCS5Padding. It's recommended to use AES in GCM mode where possible for better security.",
+    "recommendation": "Use AES/GCM/NoPadding for better security and integrity protection."
+  },
+  {
+    "misuse": "Incorrect Key Length",
+    "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+    "description": "The code always truncates or expands the input key to 16 bytes, which can weaken the encryption strength. It's recommended to enforce a specific key length and handle key material properly.",
+    "recommendation": "Use a secure and well-defined key derivation function such as PBKDF2 to derive a key of the desired length from the input key material."
+  }
+]
+```

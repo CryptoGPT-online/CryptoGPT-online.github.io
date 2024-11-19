@@ -1,0 +1,14 @@
+ [
+  {
+    "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+    "vulnerable_code": "String type = \"JKS\";\nKeyStore ks = KeyStore.getInstance(type);",
+    "description": "The code uses the `JKS` (Java Key Store) algorithm to load a keystore, which is a less secure algorithm compared to others like `PKCS12` or `BKS`. This may cause issues with negotiating with other systems that use more secure algorithms.",
+    "recommendation": "Replace `JKS` with a more secure algorithm like `PKCS12` or `BKS`."
+  },
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_code": "String defaultKey = \"changeit\";\nks.load(cacerts.openStream(), defaultKey.toCharArray());",
+    "description": "The code uses the `changeit` default password to load the keystore, which is a well-known and easily guessable password. This may allow attackers to easily gain access to the keystore and compromise the security of the system.",
+    "recommendation": "Use a strong and unique password to load the keystore, and store it securely to prevent unauthorized access."
+  }
+]

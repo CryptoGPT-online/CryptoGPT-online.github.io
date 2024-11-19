@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "KeyGenerator.getInstance(\"AES\")",
+        "description": "The KeyGenerator is being initialized without a secure random number generator or a specified key size, which could lead to the use of a weak key.",
+        "recommendation": "Specify a key size and initialize the KeyGenerator with a SecureRandom instance."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "KeyGenerator.getInstance(\"AES\")",
+        "description": "The code does not specify the key size for the AES encryption. The default key size may not be strong enough depending on the Java Cryptography Extension (JCE) policy files.",
+        "recommendation": "Explicitly specify the key size by calling keyGen.init(256) to ensure strong encryption."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5Padding\")",
+        "description": "While AES is a secure algorithm, the use of CBC mode (Cipher Block Chaining) without a properly initialized IV (Initialization Vector) can make the encryption vulnerable to certain attacks.",
+        "recommendation": "Ensure that the IV is securely generated and use modes like GCM which provide authentication."
+    }
+]
+```

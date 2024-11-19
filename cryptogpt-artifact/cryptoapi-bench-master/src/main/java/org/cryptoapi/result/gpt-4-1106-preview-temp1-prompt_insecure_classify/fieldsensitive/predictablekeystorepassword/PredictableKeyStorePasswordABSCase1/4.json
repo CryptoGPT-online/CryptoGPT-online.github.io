@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "String key = \"changeit\";",
+        "description": "The code contains a hardcoded key for the keystore, which can be easily guessed or extracted by an attacker.",
+        "recommendation": "Use a secure method to fetch or generate the key at runtime, such as prompting the user for a password, using a secure configuration file, or utilizing a secure key management system."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");\nks.load(cacerts.openStream(), passedKey.toCharArray());",
+        "description": "The code is loading certificates from a hardcoded URL without validating the server's SSL certificate, which can potentially expose it to man-in-the-middle attacks.",
+        "recommendation": "Use a proper SSL context with a trust manager that checks the validity of the certificate chain. If you need to connect to a known server with a self-signed certificate, import it into your key store and use it for the SSL context."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "passedKey = defKey;",
+        "description": "The password used for the keystore is set to a default key which is predictable and not random, reducing the security of the key store.",
+        "recommendation": "Generate a strong, random password for keystore access."
+    }
+]
+```

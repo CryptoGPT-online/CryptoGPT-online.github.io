@@ -1,0 +1,25 @@
+```json
+[
+  {
+    "misuse": "No Certificate Validation",
+    "vulnerable_code": [
+      "public void checkClientTrusted(X509Certificate[] chain, String authType)",
+      "public void checkServerTrusted(X509Certificate[] chain, String authType)",
+      "public void checkClientTrusted(X509Certificate[] chain, String authType, Socket socket)",
+      "public void checkServerTrusted(X509Certificate[] chain, String authType, Socket socket)",
+      "public void checkClientTrusted(X509Certificate[] chain, String authType, SSLEngine engine)",
+      "public void checkServerTrusted(X509Certificate[] chain, String authType, SSLEngine engine)"
+    ],
+    "description": "The trust manager does not perform any certificate validation, leaving it vulnerable to man-in-the-middle attacks.",
+    "recommendation": "Implement certificate validation logic in the 'checkClientTrusted' and 'checkServerTrusted' methods."
+  },
+  {
+    "misuse": "Return Null on getAcceptedIssuers",
+    "vulnerable_code": [
+      "public X509Certificate[] getAcceptedIssuers()"
+    ],
+    "description": "Returning 'null' from getAcceptedIssuers might be misinterpreted by some SSL/TLS implementations, leading to accepting any certificate.",
+    "recommendation": "Return a non-empty array of acceptable CA issuer certificates."
+  }
+]
+```

@@ -1,0 +1,18 @@
+ {
+"misuses": [
+{
+"misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+"vulnerable_code": "AES/ECB/PKCS5Padding",
+"description": "The code uses AES encryption in ECB mode, which is insecure and can be easily broken. ECB mode is not recommended for use in any security-related applications. The code also uses PKCS#5 padding, which is weak and can be easily broken. It is recommended to use a more secure padding scheme such as PKCS#7.",
+"recommendation": "Replace AES/ECB/PKCS5Padding with a more secure encryption mode such as AES/CBC/PKCS7Padding or AES/CTR/PKCS7Padding."
+}
+],
+"remediation": [
+{
+"step": "1. Replace the line `String cryptoAlgo = \"AES/ECB/PKCS5Padding\";` with `String cryptoAlgo = \"AES/CBC/PKCS7Padding\";` or `String cryptoAlgo = \"AES/CTR/PKCS7Padding\";`"
+},
+{
+"step": "2. Replace the line `Cipher cipher = Cipher.getInstance(passedAlgo);` with `Cipher cipher = Cipher.getInstance(cryptoAlgo);`"
+}
+]
+}

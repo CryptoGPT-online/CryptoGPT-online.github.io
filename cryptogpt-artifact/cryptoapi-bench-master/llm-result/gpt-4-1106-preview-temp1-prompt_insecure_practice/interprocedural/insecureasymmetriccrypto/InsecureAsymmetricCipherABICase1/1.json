@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Key Size",
+        "vulnerable_code": "int keySize = 1024;",
+        "description": "The key size of 1024 bits for RSA is no longer considered secure. It is vulnerable to being broken with sufficient computational resources.",
+        "recommendation": "Use a larger key size, such as 2048 or 4096 bits, to increase security."
+    },
+    {
+        "misuse": "ECB Mode in RSA (Implicit)",
+        "vulnerable_code": "Cipher.getInstance(\"RSA\")",
+        "description": "By default, when no mode or padding is specified, Java uses ECB mode, which is not secure for encrypting multiple blocks of data because it doesn't provide serious message confidentiality.",
+        "recommendation": "Although RSA generally encrypts a single block, it's good practice to specify a secure padding scheme when obtaining a Cipher instance, such as 'RSA/ECB/OAEPWithSHA-256AndMGF1Padding'."
+    },
+    {
+        "misuse": "Low Entropy Creation",
+        "vulnerable_code": "new String(\"Secret Message\")",
+        "description": "The message created has low entropy and is static, which poses a security risk if used in a real scenario.",
+        "recommendation": "While this might be a placeholder, ensure that high-entropy secrets are used and consider implementing additional layers of security such as message authentication codes or digital signatures if applicable."
+    }
+]
+```

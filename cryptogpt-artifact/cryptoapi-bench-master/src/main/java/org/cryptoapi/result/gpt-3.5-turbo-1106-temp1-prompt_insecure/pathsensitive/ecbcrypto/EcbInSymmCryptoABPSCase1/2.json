@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Misuse of Cryptographic API",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+        "description": "The KeyGenerator is used without specifying a secure random algorithm for key generation.",
+        "recommendation": "Specify a secure random algorithm for key generation, such as SecureRandom.getInstanceStrong()"
+    },
+    {
+        "misuse": "Misuse of Cryptographic API",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/ECB/PKCS5Padding\");\nif(choice>1)\n    cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "The choice of cipher mode and padding is based on a simple integer input, which is not a secure way to determine the encryption algorithm.",
+        "recommendation": "Use a secure and authenticated mode of operation with appropriate padding. Consider using AES/GCM/NoPadding or AES/CBC/PKCS5Padding with a secure IV instead."
+    }
+]
+```

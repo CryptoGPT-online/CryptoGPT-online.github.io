@@ -1,0 +1,28 @@
+```json
+[
+  {
+    "misuse": "Trust Manager that trusts all certificates",
+    "vulnerable_code": [
+        "new X509TrustManager() { ... checkClientTrusted() {...} ... checkServerTrusted() {...} ... }"
+    ],
+    "description": "The custom X509TrustManager implemented does nothing to verify the trustworthiness of the certificates, potentially allowing any certificate to be accepted, even self-signed ones. This could expose the application to man-in-the-middle attacks.",
+    "recommendation": "Implement proper certificate validation in checkClientTrusted and checkServerTrusted methods."
+  },
+  {
+    "misuse": "Dummy getAcceptedIssuers method",
+    "vulnerable_code": [
+        "public X509Certificate[] getAcceptedIssuers() { ... return EMPTY_X509CERTIFICATE_ARRAY; }"
+    ],
+    "description": "The getAcceptedIssuers method returns an empty array, indicating no trusted certificate authorities. This could prevent proper SSL/TLS connections with sites that use certificates issued by recognized CAs.",
+    "recommendation": "Return a properly initialized array of accepted issuers that includes trusted CAs."
+  },
+  {
+    "misuse": "Redundant conditional checks",
+    "vulnerable_code": [
+        "if (!(null != s || s.equalsIgnoreCase(\"RSA\") || x509Certificates.length >= 314)) { ..."
+    ],
+    "description": "The condition 'null != s' will never be false at the same time as 's.equalsIgnoreCase(\"RSA\")' because the second condition will throw a NullPointerException if s is null. The correct logic probably intended to use && instead of || to ensure all conditions are true.",
+    "recommendation": "Use proper logical operators to ensure the intended checks are performed."
+  }
+]
+```

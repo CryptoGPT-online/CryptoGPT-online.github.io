@@ -1,0 +1,38 @@
+ ### False Positive Misuses ###
+
+* Misuse Category: Insecure Key Management
+* Vulnerable Code: `encryptKey = ENCRYPT_KEY;`
+* Description: This misuse report is a false positive, as the code is not actually using the encryption key. The encryption key is being copied to a new variable, but it is not actually being used for encryption.
+* Recommendation: None
+
+* Misuse Category: Insecure Storage of Sensitive Data
+* Vulnerable Code: `ENCRYPT_KEY = DEFAULT_ENCRYPT_KEY.toCharArray();`
+* Description: This misuse report is a false positive, as the code is not actually storing the encryption key. The encryption key is being copied to a new variable, but it is not actually being stored anywhere.
+* Recommendation: None
+
+* Misuse Category: Insufficient Key Size
+* Vulnerable Code: `SecretKeySpec keySpec = new SecretKeySpec(keyBytes, "AES");`
+* Description: This misuse report is a false positive, as the key size is not actually the issue. The key size is being set to 16 bytes, but the code is not actually using the key for encryption.
+* Recommendation: None
+
+### Optimized Misuse JSON ###
+
+* Misuse Category: Broken Crypto Algorithm
+* Vulnerable Code: `byte[] keyBytes = encryptKey.toString().getBytes();`
+* Description: The encryption key is derived from a constant string, which is insecure. An attacker could potentially guess the encryption key and decrypt the data.
+* Recommendation: Use a secure method to derive the encryption key, such as using a cryptographic hash function like SHA-256 to hash the password, and then using the resulting hash as the encryption key.
+
+* Misuse Category: Insecure Key Management
+* Vulnerable Code: `encryptKey = ENCRYPT_KEY;`
+* Description: The encryption key is stored in a public static field, which means that it can be easily accessed and extracted by an attacker.
+* Recommendation: Store the encryption key in a secure location, such as a secure database or a secure key store, and access it only through a secure method, such as using a secure API or a secure library.
+
+* Misuse Category: Insecure Storage of Sensitive Data
+* Vulnerable Code: `ENCRYPT_KEY = DEFAULT_ENCRYPT_KEY.toCharArray();`
+* Description: The encryption key is stored in a public static final field, which means that it can be easily accessed and extracted by an attacker.
+* Recommendation: Store the encryption key in a secure location, such as a secure database or a secure key store, and access it only through a secure method, such as using a secure API or a secure library.
+
+* Misuse Category: Insufficient Key Size
+* Vulnerable Code: `new SecretKeySpec(keyBytes, "AES");`
+* Description: The encryption key size is 16 bytes, which is insufficient for secure encryption. It is recommended to use a key size of at least 256 bits (32 bytes) for secure encryption.
+* Recommendation: Use a secure method to generate a random encryption key, and then use the generated key to create a SecretKeySpec object.

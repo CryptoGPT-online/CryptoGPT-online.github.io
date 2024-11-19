@@ -1,0 +1,31 @@
+### False Positive Misuse ###
+
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "SecureRandom sr = new SecureRandom(); byte [] bytes = new byte[16]; sr.nextBytes(bytes);",
+        "description": "The original code was generating insufficiently random IV values using a suboptimal method, but this misuse is addressed in the revised code segment using `SecureRandom` properly.",
+        "recommendation": "Ensure this method of generating IVs is consistently used across all cryptographic processes involving IVs. The current implementation using `sr.nextBytes(bytes);` is secure."
+    }
+]
+```
+
+### Optimized Misuse JSON ###
+
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "BigInteger i = BigInteger.valueOf(sr.nextInt()); byte [] bytes = i.toByteArray();",
+        "description": "The initialization vector (IV) is being generated with `SecureRandom.nextInt()`, which limits randomness to the size of an integer (32 bits) and could result in a shorter byte array, rather than generating a full-length 16-byte array for AES.",
+        "recommendation": "Use `SecureRandom.nextBytes()` to generate a byte array of the full block size, e.g., 16 bytes for AES."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "SecretKey key = keyGen.generateKey();",
+        "description": "The KeyGenerator instance is used without explicitly setting a key size, which may default to a low encryption strength depending on the environment.",
+        "recommendation": "Explicitly specify the key size, e.g., 'keyGen.init(256);', to ensure adequate encryption strength, assuming the environment supports it."
+    }
+]
+```

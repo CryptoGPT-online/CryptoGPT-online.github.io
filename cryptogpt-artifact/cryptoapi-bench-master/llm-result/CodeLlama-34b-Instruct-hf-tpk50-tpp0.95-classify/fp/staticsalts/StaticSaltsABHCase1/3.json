@@ -1,0 +1,26 @@
+ {
+"misuses": [
+{
+"misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+"vulnerable_code": "byte b = hm.get(\"aaa\");
+
+PBEParameterSpec pbeParamSpec = null;
+byte[] salt = {b,b};
+int count = 1020;
+pbeParamSpec = new PBEParameterSpec(salt, count);",
+"description": "The code uses the PBEParameterSpec constructor to create a PBEParameterSpec object with a fixed salt and iteration count. This can lead to vulnerabilities such as dictionary attacks or rainbow table attacks.",
+"recommendation": "Use a randomly generated salt and a high iteration count, and store the salt securely."
+},
+{
+"misuse": "CWE-295: Improper Certificate Validation",
+"vulnerable_code": "byte b = hm.get(\"aaa\");
+
+PBEParameterSpec pbeParamSpec = null;
+byte[] salt = {b,b};
+int count = 1020;
+pbeParamSpec = new PBEParameterSpec(salt, count);",
+"description": "The code does not validate the certificate of the remote server, which can lead to Man-in-the-middle attacks.",
+"recommendation": "Use a secure certificate validation mechanism, such as SSL/TLS, and ensure that the certificate is valid and trusted."
+}
+]
+}

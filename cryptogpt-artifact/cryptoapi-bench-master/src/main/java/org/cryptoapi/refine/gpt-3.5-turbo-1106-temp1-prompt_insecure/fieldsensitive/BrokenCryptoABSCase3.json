@@ -1,0 +1,20 @@
+### False Positive Misuse ###
+None
+
+### Optimized Misuse JSON###
+```json
+[
+  {
+    "misuse": "Broken Crypto Algorithm",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);\nSecretKey key = keyGen.generateKey();",
+    "description": "The KeyGenerator is being instantiated with the defaultAlgo, which should be passedAlgo instead. This means that the KeyGenerator will be using the default algorithm RC4, regardless of the passed algorithm.",
+    "recommendation": "Change KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo); to KeyGenerator keyGen = KeyGenerator.getInstance(passedAlgo);"
+  },
+  {
+    "misuse": "Use of Weak Crypto Algorithm",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);\nSecretKey key = keyGen.generateKey();",
+    "description": "The KeyGenerator is being instantiated with 'defaultAlgo' which is a hard-coded algorithm ('RC4'), and the SecretKey is generated using this KeyGenerator. However, RC4 is considered to be a weak crypto algorithm and should not be used for encryption.",
+    "recommendation": "Use a stronger encryption algorithm such as AES instead of RC4. Update the 'defaultAlgo' to a more secure algorithm, and ensure that the algorithm can be passed as a parameter to the encrypt method."
+  }
+]
+```

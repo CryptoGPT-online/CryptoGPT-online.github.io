@@ -1,0 +1,39 @@
+```json
+[
+  {
+    "misuse": "Hardcoded Encryption Key",
+    "vulnerable_code": [
+      "public static final String DEFAULT_ENCRYPT_KEY = \"changeit\";"
+    ],
+    "description": "The encryption key is hardcoded and shared in the source code, which is a bad security practice as it can be easily extracted by anyone who has access to the source code.",
+    "recommendation": "Use a secure method to manage encryption keys like Key Management Services (KMS) or secure it using environment variables or a configuration file and ensure that it is not hardcoded in the source code."
+  },
+  {
+    "misuse": "Insecure Trust Management",
+    "vulnerable_code": [
+      "cacerts = new URL(\"https://www.google.com\");",
+      "ks.load(cacerts.openStream(), encryptKey);"
+    ],
+    "description": "This code is loading a KeyStore from a hardcoded URL, which could be an insecure endpoint not under the control of the site owner. This could potentially expose the application to a Man-In-The-Middle (MITM) attack if the URL is compromised or not properly validated.",
+    "recommendation": "Ensure the URL used is trusted and under your control. Preferably use an internally hosted and secure API or resource for loading KeyStores or trust material. It's also important to validate the SSL certificate of the URL to avoid MITM attacks."
+  },
+  {
+    "misuse": "Use of Weak KeyStore Type",
+    "vulnerable_code": [
+      "String type = \"JKS\";",
+      "KeyStore ks = KeyStore.getInstance(type);"
+    ],
+    "description": "The Java KeyStore (JKS) type is considered weak and has been replaced by PKCS12 as the recommended KeyStore type. JKS does not use strong cryptographic standards.",
+    "recommendation": "Switch from the JKS KeyStore type to a more secure KeyStore type, such as PKCS12, which uses stronger cryptographic standards."
+  },
+  {
+    "misuse": "Potential Plaintext Storage of Sensitive Information",
+    "vulnerable_code": [
+      "private static char[] ENCRYPT_KEY;",
+      "private static char[] encryptKey;"
+    ],
+    "description": "Sensitive information such as encryption keys should not be stored in plaintext in memory. If an attacker manages to obtain a memory dump, they could extract the sensitive keys.",
+    "recommendation": "Avoid long-term storage of encryption keys in memory. If they must be kept in memory, consider clearing (zeroing out) the array holding the key after use and avoid static storage, as statics can make it more challenging to manage the key lifecycle."
+  }
+]
+```

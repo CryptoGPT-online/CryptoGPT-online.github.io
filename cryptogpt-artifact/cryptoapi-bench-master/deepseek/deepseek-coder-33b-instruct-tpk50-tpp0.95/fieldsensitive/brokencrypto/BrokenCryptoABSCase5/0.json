@@ -1,0 +1,20 @@
+[
+  {
+    "misuse": "WEAK_ENCRYPTION",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(defaultAlgo);",
+    "description": "The algorithm used for encryption is weak or not recommended. IDEA is generally considered weak and should not be used for encryption. It's often recommended to use stronger algorithms like AES or ChaCha20.",
+    "recommendation": "Replace 'IDEA' with 'AES', 'AES/GCM/NoPadding' or 'ChaCha20'. Use a Key Derivation Function (KDF) like bcrypt, scrypt or Argon2 for generating the encryption key."
+  },
+  {
+    "misuse": "UNIVERSAL_KEY",
+    "vulnerable_code": "SecretKey key = keyGen.generateKey();",
+    "description": "The key used for encryption is generated using a weak random number generator, making it easily guessable. Different keys should be used for every encryption operation.",
+    "recommendation": "Use a cryptographically secure random number generator to generate the keys."
+  },
+  {
+    "misuse": "SHARED_KEY",
+    "vulnerable_code": "SecretKey key = keyGen.generateKey();",
+    "description": "The same key is used for encrypting and decrypting data. This is a security risk. Each party should use different keys for encryption and decryption.",
+    "recommendation": "Generate a new key for each encryption and decryption operation."
+  }
+]

@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Weak Random Seed",
+        "vulnerable_code": "byte seed = 100;\nSecureRandom sr = new SecureRandom(new byte[]{seed});",
+        "description": "The seed for SecureRandom is just a single byte. The total number of possible seeds is 256 (including 0), which is small. This means that the generated sequence of random numbers will repeat after 256 iterations, and is therefore not cryptographically strong.",
+        "recommendation": "Use a larger seed, such as a long or array of bytes. For instance, you could use System.nanoTime() to get the current time in nanoseconds, which provides more variation."
+    },
+    {
+        "misuse": "Use of byte instead of byte[]",
+        "vulnerable_code": "byte seed = ...;\nSecureRandom sr = new SecureRandom(new byte[]{seed});",
+        "description": "SecureRandom expects an array of bytes as a seed, not a single byte. If you supply a single byte, it will be automatically converted to an array of bytes of length 1, which will not provide enough randomness.",
+        "recommendation": "Always provide a full array of bytes as a seed for SecureRandom."
+    }
+]
+```

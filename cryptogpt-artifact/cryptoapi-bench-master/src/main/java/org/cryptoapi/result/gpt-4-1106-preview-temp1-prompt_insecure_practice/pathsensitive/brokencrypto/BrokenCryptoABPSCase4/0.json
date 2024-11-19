@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Inappropriate Cipher Algorithm",
+        "vulnerable_code": "Cipher.getInstance(\"RC2\")",
+        "description": "The RC2 cipher algorithm is considered weak and has been deprecated due to its 64-bit block size and vulnerabilities to modern cryptanalysis techniques.",
+        "recommendation": "Use a more secure block cipher mode like AES/GCM/NoPadding."
+    },
+    {
+        "misuse": "Key Management Issues",
+        "vulnerable_code": "keyGen.generateKey()",
+        "description": "The KeyGenerator instance is not initialized with a specific key size which might result in a weak key if the default size is not sufficient.",
+        "recommendation": "Initialize the KeyGenerator instance with a specific key size, for AES use at least 128 bits."
+    },
+    {
+        "misuse": "Invalid Key Specified",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key)",
+        "description": "The code incorrectly tries to use an AES key with the RC2 Cipher instance when choice is not greater than 1.",
+        "recommendation": "Ensure that the appropriate key is used for the specified cipher algorithm."
+    },
+    {
+        "misuse": "Insecure Cipher Mode",
+        "vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5Padding\")",
+        "description": "Cipher Block Chaining (CBC) mode with PKCS5Padding is vulnerable to padding oracle attacks.",
+        "recommendation": "Use an authenticated encryption mode such as AES/GCM/NoPadding to mitigate padding oracle attacks."
+    }
+]
+```

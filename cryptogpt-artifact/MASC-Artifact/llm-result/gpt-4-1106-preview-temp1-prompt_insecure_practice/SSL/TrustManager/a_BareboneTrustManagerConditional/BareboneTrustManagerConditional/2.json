@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure TrustManager",
+        "vulnerable_code": "new X509TrustManager() {...}",
+        "description": "The X509TrustManager implemented accepts any certificate as valid without any checks. This can lead to trusting malicious certificates and man-in-the-middle attacks.",
+        "recommendation": "Implement proper certificate validation within `checkClientTrusted` and `checkServerTrusted` methods."
+    },
+    {
+        "misuse": "Insecure Hostname Verifier",
+        "vulnerable_code": "\"context.init(null, trustAll, new SecureRandom());\"",
+        "description": "Though the code is commented out, it shows the intent to use an insecure TrustManager within an SSLContext which skips hostname verification. This is also a typical mistake which results in ignoring SSL errors and accepting any SSL/TLS certificates.",
+        "recommendation": "Use a HostnameVerifier that checks the hostname against the certificate to prevent man-in-the-middle attacks."
+    },
+    {
+        "misuse": "Empty getAcceptedIssuers",
+        "vulnerable_code": "return EMPTY_X509CERTIFICATE_ARRAY;",
+        "description": "The `getAcceptedIssuers` method returns an empty array which means it does not define any trusted certificate authorities. Although it may not pose a direct risk in the context of the over-trusting TrustManager, this generally indicates a misunderstanding or improper setup of certificate validation.",
+        "recommendation": "Properly populate the `getAcceptedIssuers` with a list of trusted authorities."
+    }
+]
+```

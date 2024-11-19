@@ -1,0 +1,23 @@
+The provided code does not have any security issue from a crypto API misuse perspective. 
+
+However, it does show a misuse of the SecureRandom class. When it is set a seed, it should not be done during runtime. The seed is intended to initialize a pseudorandom number generator and a static seed does not make the generated numbers truly random. 
+
+Here's the corrected code snippet and explanation:
+
+```java
+public class P1 {
+    public static void main (String [] args){
+        byte [] seed = {(byte) 100, (byte) 200};
+        go(seed);
+    }
+    private static void go(byte [] seed) {
+        SecureRandom sr = new SecureRandom(seed); // Use the seed here instead of runtime seeding
+        int v = sr.nextInt();
+        System.out.println(v);
+    }
+}
+```
+
+In the corrected version, the seed is set during initialization of the SecureRandom instance. This way, every time you generate a random number, you are not using a static seed, but the seed specified during the creation of the SecureRandom object.
+
+It's worth mentioning that SecureRandom should only be used when strong randomness is necessary. For most applications, the Random class, even though not cryptographically strong, will be sufficient and faster.

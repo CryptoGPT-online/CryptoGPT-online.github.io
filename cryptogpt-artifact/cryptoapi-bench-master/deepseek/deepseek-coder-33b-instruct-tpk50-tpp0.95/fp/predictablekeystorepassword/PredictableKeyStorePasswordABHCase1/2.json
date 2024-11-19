@@ -1,0 +1,11 @@
+Misuses:
+```json
+[
+    {
+        "misuse": "Weak Crypto Algorithm",
+        "vulnerable_code": "String password = String.valueOf(random.ints()); byte [] keyBytes = password.getBytes(\"UTF-8\"); KeyStore ks = KeyStore.getInstance(type); cacerts = new URL(\"https://www.google.com\"); ks.load(cacerts.openStream(), new String(keyBytes).toCharArray());",
+        "description": "The code uses the java.security.SecureRandom class to generate a random number, convert it to a String, and then converts the String back to a byte array using the UTF-8 encoding. This approach provides little randomness and might make the key generated weaker. The JKS key store (Java Key Store) and URL-based loading of keystore are also weak from a crypto perspective. It is a common misconfiguration to load the keystore from a remote URL.",
+        "recommendation": "It is recommended to use a stronger algorithm to generate the password. Consider using the java.security.SecureRandom.getInstanceStrong() method or a password manager to generate a more secure password. For the key store, it would be more secure to load the keystore from a local file. Lastly, use a password manager to securely manage your cryptographic keys."
+    }
+]
+```

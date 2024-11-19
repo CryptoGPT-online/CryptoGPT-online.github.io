@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "CWE-295: Improper Certificate Validation.",
+        "vulnerable_code": "byte [] salt = new byte[16]; SecureRandom sr = new SecureRandom(); sr.nextBytes(salt);",
+        "description": "The 'SecureRandom' instance 'sr' is used to generate a salt. The salt should be unique for every encryption operation. If the salt were not unique, it could potentially lead to less secure encryption and vulnerability to attacks like rainbow table attacks.",
+        "recommendation": "The salt should be unique for every encryption and should not be hard-coded. It should be randomly generated for each encryption operation. You can use java.security.SecureRandom to generate a unique salt for each encryption."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values.",
+        "vulnerable_code": "int iterationCount = 11010;",
+        "description": "The number of iterations is not random but hard-coded. This can make the cryptographic algorithm less secure. It is highly recommended to use a random number generator to generate the number of iterations for key generation.",
+        "recommendation": "To fix this, use a random number generator to generate the number of iterations, rather than hardcoding it."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_code": "int keyLength = 16;",
+        "description": "The key length is less than the recommended standard. Using a key length of 16 is typically considered insecure. This length is too short to be secure against attacks like brute force and dictionary attacks.",
+        "recommendation": "The key length should be at least 128 bits in the case of AES. Consider using a key length of 256 bits for stronger security."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials.",
+        "vulnerable_code": "String password = \"sagar\";",
+        "description": "The password used in the PBEKeySpec constructor is hardcoded. Hardcoding credentials increases the chance of accidentally leaking them and makes it more difficult to rotate them.",
+        "recommendation": "Do not hardcode credentials. Instead, use a more secure method to manage credentials, such as a secure credential store or use a secure environment variable."
+    }
+]
+```

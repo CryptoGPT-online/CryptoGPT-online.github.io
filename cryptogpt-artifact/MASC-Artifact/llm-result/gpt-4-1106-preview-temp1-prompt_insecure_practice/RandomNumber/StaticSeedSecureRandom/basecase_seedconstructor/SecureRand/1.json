@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Use of SecureRandom",
+        "vulnerable_code": "SecureRandom rand1 = new SecureRandom(seedBytes);",
+        "description": "Instantiating SecureRandom with a predictable seed makes the generated random numbers predictable, which reduces the entropy and makes it insecure for cryptographic operations.",
+        "recommendation": "Use the no-argument constructor 'new SecureRandom()' to allow SecureRandom to self-seed with entropy from the operating system. Never use a predictable seed for cryptographic operations."
+    },
+    {
+        "misuse": "Insecure Use of SecureRandom",
+        "vulnerable_code": "SecureRandom rand2 = new SecureRandom(seedBytes);",
+        "description": "Similar to the first instance, using a predictable seed for the second SecureRandom instance is insecure for the same reason.",
+        "recommendation": "Like the first instance, use the no-argument constructor 'new SecureRandom()' for this instance as well."
+    },
+    {
+        "misuse": "Equality of SecureRandom Outputs",
+        "vulnerable_code": "System.out.println(rand1.nextInt()==rand2.nextInt());",
+        "description": "Comparing outputs of two SecureRandom instances seeded with the same value demonstrates that the generated random values can be replicated, which should never happen in a secure context.",
+        "recommendation": "Aside from using SecureRandom properly by not providing a seed, it is important to understand that the output of random number generation should not be predictable or comparable in a secure context."
+    }
+]
+```

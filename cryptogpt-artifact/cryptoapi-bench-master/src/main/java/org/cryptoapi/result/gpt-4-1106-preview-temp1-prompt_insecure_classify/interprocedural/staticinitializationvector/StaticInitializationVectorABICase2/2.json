@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "new IvParameterSpec(new byte[]{Byte.parseByte(String.valueOf(initialization))});",
+        "description": "The initialization vector (IV) should be a random value and is created in a non-random and predictable way from a fixed string.",
+        "recommendation": "Use a secure random number generator to create the IV."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "KeyGenerator.getInstance(\"AES\");",
+        "description": "The key generator does not specify a key size, which may result in a key size that is not considered secure (less than 128 bits for AES).",
+        "recommendation": "Explicitly set a secure key size when generating the key, such as 128, 192, or 256 bits."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "new IvParameterSpec(new byte[]{Byte.parseByte(String.valueOf(initialization))});",
+        "description": "The IV is derived from a fixed and potentially short string, which may not provide adequate entropy for secure encryption.",
+        "recommendation": "Use a secure random number generator to create an IV with sufficient length (16 bytes for AES)."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "public static final String DEFAULT_INITIALIZATION = \"abcde\";",
+        "description": "The DEFAULT_INITIALIZATION string is hardcoded and used for cryptographic operations, which might compromise security if it is used as a key or an IV.",
+        "recommendation": "Avoid using hardcoded values for keys or IVs. Use a secure method to generate them."
+    }
+]
+```

@@ -1,0 +1,20 @@
+```json
+[
+    {
+        "misuse": "SSL/TLS Protocol Version Not Set (CWE-757)",
+        "vulnerable_code": [
+            "ssf.createSocket(\"my.host.name\", 443)"
+        ],
+        "description": "The SSL socket is created with default settings, which do not explicitly set the protocol version used. This can lead to using a protocol version that is not secure, such as SSLv3 or earlier versions.",
+        "recommendation": "Set the enabled protocols explicitly on the SSLSocket to ensure only secure protocols are used (e.g., TLSv1.2 or TLSv1.3)."
+    },
+    {
+        "misuse": "No Hostname Verification (CWE-297)",
+        "vulnerable_code": [
+            "ssf.createSocket(\"my.host.name\", 443)"
+        ],
+        "description": "The code does not perform any hostname verification post handshake, this could make Man-In-The-Middle (MITM) attacks possible. Although hostname verification is not explicitly part of the Java SSLSocket API, it should be considered in this context as a security protection.",
+        "recommendation": "Implement hostname verification using a custom HostnameVerifier or use the HttpsURLConnection class which includes hostname verification."
+    }
+]
+```

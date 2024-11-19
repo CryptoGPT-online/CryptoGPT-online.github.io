@@ -1,0 +1,21 @@
+```json
+[
+    {
+        "misuse": "Trust Manager that trusts any certificate",
+        "vulnerable_code": [
+            "new X509TrustManager() { ... }"
+        ],
+        "description": "The anonymous X509TrustManager implementation skips certificate validation by not actually checking the details of the presented certificate. This defeats the purpose of SSL/TLS protection as it allows self-signed or untrusted certificates to be accepted as valid, making it vulnerable to man-in-the-middle attacks.",
+        "recommendation": "Implement proper certificate validation in checkClientTrusted and checkServerTrusted methods. Do not return an empty array from getAcceptedIssuers."
+    },
+    {
+        "misuse": "Insecure Trust Manager Implementation",
+        "vulnerable_code": [
+            "public void checkClientTrusted(X509Certificate[] x509Certificates, String s)",
+            "public void checkServerTrusted(X509Certificate[] x509Certificates, String s)"
+        ],
+        "description": "The checkClientTrusted and checkServerTrusted methods are supposed to throw exceptions if the certificate chain is untrusted. However, the logic provided is flawed as it seems to use OR instead of AND, which could lead to acceptance of invalid certificates.",
+        "recommendation": "Rewrite the logic inside these methods to correctly validate the certificate chain."
+    }
+]
+```

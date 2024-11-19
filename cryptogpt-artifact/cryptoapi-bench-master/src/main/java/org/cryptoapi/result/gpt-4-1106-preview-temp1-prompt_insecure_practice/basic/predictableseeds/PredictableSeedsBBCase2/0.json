@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "SecureRandom sr = new SecureRandom(new byte[]{seed});",
+        "description": "The constructor of SecureRandom is being used with a static seed which leads to predictable random numbers. This makes it easier for an attacker to predict the outcome of the random number generator.",
+        "recommendation": "Do not use a hardcoded seed for SecureRandom. Instead, allow SecureRandom to self-seed from a truly random source provided by the operating system."
+    },
+    {
+        "misuse": "Insufficient Entropy",
+        "vulnerable_code": "SecureRandom sr = new SecureRandom(new byte[]{seed});",
+        "description": "The seed provided to SecureRandom is only 8 bits, which does not provide sufficient entropy for security purposes, making the random number generation weak.",
+        "recommendation": "Remove the seed parameter to allow SecureRandom to gather entropy from system sources or use a larger and more unpredictable seed value."
+    },
+    {
+        "misuse": "Use of Hardcoded Seed",
+        "vulnerable_code": "byte seed = 100;",
+        "description": "The seed for the random number generation is hardcoded, which means it does not change between executions and can easily be discovered by reverse engineering or analysis of the code.",
+        "recommendation": "Do not hardcode seed values for cryptographic operations. Always generate a secure, random seed that is not predictable."
+    }
+]
+```

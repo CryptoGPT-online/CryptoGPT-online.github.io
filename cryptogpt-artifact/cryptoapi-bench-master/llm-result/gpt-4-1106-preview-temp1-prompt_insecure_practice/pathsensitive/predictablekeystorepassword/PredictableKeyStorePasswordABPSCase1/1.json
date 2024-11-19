@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "Insecure Randomness",
+    "vulnerable_code": "defaultKey = String.valueOf(random.ints());",
+    "description": "The use of SecureRandom this way does not generate a secure random key. It generates an `IntStream`, which is being converted to a String representation directly without any secure encoding.",
+    "recommendation": "Use a proper key derivation function or securely generate random bytes and encode them using Base64 or Hex."
+  },
+  {
+    "misuse": "Hardcoded Security Credentials",
+    "vulnerable_code": "String defaultKey = \"changeit\";",
+    "description": "The hardcoded password 'changeit' is a common default password for Java keystores and should not be used in a production environment as it could be easily guessed or found in documentation.",
+    "recommendation": "Do not hardcode passwords in source code. Use a secure mechanism to retrieve and store passwords, such as environment variables, configuration files, or a secret management service."
+  },
+  {
+    "misuse": "Insufficient Validation of Certificate",
+    "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");\nks.load(cacerts.openStream(), defaultKey.toCharArray());",
+    "description": "The code is loading a certificate from an URL without validating the server's certificate chain and hostname. This may expose it to Man-In-The-Middle (MITM) attacks.",
+    "recommendation": "Use HTTPS with proper hostname verification and certificate chain validation."
+  }
+]
+```

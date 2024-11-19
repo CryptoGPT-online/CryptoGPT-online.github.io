@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "Insecure Transport",
+    "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");",
+    "description": "The code loads a KeyStore from an arbitrary URL (google.com), which is not a legitimate certificate authority (CA) resource. This means the application could be tricked into trusting malicious certificates if an attacker has control over the network or DNS resolution.",
+    "recommendation": "Retrieve certificates from a trusted and controlled source. Avoid loading KeyStores or certificates from untrusted or arbitrary URLs."
+  },
+  {
+    "misuse": "Hardcoded Cryptographic Key",
+    "vulnerable_code": "String key = \"changeit\";",
+    "description": "The application uses a hardcoded key 'changeit', which is a common default password and widely known. This makes the KeyStore easily accessible if the code or compiled class file is obtained by an attacker.",
+    "recommendation": "Remove hardcoded keys from the source code. Use a secure method to manage keys, such as a dedicated secrets management service or environment variables, and ensure they are properly protected and rotated regularly."
+  },
+  {
+    "misuse": "Static Cryptographic Key",
+    "vulnerable_code": "passedKey = defKey;",
+    "description": "The method 'method1' overwrites its parameter 'passedKey' with a static key stored in the class, effectively ignoring any dynamic key passed to it. This prevents the use of different keys for different sessions or instances, which is a fundamental security practice.",
+    "recommendation": "Do not overwrite the 'passedKey' parameter. Ensure each instance or session can use a unique key, and manage the keys securely."
+  }
+]
+```

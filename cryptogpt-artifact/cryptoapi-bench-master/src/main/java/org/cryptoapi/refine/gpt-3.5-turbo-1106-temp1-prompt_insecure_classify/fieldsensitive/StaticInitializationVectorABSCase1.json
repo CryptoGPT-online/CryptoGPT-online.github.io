@@ -1,0 +1,24 @@
+### False Positive Misuse ###
+None
+
+### Optimized Misuse JSON###
+[
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values",
+    "vulnerable_code": "passedIV = defIV;",
+    "description": "The code assigns the defIV (default initialization vector) to the passedIV parameter, effectively overriding any passed value. This means that the initialization vector used for encryption is always the same.",
+    "recommendation": "Instead of assigning defIV to passedIV, use passedIV directly in the subsequent code."
+  },
+  {
+    "misuse": "CWE-798: Use of Hardcoded Credentials",
+    "vulnerable_code": "crypto = new C1(bytes);\n",
+    "description": "The hardcoded key in the S1 class can be easily compromised by an attacker if discovered.",
+    "recommendation": "Use a more secure method for key generation and management, such as using a secure key store or hardware security module."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+    "description": "The code generates an AES key with default settings, which may result in a key with insufficient encryption strength.",
+    "recommendation": "Specify the desired key size and any required parameters when generating the AES key to ensure sufficient encryption strength."
+  }
+]

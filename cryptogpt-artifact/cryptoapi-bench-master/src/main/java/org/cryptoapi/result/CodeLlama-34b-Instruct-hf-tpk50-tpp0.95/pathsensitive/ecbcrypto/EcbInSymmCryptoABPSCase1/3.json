@@ -1,0 +1,30 @@
+ {
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+"description": "The code uses the KeyGenerator.getInstance() method to generate an AES key, which is a broken crypto algorithm. AES keys are vulnerable to brute force attacks, which can compromise the security of the encrypted data.",
+"recommendation": "Use a secure crypto algorithm such as AES-128, AES-192, or AES-256. These algorithms are not vulnerable to brute force attacks and provide stronger encryption."
+},
+{
+"misuse": "ECB mode",
+"vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/ECB/PKCS5Padding\");",
+"description": "The code uses the ECB mode of operation, which is insecure and should not be used. ECB mode does not use an initialization vector (IV) and encrypts blocks of data in a deterministic manner, which can leak information.",
+"recommendation": "Use a secure mode of operation such as CBC, CFB, or GCM. These modes provide stronger encryption and are less vulnerable to attacks."
+},
+{
+"misuse": "No padding",
+"vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+"description": "The code does not use padding, which can lead to a padding oracle attack. A padding oracle attack can allow an attacker to decrypt the encrypted data by exploiting the padding scheme.",
+"recommendation": "Use a secure padding scheme such as PKCS#7 or ISO/IEC 7816-4."
+},
+{
+"misuse": "Invalid key",
+"vulnerable_code": "SecretKey key = keyGen.generateKey();",
+"description": "The code generates an AES key using the KeyGenerator.generateKey() method, which can return an invalid key. An invalid key can lead to a catastrophic failure in the encryption and decryption process.",
+"recommendation": "Use a secure key generation method such as AES-128, AES-192, or AES-256. These algorithms are secure and should not return invalid keys."
+},
+{
+"misuse": "Insecure IV",
+"vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+"description": "The code uses an insecure IV (initialization vector) when initializing the Cipher object. An insecure IV can lead to a catastrophic failure in the encryption and decryption process.",
+"recommendation": "Use a secure IV generation method such as AES-128, AES-192, or AES-256. These algorithms are secure and should not return insecure IVs."
+}

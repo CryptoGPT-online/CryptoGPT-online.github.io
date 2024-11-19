@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Insufficient Entropy (CWE-331)",
+        "vulnerable_code": "KeyGenerator.getInstance(\"AES\"); keyGen.generateKey();",
+        "description": "The code generates an AES key without specifying the key size, which could result in a weaker key than intended.",
+        "recommendation": "Specify a key size when generating the AES key, such as keyGen.init(256); for a 256-bit key."
+    },
+    {
+        "misuse": "Missing Initialization Vector for CBC mode (CWE-329)",
+        "vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5Padding\"); cipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "Cipher Block Chaining (CBC) mode requires an initialization vector (IV) for encryption to ensure that identical plain texts encrypted with the same key will result in different cipher texts. The code does not appear to specify an IV.",
+        "recommendation": "Generate a secure random IV and use it as a parameter when initializing the Cipher instance for encryption."
+    }
+]
+```

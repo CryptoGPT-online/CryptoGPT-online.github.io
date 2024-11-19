@@ -1,0 +1,14 @@
+[
+    {
+        "misuse": "Insecure Key Generation",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\"); SecretKey key = keyGen.generateKey();",
+        "description": "The code uses KeyGenerator.getInstance to generate a random secret key using the AES algorithm. This key is not cryptographically strong enough and can be easily guessed if the attacker has access to the key. It's recommended to use a key length of at least 128 bits for AES.",
+        "recommendation": "Use a key length of at least 128 bits for AES. An example is shown below: KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\"); keyGen.init(128); SecretKey key = keyGen.generateKey();"
+    },
+    {
+        "misuse": "Insecure Cipher Algorithm",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"Blowfish\");",
+        "description": "Blowfish is a block cipher that has a block size of 64 bits. It has a relatively small key size and is relatively weak compared to other modern ciphers. We recommend using stronger ciphers like AES which is a much better choice for most use cases.",
+        "recommendation": "Use a stronger cipher algorithm like AES. For example: Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");"
+    }
+]

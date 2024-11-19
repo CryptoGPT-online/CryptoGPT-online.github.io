@@ -1,0 +1,20 @@
+public class Pd {
+    private PBEKeySpec pbeKeySpec = null;
+    private PBEParameterSpec pbeParamSpec = null;
+
+    public static void main(String [] args){
+        Pd ckp = new Pd();
+        ckp.key();
+    }
+    public void key() {
+        SecureRandom random = new SecureRandom();
+        String password = "Some Strong Password";
+        byte [] salt = new byte[16];
+        random.nextBytes(salt);
+        int iterationCount = 10000;
+        int keyLength = 128;
+        pbeKeySpec = new PBEKeySpec(password.toCharArray(),salt,iterationCount,keyLength);
+    }
+}
+```
+You should replace "Some Strong Password" with a strong password and ensure that the iteration count is greater than or equal to 10000 and the key length is greater than or equal to 128 bits.

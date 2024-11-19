@@ -1,0 +1,16 @@
+```
+[
+    {
+        "misuse": "Insecure TrustManager Implementation",
+        "vulnerable_code": "public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {}",
+        "description": "This method is currently empty, meaning that the server is not being verified. This can make the system vulnerable to man-in-the-middle attacks, where an attacker can present a fake certificate as a valid certificate.",
+        "recommendation": "Consider implementing server validation checks. If validation checks fail, throw a CertificateException. Always use a valid certificate for the server to avoid man-in-the-middle attacks."
+    },
+    {
+        "misuse": "Empty X509Certificate array",
+        "vulnerable_code": "public X509Certificate[] getAcceptedIssuers() {return new X509Certificate[0];}",
+        "description": "This method returns an empty X509Certificate array. This means that no certificates are trusted. The server's certificate must be validated against this list of accepted issuers in order for the handshake to be successful.",
+        "recommendation": "Consider validating the certificate against a list of acceptable issuers."
+    }
+]
+```

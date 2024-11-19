@@ -1,0 +1,19 @@
+```json
+[
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": [
+            "public boolean verify(String hostname, SSLSession sslSession) {",
+            "    if (\"192.168.0.10\".equals(hostname)) {",
+            "        return true;",
+            "    } else {",
+            "        HostnameVerifier hv = HttpsURLConnection.getDefaultHostnameVerifier();",
+            "        return hv.verify(hostname, sslSession);",
+            "    }",
+            "}"
+        ],
+        "description": "This code snippet is an instance of improper certificate validation. It bypasses all SSL/TLS certificate checks for a specific hostname (192.168.0.10), which can lead to man-in-the-middle attacks.",
+        "recommendation": "Do not bypass hostname verification. Ensure that proper certificate validation is performed for all hostnames."
+    }
+]
+```

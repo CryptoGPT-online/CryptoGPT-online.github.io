@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "CWE-295: Improper Certificate Validation",
+    "vulnerable_code": "public abstract class BareboneTrustManagerExt implements javax.net.ssl.X509TrustManager{...}",
+    "description": "The code implements a custom TrustManager that does not perform any certificate validation. The checkClientTrusted and checkServerTrusted methods accept any certificate without performing any validation checks, which undermines the purpose of server and client certificate validation in SSL/TLS connections.",
+    "recommendation": "Ensure that proper certificate validation is performed in the custom TrustManager implementation to validate the authenticity and integrity of the server and client certificates."
+  },
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values",
+    "vulnerable_code": "context.init(null, trustAll, new SecureRandom());",
+    "description": "The code initializes the SSLContext using the default implementation of SecureRandom, which may not provide a cryptographically strong random value. This can weaken the security of cryptographic operations.",
+    "recommendation": "Use a cryptographically strong random number generator by creating a new instance of SecureRandom with the appropriate algorithm. For example: SecureRandom.getInstanceStrong()"
+  }
+]
+```

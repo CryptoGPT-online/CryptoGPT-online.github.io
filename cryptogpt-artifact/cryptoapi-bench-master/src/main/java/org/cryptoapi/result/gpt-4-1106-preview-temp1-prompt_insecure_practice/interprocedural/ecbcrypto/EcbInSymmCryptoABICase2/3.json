@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Use of ECB Mode",
+        "vulnerable_code": "Cipher.getInstance(String.valueOf(crypto));",
+        "description": "ECB (Electronic Codebook) mode is used for AES which is not secure because it doesn't provide serious data confidentiality by encrypting identical plaintext blocks into identical ciphertext blocks.",
+        "recommendation": "Should use a more secure mode of operation like CBC, CFB, OFB, or GCM that provides proper data confidentiality."
+    },
+    {
+        "misuse": "Insufficient Key Management",
+        "vulnerable_code": "SecretKey key = keyGen.generateKey();",
+        "description": "The generated key is not stored protected. Key management procedures such as secure key storage, rotation and destruction are missing.",
+        "recommendation": "Implement key management procedures. Keys should be stored securely using KeyStore and managed properly throughout their lifecycle."
+    },
+    {
+        "misuse": "KeyGenerator without SecureRandom",
+        "vulnerable_code": "KeyGenerator.getInstance(\"AES\");",
+        "description": "The KeyGenerator instance is not explicitly initialized with a SecureRandom instance, relying on default which may not provide a strong source of randomness.",
+        "recommendation": "Initialize the KeyGenerator with a SecureRandom instance that is securely seeded."
+    },
+    {
+        "misuse": "Insecure Cipher Transformation Conversion",
+        "vulnerable_code": "Cipher.getInstance(String.valueOf(crypto));",
+        "description": "Conversion from String to Cipher transformation via `String.valueOf(crypto)` can lead to misuse or configuration errors because it is susceptible to character encoding issues and can inadvertently change transformation.",
+        "recommendation": "Directly use string literals or constants that represent valid algorithm/mode/padding strings for cipher transformation."
+    }
+]
+```

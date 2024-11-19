@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Cipher Algorithm",
+        "vulnerable_code": "cipherName = \"DES\";",
+        "description": "The DES algorithm is considered insecure due to its key size being too small (56 bits) which makes it vulnerable to brute-force attacks.",
+        "recommendation": "Use a more secure encryption algorithm like AES with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "Static IV in GCM mode",
+        "vulnerable_code": "cipherName = \"AES/GCM/NoPadding\";",
+        "description": "The misuse is not directly visible in the given code snippet but using 'AES/GCM/NoPadding' without properly initializing a unique IV (Initialization Vector) for each encryption operation can lead to serious security issues in GCM mode. Reusing a nonce (IV) in GCM can undermine the confidentiality and authenticity guarantees of the encryption.",
+        "recommendation": "Ensure that a cryptographically strong, random IV is generated for each encryption operation when using GCM mode."
+    },
+    {
+        "misuse": "DES Algorithm without Initialization Vector (IV)",
+        "vulnerable_code": "Cipher.getInstance(new CipherExample().methodA().methodB().getCipherName());",
+        "description": "When operating in block cipher modes that require an IV (like CBC mode), failing to specify an IV or using a predictable IV can lead to vulnerabilities. While the DES algorithm by itself in ECB mode doesn't use an IV, if it were modified to use a mode that does (like CBC), using a predictable IV would be a serious flaw.",
+        "recommendation": "Always provide a secure random IV when initializing ciphers in modes that require an IV (apart from ECB), even though the current code does not demonstrate the generation or use of an IV. Also, consider using more secure cipher algorithms."
+    }
+]
+```

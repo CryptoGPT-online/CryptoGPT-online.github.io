@@ -1,0 +1,25 @@
+The misuse in this code is "Broken Cryptography: Insecure Random Number Generation for Pseudo Random Number Generator".
+
+Misuse Type: Broken Cryptography: Insecure Random Number Generation for Pseudo Random Number Generator
+
+Misuse Code Snippets:
+```java
+byte [] salt = new byte[16];
+SecureRandom sr = new SecureRandom();
+sr.nextBytes(salt);
+```
+
+Description: The code uses an insecure pseudo random number generator to generate the random salt used in password-based encryption (PBE). The insecure random number generator may not produce high entropy, which in turn reduces the security of the generated keys.
+
+Recommendation: Instead of using the insecure SecureRandom for generating the salt, it is recommended to use the Java Cryptographic Extension (JCE) framework or implement a key derivation function to enhance the security of your keys.
+
+```json
+[
+    {
+        "misuse": "Broken Cryptography: Insecure Random Number Generation for Pseudo Random Number Generator",
+        "vulnerable_code": "byte [] salt = new byte[16];SecureRandom sr = new SecureRandom();sr.nextBytes(salt);",
+        "description": "The code uses an insecure pseudo random number generator to generate the random salt used in password-based encryption (PBE). The insecure random number generator may not produce high entropy, which in turn reduces the security of the generated keys.",
+        "recommendation": "Instead of using the insecure SecureRandom for generating the salt, it is recommended to use the Java Cryptographic Extension (JCE) framework or implement a key derivation function to enhance the security of your keys."
+    }
+]
+```

@@ -1,0 +1,40 @@
+```json
+[
+    {
+        "misuse": "Insecure Encryption Algorithm",
+        "vulnerable_code": "String key = \"DES\";\nString crypto = \"DES/ECB/PKCS5Padding\";",
+        "description": "DES is an outdated symmetric encryption algorithm that is considered insecure due to its short key length of 56 bits, which is susceptible to brute-force attacks.",
+        "recommendation": "Use a more secure algorithm, such as AES with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "ECB Mode of Operation",
+        "vulnerable_code": "String crypto = \"DES/ECB/PKCS5Padding\";",
+        "description": "ECB (Electronic Codebook) mode for block ciphers is not secure because identical plaintext blocks are encrypted to identical ciphertext blocks, making it susceptible to pattern analysis and potentially leaking information about the plaintext.",
+        "recommendation": "Use a more secure mode of operation like CBC, CFB, OFB, or GCM which includes an initialization vector (IV) to introduce randomness."
+    },
+    {
+        "misuse": "Static Key Specification",
+        "vulnerable_code": "String key = \"DES\";",
+        "description": "The encryption key should not be a static string. Static and hard-coded keys can be easily extracted from the application binary and compromise the encryption.",
+        "recommendation": "Generate a strong random key using a secure random number generator or KeyGenerator, and store it securely."
+    },
+    {
+        "misuse": "KeyGenerator Misuse",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(cryptoKey);",
+        "description": "The method 'getInstance()' of KeyGenerator should be passed a key generation algorithm, not an encryption algorithm. Passing 'cryptoKey', which is 'DES', to getInstance() does not make sense for key generation and may throw an exception if 'cryptoKey' does not match a valid key generation algorithm name.",
+        "recommendation": "Pass a correct key generation algorithm to 'KeyGenerator.getInstance()', such as 'AES' or 'DESede'."
+    },
+    {
+        "misuse": "Lack of Key Size Specification",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(cryptoKey);",
+        "description": "When generating a key using KeyGenerator, the key size should be specified to ensure it meets the security requirements. The default key size may not be sufficient.",
+        "recommendation": "Specify the key size explicitly using 'keyGen.init(keysize)' where 'keysize' is the desired size in bits."
+    },
+    {
+        "misuse": "Missing Cryptographic Algorithm Parameter Checks",
+        "vulnerable_code": "public static void method2(String c, String key)",
+        "description": "The method accepts cryptographic parameters directly from the caller without validation. This could allow an attacker to pass in weak or insecure cryptographic parameters.",
+        "recommendation": "Validate cryptographic algorithm parameters before use to ensure they meet security policies."
+    }
+]
+```

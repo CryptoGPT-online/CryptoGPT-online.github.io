@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "Insufficient Key Size",
+    "vulnerable_code": "Cipher.getInstance(\"AES/GCM/NoPadding\")",
+    "description": "The code initializes a Cipher instance but does not specify the key size. Various key sizes may be supported e.g., 128, 192, or 256 bits for AES but not specifying a key size may lead to use of a weaker, default key size.",
+    "recommendation": "Explicitly specify a key size that is appropriate for the security context, such as Cipher.getInstance(\"AES/GCM/NoPadding\").init(Cipher.ENCRYPT_MODE, new SecretKeySpec(key, \"AES\"), new GCMParameterSpec(...)) with a key length of 128, 192, or 256 bits."
+  },
+  {
+    "misuse": "Missing Initialization Vector (IV)",
+    "vulnerable_code": "Cipher.getInstance(\"AES/GCM/NoPadding\")",
+    "description": "While the code snippet uses the GCM mode which requires an Initialization Vector (IV), the code lacks the IV during the initialization of the Cipher. Without proper IV, the same plaintext will always result in the same ciphertext, potentially leading to IV reuse and thus compromising security.",
+    "recommendation": "Ensure that a secure, random IV is generated for each encryption operation using a secure random number generator, and initialize the Cipher with it using GCMParameterSpec."
+  },
+  {
+    "misuse": "Hardcoded Security Providers",
+    "vulnerable_code": "Cipher.getInstance(\"AES/GCM/NoPadding\")",
+    "description": "The code snippet does not specify a security provider. While not inherently a security risk, reliance on the default provider can result in inconsistencies across different environments and potential use of less secure algorithms or implementations.",
+    "recommendation": "If a specific provider that is known to be secure for the use case is required, it should be explicitly specified when obtaining the instance of Cipher."
+  }
+]
+```

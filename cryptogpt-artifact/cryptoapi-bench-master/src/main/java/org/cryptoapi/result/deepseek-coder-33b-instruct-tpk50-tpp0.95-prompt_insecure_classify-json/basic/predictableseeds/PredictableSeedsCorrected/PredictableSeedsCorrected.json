@@ -1,0 +1,21 @@
+### False Positive Misuse
+[
+    {
+        "misuse category": "Insufficiently Random Values",
+        "vulnerable_method": "Pd.main(String[])",
+        "vulnerable_code": "sr.setSeed(l);",
+        "description": "The SecureRandom.setSeed() function is generally used to ensure that the same sequence of 'random' numbers is generated each time the program runs, and is often used for debugging. However, here, a new random value is generated and then set as the seed for the random number generator, which defeats the purpose of the function. This can lead to unreliable and predictable random numbers.",
+        "recommendation": "Consider removing this line of code, or altering its purpose to ensure that randomness isn't predetermined."
+    }
+]
+
+### Optimized Misuse JSON
+[
+  {
+    "misuse category": "Insufficiently Random Values",
+    "vulnerable_method": "Pd.main(String[])",
+    "vulnerable_code": "sr.setSeed(l);\nint v = sr.nextInt();\nSystem.out.println(v);",
+    "description": "The use of a fixed seed when generating random values makes the sequence of random values less random and hence less secure.",
+    "recommendation": "Remove the line `sr.setSeed(l)`."
+  }
+]

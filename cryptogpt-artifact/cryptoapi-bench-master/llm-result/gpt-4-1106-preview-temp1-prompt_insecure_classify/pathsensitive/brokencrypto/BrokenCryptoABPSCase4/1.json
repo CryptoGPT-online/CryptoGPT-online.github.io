@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "Cipher.getInstance(\"RC2\")",
+        "description": "The RC2 algorithm is considered outdated and vulnerable to attacks. It should not be used for any new system or security-sensitive application.",
+        "recommendation": "Use a modern and secure algorithm like AES with a secure mode of operation such as GCM (Galois/Counter Mode)."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_code": "KeyGenerator.getInstance(\"AES\")",
+        "description": "The code generates an AES key without specifying the key size. The default key size may not provide adequate security, especially if it defaults to a lower key size such as 128 bits.",
+        "recommendation": "Specify the key size explicitly when generating the AES key to ensure adequate encryption strength, for example, using KeyGenerator.init(256) to get a 256-bit AES key."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5Padding\")",
+        "description": "While AES itself is secure, using AES in CBC mode with PKCS5Padding can be susceptible to padding oracle attacks if not handled correctly. Additionally, the initialization vector (IV) is not defined, potentially leading to weak encryption if the same IV is reused.",
+        "recommendation": "Use AES in GCM mode to prevent padding oracle attacks and to provide authenticated encryption. Also, ensure that a secure random IV is generated and used for each encryption operation."
+    }
+]
+```

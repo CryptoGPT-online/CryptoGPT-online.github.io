@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insecure Initialization Vector (IV)",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+        "description": "The code uses a static IV 'abcde'. Using a predictable IV with CBC mode is insecure because it undermines the cryptographic strength of the encryption algorithm and can lead to vulnerabilities such as the BEAST attack.",
+        "recommendation": "Use a secure random IV for each encryption operation."
+    },
+    {
+        "misuse": "Insufficient Key Length",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "description": "The KeyGenerator instance is initialized without specifying a key size. This could lead to generation of a key with the default size which may not be sufficient depending on the context.",
+        "recommendation": "Specify a key size when initializing the KeyGenerator instance, such as 256 bits. Use keyGen.init(256);"
+    },
+    {
+        "misuse": "Potential Use of ECB Mode",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "If the provider does not support the 'AES/CBC/PKCS5Padding' explicitly, the application could potentially fall back to ECB mode, which is not secure because it doesn't provide serious message confidentiality.",
+        "recommendation": "Ensure that the specified Cipher.getInstance securely sets the encryption mode. Preferably, specify the provider also."
+    },
+    {
+        "misuse": "Hardcoded Encryption Parameters",
+        "vulnerable_code": "byte [] bytes = \"abcde\".getBytes(\"UTF-8\");",
+        "description": "The encryption parameters such as IV and key should not be hardcoded. This makes the encryption predictable and potentially reversible by an attacker who has access to the source code.",
+        "recommendation": "Use a secure random generator to create the IV and avoid hardcoding encryption parameters."
+    }
+]
+```

@@ -1,0 +1,30 @@
+### False Positive Misuse ###
+None
+
+### Optimized Misuse JSON###
+[
+  {
+    "misuse": "CWE-295: Improper Certificate Validation",
+    "vulnerable_code": "SSF.createSocket()",
+    "description": "The code is creating an SSL socket without validating the server's certificate.",
+    "recommendation": "Implement proper certificate validation to ensure the authenticity of the server."
+  },
+  {
+    "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+    "vulnerable_code": "SSLSocket socket = (SSLSocket) ssf.createSocket(\"my.host.name\", 443);",
+    "description": "The code is not specifying a specific TLS version or encryption cipher suite, which means it may fall back to using less secure algorithms during the negotiation process.",
+    "recommendation": "Specify a specific TLS version and a strong encryption cipher suite, for example:\n\nsocket.setEnabledProtocols(new String[] {\"TLSv1.2\"});\nsocket.setEnabledCipherSuites(new String[] {\"TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384\"});"
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_code": "SSLSocketFactory ssf = (SSLSocketFactory) SSLSocketFactory.getDefault();\nSSLSocket socket = (SSLSocket) ssf.createSocket(\"my.host.name\", 443);",
+    "description": "The code is using the default SSLSocketFactory without explicitly providing a trust manager to validate the server certificate, and it does not verify the server's certificate.",
+    "recommendation": "Properly implement certificate validation by checking the server's certificate chain, its validity period, and verifying the hostname against the certificate's subject name or subject alternative names."
+  },
+  {
+    "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+    "vulnerable_code": "SSLSocketFactory.getDefault()",
+    "description": "The getDefault() method of SSLSocketFactory returns the default SSL socket factory, which may not provide the highest level of security.",
+    "recommendation": "Explicitly specify a secure SSL socket factory with the desired security features."
+  }
+]

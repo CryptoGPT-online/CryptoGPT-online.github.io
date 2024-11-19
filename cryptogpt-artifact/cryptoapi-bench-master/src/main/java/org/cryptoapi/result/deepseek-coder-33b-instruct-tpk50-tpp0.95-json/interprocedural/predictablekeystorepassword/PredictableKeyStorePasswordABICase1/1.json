@@ -1,0 +1,14 @@
+[
+  {
+    "misuse": "Hardcoded Credentials",
+    "vulnerable_code": "String key = \"changeit\";\nks.load(cacerts.openStream(), key.toCharArray());",
+    "description": "The key string \"changeit\" is hard-coded and used as the KeyStore password. It is generally not secure to hard-code sensitive information in the code like this.",
+    "recommendation": "You should avoid hard-coding any sensitive information such as passwords. Instead, you could use environment variables, configuration files or some other secure method of providing credentials to your application."
+  },
+  {
+    "misuse": "Using of Unsafe URL",
+    "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");\nks.load(cacerts.openStream(), key.toCharArray());",
+    "description": "The URL provided is not a valid KeyStore URL. The provided URL is for Google's homepage. If there was an actual KeyStore file hosted at this URL, it would typically be a .jks file, not a web page. If there was a valid KeyStore file available, you would need to correctly specify the URL to that file instead.",
+    "recommendation": "You need to replace the URL with the correct one for the KeyStore file you want to use. Be sure this URL is not accessible to unauthorized users or that proper security measures are in place to protect the KeyStore file."
+  }
+]

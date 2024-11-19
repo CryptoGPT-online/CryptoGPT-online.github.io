@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Hardcoded Cryptographic Key",
+        "vulnerable_code": "String key = \"changeit\";",
+        "description": "The code is using a hardcoded string ('changeit') as the password to unlock the KeyStore, which can be easily discovered by inspecting the code.",
+        "recommendation": "Do not hardcode cryptographic keys/passwords in the source code. Instead, use a secure method for managing keys, such as relying on a more secure external source or a configuration file with proper access restrictions."
+    },
+    {
+        "misuse": "Insecure Trust Management",
+        "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");",
+        "description": "Loading a keystore from a URL is risky if you don't verify the source's authenticity and integrity, potentially making it vulnerable to a man-in-the-middle attack.",
+        "recommendation": "Perform proper certificate validation and ensure secure transport (TLS) with hostname verification when retrieving keystores. Use a more secure means of transporting and loading certificate stores, such as a secure directory with restricted access."
+    },
+    {
+        "misuse": "Inadequate Exception Handling",
+        "vulnerable_code": "public static void main(String args[]) throws KeyStoreException, IOException, CertificateException, NoSuchAlgorithmException...",
+        "description": "The main method throws several general exceptions but does not handle them, which might prevent proper cleanup or logging in case of an error. This lack of exception handling could potentially expose sensitive information or lead to inconsistent states.",
+        "recommendation": "Instead of propagating exceptions up to the 'main' method, handle them appropriately. Log errors, clean up resources, and avoid exposing sensitive information in error messages."
+    }
+]
+```

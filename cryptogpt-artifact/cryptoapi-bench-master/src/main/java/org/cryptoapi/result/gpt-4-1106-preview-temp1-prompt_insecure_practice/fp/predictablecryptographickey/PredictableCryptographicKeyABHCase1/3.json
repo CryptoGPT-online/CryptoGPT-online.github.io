@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "String.valueOf(random.ints())",
+        "description": "String.valueOf(random.ints()) does not provide a proper way to generate a secure encryption key because it will generate a sequence of numbers cast to a string, without ensuring the necessary entropy and format for secure key generation.",
+        "recommendation": "Use SecureRandom to generate a byte array directly for the key and ensure that the generated key has enough entropy."
+    },
+    {
+        "misuse": "Static Initialization Vector (IV)",
+        "vulnerable_code": "byte [] keyBytes = defaultKey.getBytes(\"UTF-8\");\n keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "While not directly evident in the provided snippet, by truncating/padding keys based on arbitrary String values derived from SecureRandom, any implementation of encryption could lead to using a static IV where the randomness is not sufficient for secure initialization vectors.",
+        "recommendation": "Generate a random IV using SecureRandom and use it in conjunction with Cipher for encryption. Ensure the IV is transmitted alongside the ciphertext."
+    },
+    {
+        "misuse": "Insecure Key Generation",
+        "vulnerable_code": "defaultKey.getBytes(\"UTF-8\");",
+        "description": "Using getBytes() on a String to generate the key material can lead to insecure key generation since it does not provide the required cryptographic strength and may lead to predictable keys.",
+        "recommendation": "Generate cryptographic keys using a key generation algorithm like KeyGenerator for AES."
+    },
+    {
+        "misuse": "Weak Key Derivation",
+        "vulnerable_code": "byte [] keyBytes = defaultKey.getBytes(\"UTF-8\");\nkeyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "Using Arrays.copyOf to trim or pad the key to the required length is not a secure key derivation method and can lead to weak keys.",
+        "recommendation": "Use a proper Key Derivation Function (KDF) like PBKDF2 to derive keys."
+    }
+]
+```

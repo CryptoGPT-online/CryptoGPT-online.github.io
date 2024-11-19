@@ -1,0 +1,26 @@
+Misuse Detected: CWE-295: Improper Certificate Validation
+
+Misuse Code Snippet: 
+```java
+if ("192.168.0.10".equals(hostname)) {
+    return true;
+} else {
+    HostnameVerifier hv = HttpsURLConnection.getDefaultHostnameVerifier();
+    return hv.verify(hostname, sslSession);
+}
+```
+
+Description: The code is bypassing the hostname verification for the IP address "192.168.0.10". This could allow a man-in-the-middle (MitM) attack, where someone can intercept and change the connection between the client and the server.
+
+Recommendation: Instead of bypassing the hostname verification for a particular IP address, use a hostname verification library or framework. These libraries can handle the hostname verification securely. If you need to bypass the verification for certain hosts, make sure you do so securely and consider a secure method than just checking if the hostname is equal to "192.168.0.10". 
+
+In the JSON format, the response could look like this:
+
+```json
+[{
+    "misuse": "CWE-295: Improper Certificate Validation",
+    "vulnerable_code": "if (\"192.168.0.10\".equals(hostname)) {...}",
+    "description": "The code is bypassing the hostname verification for the IP address \"192.168.0.10\". This could allow a man-in-the-middle (MitM) attack, where someone can intercept and change the connection between the client and the server.",
+    "recommendation": "Instead of bypassing the hostname verification for a particular IP address, use a hostname verification library or framework. These libraries can handle the hostname verification securely."
+}]
+```

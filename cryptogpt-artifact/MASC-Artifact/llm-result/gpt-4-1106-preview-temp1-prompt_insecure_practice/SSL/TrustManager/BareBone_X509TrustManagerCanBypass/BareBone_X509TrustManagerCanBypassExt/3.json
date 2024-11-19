@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "TrustManager that accepts any SSL certificate",
+        "vulnerable_code": [
+            "public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+				// TODO Auto-generated method stub
+			}",
+            "public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+				// TODO Auto-generated method stub
+			}"
+        ],
+        "description": "The implemented X509TrustManager does not validate certificate chains making the SSL/TLS connection vulnerable to man-in-the-middle attacks.",
+        "recommendation": "Implement proper certificate validation in checkClientTrusted and checkServerTrusted methods."
+    },
+    {
+        "misuse": "TrustManager returning empty set of accepted issuers",
+        "vulnerable_code": [
+            "public X509Certificate[] getAcceptedIssuers() {
+                // TODO Auto-generated method stub
+                return null;
+            }"
+        ],
+        "description": "Returning null in getAcceptedIssuers can lead to accepting any certificate as a trusted one, rendering the connection insecure by not checking the certificate chain against a set of trusted CAs.",
+        "recommendation": "Return a non-empty array of trusted CA certificates that the client can accept."
+    }
+]
+```

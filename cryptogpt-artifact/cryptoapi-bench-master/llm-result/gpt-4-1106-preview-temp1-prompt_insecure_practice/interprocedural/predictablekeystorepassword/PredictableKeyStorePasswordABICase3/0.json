@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Hardcoded Encryption Key",
+        "vulnerable_code": "\"changeit\"",
+        "description": "The password for accessing the keystore is hardcoded and is a well-known default password.",
+        "recommendation": "Use a secure method for managing passwords, such as a password management tool or environment variables, and ensure the password is strong and private."
+    },
+    {
+        "misuse": "Insecure Trust Store Management",
+        "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");\nks.load(cacerts.openStream(), key.toCharArray());",
+        "description": "Loading KeyStore from a hardcoded URL may not be safe if the URL is not trustworthy or if the connection is not secure. There is a risk that the keystore could be tampered with during download.",
+        "recommendation": "Ensure that the KeyStore is loaded from a trusted and secure source. If loading over a network, use HTTPS and certificate pinning to prevent Man-In-The-Middle attacks."
+    },
+    {
+        "misuse": "Insufficient Transport Layer Protection",
+        "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");",
+        "description": "The code is loading a KeyStore over an unverified HTTPS connection without any certificate verification or hostname checking. This is potentially vulnerable to Man-In-The-Middle attacks.",
+        "recommendation": "Implement proper SSL/TLS checks such as hostname verification and certificate trust checks. Do not assume that all HTTPS connections are secure by default."
+    }
+]
+```

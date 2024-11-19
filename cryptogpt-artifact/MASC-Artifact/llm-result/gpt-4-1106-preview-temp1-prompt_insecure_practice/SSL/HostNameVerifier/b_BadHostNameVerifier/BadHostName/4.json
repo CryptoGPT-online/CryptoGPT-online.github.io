@@ -1,0 +1,17 @@
+```json
+[
+    {
+        "misuse": "Improper Validation of Certificate with Hostname",
+        "vulnerable_code": [
+            "new HostnameVerifier(){",
+            "    @Override",
+            "    public boolean verify(String hostname, SSLSession session) {",
+            "        return true;",
+            "    }",
+            "};"
+        ],
+        "description": "The code implements a custom HostnameVerifier which always returns true. This means it accepts any hostname, whether it matches the certificate's Common Name (CN) or not. This bypasses hostname verification and makes the application vulnerable to man-in-the-middle attacks.",
+        "recommendation": "Remove the custom HostnameVerifier and rely on the default HostnameVerifier that correctly checks the hostname against the certificate's CN or SAN fields."
+    }
+]
+```

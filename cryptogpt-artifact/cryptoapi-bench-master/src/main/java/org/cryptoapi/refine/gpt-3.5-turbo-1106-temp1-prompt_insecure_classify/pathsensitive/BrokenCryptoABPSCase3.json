@@ -1,0 +1,30 @@
+### False Positive Misuse ###
+None
+
+### Optimized Misuse JSON###
+[
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"RC4\");",
+    "description": "The code uses RC4 encryption algorithm, which is considered to be broken and insecure.",
+    "recommendation": "Use a more secure encryption algorithm, such as AES."
+  },
+  {
+    "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+    "vulnerable_code": "if (choice > 1)\n    cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+    "description": "The code uses AES/CBC/PKCS5Padding only if the choice is greater than 1. This means that if the choice is 1 or less, a less secure encryption algorithm is used.",
+    "recommendation": "Always use a secure encryption algorithm and do not rely on user input to determine the algorithm."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_code": "KeyGenerator.getInstance(\"AES\");",
+    "description": "The code uses a default key size for AES encryption, which may be insufficiently strong.",
+    "recommendation": "Specify a key size for AES encryption, preferably 128 bits or higher."
+  },
+  {
+    "misuse": "CWE-798: Use of Hardcoded Credentials",
+    "vulnerable_code": "int choice=2;",
+    "description": "The choice variable is hardcoded with a value of 2. Hardcoding credentials or sensitive information can make it easier for an attacker to guess or bypass security measures.",
+    "recommendation": "Refactor the code to remove the hardcoded value and use a secure method for obtaining the choice variable, such as user input or a secure configuration file."
+  }
+]

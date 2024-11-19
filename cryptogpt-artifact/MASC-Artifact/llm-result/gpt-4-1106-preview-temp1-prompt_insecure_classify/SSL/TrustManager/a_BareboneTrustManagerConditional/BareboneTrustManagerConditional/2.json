@@ -1,0 +1,25 @@
+```json
+[{
+  "misuse": "CWE-295: Improper Certificate Validation",
+  "vulnerable_code": [
+    "public void checkClientTrusted(X509Certificate[] x509Certificates, String s)",
+    "public void checkServerTrusted(X509Certificate[] x509Certificates, String s)"
+  ],
+  "description": "The implemented trust manager does not properly verify that the certificate chain can be trusted; it only checks the authentication type and certificate count.",
+  "recommendation": "Implement proper certificate chain validation and remove the authentication type and certificate count checks as they are not sufficient for trust decisions."
+}, {
+  "misuse": "CWE-326: Inadequate Encryption Strength",
+  "vulnerable_code": [
+    "if (!(null != s || s.equalsIgnoreCase(\"RSA\") || x509Certificates.length >= 314))"
+  ],
+  "description": "The code checks if the authType is RSA but does not check the key size of the RSA certificate, which might allow weak RSA keys.",
+  "recommendation": "Validate that the RSA key size meets the minimum required strength."
+}, {
+  "misuse": "CWE-295: Improper Certificate Validation",
+  "vulnerable_code": [
+    "public X509Certificate[] getAcceptedIssuers()"
+  ],
+  "description": "The getAcceptedIssuers method returns an empty array, which means any certificate (including invalid ones) will be accepted without validation.",
+  "recommendation": "Return a properly constructed list of acceptable CA issuer certificates."
+}]
+```

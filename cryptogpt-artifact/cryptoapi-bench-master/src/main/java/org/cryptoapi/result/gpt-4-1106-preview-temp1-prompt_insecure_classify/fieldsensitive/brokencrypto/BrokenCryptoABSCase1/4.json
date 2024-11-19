@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "crypto = new C2(\"DES/ECB/PKCS5Padding\");",
+        "description": "DES is considered a broken and risky cryptographic algorithm due to its small key size of 56 bits, which is susceptible to brute-force attacks.",
+        "recommendation": "Use a stronger algorithm like AES with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_code": "KeyGenerator.getInstance(defaultAlgo);",
+        "description": "The code is generating a key for DES which has an inadequate key length of 56 bits, making it vulnerable to brute-force attacks.",
+        "recommendation": "Use a stronger algorithm like AES with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values.",
+        "vulnerable_code": "SecretKey key = keyGen.generateKey();",
+        "description": "The key generation does not specify a secure random source, which could lead to insufficiently random keys if the default is not secure.",
+        "recommendation": "Ensure a secure random number generator is used for key generation."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_code": "Cipher.getInstance(defaultAlgo);",
+        "description": "ECB (Electronic Codebook) mode is used for encryption, which is not secure because it doesn't provide serious message confidentiality. Identical plaintext blocks are encrypted into identical ciphertext blocks; thus, it does not hide data patterns.",
+        "recommendation": "Use a more secure mode of operation such as CBC or GCM which includes an initialization vector (IV) to ensure that identical plaintext blocks encrypt differently."
+    }
+]
+```

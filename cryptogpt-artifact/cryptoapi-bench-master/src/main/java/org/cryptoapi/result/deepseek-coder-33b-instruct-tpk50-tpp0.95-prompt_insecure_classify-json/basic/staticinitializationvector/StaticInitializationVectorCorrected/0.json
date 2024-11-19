@@ -1,0 +1,8 @@
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "BigInteger i = BigInteger.valueOf(sr.nextInt())\nbyte [] bytes = i.toByteArray();",
+        "description": "The SecureRandom.nextInt() function is used to generate random integers. While it provides an adequate randomness for most purposes, it is not suitable for generating secure keys, especially if they require randomness from a large integer space. Using a SecureRandom object to generate the IvParameterSpec may allow potential attackers to guess the IV and manipulate the encryption or decryption process.",
+        "recommendation": "Replace the use of SecureRandom with a fixed seed to ensure reproducibility. If the goal is to generate a random key, use the KeyGenerator class's generateKey method. Always use a unique, unpredictable value when calling the SecureRandom constructor for random seeding."
+    }
+]

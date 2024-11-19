@@ -1,0 +1,21 @@
+```json
+[
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": [
+            "public void checkClientTrusted(X509Certificate[] x509Certificates, String s) { ... }",
+            "public void checkServerTrusted(X509Certificate[] x509Certificates, String s) { ... }"
+        ],
+        "description": "Both methods `checkClientTrusted` and `checkServerTrusted` do not perform any validation to ensure the certificate chain is trusted. It contains dummy logic that does not validate the presented certificates, leaving the TLS connection vulnerable to man-in-the-middle attacks.",
+        "recommendation": "Implement proper certificate validation that checks the certificate chain against a set of trusted root certificates and ensure that certificate hostname is verified."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": [
+            "public X509Certificate[] getAcceptedIssuers() { ... }"
+        ],
+        "description": "The `getAcceptedIssuers` method returns an empty array, implying that no CA certificates are trusted. In a real TLS handshake, this could mean that any certificate will be accepted, effectively disabling certificate validation.",
+        "recommendation": "Return a non-empty array of acceptable CA issuer certificates."
+    }
+]
+```

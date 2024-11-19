@@ -1,0 +1,10 @@
+```json
+[{"misuse": "Incomplete SSL/TLS Handshake", 
+  "vulnerable_code": "public boolean verify(String hostname, SSLSession session) { return true; }",
+  "description": "The implementation of SSL HostnameVerifier always returns true, which skips the hostname verification step in SSL/TLS handshake process. This could potentially lead to man-in-the-middle (MITM) attacks.",
+  "recommendation": "Implement a proper hostname verification logic to ensure the authenticity of the server's identity during SSL handshake."},
+ {"misuse": "Insecure SSL/TLS Trust Manager", 
+  "vulnerable_code": "new HostNameVerifier(){ @Override public boolean verify(String hostname, SSLSession session) { return true; }};",
+  "description": "The custom HostnameVerifier implementation does not perform any proper hostname verification, which can allow attackers to impersonate the server and conduct MITM attacks.",
+  "recommendation": "Use the standard and secure HostnameVerifier implementations such as HttpsURLConnection.getDefaultHostnameVerifier() or implement a custom HostnameVerifier that performs proper hostname verification."}]
+```

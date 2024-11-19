@@ -1,0 +1,34 @@
+```json
+[
+  {
+    "misuse": "Use of Insecure or Deprecated Algorithm",
+    "vulnerable_code": "\"IDEA\"",
+    "description": "IDEA (International Data Encryption Algorithm) is considered less secure than more modern algorithms like AES. It is not commonly used and has been superseded by more secure standards.",
+    "recommendation": "Switch to a more secure and widely accepted encryption standard like AES."
+  },
+  {
+    "misuse": "Hardcoded Cryptographic Key",
+    "vulnerable_code": "KeyGenerator.getInstance(String.valueOf(crypto))",
+    "description": "Using a hardcoded string 'crypto' derived from a constant field 'DEFAULT_CRYPTO' as an argument for KeyGenerator could lead to the use of a predictable key generation source, reducing security.",
+    "recommendation": "Use a secure, randomly generated key source for key generation."
+  },
+  {
+    "misuse": "Lack of Key Strength Validation",
+    "vulnerable_code": "keyGen.generateKey()",
+    "description": "The strength of the generated key is not set or verified, which could result in weak keys that are susceptible to cryptographic attacks.",
+    "recommendation": "Explicitly set and validate the key strength when generating keys."
+  },
+  {
+    "misuse": "Potential Insecure Cipher Operation Mode",
+    "vulnerable_code": "Cipher.getInstance(String.valueOf(crypto))",
+    "description": "No specific cipher operation mode or padding is defined for the Cipher instance. The default could be insecure, for instance using ECB mode, which is not recommended.",
+    "recommendation": "Specify a secure cipher mode and padding, e.g., 'AES/CBC/PKCS5Padding'."
+  },
+  {
+    "misuse": "Improper API Usage",
+    "vulnerable_code": "String.valueOf(crypto)",
+    "description": "Conversion of the character array 'crypto' to a String may not be safely handling cryptographic material, potentially leading to sensitive data leakage.",
+    "recommendation": "Handle cryptographic keys and other sensitive data using appropriate data types that mitigate risks of accidental exposure or improper handling, such as byte arrays or dedicated key objects."
+  }
+]
+```

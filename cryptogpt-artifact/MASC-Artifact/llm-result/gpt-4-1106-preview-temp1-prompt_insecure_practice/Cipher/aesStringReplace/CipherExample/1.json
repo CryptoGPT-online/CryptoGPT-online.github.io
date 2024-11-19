@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Insecure Cipher Mode",
+        "vulnerable_code": "Cipher.getInstance(\"AES\".replace(\"A\", \"D\"));",
+        "description": "The code attempts to get an instance of a Cipher using AES encryption, but it's manipulated to actually use 'DES' due to the replace function. DES is an outdated and insecure algorithm that is vulnerable to brute-force attacks due to its short key length. Furthermore, no mode of operation (like CBC, CFB, ECB, etc.) or padding is specified.",
+        "recommendation": "Use AES with a secure mode of operation (like CBC, GCM, etc.) and secure padding. An example would be 'Cipher.getInstance(\"AES/GCM/NoPadding\")'. Do not use DES, as it is considered insecure."
+    },
+    {
+        "misuse": "Missing Mode of Operation and Padding Scheme",
+        "vulnerable_code": "Cipher.getInstance(\"AES\".replace(\"A\", \"D\"));",
+        "description": "The code does not explicitly set a mode of operation or padding scheme. When not specified, Java defaults may vary and lead to insecure defaults like ECB mode, which is insecure when encrypting more than one block of data with the same key, as it does not hide data patterns.",
+        "recommendation": "Always specify a secure mode of operation and padding scheme when getting a Cipher instance. For example, 'Cipher.getInstance(\"AES/CBC/PKCS5Padding\")' for AES."
+    }
+]
+```

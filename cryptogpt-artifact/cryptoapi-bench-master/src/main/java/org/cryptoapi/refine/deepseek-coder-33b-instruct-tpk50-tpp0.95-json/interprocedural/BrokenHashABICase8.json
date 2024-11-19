@@ -1,0 +1,35 @@
+### False Positive Misuse ###
+
+```json
+[]
+```
+### Optimized Misuse JSON ###
+
+```json
+[
+    {
+        "misuse": "Insecure Crypto Algorithm Usage",
+        "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(String.valueOf(crypto));",
+        "description": "The cryptographic algorithm used for the MessageDigest instance could change during runtime. This could potentially lead to issues if the crypto algorithm provided is not approved or known.",
+        "recommendation": "Consider storing the crypto algorithm name as a constant String and using that throughout the program to ensure a consistent and controlled usage of crypto algorithms."
+    },
+    {
+        "misuse": "Insecure Crypto Algorithm Usage",
+        "vulnerable_code": "CRYPTO = DEFAULT_CRYPTO.toCharArray();",
+        "description": "The cryptographic algorithm name is being stored as a character array, which could be changed during runtime. This could potentially lead to issues if the crypto algorithm provided is not approved or known.",
+        "recommendation": "Consider storing the crypto algorithm name as a constant String and using that throughout the program to ensure a consistent and controlled usage of crypto algorithms."
+    },
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(String.valueOf(crypto));",
+        "description": "The cryptographic algorithm is hardcoded and the application may use a weak or broken cryptographic algorithm such as MD2.",
+        "recommendation": "Always use strong and modern cryptographic algorithms, not just for security but for performance as well. Please use stronger algorithms such as SHA-256 or SHA-3."
+    },
+    {
+        "misuse": "Insecure Cryptography Configuration",
+        "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(String.valueOf(crypto));",
+        "description": "This code is using the MessageDigest class with MD2, which is a weak cryptographic algorithm. This algorithm is no longer considered secure for most purposes, and may be vulnerable to attack if security is a concern. It is recommended to use stronger algorithms such as SHA-256, SHA-3 or Bcrypt in the modern cryptography standards.",
+        "recommendation": "Replace \"MD2\" with \"SHA-256\" or any stronger algorithm available in the Java's built-in MessageDigest algorithms. Also, the code needs a default algorithm to fall back to in case the crypto variable is not properly initialized or is null."
+    }
+]
+```

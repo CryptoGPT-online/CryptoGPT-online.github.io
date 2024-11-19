@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "String password = String.valueOf(random.ints());",
+        "description": "The usage of SecureRandom#ints() for key generation is insufficiently random and does not consider the whole range of valid characters (e.g. it will exclude special characters or lowercase letters). This can lead to issues with key strength and potentially weaken the overall security of the cryptographic operations.",
+        "recommendation": "Use a cryptographically secure method to generate random keys. The SecureRandom#ints() method is not suitable for generating keys due to its insecure nature. Use a secure library or API that provides a suitable method for generating random keys."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "ks.load(cacerts.openStream(), new String(keyBytes).toCharArray());",
+        "description": "The Java Keystore is being loaded using a password that is derived from a weak random number generator. This makes the password easily guessable and reduces the security of the Keystore.",
+        "recommendation": "Do not use hardcoded passwords or predictable passwords. Instead, use a secure method for generating and storing passwords, such as a secure keystore or password vault."
+    }
+]
+```

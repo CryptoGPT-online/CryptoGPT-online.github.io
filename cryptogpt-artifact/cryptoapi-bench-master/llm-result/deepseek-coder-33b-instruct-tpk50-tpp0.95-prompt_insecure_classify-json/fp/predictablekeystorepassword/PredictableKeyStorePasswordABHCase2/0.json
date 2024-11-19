@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "String key = hm.get(\"aaa\");\n\nKeyStore ks = KeyStore.getInstance(type);\ncacerts = new URL(\"https://www.google.com\");\nks.load(cacerts.openStream(), key.toCharArray());",
+        "description": "The predictable password \"afix\" is used for the keystore. This makes the keystore vulnerable to brute force attacks.",
+        "recommendation": "Do not use predictable passwords. Use a randomly generated password for your keystore."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": "String type = \"JKS\";\n\nMap<String,String> hm = new HashMap<String, String>();\nhm.put(\"aaa\", \"afix\");\nhm.put(\"bbb\", \"bfix\");\nhm.put(\"ccc\", \"cfix\");\nhm.put(\"ddd\", \"dfix\");\n\nString key = hm.get(\"aaa\");\n\nKeyStore ks = KeyStore.getInstance(type);\ncacerts = new URL(\"https://www.google.com\");\nks.load(cacerts.openStream(), key.toCharArray());",
+        "description": "The JKS keystore type is a less secure option than other options like PKCS12. JKS stores the password in plain text which makes it less secure.",
+        "recommendation": "Use a secure keystore type such as PKCS12 which stores the password hashed."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");\nks.load(cacerts.openStream(), key.toCharArray());",
+        "description": "The URL \"https://www.google.com\" is hardcoded in the program. This can be easily modified which could lead to different keystore file to be loaded.",
+        "recommendation": "Do not hardcode the keystore file URL. The keystore file should be read from a configuration file or an environment variable."
+    }
+]
+```

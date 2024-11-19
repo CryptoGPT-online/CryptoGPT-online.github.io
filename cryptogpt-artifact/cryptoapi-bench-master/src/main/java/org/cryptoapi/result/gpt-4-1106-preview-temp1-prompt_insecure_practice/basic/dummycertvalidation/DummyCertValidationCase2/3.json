@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Trust Manager that does not validate certificate chains (CWE-295)",
+        "vulnerable_code": "public void checkClientTrusted(X509Certificate[] x509Certificates, String s)",
+        "description": "The checkClientTrusted method is empty, which means it does not validate the client's certificate chain, potentially accepting any certificate even if it is invalid.",
+        "recommendation": "Implement proper validation of the certificate chain in checkClientTrusted method."
+    },
+    {
+        "misuse": "Trust Manager that does not validate certificate chains (CWE-295)",
+        "vulnerable_code": "public void checkServerTrusted(X509Certificate[] x509Certificates, String s)",
+        "description": "The checkServerTrusted method is empty, which means it does not verify the server's certificate chain, allowing any server certificate to be trusted which can lead to man-in-the-middle attacks.",
+        "recommendation": "Implement proper validation of the certificate chain in the checkServerTrusted method."
+    },
+    {
+        "misuse": "Empty array of accepted issuers (CWE-757)",
+        "vulnerable_code": "return new X509Certificate[0]",
+        "description": "The getAcceptedIssuers method returns an empty array, indicating no CA is trusted by default. This configuration can lead to a trust manager that does not trust any certificates or trusts all certificates if combined with non-validating trust manager methods.",
+        "recommendation": "Return a valid array of trusted X509Certificate issuers that the system can use to validate certificates."
+    }
+]
+```

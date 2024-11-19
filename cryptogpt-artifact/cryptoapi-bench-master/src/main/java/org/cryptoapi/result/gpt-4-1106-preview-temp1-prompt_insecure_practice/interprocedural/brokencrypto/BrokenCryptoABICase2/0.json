@@ -1,0 +1,30 @@
+```json
+[
+  {
+    "misuse": "Insufficient Key Length",
+    "vulnerable_code": [
+      "KeyGenerator.getInstance(crypto)",
+      "keyGen.generateKey()"
+    ],
+    "description": "Blowfish algorithm key size is not explicitly defined and can result in a weak key if the default size is used, which can be less than 128 bits.",
+    "recommendation": "Explicitly define a key size of at least 128 bits when using Blowfish."
+  },
+  {
+    "misuse": "Weak Encryption Mode",
+    "vulnerable_code": [
+      "Cipher.getInstance(crypto)"
+    ],
+    "description": "The 'cipher' instance is created using only the algorithm name without specifying the mode and padding, thus relying on defaults which might be insecure, such as ECB mode, which is vulnerable to pattern analysis if used on multiple blocks of data with the same key.",
+    "recommendation": "Specify a secure mode and padding scheme, such as Blowfish/CBC/PKCS5Padding."
+  },
+  {
+    "misuse": "Algorithm Parameter Not Defined",
+    "vulnerable_code": [
+      "KeyGenerator.getInstance(crypto)",
+      "Cipher.getInstance(crypto)"
+    ],
+    "description": "When initializing the 'KeyGenerator' and 'Cipher' instances, the crypto parameters are not completely defined, which can result in default parameters being used that might not be secure.",
+    "recommendation": "Define all cryptographic parameters explicitly, including encryption mode, padding mechanism, and key size."
+  }
+]
+```

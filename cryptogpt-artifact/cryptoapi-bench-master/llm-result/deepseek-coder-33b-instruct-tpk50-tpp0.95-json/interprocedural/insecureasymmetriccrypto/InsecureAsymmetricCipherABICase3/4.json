@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Cryptographic Algorithm",
+        "vulnerable_code": "KeyPairGenerator kgp = KeyPairGenerator.getInstance(\"RSA\");",
+        "description": "The key size is generated from user input and is smaller than the recommended minimum key size of 2048 bits. This could lead to weak encryption and security vulnerabilities.",
+        "recommendation": "Increase the key size to at least 2048 bits."
+    },
+    {
+        "misuse": "Insecure Cryptographic Key Management",
+        "vulnerable_code": "KeyPairGenerator kgp = KeyPairGenerator.getInstance(\"RSA\"); kgp.initialize(key); KeyPair kp = kgp.generateKeyPair(); Cipher cipher = Cipher.getInstance(\"RSA\"); cipher.init(Cipher.ENCRYPT_MODE, kp.getPublic());",
+        "description": "The cryptographic keys are generated and used within the same method without any secure key management or storage. The private key could be exposed or compromised if the application crashes or restarts.",
+        "recommendation": "Implement secure key management or use Key Management Systems (KMS) or Hardware Security Modules (HSMs) to securely generate, manage, and store cryptographic keys."
+    },
+    {
+        "misuse": "Use of Broken or Risky Cryptographic Padding",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"RSA/ECB/PKCS1Padding\"); cipher.init(Cipher.ENCRYPT_MODE, kp.getPublic());",
+        "description": "The default padding mechanism for RSA encryption is PKCS1. However, if ECB (Electronic Codebook) mode is used with PKCS1 padding, it is susceptible to Oracle Padding Attack. Other risks include timing attacks, chained blocks attacks, related key attacks and birthday attacks.",
+        "recommendation": "Use AES symmetric encryption algorithm for data at rest or use authenticated encryption modes with RSA."
+    }
+]
+```

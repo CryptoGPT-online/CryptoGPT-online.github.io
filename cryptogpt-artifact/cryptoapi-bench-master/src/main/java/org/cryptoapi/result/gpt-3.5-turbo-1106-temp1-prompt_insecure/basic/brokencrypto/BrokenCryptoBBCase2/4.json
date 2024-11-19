@@ -1,0 +1,11 @@
+```json
+[{"misuse": "Insecure Key Generation",
+  "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"Blowfish\");\nSecretKey key = keyGen.generateKey();",
+  "description": "The KeyGenerator is being used to generate a symmetric key without specifying a SecureRandom algorithm, which can be insecure. Also, no key size is specified, which may result in a default and potentially weak key size being used.",
+  "recommendation": "Specify a SecureRandom algorithm for the KeyGenerator, and consider specifying a key size to ensure a stronger key."},
+
+ {"misuse": "Insecure Cipher Mode",
+  "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"Blowfish\");\ncipher.init(Cipher.ENCRYPT_MODE, key);",
+  "description": "The cipher is being initialized for encryption mode only. This may lead to potential misuse of encryption and potential misuse of the cipher.",
+  "recommendation": "Consider providing options for both encryption and decryption modes, unless the specific use case only requires one mode."}]
+```

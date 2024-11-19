@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Cipher Mode",
+        "vulnerable_code": "Cipher.getInstance(crypto);",
+        "description": "ECB mode is used for encryption, which does not provide serious message confidentiality. It is particularly vulnerable to pattern recognition attacks because identical plaintext blocks are encrypted into identical ciphertext blocks.",
+        "recommendation": "Use a more secure mode such as CBC, CTR, or GCM with a unique IV for each encryption operation."
+    },
+    {
+        "misuse": "Static Initialization Vector",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "The initialization vector (IV) is not explicitly specified, which means that a default one may be used; if it is static (i.e., does not change) and known, this undermines the security of the encryption for schemes like CBC.",
+        "recommendation": "Generate a unique IV for each encryption operation and provide it to cipher.init along with the key."
+    },
+    {
+        "misuse": "Unspecified Key Size",
+        "vulnerable_code": "KeyGenerator.getInstance(\"AES\");",
+        "description": "The key generation code does not specify the key size, so it uses the default size which may not be sufficient for strong security (e.g., the default size could be 128 bits, but 256 bits is stronger).",
+        "recommendation": "Specify the desired key size by using keyGen.init(size) with a larger key size such as 256 bits."
+    }
+]
+```

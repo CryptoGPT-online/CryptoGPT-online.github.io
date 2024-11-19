@@ -1,0 +1,25 @@
+### False Positive Misuse ###
+
+After careful analysis:
+
+1. CWE-798: Use of Hardcoded Credentials - This misuse is reported with the idea that setting a hardcoded string as a seed might be equivalent to using hardcoded credentials. However, a seed for a random number generator, while it should be random and not hardcoded, isn't precisely the same as hardcoded credentials (such as passwords or cryptographic keys). The misuse here is the lack of randomness, which is properly captured by CWE-330, but this particular misuse (CWE-798) is slightly out of context, so it can be considered a false positive.
+
+2. CWE-326: Inadequate Encryption Strength - This is sensitive to context. While using a short and simple hardcoded seed could lead to predictable random values, the misuse itself is about encryption strength. Since the code does not implement encryption directly and CWE-330 more accurately describes the problem with the RNG seeding, this misuse is somewhat mislabeled and can also be considered a false positive.
+
+### Optimized Misuse JSON ###
+
+The remaining misuse after removing the false positives is CWE-330: Use of Insufficiently Random Values.
+
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": [
+            "rand1.setSeed(seedBytes);",
+            "rand2.setSeed(seedBytes);"
+        ],
+        "description": "Setting the seed for a SecureRandom with a predictable value such as 'Seed' can lead to the generation of predictable random values, which is not sufficiently random for security-sensitive operations.",
+        "recommendation": "Do not set a fixed seed for SecureRandom; allow the SecureRandom instance to self-seed with entropy from the underlying operating system."
+    }
+]
+```

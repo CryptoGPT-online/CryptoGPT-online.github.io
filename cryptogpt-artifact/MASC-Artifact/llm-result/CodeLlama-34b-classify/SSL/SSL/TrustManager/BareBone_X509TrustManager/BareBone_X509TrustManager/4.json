@@ -1,0 +1,20 @@
+ [
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "getAcceptedIssuers() method returns null",
+        "description": "The X509TrustManager interface defines a getAcceptedIssuers() method that returns an array of trusted issuers. In this case, the method returns null, which means that any certificate will be accepted as trusted, which is a security vulnerability. A malicious attacker could use this vulnerability to inject their own certificate into the trust store, allowing them to intercept and modify sensitive data.",
+        "recommendation": "The getAcceptedIssuers() method should be implemented to return a non-null array of trusted issuers. The array should be populated with the certificate authorities that the application trusts. This will ensure that only trusted certificates are accepted, and prevent malicious attackers from injecting their own certificates into the trust store."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "X509Certificate[].getEncoded() method",
+        "description": "The X509Certificate interface defines a getEncoded() method that returns the DER-encoded form of the certificate. In this case, the method is used to obtain the encoded form of a certificate, which is then used to verify the certificate. However, the use of a static method in this way is a security vulnerability, as it allows an attacker to manipulate the certificate and bypass the verification check. To fix this vulnerability, the getEncoded() method should be called on an instance of the X509Certificate class, and the resulting encoded certificate should be verified using a secure method, such as a digital signature.",
+        "recommendation": "The getEncoded() method should be called on an instance of the X509Certificate class, and the resulting encoded certificate should be verified using a secure method, such as a digital signature. This will ensure that the certificate is verified correctly, and prevent malicious attackers from manipulating the certificate."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "Hardcoded password in the checkServerTrusted() method",
+        "description": "The checkServerTrusted() method contains a hardcoded password, which is a security vulnerability. An attacker could potentially discover the hardcoded password and use it to gain unauthorized access to the application. To fix this vulnerability, the password should be stored securely, such as in a configuration file or a database, and should be accessed using a secure method, such as a password manager.",
+        "recommendation": "The password should be stored securely, such as in a configuration file or a database, and should be accessed using a secure method, such as a password manager. This will ensure that the password is protected from unauthorized access, and prevent malicious attackers from discovering the hardcoded password."
+    }
+]

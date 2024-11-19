@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Use of a Hardcoded Encryption Key",
+        "vulnerable_code": "String defaultKey = \"defaultkey\";",
+        "description": "The encryption key should not be hardcoded and should be securely managed and stored.",
+        "recommendation": "Use secure key management practices, such as storing keys in a secure key store or using a key generation mechanism compliant with security standards."
+    },
+    {
+        "misuse": "Insecure Random Number Generation",
+        "vulnerable_code": "keyBytes = String.valueOf(random.ints()).getBytes();",
+        "description": "While SecureRandom is used, the method of converting a stream of random integers to a string, and then getting its bytes, is not a secure way to generate key material. It could lead to predictable keys if the encoding does not cover all byte values equally.",
+        "recommendation": "Use SecureRandom's nextBytes(byte[] bytes) method to directly fill a byte array with random data."
+    },
+    {
+        "misuse": "Weak Key Derivation",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "Simply padding the key to the desired length without any key derivation function does not provide sufficient entropy and could lead to weak keys.",
+        "recommendation": "Use a secure key derivation function like PBKDF2, bcrypt, or scrypt to derive the key from a password or a randomly generated value."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "For AES, a 128-bit key may be considered secure, but it's recommended to use a 256-bit key when possible for stronger security.",
+        "recommendation": "Use a key size of 256 bits for AES to increase the cryptographic strength."
+    }
+]
+```

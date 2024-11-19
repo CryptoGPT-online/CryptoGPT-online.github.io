@@ -1,0 +1,53 @@
+The code you provided has a misuse of the Cryptographic Algorithm. The class `C1` uses SHA-1 (`MessageDigest.getInstance("SHA1")`) as the default encryption algorithm, which is considered weak and insecure. 
+
+This can be classified as a CWE-327: Use of a Broken or Risky Cryptographic Algorithm misuse.
+
+Here's how you can improve this:
+
+1. In the `C1` constructor, use stronger hash algorithms such as SHA-256 or SHA-3.
+
+2. When using a specific algorithm, make sure to pass it as a parameter and not hardcoded as SHA-1.
+
+The modified code should look like this:
+
+```java
+public class B1 {
+    C1 crypto;
+    public B1() throws NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
+        crypto = new C1("SHA-256");
+        crypto.encrypt("abc","");
+    }
+}
+
+class C1 {
+    String crypto;
+
+    public C1(String defCrypto) throws NoSuchPaddingException, NoSuchAlgorithmException {
+        crypto = defCrypto;
+    }
+
+    public void encrypt(String str, String passedAlgo) throws UnsupportedEncodingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, NoSuchPaddingException {
+        if(passedAlgo.isEmpty()){
+            passedAlgo = crypto;
+        }
+
+        MessageDigest md = MessageDigest.getInstance(passedAlgo);
+        md.update(str.getBytes());
+        System.out.println(md.digest());
+
+    }
+}
+```
+In this modified version, the SHA-256 algorithm is used for the default encryption. When an algorithm is passed, it is used instead of the default.
+
+The JSON response for this would be:
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "MessageDigest.getInstance(\"SHA1\")",
+        "description": "SHA-1 is a weak and insecure hash algorithm.",
+        "recommendation": "Use a stronger cryptographic algorithm like SHA-256."
+    }
+]
+```

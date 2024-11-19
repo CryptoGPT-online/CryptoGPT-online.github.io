@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "TrustManager that trusts all certificates",
+        "vulnerable_code": "checkServerTrusted(X509Certificate[] chain, String authType)",
+        "description": "The implementation of checkServerTrusted is empty, which means it does not verify the certificate chain, trusting all servers' certificates unconditionally. This introduces a vulnerability where man-in-the-middle attacks could go undetected.",
+        "recommendation": "Implement proper certificate chain validation or use the default trust manager provided by the Java runtime."
+    },
+    {
+        "misuse": "HostnameVerifier that allows all hostnames",
+        "vulnerable_code": "// HttpsURLConnection.setDefaultHostnameVerifier(new DefaultHostnameVerifier());",
+        "description": "Even though the code to set a custom HostnameVerifier is commented out, if uncommented, the DefaultHostnameVerifier is likely to trust all hostnames which could lead to man-in-the-middle attacks.",
+        "recommendation": "Do not use a custom HostnameVerifier that allows all hostnames. Ensure proper hostname verification is in place."
+    },
+    {
+        "misuse": "Outdated TLS protocol",
+        "vulnerable_code": "SSLContext.getInstance(\"SSL\")",
+        "description": "Using 'SSL' as a protocol for SSLContext.getInstance is deprecated and insecure as it refers to SSL 3.0 or earlier, which are known to have several vulnerabilities.",
+        "recommendation": "Use SSLContext.getInstance with 'TLS', specifically a secure version like 'TLSv1.2' or 'TLSv1.3'."
+    }
+]
+```

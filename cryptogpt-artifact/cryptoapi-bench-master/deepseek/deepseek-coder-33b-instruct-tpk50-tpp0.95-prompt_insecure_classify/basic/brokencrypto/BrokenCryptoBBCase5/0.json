@@ -1,0 +1,23 @@
+Misuse: CWE-326: Inadequate Encryption Strength
+
+Misuse Code: 
+```java
+KeyGenerator keyGen = KeyGenerator.getInstance("IDEA");
+SecretKey key = keyGen.generateKey();
+```
+
+Description: The IDEA (International Data Encryption Algorithm) is a symmetric-key block cipher, but it's no longer considered secure due to its short key size (128 bits). The current recommended key sizes for IDEA are 128, 192, and 256 bits.
+
+Recommendation: You should use a more secure algorithm or increase the key size. If you need to use IDEA, use the 128-bit key.
+
+Here's how you can fix the code:
+
+```java
+KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+keyGen.init(128);
+SecretKey key = keyGen.generateKey();
+Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+cipher.init(Cipher.ENCRYPT_MODE, key);
+```
+
+Now we're using the AES (Advanced Encryption Standard) algorithm, which is considered more secure and is known to be more robust against attacks. We've also increased the key size to 128 bits which is the current recommended key size for AES.

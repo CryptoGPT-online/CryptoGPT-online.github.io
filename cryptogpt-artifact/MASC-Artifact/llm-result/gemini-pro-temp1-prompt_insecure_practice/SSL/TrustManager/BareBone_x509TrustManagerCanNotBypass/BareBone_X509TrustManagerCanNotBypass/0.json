@@ -1,0 +1,35 @@
+```java
+public class Bs {
+
+    public static void main(String[] args) {
+        new BareBone_X509TrustManagerCanNotBypassExt() {
+        };
+        System.out.println("Hello World");
+    }
+}
+
+public abstract class BareBone_X509TrustManagerCanNotBypassExt implements X509TrustManager {
+    public void checkClientTrusted(X509Certificate[] chain, String authType)
+            throws CertificateException {
+    }
+    public void checkServerTrusted(X509Certificate[] chain, String authType)
+            throws CertificateException {
+    }
+    public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+        return null;
+    }
+}
+```
+
+There is a crypto API misuse in the provided code:
+1. The code uses `BareBone_X509TrustManagerCanNotBypassExt` class as a custom `X509TrustManager` implementation. This class does not perform any certificate validation, which means that any certificate presented by the server will be accepted. This can lead to a `man-in-the-middle` attack, where an attacker can intercept the communication and impersonate the server.
+
+The following JSON object describes the misuse:
+```json
+{
+  "misuse": "CWE-297: Improper Certificate Validation",
+  "vulnerable_code": "The `BareBone_X509TrustManagerCanNotBypassExt` class does not perform any certificate validation, which can lead to a `man-in-the-middle` attack.",
+  "description": "The code uses a custom `X509TrustManager` implementation that does not perform any certificate validation. This means that any certificate presented by the server will be accepted, which can lead to a `man-in-the-middle` attack.",
+  "recommendation": "Use a proper `X509TrustManager` implementation that performs certificate validation to prevent `man-in-the-middle` attacks."
+}
+```

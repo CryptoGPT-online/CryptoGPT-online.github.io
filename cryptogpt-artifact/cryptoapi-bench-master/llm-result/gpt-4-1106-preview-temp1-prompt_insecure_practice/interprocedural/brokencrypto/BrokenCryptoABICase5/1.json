@@ -1,0 +1,29 @@
+```json
+[
+    {
+        "misuse": "Use of weak cryptographic algorithm",
+        "vulnerable_code": [
+            "public static final String DEFAULT_CRYPTO = \"DES/ECB/PKCS5Padding\";",
+            "public static final String DEFAULT_CRYPTO_ALGO = \"DES\";"
+        ],
+        "description": "DES (Data Encryption Standard) is considered a weak encryption algorithm due to its small key size of 56-bits, which makes it susceptible to brute-force attacks.",
+        "recommendation": "Use a stronger encryption algorithm, such as AES with keys of at least 128 bits."
+    },
+    {
+        "misuse": "Electronic Codebook (ECB) mode use",
+        "vulnerable_code": [
+            "\"DES/ECB/PKCS5Padding\""
+        ],
+        "description": "Using ECB mode for encryption is insecure as it does not provide serious message confidentiality. Identical plaintext blocks result in identical ciphertext blocks, revealing patterns in the plaintext.",
+        "recommendation": "Use a more secure mode of operation like CBC, CFB or GCM."
+    },
+    {
+        "misuse": "Insecure padding scheme",
+        "vulnerable_code": [
+            "\"DES/ECB/PKCS5Padding\""
+        ],
+        "description": "PKCS5Padding is vulnerable to padding oracle attacks, which allows attackers to decrypt data without knowing the key.",
+        "recommendation": "Switch to an authenticated encryption mode like GCM that includes integrity checking."
+    }
+]
+```

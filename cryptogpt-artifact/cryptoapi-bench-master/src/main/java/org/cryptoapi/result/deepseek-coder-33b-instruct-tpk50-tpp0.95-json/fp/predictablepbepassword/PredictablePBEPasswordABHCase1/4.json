@@ -1,0 +1,34 @@
+```json
+[
+    {
+        "misuse": "Use of a weak cryptographic algorithm like PBEWithMD5AndDES",
+        "vulnerable_code": "pbeKeySpec = new PBEKeySpec(new String(keyBytes).toCharArray(),salt,iterationCount,keyLength);",
+        "description": "PBEWithMD5AndDES is a weak algorithm. It uses the MD5 hash function and DES symmetric encryption, which are now considered to be weak and less secure than other options.",
+        "recommendation": "Use a stronger cryptographic algorithm like PBKDF2WithHmacSHA256 or PBKDF2WithHmacSHA512."
+    },
+    {
+        "misuse": "Insecure use of getBytes() method",
+        "vulnerable_code": "byte [] keyBytes = defaultKey.getBytes();",
+        "description": "The getBytes() method with no charset specified is used to convert a String to a byte array, which can introduce encoding issues and potentially vulnerabilities.",
+        "recommendation": "Always specify a charset when using the getBytes() method."
+    },
+    {
+        "misuse": "Insufficient Iteration Count",
+        "vulnerable_code": "int iterationCount = 11010;",
+        "description": "The iteration count is set to 11010, which is significantly lower than recommended levels.",
+        "recommendation": "Set the iteration count to a higher value to protect against brute force attacks."
+    },
+    {
+        "misuse": "Hard-coded Salt",
+        "vulnerable_code": "byte [] salt = new byte[16];",
+        "description": "A random salt is typically used to protect against pre-computed hash table attacks.",
+        "recommendation": "Use a randomly generated salt to protect against attacks."
+    },
+    {
+        "misuse": "Lack of Key Length",
+        "vulnerable_code": "int keyLength = 16;",
+        "description": "The key length is set to 16 bytes, which is much lower than recommended levels.",
+        "recommendation": "Increase the key length to at least 128 bits."
+    },
+    {
+        "misuse": "Vulnerable to Timing Att

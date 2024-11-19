@@ -1,0 +1,47 @@
+### False Positive Misuse ###
+```json
+[
+    {
+        "misuse category": "CWE-319: Cleartext Transmission of Sensitive Information",
+        "vulnerable_method": "P1.go()",
+        "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");",
+        "description": "The keystore is loaded over a secure connection (https).",
+        "recommendation": "No action required."
+    },
+    {
+        "misuse category": "CWE-259: Use of Hard-coded Password",
+        "vulnerable_method": "P1.go()",
+        "vulnerable_code": "ks.load(cacerts.openStream(), defaultKey.toCharArray());",
+        "description": "The password is not stored in the code in plain text.",
+        "recommendation": "No action required."
+    }
+]
+```
+
+### Optimized Misuse JSON ###
+```json
+[
+    {
+        "misuse category": "CWE-798: Use of Hard-coded Password",
+        "vulnerable_method": "P1.go()",
+        "vulnerable_code": "ks.load(cacerts.openStream(), defaultKey.toCharArray());",
+        "description": "The hardcoded password is replaced by a more secure method.",
+        "recommendation": "The password should not be hardcoded in the source code, use a secure method for storing and retrieving secrets."
+    },
+    {
+        "misuse category": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_method": "P1.go()",
+        "vulnerable_code": "ks.load(cacerts.openStream(), defaultKey.toCharArray());",
+        "description": "The used keystore type (JKS) is a deprecated format and has known vulnerabilities.",
+        "recommendation": "Use a secure and standardized keystore format like PKCS#12."
+    }
+]
+```
+
+In conclusion, the false positive misuses were found to be:
+1. The first misuse of sending sensitive data in the clear over a network connection is removed because the keystore is loaded over a secure connection (https).
+2. The second misuse of using a hardcoded password is removed because the password is not stored in the code in plain text.
+
+The optimized misuses are:
+1. The first misuse of using a hardcoded password is included because it was found that the password is not hardcoded in the source code, but it was replaced by a more secure method.
+2. The second misuse of using a deprecated cryptographic algorithm (JKS) is included because it was found that it is a deprecated format and has known vulnerabilities. The use of a secure and standardized keystore format like PKCS#12 is suggested for improved security.

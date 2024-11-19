@@ -1,0 +1,31 @@
+### False Positive Misuse ###
+
+- CWE-757 (Selection of Less-Secure Algorithm During Negotiation) regarding `s.equalsIgnoreCase("RSA")` is a false positive. The TrustManager is not selecting an algorithm; it is simply verifying that the authType is RSA. While it is true that enforcing a specific algorithm could lead to a less-secure choice if better algorithms are available, the code isn’t negotiating or selecting an algorithm but rather enforcing one. Therefore, the actual misuse is accepting a specific type of certificates without proper validation, not the negotiation of less-secure algorithms. Nevertheless, the system should not be restricted to RSA-only unless there is a clear requirement to do so. This might be a poor design decision but it's not a misuse in the context of selecting a less secure algorithm.
+
+- CWE-757 (Selection of Less-Secure Algorithm During Negotiation) referring to `SSLContext.getInstance("TLS")` could be considered a potential issue because not specifying the TLS version could allow the use of deprecated TLS versions. However, recent versions of Java default to a reasonable minimum version of TLS (such as TLS 1.2 in Java 8 update 191 and later), so this might not be an immediate security concern unless the Java version in use allows insecure protocols. The right action here is to verify the behavior of the Java version used.
+
+- CWE-330 (Use of Insufficiently Random Values) with regard to `new SecureRandom()` is not applicable in this context since `SecureRandom` is a cryptographically strong random number generator. The misuse is citing that the use of `SecureRandom` is insufficient due to the improper implementation of the TrustManager. The core issue is not with `SecureRandom` but with the TrustManager. Hence, it's not a misuse of the `SecureRandom` class itself.
+
+### Optimized Misuse JSON###
+
+```json
+[
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": [
+            "public void checkClientTrusted(X509Certificate[] x509Certificates, String s)",
+            "public void checkServerTrusted(X509Certificate[] x509Certificates, String s)"
+        ],
+        "description": "The custom TrustManager implemented does not properly verify the certificate chain. It only checks the authType to be 'RSA' and doesn't actually validate the certificate, making it vulnerable to man-in-the-middle attacks.",
+        "recommendation": "Implement proper certificate validation by checking the validity of the certificate chain against trusted CAs."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "getAcceptedIssuers()",
+        "description": "The method getAcceptedIssuers returns an empty array, indicating no trusted certificate authorities. This results in the trust manager not verifying any certificate chains, which undermines the SSL/TLS security.",
+        "recommendation": "Return a non-empty array of trusted CAs in the getAcceptedIssuers method."
+    }
+]
+```
+
+The false positive reports have been removed, and the resultant list focuses on the actual misuse of improper certificate validation.

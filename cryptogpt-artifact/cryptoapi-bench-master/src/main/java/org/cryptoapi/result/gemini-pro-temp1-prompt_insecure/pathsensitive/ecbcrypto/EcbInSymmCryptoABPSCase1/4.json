@@ -1,0 +1,16 @@
+```JSON
+[
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+    "description": "Using AES without specifying the key size makes it vulnerable to brute-force attacks. It is recommended to use a key size of at least 128 bits for AES.",
+    "recommendation": "Specify the key size explicitly when creating the KeyGenerator. For example, `KeyGenerator keyGen = KeyGenerator.getInstance(\"AES/128/CBC/PKCS5Padding\");`. This will ensure that a key of at least 128 bits is generated."
+  },
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/ECB/PKCS5Padding\");",
+    "description": "ECB (Electronic Codebook) mode is a simple encryption mode that does not provide confidentiality. It is vulnerable to a variety of attacks, including the ability for an attacker to determine the plaintext of individual blocks of data. It is recommended to use a more secure mode of operation, such as CBC (Cipher Block Chaining) or CTR (Counter) mode.",
+    "recommendation": "Use a more secure mode of operation, such as CBC or CTR. For example, `Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");`. This will provide better confidentiality and protect against attacks that exploit the weaknesses of ECB mode."
+  }
+]
+```

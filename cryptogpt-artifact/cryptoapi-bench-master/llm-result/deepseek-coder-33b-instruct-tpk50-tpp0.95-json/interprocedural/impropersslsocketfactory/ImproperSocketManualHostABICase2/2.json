@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Insecure SSLSocketFactory Usage",
+        "vulnerable_code": "SSLSocketFactory ssf = (SSLSocketFactory) SSLSocketFactory.getDefault();",
+        "description": "This line gets the default SSLSocketFactory. This factory is not secure as it does not provide any level of control over the SSL/TLS settings. This can lead to a number of vulnerabilities, including man-in-the-middle attacks, weak encryption, and untrusted host verification.",
+        "recommendation": "Create an SSLContext with a TrustManager and KeyManager to provide control over the SSL/TLS settings. You can also use HttpsURLConnection if you are just doing simple GET/POST requests."
+    },
+    {
+        "misuse": "Hostname Verification Not Implemented",
+        "vulnerable_code": "SSLSocket socket = (SSLSocket) ssf.createSocket(hostName.toString(),soc);",
+        "description": "Here, the hostname is not verified during the SSL handshake. This can be susceptible to man-in-the-middle attacks where an attacker might present a fake certificate for the intended hostname. This could lead to a potential security breach.",
+        "recommendation": "Implement hostname verification during the SSL handshake. The javax.net.ssl.HttpsURLConnection class provides an option to do this."
+    }
+]
+```

@@ -1,0 +1,16 @@
+```
+[
+    {
+        "misuse": "Insecure Default Crypto Usage",
+        "vulnerable_code": "public C1(String url){\n        defURL = url;\n    }",
+        "description": "The URL provided to the C1 class is used as a default URL. This can create a security risk because if the URL is hardcoded and not properly sanitized, it can be manipulated to contain malicious code. This code does not sanitize the input URL and could potentially create an open redirect vulnerability.",
+        "recommendation": "The default URL should be hardcoded or provided by a trusted source, or it should be sanitized to ensure it does not contain any malicious code."
+    },
+    {
+        "misuse": "Use of Crypto Insecure Method",
+        "vulnerable_code": "public void method1(String passedURL) throws MalformedURLException {\n\n        if(passedURL.isEmpty()){\n            passedURL = defURL;\n        }\n        System.out.println(new URL(passedURL));\n    }",
+        "description": "The 'method1' method takes a URL as input and uses it to create a new URL object. If the passed URL is empty, it defaults to the default URL. The 'MalformedURLException' is thrown which could potentially swallow the exception. This could allow an attacker to construct a malicious URL that leads to unexpected behavior.",
+        "recommendation": "To fix this, the MalformedURLException should be properly handled. Additionally, the URL should be validated against a list of allowed or trusted URLs to prevent potential open redirect vulnerabilities."
+    }
+]
+```

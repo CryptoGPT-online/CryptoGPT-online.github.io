@@ -1,0 +1,24 @@
+The code is vulnerable to:
+
+1. Using RC2, which is a weak algorithm. RC2 is considered insecure because of its short key length and potentially poor resistance to different types of crypto attacks.
+
+2. Choosing cipher on the runtime based on choice variable, which might make it harder for someone to spot the issue. 
+
+The JSON response is:
+
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"RC2\");",
+        "description": "The code uses the RC2 algorithm, which is considered weak.",
+        "recommendation": "Use a stronger algorithm like AES."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": "if (choice > 1) cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "The cipher is chosen based on the runtime variable. This might lead to accidental use of weak ciphers.",
+        "recommendation": "Choose a strong cipher during compilation time. Never choose a cipher on the runtime based on a variable."
+    }
+]
+```

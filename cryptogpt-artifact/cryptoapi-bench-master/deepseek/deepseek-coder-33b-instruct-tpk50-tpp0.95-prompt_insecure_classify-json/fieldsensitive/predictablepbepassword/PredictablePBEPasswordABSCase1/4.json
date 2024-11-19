@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "PBEKeySpec pbeKeySpec = new PBEKeySpec(passedPassword.toCharArray(),salt,iterationCount,keyLength);",
+        "description": "The PBE (Password-Based Encryption) algorithm with SHA1 and 11010 iterations (PBKDF2) is not secure anymore. The attacker can easily crack the password in the future.",
+        "recommendation": "Use a secure hash algorithm like bcrypt or scrypt for password-based key derivation functions, and consider using a higher iteration count."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "SecureRandom sr = new SecureRandom();",
+        "description": "The salt is generated using `SecureRandom`. However, it's not recommended to use `SecureRandom` alone to generate the salt. It's a common practice to use a cryptographically strong random number generator (RNG) as seed for the `SecureRandom`. Also, if the seed is not regularly changed, attackers can guess the salt and find the key.",
+        "recommendation": "Use `SecureRandom` to generate the salt only as seed, and then fill the rest of the bytes manually or with another secure random number generator, and ensure the salt is regularly changed."
+    }
+]
+```

@@ -1,0 +1,18 @@
+{
+  "misuse": "Hardcoded Cryptographic Key",
+  "vulnerable_code": "private static char[] CRYPTO_ALGO;\nprivate static char[] crypto_algo;",
+  "description": "The cryptographic algorithm is hardcoded as a char array, which can be easily extracted from the compiled code.",
+  "recommendation": "Use secure random keys and store them securely."
+},
+{
+  "misuse": "Insecure Randomness",
+  "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(String.valueOf(crypto_algo));\nSecretKey key = keyGen.generateKey();",
+  "description": "The key generation is based on char array crypto_algo, which could result in insecure or predictable keys.",
+  "recommendation": "Use cryptographically secure random number generators like SecureRandom to generate keys."
+},
+{
+  "misuse": "Insecure Cipher Algorithm",
+  "vulnerable_code": "Cipher cipher = Cipher.getInstance(String.valueOf(crypto));",
+  "description": "The cipher algorithm is obtained from a char array crypto, which could be manipulated to use insecure or broken cryptographic algorithms.",
+  "recommendation": "Use known secure cipher algorithms and modes, and avoid using dynamic strings to specify cryptographic algorithms."
+}

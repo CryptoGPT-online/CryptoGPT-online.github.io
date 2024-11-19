@@ -1,0 +1,40 @@
+```json
+[
+    {
+        "misuse": "Use of a Weak Cryptographic Key",
+        "vulnerable_code": "String.valueOf(random.ints());",
+        "description": "The key is generated from a string representation of random integers without a proper cryptographic key derivation function, which might lead to a weak key that can be predictable or not have enough entropy.",
+        "recommendation": "Use a strong key derivation function like PBKDF2, Argon2, or similar with a proper salt and iteration count."
+    },
+    {
+        "misuse": "Missing Initialization Vector (IV) for CBC Mode",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, keySpec);",
+        "description": "The code does not explicitly specify an Initialization Vector (IV) for AES in CBC mode. This can lead to the same plaintext block resulting in the same ciphertext block which can reveal patterns.",
+        "recommendation": "Generate a random IV using SecureRandom and specify it in the cipher initialization."
+    },
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "String.valueOf(random.ints());",
+        "description": "The way the key is generated from random integers can lead to insecure randomness issues as the 'ints' method does not provide cryptographic-strength random values suitable for key generation.",
+        "recommendation": "Use SecureRandom properly to generate a byte array directly for the key material."
+    },
+    {
+        "misuse": "Insecure Key Length",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The key length is hardcoded to 16 bytes (128 bits); while not inherently weak, better security would be obtained using a longer key, provided that such lengths are supported by the crypto policy in use.",
+        "recommendation": "If the policy allows, use 256-bit keys for AES."
+    },
+    {
+        "misuse": "Improper Error Handling",
+        "vulnerable_code": "public static void main(String [] args)",
+        "description": "The method is declared to throw generic exceptions, which can lead to catching more exceptions than intended and can potentially hide different exception details which are useful for secure coding.",
+        "recommendation": "Catch specific exceptions that are expected to occur and handle them accordingly."
+    },
+    {
+        "misuse": "Unnecessary Information Disclosure",
+        "vulnerable_code": "System.out.println(encrypt);",
+        "description": "Printing sensitive data such as encrypted strings to the console can lead to information leakage if the output is accessible by untrusted parties.",
+        "recommendation": "Avoid logging sensitive information. If logging is necessary, ensure it is done in a secure way that does not expose the sensitive data to unauthorized entities."
+    }
+]
+```

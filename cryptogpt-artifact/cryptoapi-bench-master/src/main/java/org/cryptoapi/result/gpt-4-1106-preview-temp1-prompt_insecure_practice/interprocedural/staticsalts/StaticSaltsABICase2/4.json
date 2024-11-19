@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Hardcoded Sensitive Data",
+        "vulnerable_code": "\"12345\"",
+        "description": "Using a hardcoded string as a salt is insecure because it does not provide sufficient entropy and can be easily discovered.",
+        "recommendation": "Use a securely generated random value as the salt."
+    },
+    {
+        "misuse": "Inadequate Salt Conversion",
+        "vulnerable_code": "new byte[]{Byte.parseByte(salt.toString())}",
+        "description": "Converting the salt to a byte representation using 'toString' does not convert the char array properly into bytes, and will only generate the byte representation of the array's object identity (such as '[C@6d06d69c').",
+        "recommendation": "Correctly convert the character array to a byte array using appropriate encoding (e.g., UTF-8)."
+    },
+    {
+        "misuse": "Insecure Iteration Count",
+        "vulnerable_code": "int count = 1020",
+        "description": "The iteration count (1020) for password-based encryption might be too low. It does not provide sufficient work factor for modern hardware.",
+        "recommendation": "Increase the iteration count to a higher number (e.g., at least 10000) to increase the computational effort required to brute-force the encryption."
+    },
+    {
+        "misuse": "Static Salt",
+        "vulnerable_code": "SALT = DEFAULT_SALT.toCharArray();",
+        "description": "The salt is static and equally applies to all encryption operations, which makes it easier for attackers to precompute attack tables (like rainbow tables).",
+        "recommendation": "Use a different random salt for each encryption operation."
+    }
+]
+```

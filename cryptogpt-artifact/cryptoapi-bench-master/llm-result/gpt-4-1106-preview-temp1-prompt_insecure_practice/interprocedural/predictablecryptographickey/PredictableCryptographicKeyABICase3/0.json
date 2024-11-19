@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Key Generation",
+        "vulnerable_code": "key.getBytes()",
+        "description": "The key is derived from a string that may not be sufficiently random or secure, and it uses the platform's default charset which can vary. Moreover, it's truncated or padded to fit the required length without a secure key-stretching algorithm.",
+        "recommendation": "Use a proper key derivation function (KDF) like PBKDF2, bcrypt, or scrypt with a random salt to derive the key from the password."
+    },
+    {
+        "misuse": "Hardcoded Key",
+        "vulnerable_code": "\"defaultkey\"",
+        "description": "Using a hardcoded key in the source code poses a security risk as it can be discovered through reverse engineering.",
+        "recommendation": "Avoid hardcoding encryption keys into the source code. Instead, use a secure method to load keys such as from a configuration file, environment variable, or key management service."
+    },
+    {
+        "misuse": "Inadequate Key Size",
+        "vulnerable_code": "Arrays.copyOf(keyBytes,16)",
+        "description": "The key size may not meet the minimum security requirements. If the original key is shorter than 16 bytes, it may not provide AES-128 security strength.",
+        "recommendation": "Ensure that the key is at least 128 bits for AES-128, 192 bits for AES-192, or 256 bits for AES-256 encryption."
+    }
+]
+```

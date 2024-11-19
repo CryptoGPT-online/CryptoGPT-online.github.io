@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "CWE-295: Improper Certificate Validation",
+    "vulnerable_code": "public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException",
+    "description": "The method checkClientTrusted is empty, which means it does not actually check if the client's certificates are trustworthy, potentially accepting any certificate without validation.",
+    "recommendation": "Implement proper certificate validation in checkClientTrusted method."
+  },
+  {
+    "misuse": "CWE-295: Improper Certificate Validation",
+    "vulnerable_code": "public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException",
+    "description": "The method checkServerTrusted is empty, which could allow any server certificate to be accepted without validation.",
+    "recommendation": "Implement proper certificate validation in checkServerTrusted method."
+  },
+  {
+    "misuse": "CWE-295: Improper Certificate Validation",
+    "vulnerable_code": "public X509Certificate[] getAcceptedIssuers()",
+    "description": "Returning null from getAcceptedIssuers will trust all authorities, which is insecure because it disables certificate chain validation.",
+    "recommendation": "Return a proper list of accepted issuers or throw an UnsupportedOperationException if the method is not supposed to be called."
+  }
+]
+```

@@ -1,0 +1,20 @@
+ [
+    {
+        "misuse": "Insecure Seed Initialization",
+        "vulnerable_code": "SecureRandom rand1 = SecureRandom.getInstance(\"NativePRNG\");\nrand1.setSeed(seedBytes);",
+        "description": "The seed used to initialize the SecureRandom instance is not properly generated and is predictable, which makes it easier for an attacker to predict the output of the random number generator.",
+        "recommendation": "Use a cryptographically secure random number generator to generate the seed, such as SecureRandom.getInstanceStrong()."
+    },
+    {
+        "misuse": "Insecure Random Number Generation",
+        "vulnerable_code": "rand1.nextInt()",
+        "description": "The SecureRandom.nextInt() method is not suitable for cryptographic use because it returns the same value on every execution, which makes it possible for an attacker to predict the output.",
+        "recommendation": "Use a cryptographically secure random number generator, such as the SHA-256 hash function, to generate random numbers."
+    },
+    {
+        "misuse": "Insecure Comparison of Random Numbers",
+        "vulnerable_code": "System.out.println(rand1.nextInt()==rand2.nextInt());",
+        "description": "Comparing the output of the random number generator directly is vulnerable to side-channel attacks, which can allow an attacker to recover the secret key used to generate the random numbers.",
+        "recommendation": "Use a secure comparison function, such as the Timing-attack-resistant comparison (TC), to compare the random numbers."
+    }
+]

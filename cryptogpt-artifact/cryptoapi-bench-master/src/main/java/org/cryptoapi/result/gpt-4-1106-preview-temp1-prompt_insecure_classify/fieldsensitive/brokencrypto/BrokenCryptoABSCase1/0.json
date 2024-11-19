@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "crypto = new C2(\"DES/ECB/PKCS5Padding\");",
+        "description": "DES (Data Encryption Standard) is considered a broken algorithm due to its small key size of 56 bits which makes it vulnerable to brute-force attacks.",
+        "recommendation": "Use a more secure algorithm like AES with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values.",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);\nSecretKey key = keyGen.generateKey();",
+        "description": "The KeyGenerator might not be using a sufficiently random seed for key generation, which could lead to predictable keys if the default random source is not secure.",
+        "recommendation": "Ensure that a secure random seed is used for key generation."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);\nSecretKey key = keyGen.generateKey();",
+        "description": "Using DES with a key size of 56 bits provides insufficient encryption strength.",
+        "recommendation": "Use AES with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(defaultAlgo);",
+        "description": "The use of ECB mode (Electronic Codebook) does not provide serious message confidentiality, as identical plaintext blocks are encrypted into identical ciphertext blocks.",
+        "recommendation": "Use a more secure mode of operation such as CBC (Cipher Block Chaining) with a proper initialization vector (IV)."
+    }
+]
+```

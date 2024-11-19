@@ -1,0 +1,15 @@
+ {"misuses": [
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_code": "defaultKey = String.valueOf(random.ints());\nbyte [] keyBytes = defaultKey.getBytes(\"UTF-8\");\nkeyBytes = Arrays.copyOf(keyBytes,16);\nSecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES\");",
+    "description": "The code uses the default constructor of the SecureRandom class to generate a random key, which can be weak if the seed is not properly generated or if the implementation of the SecureRandom class is not secure. The code also uses the UTF-8 encoding to convert the key to a byte array, which may result in data loss or inconsistencies in the encryption process.",
+    "recommendation": "Use a secure and deterministic method to generate the key, such as the SecureRandom.generateSeed(int) method, and use a fixed-size byte array to store the key. Also, use a secure encryption algorithm, such as AES-CBC or AES-GCM, and use a secure padding mode, such as PKCS5 or PKCS7, to prevent padding oracle attacks."
+  },
+  {
+    "misuse": "CWE-295: Improper Certificate Validation",
+    "vulnerable_code": "SecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES\");",
+    "description": "The code uses a hardcoded password for the SecretKeySpec constructor, which can be vulnerable to a variety of attacks, including dictionary attacks and brute-force attacks. The code also does not validate the password or the SecretKeySpec object, which can lead to the exposure of sensitive information.",
+    "recommendation": "Use a secure and random password for the SecretKeySpec constructor, and validate the password and the SecretKeySpec object to prevent unauthorized access to the sensitive information."
+  }
+]
+}

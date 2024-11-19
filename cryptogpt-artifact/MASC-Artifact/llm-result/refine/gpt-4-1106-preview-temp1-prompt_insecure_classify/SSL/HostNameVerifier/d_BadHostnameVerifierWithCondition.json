@@ -1,0 +1,27 @@
+### False Positive Misuse ###
+
+All the reported misuses in the lists are valid and not false positives. They all revolve around the same problem: the `verify` method of `HostNameVerifier` always returns `true`, disabling any hostname verification and allowing potential man-in-the-middle attacks.
+
+Each JSON entry describes this vulnerability (CWE-295: Improper Certificate Validation) with slightly different language, but the essence of the misuse is the same across all entries. Thus, there are no false positives to remove.
+
+### Optimized Misuse JSON###
+
+Since all entries report the same misuse, we can condense the entries into a single JSON object that captures the essence of the vulnerability:
+
+```json
+[
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": [
+            "public boolean verify(String hostname, SSLSession session) {\n    if(true || session.getCipherSuite().length()>=0){\n        return true;\n    }\n    return false;\n}",
+            "new HostNameVerifier(){\n    @Override\n    public boolean verify(String hostname, SSLSession session) {\n        if(true || session.getCipherSuite().length()>=0){\n            return true;\n        }\n        return false;\n    }\n};",
+            "new HostNameVerifier()...",
+            "if(true || session.getCipherSuite().length()>=0){\n    return true;\n}"
+        ],
+        "description": "The verify method of HostnameVerifier is overridden to always return true, which bypasses all the hostname verification checks and accepts any SSL certificate presented without validation. This enables man-in-the-middle (MITM) attacks by allowing an attacker to use a fraudulent certificate.",
+        "recommendation": "Implement proper hostname verification by comparing the server's hostname with the domain name in the server's SSL certificate. Do not override the verify method to always return true."
+    }
+]
+``` 
+
+This optimized misuse list removes redundant entries while still representing the core security issue. The `vulnerable_code` section includes references to different code snippets that were reported, summarizing the issue in a concise manner.

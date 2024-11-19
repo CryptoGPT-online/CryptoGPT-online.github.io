@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insecure Encryption Algorithm",
+        "vulnerable_code": "crypto = new C5(\"RC2\");",
+        "description": "RC2 is an outdated and insecure encryption algorithm. It has been considered weak for many years due to its small key size and the availability of more secure alternatives.",
+        "recommendation": "Use a more secure algorithm such as AES with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "Use of Static, Empty or Predictable Key",
+        "vulnerable_code": "crypto.encrypt(\"abc\",\"\");",
+        "description": "The encryption key should be generated securely. However, passing an empty string for the algorithm could potentially result in a predictable or weak key.",
+        "recommendation": "Ensure a strong key is used by either securely generating it or using an appropriate key derivation function."
+    },
+    {
+        "misuse": "Lack of Secure Random Key Generation",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo); SecretKey key = keyGen.generateKey();",
+        "description": "Key generation should happen using a cryptographically secure random number generator, but the default algorithm may not ensure this.",
+        "recommendation": "Use KeyGenerator with a specific secure random instance initialized with 'SecureRandom.getInstanceStrong()', and explicitly set a key size."
+    },
+    {
+        "misuse": "Hardcoded Cipher Mode and Padding",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(defaultAlgo);",
+        "description": "Cipher.getInstance should be called with a full algorithm string including encryption mode and padding. Here it's using the default, which might not be secure.",
+        "recommendation": "Specify a mode and padding in the algorithm String, such as AES/CBC/PKCS5Padding."
+    }
+]
+```

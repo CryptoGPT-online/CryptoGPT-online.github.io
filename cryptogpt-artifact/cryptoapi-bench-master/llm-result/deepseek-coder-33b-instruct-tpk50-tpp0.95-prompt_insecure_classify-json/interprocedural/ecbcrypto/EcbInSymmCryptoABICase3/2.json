@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "Cipher.getInstance(crypto)",
+        "description": "The crypto argument passed to method1 is not statically checked against a list of secure algorithms, allowing any algorithm to be used. This may include weak or broken cryptographic algorithms, such as 'AES' in this case, which has known vulnerabilities.",
+        "recommendation": "Avoid using non-constant strings to specify cryptographic algorithms. Instead, define a static list of secure algorithms, and check the passed argument against this list before passing it to Cipher.getInstance()."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "KeyGenerator.getInstance(\"AES\").generateKey()",
+        "description": "The cryptographic key is generated without a secure random number generator. This makes the generated key deterministic, which can lead to predictable keys and should never be used for secure encryption or authentication.",
+        "recommendation": "Use a secure random number generator to generate the cryptographic key. This can be done by using the 'getInstance(\"AES\", \"BC\")' method of KeyGenerator which uses the Bouncy Castle provider, which provides a strong random number generator. Alternatively, Java 9 or later versions come with a standardized random number generator."
+    }
+]
+```

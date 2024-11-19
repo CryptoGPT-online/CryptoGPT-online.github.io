@@ -1,0 +1,24 @@
+The misuse and the vulnerable code snippet are:
+
+```java
+KeyGenerator keyGen = KeyGenerator.getInstance("IDEA");
+```
+
+The above code is vulnerable to misuse of a risky cryptographic algorithm because the IDEA algorithm is a weak encryption algorithm and it's nowadays considered to be insecure and deprecated. Instead, a more secure encryption algorithm should be used like AES.
+
+Here is the recommended fix:
+
+```java
+KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+```
+
+Please note that even though IDEA is considered weak, it's still used for some systems and historical reasons, especially in government and defense sectors. However, there's no requirement for such systems to use a secure encryption algorithm. As such, it's recommended to use a stronger encryption algorithm whenever possible.
+
+```json
+[{
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm", 
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"IDEA\");", 
+    "description": "The IDEA algorithm is a weak encryption algorithm and it's nowadays considered to be insecure and deprecated. Instead, a more secure encryption algorithm should be used like AES.",
+    "recommendation": "Use KeyGenerator.getInstance(\"AES\") to generate a stronger key for AES algorithm."
+}]
+```

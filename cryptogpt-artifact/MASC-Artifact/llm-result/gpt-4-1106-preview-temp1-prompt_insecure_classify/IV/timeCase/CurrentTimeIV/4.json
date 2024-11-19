@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "new IvParameterSpec(val.getBytes(),0,8)",
+        "description": "The initialization vector (IV) is derived from the current time formatted as a string, which is predictable and not cryptographically random. This can lead to predictable IVs which can be exploited in certain cryptographic attacks.",
+        "recommendation": "Use a secure random source to generate the IV, such as 'SecureRandom'."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "new IvParameterSpec(val.getBytes(),0,8)",
+        "description": "The IV is being truncated to only 8 bytes (64 bits), which does not match the typical block size of modern encryption algorithms (e.g., 128 bits for AES). This can lead to weak encryption.",
+        "recommendation": "Ensure that the IV length matches the block size of the encryption algorithm used (e.g., 16 bytes for AES)."
+    }
+]
+```

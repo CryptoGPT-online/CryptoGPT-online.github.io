@@ -1,0 +1,20 @@
+[
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+    "vulnerable_code": "md = MessageDigest.getInstance(\"MD5\");",
+    "description": "The code uses the MD5 algorithm for hashing, which is considered broken and risky because it is vulnerable to collision attacks.",
+    "recommendation": "Use a stronger and more secure hashing algorithm such as SHA-256 or SHA-3."
+  },
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+    "vulnerable_code": "md.update(name.getBytes());",
+    "description": "The code does not specify any character encoding when calling getBytes(), which can lead to inconsistent hashing results across different platforms and locales.",
+    "recommendation": "Always specify the character encoding when converting strings to bytes, such as name.getBytes(StandardCharsets.UTF_8) or name.getBytes(\"UTF-8\")."
+  },
+  {
+    "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation.",
+    "vulnerable_code": "md = MessageDigest.getInstance(\"SHA-256\");",
+    "description": "The code selects the SHA-256 algorithm for hashing based on a simple condition (choice > 1), without considering any security negotiation or configuration. This can lead to the use of less secure algorithms in certain scenarios.",
+    "recommendation": "Implement a proper security negotiation mechanism to select the appropriate hashing algorithm based on security requirements and configurations."
+  }
+]

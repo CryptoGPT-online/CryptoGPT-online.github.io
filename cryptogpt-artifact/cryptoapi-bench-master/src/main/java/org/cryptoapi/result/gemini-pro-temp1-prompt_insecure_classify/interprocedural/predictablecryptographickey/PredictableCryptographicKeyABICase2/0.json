@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation.",
+    "vulnerable_code": "SecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES\");",
+    "description": "The code is using the AES algorithm without specifying the key size. By default, AES is used with a 128-bit key, which is considered insecure. To fix this, the code should explicitly specify the key size, e.g. `AES-256`.",
+    "recommendation": "Change `SecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES\");` to `SecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES-256\");`"
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength.",
+    "vulnerable_code": "byte[] keyBytes = encryptKey.toString().getBytes();\nkeyBytes = Arrays.copyOf(keyBytes,16);",
+    "description": "The code is using a hardcoded encryption key, which is insecure. Hardcoded keys can be easily compromised by attackers. To fix this, the code should generate a random encryption key and store it securely.",
+    "recommendation": "Generate a random encryption key using a secure random number generator and store it securely."
+  },
+  {
+    "misuse": "CWE-798: Use of Hardcoded Credentials.",
+    "vulnerable_code": "public static final String DEFAULT_ENCRYPT_KEY = \"defaultkey\";",
+    "description": "The code is using a hardcoded encryption key, which is insecure. Hardcoded keys can be easily compromised by attackers. To fix this, the code should generate a random encryption key and store it securely.",
+    "recommendation": "Generate a random encryption key using a secure random number generator and store it securely."
+  }
+]
+```

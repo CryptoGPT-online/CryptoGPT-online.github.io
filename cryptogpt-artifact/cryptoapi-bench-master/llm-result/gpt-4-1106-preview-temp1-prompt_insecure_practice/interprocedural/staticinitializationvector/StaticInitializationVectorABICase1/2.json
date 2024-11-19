@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insufficiently Random IV",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+        "description": "Using a static string (\"abcde\") to create an IV (Initialization Vector) makes it predictable. Predictable IVs undermine the security provided by the cipher as they are meant to provide an element of randomness.",
+        "recommendation": "Use a secure random generator to create the IV."
+    },
+    {
+        "misuse": "Hardcoded Key",
+        "vulnerable_code": "SecretKey key = keyGen.generateKey();",
+        "description": "The key appears to be generated without sufficient security guarantees. If this were done without a secure random seed or if it’s reused across sessions, it can be insecure.",
+        "recommendation": "Ensure the KeyGenerator is seeded with a strong source of randomness and keys are not reused in an insecure manner."
+    },
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "description": "The usage of KeyGenerator without specifying a secure random instance makes it insecure if the default is not secure. The randomness of the key is crucial for the security of the encryption scheme.",
+        "recommendation": "Specify a SecureRandom instance when generating the key or ensure the default is secure."
+    },
+    {
+        "misuse": "Short IV Length",
+        "vulnerable_code": "byte [] bytes = \"abcde\".getBytes();",
+        "description": "Initialization Vector (IV) should be as long as the block size of the cipher, which is 16 bytes for AES. A shorter IV may expose patterns and undermine the security of the encryption.",
+        "recommendation": "Use an IV that is the proper length for the selected block cipher mode (16 bytes for AES)."
+    }
+]
+```

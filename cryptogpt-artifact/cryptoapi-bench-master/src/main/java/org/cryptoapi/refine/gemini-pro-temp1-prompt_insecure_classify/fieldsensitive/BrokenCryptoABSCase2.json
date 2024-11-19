@@ -1,0 +1,30 @@
+### False Positive Misuse ###
+
+None of the provided misuses are false positives.
+
+### Optimized Misuse JSON ###
+````json
+[
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_method": "C3.encrypt",
+    "vulnerable_code": "crypto.encrypt(\"abc\", \"\");",
+    "description": "The code uses the Blowfish algorithm for encryption, which is a known weak algorithm and is not recommended for modern cryptographic applications.",
+    "recommendation": "Replace Blowfish with a more secure algorithm such as AES or ChaCha20."
+  },
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values",
+    "vulnerable_method": "C3.encrypt",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);\nSecretKey key = keyGen.generateKey();",
+    "description": "The code generates a secret key using KeyGenerator without specifying a secure random number generator (RNG). This may result in predictable or weak keys.",
+    "recommendation": "Use a secure RNG such as SecureRandom to generate cryptographic keys."
+  },
+  {
+    "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+    "vulnerable_method": "C3.encrypt",
+    "vulnerable_code": "if(passedAlgo.isEmpty()){\n            passedAlgo = defaultAlgo;\n        }",
+    "description": "The code allows the caller to specify the encryption algorithm, but if the caller passes an empty string, it defaults to Blowfish. This can be exploited by an attacker to force the use of a weak algorithm.",
+    "recommendation": "Always use a secure default algorithm and validate the caller's input before using it."
+  }
+]
+````

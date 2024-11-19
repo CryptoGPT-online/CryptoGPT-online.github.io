@@ -1,0 +1,10 @@
+```json
+[
+    {
+        "misuse": "CWE-330 Use of Insufficiently Random Values",
+        "vulnerable_code": "byte[] keyBytes = encryptKey.toString().getBytes();\nkeyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The code snippet creates a byte array from a string conversion of `encryptKey` variable, and then it truncates or pads the bytes array to 16 bytes long. This process does not generate a truly random byte array and might produce the same output for different inputs, thus making the encryption process less secure.",
+        "recommendation": "To fix this issue, you should use a secure random number generator to generate a random byte array. An example of how to do this using Java's SecureRandom class is shown below:\n\nSecureRandom sr = new SecureRandom();\nbyte[] keyBytes = new byte[16];\nsr.nextBytes(keyBytes);\nSecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES\");"
+    }
+]
+```

@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "String defaultKey = \"changeit\";",
+        "description": "The code snippet has a hardcoded password ('changeit'), which is a common default password for keystores and should never be used in production.",
+        "recommendation": "Use a secure method to store and retrieve passwords, such as a password management system or environment variables, and never hardcode passwords."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "defaultKey = String.valueOf(random.ints());",
+        "description": "The use of SecureRandom to generate a key as a set of random integers converted to a string is unconventional and does not guarantee a sufficiently random or appropriately formatted key.",
+        "recommendation": "Use a more standard approach to key generation, such as PBKDF2, with appropriate key lengths and secure random number generation."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");\nks.load(cacerts.openStream(), defaultKey.toCharArray());",
+        "description": "The code is loading a keystore from a URL without validating the server's certificate, which could potentially allow a man-in-the-middle attack.",
+        "recommendation": "Implement proper SSL/TLS certificate validation using a custom trust manager that checks the server's certificate chain."
+    }
+]
+```

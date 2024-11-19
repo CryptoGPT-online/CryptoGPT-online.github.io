@@ -1,0 +1,8 @@
+ [
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": "public boolean verify(String hostname, SSLSession session) { return true; }",
+        "description": "The `HostnameVerifier` interface is used to check if the hostname of a SSL/TLS server matches the one provided in the URL. However, the implementation in this code always returns true, effectively disabling hostname verification. This can lead to a man-in-the-middle attack where an attacker intercepts the communication between the client and the server, and the client is unaware of the attack.",
+        "recommendation": "Implement a proper hostname verification mechanism that ensures the hostname of the SSL/TLS server matches the one provided in the URL. This can be achieved by using the `getPeerCertificates()` method of the `SSLSession` object, and then using the `X509Certificate` object to extract the hostname from the certificate."
+    }
+]

@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException",
+        "description": "The checkClientTrusted method is empty, which bypasses client certificate validation. This can allow malicious clients to establish connections without proper authentication.",
+        "recommendation": "Implement proper certificate validation logic within the checkClientTrusted method."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException",
+        "description": "The checkServerTrusted method is empty, which bypasses server certificate validation. Without proper validation, the client cannot be assured of the server's identity, leading to possible man-in-the-middle attacks.",
+        "recommendation": "Implement certificate validation logic to verify server certificates properly within the checkServerTrusted method."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "public X509Certificate[] getAcceptedIssuers()",
+        "description": "Returning null from getAcceptedIssuers may cause the TrustManager to accept any certificate presented to it which is insecure and not recommended.",
+        "recommendation": "Return a list of trusted root CA certificates that the TrustManager should use to determine trust."
+    }
+]
+```

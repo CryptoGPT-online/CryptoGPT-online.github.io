@@ -1,0 +1,4 @@
+[{"misuse": "CWE-295: Improper Certificate Validation", 
+  "vulnerable_code": "public class Be { public static void main(String[] args) { new HostNameVerifier(){ @Override public boolean verify(String hostname, SSLSession session) { if(true || session == null){ return true; } return false; } }; } }",
+  "description": "The custom HostNameVerifier implementation accepts any hostname and bypasses the certificate validation process by always returning true. This could lead to a potential Man-in-the-Middle (MitM) attack as the SSL certificate is not being properly verified.", 
+  "recommendation": "It is recommended to implement a proper hostname verification logic by checking the hostname against the SSLSession and certificate information to ensure a secure connection. If the verification fails, the connection should be terminated."}]

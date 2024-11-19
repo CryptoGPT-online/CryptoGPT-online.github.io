@@ -1,0 +1,10 @@
+```json
+[{"misuse": "Weak Entropy", 
+  "vulnerable_code": "SecureRandom random = new SecureRandom();\nString str = String.valueOf(random.ints());\nbyte[] seed = str.getBytes();", 
+  "description": "The SecureRandom instance is initialized without specifying a seed, then the seed is generated from the random integer and converted to a byte array. This approach may lead to weak entropy and compromised security.", 
+  "recommendation": "Use a stronger source of entropy to initialize SecureRandom, such as using /dev/urandom on Unix-based systems or RNGCryptoServiceProvider on Windows."},
+ {"misuse": "Insecure Seed Generation", 
+  "vulnerable_code": "SecureRandom sr = new SecureRandom(new byte[]{b});", 
+  "description": "The byte array used to initialize the new SecureRandom instance is generated from a Byte object obtained from a HashMap, which may lead to insecure seed generation.", 
+  "recommendation": "Use a stronger and more secure method for seed generation, such as using SecureRandom.generateSeed() to obtain a secure seed."}]
+```

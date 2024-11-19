@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "Cipher.getInstance(String.valueOf(crypto));",
+        "description": "The use of Blowfish algorithm is considered risky as it has a block size of 64 bits which is no longer considered secure against modern cryptanalysis. It may lead to issues like the Sweet32 vulnerability.",
+        "recommendation": "Use a more secure algorithm, such as AES with a block size of 128 bits."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values.",
+        "vulnerable_code": "KeyGenerator.getInstance(String.valueOf(crypto));",
+        "description": "The code does not specify a SecureRandom instance for the KeyGenerator, relying on default randomness which may not be sufficiently secure.",
+        "recommendation": "Instantiate a SecureRandom with a strong source of randomness and pass it to the KeyGenerator."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_code": "KeyGenerator.getInstance(String.valueOf(crypto));",
+        "description": "The key size for the Blowfish algorithm is not specified, and the default key size may not provide adequate encryption strength.",
+        "recommendation": "Specify a key size that is considered strong enough (e.g., 128 or 256 bits for AES)."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials.",
+        "vulnerable_code": "public static final String DEFAULT_CRYPTO = \"Blowfish\";",
+        "description": "The cryptographic algorithm name 'Blowfish' is hardcoded, which could be a security risk if the algorithm needs to be changed.",
+        "recommendation": "Avoid hardcoding cryptographic algorithms. Instead, use configuration files or environment variables to specify the algorithm."
+    }
+]
+```

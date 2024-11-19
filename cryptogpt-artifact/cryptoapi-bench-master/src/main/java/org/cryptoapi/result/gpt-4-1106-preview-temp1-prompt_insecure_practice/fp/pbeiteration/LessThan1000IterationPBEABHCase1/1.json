@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "random.nextBytes(salt);",
+        "description": "The generator 'SecureRandom' is secure for generating random bytes, but the salt size used in PBEParameterSpec should be at least 64 bits (8 bytes) to ensure its effectiveness.",
+        "recommendation": "Use a larger salt size that is at least 64 bits in length."
+    },
+    {
+        "misuse": "Insufficient Iteration Count",
+        "vulnerable_code": "hm.put(\"bbb\", new Integer(20));\n... \nint iteration = hm.get(\"bbb\");",
+        "description": "The number of iterations specified for the password-based encryption (PBE) parameter specification is retrieved from a map and is set to 20, which is generally considered too low. Modern standards require a much higher iteration count, typically tens of thousands, to make brute-force attacks more difficult.",
+        "recommendation": "Increase the iteration count to a higher number (at least 10,000) to enhance security."
+    },
+    {
+        "misuse": "Hardcoded Sensitive Values",
+        "vulnerable_code": "\"aaa\", new Integer(1020)",
+        "description": "Sensitive values such as encryption keys and parameters should not be hardcoded or stored in such an easily accessible manner, as it is shown in the code snippet with the map entry 'aaa'.",
+        "recommendation": "Instead of hardcoding sensitive information, retrieve them securely from environment variables, configuration files, or secure storage mechanisms."
+    },
+    {
+        "misuse": "Use of Deprecated API",
+        "vulnerable_code": "new Integer(1020)\nnew Integer(20)",
+        "description": "Usage of the constructor 'Integer(int)' is discouraged as of Java 9 and it has been deprecated. While this is not directly a vulnerability, it is a code practice that could lead to maintenance and compatibility issues.",
+        "recommendation": "Use 'Integer.valueOf(int)' to create integer instances to take advantage of caching and the avoidance of unnecessary object creation."
+    }
+]
+```

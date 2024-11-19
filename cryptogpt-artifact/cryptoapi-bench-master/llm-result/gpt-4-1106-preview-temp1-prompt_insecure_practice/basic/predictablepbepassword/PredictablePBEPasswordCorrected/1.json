@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "int keyLength = 16;",
+        "description": "The keyLength is set to 16 bits which is considered too small and can be brute-forced easily, making it an insecure key size.",
+        "recommendation": "Increase the key size to at least 128 bits (16 bytes) for adequate security."
+    },
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "pbeKeySpec = new PBEKeySpec(password.toCharArray(),salt,iterationCount,keyLength);",
+        "description": "The Password-based Encryption (PBE) is missing specification of the algorithm to be used, which might default to a weak algorithm, and the key length specified is incorrectly 16 bits instead of 16 bytes.",
+        "recommendation": "Specify a strong PBE algorithm explicitly, and ensure the key length is correct, which should be in bytes (e.g., `PBEKeySpec(password.toCharArray(), salt, iterationCount, 128)` for 128-bit keys)."
+    },
+    {
+        "misuse": "Password Generation Using Low-Entropy Source",
+        "vulnerable_code": "String password = String.valueOf(random.ints());",
+        "description": "The method used for password generation is using a low-entropy numeric value converted to a string, which might not provide a high entropy password required for cryptographic purposes.",
+        "recommendation": "Use a stronger method for password generation with high entropy suitable for cryptographic use."
+    },
+    {
+        "misuse": "Unclear Specification of Password-Based Key Derivation Function",
+        "vulnerable_code": "pbeKeySpec = new PBEKeySpec(password.toCharArray(),salt,iterationCount,keyLength);",
+        "description": "The PBEKeySpec constructor is being used to generate a key, but it is not clear which Password-Based Key Derivation Function (PBKDF) is being used, such as PBKDF2, which is recommended for secure password hashing.",
+        "recommendation": "Specify a secure PBKDF such as PBKDF2 (e.g., using SecretKeyFactory.getInstance(\"PBKDF2WithHmacSHA256\") to generate the keys)."
+    }
+]
+```

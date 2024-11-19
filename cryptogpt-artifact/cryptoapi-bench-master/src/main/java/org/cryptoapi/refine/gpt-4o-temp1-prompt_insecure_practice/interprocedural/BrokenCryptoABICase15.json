@@ -1,0 +1,28 @@
+### False Positive Misuse ###
+1. **Crypto Algorithm Controlled by External Input**  
+   - Vulnerable Code: `String cryptoAlgo = c; method1(cryptoAlgo);`  
+   - Reason: Although the algorithm is indeed determined by an external input (`c`), the calling method in `main` specifically passes a hardcoded and predefined string "IDEA". There is no external or user input influencing it, thus not leading to insecure algorithm configuration due to external factors in the given code context.
+
+2. **CWE-327: Use of a Broken or Risky Cryptographic Algorithm**  
+   - Vulnerable Code: `KeyGenerator keyGen = KeyGenerator.getInstance(crypto);`  
+   - Reason: While it indicates dynamic algorithm selection, only a single hard-coded algorithm "IDEA" is used directly without any potential for dynamically changing the algorithm, hence this particular concern doesn't apply to this specific use case.
+
+3. **Cipher Algorithm is Defined at Runtime**  
+   - Vulnerable Code: `String cryptoAlgo = c; method1(cryptoAlgo);`  
+   - Reason: Similar to the false positive above, though potentially dangerous in a different context, here it does not occur as "IDEA" is the sole algorithm passed in a controlled manner.
+
+4. **Improper Validation of Cryptographic Algorithm**  
+   - Vulnerable Code: `KeyGenerator keyGen = KeyGenerator.getInstance(crypto);`  
+   - Reason: Here again, the misuse point argues dynamic selection risks, however, the same pattern of controlled input limits practical vulnerabilities arising from dynamic or improper validation.
+
+### Optimized Misuse JSON ###
+```json
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "String crypto = \"IDEA\";",
+        "description": "The IDEA algorithm is considered insecure as it has been broken and should not be used for secure applications.",
+        "recommendation": "Use strong, widely accepted encryption algorithms such as AES (Advanced Encryption Standard) with a secure mode of operation, like AES/GCM/NoPadding."
+    }
+]
+```

@@ -1,0 +1,48 @@
+ {
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "cipher.getInstance(String.valueOf(crypto));",
+"description": "The cipher algorithm is vulnerable to padding oracle attack. The crypto variable is not properly validated, allowing an attacker to manipulate the encryption process.",
+"recommendation": "Use a secure crypto algorithm that is not vulnerable to padding oracle attack, such as AES/CBC/PKCS5Padding. Additionally, ensure that all input is properly validated and sanitized to prevent attacker's manipulation of the encryption process."
+}
+{
+"misuse": "Hardcoded Credentials",
+"vulnerable_code": "char[] crypto = CRYPTO;",
+"description": "The crypto variable is being set to a hardcoded value. This allows an attacker to easily determine the encryption key and manipulate the encryption process.",
+"recommendation": "Do not use hardcoded credentials. Instead, use a secure method of storing and retrieving encryption keys, such as using a key management system or environment variables."
+}
+{
+"misuse": "Missing IV",
+"vulnerable_code": "Cipher cipher = Cipher.getInstance(String.valueOf(crypto));",
+"description": "The cipher instance is missing an initialization vector (IV). This allows an attacker to manipulate the encryption process by using the same IV for multiple encryption operations.",
+"recommendation": "Always use a random IV for each encryption operation to prevent attackers from manipulating the encryption process."
+}
+{
+"misuse": "ECB Mode",
+"vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+"description": "The cipher is using the Electronic Codebook (ECB) mode of operation. This mode is vulnerable to attacks, such as the Padding Oracle Attack, which can allow an attacker to manipulate the encryption process.",
+"recommendation": "Use a secure block cipher mode of operation, such as Cipher Block Chaining (CBC) or Galois/Counter Mode (GCM), instead of ECB mode."
+}
+{
+"misuse": "No Integrity Check",
+"vulnerable_code": "Cipher cipher = Cipher.getInstance(String.valueOf(crypto));",
+"description": "The cipher is not using an integrity check to ensure the authenticity of the encrypted data. This allows an attacker to manipulate the encryption process by modifying the encrypted data without being detected.",
+"recommendation": "Always use an integrity check, such as a message authentication code (MAC), to ensure the authenticity of the encrypted data."
+}
+{
+"misuse": "No Authentication",
+"vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+"description": "The key generator is not using any form of authentication to ensure the integrity of the generated key. This allows an attacker to manipulate the key generation process and use a weak or compromised key.",
+"recommendation": "Always use a secure key generation process that includes an authentication step, such as using a secure random number generator or a hardware security module, to ensure the integrity of the generated key."
+}
+{
+"misuse": "Insecure Storage of Encryption Key",
+"vulnerable_code": "SecretKey key = keyGen.generateKey();",
+"description": "The encryption key is being stored in a static variable, which is not secure. This allows an attacker to easily access the encryption key and manipulate the encryption process.",
+"recommendation": "Do not store the encryption key in a static variable. Instead, use a secure method of storing the key, such as using a key management system or environment variables."
+}
+{
+"misuse": "Insecure Storage of Encryption Algorithm",
+"vulnerable_code": "cipher.getInstance(String.valueOf(crypto));",
+"description": "The encryption algorithm is being stored in a static variable, which is not secure. This allows an attacker to easily access the encryption algorithm and manipulate the encryption process.",
+"recommendation": "Do not store the encryption algorithm in a static variable. Instead, use a secure method of storing the algorithm, such as using a secure configuration file or a secure database."
+}

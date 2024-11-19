@@ -1,0 +1,23 @@
+```json
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": [
+            "byte b = hm.get(\"aaa\");",
+            "byte [] seed = {b,b};",
+            "sr.setSeed(seed);"
+        ],
+        "description": "The randomness can be predicted as 'seed' is derived from a hardcoded, known value retrieved from the map. Also, the use of SecureRandom with user-provided seed may degrade randomness.",
+        "recommendation": "Do not set a predictable seed for SecureRandom; allow it to self-seed."
+    },
+    {
+        "misuse": "Weak Cryptography",
+        "vulnerable_code": [
+            "hm.put(\"ccc\", new Byte((byte) 300));",
+            "hm.put(\"ddd\", new Byte((byte) 400));"
+        ],
+        "description": "The values 300 and 400 are being cast to the byte type which can hold values from -128 to 127, causing overflow and thus inaccurate data to be stored.",
+        "recommendation": "Ensure that the values used for byte operations are within the valid range of the byte data type."
+    }
+]
+```

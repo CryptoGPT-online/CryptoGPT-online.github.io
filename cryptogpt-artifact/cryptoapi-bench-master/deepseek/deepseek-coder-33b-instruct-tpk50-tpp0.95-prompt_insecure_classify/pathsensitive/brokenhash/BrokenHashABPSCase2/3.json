@@ -1,0 +1,6 @@
+Misuse Type: CWE-327: Use of a Broken or Risky Cryptographic Algorithm
+Misuse Code Snippet: MessageDigest md = MessageDigest.getInstance("MD5"); if(choice>1) md = MessageDigest.getInstance("SHA-256");
+Description: This code is using the MessageDigest library in Java to hash a string. It starts by setting the hash algorithm to be used as MD5 but then checks a variable "choice". If choice is greater than 1, it changes the algorithm to SHA-256, which is considered more secure and stronger. However, MD5 is considered broken and not secure anymore for most purposes.
+Recommendation: If you are developing a new application, you should use a stronger algorithm like SHA-256. If you are maintaining an old application that requires MD5, you should take care not to use it for new purposes.
+
+Please note that this warning does not indicate an actual issue in your code, but more of a potential security risk. If MD5 was needed due to a specific application requirement, it may be valid to use it. It's always important to thoroughly understand the security implications of the cryptographic algorithm you are using.

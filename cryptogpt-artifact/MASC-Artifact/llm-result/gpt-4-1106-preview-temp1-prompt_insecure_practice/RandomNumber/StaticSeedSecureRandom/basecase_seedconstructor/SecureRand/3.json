@@ -1,0 +1,21 @@
+```json
+[
+    {
+        "misuse": "Insecure Use of SecureRandom with Static Seed",
+        "vulnerable_code": [
+            "SecureRandom rand1 = new SecureRandom(seedBytes);",
+            "SecureRandom rand2 = new SecureRandom(seedBytes);"
+        ],
+        "description": "SecureRandom instances are being seeded with a static seed value. This undermines the security of SecureRandom, as it produces predictable outputs which can be reproduced, not suitable for cryptography purposes.",
+        "recommendation": "Remove the static seed or use 'SecureRandom.getInstanceStrong()' to get a SecureRandom object that provides a strong random seed. If a seed is required, ensure it's unique and unpredictable."
+    },
+    {
+        "misuse": "Weak or Compromised Seed Material",
+        "vulnerable_code": [
+            "byte[] seedBytes = \"Seed\".getBytes(StandardCharsets.UTF_8);"
+        ],
+        "description": "The 'seedBytes' array is derived from a hardcoded, static string, which is easily guessable and weak as seed material for cryptographic use.",
+        "recommendation": "Secure the seed by using a strong source of entropy (e.g., java.security.SecureRandom) for generating seed material rather than a hardcoded string."
+    }
+]
+```

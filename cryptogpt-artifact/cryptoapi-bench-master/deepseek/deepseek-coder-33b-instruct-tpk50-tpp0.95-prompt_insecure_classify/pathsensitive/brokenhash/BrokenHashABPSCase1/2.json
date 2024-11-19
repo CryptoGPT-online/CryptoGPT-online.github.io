@@ -1,0 +1,36 @@
+The code you provided is using Java's MessageDigest library to hash a string. It seems to be in a good state for most common uses. However, it uses SHA-256 regardless of the value of the "choice" variable, which is likely to be a mistake. 
+
+If the "choice" variable is used to decide which hash algorithm to use, the algorithm should be decided based on the value of this variable. However, in your current code, regardless of the value of "choice", it will always use SHA-256.
+
+To use a conditional statement to decide between algorithms, the code should be something like this:
+
+```java
+if(choice > 1) {
+    md = MessageDigest.getInstance("SHA-256");
+} else {
+    md = MessageDigest.getInstance("SHA1");
+}
+```
+
+Here is the corrected code:
+
+```java
+public class B1 {
+    public static void main (String [] args) throws NoSuchAlgorithmException {
+        String name = "abcdef";
+        int choice = 2;
+        MessageDigest md = null;
+
+        if(choice > 1) {
+            md = MessageDigest.getInstance("SHA-256");
+        } else {
+            md = MessageDigest.getInstance("SHA1");
+        }
+
+        md.update(name.getBytes());
+        System.out.println(md.digest());
+    }
+}
+```
+
+This should be a safe use of MessageDigest.

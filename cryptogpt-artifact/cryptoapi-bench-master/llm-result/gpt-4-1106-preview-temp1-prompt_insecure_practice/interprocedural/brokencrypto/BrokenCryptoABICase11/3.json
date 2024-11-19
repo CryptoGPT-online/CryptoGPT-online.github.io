@@ -1,0 +1,37 @@
+```json
+[
+    {
+        "misuse": "Insecure Algorithm",
+        "vulnerable_code": [
+            "String key = \"DES\";",
+            "String crypto = \"DES/ECB/PKCS5Padding\";"
+        ],
+        "description": "DES is an outdated and insecure algorithm that can be cracked with relative ease due to its small key size of 56 bits.",
+        "recommendation": "Use a more secure algorithm such as AES with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "Insecure Mode of Operation",
+        "vulnerable_code": [
+            "String crypto = \"DES/ECB/PKCS5Padding\";"
+        ],
+        "description": "ECB (Electronic Codebook) mode is insecure when used with block ciphers as it does not provide serious message confidentiality. Identical plaintext blocks result in identical ciphertext blocks, making patterns in data recognizable.",
+        "recommendation": "Use a more secure mode such as CBC (Cipher Block Chaining) with a proper initialization vector or GCM (Galois/Counter Mode) for added authenticity and integrity checks."
+    },
+    {
+        "misuse": "KeyGenerator Misuse",
+        "vulnerable_code": [
+            "KeyGenerator.getInstance(cryptoKey);"
+        ],
+        "description": "The cryptoKey parameter value is presumed to be an algorithm name, but it's actually being set to \"DES\", which is not a valid input for KeyGenerator.getInstance. This method expects a key-generating algorithm, not a block cipher name.",
+        "recommendation": "Ensure that the argument to KeyGenerator.getInstance is a valid key-generating algorithm like 'AES' or 'DESede'."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": [
+            "KeyGenerator.getInstance(\"DES\");"
+        ],
+        "description": "When the 'DES' algorithm is used for key generation, it produces a key of 56 bits, which is no longer considered secure.",
+        "recommendation": "Use algorithms that support larger key sizes, such as AES with a minimum key size of 128 bits."
+    }
+]
+```

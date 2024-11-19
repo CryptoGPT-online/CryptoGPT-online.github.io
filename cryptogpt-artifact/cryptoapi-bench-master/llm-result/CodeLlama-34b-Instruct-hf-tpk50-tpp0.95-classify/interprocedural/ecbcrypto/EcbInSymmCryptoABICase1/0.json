@@ -1,0 +1,20 @@
+ [
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "Cipher.getInstance(crypto)",
+        "description": "The cipher algorithm used is ECB, which is not a secure mode of operation. ECB encryption mode does not use an Initialization Vector (IV) to initialize the cipher, which makes it vulnerable to attacks that involve encrypting the same plaintext multiple times. In addition, ECB encryption mode does not hide the pattern of the plaintext, which can make it easier to deduce the contents of the encrypted data.",
+        "recommendation": "Use a secure mode of operation such as CBC, CFB, or CTR, and use a random IV for each encryption operation."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "SecretKey key = keyGen.generateKey()",
+        "description": "The KeyGenerator.generateKey() method generates a key using a pseudo-random number generator (PRNG) that may not be secure. The PRNG may be predictable, which could allow an attacker to deduce the contents of the encrypted data.",
+        "recommendation": "Use a cryptographically secure random number generator, such as SecureRandom, to generate the key."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": "KeyGenerator.getInstance(\"AES\")",
+        "description": "The AES algorithm is a widely used encryption algorithm, but it is not the most secure algorithm available. A more secure algorithm, such as AES-256, should be used instead.",
+        "recommendation": "Use a more secure encryption algorithm, such as AES-256, instead of AES."
+    }
+]

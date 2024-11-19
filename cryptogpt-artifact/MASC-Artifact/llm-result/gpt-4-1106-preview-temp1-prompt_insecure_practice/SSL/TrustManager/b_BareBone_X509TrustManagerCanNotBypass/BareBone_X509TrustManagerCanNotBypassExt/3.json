@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "TrustManager that does not verify certificate chains",
+        "vulnerable_code": "public void checkClientTrusted(X509Certificate[] chain, String authType)",
+        "description": "The method checkClientTrusted is empty, meaning it does not enforce any form of certificate validation for client certificates. An attacker could exploit this to perform Man-in-the-Middle (MitM) attacks with any client certificate, including self-signed certificates.",
+        "recommendation": "Implement proper certificate validation by checking the validity of the certificate chain provided. Use the default TrustManager or customize the trust verification process to enforce security checks according to the organization's requirements."
+    },
+    {
+        "misuse": "TrustManager that does not verify certificate chains",
+        "vulnerable_code": "public void checkServerTrusted(X509Certificate[] chain, String authType)",
+        "description": "The method checkServerTrusted is empty, meaning it does not enforce validation of server certificates. This could allow an attacker to present any certificate, including invalid or self-signed ones without being detected, leading to a severe security risk like Man-in-the-Middle (MitM) attacks.",
+        "recommendation": "Implement certificate chain validation logic within checkServerTrusted method to ensure that the server's certificate chain is valid and trusted. Use the system's default TrustManager as a reference implementation and add any additional checks necessary for your application."
+    },
+    {
+        "misuse": "Improper certificate chain validation",
+        "vulnerable_code": "public X509Certificate[] getAcceptedIssuers()",
+        "description": "Returning null from getAcceptedIssuers indicates that the trust manager does not have any trusted issuers. This could be used by an attacker to present any certificate which would be accepted since no proper chain trust validation is done.",
+        "recommendation": "Return a list of trusted CA certificates that your application is willing to trust. An empty array should be returned if no trusted CAs are configured, rather than null."
+    }
+]
+```

@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "TrustManager that does not verify certificates",
+        "vulnerable_code": "new X509TrustManager() {...",
+        "description": "The custom X509TrustManager implementation does not adequately verify the certificate chain of a client or server. This could allow malicious certificates to be trusted and enable man-in-the-middle attacks.",
+        "recommendation": "Implement proper certificate validation in the checkClientTrusted and checkServerTrusted methods."
+    },
+    {
+        "misuse": "Empty getAcceptedIssuers method",
+        "vulnerable_code": "public X509Certificate[] getAcceptedIssuers() {...",
+        "description": "Returning an empty array from the getAcceptedIssuers method means the TrustManager will accept any certificate, effectively disabling certificate verification. This is insecure as it does not provide any assurance of the server's or client's identity.",
+        "recommendation": "Return a valid array of certificates that are trusted for establishing connections."
+    }
+]
+```

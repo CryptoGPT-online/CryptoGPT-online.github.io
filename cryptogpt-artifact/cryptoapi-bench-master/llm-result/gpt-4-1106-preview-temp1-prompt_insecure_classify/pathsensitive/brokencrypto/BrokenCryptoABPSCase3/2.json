@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "Cipher.getInstance(\"RC4\")",
+        "description": "The RC4 encryption algorithm is considered to be broken and insecure. It is vulnerable to several attacks and should not be used in secure communications.",
+        "recommendation": "Replace RC4 with a secure algorithm such as AES."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "KeyGenerator.getInstance(\"AES\")",
+        "description": "There is no specification of the key size for the AES key generator. It might generate a key with a default size which could be insufficient, depending on what size is considered secure at the time.",
+        "recommendation": "Specify the key size explicitly when generating AES keys, e.g., use KeyGenerator.getInstance(\"AES\").init(256) for a 256-bit key."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "keyGen.generateKey()",
+        "description": "The KeyGenerator does not specify a secure random source which may result in weak keys if the default is not secure.",
+        "recommendation": "Specify a secure random source when generating keys, e.g., keyGen.init(256, SecureRandom.getInstance(\"SHA1PRNG\"))"
+    }
+]
+```

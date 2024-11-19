@@ -1,0 +1,98 @@
+```java
+import javax.net.ssl.X509TrustManager;
+
+public abstract class BareBone_X509TrustManagerCanBypassExt implements X509TrustManager {
+}
+
+public class Bs {
+    static X509TrustManager getTrustManager(){
+		return new BareBone_X509TrustManagerCanBypassExt(){
+
+			@Override
+			public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public X509Certificate[] getAcceptedIssuers() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+        };
+	}
+    public static void main(String[] args) {
+        getTrustManager();
+        System.out.println("Hello World");
+    }
+}
+```
+
+1. **Misuse**: Trust Manager Bypass
+   - **Vulnerable Code**:
+   
+     ```java
+     static X509TrustManager getTrustManager(){
+		return new BareBone_X509TrustManagerCanBypassExt(){
+
+			@Override
+			public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public X509Certificate[] getAcceptedIssuers() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+        };
+	}
+     ```
+   - **Description**: This code creates a custom X509TrustManager that bypasses all certificate checks. This can be dangerous as it allows connections to untrusted servers, which could lead to man-in-the-middle attacks or other security breaches.
+   - **Recommendation**: Use a proper X509TrustManager implementation that performs proper certificate validation.
+
+2. **Misuse**: Lack of Certificate Validation
+   - **Vulnerable Code**:
+   
+     ```java
+     static X509TrustManager getTrustManager(){
+		return new BareBone_X509TrustManagerCanBypassExt(){
+
+			@Override
+			public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public X509Certificate[] getAcceptedIssuers() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+        };
+	}
+     ```
+   - **Description**: The custom X509TrustManager created in this code does not perform any certificate validation. This means that it will trust any certificate, regardless of whether it is valid or not. This can be dangerous as it allows connections to untrusted servers, which could lead to man-in-the-middle attacks or other security breaches.
+   - **Recommendation**: Implement proper certificate validation in the custom X509TrustManager.

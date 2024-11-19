@@ -1,0 +1,24 @@
+```json
+[
+    {"misuse": "CWE-326: Inadequate Encryption Strength",
+     "vulnerable_code": "public static final String DEFAULT_SALT = \"12345\";",
+     "description": "The salt used for encryption is inadequate in length and complexity. Using a short and predictable salt can lead to vulnerabilities such as easier brute force attacks.",
+     "recommendation": "Use a longer and more complex salt, ideally generated using a secure random number generator."
+    },
+    {"misuse": "CWE-798: Use of Hardcoded Credentials",
+     "vulnerable_code": "public static final String DEFAULT_SALT = \"12345\";",
+     "description": "The salt is hardcoded within the code, which makes it predictable and accessible to anyone who can read the code.",
+     "recommendation": "Avoid hardcoding the salt; instead, generate it at runtime using a secure random number generator and store it securely."
+    },
+    {"misuse": "CWE-330: Use of Insufficiently Random Values",
+     "vulnerable_code": "pbeParamSpec = new PBEParameterSpec(new byte[]{Byte.parseByte(salt.toString())}, count);",
+     "description": "The method of converting the salt to a byte array is incorrect. Calling toString() on a char array does not convert the characters to a String representation of the array's contents but rather generates a String object representing the array's identity. Additionally, the salt should be generated using a cryptographically secure random number generator.",
+     "recommendation": "Correctly convert the char array to a byte array and ensure that the salt is generated securely."
+    },
+    {"misuse": "CWE-326: Inadequate Encryption Strength",
+     "vulnerable_code": "pbeParamSpec = new PBEParameterSpec(new byte[]{Byte.parseByte(salt.toString())}, count);",
+     "description": "The iteration count (1020) provided to the PBEParameterSpec constructor may be insufficient to provide adequate key strengthening, depending on the algorithm and context.",
+     "recommendation": "Use a higher iteration count that is considered safe by contemporary standards, typically at least 10,000 iterations."
+    }
+]
+```

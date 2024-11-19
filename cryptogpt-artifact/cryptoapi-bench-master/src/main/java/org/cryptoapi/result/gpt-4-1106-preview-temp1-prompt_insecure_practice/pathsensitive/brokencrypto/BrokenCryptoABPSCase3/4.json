@@ -1,0 +1,34 @@
+```json
+[
+  {
+    "misuse": "Broken Crypto Algorithm",
+    "vulnerable_code": "Cipher.getInstance(\"RC4\")",
+    "description": "RC4 is considered to be a broken and insecure cryptographic algorithm.",
+    "recommendation": "Replace RC4 with a secure encryption algorithm such as AES."
+  },
+  {
+    "misuse": "Improper Key Generation",
+    "vulnerable_code": "KeyGenerator.getInstance(\"AES\"); SecretKey key = keyGen.generateKey();",
+    "description": "The key generation does not specify a key size for AES, which can result in a weak default key size depending on the JCE implementation.",
+    "recommendation": "Specify a key size when generating the AES key, such as 128, 192, or 256 bits."
+  },
+  {
+    "misuse": "Inadequate Error Handling",
+    "vulnerable_code": "public void go(int choice)",
+    "description": "The method throws generic exceptions which lack specificity and may not correctly handle cryptographic errors.",
+    "recommendation": "Use more specific exception handling, or handle exceptions in a way that does not expose details of the encryption process."
+  },
+  {
+    "misuse": "Insufficiently Protected Credentials",
+    "vulnerable_code": "keyGen.generateKey()",
+    "description": "There is no secure handling or protection of the generated secret key. The key could be exposed through memory dumps or other runtime attacks.",
+    "recommendation": "Ensure that secret keys are stored and handled securely, such as using a KeyStore or clearing the memory once the key is no longer needed."
+  },
+  {
+    "misuse": "Insecure Initialization Vector (IV)",
+    "vulnerable_code": "cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\")",
+    "description": "When using AES in CBC mode, a secure, random IV should be provided in the encryption process. The code does not explicitly set an IV, which may lead to the use of an implicit, potentially static IV.",
+    "recommendation": "Generate a random IV for each encryption operation and set it using IvParameterSpec."
+  }
+]
+```

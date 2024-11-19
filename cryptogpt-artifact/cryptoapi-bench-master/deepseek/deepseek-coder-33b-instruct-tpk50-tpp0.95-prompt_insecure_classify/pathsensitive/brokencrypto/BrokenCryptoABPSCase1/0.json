@@ -1,0 +1,9 @@
+
+```json
+[{
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"DES/ECB/PKCS5Padding\");\n...\nif (choice > 1)\n   cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");\n...\ncipher.init(Cipher.ENCRYPT_MODE, key);",
+    "description": "The Cipher object is instantiated using DES, but it is later used with AES key. If the choice is greater than 1, the cipher object is replaced with AES cipher. This leads to incorrect usage of cryptographic algorithms.",
+    "recommendation": "Ensure to use the correct cipher algorithm based on the key used, either AES or DES. If the choice is determined dynamically, make sure the same cipher algorithm is consistently used."
+}]
+```

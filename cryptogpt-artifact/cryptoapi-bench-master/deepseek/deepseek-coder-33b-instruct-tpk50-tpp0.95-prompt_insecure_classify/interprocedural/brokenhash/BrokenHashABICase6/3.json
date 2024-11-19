@@ -1,0 +1,33 @@
+CWE-330: Use of Insufficiently Random Values.
+
+Vulnerable Code:
+```java
+private static void go2(){
+    CRYPTO = DEFAULT_CRYPTO.toCharArray();
+}
+```
+
+```java
+private static void go3(){
+    crypto = CRYPTO;
+}
+```
+
+Description: 
+In this code, the variable `CRYPTO` is initialized with a default crypto algorithm "MD5" as a character array (`CRYPTO = DEFAULT_CRYPTO.toCharArray();`), and later `crypto` is given the value of `CRYPTO` without further modification. Then when `MessageDigest.getInstance(String.valueOf(crypto));` is called, it will always initialize the MessageDigest with the algorithm "MD5" (since `crypto` is equal to "MD5" in char array format). 
+
+This may not be the intended functionality. If the `crypto` variable is expected to be mutable or different values could be assigned to it later in the code, then this could result in security issues if an attacker is able to control the value of `crypto`.
+
+Recommendation:
+Ensure that any code or user input affecting the crypto algorithm to be used should only assign the final value of the crypto algorithm to a string variable and pass it to `MessageDigest.getInstance()`. It is not recommended to use non-constant crypto algorithms based on external inputs.
+
+In this case, the problem lies in the `go2()` and `go3()` methods. If these methods are necessary, the code should convert `DEFAULT_CRYPTO` to a `char[]`, assign this to `CRYPTO`, then `crypto` should be assigned this `CRYPTO` value to prevent tampering with the crypto algorithm.
+
+If these methods are unnecessary or unintended to be used, they can be removed. If they are necessary, the code should look like this:
+
+```java
+private static void go2(){
+    CRYPTO = DEFAULT_CRYPTO.toCharArray();
+    crypto = CRYPTO;
+}
+```

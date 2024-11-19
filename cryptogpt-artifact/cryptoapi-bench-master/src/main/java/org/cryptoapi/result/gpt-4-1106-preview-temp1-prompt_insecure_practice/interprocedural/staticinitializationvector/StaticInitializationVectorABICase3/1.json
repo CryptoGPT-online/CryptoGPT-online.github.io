@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insufficient IV size for encryption",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+        "description": "The IV for AES CBC mode should be 16 bytes (128 bits), but the input byte array may not meet this length requirement, which can compromise the encryption's security.",
+        "recommendation": "Ensure that the IV size is exactly 16 bytes, and consider securely generating a random IV for each encryption operation."
+    },
+    {
+        "misuse": "Hardcoded Initialization Vector (IV)",
+        "vulnerable_code": "byte [] bytes = \"abcde\".getBytes();",
+        "description": "The code uses a hardcoded string that is converted to bytes as the IV, which can potentially be predictable and not provide the necessary security guarantees.",
+        "recommendation": "Replace the hardcoded IV with a securely generated random IV for each encryption operation."
+    },
+    {
+        "misuse": "Using Encryption without Integrity Protection",
+        "vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "The use of AES in CBC mode without a Message Authentication Code (MAC) or an equivalent mechanism does not protect the ciphertext against tampering. This can lead to vulnerabilities like padding oracle attacks.",
+        "recommendation": "Use an authenticated encryption mode such as GCM (Galois/Counter Mode) or apply a MAC such as HMAC, after the encryption step to ensure integrity."
+    },
+    {
+        "misuse": "Lack of Secure Random Key Generation",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "description": "The KeyGenerator instance is not explicitly initialized with a secure random seed or a specified key size, which might result in a weak key.",
+        "recommendation": "Initialize the KeyGenerator with a specific key size using keyGen.init(size, SecureRandom) and ensure the use of a secure random instance."
+    }
+]
+```

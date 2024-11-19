@@ -1,0 +1,18 @@
+### False Positive Misuse ###
+
+1. **Misuse:** CWE-295: Improper Certificate Validation
+**Vulnerable Code:** `if(true || session.getCipherSuite().length()>=0)`
+**Description:** This misuse is a false positive because the code is not validating the server's certificate. It is only checking the length of the cipher suite, which is not a valid check for certificate validation.
+**Recommendation:** N/A
+
+### Optimized Misuse JSON ###
+
+[
+  {
+    "misuse category": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+    "vulnerable_method": "HostNameVerifier.verify()",
+    "vulnerable_code": "if(true || session.getCipherSuite().length()>=0)",
+    "description": "The code always returns true, regardless of the cipher suite used by the SSL session. This means that the server will accept any cipher suite, even if it is weak or insecure.",
+    "recommendation": "The code should be changed to only accept cipher suites that are considered to be secure."
+  }
+]

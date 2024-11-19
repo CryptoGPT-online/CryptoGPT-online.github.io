@@ -1,0 +1,37 @@
+In this code, the use of KeyGenerator to generate a key and a Cipher to encrypt data is problematic. The issue is with this line:
+```
+KeyGenerator keyGen = KeyGenerator.getInstance(cryptoKey);
+```
+The "cryptoKey" in the getInstance method should be a crypto algorithm instead of a key. The user-provided "key" (which is a crypto algorithm) is used as a crypto algorithm, which results in a vulnerability.
+
+Here is the corrected code:
+
+```java
+import javax.crypto.KeyGenerator;
+import javax.crypto.Cipher;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+
+public class B1 {
+    public static void method2(String c, String key) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+        String cryptoAlgo = c;
+        method1(cryptoAlgo,key);
+    }
+    public static void method1(String crypto,String cryptoKey) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+        KeyGenerator keyGen = KeyGenerator.getInstance(cryptoKey);
+        SecretKey key = keyGen.generateKey();
+        Cipher cipher = Cipher.getInstance(crypto);
+        cipher.init(Cipher.ENCRYPT_MODE, key);
+    }
+
+    public static void main (String [] args) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+        String key = "DES";
+        String crypto = "DES/ECB/PKCS5Padding";
+        method2(crypto,key);
+    }
+}
+```
+
+In this correction, we should create a KeyGenerator instance based on the crypto algorithm (DES in this case), and then generate a key for it. The user-provided "cryptoKey" should be a crypto algorithm (like DES) not a key, which is what the user provides.

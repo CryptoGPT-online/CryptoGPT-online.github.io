@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Weak Seed Generation",
+        "vulnerable_code": "byte [] seed = {(byte) 100, (byte) 200};",
+        "description": "The seed provided to the SecureRandom is a constant array of bytes, which can be easily guessed. The use of weak seeds can lead to predictable random number sequences, compromising security.",
+        "recommendation": "Use a strong seed source for SecureRandom. This could be a hardware device, a process ID or a high-resolution timestamp."
+    },
+    {
+        "misuse": "Weak Predictability",
+        "vulnerable_code": "byte [] seed = {(byte) 100, (byte) 200};\nif(choice>1)\n    sr2.nextBytes(seed);",
+        "description": "The seed is predictable as it depends on the choice variable. Anybody who can control this variable can predict future values produced by the SecureRandom.",
+        "recommendation": "Avoid using constant values or predictable data as a seed. Use a more random source, like java.security.SecureRandom.generateSeed(int numBytes) to generate a strong seed."
+    }
+]
+```

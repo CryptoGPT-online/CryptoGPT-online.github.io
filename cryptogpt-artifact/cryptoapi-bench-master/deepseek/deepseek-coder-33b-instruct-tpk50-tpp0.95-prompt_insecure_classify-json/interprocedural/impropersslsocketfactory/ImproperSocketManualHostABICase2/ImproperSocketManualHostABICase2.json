@@ -1,0 +1,31 @@
+## False Positive Misuse
+
+The following misuse was not determined to be false positive:
+
+```json
+[
+  {
+    "misuse category": "Hardcoding Security Sensitive Information",
+    "vulnerable_method": "private static char[] HOST_NAME;",
+    "vulnerable_code": "private static char[] HOST_NAME;",
+    "description": "The use of a hardcoded string for the host name can expose it to attackers. It's better to use a configuration file or environment variables to store sensitive data like host names, passwords, or API keys.",
+    "recommendation": "Use a configuration file or environment variables to store sensitive data."
+  }
+]
+```
+
+## Optimized Misuse JSON
+
+Based on the context, the first and last misuse were determined to be false positive as there is no use of hard-coded sensitive data or any risky cryptographic algorithm involved. The only misuse that is not false positive is shown below:
+
+```json
+[
+  {
+    "misuse category": "Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_method": "private static char[] HOST_NAME;",
+    "vulnerable_code": "HOST_NAME = DEFAULT_HOST_NAME.toCharArray();",
+    "description": "Host name conversion to char array is used without any cryptographic operations. This might be risky if the host name is user-provided or changes over time.",
+    "recommendation": "If you are using the host name as a string, make sure it's validated or sanitized to prevent any misuse. If you need to convert the host name to a char array, make sure to do it properly according to the cryptographic standards."
+  }
+]
+```

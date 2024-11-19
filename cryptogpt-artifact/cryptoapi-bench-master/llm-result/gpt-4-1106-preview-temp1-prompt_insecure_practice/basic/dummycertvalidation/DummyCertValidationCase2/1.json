@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "TrustManager that does not validate certificate chains",
+        "vulnerable_code": "public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException { }",
+        "description": "The checkServerTrusted method is empty and does not implement any certificate validation. This could allow any certificate, including self-signed ones or those signed by an unknown authority, to be accepted as valid.",
+        "recommendation": "Implement proper validation of certificate chains in the checkServerTrusted method according to the application's trust policy."
+    },
+    {
+        "misuse": "TrustManager that does not validate certificate chains",
+        "vulnerable_code": "public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException { }",
+        "description": "The checkClientTrusted method is empty and does not implement any certificate validation. This could lead to accepting connections from clients with invalid SSL/TLS certificates.",
+        "recommendation": "Implement proper validation of certificate chains in the checkClientTrusted method according to the trust policy required for client authentication."
+    },
+    {
+        "misuse": "Empty array of accepted issuers",
+        "vulnerable_code": "return new X509Certificate[0];",
+        "description": "The getAcceptedIssuers method returns an empty array, which means no CA certificates are trusted. As a result, the trust manager does not trust any issuers, making it unusable for a secure TLS connection.",
+        "recommendation": "Return a non-empty array of trusted CA certificates or implement logic to dynamically determine the trusted issuers based on the trust policy."
+    }
+]
+```

@@ -1,0 +1,24 @@
+
+
+```json
+[
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": "ckp.key(key);",
+        "description": "The key size used for PBE is not negotiated during the communication. If an attacker can modify the communication, they can change the key size, potentially selecting a less secure algorithm.",
+        "recommendation": "Negotiate the size of the key used for PBE during the communication to ensure the security of the application."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "ckp.key(key);",
+        "description": "The PBE is using a low iteration count (11010) which is less than the recommended value (10000). This makes the PBE computationally expensive and vulnerable to brute force attacks.",
+        "recommendation": "Increase the iteration count to a secure value."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "String key = hm.get("aaa");",
+        "description": "The key for the PBE is derived from a hardcoded string, which is fetched from a HashMap. This weakens the security of the application because if an attacker can guess or brute force this key, they can potentially decrypt the data.",
+        "recommendation": "Avoid using hardcoded credentials. Instead, fetch the credentials from secure storage or use secure protocols."
+    }
+]
+```

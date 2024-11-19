@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "checkServerTrusted(X509Certificate[] chain, String authType)",
+        "description": "The method checkServerTrusted has been overridden to do nothing, which means it does not validate any certificate from the server, potentially accepting any certificate even if it is not trusted.",
+        "recommendation": "Implement certificate validation in checkServerTrusted method or use the default trust manager that performs the certificate validation properly."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "SSLContext.getInstance(\"SSL\")",
+        "description": "The 'SSL' protocol is considered insecure. There have been multiple vulnerabilities found in SSL, and it is now deprecated.",
+        "recommendation": "Use TLS (for example 'TLSv1.2' or 'TLSv1.3') instead of the SSL protocol for secure connections."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "new SecureRandom()",
+        "description": "While using SecureRandom here is good, the SSLContext does not enforce the use of strong ciphers. Without ensuring strong ciphers are used, the encryption strength could be inadequate.",
+        "recommendation": "Define and enforce a strong cipher suite when initializing the SSLContext."
+    }
+]
+```

@@ -1,0 +1,45 @@
+### False Positive Misuse ###
+
+1. "ECB Mode in Cipher Instance" and "ECB Mode in RSA" are false positives. RSA is not a block cipher and does not use modes of operation like ECB or CBC. The "RSA" transformation string in `Cipher.getInstance("RSA")` does not imply ECB mode as it would with block ciphers. RSA operates on the entire block and does not have modes of operation in the same sense as block ciphers.
+
+2. "Unused Variable" is a false positive. The variable `KEY_SIZE` is used in the methods `go2()` and `go3()`, which in turn affect the `keysize` variable that is used to initialize the `KeyPairGenerator`.
+
+### Optimized Misuse JSON###
+
+```json
+[
+  {
+    "misuse": "Insufficient Key Size",
+    "vulnerable_code": "public static final int DEFAULT_KEY_SIZE = 1024;",
+    "description": "The key size of 1024 for RSA is considered to be insufficient for security.",
+    "recommendation": "Increase the key size to at least 2048 bits."
+  },
+  {
+    "misuse": "Default Algorithm Without Secure Padding",
+    "vulnerable_code": [
+      "Cipher cipher = Cipher.getInstance(\"RSA\");",
+      "Cipher dec = Cipher.getInstance(\"RSA\");"
+    ],
+    "description": "Using RSA without specifying a padding scheme can lead to insecure encryption. RSA encryption should be used with secure padding such as OAEP.",
+    "recommendation": "Specify a padding scheme like OAEP with a proper hash function, for example 'RSA/ECB/OAEPWithSHA-256AndMGF1Padding'."
+  },
+  {
+    "misuse": "Static Mutable Fields",
+    "vulnerable_code": [
+      "private static int KEY_SIZE;",
+      "private static int keysize;"
+    ],
+    "description": "Use of static mutable fields can introduce security issues if multiple threads access and modify these shared variables in a concurrent context.",
+    "recommendation": "Avoid using static mutable fields or ensure proper synchronization if needed."
+  },
+  {
+    "misuse": "Missing Exception Handling",
+    "vulnerable_code": [
+      "\"public void go(KeyPairGenerator kgp, KeyPair kp) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IOException, IllegalBlockSizeException, BadPaddingException, ClassNotFoundException\"",
+      "\"public static void main (String [] args) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IOException, IllegalBlockSizeException, BadPaddingException, ClassNotFoundException\""
+    ],
+    "description": "The code throws a broad set of exceptions from the main methods without actually handling them. This can expose stack traces to users, potentially revealing underlying implementation details.",
+    "recommendation": "Exceptions should be caught and handled appropriately to avoid potential information disclosure."
+  }
+]
+```

@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "pbeParamSpec = new PBEParameterSpec(salt, Integer.parseInt(String.valueOf(count)));",
+        "description": "The iteration count 'count' is potentially too low for PBKDF2, which can lead to inadequate encryption strength.",
+        "recommendation": "Use a higher iteration count for key derivation, typically at least 10,000 iterations."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "public static final String DEFAULT_COUNT = \"20\";",
+        "description": "The iteration count is derived from a hardcoded value, which might be considered as using hardcoded credentials if this value contributes to cryptographic operations.",
+        "recommendation": "Avoid using hardcoded values for cryptographic operations; instead, use a secure method to generate and store cryptographic parameters."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "COUNT = DEFAULT_COUNT.toCharArray();\ngo2();\ngo3();",
+        "description": "The variable 'count' is initialized from a hardcoded string, which does not provide a sufficiently random value, especially for cryptographic operations such as setting the iteration count for PBEParameterSpec.",
+        "recommendation": "Ensure that any cryptographic parameters are generated using a secure random number generator or are derived in a secure manner."
+    }
+]
+```

@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "SecureRandom rand1 = new SecureRandom(seedBytes); SecureRandom rand2 = new SecureRandom(seedBytes);",
+        "description": "Two instances of SecureRandom are seeded with the same value which will produce the same sequence of random numbers in both instances. This reduces the entropy of the values produced and may make the output predictable.",
+        "recommendation": "Avoid using user-defined seeds for SecureRandom unless absolutely necessary; let the implementation use its default seeding mechanism which is designed to be secure. If a seed is required for a specific use case, make sure that it is not predictable and has high entropy."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "byte[] seedBytes = \"Seed\".getBytes(StandardCharsets.UTF_8);",
+        "description": "The 'seedBytes' value is hardcoded in the source, making the seed predictable and increasing the risk of an attacker being able to reproduce the same sequence of random numbers if they have access to the source code.",
+        "recommendation": "Use a more secure and unpredictable source for the seed value, such as using the default no-argument constructor for SecureRandom which does not accept a seed, thus it provides better randomness by relying on the underlying operating system's own entropy source."
+    }
+]
+```

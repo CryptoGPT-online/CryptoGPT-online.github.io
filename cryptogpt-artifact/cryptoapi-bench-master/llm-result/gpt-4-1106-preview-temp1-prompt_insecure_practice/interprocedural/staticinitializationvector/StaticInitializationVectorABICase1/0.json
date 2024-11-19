@@ -1,0 +1,47 @@
+```json
+[
+    {
+        "misuse": "Insufficient IV Size for Cipher Block Mode",
+        "vulnerable_code": [
+            "byte [] bytes = \"abcde\".getBytes();",
+            "IvParameterSpec ivSpec = new IvParameterSpec(bytes);"
+        ],
+        "description": "The initialization vector (IV) should be the same size as the cipher's block size. For AES, this should be 128 bits (16 bytes). Using a smaller IV can lead to weak cryptography.",
+        "recommendation": "Use a securely generated random IV of the correct size."
+    },
+    {
+        "misuse": "Weak Key Generation",
+        "vulnerable_code": [
+            "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+            "SecretKey key = keyGen.generateKey();"
+        ],
+        "description": "The KeyGenerator is not initialized with a specific key size, which can lead to generating a key with a default size that might not be secure enough for certain applications.",
+        "recommendation": "Specify a key size when initializing the KeyGenerator instance to ensure it is adequately secure, such as 128, 192, or 256 bits."
+    },
+    {
+        "misuse": "Hardcoded IV",
+        "vulnerable_code": [
+            "byte [] bytes = \"abcde\".getBytes();",
+            "IvParameterSpec ivSpec = new IvParameterSpec(bytes);"
+        ],
+        "description": "Using a hardcoded, non-random IV makes the encryption more predictable and vulnerable to certain attacks such as replay attacks.",
+        "recommendation": "Generate a unique, random IV for each encryption request."
+    },
+    {
+        "misuse": "Static IV with CBC Mode",
+        "vulnerable_code": [
+            "IvParameterSpec ivSpec = new IvParameterSpec(bytes);"
+        ],
+        "description": "Using a static initialization vector (IV) with CBC mode encryption is insecure as it does not provide semantic security.",
+        "recommendation": "Use a securely generated random IV for each encryption operation."
+    },
+    {
+        "misuse": "Insufficient Error Handling",
+        "vulnerable_code": [
+            "public void go(byte[] bytes) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, InvalidAlgorithmParameterException"
+        ],
+        "description": "Error handling for security-related exceptions is not provided, which could leak information about the cryptographic mechanisms used or allow an attacker to infer the nature of the failure.",
+        "recommendation": "Handle exceptions properly to avoid any potential information leakage or system compromise."
+    }
+]
+```

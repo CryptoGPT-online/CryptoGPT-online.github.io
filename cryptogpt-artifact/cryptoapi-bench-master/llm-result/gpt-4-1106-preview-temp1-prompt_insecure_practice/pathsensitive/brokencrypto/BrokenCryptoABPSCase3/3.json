@@ -1,0 +1,28 @@
+```json
+[
+  {
+    "misuse": "Inconsistent use of encryption algorithms",
+    "vulnerable_code": "Cipher.getInstance(\"RC4\")",
+    "description": "The code uses 'RC4' which is a weak stream cipher, and switching to 'AES/CBC/PKCS5Padding' is based on a conditional statement which could lead to inconsistent encryption.",
+    "recommendation": "Use a consistent and strong encryption algorithm such as 'AES/GCM/NoPadding'."
+  },
+  {
+    "misuse": "Use of a non-initialized IV for CBC mode",
+    "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+    "description": "When using 'AES/CBC/PKCS5Padding', an initialization vector (IV) must be specified; using Cipher without it may allow for weak cryptography.",
+    "recommendation": "Generate a random IV and use it by specifying a new IvParameterSpec."
+  },
+  {
+    "misuse": "ECB Mode Allowed",
+    "vulnerable_code": "Cipher.getInstance(\"AES\")",
+    "description": "Although ECB mode is not explicitly used, not defining a cipher mode defaults to ECB, which is insecure as it doesn't provide serious message confidentiality.",
+    "recommendation": "Specify a strong encryption mode and padding scheme explicitly."
+  },
+  {
+    "misuse": "KeyGenerator without specifying key size",
+    "vulnerable_code": "KeyGenerator.getInstance(\"AES\")",
+    "description": "Using KeyGenerator without specifying a key size could potentially use a default weak key size.",
+    "recommendation": "Specify a key size during key generation, such as KeyGenerator.getInstance(\"AES\").init(256);"
+  }
+]
+```

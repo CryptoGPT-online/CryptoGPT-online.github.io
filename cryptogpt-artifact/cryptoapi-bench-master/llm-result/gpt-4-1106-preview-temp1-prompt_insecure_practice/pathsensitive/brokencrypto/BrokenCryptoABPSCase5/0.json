@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "Cipher.getInstance(\"IDEA\")",
+        "description": "IDEA is an outdated encryption algorithm with known weaknesses. Using a weak or broken algorithm can expose the data to decryption by attackers.",
+        "recommendation": "Replace IDEA with a more secure algorithm, like AES."
+    },
+    {
+        "misuse": "Unspecified Cipher Mode and Padding",
+        "vulnerable_code": "Cipher.getInstance(\"AES\")",
+        "description": "When obtaining an instance of a Cipher object without specifying the cipher mode and padding, Java defaults to ECB mode and PKCS5Padding, which may not be secure. ECB mode does not provide serious message confidentiality and is vulnerable to pattern attacks.",
+        "recommendation": "Specify the cipher mode and padding scheme when obtaining an instance of Cipher, e.g., 'AES/CBC/PKCS5Padding'."
+    },
+    {
+        "misuse": "Use of Static/Deterministic IV",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key)",
+        "description": "The code initializes the cipher without specifying an initialization vector (IV). When using CBC mode, reusing an IV can result in pattern leakage and potentially allows an attacker to retrieve the plain text from repeated ciphertext blocks.",
+        "recommendation": "Generate a new random IV for each encryption operation and provide it to cipher.init along with the SecretKey."
+    }
+]
+```

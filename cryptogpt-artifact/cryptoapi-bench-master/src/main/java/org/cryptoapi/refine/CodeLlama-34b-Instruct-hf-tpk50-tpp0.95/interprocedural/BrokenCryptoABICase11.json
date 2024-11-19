@@ -1,0 +1,52 @@
+ ### False Positive Misuses ###
+
+The following misuses are identified as false positives and will not be included in the optimized misuse JSON:
+
+1. "Broken Crypto Algorithm" in method1() method: The method uses a user-provided cipher algorithm name, which can lead to vulnerabilities if the user provides an invalid or malicious algorithm name.
+2. "Insufficient Key Size" in method1() method: The method uses a 56-bit key for the cipher, which is vulnerable to brute force attacks.
+3. "ECB Mode" in method1() method: The method uses the Electronic Codebook (ECB) mode, which can lead to plaintext attacks.
+
+### Optimized Misuse JSON ###
+
+[{"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "method2() method: The crypto algorithm used is insecure and deprecated.",
+"description": "The method2() method uses the DES algorithm, which is considered insecure and deprecated. It is recommended to use more secure and modern algorithms such as AES.",
+"recommendation": "Replace the DES algorithm with a more secure and modern algorithm such as AES in the method2() method."},
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "method1() method: The crypto algorithm used is insecure and deprecated.",
+"description": "The method1() method uses the DES algorithm, which is considered insecure and deprecated. It is recommended to use more secure and modern algorithms such as AES.",
+"recommendation": "Replace the DES algorithm with a more secure and modern algorithm such as AES in the method1() method."},
+{
+"misuse": "Insecure Crypto API Use",
+"vulnerable_code": "method2() method: The use of ECB mode is insecure.",
+"description": "The method2() method uses the ECB mode of operation, which is insecure. ECB mode can leak information about the encrypted data, and it is not recommended for use in new code.",
+"recommendation": "Replace the ECB mode with a more secure mode of operation such as CBC or GCM in the method2() method."},
+{
+"misuse": "Insecure Crypto API Use",
+"vulnerable_code": "method1() method: The use of PKCS5Padding is insecure.",
+"description": "The method1() method uses PKCS5Padding, which is considered insecure. It is recommended to use a more secure padding method such as OAEP or PSS in the method1() method.",
+"recommendation": "Replace PKCS5Padding with a more secure padding method such as OAEP or PSS in the method1() method."},
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "method2(crypto,key)",
+"description": "The use of the DES algorithm in ECB mode is vulnerable to attacks such as the ECB padding oracle attack. This can allow an attacker to recover the plaintext of the encrypted data.",
+"recommendation": "Use a secure cryptographic algorithm such as AES in GCM or CBC mode with a secure key management system to protect the encryption key."},
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "method2(crypto,key);",
+"description": "The method method2 is using the DES encryption algorithm, which is considered to be broken and should not be used. The method is also using the ECB mode of operation, which is not semantically secure. Additionally, the key generation algorithm is not specified, which could result in the use of an insecure key.",
+"recommendation": "Use a secure encryption algorithm such as AES, and specify a secure key generation algorithm such as RSA or DSA. Also, use a secure mode of operation such as GCM or CBC."},
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "String cryptoAlgo = c;",
+"description": "The method2 function takes a string parameter c, which is passed to method1 without any validation. The method1 function then uses the string value as the crypto algorithm for generating a key and encrypting data. This allows an attacker to specify the crypto algorithm, potentially using a weak or broken algorithm that can be easily cracked.",
+"recommendation": "The method2 function should validate the input string to ensure it is a valid crypto algorithm before passing it to method1. The validation should include checking the algorithm against a list of approved algorithms, and the method1 function should be updated to use a secure algorithm by default if the input algorithm is not valid."
+}
+] {
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "String cryptoAlgo = c;",
+"description": "The method2 function takes a string parameter c, which is passed to method1 without any validation. The method1 function then uses the string value as the crypto algorithm for generating a key and encrypting data. This allows an attacker to specify the crypto algorithm, potentially using a weak or broken algorithm that can be easily cracked.",
+"recommendation": "The method2 function should validate the input string to ensure it is a valid crypto algorithm before passing it to method1. The validation should include checking the algorithm against a list of approved algorithms, and the method1 function should be updated to use a secure algorithm by default if the input algorithm is not valid."
+}
+---misuses lists end---

@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "Insecure Salt",
+    "vulnerable_code": "public static final String DEFAULT_SALT = \"12345\";",
+    "description": "The salt used for encryption is hardcoded and very short, which makes it predictable and not secure.",
+    "recommendation": "Use a securely generated random salt of adequate length."
+  },
+  {
+    "misuse": "Inadequate Iteration Count",
+    "vulnerable_code": "int count = 1020;",
+    "description": "The iteration count (1020) for the key derivation function may not be sufficient. Standards suggest a minimum of 10,000 iterations, depending on the algorithm and application.",
+    "recommendation": "Increase the iteration count to a value that is appropriate for the security level required, typically at least 10,000."
+  },
+  {
+    "misuse": "Improper Conversion of Salt to Byte Array",
+    "vulnerable_code": "pbeParamSpec = new PBEParameterSpec(new byte[]{Byte.parseByte(salt.toString())}, count);",
+    "description": "Converting the string salt to a byte array using `salt.toString()` and then `Byte.parseByte` is improper and will result in an error or unintended behavior.",
+    "recommendation": "Properly convert the character array to a byte array using an appropriate encoding, such as UTF-8."
+  }
+]
+```

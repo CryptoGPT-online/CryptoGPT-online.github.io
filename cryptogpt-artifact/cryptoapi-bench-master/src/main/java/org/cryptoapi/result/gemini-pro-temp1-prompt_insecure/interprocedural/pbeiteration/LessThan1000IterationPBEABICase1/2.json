@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_code": "SecureRandom random = new SecureRandom();",
+    "description": "Using SecureRandom without a strong entropy source can lead to weak key generation.",
+    "recommendation": "Consider using a cryptographically secure pseudorandom number generator (CSPRNG) such as SecureRandom with a proper entropy source."
+  },
+  {
+    "misuse": "CWE-321: Use of Hard-coded Password",
+    "vulnerable_code": "byte[] salt = new byte[32];\nrandom.nextBytes(salt);",
+    "description": "Generating a salt using a pseudo-random number generator is not secure because it is predictable.",
+    "recommendation": "Use a cryptographically secure random number generator to generate a salt. Additionally, consider using a unique salt for each password."
+  },
+  {
+    "misuse": "CWE-256: Plaintext Storage in a File or Database",
+    "vulnerable_code": "PBEParameterSpec pbeParamSpec = new PBEParameterSpec(salt, count);",
+    "description": "The password is stored in plaintext in the PBEParameterSpec object, which is insecure.",
+    "recommendation": "Use a secure storage mechanism, such as a password manager or a hardware security module (HSM), to store the password."
+  }
+]
+```

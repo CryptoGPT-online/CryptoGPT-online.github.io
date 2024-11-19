@@ -1,0 +1,23 @@
+```json
+[{
+    "misuse": "Insecure TrustManager",
+    "vulnerable_code": "public void checkServerTrusted(X509Certificate[] chain, String authType) { /*...*/ }",
+    "description": "By leaving the checkServerTrusted method empty, this X509TrustManager does not validate the certificate chain presented by the server, making the client vulnerable to man-in-the-middle attacks.",
+    "recommendation": "Remove this custom TrustManager and rely on the default TrustManager that validates the certificate chains against trusted Certificate Authorities (CAs)."
+},{
+    "misuse": "Potentially Insecure Protocol",
+    "vulnerable_code": "SSLContext.getInstance(\"SSL\")",
+    "description": "Use of the 'SSL' protocol for obtaining an SSLContext instance can lead to vulnerable connections because 'SSL' could refer to SSLv3, which is an obsolete and insecure version.",
+    "recommendation": "Replace 'SSL' with 'TLS', which negotiates the highest version of TLS supported by both the client and the server."
+},{
+    "misuse": "Disabled Hostname Verification",
+    "vulnerable_code": "// HttpsURLConnection.setDefaultHostnameVerifier(new DefaultHostnameVerifier());",
+    "description": "The commented-out code implies that hostname verification might be intentionally bypassed, which is a serious flaw. Hostname verification ensures that the server certificate's Common Name (CN) or SubjectAltName matches the host to which the client is trying to connect.",
+    "recommendation": "Do not disable hostname verification. Ensure that HttpsURLConnection uses the default HostnameVerifier that checks that the server's hostname matches the hostname in the server certificate."
+},{
+    "misuse": "Null Accepting Issuers",
+    "vulnerable_code": "public X509Certificate[] getAcceptedIssuers() { return null; }",
+    "description": "Returning 'null' from getAcceptedIssuers() tells the SSL stack to use a default set of root certificate authorities, but this can be interpreted differently by different implementations and may cause a NullPointerException. The code, therefore, may be unreliable and insecure in how it determines trust.",
+    "recommendation": "Implement the getAcceptedIssuers method to return a valid array of trusted CA certificates."
+}]
+```

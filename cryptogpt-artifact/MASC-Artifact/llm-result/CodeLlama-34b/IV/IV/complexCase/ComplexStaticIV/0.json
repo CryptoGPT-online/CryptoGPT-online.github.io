@@ -1,0 +1,14 @@
+ [
+    {
+        "misuse": "Insecure Randomization",
+        "vulnerable_code": "for(int i = 65; i < 75; i++){val += (char) i;}",
+        "description": "The code uses a hardcoded sequence of characters (A-Z) to initialize the IV. This is not a secure way to generate randomness and can lead to predictable output.",
+        "recommendation": "Use a secure random number generator (such as SecureRandom in Java) to generate the IV. For example: IvParameterSpec ivSpec = new IvParameterSpec(new SecureRandom().generateSeed(8),0,8);"
+    },
+    {
+        "misuse": "Weak Key",
+        "vulnerable_code": "val.getBytes()",
+        "description": "The IV is derived from a weak key (the string \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\"). Weak keys can be easily guessed and can compromise the security of the encryption.",
+        "recommendation": "Use a stronger key, such as a random or pseudorandom sequence of bytes. For example: IvParameterSpec ivSpec = new IvParameterSpec(new SecureRandom().generateSeed(8),0,8);"
+    }
+]

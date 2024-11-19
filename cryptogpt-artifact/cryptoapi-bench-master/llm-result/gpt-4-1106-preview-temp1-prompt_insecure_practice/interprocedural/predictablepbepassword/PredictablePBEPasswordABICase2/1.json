@@ -1,0 +1,34 @@
+```json
+[
+    {
+        "misuse": "Hardcoded Cryptographic Key",
+        "vulnerable_code": "public static String KEY = \"sagar\";",
+        "description": "The hardcoded key 'KEY' is used for encryption which can be easily discovered in the bytecode of the class and exploited.",
+        "recommendation": "Use a secure method to provide cryptographic keys, such as prompting the user for a password, or using a secure key management system."
+    },
+    {
+        "misuse": "Insufficient Key Length",
+        "vulnerable_code": "pbeKeySpec = new PBEKeySpec(encryptKey,salt,10000,16);",
+        "description": "The key length specified in the PBEKeySpec constructor should match the expected key length of the encryption algorithm in bits. A 16-bit key is inadequate for most security requirements.",
+        "recommendation": "Choose a key length that is appropriate for the chosen encryption algorithm, typically at least 128 bits."
+    },
+    {
+        "misuse": "Weak Password-Based Encryption",
+        "vulnerable_code": "pbeKeySpec = new PBEKeySpec(encryptKey,salt,10000,16);",
+        "description": "The usage of a low-entropy password 'KEY' for key derivation may lead to easy recovery of the key by attackers using brute-force methods.",
+        "recommendation": "Use passwords with higher complexity and entropy, and consider other key derivation functions that can provide a stronger key from a password."
+    },
+    {
+        "misuse": "Static Salt",
+        "vulnerable_code": "byte [] salt = new byte[16];",
+        "description": "Static or predictable salts make it easier for attackers to perform precomputed attacks, such as rainbow table attacks.",
+        "recommendation": "Use a randomly generated salt for each encryption operation."
+    },
+    {
+        "misuse": "Weak Random Number Generation",
+        "vulnerable_code": "SecureRandom sr = new SecureRandom();",
+        "description": "Simply instantiating SecureRandom without specifying a strong source of randomness or seed may lead to predictable values on some platforms or configurations.",
+        "recommendation": "Explicitly specify a strong random number generator algorithm (e.g., SecureRandom.getInstanceStrong())."
+    }
+]
+```

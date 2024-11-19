@@ -1,0 +1,28 @@
+```json
+[
+  {
+    "misuse": "Insufficient Key Size",
+    "vulnerable_code": "defaultKey.getBytes()",
+    "description": "The hardcoded string 'defaultkey' used for keyBytes is not of sufficient length for a secure AES key. A minimum of 128 bits is required for AES.",
+    "recommendation": "Use key generation mechanisms provided by cryptography libraries to generate a secure random key of the correct size."
+  },
+  {
+    "misuse": "Insecure Random Number Generation",
+    "vulnerable_code": "String.valueOf(random.ints()).getBytes()",
+    "description": "The use of the String representation of the entire IntStream provided by random.ints() is unpredictable and may not provide cryptographically secure bytes. This could lead to weak cryptographic keys.",
+    "recommendation": "Use SecureRandom's nextBytes method or another secure method to directly generate a byte array for cryptographic keys."
+  },
+  {
+    "misuse": "Key Truncation",
+    "vulnerable_code": "Arrays.copyOf(keyBytes,16)",
+    "description": "The key is padded or truncated to fit exactly 16 bytes regardless of its original size, which can weaken the key if it was originally larger and contain more entropy.",
+    "recommendation": "Ensure that the key has the correct size before usage and do not truncate or pad keys blindly."
+  },
+  {
+    "misuse": "Use of Static, Predictable Key in Production",
+    "vulnerable_code": "String defaultKey = \"defaultkey\";",
+    "description": "The use of a static, hardcoded key 'defaultkey' makes the encryption predictable and susceptible to being compromised. This goes against best practices and compromises security.",
+    "recommendation": "Use a secure and unpredictable way of generating cryptographic keys. Avoid using hardcoded keys in production code."
+  }
+]
+```

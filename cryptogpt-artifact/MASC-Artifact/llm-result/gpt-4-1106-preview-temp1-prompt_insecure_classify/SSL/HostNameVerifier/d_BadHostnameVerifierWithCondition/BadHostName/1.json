@@ -1,0 +1,10 @@
+```json
+[
+  {
+    "misuse": "CWE-295: Improper Certificate Validation",
+    "vulnerable_code": "new HostNameVerifier(){\n    @Override\n    public boolean verify(String hostname, SSLSession session) {\n        if(true || session.getCipherSuite().length()>=0){\n            return true;\n        }\n        return false;\n    }\n};",
+    "description": "The HostNameVerifier method always returns true, effectively disabling hostname verification. This can make the connection susceptible to man-in-the-middle attacks.",
+    "recommendation": "Implement proper hostname verification in accordance with the expected hostname or default HostnameVerifier."
+  }
+]
+```

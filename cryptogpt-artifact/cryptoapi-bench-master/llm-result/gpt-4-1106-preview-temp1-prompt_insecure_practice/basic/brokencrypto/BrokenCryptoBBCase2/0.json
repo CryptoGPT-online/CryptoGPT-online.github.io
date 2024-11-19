@@ -1,0 +1,29 @@
+```json
+[
+    {
+        "misuse": "Weak Encryption Algorithm",
+        "vulnerable_code": [
+            "KeyGenerator.getInstance(\"Blowfish\")",
+            "Cipher.getInstance(\"Blowfish\")"
+        ],
+        "description": "Blowfish is an outdated symmetric encryption algorithm with block size of 64 bits, which does not meet the modern security standards. Additionally, the use of Blowfish without specifying a mode of operation and padding opens the door for vulnerabilities.",
+        "recommendation": "Use a stronger encryption algorithm such as AES with a proper mode of operation and padding scheme, for example 'AES/GCM/NoPadding'."
+    },
+    {
+        "misuse": "Hardcoded or unspecified encryption mode and padding",
+        "vulnerable_code": [
+            "Cipher.getInstance(\"Blowfish\")"
+        ],
+        "description": "Cipher.getInstance is called with just \"Blowfish\", which means it uses the ECB mode of operation and PKCS5Padding by default. ECB mode does not provide serious message confidentiality as patterns present in the plaintext can be observed in the ciphertext.",
+        "recommendation": "Specify a secure mode of operation and padding when calling Cipher.getInstance, for instance use 'Blowfish/CBC/PKCS5Padding' and manage initialization vectors (IV) securely."
+    },
+    {
+        "misuse": "Insecure Random Number Generation",
+        "vulnerable_code": [
+            "keyGen.generateKey()"
+        ],
+        "description": "The KeyGenerator might be using a default insecure random number generator for key generation, which can lead to weak keys that are easier to break.",
+        "recommendation": "Use SecureRandom with a strong random number generator algorithm for key generation."
+    }
+]
+```

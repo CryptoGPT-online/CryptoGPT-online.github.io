@@ -1,0 +1,20 @@
+### False Positive Misuse ###
+
+- The reported misuse "Insufficient Entropy (CWE-331)" concerning not specifying key size is a false positive. In Java, the default key size for AES is considered secure (128 bits), meeting current recommendations. A larger key size can be specified if needed (e.g., 256 bits), but the default key size is not a security flaw per se.
+
+- The reported misuse "Insecure Randomness" concerned with using the default `SecureRandom` instance is a false positive. The `KeyGenerator` class by default utilizes a secure random number generator to produce the key when no specific `SecureRandom` instance is provided. The default `SecureRandom` is designed to be cryptographically secure, and this implementation is generally considered safe unless there are specific requirements or known issues with the platform's default RNG.
+
+### Optimized Misuse JSON ###
+
+```json
+[
+    {
+        "misuse": "Missing Initialization Vector for CBC mode (CWE-329)",
+        "vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5Padding\"); cipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "Cipher Block Chaining (CBC) mode requires an initialization vector (IV) for encryption to ensure that identical plain texts encrypted with the same key will result in different cipher texts. The code does not appear to specify an IV.",
+        "recommendation": "Generate a secure random IV and use it as a parameter when initializing the Cipher instance for encryption."
+    }
+]
+``` 
+
+Please note that while a default IV might be created internally by the `Cipher` instance during the `init` method call, it is a best practice to explicitly generate and use a secure random IV to ensure the security of CBC mode encryption. In the context of a security audit, the above maintained misuse should be considered a potential weakness until it can be confirmed that an appropriate IV handling mechanism is employed during actual encryption operations.

@@ -1,0 +1,30 @@
+```json
+[
+    {
+        "misuse": "Incompatible Key and Algorithm",
+        "vulnerable_code": [
+            "Cipher cipher = Cipher.getInstance(\"DES/ECB/PKCS5Padding\");",
+            "cipher.init(Cipher.ENCRYPT_MODE, key);"
+        ],
+        "description": "An AES key is generated but a DES cipher is used conditionally. Key objects are not checked for algorithm compatibility with Cipher.",
+        "recommendation": "Ensure that the SecretKey instance matches the algorithm used by the Cipher instance. Use AES cipher with AES keys and DES cipher with DES keys."
+    },
+    {
+        "misuse": "Insecure Cipher Mode",
+        "vulnerable_code": [
+            "Cipher.getInstance(\"DES/ECB/PKCS5Padding\")",
+            "cipher.init(Cipher.ENCRYPT_MODE, key);"
+        ],
+        "description": "ECB (Electronic Codebook) mode is used for DES which is insecure because identical plaintext blocks are encrypted to identical ciphertext blocks, leading to patterns in ciphertext and potential leakage of information.",
+        "recommendation": "Use a more secure mode of operation such as CBC (Cipher Block Chaining) with a unique, unpredictable initialization vector for each encryption."
+    },
+    {
+        "misuse": "Weak Encryption Algorithm",
+        "vulnerable_code": [
+            "Cipher.getInstance(\"DES/ECB/PKCS5Padding\")"
+        ],
+        "description": "DES (Data Encryption Standard) is considered insecure due to its key size being too small; it can be broken relatively easily with modern computing power.",
+        "recommendation": "Use AES (Advanced Encryption Standard) with a key size of at least 128 bits."
+    }
+]
+```

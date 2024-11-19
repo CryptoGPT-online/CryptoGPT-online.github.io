@@ -1,0 +1,9 @@
+CWE-327: Use of a Broken or Risky Cryptographic Algorithm.
+
+vulnerable_code: `SecureRandom sr = new SecureRandom(new byte[]{seed});`
+
+description: 
+The `SecureRandom` constructor which takes a byte array as argument is not advisable to use when the purpose is to generate secure random numbers. The `SecureRandom` class should only be used with no arguments for secure random numbers. It was designed for generating seeds. If a user-supplied seed is used in `SecureRandom` constructor, it may result in an insecure generator. The byte array used in this case has only one byte, which may lead to a very weak random number generator, possibly resulting in predictable or less random numbers.
+
+recommendation:
+Remove the byte array from the `SecureRandom` constructor, and use it like this: `SecureRandom sr = new SecureRandom();`. This will generate a secure seed automatically.

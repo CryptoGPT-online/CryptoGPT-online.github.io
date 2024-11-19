@@ -1,0 +1,20 @@
+ [
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "KeyStore.getInstance(type)",
+        "description": "The KeyStore.getInstance() method is used to load a KeyStore instance, but the type parameter is not specified. This could allow an attacker to specify a KeyStore type that is not secure, such as a KeyStore that uses the Java Cryptography Architecture (JCA) APIs, which have known vulnerabilities.",
+        "recommendation": "Always specify a secure KeyStore type when using the KeyStore.getInstance() method. For example, use KeyStore.getInstance(KeyStore.getDefaultType()) to load the default KeyStore type."
+    },
+    {
+        "misuse": "Random Number Generator (RNG) Misuse",
+        "vulnerable_code": "SecureRandom random = new SecureRandom();",
+        "description": "A SecureRandom object is used to generate a password for a KeyStore, but the SecureRandom object is not seeded with a secure source of entropy. This could allow an attacker to predict the password and gain unauthorized access to the KeyStore.",
+        "recommendation": "Always seed SecureRandom objects with a secure source of entropy, such as SecureRandom.getInstanceStrong() or SecureRandom.getInstanceDefault()."
+    },
+    {
+        "misuse": "Insecure Password Storage",
+        "vulnerable_code": "password.toCharArray()",
+        "description": "A password is stored as a char array, which could allow an attacker to access the password in memory. Additionally, the password is stored in clear text, which could allow an attacker to access the password in the KeyStore file.",
+        "recommendation": "Always store passwords securely, using a secure hashing algorithm, such as bcrypt or Argon2. Additionally, do not store passwords in clear text, and do not store them as char arrays, as this could allow an attacker to access the password in memory."
+    }
+]

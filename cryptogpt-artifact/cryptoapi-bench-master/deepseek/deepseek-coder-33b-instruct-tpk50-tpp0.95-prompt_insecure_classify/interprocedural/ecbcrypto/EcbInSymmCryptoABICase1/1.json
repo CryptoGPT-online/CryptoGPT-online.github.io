@@ -1,0 +1,36 @@
+The misuse of crypto API in the provided Java code is related to CWE-327: Use of a Broken or Risky Cryptographic Algorithm. 
+
+CWE-327: "The use of a broken or risky cryptographic algorithm undermines the purposes of using encryption and authentication. An attacker may be able to break the cryptographic algorithm and gain access to the original data." 
+
+In the provided Java code, the use of the AES algorithm with ECB mode is highly risky. ECB (Electronic Codebook) is a widely used encryption algorithm that doesn't use an Initialization Vector (IV), and it doesn't guarantee the confidentiality of the encrypted data. The same plaintext block will always produce the same ciphertext block.
+
+Misuse code snippets:
+```java
+KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+Cipher cipher = Cipher.getInstance(crypto);
+```
+
+The description of the misuse:
+The cryptographic algorithm used in the code, AES (Advanced Encryption Standard), with ECB (Electronic Codebook) mode, is a risky choice because it does not provide message integrity (like confidentiality and authenticity). Because it encrypts the same input to the same output every time, it is vulnerable to pattern recognition attacks.
+
+The recommended fix: 
+Use a secure encryption algorithm such as AES with CBC mode (Cipher Block Chaining) or GCM mode (Galois/Counter Mode) which provides authentication and confidentiality. Additionally, an Initialization Vector (IV) should be used with these modes. Please note that, AES-CBC mode can also be considered broken if reusing an IV or not properly randomizing it.
+
+Here's an example of how to fix the code:
+
+```java
+import javax.crypto.spec.IvParameterSpec;
+import java.security.SecureRandom;
+...
+public void go(String crypto) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, InvalidAlgorithmParameterException {
+    KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+    SecretKey key = keyGen.generateKey();
+    byte[] IV = new byte[16];
+    SecureRandom random = new SecureRandom();
+    random.nextBytes(IV);
+    IvParameterSpec ivParameterSpec = new IvParameterSpec(IV);
+
+    Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+    cipher.init(Cipher.ENCRYPT_MODE, key, ivParameterSpec);
+}
+```

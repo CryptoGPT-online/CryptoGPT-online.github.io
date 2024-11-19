@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Key Size",
+        "vulnerable_code": "int keysize = 1024;",
+        "description": "Using RSA with a key size of 1024 bits is considered insecure as it does not provide sufficient security against modern cryptanalytic techniques.",
+        "recommendation": "Increase the key size to at least 2048 bits to ensure adequate security."
+    },
+    {
+        "misuse": "ECB Mode Usage",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"RSA\");",
+        "description": "When getting a Cipher instance without specifying the padding and mode, Java defaults to RSA in ECB mode with PKCS1Padding. RSA isn't a block cipher so it doesn't use modes like ECB, but the 'Cipher' class may default to ECB mode for block ciphers, which is insecure as it doesn't provide semantic security; identical plaintext blocks will be encrypted to identical ciphertext blocks.",
+        "recommendation": "Specify the appropriate padding scheme explicitly when getting the Cipher instance (e.g., \"RSA/ECB/OAEPWithSHA-256AndMGF1Padding\")."
+    },
+    {
+        "misuse": "String Encoding",
+        "vulnerable_code": "String myMessage = new String(\"Secret Message\");",
+        "description": "The 'String(byte[])' constructor is being used without specifying a character encoding, resulting in the platform's default charset being used. This can lead to unforeseen encoding issues, particularly when the ciphertext is converted to a string or sent across different platforms.",
+        "recommendation": "Explicitly specify the character encoding when creating strings from byte arrays."
+    }
+]
+```

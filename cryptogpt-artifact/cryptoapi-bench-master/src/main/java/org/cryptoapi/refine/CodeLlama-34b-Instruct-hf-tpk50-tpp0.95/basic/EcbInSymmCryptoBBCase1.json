@@ -1,0 +1,21 @@
+ [{
+"misuse": "Insecure Use of AES/ECB/PKCS5Padding",
+"vulnerable_code": "cipher = Cipher.getInstance(\"AES/ECB/PKCS5Padding\");",
+"description": "The code uses the AES algorithm in ECB mode and PKCS5 padding, which is insecure and can lead to plaintext recovery attacks. ECB mode does not provide semantic security, meaning that the same plaintext will always produce the same ciphertext, regardless of the key used. This makes it possible for an attacker to deduce information about the plaintext based on the ciphertext. Additionally, PKCS5 padding is not recommended as it can be vulnerable to padding oracle attacks.",
+"recommendation": "Use a secure mode of operation, such as GCM or CBC, and a secure padding scheme, such as OAEP or RSA-KEM."
+}, {
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "Cipher.getInstance(\"AES/ECB/PKCS5Padding\");",
+"description": "Using ECB mode for encryption is vulnerable to attacks, such as block reuse attacks and block repetition attacks, which can lead to plaintext recovery.",
+"recommendation": "Use a secure mode of operation, such as CBC mode or GCM mode, instead of ECB mode."
+} ,
+   {"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "Cipher.getInstance(\"AES/ECB/PKCS5Padding\")",
+"description": "The code uses the AES algorithm in ECB mode and PKCS5Padding, which is vulnerable to attacks, such as block replay and padding oracle attack. It is recommended to use a more secure mode such as GCM or CBC, and to use a secure padding scheme such as OAEP or PKCS7.",
+"recommendation": "Replace the line `Cipher cipher = Cipher.getInstance(\"AES/ECB/PKCS5Padding\");` with `Cipher cipher = Cipher.getInstance(\"AES/GCM/NoPadding\");` and remove the line `cipher.init(Cipher.ENCRYPT_MODE, key);`. Also, make sure to use a secure random number generator to generate the key, and to use a secure key management system to store and retrieve the key."
+} ,{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\n        SecretKey key = keyGen.generateKey();\n        Cipher cipher = Cipher.getInstance(\"AES/ECB/PKCS5Padding\");\n        cipher.init(Cipher.ENCRYPT_MODE, key);",
+"description": "The code uses the AES algorithm with ECB mode and PKCS5Padding, which is vulnerable to attacks such as block replay and padding oracle attack. It is recommended to use a more secure mode such as GCM or CBC, and to use a secure padding scheme such as OAEP or PKCS7.",
+"recommendation": "Replace the line `Cipher cipher = Cipher.getInstance(\"AES/ECB/PKCS5Padding\");` with `Cipher cipher = Cipher.getInstance(\"AES/GCM/NoPadding\");` and remove the line `cipher.init(Cipher.ENCRYPT_MODE, key);`. Also, make sure to use a secure random number generator to generate the key, and to use a secure key management system to store and retrieve the key."
+}]

@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Insufficient Salt Size",
+        "vulnerable_code": "byte[] salt = new byte[32];\nrandom.nextBytes(salt);",
+        "description": "The size of the salt is very critical to password-based encryption. The typical size of the salt should at least match the size of the output of the hash function used. A salt size of 32 bytes is generally considered secure but depending on the context and the algorithm in use, it may be inadequate.",
+        "recommendation": "Ensure the salt size is adequate for the specific crypto algorithm in use, typically at least the output size of the hash function."
+    },
+    {
+        "misuse": "PBEParameterSpec not used",
+        "vulnerable_code": "pbe = new PBEParameterSpec(salt, count);",
+        "description": "Although a PBEParameterSpec object with salt and iteration count is created, it is assigned to the parameter 'pbe' which is a method local variable and not returned or used in any cryptographic operation. The 'pbe' object should be passed to a PBE cipher and used in the encryption or decryption process.",
+        "recommendation": "Return the PBEParameterSpec object, or pass it to the cryptographic method that requires it, ensuring it is used in the encryption or decryption process."
+    }
+]
+```

@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Hardcoded Initialization Vector",
+        "vulnerable_code": "byte [] bytes = \"abcde\".getBytes();\n\n        crypto = new C1(bytes);",
+        "description": "Using a hardcoded initialization vector (IV) might compromise the security by making encryption predictable.",
+        "recommendation": "Use a securely generated random IV for each encryption operation."
+    },
+    {
+        "misuse": "Static Initialization Vector",
+        "vulnerable_code": "byte [] defIV;\n\ndefIV = bytes;",
+        "description": "The initialization vector is static and reused, which could lead to encryption weaknesses as the same IV is used for every encryption operation.",
+        "recommendation": "Generate a new IV for each encryption session."
+    },
+    {
+        "misuse": "Insecure Key Generation",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+        "description": "The code doesn't specify a key size for the AES key generator. The default key size might not be strong enough.",
+        "recommendation": "Specify a key size when generating the key. For AES, use a key size of 128, 192, or 256 bits."
+    },
+    {
+        "misuse": "Lack of Secure Random",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(passedIV);",
+        "description": "The code uses a hardcoded value 'abcde' for the IV which is also not a secure random value, meaning if it weren't hardcoded, it still wouldn't be using a cryptographically secure random source.",
+        "recommendation": "Use SecureRandom to generate a cryptographically secure IV."
+    }
+]
+```

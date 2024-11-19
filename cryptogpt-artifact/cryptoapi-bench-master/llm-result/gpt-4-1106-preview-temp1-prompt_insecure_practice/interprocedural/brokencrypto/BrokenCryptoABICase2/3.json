@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Use of Weak or Untrusted Algorithm",
+        "vulnerable_code": "String crypto = \"Blowfish\";",
+        "description": "The use of 'Blowfish' algorithm is considered weak as it has a block size of 64 bits which makes it vulnerable to birthday attacks.",
+        "recommendation": "Use a stronger algorithm like AES with a block size of 128 bits."
+    },
+    {
+        "misuse": "Missing Initialization Vector (IV)",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "The code does not specify an Initialization Vector (IV) when initializing the cipher for encryption, potentially making the ciphertext predictable if the same key is reused for different encryptions.",
+        "recommendation": "An IV should be specified and ideally, it should be unique and randomly generated for each encryption."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(crypto);",
+        "description": "The key size is not explicitly defined and thus relies on the default size, which for Blowfish can be as low as 32 bits, this key size is far too short to ensure security.",
+        "recommendation": "Set the key size explicitly to a secure value when generating the key, e.g., Blowfish should have a key size of at least 128 bits."
+    },
+    {
+        "misuse": "Insecure Cipher Mode",
+        "vulnerable_code": "Cipher.getInstance(crypto);",
+        "description": "By not specifying a cipher mode or padding, the code defaults to ECB mode without padding, which is insecure because it does not hide data patterns.",
+        "recommendation": "Use a secure cipher mode like CBC, GCM, or another mode that provides confidentiality and integrity, and specify appropriate padding."
+    }
+]
+```

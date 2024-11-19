@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "Weak padding algorithm",
+    "vulnerable_code": "cipher = Cipher.getInstance(\"AES/ECB/PKCS5Padding\");\ncipher.init(Cipher.ENCRYPT_MODE, key);",
+    "description": "ECB (Electronic Codebook) mode is a block cipher mode that encrypts each block of plaintext independently, making it vulnerable to certain attacks. PKCS5Padding is a padding scheme that is also not recommended for use with ECB mode.",
+    "recommendation": "Use a more secure block cipher mode such as CBC (Cipher Block Chaining) or CTR (Counter Mode) with a strong padding scheme like PKCS7Padding."
+  },
+  {
+    "misuse": "Insecure key generation",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+    "description": "The code uses the default key generator for AES, which may not be secure. Additionally, the key is generated without specifying a key size, which may result in a weak key.",
+    "recommendation": "Use a secure key generator such as SecureRandom and specify a key size that is appropriate for the security level required."
+  }
+]
+```

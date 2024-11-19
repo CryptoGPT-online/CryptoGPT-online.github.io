@@ -1,0 +1,27 @@
+The code you've provided doesn't contain a cryptographic API misuse. However, I noticed that you are printing the digest in the console. This should not be done in real-world application for security reasons because the digest will be in byte format. Instead, you should convert it to a string with Base64 encoding or hexadecimal for a more human-readable format.
+
+Here's how to do it:
+
+```java
+public class B4 {
+    public static void main (String [] args) throws NoSuchAlgorithmException {
+        String name = "abcdef";
+        int choice = 2;
+        MessageDigest md = MessageDigest.getInstance("MD2");
+        if(choice>1)
+            md = MessageDigest.getInstance("SHA-256");
+        md.update(name.getBytes());
+        byte[] digest = md.digest();
+        
+        // Convert the byte array to a hexadecimal string
+        StringBuilder sb = new StringBuilder();
+        for (byte b : digest) {
+            sb.append(String.format("%02x", b & 0xff));
+        }
+        String digestStr = sb.toString();
+
+        System.out.println(digestStr);
+    }
+}
+```
+Please note that this fix is not about fixing the misuse, but addressing a common issue with using the digest result.

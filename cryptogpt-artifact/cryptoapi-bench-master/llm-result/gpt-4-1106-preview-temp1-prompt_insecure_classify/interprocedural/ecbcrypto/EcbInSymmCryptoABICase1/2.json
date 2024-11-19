@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "String crypto = \"AES/ECB/PKCS5Padding\";",
+        "description": "ECB (Electronic Codebook) is a mode of operation for a block cipher, with the characteristic that each block of plaintext is encrypted separately. This can expose patterns in the plaintext, which is insecure, especially for data of any significant size.",
+        "recommendation": "Use a more secure mode of operation like CBC (Cipher Block Chaining) or GCM (Galois/Counter Mode) with proper initialization vector (IV) handling."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values.",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+        "description": "The KeyGenerator is not explicitly seeded with a secure random number. This might result in less randomness, depending on the underlying implementation.",
+        "recommendation": "Explicitly initialize the KeyGenerator with a SecureRandom instance that has a strong entropy source."
+    }
+]
+```

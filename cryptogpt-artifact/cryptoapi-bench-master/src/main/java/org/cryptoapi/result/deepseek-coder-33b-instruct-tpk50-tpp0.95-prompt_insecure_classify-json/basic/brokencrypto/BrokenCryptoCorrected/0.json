@@ -1,0 +1,18 @@
+public class Bd {
+    public void go() throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+        KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+        SecureRandom random = new SecureRandom();
+        keyGen.init(256, random); // Use a secure random, and generate a 256-bit key
+        SecretKey key = keyGen.generateKey();
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        cipher.init(Cipher.ENCRYPT_MODE, key);
+    }
+
+    public static void main (String [] args) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+        Bd bc = new Bd();
+        bc.go();
+    }
+}
+```
+
+Note: The key size is now 256 bits, which is considered secure. The SecureRandom class is used to ensure a secure random number generator is used. The usage of a secure random in key generation is a best practice to avoid predictable keys and side-channel attacks.

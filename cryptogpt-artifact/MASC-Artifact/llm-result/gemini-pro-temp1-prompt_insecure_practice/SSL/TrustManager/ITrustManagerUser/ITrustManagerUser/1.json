@@ -1,0 +1,25 @@
+```json
+[
+  {
+    "misuse": "CWE-547: http://cwe.mitre.org/data/definitions/547.html",
+    "vulnerable_code": """new ITrustManager() {
+			@Override
+			public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+
+			}
+
+			@Override
+			public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+
+			}
+
+			@Override
+			public X509Certificate[] getAcceptedIssuers() {
+				return new X509Certificate[0];
+			}
+		};""",
+    "description": "The code creates a new instance of an anonymous inner class that implements the `ITrustManager` interface. This is not a secure way to implement trust management, as it allows any certificate to be trusted. An attacker could create a self-signed certificate and use it to impersonate a trusted server.",
+    "recommendation": "Implement trust management in a more secure way, such as using a `TrustManagerFactory` to create a `TrustManager` that trusts a specific set of certificates."
+  }
+]
+```

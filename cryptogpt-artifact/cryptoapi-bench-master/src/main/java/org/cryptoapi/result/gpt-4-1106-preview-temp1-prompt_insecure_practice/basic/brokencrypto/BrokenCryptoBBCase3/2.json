@@ -1,0 +1,29 @@
+```json
+[
+    {
+        "misuse": "Weak Encryption Algorithm",
+        "vulnerable_code": [
+            "KeyGenerator.getInstance(\"RC4\")",
+            "Cipher.getInstance(\"RC4\")"
+        ],
+        "description": "RC4 is an outdated and insecure encryption algorithm that is known to have several vulnerabilities and should not be used for secure applications.",
+        "recommendation": "Use a more secure algorithm such as AES (Advanced Encryption Standard) with a key size of at least 128 bits. Replace 'RC4' with 'AES/GCM/NoPadding' for example."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": [
+            "KeyGenerator.getInstance(\"RC4\")"
+        ],
+        "description": "When calling 'KeyGenerator.getInstance()' for RC4, if the key size is not specified, a platform default is used, which may not be secure.",
+        "recommendation": "Explicitly specify a key size that is considered secure for the chosen algorithm. For example, if using AES, you can specify a key size of 128, 192, or 256 bits."
+    },
+    {
+        "misuse": "Lack of Secure Random Number Generator",
+        "vulnerable_code": [
+            "keyGen.generateKey()"
+        ],
+        "description": "The code does not specify a secure random number generator when generating the key. This may lead to weak keys that can be predicted or easily brute-forced.",
+        "recommendation": "Use SecureRandom with a strong source of randomness when generating keys. For instance, specify a SecureRandom instance to 'KeyGenerator.init' with a proper source of entropy."
+    }
+]
+```

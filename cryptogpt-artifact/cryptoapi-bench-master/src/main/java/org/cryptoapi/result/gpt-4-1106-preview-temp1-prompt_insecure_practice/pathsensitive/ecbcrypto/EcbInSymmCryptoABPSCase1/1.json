@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insecure Encryption Mode",
+        "vulnerable_code": "Cipher.getInstance(\"AES/ECB/PKCS5Padding\")",
+        "description": "AES in ECB mode is vulnerable to pattern analysis and should not be used in secure contexts. It does not provide serious message confidentiality, and it is not recommended for use in cryptographic protocols at all.",
+        "recommendation": "Use a more secure mode like CBC, CFB, OFB, or GCM, which utilize an initialization vector (IV) and provide better security properties."
+    },
+    {
+        "misuse": "Insufficient Key Management",
+        "vulnerable_code": "keyGen.generateKey()",
+        "description": "The KeyGenerator instance is not initialized with a specific key size. This can lead to generating keys with default size which may not be secure enough for some applications.",
+        "recommendation": "Explicitly initialize the KeyGenerator with a specific key size that is appropriate for your security context (e.g., 'keyGen.init(256);' for AES)."
+    },
+    {
+        "misuse": "Missing Initialization Vector (IV)",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "When using CBC mode, as chosen when 'choice' is greater than 1, it requires an initialization vector (IV) for secure operation. The code does not specify an IV which leads to ECB mode-like vulnerability.",
+        "recommendation": "Generate a random IV using 'IvParameterSpec' and initialize the cipher with it in addition to the secret key."
+    },
+    {
+        "misuse": "Hardcoded Encryption Mode Switch",
+        "vulnerable_code": "if(choice>1)",
+        "description": "The decision to use ECB or CBC mode is controlled by an unchecked 'choice' parameter. While not inherently insecure, a bad 'choice' could lead to an insecure configuration unintentionally.",
+        "recommendation": "Remove the hardcoded switch and enforce the use of a secure block cipher mode. If multiple modes need to be supported, ensure proper input validation for the mode selection and consistent initialization with an IV when required."
+    }
+]
+```

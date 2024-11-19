@@ -1,0 +1,20 @@
+```json
+{
+  "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+  "vulnerable_code": "Cipher.getInstance(String.valueOf(crypto))\nKeyGenerator.getInstance(String.valueOf(crypto_algo))",
+  "description": "This code uses insecurely obtained algorithm names. The algorithm names can be manipulated by an attacker to inject arbitrary ones.",
+  "recommendation": "Use constant algorithms instead of runtime obtained ones. If dynamic algorithm names are necessary, validate them against a safe, whitelisted set."
+}
+```
+
+2. Insecure use of crypto API:
+   The usage of `crypto_algo` and `crypto` in `go3()` method is insecure because the variables `crypto` and `crypto_algo` can be manipulated at runtime by an attacker. This allows an attacker to specify arbitrary algorithm names, which may include weak ones or ones not approved for security.
+
+```json
+{
+  "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+  "vulnerable_code": "crypto = CRYPTO;\ncrypto_algo = CRYPTO_ALGO;",
+  "description": "This code uses insecurely obtained algorithm names. The algorithm names can be manipulated by an attacker to inject arbitrary ones.",
+  "recommendation": "Use constant algorithms instead of runtime obtained ones. If dynamic algorithm names are necessary, validate them against a safe, whitelisted set."
+}
+```

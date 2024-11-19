@@ -1,0 +1,34 @@
+### False Positives: ###
+
+The provided misuses list below are false positives:
+
+```json
+[{
+    "misuse category": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_method": "B1.go(int)",
+    "vulnerable_code": "Cipher.getInstance(\"DES/ECB/PKCS5Padding\");",
+    "description": "This part of the code is a false positive. The Cipher instance is indeed created with a weak algorithm, DES, but it gets replaced later with the safer AES in the 'choice' condition. So, the false positive is due to this condition.",
+    "recommendation": "Remove the false positive by ensuring the right encryption algorithm (either AES or DES) is used based on the key used, irrespective of the 'choice' condition."
+},
+{
+    "misuse category": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_method": "B1.go(int)",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\"); SecretKey key = keyGen.generateKey();",
+    "description": "This part of the code is a false positive. Even though AES is used as the encryption algorithm, the strength of the key generated is not checked. The KeyGenerator.getInstance(\"AES\") creates a new key generator for AES and generateKey() generates a new key. However, no code is provided to validate the strength of the AES key, which is not necessary when the chosen algorithm is AES.",
+    "recommendation": "The recommendation is to remove the false positive by not checking the strength of the key in this case."
+}]
+```
+
+### Optimized Misuse JSON: ###
+
+The optimized misuse detected is for the use of DES in B1.go(int), which is a broken or risky cryptographic algorithm. The misuse is categorized as CWE-327: Use of a Broken or Risky Cryptographic Algorithm.
+
+```json
+[{
+    "misuse category": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_method": "B1.go(int)",
+    "vulnerable_code": "Cipher.getInstance(\"DES/ECB/PKCS5Padding\");",
+    "description": "DES is a broken and insecure algorithm. It uses a 56-bit key size, which is only 25% as long as the recommended AES key size of 128, 192 or 256 bits. Moreover, several attacks are possible against DES and its many modes.",
+    "recommendation": "To fix this, use AES, a strong, publicly-accepted algorithm for encryption. It offers a much larger key space and is resistant to many forms of attacks, reducing the chances of exploitation."
+}]
+```

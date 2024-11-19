@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Hardcoded Cryptographic Key",
+        "vulnerable_code": "\"changeit\"",
+        "description": "The password for the key store is hardcoded into the source code, making it easily accessible to an attacker who can inspect the compiled code.",
+        "recommendation": "Store cryptographic keys securely using a secure management system or retrieve them from a secure external source."
+    },
+    {
+        "misuse": "Insecure protocol",
+        "vulnerable_code": "new URL(\"https://www.google.com\")",
+        "description": "Loading a KeyStore from a hardcoded, non-configurable URL is an insecure practice, as it makes the application vulnerable to man-in-the-middle attacks and could potentially expose the KeyStore if the URL is compromised.",
+        "recommendation": "Use trusted certificate management or loading mechanism with proper validation or secure storage to prevent tampering."
+    },
+    {
+        "misuse": "Insecure TrustStore management",
+        "vulnerable_code": "ks.load(cacerts.openStream(), key.toCharArray())",
+        "description": "The KeyStore is being loaded from a URL stream without any certificate validation. This makes the application vulnerable to man-in-the-middle attacks as there is no guarantee that the KeyStore has not been tampered with during transport.",
+        "recommendation": "Implement proper transport security such as TLS with certificate pinning when loading KeyStores over a network."
+    }
+]
+```

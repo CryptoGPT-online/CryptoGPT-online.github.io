@@ -1,0 +1,10 @@
+```json
+[
+  {
+    "misuse": "CWE-295: Improper Certificate Validation",
+    "vulnerable_code": "TrustManager[] trustAll = new TrustManager[] { \n\t\t\tnew X509TrustManager() {\n\t\t\t\t@Override\n\t\t\t\tpublic void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {\n\t\t\t\t\tif (!(null != s && s.equalsIgnoreCase(\"RSA\"))) {\n\t\t\t\t\t\tthrow new CertificateException(\"checkServerTrusted: AuthType is not RSA\");\n\t\t\t\t\t}\n\t\t\t\t}\n\n\t\t\t\t@Override\n\t\t\t\tpublic void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {\n\t\t\t\t\tif (!(null != s && s.equalsIgnoreCase(\"RSA\"))) {\n\t\t\t\t\t\tthrow new CertificateException(\"checkServerTrusted: AuthType is not RSA\");\n\t\t\t\t\t}\n\t\t\t\t}\n\n\t\t\t\t@Override\n\t\t\t\tpublic X509Certificate[] getAcceptedIssuers() {\n\t\t\t\t\treturn null;\n\t\t\t}\n\t\t}\n\t};",
+    "description": "The code snippet above is using a custom `X509TrustManager` to validate certificates. However, the validation logic is incomplete and does not properly validate the certificate chain. This could allow an attacker to present a forged certificate and gain access to the server.",
+    "recommendation": "Use a library or framework that provides a more complete and secure certificate validation process."
+  }
+]
+```

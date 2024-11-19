@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Incompatible Key and Cipher Algorithm",
+        "vulnerable_code": "Cipher.getInstance(\"DES/ECB/PKCS5Padding\");",
+        "description": "An AES key is generated but a DES cipher is used if the choice is not greater than 1. AES keys are not compatible with DES algorithm.",
+        "recommendation": "Ensure that the cipher algorithm matches the key algorithm. If an AES key is generated, use an AES cipher."
+    },
+    {
+        "misuse": "Use of ECB Mode",
+        "vulnerable_code": "Cipher.getInstance(\"DES/ECB/PKCS5Padding\");",
+        "description": "ECB (Electronic Codebook) mode is used which is insecure for encrypting multiple blocks of data because it does not use an initialization vector to provide randomness.",
+        "recommendation": "Use a cipher mode that incorporates an Initialization Vector (IV) such as CBC, CFB, OFB, or GCM to prevent equal inputs from producing equal ciphertexts."
+    },
+    {
+        "misuse": "Missing Initialization Vector for CBC Mode",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "While AES/CBC/PKCS5Padding requires an initialization vector (IV), none is provided during cipher initialization, which could lead to weak encryption.",
+        "recommendation": "Provide an IV when initializing the cipher in CBC mode. Securely generate the IV and share it alongside the ciphertext if necessary."
+    }
+]
+```

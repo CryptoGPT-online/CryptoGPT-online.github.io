@@ -1,0 +1,59 @@
+ ### False Positive Misuse
+{
+"misuses": [
+{
+"misuse": "Weak Key",
+"vulnerable_code": "defaultKey.getBytes();",
+"description": "The default key is a weak key and can be easily guessed by an attacker.",
+"recommendation": "Use a strong and unique key for encryption."
+}
+]
+}
+
+### Optimized Misuse JSON
+
+{
+"misuses": [
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "byte[] keyBytes = defaultKey.getBytes(); keyBytes = Arrays.copyOf(keyBytes,16); SecretKeySpec keySpec = new SecretKeySpec(keyBytes, "AES");",
+"description": "The AES encryption algorithm requires a 16-byte key, but the default key provided is only 9 bytes long. This will result in the AES encryption algorithm using a weak and broken key, which can be easily broken by an attacker.",
+"recommendation": "Use a longer and more secure key for the AES encryption algorithm. It is recommended to use a randomly generated key of at least 16 bytes."
+},
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "String defaultKey = \"defaultkey\";\nbyte[] keyBytes = defaultKey.getBytes();\nkeyBytes = Arrays.copyOf(keyBytes,16);",
+"description": "The key generation method is insecure because the default key is derived from a hard-coded string, which is predictable and can be easily guessed by attackers. Moreover, the key generation method is not random and can be brute-forced easily.",
+"recommendation": "Use a secure key generation method that uses randomness and generates non-predictable keys."
+},
+{
+"misuse": "Weak Key Generation",
+"vulnerable_code": "SecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES\");",
+"description": "The keySpec is generated using a weak key generation method that uses a predictable and insecure key. This can be easily guessed by attackers, and the keySpec can be easily obtained and used to decrypt the data.",
+"recommendation": "Use a secure key generation method that uses randomness and generates non-predictable keys."
+},
+{
+"misuse": "Insecure Key Size",
+"vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16)",
+"description": "The code specifies a key size of 16 bytes, which is too small for a secure AES key. AES keys should be at least 256 bits (32 bytes) to be secure.",
+"recommendation": "Use a key size of at least 256 bits (32 bytes) for AES encryption. Consider using a larger key size for additional security."
+}
+]
+}
+
+### Insufficient Key Size
+{
+"misuse": "Insufficient Key Size",
+"vulnerable_code": "SecretKeySpec keySpec = new SecretKeySpec(keyBytes, "AES");",
+"description": "The default key provided in the code is only 16 bytes, which is too small for AES. AES requires a key size of at least 128 bits, which is 16 bytes. Using a key that is too small can cause the encryption to be weak and easily breakable.",
+"recommendation": "Use a key that is at least 16 bytes for AES encryption. It is recommended to use a secure random number generator to generate a random key."
+}
+
+### Hard-coded Key
+{
+"misuse": "Hard-coded Key",
+"vulnerable_code": "String defaultKey = "defaultkey";",
+"description": "The key is hard-coded in the code, which makes it vulnerable to attacks. If the key is compromised, the encryption can be broken easily.",
+"recommendation": "Do not hard-code keys in the code. Instead, use a secure key management system to generate and store keys securely."
+}
+]

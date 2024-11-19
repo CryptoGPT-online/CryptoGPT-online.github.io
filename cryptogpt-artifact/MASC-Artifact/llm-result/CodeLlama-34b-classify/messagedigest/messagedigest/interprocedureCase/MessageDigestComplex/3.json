@@ -1,0 +1,14 @@
+ [
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "MessageDigestComplex.B()",
+        "description": "The use of MD5 in the `B()` method is considered broken and should not be used for security purposes. It is recommended to use SHA-256 or stronger algorithms instead.",
+        "recommendation": "Replace the use of MD5 with a stronger algorithm, such as SHA-256."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation.",
+        "vulnerable_code": "MessageDigest.getInstance(new MessageDigestComplex().A().B().getName())",
+        "description": "The `A()` and `B()` methods set the `digestName` field to \"SHA-256\" and then \"MD5\" respectively. The `getName()` method returns the value of `digestName`, which is then used to select the message digest algorithm. This is vulnerable to downgrade attacks, where an attacker could trick the system into using a weaker algorithm, such as MD5.",
+        "recommendation": "Use a secure algorithm selection mechanism, such as the `MessageDigest.getInstance()` method with a hardcoded algorithm name, or use a secure negotiation protocol, such as TLS."
+    }
+]

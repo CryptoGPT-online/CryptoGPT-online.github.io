@@ -1,0 +1,24 @@
+ {
+"misuses": [
+{
+"misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+"vulnerable_code": "Cipher.getInstance(passedAlgo)",
+"description": "The application uses the passed in algorithm without checking if it is a valid and secure algorithm. An attacker could potentially pass in a weak or broken algorithm, which could compromise the encryption.",
+"recommendation": "Always check the validity and security of the passed in algorithm before using it."
+},
+{
+"misuse": "CWE-330: Use of Insufficiently Random Values",
+"vulnerable_code": "passedAlgo = defAlgo;",
+"description": "The application uses a predefined default algorithm if the passed in algorithm is empty, which could lead to a predictable encryption key. An attacker could potentially use this predictability to decrypt the data.",
+"recommendation": "Generate a random key for each encryption, rather than using a predefined default algorithm."
+}
+],
+"remediation": [
+{
+"step": "1. Add input validation to ensure that the passed in algorithm is a valid and secure algorithm. You can use a list of valid algorithms that are known to be secure, and reject any input that does not match one of these algorithms."
+},
+{
+"step": "2. Generate a random key for each encryption, rather than using a predefined default algorithm. You can use a cryptographically secure pseudorandom number generator (PRNG) to generate the key."
+}
+]
+}

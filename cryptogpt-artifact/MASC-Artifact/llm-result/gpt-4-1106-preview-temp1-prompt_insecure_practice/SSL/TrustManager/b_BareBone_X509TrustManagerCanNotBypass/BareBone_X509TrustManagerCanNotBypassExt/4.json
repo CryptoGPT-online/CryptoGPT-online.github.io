@@ -1,0 +1,35 @@
+```json
+[
+  {
+    "misuse": "TrustManager that does not check server certificates",
+    "vulnerable_code": [
+      "public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {",
+      "  // TODO Auto-generated method stub",
+      "}"
+    ],
+    "description": "This custom TrustManager implementation does not verify the certificate chain, which means it accepts any certificate presented by the server. This can lead to Man-in-the-Middle (MITM) attacks because malicious servers can impersonate legitimate ones.",
+    "recommendation": "Implement validation logic inside the checkServerTrusted method to properly verify the server's SSL certificate against a list of trusted Certificate Authorities (CAs) or according to a specific verification policy."
+  },
+  {
+    "misuse": "TrustManager that does not check client certificates",
+    "vulnerable_code": [
+      "public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {",
+      "  // TODO Auto-generated method stub",
+      "}"
+    ],
+    "description": "By not implementing the checkClientTrusted method, it does not validate client certificates for mutual authentication. This could allow clients with invalid certificates to authenticate to the server.",
+    "recommendation": "Implement validation logic in the checkClientTrusted method to verify client certificates, especially if your server requires mutual SSL authentication."
+  },
+  {
+    "misuse": "TrustManager returns null for accepted issuers",
+    "vulnerable_code": [
+      "public X509Certificate[] getAcceptedIssuers() {",
+      "  // TODO Auto-generated method stub",
+      "  return null;",
+      "}"
+    ],
+    "description": "Returning null for the `getAcceptedIssuers` method implies that no CA certificates are trusted. This can be interpreted differently depending on the JVM implementation but typically leads to not being able to authenticate peers against any CAs.",
+    "recommendation": "Return an array of X509Certificates that contains a list of accepted CAs the trust manager should trust, or ensure it returns the default set of accepted CAs if intending to use the JVM's default trust store."
+  }
+]
+```

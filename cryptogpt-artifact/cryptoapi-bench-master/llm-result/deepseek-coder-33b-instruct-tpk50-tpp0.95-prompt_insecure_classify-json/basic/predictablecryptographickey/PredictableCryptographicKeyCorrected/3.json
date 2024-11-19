@@ -1,0 +1,28 @@
+```json
+[
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+    "description": "The key length is reduced to 16 bytes. AES requires a 128-bit (16 bytes) key. This may not result in a strong encryption.",
+    "recommendation": "Use a 128-bit (16 bytes) or a 256-bit (32 bytes) key for AES encryption."
+  },
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5PADDING\");",
+    "description": "Using AES/CBC/PKCS5PADDING may be susceptible to a padding oracle attack if the same message and padding is used for the entire communication. AES-GCM should be used instead, which provides both confidentiality and integrity for data without having to handle the padding issue.",
+    "recommendation": "Use AES/GCM/NoPadding instead."
+  },
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values",
+    "vulnerable_code": "String defaultKey = String.valueOf(random.ints());",
+    "description": "This code uses a random number generator to create a key, but it does not guarantee a good quality randomness. AES needs high quality randomness and it is generally recommended to use java.security.SecureRandom instead of Random to generate the keys.",
+    "recommendation": "Use SecureRandom for generating the keys."
+  },
+  {
+    "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5PADDING\");",
+    "description": "The key exchange algorithm used is not negotiated. Any party that can compromise the communication channel could choose an arbitrary algorithm that would likely be less secure than the chosen one. This could lead to a Padding Oracle Attack.",
+    "recommendation": "Always negotiate the cipher suite during secure communication to prevent the selection of less secure algorithms."
+  }
+]
+```

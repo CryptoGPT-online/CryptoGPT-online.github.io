@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Key Management",
+        "vulnerable_code": "public static final String DEFAULT_ENCRYPT_KEY = \"changeit\";",
+        "description": "The encryption key is hardcoded and set to a default value that is commonly known and easy to guess, which makes it easy to crack the keystore.",
+        "recommendation": "Use a secure key management system to obtain encryption keys, avoid hardcoding keys in the source code, and ensure keys are complex and unique."
+    },
+    {
+        "misuse": "Insecure Trust Management",
+        "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");\nks.load(cacerts.openStream(), encryptKey);",
+        "description": "Loading a KeyStore over a network connection, especially from a hardcoded URL, can be insecure if the connection is not trusted or if there is any chance of a Man-In-The-Middle (MITM) attack.",
+        "recommendation": "Always load keystores from a trusted and secure source. Use secure connections and proper certificate validation when obtaining keystores remotely."
+    },
+    {
+        "misuse": "Inadequate Encryption Strength",
+        "vulnerable_code": "private static char[] ENCRYPT_KEY;",
+        "description": "If the character array 'ENCRYPT_KEY' is intended to be used as a key for encryption, its size and the method of its generation are not secure enough (assuming that the default key is used or the pattern is similar).",
+        "recommendation": "Generate encryption keys using a secure and recommended key generation practice that ensures appropriate key length and entropy."
+    }
+]
+```

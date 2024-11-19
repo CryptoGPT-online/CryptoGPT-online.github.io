@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure TrustManager",
+        "vulnerable_code": [
+            "public void checkClientTrusted(X509Certificate[] x509Certificates, String s)",
+            "public void checkServerTrusted(X509Certificate[] x509Certificates, String s)",
+            "public X509Certificate[] getAcceptedIssuers()"
+        ],
+        "description": "The custom X509TrustManager implemented here does not properly verify certificate chains, which makes the code vulnerable to man-in-the-middle attacks. The checkClientTrusted and checkServerTrusted methods do not perform any checks, potentially accepting any certificate presented to them.",
+        "recommendation": "Implement proper certificate chain verification and host name verification according to the specified 's' parameter (authType). Don't allow all certificates to be trusted without any validation."
+    },
+    {
+        "misuse": "Empty Certificate Authority Array",
+        "vulnerable_code": [
+            "\"return EMPTY_X509CERTIFICATE_ARRAY;\""
+        ],
+        "description": "The getAcceptedIssuers method returns an empty array of certificates. This could potentially bypass any checks against known certificate authorities, as it suggests no authorities are trusted.",
+        "recommendation": "Return an appropriate, non-empty list of acceptable CA certificates."
+    }
+]
+```

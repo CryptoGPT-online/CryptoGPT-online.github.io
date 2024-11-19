@@ -1,0 +1,34 @@
+```json
+[
+  {
+    "misuse": "Weak Cryptographic Hash Function",
+    "vulnerable_code": "crypto = new C2(\"MD5\");",
+    "description": "MD5 is a weak cryptographic hash function which is prone to collision attacks and should not be used for secure hashing purposes.",
+    "recommendation": "Use a strong cryptographic hash function such as SHA-256."
+  },
+  {
+    "misuse": "Inadequate Encryption Method",
+    "vulnerable_code": "public void encrypt(String str, String passedAlgo)",
+    "description": "The encrypt method is not performing encryption, but it is producing a cryptographic hash. The naming suggests that data is being securely encrypted, which is misleading.",
+    "recommendation": "Adjust method name to reflect the action performed, e.g., rename to 'hash' if hashing is intended, or implement actual encryption if that is the goal."
+  },
+  {
+    "misuse": "Insecure Output Encoding",
+    "vulnerable_code": "System.out.println(md.digest());",
+    "description": "The hashed value is printed out to the console directly as a byte array, which may result in an unreadable or incorrect representation. This can lead to information leakage or misuse of the hashed value.",
+    "recommendation": "Encode the output in a proper format such as hexadecimal or Base64 when displaying or transmitting."
+  },
+  {
+    "misuse": "Hardcoded Weak Cryptographic Hash Function",
+    "vulnerable_code": "crypto = new C2(\"MD5\");",
+    "description": "Using a hardcoded weak cryptographic hash function like MD5 does not allow for easy updates or migration to stronger algorithms without code changes.",
+    "recommendation": "Avoid hard-coding the cryptographic algorithm. Instead, use a configuration item that can be updated without modifying the codebase."
+  },
+  {
+    "misuse": "Unvalidated Algorithm Selection",
+    "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(crypto);",
+    "description": "The algorithm is being selected based on a passed or default string without validation, which could lead to using an insecure algorithm or introduce vulnerabilities if the string is manipulated.",
+    "recommendation": "Validate the algorithm string against a list of secure, accepted algorithms before instantiating the MessageDigest."
+  }
+]
+```

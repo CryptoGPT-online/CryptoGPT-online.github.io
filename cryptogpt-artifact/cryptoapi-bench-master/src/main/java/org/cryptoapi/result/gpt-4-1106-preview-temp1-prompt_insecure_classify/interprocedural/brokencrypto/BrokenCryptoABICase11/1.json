@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "String key = \"DES\";\nString crypto = \"DES/ECB/PKCS5Padding\";",
+        "description": "DES (Data Encryption Standard) is considered a broken and risky cryptographic algorithm due to its short key length of 56 bits, which is susceptible to brute-force attacks.",
+        "recommendation": "Replace DES with a more secure algorithm such as AES (Advanced Encryption Standard) with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_code": "String key = \"DES\";\nString crypto = \"DES/ECB/PKCS5Padding\";",
+        "description": "The use of DES with a key length of 56 bits does not provide adequate encryption strength in the current cryptographic landscape.",
+        "recommendation": "Use a stronger encryption algorithm like AES with a larger key size to increase encryption strength."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values.",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(cryptoKey);\nSecretKey key = keyGen.generateKey();",
+        "description": "The key generator instance is not being initialized with a secure random source, which may result in the generation of keys that are not sufficiently random.",
+        "recommendation": "Ensure the KeyGenerator is securely initialized with a SecureRandom instance."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation.",
+        "vulnerable_code": "String key = \"DES\";\nString crypto = \"DES/ECB/PKCS5Padding\";",
+        "description": "DES is a less-secure algorithm that should not be used in secure communications. ECB (Electronic Codebook) mode is also insecure because it does not provide serious message confidentiality.",
+        "recommendation": "Use a more secure algorithm and mode, such as AES/GCM/NoPadding, which provides both confidentiality and authenticity."
+    }
+]
+```

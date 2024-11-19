@@ -1,0 +1,49 @@
+### False Positive Misuse ###
+[
+  {
+    "misuse category": "Deprecated Cipher Algorithm",
+    "vulnerable_method": "C4.encrypt()",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(defaultAlgo);",
+    "description": "In the given code, the encryption algorithm is explicitly set to 'RC4' which is not a secure algorithm anymore. RC4 is being deprecated in many places and cannot be used for new encryption purposes.",
+    "recommendation": "Instead of using 'RC4', consider using stronger encryption algorithms like 'AES'. Also, it is a good practice to not hardcode the encryption algorithm but to configure it externally or via a parameter."
+  },
+  {
+    "misuse category": "Key Length",
+    "vulnerable_method": "C4.encrypt()",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);",
+    "description": "Generating a new key every time is insecure and may lead to key leakage and reuse if key is compromised.",
+    "recommendation": "Generate and store keys securely and use secure random number generator."
+  },
+  {
+    "misuse category": "Exception Handling",
+    "vulnerable_method": "C4.encrypt()",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);",
+    "description": "The NoSuchAlgorithmException is not appropriate for flow control. Its main purpose is to communicate a lack of a specific cryptographic algorithm and should not be caught for program control flow.",
+    "recommendation": "Do not use NoSuchAlgorithmException for flow control, and ensure that you always have adequate error handling for when the encryption algorithms are not supported."
+  }
+]
+
+### Optimized Misuse JSON ###
+[
+  {
+    "misuse category": "Deprecated Cipher Algorithm",
+    "vulnerable_method": "C4.encrypt()",
+    "vulnerable_code": "cipher = Cipher.getInstance(defaultAlgo);",
+    "description": "RC4 is a weak cipher which is not secure and should not be used in any new code.",
+    "recommendation": "Consider using a strong cipher, such as AES."
+  },
+  {
+    "misuse category": "Weak Key Length",
+    "vulnerable_method": "C4.encrypt()",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);",
+    "description": "RC4 is a weak encryption algorithm. It should not be used for new applications, and should be avoided even for legacy applications.",
+    "recommendation": "Use a stronger encryption algorithm like AES, use an appropriate mode of operation, and generate a key that is strong enough. In Java, you can generate a key of 128 bits using DESede (triple DES) or 256 bits using AES."
+  },
+  {
+    "misuse category": "Inadequate Key Management",
+    "vulnerable_method": "C4.encrypt()",
+    "vulnerable_code": "SecretKey key = keyGen.generateKey();",
+    "description": "Generating a new key every time is insecure and may lead to key leakage and reuse if key is compromised.",
+    "recommendation": "Generate and store keys securely and use secure random number generator."
+  }
+]

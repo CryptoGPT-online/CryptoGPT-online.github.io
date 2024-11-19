@@ -1,0 +1,37 @@
+```json
+[
+  {
+    "misuse": "Improper Certificate Validation",
+    "vulnerable_code": [
+      "public void checkClientTrusted(X509Certificate[] x509Certificates, String s)",
+      "public void checkServerTrusted(X509Certificate[] x509Certificates, String s)"
+    ],
+    "description": "Both checkClientTrusted and checkServerTrusted methods are empty, meaning they do not actually perform any form of certificate validation. This can allow any certificate, whether valid or not, and exposes the application to Man-in-the-Middle (MITM) attacks.",
+    "recommendation": "Implement proper certificate validation logic inside the checkClientTrusted and checkServerTrusted methods."
+  },
+  {
+    "misuse": "TrustManager that Accepts Any Certificate",
+    "vulnerable_code": [
+      "new X509TrustManager() { ... }"
+    ],
+    "description": "This custom TrustManager is insecure as it's designed to trust all certificates which can make the application vulnerable to various attacks such as MITM where an attacker could intercept and possibly alter communications between the client and server.",
+    "recommendation": "Remove the custom X509TrustManager that trusts all certificates and replace it with a TrustManager that properly validates certificates against a trust store."
+  },
+  {
+    "misuse": "Returning Empty Certificate Array",
+    "vulnerable_code": [
+      "public X509Certificate[] getAcceptedIssuers() { ... }"
+    ],
+    "description": "The getAcceptedIssuers() method returns an empty certificate array, implying no trust anchors are specified. This could result in the application failing to authenticate peers against a set of trusted certificates.",
+    "recommendation": "Return a non-empty array of trusted root CA certificates from the getAcceptedIssuers() method."
+  },
+  {
+    "misuse": "Condition Logic Error",
+    "vulnerable_code": [
+      "if (!(null != s || s.equalsIgnoreCase(\"RSA\") || x509Certificates.length >= 314)) { ... }"
+    ],
+    "description": "The condition logic in checkClientTrusted and checkServerTrusted is flawed, because null != s is always evaluated before the other conditions, allowing a null value for 's' to bypass any further checks, including the intended type check for RSA.",
+    "recommendation": "Correct the conditional checks by ensuring that 's' is not null before attempting to call methods on it, and refine the logic to ensure the intended checks are performed in the correct order."
+  }
+]
+```

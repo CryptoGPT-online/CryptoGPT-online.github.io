@@ -1,0 +1,50 @@
+### False Positive Misuse ###
+
+```json
+[
+    {
+        "misuse category": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_method": "method1(String, String)",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(cryptoKey);",
+        "description": "The cryptographic key is generated based on an input which is provided by the user, and it's potentially insecure. A static or weak key could be used, making the generated encrypted information vulnerable.",
+        "recommendation": "Use secure randomness generator for cryptographic keys to mitigate the risk of insufficiently random values."
+    },
+    {
+        "misuse category": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_method": "method1(String, String)",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(cryptoKey);",
+        "description": "The cryptoKey parameter in method1 is used to get the key generator, it may be hardcoded or from an external source. If it's not securely generated or not the optimal length, it may lead to weaker encryption strength.",
+        "recommendation": "For generating cryptographic keys, use a secure random number generator. Also consider the strength of the key based on the security requirements."
+    },
+    {
+        "misuse category": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_method": "method1(String, String)",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(crypto);",
+        "description": "In this code, the crypto parameter in method1 is directly used to create the cipher. This may allow an insecure or broken algorithm to be used, which could lead to vulnerabilities in the encryption process.",
+        "recommendation": "Ensure that only secure and up-to-date encryption algorithms are used. Always check the documentation or trustworthy sources for cryptographic algorithms."
+    }
+]
+```
+
+### Optimized Misuse JSON###
+
+```json
+[
+    {
+        "misuse category": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_method": "method1(String, String)",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(crypto);",
+        "description": "The crypto parameter is user controlled and is passed directly to the getInstance method. In this case, 'DES/ECB/PKCS5Padding' is passed, which is a risky choice.",
+        "recommendation": "Consider using a stronger cryptographic algorithm, e.g. AES in GCM mode. Also, avoid using ECB mode."
+    },
+    {
+        "misuse category": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_method": "method1(String, String)",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(cryptoKey);",
+        "description": "The cryptoKey parameter is user controlled and is passed directly to the getInstance method. In this case, 'DES' is passed, which is a short key length.",
+        "recommendation": "Consider using a longer, random key for encryption. The key length should at least match the block size of the chosen algorithm (e.g. 256 bits for AES)."
+    }
+]
+```
+
+These optimized misuse lists exclude the first three misuses because they are false positives. The cryptographic algorithm used is not insecure and the key length is long enough based on the AES specification.

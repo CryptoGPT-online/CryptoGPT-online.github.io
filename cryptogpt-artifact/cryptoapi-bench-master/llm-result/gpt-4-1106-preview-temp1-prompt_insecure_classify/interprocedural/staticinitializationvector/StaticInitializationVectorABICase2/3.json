@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(new byte[]{Byte.parseByte(String.valueOf(initialization))});",
+        "description": "The initialization vector (IV) for AES should be a random and unique value for each encryption operation, but here it is derived from a static, hardcoded string which does not provide a sufficiently random or unique IV.",
+        "recommendation": "Use a secure random number generator to create a new IV for each encryption operation."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+        "description": "The KeyGenerator is not explicitly initialized with a secure random seed or specified key size, which might result in using a default and potentially weak key. Additionally, the IV construction from the static string also suffers from predictability.",
+        "recommendation": "Securely initialize the KeyGenerator with a specified key size and a secure random seed. Also, ensure to use a secure random number generator for IV creation."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "public static final String DEFAULT_INITIALIZATION = \"abcde\";",
+        "description": "The hardcoded string 'DEFAULT_INITIALIZATION' is used as part of the IV setup, which is akin to having hardcoded credentials in the cryptographic process.",
+        "recommendation": "Remove hardcoded values and ensure that cryptographic parameters such as IVs are generated at runtime using secure random values."
+    }
+]
+```

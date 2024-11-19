@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(defaultAlgo);",
+        "description": "This code uses DES (Data Encryption Standard) for encryption. DES is a 56-bit block cipher and it's now considered weak and broken. This is not recommended for use in modern applications.",
+        "recommendation": "Consider using a modern, secure, and recommended cipher such as AES (Advanced Encryption Standard)."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation.",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);",
+        "description": "This code generates a key using KeyGenerator. No certificate or key validation is performed. This can make the code vulnerable to potential man-in-the-middle attacks.",
+        "recommendation": "Consider using a secure key generation method or validating the cryptographic keys, such as using a secure key exchange protocol."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values.",
+        "vulnerable_code": "SecretKey key = keyGen.generateKey();",
+        "description": "The secret key generated with KeyGenerator.getInstance(defaultAlgo).generateKey() is not random enough. This is typically a concern in cryptographic operations.",
+        "recommendation": "Use a secure random number generator to generate the keys for encryption."
+    }
+]
+```

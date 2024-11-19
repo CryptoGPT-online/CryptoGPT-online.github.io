@@ -1,0 +1,32 @@
+ {
+"misuses": [
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5PADDING\")",
+"description": "The use of AES/CBC/PKCS5PADDING is vulnerable to padding oracle attacks. It is recommended to use a more secure padding mode such as AES/GCM/NoPadding or AES/CCM/NoPadding.",
+"recommendation": "Replace AES/CBC/PKCS5PADDING with AES/GCM/NoPadding or AES/CCM/NoPadding."
+},
+{
+"misuse": "Misuse of SecureRandom",
+"vulnerable_code": "SecureRandom random = new SecureRandom();
+String defaultKey = String.valueOf(random.ints());",
+"description": "The use of SecureRandom with the default constructor is vulnerable to seed predictability issues. It is recommended to use a secure seed such as SecureRandom.getInstanceStrong() or SecureRandom.getInstance(\"SHA1PRNG\").",
+"recommendation": "Replace SecureRandom random = new SecureRandom() with SecureRandom random = SecureRandom.getInstanceStrong() or SecureRandom random = SecureRandom.getInstance(\"SHA1PRNG\")."
+},
+{
+"misuse": "Insecure Key Size",
+"vulnerable_code": "String defaultKey = String.valueOf(random.ints());
+byte[] keyBytes = defaultKey.getBytes();
+keyBytes = Arrays.copyOf(keyBytes,16);
+SecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES\");",
+"description": "The use of a 16-byte key for AES is insecure. It is recommended to use a 32-byte key for AES-256.",
+"recommendation": "Replace keyBytes = Arrays.copyOf(keyBytes,16) with keyBytes = Arrays.copyOf(keyBytes,32)."
+},
+{
+"misuse": "Insecure IV Generation",
+"vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, keySpec);",
+"description": "The use of a nonce (IV) generated insecurely can lead to cryptographic vulnerabilities. It is recommended to use a secure nonce generation mechanism such as SecureRandom.getInstanceStrong() or SecureRandom.getInstance(\"SHA1PRNG\").",
+"recommendation": "Replace cipher.init(Cipher.ENCRYPT_MODE, keySpec) with cipher.init(Cipher.ENCRYPT_MODE, keySpec, SecureRandom.getInstanceStrong()) or cipher.init(Cipher.ENCRYPT_MODE, keySpec, SecureRandom.getInstance(\"SHA1PRNG\"))."
+}
+]
+}

@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Inadequate Entropy in Pseudo Random Number Generator",
+        "vulnerable_code": "SecureRandom random = new SecureRandom();\nString defaultKey = String.valueOf(random.ints());",
+        "description": "The Pseudo Random Number Generator (PRNG) used here does not use secure seed, leading to inadequate entropy for encryption keys.",
+        "recommendation": "To ensure adequate entropy for encryption keys, a SecureRandom should be seeded with a secure random value or securely generated data, such as from java.security.SecureRandom.getInstanceStrong()."
+    },
+    {
+        "misuse": "Insufficient Length for AES Key",
+        "vulnerable_code": "byte[] keyBytes = defaultKey.getBytes();\nkeyBytes = Arrays.copyOf(keyBytes,16);\nSecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES\");",
+        "description": "The length of the AES key is too short. The minimum key length for AES is 16 bytes (128 bits).",
+        "recommendation": "Generate a secure random key that is 16 bytes (128 bits) long. You may also want to consider using a key derivation function (KDF) to convert a secure random key to the correct size."
+    },
+    {
+        "misuse": "Exception Not Thrown For Unsupported Algorithms",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5PADDING\");",
+        "description": "The code doesn't check if the requested transformation of the Cipher (in this case, \"AES/CBC/PKCS5PADDING\") is supported by the JVM. If it's not supported, it will throw a NoSuchAlgorithmException at runtime.",
+        "recommendation": "Always ensure that you check if the transformation is supported by using Cipher.getAvailableAlgorithms() and Cipher.getInstance(String transformation, Provider provider)."
+    }
+]
+```

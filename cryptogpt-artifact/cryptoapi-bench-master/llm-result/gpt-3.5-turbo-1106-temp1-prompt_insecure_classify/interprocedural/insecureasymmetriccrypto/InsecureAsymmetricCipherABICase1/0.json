@@ -1,0 +1,14 @@
+[{"misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm", 
+  "vulnerable_code": "KeyPairGenerator kgp = KeyPairGenerator.getInstance(\"RSA\");", 
+  "description": "The code uses RSA as the cryptographic algorithm. RSA is a well-known and widely used algorithm for public-key encryption and digital signatures. However, its security depends on the key size used. Currently, key sizes less than 2048 bits are considered to be insecure and vulnerable to attacks. The key size in this code is set to 1024 bits, which is below the recommended minimum key size.", 
+  "recommendation": "Increase the key size to at least 2048 bits or use a stronger cryptographic algorithm, such as ECC (Elliptic Curve Cryptography)."}, 
+
+ {"misuse": "CWE-326: Inadequate Encryption Strength", 
+  "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"RSA\");", 
+  "description": "The code uses RSA for both encryption and decryption without specifying any padding scheme. RSA encryption without proper padding is vulnerable to chosen-ciphertext attacks and padding oracle attacks. This can lead to potential information leaks or even full decryption of the encrypted data.", 
+  "recommendation": "Specify a padding scheme, such as RSA/ECB/OAEPWithSHA-256AndMGF1Padding or RSA/ECB/PKCS1Padding, for the encryption and decryption operations to ensure proper security and prevent attacks."},
+
+  {"misuse": "CWE-330: Use of Insufficiently Random Values", 
+  "vulnerable_code": "String myMessage = new String(\"Secret Message\");", 
+  "description": "The code uses a string literal as the input to be encrypted. String literals are predictable and can result in weak or easily guessable encryption keys or IVs, which weakens the security of the encryption. The use of weak or predictable encryption values can make it easier for attackers to decrypt the encrypted data.", 
+  "recommendation": "Use a secure random number generator to generate a random value as the input to be encrypted, such as using the SecureRandom class in Java. This ensures that the encryption values are unpredictable and improves the security of the encryption."}]

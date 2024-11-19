@@ -1,0 +1,23 @@
+### False Positive Misuses
+1. CWE-354: Use of Hard-Coded Credentials
+   - This is not a misuse as the hostname and port are not hard-coded credentials. They are simply the hostname and port of the server that the client wants to connect to.
+
+### Optimized Misuse JSON
+```json
+[
+  {
+    "misuse category": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable method": "SSLSocketFactory.getDefault()",
+    "vulnerable code": "SSLSocketFactory ssf = (SSLSocketFactory) SSLSocketFactory.getDefault();",
+    "description": "Using the default SSLSocketFactory may result in weak encryption algorithms being used.",
+    "recommendation": "Use a more secure SSLSocketFactory that specifies the desired encryption algorithms and protocols."
+  },
+  {
+    "misuse category": "CWE-256: Unprotected Transport of Sensitive Data",
+    "vulnerable method": "SSLSocketFactory.createSocket()",
+    "vulnerable code": "SSLSocket socket = (SSLSocket) ssf.createSocket(hostname,soc);",
+    "description": "The code does not specify any security parameters when creating the SSL socket, such as the protocol or cipher suite to be used. This can lead to the use of insecure protocols or cipher suites, which could allow an attacker to intercept and decrypt the transmitted data.",
+    "recommendation": "Explicitly specify the security parameters to be used when creating the SSL socket."
+  }
+]
+```

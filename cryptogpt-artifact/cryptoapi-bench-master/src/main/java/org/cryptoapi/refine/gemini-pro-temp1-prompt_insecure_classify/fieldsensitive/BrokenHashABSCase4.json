@@ -1,0 +1,39 @@
+### False Positive Misuse ###
+
+There are no false positives in the provided lists. All reported misuses are valid.
+
+
+### Optimized Misuse JSON ###
+
+```json
+[
+  {
+    "misuse category": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+    "vulnerable_method": "C4 constructor",
+    "vulnerable_code": "crypto = new C4(\"MD2\");",
+    "description": "The MD2 algorithm is considered broken and should not be used for cryptographic purposes.",
+    "recommendation": "Use a more secure cryptographic algorithm, such as SHA-256 or SHA-512."
+  },
+  {
+    "misuse category": "CWE-757: Selection of Less-Secure Algorithm During Negotiation.",
+    "vulnerable_method": "C4.encrypt",
+    "vulnerable_code": "if(passedAlgo.isEmpty()){\n            passedAlgo = crypto;\n        }",
+    "description": "The code is using the less secure algorithm specified in the constructor (`crypto`) if the `passedAlgo` is empty. This allows an attacker to force the use of a weak algorithm by providing an empty string for `passedAlgo`.",
+    "recommendation": "Always use a secure algorithm, regardless of the value of `passedAlgo`. If a secure algorithm is not specified, an exception should be thrown."
+  },
+  {
+    "misuse category": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+    "vulnerable_method": "MessageDigest.getInstance",
+    "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(crypto);",
+    "description": "The MD2 algorithm is considered broken and should not be used for cryptographic purposes.",
+    "recommendation": "Use a more secure hashing algorithm such as SHA-256 or SHA-512."
+  },
+  {
+    "misuse category": "CWE-330: Use of Insufficiently Random Values.",
+    "vulnerable_method": "C4.encrypt",
+    "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(crypto);",
+    "description": "The MessageDigest instance is created using a fixed algorithm (obtained from `crypto`) and does not use any additional entropy.",
+    "recommendation": "Use a more secure random number generator, such as `SecureRandom`, to generate the initialization vector."
+  }
+]
+```

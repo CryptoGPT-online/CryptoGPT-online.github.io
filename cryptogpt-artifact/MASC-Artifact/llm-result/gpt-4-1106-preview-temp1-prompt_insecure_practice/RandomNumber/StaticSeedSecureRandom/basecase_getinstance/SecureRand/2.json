@@ -1,0 +1,21 @@
+```json
+[
+  {
+    "misuse": "Insufficient Entropy",
+    "vulnerable_code": [
+      "rand1.setSeed(seedBytes);",
+      "rand2.setSeed(seedBytes);"
+    ],
+    "description": "The same seed is used for initializing two instances of SecureRandom, which leads to both instances producing the same sequence of pseudo-random numbers if the same algorithms are used. This can be exploited if the predictability of the generated values compromises security, for example in cryptographic applications.",
+    "recommendation": "Remove the setSeed calls or use a more unpredictable source of entropy for the seed, ensuring that the seed is not predictable or re-used between instances."
+  },
+  {
+    "misuse": "Insecure Randomness",
+    "vulnerable_code": [
+      "rand1.nextInt()==rand2.nextInt()"
+    ],
+    "description": "Using predictable seeds in SecureRandom makes the output sequence of random numbers predictable, which is insecure if used for cryptographic purposes or any other security-critical operations where unpredictability is required.",
+    "recommendation": "Ensure that SecureRandom instances are provided with unpredictable seed values or allow SecureRandom to self-seed with its default entropy source."
+  }
+]
+```

@@ -1,0 +1,21 @@
+This code contains a misuse of the PBEKeySpec API, which is a crypto API misuse. 
+
+Misuse: Weak PBE Iteration Count.
+
+Vulnerable Code:
+
+```java
+int iterationCount = 11010;
+pbeKeySpec = new PBEKeySpec(password.toCharArray(),salt,iterationCount,keyLength);
+```
+
+Description: The iteration count is set to 11010, which is relatively low. It's recommended that at least 10000 iterations are used for PBKDF2. 
+
+Recommendation: Increase the iteration count to a higher number to increase the security of the encryption process. For example:
+
+```java
+int iterationCount = 50000;
+pbeKeySpec = new PBEKeySpec(password.toCharArray(),salt,iterationCount,keyLength);
+```
+
+Please note that the actual value for iteration count can vary depending on the specific requirements and constraints of your application. However, the recommended minimum value is 10000.

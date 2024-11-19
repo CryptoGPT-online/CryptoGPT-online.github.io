@@ -1,0 +1,40 @@
+```json
+[
+    {
+        "misuse": "Inadequate Salt Size",
+        "vulnerable_code": "byte[] salt = {(byte) 0xa2};",
+        "description": "The salt for PBE is only one byte long, which is not secure as salts should be long and unpredictable to prevent dictionary and pre-computation attacks.",
+        "recommendation": "Use a longer, randomly generated salt, at least 16 bytes in length."
+    },
+    {
+        "misuse": "Static Salt",
+        "vulnerable_code": "byte[] salt = {(byte) 0xa2};",
+        "description": "The salt is hardcoded and static, which means that it is the same for every encryption operation, reducing the security of encryption because it makes the system vulnerable to dictionary attacks.",
+        "recommendation": "Always use a random, unique salt for each encryption operation."
+    },
+    {
+        "misuse": "Low Iteration Count",
+        "vulnerable_code": "int count = 1020;",
+        "description": "The iteration count for PBE is set to 1020, which may be insufficient to resist brute-force attacks depending on the performance of the hash function used.",
+        "recommendation": "Use a higher iteration count that provides a balance between security and performance, typically at least 10,000."
+    },
+    {
+        "misuse": "Unused Parameter",
+        "vulnerable_code": "crypto.method1(null);",
+        "description": "The method 'method1' is called with a null argument, but within this method, 'passedSalt' parameter is immediately overwritten. Therefore, the argument has no effect on the method’s behavior.",
+        "recommendation": "Refactor the code to avoid unnecessary parameters or misleading usage of arguments."
+    },
+    {
+        "misuse": "Storing the Salt in a Potentially insecure Manner",
+        "vulnerable_code": "byte[] defSalt;",
+        "description": "The salt is stored in a public or package-private variable 'defSalt', which could be modified by malicious actors or leak through memory dumps or errors.",
+        "recommendation": "Store sensitive information like salt in a secure manner, preferably within a local scope or in a way that access to the data is restricted and secure."
+    },
+    {
+        "misuse": "Parameter Reassignment",
+        "vulnerable_code": "passedSalt = defSalt;",
+        "description": "The method 'method1' reassigns the input 'passedSalt' to the 'defSalt' field, which can not only be unexpected from the caller's perspective but also defeats the purpose of passing a salt as a parameter.",
+        "recommendation": "Avoid reassigning parameters and refactor the method to take into consideration the passed salt if that is its intended use."
+    }
+]
+```

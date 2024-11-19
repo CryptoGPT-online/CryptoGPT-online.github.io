@@ -1,0 +1,46 @@
+```java
+import javax.net.ssl.X509TrustManager;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+
+public abstract class BareBone_X509TrustManagerCanBypassExt implements X509TrustManager {
+}
+
+public class Bs {
+    static X509TrustManager getTrustManager(){
+        return new BareBone_X509TrustManagerCanBypassExt(){
+
+            @Override
+            public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public X509Certificate[] getAcceptedIssuers() {
+                // TODO Auto-generated method stub
+                return null;
+            }
+
+        };
+    }
+    public static void main(String[] args) {
+        getTrustManager();
+        System.out.println("Hello World");
+    }
+}
+```
+There is one crypto API misuse in the code:
+
+{
+  "misuse": "Missing certificate path validation",
+  "vulnerable_code": "you didn't perform any certificate chain validation in the checkClientTrusted and checkServerTrusted",
+  "description": "In Java, a custom X.509 trust manager can be created by implementing the javax.net.ssl.X509TrustManager interface. This interface provides three methods: checkClientTrusted, checkServerTrusted, and getAcceptedIssuers. The checkClientTrusted and checkServerTrusted methods are used to validate the certificate chain of a remote peer. However, in your code, you have not implemented these methods. This means that any certificate will be considered valid, which can lead to security vulnerabilities.",
+  "recommendation": "Implement the checkClientTrusted and checkServerTrusted methods to perform certificate chain validation."
+}

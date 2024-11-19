@@ -1,0 +1,51 @@
+ ### Optimized Misuse JSON
+
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "Cipher.getInstance(crypto)",
+        "description": "The code uses the AES algorithm in ECB mode with PKCS5 padding, which is vulnerable to attacks such as Bleichenbacher's PKCS 1.5 padding oracle attack.",
+        "recommendation": "Use a secure padding scheme such as OAEP or GCM, and consider using a secure mode of operation such as GCM or EAX."
+    },
+    {
+        "misuse": "Incorrect Key Length",
+        "vulnerable_code": "SecretKey key = keyGen.generateKey()",
+        "description": "The length of the generated key is not specified, which may result in the use of a key with a length that is too short for the selected cryptographic algorithm. This can lead to weakened encryption and increased vulnerability to attacks.",
+        "recommendation": "Specify the key length explicitly, using the appropriate constant from the Java Cryptography Architecture (JCA) API."
+    },
+    {
+        "misuse": "Incorrect Cipher Mode",
+        "vulnerable_code": "Cipher.getInstance(crypto)",
+        "description": "The cipher mode is not explicitly specified, which can lead to the use of insecure defaults, such as ECB mode.",
+        "recommendation": "Specify the cipher mode explicitly, using the appropriate constant from the Java Cryptography Architecture (JCA) API."
+    },
+    {
+        "misuse": "Lack of Authentication",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key)",
+        "description": "The cipher is being used for encryption only, without any additional authentication. This can make it vulnerable to attacks, such as tampering or replay attacks.",
+        "recommendation": "Use a cipher mode that includes authentication, such as GCM or CCM."
+    }
+]
+
+### False Positive Misuse JSON
+
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "Cipher.getInstance(crypto)",
+        "description": "The code uses the ECB mode of operation, which is not secure for encrypting more than a few blocks of data. It is recommended to use a more secure mode, such as CBC or GCM, with a random IV.",
+        "recommendation": "Change the mode of operation to a more secure mode, such as CBC or GCM, and use a random IV."
+    },
+    {
+        "misuse": "Insecure Use of Randomness",
+        "vulnerable_code": "KeyGenerator.getInstance(\"AES\").generateKey()",
+        "description": "The code uses the default random number generator, which may not be secure. It is recommended to use a secure random number generator, such as SecureRandom, to generate the key.",
+        "recommendation": "Use a secure random number generator, such as SecureRandom, to generate the key."
+    },
+    {
+        "misuse": "Insecure Use of Crypto API",
+        "vulnerable_code": "Cipher.init(Cipher.ENCRYPT_MODE, key)",
+        "description": "The code uses the Cipher class to encrypt data, but does not specify the algorithm and mode of operation. It is recommended to specify the algorithm and mode of operation explicitly to ensure that the correct algorithm and mode are used.",
+        "recommendation": "Specify the algorithm and mode of operation explicitly when using the Cipher class to encrypt data."
+    }
+]

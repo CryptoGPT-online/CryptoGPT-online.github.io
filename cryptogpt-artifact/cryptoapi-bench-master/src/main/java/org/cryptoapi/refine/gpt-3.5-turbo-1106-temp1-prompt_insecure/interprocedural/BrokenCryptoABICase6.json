@@ -1,0 +1,20 @@
+### False Positive Misuse ###
+N/A
+
+### Optimized Misuse JSON ###
+```json
+[
+    {
+        "misuse": "Hardcoded Crypto Key",
+        "vulnerable_code": "private static char[] CRYPTO;\nprivate static char[] crypto;\npublic void go() throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {\n    KeyGenerator keyGen = KeyGenerator.getInstance(String.valueOf(crypto));\n    SecretKey key = keyGen.generateKey();\n    Cipher cipher = Cipher.getInstance(String.valueOf(crypto));\n    cipher.init(Cipher.ENCRYPT_MODE, key);\n}",
+        "description": "The code uses a hardcoded crypto key which is set to the value of the variable 'crypto'. This can lead to security vulnerabilities as the key is not securely generated or stored.",
+        "recommendation": "Generate the crypto key securely using a KeyGenerator or SecureRandom, and ensure it is stored and accessed securely. Avoid using hardcoded keys."
+    },
+    {
+        "misuse": "Insecure Key Generation",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(String.valueOf(crypto));\n SecretKey key = keyGen.generateKey();",
+        "description": "The KeyGenerator is not being initialized with a specified key size or with a secure random number generator. This can lead to weak keys being generated.",
+        "recommendation": "Initialize the KeyGenerator with a specific key size and use a secure random number generator to generate the key."
+    }
+]
+```

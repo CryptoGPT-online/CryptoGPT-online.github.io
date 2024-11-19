@@ -1,0 +1,14 @@
+```json
+{"misuse": "Insecure Randomness", 
+ "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();", 
+ "description": "The KeyGenerator.getInstance(\"AES\") method does not specify a SecureRandom algorithm, which may result in using a weak or predictable random number generator for key generation.", 
+ "recommendation": "Specify a SecureRandom algorithm when generating the key by using SecureRandom.getInstanceStrong()."},
+{"misuse": "Weak Encryption", 
+ "vulnerable_code": "String crypto = \"AES/ECB/PKCS5Padding\";\nCipher cipher = Cipher.getInstance(crypto);", 
+ "description": "Using AES in ECB mode with PKCS5Padding may lead to various vulnerabilities such as lack of semantic security and vulnerability to ciphertext manipulation attacks.", 
+ "recommendation": "Prefer using AES in GCM mode for better security. Additionally, specify a mode and padding that provides semantic security."},
+{"misuse": "Uninitialized Vector (IV)", 
+ "vulnerable_code": "Cipher cipher = Cipher.getInstance(crypto);\ncipher.init(Cipher.ENCRYPT_MODE, key);", 
+ "description": "The code does not initialize an initialization vector (IV) for the cipher, which can lead to security vulnerabilities when using block cipher modes that require an IV (e.g., CBC mode).", 
+ "recommendation": "For block cipher modes that require an IV (e.g., CBC mode), initialize the IV using the appropriate SecureRandom algorithm and provide it to the cipher during initialization."}
+```

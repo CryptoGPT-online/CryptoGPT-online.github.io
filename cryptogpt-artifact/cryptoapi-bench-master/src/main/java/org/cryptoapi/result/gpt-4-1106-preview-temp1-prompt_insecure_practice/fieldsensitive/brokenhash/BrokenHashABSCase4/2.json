@@ -1,0 +1,32 @@
+```json
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "crypto = new C4(\"MD2\");",
+        "description": "MD2 is an outdated and weak hashing algorithm which is considered cryptographically broken and unsuitable for further use.",
+        "recommendation": "Use a secure hashing algorithm like SHA-256 or SHA-3."
+    },
+    {
+        "misuse": "Insecure Encoding",
+        "vulnerable_code": "str.getBytes()",
+        "description": "Using default encoding can lead to unpredictable results depending on platform default. This can cause issues when comparing hash values across different systems.",
+        "recommendation": "Always specify a charset when converting strings to bytes, e.g., str.getBytes(StandardCharsets.UTF_8)."
+    },
+    {
+        "misuse": "Inadequate Exception Handling",
+        "vulnerable_code": [
+            "MessageDigest md = MessageDigest.getInstance(crypto);",
+            "md.update(str.getBytes());",
+            "System.out.println(md.digest());"
+        ],
+        "description": "The misuse of crypto API can also result from inadequate exception handling. If the MessageDigest.getInstance method does not support the requested algorithm, it throws a NoSuchAlgorithmException which is not handled appropriately.",
+        "recommendation": "Implement proper exception handling for NoSuchAlgorithmException, logging the error, and/or rethrowing as a custom exception."
+    },
+    {
+        "misuse": "Implied Hash without Integrity Protection",
+        "vulnerable_code": "System.out.println(md.digest());",
+        "description": "The code is implying that the MD2 algorithm is being used for encryption, while it's actually a hash function without any form of integrity protection or encryption .",
+        "recommendation": "Clarify code semantics, and if encryption is desired, use a proper cryptographic algorithm with an appropriate mode of operation."
+    }
+]
+```

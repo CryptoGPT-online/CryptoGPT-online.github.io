@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "crypto = new C2(\"DES/ECB/PKCS5Padding\");",
+        "description": "DES is a deprecated and insecure algorithm due to its small key size which makes it vulnerable to brute-force attacks.",
+        "recommendation": "Use a strong encryption algorithm like AES with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "Insecure Mode of Operation",
+        "vulnerable_code": "crypto = new C2(\"DES/ECB/PKCS5Padding\");",
+        "description": "ECB mode does not provide serious message confidentiality. It fails to prevent pattern disclosure by encrypting identical plaintext blocks into identical ciphertext blocks.",
+        "recommendation": "Switch to a more secure mode of operation, such as CBC or GCM, which provide better security by using an IV."
+    },
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "KeyGenerator.getInstance(defaultAlgo);",
+        "description": "The KeyGenerator might not be initialized with a secure randomness source, which could lead to weak keys that are easier to break.",
+        "recommendation": "Ensure that a secure source of randomness is used when generating keys."
+    },
+    {
+        "misuse": "Hardcoded Crypto Algorithm",
+        "vulnerable_code": "KeyGenerator.getInstance(defaultAlgo); Cipher.getInstance(defaultAlgo);",
+        "description": "The algorithm used for key generation and cipher instance should not be hardcoded, as this reduces the flexibility to change the algorithm as needed for security.",
+        "recommendation": "Provide mechanism to easily switch to a different algorithm or key size without code changes."
+    }
+]
+```

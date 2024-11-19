@@ -1,0 +1,34 @@
+```json
+[
+    {
+        "misuse": "Deprecated or Weak Crypto Algorithm",
+        "vulnerable_code": "String crypto = \"IDEA\";",
+        "description": "IDEA (International Data Encryption Algorithm) is considered weak by modern standards. It has a relatively small key size and block size compared to newer algorithms, which can result in vulnerabilities.",
+        "recommendation": "Use stronger, more current cryptographic algorithms like AES with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "Insufficient Key Size Generation",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(crypto);",
+        "description": "The code does not explicitly set a secure key size for the KeyGenerator. The default key size might not be secure, especially for older or weaker algorithms.",
+        "recommendation": "Explicitly set a secure key size when initializing the KeyGenerator. For example, KeyGenerator.getInstance(crypto).init(256); for AES."
+    },
+    {
+        "misuse": "No Secure Random Number Generator",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(crypto);",
+        "description": "The KeyGenerator does not explicitly use a secure random number generator. It is relying on the default settings which may not be secure.",
+        "recommendation": "Use KeyGenerator with a specified SecureRandom instance for key generation. For example, keyGen.init(256, new SecureRandom());"
+    },
+    {
+        "misuse": "Cryptographic Operation without Secure Randomness",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "In the absence of a specified SecureRandom instance, the cipher may not have secure randomness for encryption operations especially in modes of encryption that require an IV (e.g., CBC mode).",
+        "recommendation": "When using block cipher modes that require an IV, make sure to provide a securely generated IV by specifying a SecureRandom instance."
+    },
+    {
+        "misuse": "Insecure Exception Handling",
+        "vulnerable_code": "public static void main (String [] args) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException",
+        "description": "The main method is declared to simply throw security-critical exceptions, which could lead to insecure exception handling if not properly managed by the calling environment.",
+        "recommendation": "Catch security-critical exceptions and handle them appropriately within the code to ensure a secure failure mode."
+    }
+]
+```

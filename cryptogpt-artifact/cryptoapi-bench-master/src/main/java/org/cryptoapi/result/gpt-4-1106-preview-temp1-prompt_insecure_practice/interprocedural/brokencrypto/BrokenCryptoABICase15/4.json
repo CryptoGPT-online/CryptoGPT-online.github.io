@@ -1,0 +1,37 @@
+```json
+[
+    {
+        "misuse": "Deprecated or Weak Cryptographic Algorithm",
+        "vulnerable_code": "String crypto = \"IDEA\";",
+        "description": "The IDEA (International Data Encryption Algorithm) is an old cryptographic algorithm which may not be considered secure by modern standards. It is also not widely adopted, meaning it has not received the same level of scrutiny as more standard algorithms.",
+        "recommendation": "Replace with a more secure algorithm such as AES (Advanced Encryption Standard)."
+    },
+    {
+        "misuse": "Use of ECB mode for encryption",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(crypto);",
+        "description": "The code does not specify a cipher mode or padding scheme when calling Cipher.getInstance(), which means it will default to ECB (Electronic Codebook) mode if IDEA is used. ECB mode is not recommended for use in cryptographic protocols because it does not provide serious message confidentiality, as it encrypts identical plaintext blocks into identical ciphertext blocks.",
+        "recommendation": "Use a more secure mode of operation like CBC (Cipher Block Chaining) with proper initialization vector (IV) management."
+    },
+    {
+        "misuse": "Missing Initialization Vector (IV)",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "The cipher is initialized without an initialization vector (IV). This is insecure if using a mode of operation, such as CBC, that requires an IV. Reusing an IV across multiple encryptions can compromise the security of the first block of encrypted data and, depending on the mode, potentially allow for some patterns to be discerned across ciphertexts.",
+        "recommendation": "Properly generate and use a unique IV for each encryption operation."
+    },
+    {
+        "misuse": "Insecure Random Number Generation",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(crypto);",
+        "description": "The code does not specify a secure random number generator for the key generation process. Insecure random number generators (RNG) can lead to predictable keys which would make it easier for an attacker to compromise the encryption.",
+        "recommendation": "Ensure that a secure random number generator is used for key generation."
+    },
+    {
+        "misuse": "No specification of Provider",
+        "vulnerable_code": [
+            "KeyGenerator keyGen = KeyGenerator.getInstance(crypto);",
+            "Cipher cipher = Cipher.getInstance(crypto);"
+        ],
+        "description": "The cryptographic provider is not specified when getting the instance of KeyGenerator and Cipher. This could lead to using a weak or non-compliant provider for cryptographic operations unintentionally.",
+        "recommendation": "Specify a secure and vetted cryptographic provider explicitly when obtaining instances of cryptographic objects."
+    }
+]
+```

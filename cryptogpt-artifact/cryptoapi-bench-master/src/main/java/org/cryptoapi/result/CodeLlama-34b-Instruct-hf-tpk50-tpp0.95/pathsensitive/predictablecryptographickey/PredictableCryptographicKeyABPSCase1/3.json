@@ -1,0 +1,22 @@
+ ```json
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "SecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES\");",
+        "description": "The provided key is a fixed default key, which can be easily discovered by an attacker and used to gain unauthorized access to the encrypted data.",
+        "recommendation": "Always use a securely generated key that is unique and randomly generated for each encryption operation. This can be achieved by using a cryptographically secure random number generator, such as the SecureRandom class in Java."
+    },
+    {
+        "misuse": "Key Material Reuse",
+        "vulnerable_code": "keyBytes = String.valueOf(random.ints()).getBytes();",
+        "description": "The provided key is generated using a random number generator, but it is reused for each encryption operation. This can weaken the security of the encryption by making it easier for an attacker to guess the key.",
+        "recommendation": "Always generate a new key for each encryption operation. This can be achieved by using a cryptographically secure random number generator, such as the SecureRandom class in Java."
+    },
+    {
+        "misuse": "Key Material Weakness",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The provided key is truncated to 16 bytes, which can weaken the security of the encryption by reducing the key size. This can make it easier for an attacker to guess the key.",
+        "recommendation": "Always use a secure and recommended key size for the encryption algorithm being used. For AES, the recommended key sizes are 128, 192, or 256 bits."
+    }
+]
+```

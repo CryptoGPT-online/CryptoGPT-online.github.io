@@ -1,0 +1,22 @@
+ {
+"misuses": [
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "SSLSocketFactory.getDefault();",
+"description": "The SSLSocketFactory.getDefault() method is insecure as it uses the JDK default SSLContext, which may not be secure.",
+"recommendation": "Use the SSLSocketFactory.getDefault(KeyStore) method to provide a custom KeyStore for the SSLContext."
+},
+{
+"misuse": "Insufficient Key Size",
+"vulnerable_code": "SSLSocket socket = (SSLSocket) ssf.createSocket(\"my.host.name\", 443);",
+"description": "The default key size for SSL/TLS connections is 1024 bits, which is insufficient for secure communication. A minimum of 2048 bits is recommended.",
+"recommendation": "Set the SSLContext.getDefault().getSupportedKeySizes() method to a larger key size, such as 2048 or higher, before creating the SSLSocket."
+},
+{
+"misuse": "Insecure Protocol Version",
+"vulnerable_code": "SSLSocket socket = (SSLSocket) ssf.createSocket(\"my.host.name\", 443);",
+"description": "The default SSL/TLS protocol version used by the SSLSocketFactory is SSLv2, which is insecure and can be easily downgraded by an attacker. ",
+"recommendation": "Use the SSLContext.getDefault().getSupportedProtocols() method to specify a secure protocol version, such as TLSv1.2 or higher, before creating the SSLSocket."
+}
+]
+}

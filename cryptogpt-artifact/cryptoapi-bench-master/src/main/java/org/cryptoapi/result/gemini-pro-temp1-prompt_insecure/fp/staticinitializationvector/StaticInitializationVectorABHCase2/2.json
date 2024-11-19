@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+    "description": "Using weak encryption algorithm (AES) with an effective key length of 128 bits. This may not provide sufficient security for sensitive data, which could potentially be decrypted by attackers.",
+    "recommendation": "Consider using a stronger encryption algorithm such as AES-256 or a more modern algorithm like ChaCha20 or XChaCha20."
+  },
+  {
+    "misuse": "CWE-327: Use of a Weak Key",
+    "vulnerable_code": "SecretKey key = keyGen.generateKey();",
+    "description": "Generating a key using the default settings of the KeyGenerator may result in weak or predictable keys. This could allow attackers to guess or brute-force the key, compromising the security of the cipher.",
+    "recommendation": "Consider using a stronger key generation mechanism, such as using a secure random number generator (e.g., SecureRandom) or employing a key derivation function (e.g., PBKDF2) to derive keys from a user-provided password or other secret."
+  },
+  {
+    "misuse": "CWE-338: Use of Cryptographic Constant",
+    "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+    "description": "Using a constant value (the bytes of the string \"abcdef\") as the initialization vector (IV) makes the cipher vulnerable to attacks. An IV should be random or unpredictable to ensure that the same plaintext encrypted multiple times with the same key will result in different ciphertexts.",
+    "recommendation": "Generate a random IV for each encryption operation, using a secure random number generator (e.g., SecureRandom)."
+  }
+]
+```

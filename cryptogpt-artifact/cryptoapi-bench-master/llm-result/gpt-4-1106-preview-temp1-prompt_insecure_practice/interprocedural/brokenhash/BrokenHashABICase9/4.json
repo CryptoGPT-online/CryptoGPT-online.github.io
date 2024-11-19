@@ -1,0 +1,28 @@
+```json
+[
+  {
+    "misuse": "Insecure Hash Algorithm",
+    "vulnerable_code": "MessageDigest.getInstance(crypto)",
+    "description": "SHA-1 is considered insecure due to vulnerabilities that allow for collision attacks. Using an insecure hash function for cryptographic purposes can lead to vulnerabilities.",
+    "recommendation": "Switch to a secure hashing algorithm such as SHA-256 or SHA-3."
+  },
+  {
+    "misuse": "Insufficient Error Handling",
+    "vulnerable_code": "method1(str,hashAlgo);",
+    "description": "The 'NoSuchAlgorithmException' for 'MessageDigest.getInstance' is handled by propogating the exception, but it does not have adequate error handling which may lead to unexpected behavior or information leakage if the exception occurs.",
+    "recommendation": "Implement proper error handling mechanism to deal with the exception appropriately."
+  },
+  {
+    "misuse": "Inadequate Byte Representation",
+    "vulnerable_code": "md.update(str.getBytes());",
+    "description": "Using the platform's default charset to convert a String to bytes can lead to undetermined behavior across different platforms. Not specifying a charset when calling getBytes() may produce different results on different systems.",
+    "recommendation": "Define a specific charset such as UTF-8 when converting a String to bytes."
+  },
+  {
+    "misuse": "Unsecure Print of Sensitive Data",
+    "vulnerable_code": "System.out.println(md.digest());",
+    "description": "Printing the result of a cryptographic operation can unintentionally leak sensitive information to the logs or console output.",
+    "recommendation": "Avoid direct printing of sensitive data or hash values. If needed, securely log the information, ensuring it is not accessible to unauthorized users."
+  }
+]
+```

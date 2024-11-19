@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Missing Initialization Vector (IV)",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "AES in CBC mode is being initialized without specifying an Initialization Vector (IV). Using a static IV or not using an IV at all can make encryption deterministic, hence susceptible to certain types of attacks, such as dictionary attacks.",
+        "recommendation": "Use a securely generated random IV for each encryption operation and pass it to the cipher.init() method."
+    },
+    {
+        "misuse": "Class Name Mismatch",
+        "vulnerable_code": "EcbInSymmCryptoBBCase1 bc = new EcbInSymmCryptoBBCase1();",
+        "description": "The class being instantiated is named 'EcbInSymmCryptoBBCase1' which may suggest that the cryptography is being done in ECB mode which is insecure, but the actual Cipher instance is created with 'AES/CBC/PKCS5Padding'. This is likely a copy-paste error or a refactoring issue.",
+        "recommendation": "Ensure that the class names and the cryptographic modes they implement are in sync to avoid confusion. If ECB mode is intended, change the cipher string to 'AES/ECB/PKCS5Padding', but it is recommended to use a more secure mode like CBC with a proper IV, as mentioned above."
+    }
+]
+```

@@ -1,0 +1,19 @@
+### False Positive Misuses ###
+
+1. **CWE-326: Inadequate Encryption Strength**
+   - Vulnerable Code: `KeyGenerator keyGen = KeyGenerator.getInstance("AES\");`
+   - Explanation: This misuse report is false positive because it fails to consider the context. In this specific case, the key size is not being set explicitly. The default key size for AES is 128 bits, which is considered adequate for most applications.
+
+### Optimized Misuse JSON ###
+
+```json
+[
+  {
+    "misuse category": "Insufficient Initialization Vector (IV)",
+    "vulnerable_method": "IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+    "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+    "description": "The IV (Initialization Vector) used for CBC mode encryption is generated from the input bytes, which is insecure. An IV should be random and unpredictable.",
+    "recommendation": "Use a secure random number generator to generate the IV, such as `SecureRandom`."
+  }
+]
+```

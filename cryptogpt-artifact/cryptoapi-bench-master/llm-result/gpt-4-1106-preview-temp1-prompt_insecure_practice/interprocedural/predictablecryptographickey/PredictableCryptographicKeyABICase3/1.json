@@ -1,0 +1,34 @@
+```json
+[
+    {
+        "misuse": "Hardcoded Cryptographic Key",
+        "vulnerable_code": "String key = \"defaultkey\";",
+        "description": "The code contains a hardcoded key for cryptographic operations, which could be extracted by decompiling the bytecode or inspecting the application at runtime.",
+        "recommendation": "Use a secure method to manage keys, such as a dedicated key management service or secure storage, and never hardcode keys within the application."
+    },
+    {
+        "misuse": "Insecure Key Derivation",
+        "vulnerable_code": "byte[] keyBytes = key.getBytes();\nkeyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The key is derived from a string in a way that doesn't ensure cryptographic strength. It may not use the full entropy available in the key (for example, it just takes the raw bytes and pads them to the needed length).",
+        "recommendation": "Use a secure key derivation function such as PBKDF2, bcrypt, or scrypt to derive the key from a password or passphrase."
+    },
+    {
+        "misuse": "Potential Use of Weak or Insufficient Entropy for Key",
+        "vulnerable_code": "String key = \"defaultkey\";",
+        "description": "The key is derived from a string with potentially weak or insufficient entropy which makes it predictable and vulnerable to attacks.",
+        "recommendation": "Generate keys using a secure random number generator or derive them from high entropy sources."
+    },
+    {
+        "misuse": "Inadequate Key Size",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The code may not ensure that the key size is adequate for the chosen encryption algorithm. If the original key has fewer than 16 bytes, the size extension might not align with AES requirements for secure key sizes such as 128, 192, or 256 bits.",
+        "recommendation": "Ensure the key size matches one of the AES-compliant key sizes (128, 192, or 256 bits). Use adequate padding mechanism if needed."
+    },
+    {
+        "misuse": "Implicit Character Encoding",
+        "vulnerable_code": "byte[] keyBytes = key.getBytes();",
+        "description": "getBytes() uses the platform's default charset to encode the string, which could vary between platforms and lead to unpredictable results in the cryptographic process.",
+        "recommendation": "Specify a character encoding to ensure consistent behavior across platforms, for instance, key.getBytes(StandardCharsets.UTF_8)."
+    }
+]
+```

@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Invalid Key Exception Potential",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "The cipher instance might be initialized with a key algorithm that is incompatible with the Cipher algorithm. Specifically, if 'choice' is not greater than 1, an AES key will be used with an RC2 Cipher, which is not compatible.",
+        "recommendation": "Ensure that the key algorithm matches the Cipher algorithm being used. If RC2 is desired, an RC2 key should be generated. If AES is being used, the conditional check should ensure its use exclusively."
+    },
+    {
+        "misuse": "Use of Weak Cryptographic Algorithm",
+        "vulnerable_code": "Cipher.getInstance(\"RC2\")",
+        "description": "The RC2 cryptographic algorithm is considered weak and vulnerable to attack.",
+        "recommendation": "Replace the use of RC2 with a more secure algorithm like AES with a secure mode of operation and padding scheme."
+    },
+    {
+        "misuse": "Deterministic Encryption",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "When using AES in CBC mode, the encryption is deterministic if an initialization vector (IV) is not provided, which may lead to patterns in ciphertexts allowing an attacker to obtain information about the plaintext.",
+        "recommendation": "Use a secure random IV for CBC mode encryption and ensure that the IV is different for each encryption operation."
+    },
+    {
+        "misuse": "Insufficient Entropy",
+        "vulnerable_code": "KeyGenerator.getInstance(\"AES\");",
+        "description": "Without specifying a secure random source or entropy for the key generation, the default KeyGenerator may not produce keys with sufficient randomness depending on the Java Crypto provider implementation.",
+        "recommendation": "Specify a secure random source for key generation to ensure the entropy of the keys is sufficient."
+    }
+]
+```

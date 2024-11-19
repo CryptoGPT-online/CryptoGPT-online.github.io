@@ -1,0 +1,23 @@
+The code provided is not vulnerable to cryptographic algorithm misuse. However, it is important to note that the security of the code depends on the context of its usage. In the provided code, the cryptographic algorithm (SHA-1 or SHA-256) is dynamically chosen based on a variable. This could potentially make the code more secure, because the security of the code might depend on the variable's value.
+
+However, it is generally better to use a hard-coded cryptographic algorithm rather than a dynamically chosen one, because the latter can make the code more difficult to audit. Additionally, it might expose the code to timing attacks, which could potentially reveal the used algorithm through timing differences.
+
+Here is how the recommended code would look like:
+
+```java
+public class B1 {
+    public static void main (String [] args) throws NoSuchAlgorithmException {
+        String name = "abcdef";
+        int choice = 2;
+        MessageDigest md;
+        if(choice>1)
+            md = MessageDigest.getInstance("SHA-256");
+        else
+            md = MessageDigest.getInstance("SHA-1");
+        md.update(name.getBytes());
+        System.out.println(md.digest());
+    }
+}
+```
+
+In this code, the cryptographic algorithm is chosen based on a variable, but the used algorithm is hard-coded.

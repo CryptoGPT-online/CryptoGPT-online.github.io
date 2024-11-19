@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "Insecure Key Size",
+    "vulnerable_code": "\"RSA\"",
+    "description": "The key size used for the RSA algorithm is 1024 bits, which is no longer considered secure.",
+    "recommendation": "Use a key size of at least 2048 bits when initializing the KeyPairGenerator for RSA."
+  },
+  {
+    "misuse": "ECB Mode in RSA",
+    "vulnerable_code": "Cipher.getInstance(\"RSA\")",
+    "description": "Cipher.getInstance(\"RSA\") defaults to 'RSA/ECB/PKCS1Padding' which is not a security issue per se, but specifying ECB makes it look like block cipher mode which RSA is not, causing confusion.",
+    "recommendation": "Use 'RSA/None/PKCS1Padding' to avoid confusion and to represent RSA encryption accurately."
+  },
+  {
+    "misuse": "Unused Variable",
+    "vulnerable_code": "private static int KEY_SIZE;",
+    "description": "The variable 'KEY_SIZE' is declared but never used which can lead to confusion and maintenance issues.",
+    "recommendation": "Remove the unused variable 'KEY_SIZE' or refactor the code to use this variable appropriately."
+  }
+]
+```

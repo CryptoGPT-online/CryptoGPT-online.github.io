@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values",
+    "vulnerable_code": "String defaultKey = String.valueOf(random.ints());",
+    "description": "The 'ints()' method from SecureRandom returns an IntStream of random integers, which is then converted to a String. However, when converting this IntStream to a String, the result does not represent a sufficiently random or large enough value for secure key generation.",
+    "recommendation": "Use 'random.generateSeed(int numBytes)' to generate a random seed of a specific length, and then use a key derivation function (KDF) to derive a key from it."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+    "description": "This line of code pads the key to be 16 bytes, which is the size for AES-128. If an encryption key is derived from an insecure source or if the key size is not sufficient for strong security (e.g. AES-256 would require a 32-byte key), this could lead to inadequate encryption strength.",
+    "recommendation": "Ensure that the key is derived from a secure source and is of adequate length for the required level of security. For AES-256, you would require a 32-byte key."
+  },
+  {
+    "misuse": "CWE-798: Use of Hardcoded Credentials",
+    "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+    "description": "If the defaultKey does not provide enough randomness or is predictable, the resulting keyBytes could be considered hardcoded credentials, since they do not change between executions and could be guessed by an attacker.",
+    "recommendation": "Generate a strong, random key using a cryptographic library and securely store it, or use a secure key management system."
+  }
+]
+```

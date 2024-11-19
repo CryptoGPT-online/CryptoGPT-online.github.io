@@ -1,0 +1,17 @@
+Misuse: CWE-326: Inadequate Encryption Strength
+
+vulnerable_code:
+```
+KeyGenerator keyGen = KeyGenerator.getInstance("DES");
+SecretKey key = keyGen.generateKey();
+Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
+cipher.init(Cipher.ENCRYPT_MODE, key);
+```
+
+description:
+The code uses the DES algorithm, which is a 56-bit key algorithm. DES keys are often too short to provide adequate security, especially since today's modern hardware makes the strength of DES-based encryption more easily breached via brute force.
+
+recommendation:
+Consider using stronger encryption such as AES (which provides a 128-bit key), or consider using a key length of 192 or 256 bits for DES. 
+
+Note: While DES is still useful for backwards compatibility, it's generally recommended to upgrade to AES. Java supports AES in GCM/NoPadding and CBC/PKCS5Padding modes.

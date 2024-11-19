@@ -1,0 +1,18 @@
+ {
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "MessageDigest.getInstance(\"MD5\")",
+"description": "The code uses the MD5 algorithm, which is considered broken and should not be used for any cryptographic purposes. It is recommended to use a more secure algorithm such as SHA-256 or SHA-3.",
+"recommendation": "Replace `MessageDigest.getInstance(\"MD5\")` with `MessageDigest.getInstance(\"SHA-256\")`."
+},
+{
+"misuse": "Misuse of Hash Algorithm",
+"vulnerable_code": "MessageDigest.getInstance(\"SHA-256\")",
+"description": "The code uses the SHA-256 algorithm, which is a hash algorithm and not a cryptographic algorithm. Hash algorithms are designed to be fast and efficient, but they are not secure for cryptographic purposes. It is recommended to use a more secure algorithm such as AES or RSA.",
+"recommendation": "Replace `MessageDigest.getInstance(\"SHA-256\")` with `Cipher.getInstance(\"AES/CBC/NoPadding\")` or `Signature.getInstance(\"SHA256withRSA\")`."
+},
+{
+"misuse": "Incorrect Key Usage",
+"vulnerable_code": "MessageDigest.getInstance(\"SHA-256\").update(name.getBytes())",
+"description": "The code uses the SHA-256 algorithm in a way that is not secure for cryptographic purposes. The `update()` method should only be used for hashing data, and not for encrypting or decrypting data. It is recommended to use a more secure algorithm such as AES or RSA.",
+"recommendation": "Replace `MessageDigest.getInstance(\"SHA-256\").update(name.getBytes())` with `Cipher.getInstance(\"AES/CBC/NoPadding\").doFinal(name.getBytes())` or `Signature.getInstance(\"SHA256withRSA\").doFinal(name.getBytes())`."
+}

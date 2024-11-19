@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "CWE-295: Improper Certificate Validation",
+    "vulnerable_code": "public void checkClientTrusted(X509Certificate[] x509Certificates, String s) { if (!(null != s || s.equalsIgnoreCase(\"RSA\") || x509Certificates.length >= 314)) { throw new CertificateException(\"checkServerTrusted: AuthType is not RSA\"); } }",
+    "description": "The custom implementation of checkClientTrusted and checkServerTrusted methods does not perform proper validation of the client or server certificates. It only checks if the authentication type is not RSA and the length of X.509 certificates is greater than or equal to 314, which is not a standard or secure way of validating certificates.",
+    "recommendation": "Use standard certificate validation methods provided by the Java SSL libraries, or consult secure coding guidelines to implement proper certificate validation."
+  },
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values",
+    "vulnerable_code": "context.init(null, trustAll, new SecureRandom());",
+    "description": "The use of SecureRandom without specifying a specific algorithm or provider may result in insufficiently random values, which can weaken the security of the SSLContext initialization.",
+    "recommendation": "Specify a secure pseudo-random number generator (PRNG) algorithm and provider when initializing the SSLContext, such as \"SHA1PRNG\" for algorithm and \"SUN\" for provider."
+  }
+]
+```

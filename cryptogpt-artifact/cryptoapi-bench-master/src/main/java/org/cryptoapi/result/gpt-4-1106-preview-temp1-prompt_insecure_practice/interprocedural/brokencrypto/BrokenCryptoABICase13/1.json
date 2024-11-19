@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Deprecated/Broken Crypto Algorithm",
+        "vulnerable_code": "String crypto = \"RC4\";",
+        "description": "The RC4 encryption algorithm is considered weak and insecure. Its usage is discouraged because it is vulnerable to several attacks, such as bit-flipping and weak key attacks.",
+        "recommendation": "Replace RC4 with a more secure algorithm, such as AES with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "Missing Secure Random Initialization",
+        "vulnerable_code": "KeyGenerator.getInstance(crypto)",
+        "description": "The KeyGenerator should be securely initialized with a SecureRandom instance to ensure that the key generation process is secure.",
+        "recommendation": "Initialize the KeyGenerator with a SecureRandom instance: KeyGenerator keyGen = KeyGenerator.getInstance(crypto); keyGen.init(new SecureRandom());"
+    },
+    {
+        "misuse": "Inadequate Key Size",
+        "vulnerable_code": "keyGen.generateKey();",
+        "description": "The key size is not explicitly specified, which may result in a weaker key, especially when using algorithms like AES, which support multiple key sizes.",
+        "recommendation": "Specify a key size that is considered secure, for example: keyGen.init(256); for AES."
+    }
+]
+```

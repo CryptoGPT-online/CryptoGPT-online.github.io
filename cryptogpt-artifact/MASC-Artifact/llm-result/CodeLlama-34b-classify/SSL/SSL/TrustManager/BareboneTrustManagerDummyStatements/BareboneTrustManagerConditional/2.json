@@ -1,0 +1,32 @@
+ [
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "SSLContext.getInstance(\"SSL\")",
+        "description": "The code uses the SSL protocol, which is a deprecated and insecure protocol. It should be replaced with a more secure protocol such as TLS.",
+        "recommendation": "Replace SSLContext.getInstance(\"SSL\") with SSLContext.getInstance(\"TLS\") or a more secure protocol."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "new X509TrustManager() {...}",
+        "description": "The code implements a custom trust manager that blindly trusts all certificates, regardless of their validity. This is insecure because it allows man-in-the-middle attacks.",
+        "recommendation": "Do not implement custom trust managers. Instead, use a reputable certificate authority (CA) to validate certificates."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "new SecureRandom()",
+        "description": "The code uses the SecureRandom class to generate random values, but does not specify a secure random number generator (RNG). This can lead to insecure random values being generated, which can compromise the security of the system.",
+        "recommendation": "Use a secure RNG, such as the SHA-1PRNG, to generate random values."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "s.equalsIgnoreCase(\"RSA\")",
+        "description": "The code hardcodes the RSA algorithm, which is a security risk because it allows attackers to potentially manipulate the algorithm used.",
+        "recommendation": "Do not hardcode sensitive information, such as algorithms, in code. Instead, use secure methods to store and retrieve this information."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": "context.init(null, trustAll, new SecureRandom())",
+        "description": "The code uses the SSL context to negotiate a connection, but does not specify a secure algorithm. This can lead to a less secure connection being established, which can compromise the security of the system.",
+        "recommendation": "Specify a secure algorithm, such as TLS, when negotiating a connection."
+    }
+]

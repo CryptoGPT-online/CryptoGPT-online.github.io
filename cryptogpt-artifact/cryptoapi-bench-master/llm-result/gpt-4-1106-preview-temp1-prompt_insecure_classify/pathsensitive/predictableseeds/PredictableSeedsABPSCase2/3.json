@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "byte [] seed = {(byte) 100, (byte) 200};\nif(choice>1)\n    sr2.nextBytes(seed);\n...\nSecureRandom sr = new SecureRandom(seed);",
+        "description": "The seed for SecureRandom is manually set to a specific, predictable value which makes the generated random numbers not truly random and predictable.",
+        "recommendation": "Do not manually seed SecureRandom with a predictable byte array; allow SecureRandom to self-seed with sufficient entropy."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "byte [] seed = {(byte) 100, (byte) 200};",
+        "description": "The seed is hardcoded and consists of only 2 bytes, which does not provide adequate entropy for cryptographic operations.",
+        "recommendation": "Remove the hardcoded seed and allow SecureRandom to generate a seed with sufficient entropy, or if a seed is necessary, ensure it is of adequate length and randomness."
+    }
+]
+```

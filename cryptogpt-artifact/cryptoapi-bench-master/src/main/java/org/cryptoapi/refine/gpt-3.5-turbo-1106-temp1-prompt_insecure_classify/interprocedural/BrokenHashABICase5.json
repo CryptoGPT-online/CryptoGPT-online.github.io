@@ -1,0 +1,30 @@
+### False Positive Misuse ###
+None
+
+### Optimized Misuse JSON###
+[
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+    "vulnerable_code": "CRYPTO = DEFAULT_CRYPTO.toCharArray();",
+    "description": "The code is using the SHA1 algorithm, which is considered insecure and broken.",
+    "recommendation": "Use a more secure cryptographic algorithm such as SHA-256 or SHA-3."
+  },
+  {
+    "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation.",
+    "vulnerable_code": "MessageDigest.getInstance(String.valueOf(crypto));",
+    "description": "The code is using the value of `crypto` as the selected cryptographic algorithm, which may be less secure depending on its value.",
+    "recommendation": "Ensure that `crypto` only contains secure cryptographic algorithm names, and consider using a more secure algorithm."
+  },
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+    "vulnerable_code": "MessageDigest.getInstance(String.valueOf(crypto));",
+    "description": "The code uses the crypto variable to get an instance of MessageDigest without validating whether the value is a secure cryptographic algorithm.",
+    "recommendation": "Validate the value of the crypto variable and only use secure algorithm names."
+  },
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+    "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(String.valueOf(crypto));",
+    "description": "Using a static char array to initialize the MessageDigest algorithm can lead to insecure cryptographic algorithms.",
+    "recommendation": "Use a secure cryptographic algorithm like SHA-256 or SHA-512 instead."
+  }
+]

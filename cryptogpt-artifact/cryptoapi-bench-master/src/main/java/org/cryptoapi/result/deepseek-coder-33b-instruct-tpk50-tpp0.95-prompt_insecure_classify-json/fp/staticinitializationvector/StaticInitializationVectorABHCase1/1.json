@@ -1,0 +1,27 @@
+public class S1 {
+    public void go() throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, InvalidAlgorithmParameterException {
+        KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+        keyGen.init(256); // Use a key length of 256
+        SecretKey key = keyGen.generateKey();
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+
+        byte[] ivBytes = new byte[16]; // IV length should be 16 bytes for AES
+        new SecureRandom().nextBytes(ivBytes); // Generate a random IV
+        IvParameterSpec ivSpec = new IvParameterSpec(ivBytes);
+
+        cipher.init(Cipher.ENCRYPT_MODE, key, ivSpec);
+
+        String message = "abcde";
+        byte[] cipherText = cipher.doFinal(message.getBytes(StandardCharsets.UTF_8));
+
+        System.out.println(new String(cipherText, StandardCharsets.UTF_8));
+    }
+
+    public static void main (String [] args) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
+        S1 siv = new S1();
+        siv.go();
+    }
+}
+```
+
+This code generates a random initialization vector and uses it for the encryption process. Note that the key length is set to 256 which is the standard length for AES encryption. Also, the IV length is set to 16 bytes which is the standard length for AES encryption.

@@ -1,0 +1,26 @@
+[
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+    "vulnerable_code": "SecureRandom sr2 = new SecureRandom();",
+    "description": "Using a default constructor for SecureRandom can result in the use of a weak algorithm, depending on the provider implementation.",
+    "recommendation": "Specify a strong algorithm explicitly, such as SecureRandom.getInstanceStrong()"
+  },
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values.",
+    "vulnerable_code": "byte [] seed = {(byte) 100, (byte) 200};",
+    "description": "Using a static or hardcoded seed value reduces the randomness and security of cryptographic operations.",
+    "recommendation": "Generate a secure random seed using SecureRandom.generateSeed() or obtain it from a trusted source"
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength.",
+    "vulnerable_code": "SecureRandom sr = new SecureRandom(seed);",
+    "description": "Using a byte array as a seed for SecureRandom might result in insufficient entropy and weak cryptographic keys.",
+    "recommendation": "Use SecureRandom with a sufficient seed length or generate a secure random seed using SecureRandom.generateSeed()"
+  },
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values.",
+    "vulnerable_code": "int v = sr.nextInt();",
+    "description": "Using the nextInt() method of SecureRandom without specifying a range can result in insecure random numbers.",
+    "recommendation": "Use SecureRandom.nextInt(int bound) to limit the range of random numbers"
+  }
+]

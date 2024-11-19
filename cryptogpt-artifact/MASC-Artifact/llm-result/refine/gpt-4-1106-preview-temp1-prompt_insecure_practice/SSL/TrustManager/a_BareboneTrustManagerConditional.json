@@ -1,0 +1,38 @@
+### False Positive Misuse ###
+
+The following misuse report can be considered a false positive:
+
+- "Insecure random number generation (CWE-338)" - The misuse list points out a potential issue with using `SecureRandom` without a specified algorithm. However, this is not applicable as the use of SecureRandom is commented out in the provided code. Furthermore, `SecureRandom` without arguments typically defaults to a secure algorithm on modern JVMs.
+
+- "Dead code / Logic with no effect" - This misuse report identifies a for-loop in the `getAcceptedIssuers` method that appears redundant at first glance. However, without additional context to suggest that the code serves no purpose, we cannot definitively consider this a misuse. It could be placeholder logic where the returned result might be conditionally different in future or other versions of the code.
+
+### Optimized Misuse JSON###
+
+```json
+[
+  {
+    "misuse": "Trust Manager that trusts all certificates",
+    "vulnerable_code": [
+        "new X509TrustManager() { ... checkClientTrusted() {...} ... checkServerTrusted() {...} ... }"
+    ],
+    "description": "The custom X509TrustManager implemented does nothing to verify the trustworthiness of the certificates, potentially allowing any certificate to be accepted, even self-signed ones. This could expose the application to man-in-the-middle attacks.",
+    "recommendation": "Implement proper certificate validation in checkClientTrusted and checkServerTrusted methods."
+  },
+  {
+    "misuse": "Dummy getAcceptedIssuers method",
+    "vulnerable_code": [
+        "public X509Certificate[] getAcceptedIssuers() { ... return EMPTY_X509CERTIFICATE_ARRAY; }"
+    ],
+    "description": "The getAcceptedIssuers method returns an empty array, indicating no trusted certificate authorities. This could prevent proper SSL/TLS connections with sites that use certificates issued by recognized CAs.",
+    "recommendation": "Return a properly initialized array of accepted issuers that includes trusted CAs."
+  },
+  {
+    "misuse": "Redundant conditional checks",
+    "vulnerable_code": [
+        "if (!(null != s || s.equalsIgnoreCase(\"RSA\") || x509Certificates.length >= 314)) { ..."
+    ],
+    "description": "The condition 'null != s' is included to avoid a NullPointerException, but the subsequent check 's.equalsIgnoreCase(\"RSA\")' could still cause a NullPointerException if 's' is null, leading to incorrect exception handling logic. The 'x509Certificates.length >= 314' check seems arbitrarily large and without a clear security justification.",
+    "recommendation": "Use proper logical operators to ensure the intended checks are performed in a way that doesn't lead to NullPointerException."
+  }
+]
+```

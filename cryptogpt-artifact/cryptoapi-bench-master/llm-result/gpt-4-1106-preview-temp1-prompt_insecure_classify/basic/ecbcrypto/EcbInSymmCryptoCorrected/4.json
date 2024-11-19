@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+        "description": "The code does not specify a secure random number generator or a seed. As a result, it may be using a default random number generator that is not secure enough for cryptographic operations.",
+        "recommendation": "Use a secure random number generator with a strong source of entropy for key generation. For example, KeyGenerator.getInstance(\"AES\").init(keySize, SecureRandom); where 'keySize' is the desired key size and 'SecureRandom' is an instance of a secure random number generator."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "description": "The code does not specify the key size for the AES algorithm. If the default key size is used, it might not provide adequate encryption strength.",
+        "recommendation": "Specify an explicit key size that is considered strong enough (e.g., 256 bits for AES). For example, keyGen.init(256);"
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "While AES is a secure algorithm, using CBC mode with PKCS5Padding may expose data to certain padding oracle attacks if not implemented correctly, especially without proper integrity checks such as HMAC.",
+        "recommendation": "Consider using AES in GCM mode with no padding which provides both confidentiality and integrity. For example, Cipher.getInstance(\"AES/GCM/NoPadding\");"
+    }
+]
+```

@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "KeyGenerator keygen = KeyGenerator.getInstance(algo);",
+        "description": "The code does not specify the key size when generating an AES key. Default key sizes are often insufficient for strong security.",
+        "recommendation": "Specify an adequate key size when generating the AES key, such as 256 bits."
+    },
+    {
+        "misuse": "Insecure Cipher Operation Mode",
+        "vulnerable_code": "Cipher c = Cipher.getInstance(keygen.getAlgorithm());",
+        "description": "The code uses the default cipher mode which can often be ECB, a mode that is not recommended due to its vulnerability to certain types of attacks as it does not provide serious message confidentiality.",
+        "recommendation": "Use a secure block cipher mode like CBC, CTR, or GCM with a unique initialization vector (IV) for every encryption operation."
+    },
+    {
+        "misuse": "Lack of Secure Random Initialization Vector",
+        "vulnerable_code": "c.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "The code does not define an initialization vector (IV) for the cipher. Using a random IV increases security as it ensures that the same plaintext will not result in the same ciphertext when encrypted multiple times.",
+        "recommendation": "Generate a random IV for each encryption operation using a secure random number generator and use it for cipher initialization."
+    },
+    {
+        "misuse": "Unsafe Cipher Algorithm Transformation String",
+        "vulnerable_code": "Cipher c = Cipher.getInstance(keygen.getAlgorithm());",
+        "description": "The transformation string for the Cipher instance only specifies the algorithm, and does not explicitly set the cipher mode or padding scheme. This can lead to platform-dependent defaults and potential vulnerabilities.",
+        "recommendation": "Explicitly set the cipher mode and padding scheme in the transformation string passed to Cipher.getInstance(), for example 'AES/CBC/PKCS5Padding'."
+    }
+]
+```

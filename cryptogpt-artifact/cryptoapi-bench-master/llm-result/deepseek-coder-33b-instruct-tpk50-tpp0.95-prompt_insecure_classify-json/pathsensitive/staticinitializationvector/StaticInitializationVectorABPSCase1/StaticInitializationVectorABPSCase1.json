@@ -1,0 +1,27 @@
+```json
+[
+    {
+        "misuse_category": "Inadequate Encryption Strength",
+        "vulnerable_method": "S1.go",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "description": "The code is using the AES algorithm with a key size of 128 bits, which is weaker than the recommended 256 bits or better. This could potentially leave the code vulnerable to brute force attacks.",
+        "recommendation": "Consider using an encryption algorithm that provides sufficient security, such as AES with a key size of 256 bits or higher."
+    },
+    {
+        "misuse_category": "Inadequate Encryption Strength",
+        "vulnerable_method": "S1.go",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "The code is using the AES algorithm in CBC mode with PKCS5 padding, which is an older and less secure method of encryption. This could potentially leave the code vulnerable to attack if the encryption algorithm or mode of operation is changed to a newer and less secure option.",
+        "recommendation": "Consider using an encryption algorithm and mode of operation that is stronger and more secure than AES/CBC/PKCS5Padding. Some of the recommended combinations are AES-GCM, AES-CCM, or AES-CBC with a random IV."
+    },
+    {
+        "misuse_category": "Use of Insufficiently Random Values",
+        "vulnerable_method": "S1.go",
+        "vulnerable_code": "byte [] bytes = new byte[16];\nsr.nextBytes(bytes);",
+        "description": "The IV is generated using a SecureRandom instance, which provides enough randomness. However, the IV is used in a deterministic way. The same IV is reused for different encryption operations, which could expose sensitive information if the encryption key is also used in the same way.",
+        "recommendation": "The IV should never be reused in the same encryption. To fix this, a new unique IV should be generated for each encryption. This can be done by generating a random number or using a counter in conjunction with a nonce value."
+    }
+]
+```
+
+In this case, all reported misuses are genuine and need to be addressed.

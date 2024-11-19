@@ -1,0 +1,20 @@
+[
+  {
+    "misuse": "CWE-798: Use of Hardcoded Credentials",
+    "vulnerable_code": "public static final String DEFAULT_ENCRYPT_KEY = \"changeit\";",
+    "description": "The code uses a hardcoded value \"changeit\" as the encrypt key.",
+    "recommendation": "Avoid using hardcoded credentials or sensitive information. Encrypt keys should be securely generated and stored."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_code": "ks.load(cacerts.openStream(), encryptKey);",
+    "description": "The code uses a char array (encryptKey) as the password for loading the keystore, which may result in inadequate encryption strength if the length of the char array is not sufficient.",
+    "recommendation": "Use stronger encryption algorithms and ensure that the length of the password and other parameters are appropriate to achieve sufficient encryption strength."
+  },
+  {
+    "misuse": "CWE-295: Improper Certificate Validation",
+    "vulnerable_code": "cacerts = new URL(\"https://www.google.com\"); ks.load(cacerts.openStream(), encryptKey);",
+    "description": "The code loads the cacerts from the https://www.google.com URL without proper certificate validation, which can expose the application to potential Man-in-the-Middle attacks or malicious certificate tampering.",
+    "recommendation": "Implement proper certificate validation logic while loading the cacerts, such as checking the certificate chain, verifying the certificate trust, and validating the hostname of the server."
+  }
+]

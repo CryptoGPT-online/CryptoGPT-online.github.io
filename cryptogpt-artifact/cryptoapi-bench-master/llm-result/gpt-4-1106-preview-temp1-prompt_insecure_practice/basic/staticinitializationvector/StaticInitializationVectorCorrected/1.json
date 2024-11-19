@@ -1,0 +1,23 @@
+```json
+[
+    {
+        "misuse": "Insufficient IV Size for CBC",
+        "vulnerable_code": [
+            "BigInteger i = BigInteger.valueOf(sr.nextInt());",
+            "byte [] bytes = i.toByteArray();",
+            "IvParameterSpec ivSpec = new IvParameterSpec(bytes);"
+        ],
+        "description": "CBC mode requires an IV size equal to the block size of the cipher (16 bytes for AES). The code snippet converts a random 32-bit integer to a byte array which will not provide a correctly sized IV (it should always be 16 bytes for AES).",
+        "recommendation": "Use a properly sized byte array (16 bytes for AES) and populate it using SecureRandom's nextBytes method."
+    },
+    {
+        "misuse": "Weak Key Generation",
+        "vulnerable_code": [
+            "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+            "SecretKey key = keyGen.generateKey();"
+        ],
+        "description": "The KeyGenerator instance is not explicitly initialized with a secure key size. Depending on the platform defaults, this could lead to generating weak keys.",
+        "recommendation": "Initialize the KeyGenerator instance with a specific key size using keyGen.init(256); for AES-256, or an equivalent secure key length."
+    }
+]
+```

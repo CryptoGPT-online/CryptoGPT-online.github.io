@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation.",
+        "vulnerable_code": "KeyStore ks = KeyStore.getInstance(type);",
+        "description": "In this code, the key store type is hardcoded to 'JKS'. However, 'JKS' is a legacy algorithm and not recommended anymore. If the JKS keystore is replaced with another type, such as 'PKCS12', it can offer more robust security.",
+        "recommendation": "Consider using 'PKCS12' as your key store type. It offers more robust security and is a more modern algorithm."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_code": "ks.load(cacerts.openStream(), key.toCharArray());",
+        "description": "The password for the key store is hardcoded to 'changeit'. This is the default password for many key stores, and it is considered weak. Using a strong, randomly generated password would provide better security.",
+        "recommendation": "Generate a strong, random password for your key store. Avoid using default or easily guessable passwords."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation.",
+        "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");",
+        "description": "This code sets a Google URL as the key store URL. Instead of a secure key store file, this could be vulnerable to Man-in-the-Middle attacks, and it could lead to the misuse of an incorrect or compromised certificate. Furthermore, if Google changes its certificate, this URL would stop working, causing a security risk.",
+        "recommendation": "Use a secure, trusted certificate store URL. Ensure that it does not lead to a security risk. Additionally, consider using an HTTP Secure (HTTPS) URL to ensure data is encrypted in transit."
+    }
+]
+```

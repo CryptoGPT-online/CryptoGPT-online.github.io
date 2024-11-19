@@ -1,0 +1,34 @@
+Here is how we can refine the misuses:
+
+### False Positive Misuse ###
+```json
+[
+    {
+        "misuse_category": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_method": "main(String [] args)",
+        "vulnerable_code": "INITIALIZATION = DEFAULT_INITIALIZATION.toCharArray();",
+        "description": "This assignment is not a use of insufficiently random values. The DEFAULT_INITIALIZATION is a String constant and toCharArray() is a native Java method that is deterministic and uses every possible character. No randomness is involved, so this usage cannot be categorized as insufficiently random.",
+        "recommendation": "This misuse is likely a false positive. The code is safe from this category of misuse."
+    }
+]
+```
+
+### Optimized Misuses ###
+```json
+[
+    {
+        "misuse_category": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_method": "go()",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "This usage is susceptible to the selection of less secure algorithm during negotiation misuse as AES/CBC/PKCS5Padding is not the most secure algorithm due to IV leakage through padding oracle attacks and lack of integrity protection in CBC mode.",
+        "recommendation": "Replace AES/CBC/PKCS5Padding with a secure alternative such as AES/GCM/NoPadding (Galois/Counter Mode - an authenticated encryption mode) or AES/CCM/NoPadding (Counter with CBC-MAC - a secure encryption mode)."
+    },
+    {
+        "misuse_category": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_method": "go()",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(new byte[]{Byte.parseByte(String.valueOf(initialization))});",
+        "description": "In this code, the IV is created by converting each character of an array to a byte and treating them as a string. The usage can fall under this category as this doesn't make use of a random value generator.",
+        "recommendation": "Use a secure random number generator for generating the IV for encryption operations."
+    }
+]
+```

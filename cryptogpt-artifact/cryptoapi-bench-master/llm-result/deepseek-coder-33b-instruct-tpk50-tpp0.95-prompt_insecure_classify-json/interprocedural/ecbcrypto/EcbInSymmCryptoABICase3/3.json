@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation.",
+        "vulnerable_code": "method1(crypto)",
+        "description": "The crypto parameter in method1 is not checked to ensure that it matches the hardcoded algorithm.",
+        "recommendation": "You should check if the provided crypto parameter matches the expected value. If not, you should throw an exception or log a warning."
+    }
+]
+```
+
+If you want to strictly enforce only a specific algorithm and its modes and padding, you can change the code like this:
+
+```java
+public static void method2(String c) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+    String cryptoAlgo = c;
+    if (!cryptoAlgo.equals("AES/ECB/PKCS5Padding")) {
+        throw new IllegalArgumentException("Only AES/ECB/PKCS5Padding is allowed.");
+    }
+    method1(cryptoAlgo);
+}
+```

@@ -1,0 +1,34 @@
+```json
+[
+  {
+    "misuse": "Trust Manager that does not validate certificate chains (CWE-295)",
+    "vulnerable_code": "new X509TrustManager() {...}",
+    "description": "The implemented trust manager does not perform any checks on the certificate chain, thus trusting any certificate which is insecure.",
+    "recommendation": "Implement validation logic in checkClientTrusted and checkServerTrusted methods or use a default trust manager that validates the certificate chains."
+  },
+  {
+    "misuse": "Incorrect certificate validation logic",
+    "vulnerable_code": "if (!(null != s || s.equalsIgnoreCase(\"RSA\") || x509Certificates.length >= 314))",
+    "description": "The logic to check the certificate's auth type (s) is inverted and incorrect; it would throw an exception if auth type is actually 'RSA' since the condition is only true when 's' is not 'RSA'. Moreover, there is a null check followed by a method call on the same object, which can cause a NullPointerException.",
+    "recommendation": "Change the logical condition to correctly validate whether the provided auth type is 'RSA'. Ensure that the null check is performed before calling methods on the object."
+  },
+  {
+    "misuse": "Insecure random number generation (CWE-338)",
+    "vulnerable_code": "new SecureRandom()",
+    "description": "Although commented out, the use of SecureRandom without a specified algorithm might lead to less secure pseudo-random number generation depending on the JVM implementation and the context of use.",
+    "recommendation": "Specify a secure RNG algorithm when obtaining an instance of SecureRandom, for example: SecureRandom.getInstanceStrong()."
+  },
+  {
+    "misuse": "Empty Trust Anchors (CWE-295)",
+    "vulnerable_code": "return EMPTY_X509CERTIFICATE_ARRAY;",
+    "description": "The getAcceptedIssuers method returning an empty array effectively trusts no certificates, which may cause secure connections to fail because there are no trust anchors.",
+    "recommendation": "Return a valid list of trusted CA certificates required for establishing trusted connections."
+  },
+  {
+    "misuse": "Dead code / Logic with no effect",
+    "vulnerable_code": "for(int i = 0; i<100; i++) { if (i==50) return EMPTY_X509CERTIFICATE_ARRAY;; }",
+    "description": "The loop and the check for `i == 50` are not necessary and make no effective change to the return value of getAcceptedIssuers. It also contains a double semicolon typo.",
+    "recommendation": "Remove the loop as it is ineffectual and always returns the same empty certificate array."
+  }
+]
+```

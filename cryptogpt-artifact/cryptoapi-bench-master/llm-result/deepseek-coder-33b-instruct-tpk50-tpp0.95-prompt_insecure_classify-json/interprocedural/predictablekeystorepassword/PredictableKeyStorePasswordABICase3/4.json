@@ -1,0 +1,20 @@
+```json
+[{
+  "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+  "vulnerable_code": "KeyStore ks = KeyStore.getInstance(type);",
+  "description": "The KeyStore instance is being created with type 'JKS' which is considered a risky cryptographic algorithm because it's been discontinued by Oracle and is considered weak by NIST.",
+  "recommendation": "Consider using a stronger cryptographic algorithm such as AES or RSA-3072."
+},
+{
+  "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+  "vulnerable_code": "cacerts = new URL(\"https://www.google.com\"); ks.load(cacerts.openStream(), key.toCharArray());",
+  "description": "The URL for the KeyStore is being set to 'https://www.google.com' which is an external site. This could potentially lead to a MITM attack where an attacker can intercept the connection and read the keystore data.",
+  "recommendation": "Consider using a secure and trusted source for the KeyStore URL."
+},
+{
+  "misuse": "CWE-330: Use of Insufficiently Random Values",
+  "vulnerable_code": "String key = \"changeit\";",
+  "description": "The KeyStore password is hardcoded and is not random. This could lead to a dictionary attack if the key is not strong enough.",
+  "recommendation": "Use a random and strong key for the KeyStore."
+}]
+```

@@ -1,0 +1,17 @@
+### False Positive Misuse ###
+The reported misuses can be false positives for a couple of reasons. The first is the use of DES in the Cipher.getInstance() method even though there is a condition that could switch to AES if `choice > 1`. The second misuse about AES key strength only arises if the developer decides to generate it rather than receiving one from a trusted source.
+
+### Optimized Misuse JSON###
+
+The false positives have been removed and the optimized misuse list is shown below:
+
+```json
+[
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"DES/ECB/PKCS5Padding\");\nif (choice > 1)\n    cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "The choice of the encryption algorithm depends on a variable parameter (`choice`). It doesn't seem to be checked in any security-sensitive context, which could lead to the use of a less secure algorithm than initially intended.",
+        "recommendation": "To fix this, you should validate `choice` to ensure it aligns with your intended use of encryption algorithms."
+    }
+]
+```

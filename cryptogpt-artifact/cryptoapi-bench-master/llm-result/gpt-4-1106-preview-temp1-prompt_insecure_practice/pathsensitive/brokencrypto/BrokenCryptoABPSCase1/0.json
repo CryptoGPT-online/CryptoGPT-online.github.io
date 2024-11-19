@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Incompatible Key and Cipher Algorithm",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"DES/ECB/PKCS5Padding\");",
+        "description": "An AES key is being generated but the cipher is initialized with DES instead of AES. This will throw an InvalidKeyException because the key algorithm does not match the cipher algorithm.",
+        "recommendation": "Change the Cipher algorithm to match the Key algorithm (AES)."
+    },
+    {
+        "misuse": "Insecure Cipher Mode and Padding",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"DES/ECB/PKCS5Padding\");",
+        "description": "Electronic Codebook (ECB) mode is insecure as it does not provide serious message confidentiality and can reveal patterns in the plaintext. PKCS5Padding can also be vulnerable to padding oracle attacks.",
+        "recommendation": "Use a more secure mode like CBC or GCM along with a random initialization vector (IV) and a strong padding scheme."
+    },
+    {
+        "misuse": "Missing Initialization Vector (IV) for CBC mode",
+        "vulnerable_code": "cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "When using CBC mode, an initialization vector (IV) must be specified to ensure ciphertext uniqueness. The code doesn't specify an IV, which compromises security.",
+        "recommendation": "Initialize a secure random IV when using CBC mode."
+    }
+]
+```

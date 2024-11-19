@@ -1,0 +1,9 @@
+{
+    "misuse": "CWE-295: Improper Certificate Validation",
+    "vulnerable_code": [
+        "KeyStore ks = KeyStore.getInstance(type);",
+        "ks.load(cacerts.openStream(), password.toCharArray());"
+    ],
+    "description": "The program creates a KeyStore object of type JKS and loads a certificate from an untrusted URL (Google) without any certificate validation. This can potentially expose the program to MITM attacks where an attacker can intercept and manipulate the network traffic. The key password is randomly generated using SecureRandom, but it's used only once and then immediately discarded without any purpose.",
+    "recommendation": "Validate the certificate from the URL and consider storing the certificate more securely."
+}

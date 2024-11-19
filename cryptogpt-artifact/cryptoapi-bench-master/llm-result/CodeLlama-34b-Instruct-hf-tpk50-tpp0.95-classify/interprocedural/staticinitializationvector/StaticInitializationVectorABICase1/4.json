@@ -1,0 +1,20 @@
+ [
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "The use of CBC mode encryption with a fixed IV is considered insecure. An attacker can use the same IV to encrypt multiple blocks of data, making it easier to deduce the plaintext.",
+        "recommendation": "Use a secure encryption mode, such as GCM or EAX, or use a random IV for each encryption."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+        "description": "The IV is being generated from a hardcoded value, which is not sufficient for ensuring randomness. An attacker can potentially deduce the IV and use it to manipulate the encrypted data.",
+        "recommendation": "Use a secure random number generator to generate the IV."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "description": "The use of AES with a fixed key size of 128 bits is considered insecure. An attacker can use a key recovery attack to deduce the key, which can be used to decrypt the data.",
+        "recommendation": "Use a secure key size, such as 256 bits, and use a secure random number generator to generate the key."
+    }
+]

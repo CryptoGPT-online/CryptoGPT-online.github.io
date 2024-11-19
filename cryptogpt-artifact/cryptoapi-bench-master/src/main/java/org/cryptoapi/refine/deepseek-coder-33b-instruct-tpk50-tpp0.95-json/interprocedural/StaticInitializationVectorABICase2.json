@@ -1,0 +1,25 @@
+### False Positive Misuse ###
+
+```json
+[
+    {
+        "misuse": "Incorrect IV usage",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(new byte[]{Byte.parseByte(String.valueOf(initialization))});",
+        "description": "The IV (Initialization Vector) is incorrectly used in this case. It should be randomly generated for each encryption. The hard-coded byte conversion also seems inappropriate here.",
+        "recommendation": "In order to generate a secure IV, it should be randomly generated with a secure random number generator. The IV should never be reused for the same key. The IV must be securely shared between the encrypting and decrypting parties."
+    }
+]
+```
+
+### Optimized Misuse JSON ###
+
+```json
+[
+    {
+        "misuse": "Hard-coded Cryptographic Key",
+        "vulnerable_code": "public static final String DEFAULT_INITIALIZATION = \"abcde\";",
+        "description": "The key 'abcde' used in the code is hard-coded and it should be stored securely, possibly in a configuration file or environment variable.",
+        "recommendation": "It is recommended to store sensitive data like keys securely and fetch them from a secure storage. Use environment variables or a configuration file to store these values."
+    }
+]
+```

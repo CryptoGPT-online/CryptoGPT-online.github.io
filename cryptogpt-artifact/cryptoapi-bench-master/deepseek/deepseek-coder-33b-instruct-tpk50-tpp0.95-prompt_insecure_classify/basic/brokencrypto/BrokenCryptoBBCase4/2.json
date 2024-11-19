@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-295: Improper Certificate Validation.",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"RC2\");\nSecretKey key = keyGen.generateKey();",
+        "description": "The RC2 is a weak and deprecated cryptographic algorithm. It was not designed to be secure. Using it for encryption can be a serious misuse.",
+        "recommendation": "Use a stronger algorithm like AES or use an established encryption library that handles these details for you."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values.",
+        "vulnerable_code": "SecretKey key = keyGen.generateKey();",
+        "description": "In this line, we are generating a secret key using a deprecated algorithm. The key is generated using a fixed algorithm which can be exploited if an attacker knows the seed used for the random number generator.",
+        "recommendation": "For any encryption, always make sure that your keys are securely generated and random. It's advisable to use secure random number generators to generate keys."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"RC2\");\ncipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "The RC2 algorithm is a weak cipher and is known to have serious security vulnerabilities. The algorithm is deprecated because it does not meet the standard in its security and robustness.",
+        "recommendation": "Do not use deprecated cryptographic algorithms like RC2. Use a standard and validated algorithm such as AES."
+    }
+]
+```

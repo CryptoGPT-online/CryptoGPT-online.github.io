@@ -1,0 +1,22 @@
+### False Positive Misuse ###
+1. CWE-256: Cryptographic Key Exposure
+> vulnerable_code: getName()
+> description: The `getName()` method returns the name of the digest algorithm, which may expose the cryptographic key if the algorithm is a keyed algorithm.
+---
+The `getName()` method in this code is used to return the name of the digest algorithm, which is not a cryptographic key and therefore does not pose a security risk. Hence, this misuse is a **false positive**.
+
+### Optimized Misuse JSON ###
+1. {
+> "misuse category": "CWE-256: Weak Encryption",
+> "vulnerable_method": "MessageDigest.getInstance(new MessageDigestComplex().A().B().getName())",
+> "vulnerable_code": "cryptoDigest = MessageDigest.getInstance(new MessageDigestComplex().A().B().getName());",
+> "description": "The code uses MD5, which is a weak hashing algorithm and should not be used for cryptographic purposes.",
+> "recommendation": "Use a stronger hashing algorithm, such as SHA-256 or SHA-512."
+}
+2. {
+> "misuse category": "CWE-321: Use of Hard-coded Cryptographic Key",
+> "vulnerable_method": "digestName = \"MD5\"",
+> "vulnerable_code": "digestName = \"MD5\"",
+> "description": "Hard-coding the digest algorithm makes the application vulnerable to attacks as the algorithm can be easily guessed by an attacker.",
+> "recommendation": "Avoid hard-coding cryptographic keys or algorithms. Instead, use a more secure approach such as reading the algorithm from a configuration file or using a key management system."
+}

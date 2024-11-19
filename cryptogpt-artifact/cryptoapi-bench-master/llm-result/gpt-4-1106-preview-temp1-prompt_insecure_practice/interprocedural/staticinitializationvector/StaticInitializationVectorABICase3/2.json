@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insufficient IV Size for CBC Mode",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+        "description": "The method 'method2()' attempts to initialize an IvParameterSpec with an IV that may be shorter than the AES block size (128 bits).",
+        "recommendation": "Ensure the IV is exactly 128 bits (16 bytes) when using AES in CBC mode."
+    },
+    {
+        "misuse": "Static IV",
+        "vulnerable_code": "byte [] bytes = \"abcde\".getBytes();",
+        "description": "Using a constant or predictable IV (initial value for CBC mode) can allow attackers to mount successful attacks on the encrypted data.",
+        "recommendation": "Generate a random IV for each encryption operation."
+    },
+    {
+        "misuse": "Key Management Issue",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\"); SecretKey key = keyGen.generateKey();",
+        "description": "Every time 'method2()' is called, a new secret key is generated which might be insecure if not managed properly (for example, how the key is stored or transmitted securely).",
+        "recommendation": "Use a key management solution to securely generate, store, and retrieve cryptographic keys."
+    },
+    {
+        "misuse": "Weak Encryption Scheme",
+        "vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "AES in CBC mode with PKCS5Padding is susceptible to padding oracle attacks. Although not broken per se, it should be used with caution.",
+        "recommendation": "Consider using authenticated encryption modes such as GCM that provide confidentiality and integrity."
+    }
+]
+```

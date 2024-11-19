@@ -1,0 +1,37 @@
+```json
+[
+    {
+        "misuse": "Untrustworthy Trust Manager",
+        "vulnerable_code": [
+            "public void checkClientTrusted(X509Certificate[] x509Certificates, String s)",
+            "public void checkServerTrusted(X509Certificate[] x509Certificates, String s)"
+        ],
+        "description": "The implementation of checkClientTrusted and checkServerTrusted methods do not actually verify the trustworthiness of the provided certificates, which can allow man-in-the-middle attacks.",
+        "recommendation": "Implement proper certificate validation by verifying the certificate chain against a set of trusted root CAs."
+    },
+    {
+        "misuse": "Incomplete Certificate Validation",
+        "vulnerable_code": "if (!(null != s && s.equalsIgnoreCase(\"RSA\")))",
+        "description": "Certificate validation is incomplete as it only checks the key exchange algorithm (authType) being 'RSA', but does not verify the certificate chain itself.",
+        "recommendation": "Validate the entire certificate chain against a trusted Certificate Authority (CA)."
+    },
+    {
+        "misuse": "Insecure SSL Context Initialization",
+        "vulnerable_code": "SSLContext.getInstance(\"SSL\")",
+        "description": "Using SSL (SSLContext.getInstance(\"SSL\")) is insecure as SSL is obsolete and may be vulnerable to various attacks.",
+        "recommendation": "Replace the use of 'SSL' with 'TLS', specifically 'TLSv1.2' or higher."
+    },
+    {
+        "misuse": "Empty Accepted Issuers",
+        "vulnerable_code": "public X509Certificate[] getAcceptedIssuers()",
+        "description": "This method returns null, which means any issuer is accepted, further weakening the trust checks.",
+        "recommendation": "Return a non-empty array of acceptable CA issuer certificates."
+    },
+    {
+        "misuse": "Improper Initialization of TrustManager",
+        "vulnerable_code": "context.init(null, trustAll, new SecureRandom());",
+        "description": "Passing a null KeyManager[] parameter can result in an uninitialized KeyManager being used, meaning that client authentication might not work correctly in a two-way SSL setup.",
+        "recommendation": "Provide a properly initialized KeyManager[] if client authentication is required."
+    }
+]
+```

@@ -1,0 +1,29 @@
+```json
+[
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": [
+            "public static final String DEFAULT_ENCRYPT_KEY = \"changeit\";"
+        ],
+        "description": "The encryption key is hardcoded into the source code, which makes it easier for an attacker to gain unauthorized access to encrypted data.",
+        "recommendation": "Do not hardcode encryption keys. Instead, use a secure method to manage keys, such as a dedicated key management service or environment variables."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": [
+            "public static final String DEFAULT_ENCRYPT_KEY = \"changeit\";"
+        ],
+        "description": "The hardcoded key 'changeit' is likely to be a weak key due to its simplicity and common use as a default key, which makes it inadequate for encryption strength.",
+        "recommendation": "Use a strong, randomly generated key and ensure that it is of adequate length and complexity to prevent brute-force attacks."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": [
+            "cacerts = new URL(\"https://www.google.com\");",
+            "ks.load(cacerts.openStream(), encryptKey);"
+        ],
+        "description": "The code is loading a KeyStore from a URL without any validation of the certificate provided by the server. This could potentially allow an attacker to perform a man-in-the-middle attack.",
+        "recommendation": "Implement proper SSL/TLS certificate validation by either using a custom `TrustManager` that checks the server's certificate or by using the default system validation mechanisms."
+    }
+]
+```

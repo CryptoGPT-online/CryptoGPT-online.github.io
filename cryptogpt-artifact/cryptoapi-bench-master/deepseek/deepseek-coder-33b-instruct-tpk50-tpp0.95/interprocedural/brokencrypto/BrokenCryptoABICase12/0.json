@@ -1,0 +1,30 @@
+Misuse: "Weak Cryptographic Principle"
+
+Vulnerable Code:
+
+```java
+public static void method2(String c) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+        String cryptoAlgo = c;
+        method1(cryptoAlgo);
+    }
+    public static void method1(String crypto) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+        KeyGenerator keyGen = KeyGenerator.getInstance(crypto);
+        SecretKey key = keyGen.generateKey();
+        Cipher cipher = Cipher.getInstance(crypto);
+        cipher.init(Cipher.ENCRYPT_MODE, key);
+    }
+
+    public static void main (String [] args) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+
+        String crypto = "Blowfish";
+        method2(crypto);
+    }
+```
+
+Description: 
+The Cipher object is instantiated using the "crypto" parameter, which in this case is set to "Blowfish". Blowfish is a known weak cryptographic algorithm and is no longer considered secure for new applications. Its strength has been broken and its encryption can be easily broken.
+
+Recommendation:
+Instead of "Blowfish" use more secure algorithms like "AES" for symmetric encryption. 
+
+Please note that this is a misuse, but a weak one since there are other CWE categories that can be applied to this code as well. This misuse is a direct violation of CWE-327: Use of a Broken or Risky Cryptographic Algorithm.

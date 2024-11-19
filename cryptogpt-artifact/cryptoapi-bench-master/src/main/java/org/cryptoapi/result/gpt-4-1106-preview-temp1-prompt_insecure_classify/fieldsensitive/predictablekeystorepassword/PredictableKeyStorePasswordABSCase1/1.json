@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "String key = \"changeit\";",
+        "description": "The code contains a hardcoded password ('changeit') that is used to access the keystore. Hardcoded credentials can be easily discovered and exploited by attackers.",
+        "recommendation": "Use a secure method to manage passwords and keys, such as storing them in environment variables, a configuration file, or a secrets management service, and ensure they are encrypted if at rest."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");\n    ks.load(cacerts.openStream(), passedKey.toCharArray());",
+        "description": "The method 'method1' in class 'C1' loads a KeyStore from a hardcoded URL. This does not ensure proper certificate validation as the source is not verified, and it trusts any certificate presented by the server without any checks.",
+        "recommendation": "Ensure proper SSL/TLS validation by using a trust manager that checks the validity of certificates and possibly implements hostname verification."
+    },
+    {
+        "misuse": "CWE-259: Use of Hardcoded Password",
+        "vulnerable_code": "passedKey = defKey;",
+        "description": "The code assigns a hardcoded password ('changeit') to 'passedKey'. This key appears to be intended for use as a keystore password, which should not be hardcoded.",
+        "recommendation": "Do not hardcode passwords in the source code. Instead, use a dynamic and secure way to retrieve passwords, such as through environmental variables or a secure vault."
+    }
+]
+```

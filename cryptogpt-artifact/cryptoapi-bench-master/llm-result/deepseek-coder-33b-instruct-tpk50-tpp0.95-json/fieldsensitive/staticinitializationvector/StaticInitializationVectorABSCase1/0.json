@@ -1,0 +1,14 @@
+[
+  {
+    "misuse": "Insecurely Generating Keys",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\"); \nSecretKey key = keyGen.generateKey();",
+    "description": "It's insecure to use KeyGenerator for generating a secret key. The KeyGenerator class only provides an insecure random number generator (DRBG) algorithm. It's recommended to use a dedicated key management solution for generating and managing cryptographic keys.",
+    "recommendation": "Use a key management system to manage your cryptographic keys. For example, you could use a KeyStore to store your keys, and then retrieve them when needed. If you need to share keys with others, consider using a trusted Key Management Service."
+  },
+  {
+    "misuse": "Insecure Use of IV",
+    "vulnerable_code": "byte[] passedIV; passedIV = defIV; IvParameterSpec ivSpec = new IvParameterSpec(passedIV);",
+    "description": "The IV (initialization vector) should be a random and unpredictable value for the security of the cryptographic operation. The IV in this code is not random, as it's assigned the value of defIV. This can result in the same IV being used multiple times, which reduces the security of the encryption.",
+    "recommendation": "Generate a new random IV each time you use the encryption operation. You can use the SecureRandom class to generate a secure random number for the IV."
+  }
+]

@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "Hardcoded Secret",
+    "vulnerable_code": "String key = \"changeit\";",
+    "description": "The secret key is hardcoded and visible in source code, which makes it easily accessible to an attacker who has access to the program's bytecode. This isn't secure as the secret key should be confidential.",
+    "recommendation": "Avoid hardcoded keys. Instead, securely manage the keys using a key management system or a more secure storage method that is not exposed in the application's code."
+  },
+  {
+    "misuse": "Insecure Trust Management",
+    "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");\nks.load(cacerts.openStream(), passedKey.toCharArray());",
+    "description": "The method is loading a KeyStore from a remote location served over the internet. This is an insecure practice as it could allow an attacker to intercept the KeyStore or manipulate the connection to serve a malicious KeyStore.",
+    "recommendation": "Ensure the KeyStore is obtained from a secure and trusted source. Ideally, it should not be loaded from an arbitrary URL, especially not over a network connection that is not secured and verified."
+  },
+  {
+    "misuse": "Ignored Method Parameter",
+    "vulnerable_code": "public void method1(String passedKey) { \n  passedKey = defKey;\n  ...",
+    "description": "The parameter 'passedKey' is passed to the method but then immediately overwritten with a different value. This could lead to confusion or misuse of the 'method1', as it does not behave as expected with regards to the provided parameter.",
+    "recommendation": "Do not ignore method parameters. If the 'defKey' is intended to be used, the design should either not accept a parameter in 'method1', or it should be explicitly documented that the 'passedKey' parameter is ignored."
+  }
+]
+```

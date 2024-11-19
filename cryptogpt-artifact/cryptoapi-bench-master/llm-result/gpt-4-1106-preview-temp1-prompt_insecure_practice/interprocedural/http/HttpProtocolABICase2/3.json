@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Improper String Conversion",
+        "vulnerable_code": "System.out.println(new URL(url.toString()));",
+        "description": "Calling 'toString()' on a char[] does not convert the character array into a string, but instead returns a reference description. As such, it will not create a proper URL string.",
+        "recommendation": "Replace 'url.toString()' with 'new String(url)' to correctly convert the character array to a String object."
+    },
+    {
+        "misuse": "Insecure Transport",
+        "vulnerable_code": "public static final String DEFAULT_URL = \"http://www.google.com\";",
+        "description": "The code specifies an HTTP URL, which is not secure as it does not encrypt the data transmission. This can expose sensitive data to interception.",
+        "recommendation": "Change the URL to use HTTPS (e.g., 'https://www.google.com') to ensure secure data transmission."
+    },
+    {
+        "misuse": "Hardcoded Sensitive Data",
+        "vulnerable_code": "public static final String DEFAULT_URL = \"http://www.google.com\";",
+        "description": "The URL is hardcoded which might contain sensitive data and could be exposed in the codebase. Even though in this example it's a public URL, if this pattern is used for sensitive URLs, it could be a risk.",
+        "recommendation": "Avoid using hardcoded sensitive data. If URLs containing sensitive information must be included in the code, consider techniques to obfuscate or encrypt them, or retrieve them from a secure external source."
+    },
+    {
+        "misuse": "Array Contents Exposure",
+        "vulnerable_code": "URL = DEFAULT_URL.toCharArray();\nurl = URL;",
+        "description": "The 'URL' array is being exposed outside the method without copying its contents. This could potentially expose sensitive data if the array contains such information.",
+        "recommendation": "Make a defensive copy of the array when it is being assigned to another array or when it is returned from a method."
+    }
+]
+```

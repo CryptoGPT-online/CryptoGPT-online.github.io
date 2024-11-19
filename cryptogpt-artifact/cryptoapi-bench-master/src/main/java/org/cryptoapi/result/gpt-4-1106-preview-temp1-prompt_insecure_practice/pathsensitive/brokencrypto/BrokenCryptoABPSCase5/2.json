@@ -1,0 +1,34 @@
+```json
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "Cipher.getInstance(\"IDEA\")",
+        "description": "The IDEA encryption algorithm is considered weak and outdated. Using it poses a security risk since it may be more easily broken by an attacker compared to more current encryption algorithms.",
+        "recommendation": "Use a more modern and secure encryption algorithm such as 'AES/GCM/NoPadding'."
+    },
+    {
+        "misuse": "Improper Initialization and Conditional Logic",
+        "vulnerable_code": "if (choice > 1)\n    cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "The conditional logic for choosing the cipher algorithm is insecure. It uses AES encryption only if 'choice' is greater than 1. For other values, it defaults to the insecure 'IDEA' algorithm.",
+        "recommendation": "Remove the conditional logic or ensure a secure algorithm like 'AES/CBC/PKCS5Padding' is used regardless of the 'choice' value. Also, do not forget to properly handle the initialization vector (IV) for CBC mode to avoid weak encryption."
+    },
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "keyGen.generateKey();",
+        "description": "The code does not specify a secure random number generator or a source of entropy for the key generation process. This may lead to weak key generation if an insecure source of randomness is used.",
+        "recommendation": "Specify a secure random number generator when generating encryption keys."
+    },
+    {
+        "misuse": "Missing Initialization Vector (IV) for CBC",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "When operating the AES cipher in CBC mode, an initialization vector (IV) should be used. The IV should be random and unique for each encryption operation. The code initializes the cipher without specifying an IV, which leads to the use of a default IV that can undermine the security of the encryption.",
+        "recommendation": "Generate a secure random IV and initialize the Cipher with it along with the secret key."
+    },
+    {
+        "misuse": "Key Mismatch",
+        "vulnerable_code": "Cipher.getInstance(\"IDEA\");\nkeyGen.getInstance(\"AES\");",
+        "description": "The code generates an AES key and tries to use it with IDEA cipher without checking if the key is suitable for the algorithm. This mismatch will result in a runtime error (InvalidKeyException) rather than a security issue as the code will fail to execute.",
+        "recommendation": "Ensure that the key generation algorithm matches the encryption algorithm."
+    }
+]
+```

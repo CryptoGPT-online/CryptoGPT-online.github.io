@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Missing Initialization Vector (IV) for Cipher",
+        "vulnerable_code": "Cipher c = Cipher.getInstance(algorithmName);",
+        "description": "The code does not specify a cryptographic mode or padding. Without an initialization vector (IV), the cipher defaults to ECB mode which is insecure for data that has repeating patterns.",
+        "recommendation": "Use a block mode like CBC with a securely generated IV and specify padding, such as PKCS5Padding ('AES/CBC/PKCS5Padding')."
+    },
+    {
+        "misuse": "Insecure Cipher Mode: ECB",
+        "vulnerable_code": "Cipher c = Cipher.getInstance(algorithmName);",
+        "description": "By default, without specifying a cipher mode and padding, the AES algorithm may default to ECB (Electronic Codebook) mode, which can leak information about the plaintext due to its deterministic nature.",
+        "recommendation": "Use a more secure cipher mode, like CBC with a unique IV for each encryption operation."
+    },
+    {
+        "misuse": "No Secure Randomness",
+        "vulnerable_code": "Cipher c = Cipher.getInstance(algorithmName);",
+        "description": "The cipher instance is created without configuring secure random number generation for the key or IV, which can lead to predictable encryption keys or IVs if not handled properly elsewhere in the code.",
+        "recommendation": "Ensure that a secure random number generator is used to generate the key or IV, as appropriate."
+    },
+    {
+        "misuse": "No Padding Specified",
+        "vulnerable_code": "Cipher c = Cipher.getInstance(algorithmName);",
+        "description": "The code does not explicitly define the padding scheme to use with the cipher. While some implementations might default to PKCS5Padding, it's not guaranteed and the lack of specification can lead to interoperability issues or weaker security.",
+        "recommendation": "Explicitly specify a padding scheme by changing the getInstance parameter to 'AES/CBC/PKCS5Padding' or equivalent."
+    }
+]
+```

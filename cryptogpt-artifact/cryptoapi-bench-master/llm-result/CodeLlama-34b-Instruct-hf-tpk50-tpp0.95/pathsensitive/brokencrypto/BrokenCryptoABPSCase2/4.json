@@ -1,0 +1,22 @@
+ {
+"misuses": [
+{
+"misuse": "Insecure Random Number Generation",
+"vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+"description": "The `KeyGenerator` class uses a random number generator to generate the key, but the random number generator is not cryptographically secure. This can lead to predictable keys and weak encryption.",
+"recommendation": "Use a cryptographically secure random number generator, such as `SecureRandom`, to generate the key."
+},
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "Cipher cipher = Cipher.getInstance(\"Blowfish\");",
+"description": "The `Blowfish` algorithm is considered to be insecure and should not be used for new development. It is recommended to use a more secure algorithm, such as `AES`, instead.",
+"recommendation": "Use a more secure algorithm, such as `AES`, instead of `Blowfish`."
+},
+{
+"misuse": "Insecure Cipher Block Chaining",
+"vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+"description": "The `Cipher` class is using a insecure cipher block chaining mode, which can lead to attacks such as the padding oracle attack. It is recommended to use a more secure mode, such as `AES/CBC/PKCS5Padding`, instead.",
+"recommendation": "Use a more secure mode, such as `AES/CBC/PKCS5Padding`, instead of `Cipher.ENCRYPT_MODE`."
+}
+]
+}

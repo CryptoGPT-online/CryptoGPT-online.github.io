@@ -1,0 +1,6 @@
+ {
+"misuse": "Insecure Random Number Generation",
+"vulnerable_code": "SecureRandom random = new SecureRandom();\nrandom.nextBytes(salt);",
+"description": "The SecureRandom class is not a reliable source of randomness and should not be used for generating salt. The default SecureRandom implementation uses a combination of random and pseudo-random number generators, which can make it predictable. Additionally, the method nextBytes() uses a fixed size of 256 bytes, which may not be appropriate for all use cases.",
+"recommendation": "Use a cryptographically secure random number generator, such as the SHA1PRNG algorithm, to generate the salt. The Java SecureRandom class can be used to generate random bytes, but the implementation should be properly seeded with a secure random source. Additionally, the size of the salt should be properly selected based on the specific use case."
+}

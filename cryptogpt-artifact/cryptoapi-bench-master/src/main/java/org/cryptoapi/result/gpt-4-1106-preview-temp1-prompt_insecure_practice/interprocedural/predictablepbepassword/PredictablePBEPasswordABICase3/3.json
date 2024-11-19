@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Inadequate Key Size",
+        "vulnerable_code": "int keyLength = 16;",
+        "description": "The keyLength is specified in bits, and should be at least 128 bits to be considered secure. The code incorrectly uses 16, seeming to assume the number represents bytes.",
+        "recommendation": "Change the keyLength to a secure value such as 128 or 256 bits (e.g., int keyLength = 128;)."
+    },
+    {
+        "misuse": "Weak Password-Based Encryption (PBE)",
+        "vulnerable_code": "pbeKeySpec = new PBEKeySpec(password.toCharArray(),salt,iterationCount,keyLength);",
+        "description": "The PBEKeySpec class is being used without specifying the algorithm. This may result in using a default and potentially weak hashing algorithm.",
+        "recommendation": "Specify a strong PBE algorithm explicitly when creating the PBEKeySpec."
+    },
+    {
+        "misuse": "Insufficient Iteration Count",
+        "vulnerable_code": "int iterationCount = 11010;",
+        "description": "The iteration count, which should be large to protect against brute-force attacks, is relatively small. Modern recommendations suggest at least 100,000 iterations.",
+        "recommendation": "Increase the iteration count to at least 100,000 to harden the algorithm against brute-force attacks."
+    }
+]
+```

@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Insecure Cryptographic Algorithm",
+        "vulnerable_code": "KeyPairGenerator kgp = KeyPairGenerator.getInstance(\"RSA\");\nCipher cipher = Cipher.getInstance(\"RSA\");\nCipher dec = Cipher.getInstance(\"RSA\");",
+        "description": "Using RSA for both KeyPair generation and encryption/decryption is insecure. RSA should only be used for key pair generation and key exchange, not for encrypting large amounts of data.",
+        "recommendation": "Use a symmetric encryption algorithm like AES for encrypting the message, and use RSA for key pair generation and key exchange."
+    },
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "kgp.initialize(keysize);",
+        "description": "Initializing the KeyPairGenerator with a fixed key size (1024) may lead to insecure keys. It is recommended to use a minimum key size of 2048 for RSA.",
+        "recommendation": "Use a minimum key size of 2048 for RSA to ensure security against current and future attacks."
+    }
+]
+```

@@ -1,0 +1,26 @@
+ [
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "new SecureRandom().ints()",
+        "description": "The default constructor of SecureRandom() uses the default algorithm to generate random numbers, which may not be cryptographically secure. In this case, the defaultKey is generated using the default algorithm, which may not be secure enough for encryption.",
+        "recommendation": "Use a cryptographically secure random number generator, such as SecureRandom.getInstanceStrong() or SplittableRandom, to generate the defaultKey."
+    },
+    {
+        "misuse": "Insecure Initialization Vector",
+        "vulnerable_code": "byte[] keyBytes = defaultKey.getBytes();\nkeyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The initialization vector (IV) used for the AES cipher is not securely generated. In this case, the defaultKey is used to generate the IV, which may not be secure enough.",
+        "recommendation": "Use a secure random number generator, such as SecureRandom, to generate the IV."
+    },
+    {
+        "misuse": "Insecure Key Generation",
+        "vulnerable_code": "SecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES\");",
+        "description": "The key used for the AES cipher is generated using the defaultKey, which may not be secure enough. The defaultKey may be predictable or easily guessable, which could lead to a weak encryption.",
+        "recommendation": "Use a secure random number generator, such as SecureRandom, to generate the key."
+    },
+    {
+        "misuse": "Insecure Cipher Mode",
+        "vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5PADDING\");",
+        "description": "The cipher mode used for the AES encryption (CBC) is vulnerable to attacks, such as padding oracle attacks. The use of PKCS5PADDING may also be vulnerable to attacks, as it uses a static IV.",
+        "recommendation": "Use a secure cipher mode, such as GCM or EAX, and use a secure random number generator, such as SecureRandom, to generate the IV."
+    }
+]

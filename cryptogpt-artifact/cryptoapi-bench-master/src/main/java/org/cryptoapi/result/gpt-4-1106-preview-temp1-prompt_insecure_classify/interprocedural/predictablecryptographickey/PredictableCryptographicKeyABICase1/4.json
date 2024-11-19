@@ -1,0 +1,25 @@
+```json
+[
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "String key = \"defaultkey\";",
+        "description": "The encryption key is hardcoded into the source code, which makes it easier for an attacker to retrieve and use it to decrypt data.",
+        "recommendation": "Use a secure method to manage keys, such as a dedicated key management service, environment variables, or configuration files with proper access controls."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "String key = \"defaultkey\";",
+        "description": "The hardcoded key is not randomly generated and thus does not provide a high level of entropy, which is necessary for secure encryption.",
+        "recommendation": "Generate a random key using a secure random number generator and ensure it is of appropriate length."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": [
+            "String key = \"defaultkey\";",
+            "keyBytes = Arrays.copyOf(keyBytes,16);"
+        ],
+        "description": "The key is derived from a low-entropy source (a hardcoded string) and is not subjected to a key stretching algorithm, which may lead to inadequate encryption strength.",
+        "recommendation": "Use a key derivation function (KDF) such as PBKDF2, bcrypt, or scrypt with a high iteration count to derive the key from a password, and use a secure random salt."
+    }
+]
+```

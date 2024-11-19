@@ -1,0 +1,25 @@
+```json
+[
+    {
+        "misuse": "Insufficient Entropy (CWE-331)",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "description": "The cryptographic key is generated without specifying the key size which can lead to keys with default and potentially weak sizes.",
+        "recommendation": "Specify a key size when generating the key, and ensure it's an adequate length (e.g., 256 bits for AES)."
+    },
+    {
+        "misuse": "Hardcoded IV (CWE-321)",
+        "vulnerable_code": [
+            "public static void method2(byte[] bytes) { ... IvParameterSpec ivSpec = new IvParameterSpec(bytes); ... }",
+            "byte [] bytes = \"abcde\".getBytes();"
+        ],
+        "description": "The initialization vector (IV) used in CBC mode is not random or unique. This is insecure as it should be unpredictable for each encryption operation.",
+        "recommendation": "Generate a random IV for each encryption operation and pass it alongside the ciphertext."
+    },
+    {
+        "misuse": "Static IV with Insufficient Length",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+        "description": "The provided IV is not the correct length (16 bytes for AES) and in this particular case, it comes from a static string \"abcde\" which does not meet the length requirements.",
+        "recommendation": "Use a securely generated IV of the correct length (16 bytes for AES)."
+    }
+]
+```

@@ -1,0 +1,34 @@
+```json
+[
+    {
+        "misuse": "Insecure Key Generation",
+        "vulnerable_code": "String.valueOf(random.ints())",
+        "description": "The method String.valueOf is used on a java.util.stream.IntStream, which does not effectively generate a secure key. The resultant string may not be cryptographically secure or have sufficient entropy.",
+        "recommendation": "Use a strong key generation mechanism such as KeyGenerator for generating secure keys."
+    },
+    {
+        "misuse": "Weak Salt Generation",
+        "vulnerable_code": "new byte[16]",
+        "description": "The salt is generated without ensuring it is cryptographically strong. Using only 'new byte[16]' initializes an array but does not fill it with random values.",
+        "recommendation": "Ensure that the salt is populated with a cryptographically strong random sequence of bytes."
+    },
+    {
+        "misuse": "Weak Key Derivation Function Parameters",
+        "vulnerable_code": "pbeKeySpec = new PBEKeySpec(new String(keyBytes).toCharArray(),salt,iterationCount,keyLength)",
+        "description": "The key derivation function is configured with a potentially weak key length of 16 bytes. It should be at least 128 bits (16 bytes) for most uses, and preferably 256 bits (32 bytes) to maintain security.",
+        "recommendation": "Increase the key length parameter to at least 128 bits (16 bytes), and consider using 256 bits (32 bytes) if security is a concern."
+    },
+    {
+        "misuse": "Potentially Inadequate Iteration Count",
+        "vulnerable_code": "int iterationCount = 11010",
+        "description": "The iteration count of '11010' may not provide sufficient computational work to protect against brute-force attacks.",
+        "recommendation": "Increase the iteration count to a higher value, usually tens or hundreds of thousands, to enhance security."
+    },
+    {
+        "misuse": "Weak Key Conversion",
+        "vulnerable_code": "new PBEKeySpec(new String(keyBytes).toCharArray())",
+        "description": "Converting from byte array to String and then to a char array can lead to a loss of entropy and potential charset issues, which could weaken the key.",
+        "recommendation": "Use the byte array directly if possible, or ensure that the charset does not reduce the key's entropy."
+    }
+]
+```

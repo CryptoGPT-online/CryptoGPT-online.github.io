@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "String defaultKey = \"changeit\";",
+        "description": "The password for the keystore is hardcoded as 'changeit', which is a well-known default password and could be easily guessed or found by an attacker.",
+        "recommendation": "Use a secure way to manage passwords, such as prompting the user for a password, using a password manager, or environment variables, and never hardcode sensitive information."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");\nks.load(cacerts.openStream(), defaultKey.toCharArray());",
+        "description": "The code is loading certificates from a URL but does not show any certificate validation logic. If this code is part of a larger application that acts as a client and uses these certificates to establish SSL/TLS connections, it might be vulnerable to man-in-the-middle attacks due to not validating the server's certificate properly.",
+        "recommendation": "Ensure proper SSL/TLS certificate validation is implemented. This might include hostname verification and checking the certificate chain against trusted root certificates."
+    }
+]
+```

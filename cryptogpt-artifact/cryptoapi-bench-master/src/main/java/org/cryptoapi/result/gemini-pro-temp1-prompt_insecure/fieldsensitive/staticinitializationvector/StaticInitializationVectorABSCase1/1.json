@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "CWE-326: Inadequate Key Management",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+    "description": "Key is generated using KeyGenerator, and its strength is unknown, which might lead to weak keys.",
+    "recommendation": "Consider using a secure random number generator to generate the key, and ensure that the key is of sufficient strength for the intended application."
+  },
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+    "description": "The \"AES/CBC/PKCS5Padding\" cipher is vulnerable to padding oracle attacks.",
+    "recommendation": "Consider using a more secure cipher, such as \"AES/GCM/NoPadding\"."
+  },
+  {
+    "misuse": "CWE-650: Improper Handling of Initialization Vectors",
+    "vulnerable_code": "passedIV = defIV;",
+    "description": "The initialization vector (IV) is set to a fixed value, which makes the cipher predictable and susceptible to attack.",
+    "recommendation": "Generate a random IV for each encryption operation."
+  }
+]
+```

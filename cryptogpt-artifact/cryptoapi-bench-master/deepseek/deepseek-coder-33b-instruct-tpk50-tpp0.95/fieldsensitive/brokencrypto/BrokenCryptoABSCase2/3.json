@@ -1,0 +1,13 @@
+{
+    "misuse": "Weak Random Number Generation",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);",
+    "description": "The code uses a pseudo-random number generator to generate a secret key. In the context of cryptography, it can be considered as a security weakness because if the seed used to generate the random number is predictable (like system current time, sequence, etc.), the generated key could be predicted. This would mean the encryption/decryption process could be easily compromised.",
+    "recommendation": "Avoid using KeyGenerator class to generate keys. Consider using a secure random number generator to seed the KeyGenerator. You may also consider using a KeyStore to securely store cryptographic keys."
+}
+
+{
+    "misuse": "Static Initialization Vector",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(defaultAlgo);",
+    "description": "The cipher instance is created without any explicit IV. If the mode of operation requires an initialization vector, a random value is used. However, if the same initialization vector is used more than once, it can reveal key information. For instance, in CBC mode, a simple re-use of initialization vector can leak information about the plaintext.",
+    "recommendation": "Make sure to use unique IV for each encryption. In CBC mode, it is recommended to always generate a new IV for each encryption."
+}

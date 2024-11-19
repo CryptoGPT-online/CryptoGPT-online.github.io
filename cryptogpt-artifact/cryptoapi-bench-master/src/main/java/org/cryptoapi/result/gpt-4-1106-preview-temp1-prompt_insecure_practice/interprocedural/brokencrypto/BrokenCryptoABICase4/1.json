@@ -1,0 +1,34 @@
+```json
+[
+    {
+        "misuse": "Weak Encryption Algorithm",
+        "vulnerable_code": "String crypto = \"RC2\";",
+        "description": "RC2 is an outdated and weak encryption algorithm that is vulnerable to several types of attacks. Its use is no longer considered secure.",
+        "recommendation": "Use a strong encryption algorithm such as AES with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(crypto);\nSecretKey key = keyGen.generateKey();",
+        "description": "The default key size for RC2 may be insufficient. Weak key sizes can make the encryption easier to break.",
+        "recommendation": "Specify a key size that is considered strong for the encryption algorithm chosen (e.g., KeyGenerator.getInstance(\"AES\").init(128); for AES with a 128-bit key)."
+    },
+    {
+        "misuse": "No Secure Random Specified",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(crypto);",
+        "description": "The KeyGenerator does not specify a source of randomness, which could result in weak keys if the platform default is not secure.",
+        "recommendation": "Ensure a secure random source is used for key generation (e.g., SecureRandom secureRandom = new SecureRandom(); keyGen.init(keySize, secureRandom);)."
+    },
+    {
+        "misuse": "ECB Mode or No Mode Specified",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(crypto);",
+        "description": "If no mode of operation is specified for the cipher, the default mode (Electronic Code Book, ECB) could be used, which is insecure for predictable data as identical plaintext blocks produce identical ciphertext blocks.",
+        "recommendation": "Specify a secure mode of operation (e.g., Cipher.getInstance(\"AES/CBC/PKCS5Padding\"); for AES with CBC mode and PKCS5 padding)."
+    },
+    {
+        "misuse": "No Initialization Vector (IV)",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "The cipher is initialized without specifying an initialization vector (IV), which is required for most modes of operation to ensure that encryption is secure.",
+        "recommendation": "Generate a random IV and initialize the cipher with it (e.g., cipher.init(Cipher.ENCRYPT_MODE, key, new IvParameterSpec(ivBytes)); where ivBytes is generated securely)."
+    }
+]
+```

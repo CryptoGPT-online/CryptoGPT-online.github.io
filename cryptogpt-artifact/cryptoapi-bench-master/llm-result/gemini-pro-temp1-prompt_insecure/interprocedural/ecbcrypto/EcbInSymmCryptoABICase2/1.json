@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(String.valueOf(crypto));",
+    "description": "The encryption algorithm 'AES' is used without specifying the key size. By default, it uses a 128-bit key, which is considered weak by today's standards.",
+    "recommendation": "Use a stronger encryption algorithm like 'AES/GCM/NoPadding' with an appropriate key size (e.g., 256 bits)."
+  },
+  {
+    "misuse": "CWE-327: Use of a Weak Key",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+    "description": "A weak key is generated using the default key size (128 bits) for the AES algorithm. Weak keys are susceptible to brute-force attacks.",
+    "recommendation": "Use a strong key generator that generates keys of appropriate strength (e.g., 256 bits for AES)."
+  },
+  {
+    "misuse": "CWE-759: Use of Hard-coded Cryptographic Key",
+    "vulnerable_code": "private static final String DEFAULT_CRYPTO = \"AES/ECB/PKCS5Padding\";",
+    "description": "The cryptographic key is hard-coded in the source code, which makes it susceptible to compromise.",
+    "recommendation": "Avoid hard-coding cryptographic keys in the source code. Instead, use a secure key management system to generate, store, and manage cryptographic keys."
+  }
+]
+```

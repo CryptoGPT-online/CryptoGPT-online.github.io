@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "TrustManager that does not validate certificate chains",
+        "vulnerable_code": "public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {}",
+        "description": "The checkClientTrusted method is empty, meaning that it does not implement any certificate validation. This can allow malicious clients with invalid certificates to be trusted.",
+        "recommendation": "Implement proper certificate chain validation in checkClientTrusted method."
+    },
+    {
+        "misuse": "TrustManager that does not validate certificate chains",
+        "vulnerable_code": "public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {}",
+        "description": "The checkServerTrusted method is empty, meaning that it does not implement any certificate validation. This can allow man-in-the-middle attacks as invalid server certificates will be trusted.",
+        "recommendation": "Implement proper certificate chain validation in checkServerTrusted method."
+    },
+    {
+        "misuse": "Improper certificate validation",
+        "vulnerable_code": "public X509Certificate[] getAcceptedIssuers() { return null; }",
+        "description": "Returning null from getAcceptedIssuers may bypass some checks on the certificate issuer, though the impact of this depends on the caller of this method.",
+        "recommendation": "Return a valid array of trusted issuers or implement checks according to the certificate policy."
+    }
+]
+```

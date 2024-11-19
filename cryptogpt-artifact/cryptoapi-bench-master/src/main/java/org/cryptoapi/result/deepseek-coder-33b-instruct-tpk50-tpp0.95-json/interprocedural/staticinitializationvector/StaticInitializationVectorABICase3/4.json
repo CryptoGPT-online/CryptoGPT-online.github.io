@@ -1,0 +1,14 @@
+[
+  {
+    "misuse": "Insecure Randomness",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\"); SecretKey key = keyGen.generateKey();",
+    "description": "The KeyGenerator class provides a mechanism for generating symmetric key material. When an instance of the KeyGenerator class is created, the algorithm random number generators are seeded, not just for the generator itself, but also for any other instances or static methods which generate random numbers.",
+    "recommendation": "Instead of using KeyGenerator.getInstance to generate the AES keys, it is recommended to generate the AES keys from a known cryptographically secure random number generator."
+  },
+  {
+    "misuse": "Insecure Randomness",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\"); IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+    "description": "This code creates an AES cipher in CBC mode with a plain byte array as the initialization vector (IV). Byte arrays created with new or byte[x] have their values initialized to zero, making the IV predictable and not suitable for encryption. Furthermore, if the byte array passed to the IvParameterSpec is not exactly 16 bytes (the block size for AES), it will not throw an exception but will simply use the first 16 bytes of the array.",
+    "recommendation": "A secure way to generate an AES IV is by using a SecureRandom, as the code should be handling sensitive data."
+  }
+]

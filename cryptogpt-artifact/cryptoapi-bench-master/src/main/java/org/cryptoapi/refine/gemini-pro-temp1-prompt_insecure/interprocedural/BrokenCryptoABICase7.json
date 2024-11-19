@@ -1,0 +1,33 @@
+### False Positive Misuse ###
+- **CWE-326: Inadequate Encryption Strength** 
+- **Vulnerable Code:** 
+```java
+private static void go2(){
+...
+}
+```
+
+- **Description**: The misuse report flags the assignment of the default crypto value `RC4` to the `CRYPTO` character array as inadequate encryption strength. However, this assignment does not directly lead to the usage of `RC4` for encryption or key generation. The `go2` method does not perform any cryptographic operations, and the `CRYPTO` array is not used elsewhere in the code.
+
+- **CWE-326: Inadequate Encryption Strength** 
+- **Vulnerable Code:** 
+```java
+private static void go3(){
+...
+}
+```
+
+- **Description**: The misuse report flags the assignment of the `CRYPTO` character array to the `crypto` character array as inadequate encryption strength. Similar to the previous case, this assignment does not directly lead to the usage of `RC4` for encryption or key generation. The `go3` method does not perform any cryptographic operations, and the `crypto` array is not used elsewhere in the code.
+
+### Optimized Misuse JSON ###
+```json
+[
+  {
+    "misuse category": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_method": "KeyGenerator.getInstance(String.valueOf(crypto))",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(String.valueOf(crypto));",
+    "description": "The code is using the RC4 algorithm, which is considered weak and insecure. RC4 is vulnerable to various attacks, including collision attacks and key recovery attacks.",
+    "recommendation": "Use a more secure cryptographic algorithm, such as AES or ChaCha20."
+  }
+]
+```

@@ -1,0 +1,29 @@
+```json
+[
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": [
+            "public void checkClientTrusted(X509Certificate[] x509Certificates, String s)",
+            "public void checkServerTrusted(X509Certificate[] x509Certificates, String s)"
+        ],
+        "description": "The implemented X509TrustManager does not actually verify the trustworthiness of a certificate chain, thereby allowing any certificate chain provided by the client or server without proper validation, which could enable man-in-the-middle attacks.",
+        "recommendation": "Implement proper certificate chain validation in the checkClientTrusted and checkServerTrusted methods."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": [
+            "context = SSLContext.getInstance(\"TLS\");"
+        ],
+        "description": "By using just 'TLS' without specifying a version, the code may be negotiating TLS version that is not secure. Some older versions of TLS (like TLS 1.0 and 1.1) have known vulnerabilities.",
+        "recommendation": "Specify a secure TLS version like `TLSv1.2` or `TLSv1.3` when calling SSLContext.getInstance."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": [
+            "new SecureRandom()"
+        ],
+        "description": "While the use of SecureRandom is generally secure, depending on the context, default SecureRandom might not provide sufficiently random values in all environments or it might be slow to initialize if there is insufficient entropy.",
+        "recommendation": "If applicable, consider specifying a SecureRandom implementation and/or seeding it properly."
+    }
+]
+```

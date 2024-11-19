@@ -1,0 +1,26 @@
+### False Positive Misuse ###
+N/A
+
+### Optimized Misuse JSON###
+```json
+[
+    {
+        "misuse": "Hardcoded Algorithm",
+        "vulnerable_code": "public static final String DEFAULT_CRYPTO = \"SHA1\";",
+        "description": "The algorithm \"SHA1\" is hardcoded as the default crypto algorithm, which is not recommended as it limits flexibility and future updates.",
+        "recommendation": "It is recommended to use configurable options for the crypto algorithm, allowing for easier updates and flexibility in algorithm choice."
+    },
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "CRYPTO = DEFAULT_CRYPTO.toCharArray();",
+        "description": "The use of a constant string 'SHA1' for generating cryptographic keys or initialization vectors may lead to insecure randomness and weaken the security of the cryptographic operations.",
+        "recommendation": "Use a cryptographically secure random number generator to generate keys and initialization vectors for cryptographic operations."
+    },
+    {
+        "misuse": "Insecure Use of Cryptographic Hash Function",
+        "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(String.valueOf(crypto));",
+        "description": "The String value of the crypto variable is used directly to obtain the MessageDigest instance, which may lead to insecure or inappropriate hash function usage.",
+        "recommendation": "It is recommended to use known secure cryptographic hash functions such as SHA-256 or SHA-3 instead of SHA-1. Additionally, it's important to validate the algorithm being used in the getInstance method."
+    }
+]
+```

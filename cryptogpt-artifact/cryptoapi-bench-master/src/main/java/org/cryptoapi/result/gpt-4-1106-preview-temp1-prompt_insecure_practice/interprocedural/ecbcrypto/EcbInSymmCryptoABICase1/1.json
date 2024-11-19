@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "ECB Mode Usage",
+        "vulnerable_code": "\"AES/ECB/PKCS5Padding\"",
+        "description": "The code uses ECB (Electronic Code Book) which is an insecure block cipher mode of operation, as it does not provide serious message confidentiality. Identical plaintext blocks are encrypted to identical ciphertext blocks, making it susceptible to pattern analysis and block substitution attacks.",
+        "recommendation": "Use a more secure mode of operation such as CBC (Cipher Block Chaining) with a unique, unpredictable initialization vector (IV) for each encryption."
+    },
+    {
+        "misuse": "Static Cryptographic Algorithm Specification",
+        "vulnerable_code": "\"AES/ECB/PKCS5Padding\"",
+        "description": "The cryptographic algorithm, mode, and padding are statically defined in the variable 'crypto'. This does not allow flexibility or external configuration, potentially making it harder to respond to future vulnerabilities discovered in specific cipher configurations.",
+        "recommendation": "Allow the cryptographic parameters to be configurable outside of the compiled codebase, for example by reading them from a configuration file or environment variable."
+    },
+    {
+        "misuse": "Lack of Secure Randomness",
+        "vulnerable_code": "KeyGenerator.getInstance(\"AES\")",
+        "description": "The AES KeyGenerator may not use a secure randomness source for key generation, depending on the underlying implementation and provider. This could result in weak keys that are easier to break.",
+        "recommendation": "Specify a secure randomness source by using SecureRandom with a strong seed when generating keys."
+    }
+]
+```

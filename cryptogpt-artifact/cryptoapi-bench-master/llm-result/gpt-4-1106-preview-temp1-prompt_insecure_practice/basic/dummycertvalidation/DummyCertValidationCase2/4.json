@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "TrustManager that trusts all certificates",
+        "vulnerable_code": "public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {} public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {}",
+        "description": "The TrustManager implementation does not verify the authenticity of the certificate chain, thus it trusts any certificate. This could allow man-in-the-middle attacks.",
+        "recommendation": "Implement validation logic in checkClientTrusted and checkServerTrusted methods to check the validity of certificates against trusted CAs or a known whitelist."
+    },
+    {
+        "misuse": "Empty certificate array returned by getAcceptedIssuers",
+        "vulnerable_code": "public X509Certificate[] getAcceptedIssuers() { return new X509Certificate[0]; }",
+        "description": "By returning an empty array of accepted issuers, the TrustManager does not provide any certificates that it trusts, which may lead to insecure fallbacks or incorrect assumptions about what certificates are trusted.",
+        "recommendation": "Return an array of acceptable CA issuer certificates instead of an empty array."
+    }
+]
+```

@@ -1,0 +1,28 @@
+```json
+[
+  {
+    "misuse": "Weak Cryptographic Algorithm",
+    "vulnerable_code": "KeyGenerator.getInstance(String.valueOf(crypto_algo))",
+    "description": "The DES algorithm is considered insecure because it uses a 56-bit key which can be brute-forced with modern computing power.",
+    "recommendation": "Use a stronger algorithm like AES with a key size of at least 128 bits."
+  },
+  {
+    "misuse": "ECB Mode of Operation",
+    "vulnerable_code": "Cipher.getInstance(String.valueOf(crypto))",
+    "description": "ECB (Electronic Codebook) is an insecure block cipher mode of operation that can leak patterns present in the plaintext, making it vulnerable to various cryptographic attacks.",
+    "recommendation": "Use a more secure mode like CBC, CFB, or GCM which uses an IV to add randomness to the encryption process."
+  },
+  {
+    "misuse": "Lack of Secure Randomness in Key Generation",
+    "vulnerable_code": "keyGen.generateKey()",
+    "description": "The code does not specify a secure random number generator when generating a key, potentially leading to the generation of weak keys that can be predictable.",
+    "recommendation": "Ensure that a secure random source is used for key generation by explicitly specifying it in the KeyGenerator initialization."
+  },
+  {
+    "misuse": "Insecure Initialization Vector (IV)",
+    "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key)",
+    "description": "The code does not explicitly define an IV for modes of encryption that require one, which can lead to weak encryption if ECB mode is replaced with a mode that uses an IV without properly initializing it.",
+    "recommendation": "Properly initialize the IV with a SecureRandom source and ensure it is properly used in Cipher initialization for modes that require an IV."
+  }
+]
+```

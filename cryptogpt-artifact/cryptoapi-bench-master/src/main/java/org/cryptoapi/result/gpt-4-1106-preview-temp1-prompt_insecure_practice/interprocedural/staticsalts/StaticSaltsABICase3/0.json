@@ -1,0 +1,31 @@
+```json
+[
+    {
+        "misuse": "Insufficient Salt",
+        "vulnerable_code": "byte[] salt = {(byte) 0xa2};",
+        "description": "The salt used for PBEParameterSpec is only one byte long, which is not sufficient for cryptographic security. A short salt increases the risk of successful brute force attacks because it reduces the amount of entropy in the key derivation process.",
+        "recommendation": "Use a longer and randomly generated salt of at least 16 bytes (128 bits)."
+    },
+    {
+        "misuse": "Insufficient Iteration Count",
+        "vulnerable_code": "int count = 1020;",
+        "description": "The iteration count (1020) specified for PBEParameterSpec is below the recommended minimum of 10000. A low iteration count can lead to faster brute force attacks as less computational effort is required to derive the key.",
+        "recommendation": "Increase the iteration count to at least 10000 to make key derivation more secure."
+    },
+    {
+        "misuse": "Static Salt and Iteration Count",
+        "vulnerable_code": [
+            "byte[] salt = {(byte) 0xa2};",
+            "int count = 1020;"
+        ],
+        "description": "Both salt and iteration count are hardcoded and static. This can lead to vulnerabilities since the use of the same cryptographic parameters across multiple encryptions reduces security by making it more predictable.",
+        "recommendation": "Dynamically generate a new random salt for each encryption operation, and consider varying the iteration count as well, ideally through a secure configuration management system."
+    },
+    {
+        "misuse": "Unused PBEParameterSpec",
+        "vulnerable_code": "new PBEParameterSpec(salt, count);",
+        "description": "The code creates a PBEParameterSpec object but does not use it with any cryptographic operation, such as initializing a Cipher. This is likely to be either incomplete code or misuse where the cryptographic parameters are not effectively applied.",
+        "recommendation": "Ensure that the created PBEParameterSpec object is used in conjunction with a Cipher to perform encryption or decryption."
+    }
+]
+```

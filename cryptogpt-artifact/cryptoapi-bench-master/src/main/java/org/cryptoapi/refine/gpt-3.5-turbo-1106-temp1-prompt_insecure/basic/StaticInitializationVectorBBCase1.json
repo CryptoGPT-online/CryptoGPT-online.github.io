@@ -1,0 +1,24 @@
+### False Positive Misuse ###
+None
+
+### Optimized Misuse JSON ###
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+        "description": "The KeyGenerator instance is not initialized with a specific random number generator and seed, which may result in using the platform-specific default values that could be predictable or weak.",
+        "recommendation": "Use KeyGenerator.init(SecureRandom) to initialize the KeyGenerator with a strong random number generator and seed."
+    },
+    {
+        "misuse": "Hardcoded Initialization Vector (IV)",
+        "vulnerable_code": "byte [] bytes = \"abcde\".getBytes();\nIvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+        "description": "The IV is being generated using a byte array constant, which is not secure as the IV should be unpredictable and unique for each encryption operation.",
+        "recommendation": "Generate the IV using a secure random number generator or derive it from the encryption data, and ensure it is unique and unpredictable for each encryption operation."
+    },
+    {
+        "misuse": "Weak Cryptographic Primitive",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "The code uses AES with PKCS5Padding, which may be less secure compared to more modern padding schemes like PKCS7Padding or AES/GCM/NoPadding.",
+        "recommendation": "Use a more modern padding scheme like PKCS7Padding or AES/GCM/NoPadding for AES encryption."
+    }
+]

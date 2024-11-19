@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "CWE-321: Use of Hard-Coded Cryptographic Key",
+    "vulnerable_code": "private static char[] CRYPTO = DEFAULT_CRYPTO.toCharArray();",
+    "description": "The cryptographic key ('DEFAULT_CRYPTO') is hard-coded in the source code, which makes it easy for an attacker to discover and exploit.",
+    "recommendation": "Generate cryptographic keys securely and store them in a secure location, such as a Hardware Security Module (HSM) or a Key Management Service (KMS)."
+  },
+  {
+    "misuse": "CWE-321: Use of Hard-Coded Cryptographic Key",
+    "vulnerable_code": "private static char[] crypto = CRYPTO;",
+    "description": "The cryptographic key ('CRYPTO') is assigned to another variable ('crypto') without any additional protection, making it still accessible to an attacker.",
+    "recommendation": "Avoid storing cryptographic keys in variables that can be easily accessed or modified."
+  },
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(String.valueOf(crypto));",
+    "description": "The MessageDigest algorithm is initialized with a String value obtained from the 'crypto' variable, which is derived from the hard-coded 'DEFAULT_CRYPTO' value. This approach is insecure because it allows an attacker to specify the algorithm to be used, potentially leading to the use of a weak or compromised algorithm.",
+    "recommendation": "Use a secure cryptographic algorithm and avoid using hard-coded values or user-supplied input to determine the algorithm."
+  }
+]
+```

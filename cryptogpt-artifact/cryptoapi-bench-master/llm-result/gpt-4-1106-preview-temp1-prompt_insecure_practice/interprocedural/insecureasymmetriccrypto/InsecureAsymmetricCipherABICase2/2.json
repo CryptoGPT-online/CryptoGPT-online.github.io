@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insecure Key Size",
+        "vulnerable_code": "public static final int DEFAULT_KEY_SIZE = 1024;",
+        "description": "The key size for RSA is set to 1024 bits, which is no longer considered secure for many cryptographic purposes, as it is susceptible to being broken with sufficient computing resources.",
+        "recommendation": "Use a larger key size for RSA, at least 2048 bits."
+    },
+    {
+        "misuse": "Insecure Cipher Mode",
+        "vulnerable_code": [
+            "Cipher cipher = Cipher.getInstance(\"RSA\");",
+            "Cipher dec = Cipher.getInstance(\"RSA\");"
+        ],
+        "description": "The code is using RSA without specifying the padding scheme. RSA encryption without padding is vulnerable to a number of attacks.",
+        "recommendation": "Use a secure padding mechanism like OAEP with RSA."
+    },
+    {
+        "misuse": "Missing Exception Handling",
+        "vulnerable_code": [
+            "\"public void go(KeyPairGenerator kgp, KeyPair kp) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IOException, IllegalBlockSizeException, BadPaddingException, ClassNotFoundException\"",
+            "\"public static void main (String [] args) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IOException, IllegalBlockSizeException, BadPaddingException, ClassNotFoundException\""
+        ],
+        "description": "The code throws a broad set of exceptions from the main methods without actually handling them. This can expose stack traces to users, potentially revealing underlying implementation details.",
+        "recommendation": "Exceptions should be caught and handled appropriately to avoid potential information disclosure."
+    }
+]
+```

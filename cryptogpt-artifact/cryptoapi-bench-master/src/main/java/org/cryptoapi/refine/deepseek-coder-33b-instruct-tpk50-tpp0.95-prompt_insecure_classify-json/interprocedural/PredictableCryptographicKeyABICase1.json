@@ -1,0 +1,35 @@
+### False Positive Misuse ###
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "byte[] keyBytes = key.getBytes();",
+        "description": "The code uses a hard-coded string to generate a byte array. It does not provide sufficient randomness as the Java getBytes() method will return the same output for the same input because it uses the platform's default charset.",
+        "recommendation": "Use a cryptographically secure pseudo-random number generator to create a secret key for encryption and decryption. The generated key should be checked to have a secure length."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials.",
+        "vulnerable_code": "String key = \"defaultkey\";",
+        "description": "The code uses a hardcoded string as a secret key. If the code is leaked or compromised, the attacker can use this key to decrypt the data. This is a severe vulnerability.",
+        "recommendation": "The secret key should be stored securely and not hardcoded. It should be randomly generated or obtained from a secure vault."
+    }
+]
+```
+
+### Optimized Misuse JSON ###
+```json
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "SecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES\");",
+        "description": "The code uses an insecure key length for the AES encryption algorithm. AES requires a 128, 192, or 256 bit key size, but the key provided is only 16 bytes which is too short.",
+        "recommendation": "Use a secure key length. A 128 bit key size is a good choice."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "byte[] keyBytes = key.getBytes(); keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The code uses a fixed default key and it's not secure. Moreover, it also does not check if the key's byte array is longer than 16. If the length of key is less than 16, it fills the remaining bytes with 0.",
+        "recommendation": "Instead of using a static key, it is recommended to use a randomly generated key using SecureRandom. For AES encryption, the key length should be 128, 192, or 256 bits. You can generate a new random key using the KeyGenerator class."
+    }
+]
+```

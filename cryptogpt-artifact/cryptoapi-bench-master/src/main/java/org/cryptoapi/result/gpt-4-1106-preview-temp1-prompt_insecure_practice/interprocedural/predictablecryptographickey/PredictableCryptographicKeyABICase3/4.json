@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insecure Key Management",
+        "vulnerable_code": "String key = \"defaultkey\";",
+        "description": "The key is hard-coded and too short, not providing the required 128, 192 or 256 bits for AES encryption.",
+        "recommendation": "Use a secure key management system and ensure keys are of proper length and randomness."
+    },
+    {
+        "misuse": "ECB Mode in AES",
+        "vulnerable_code": "SecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES\");",
+        "description": "ECB mode is not explicitly set here, so if default settings are used, ECB mode might be applied which is insecure.",
+        "recommendation": "Use a proper chaining mode like CBC with an Initialization Vector or GCM mode which also provides authentication."
+    },
+    {
+        "misuse": "Use of Platform Default Charset",
+        "vulnerable_code": "key.getBytes()",
+        "description": "The code relies on the platform's default charset for encoding, which can vary between platforms and lead to inadvertent encoding issues.",
+        "recommendation": "Explicitly specify a charset when calling getBytes(), like 'UTF-8'."
+    },
+    {
+        "misuse": "Weak Key Derivation",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The key derivation is weak and allows for predictable keys due to zero padding of a too-short input key which may not meet the required key strength for AES.",
+        "recommendation": "Use a key derivation function (KDF) such as PBKDF2, bcrypt or scrypt with a salt and sufficient iterations to derive the key."
+    }
+]
+```

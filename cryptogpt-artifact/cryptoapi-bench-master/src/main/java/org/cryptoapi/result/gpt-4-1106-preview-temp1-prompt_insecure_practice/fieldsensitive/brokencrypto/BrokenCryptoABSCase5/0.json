@@ -1,0 +1,40 @@
+```json
+[
+    {
+        "misuse": "Insecure Encryption Algorithm",
+        "vulnerable_code": "crypto = new C6(\"IDEA\");",
+        "description": "The International Data Encryption Algorithm (IDEA) is considered less secure than newer algorithms. It is an older cipher and may be susceptible to cryptographic attacks.",
+        "recommendation": "Use a more secure and widely accepted encryption algorithm such as AES."
+    },
+    {
+        "misuse": "Weak Key Generation",
+        "vulnerable_code": "KeyGenerator.getInstance(defaultAlgo)",
+        "description": "No key size is defined. Depending on the provider's default, this may result in weak key generation.",
+        "recommendation": "Specify the key size by using keyGen.init(128), keyGen.init(192), or keyGen.init(256) for AES encryption to ensure a secure key length."
+    },
+    {
+        "misuse": "Hardcoded Encryption Algorithm",
+        "vulnerable_code": "Cipher.getInstance(defaultAlgo)",
+        "description": "The encryption algorithm is hardcoded, which may not allow for flexibility or security updates in the future.",
+        "recommendation": "Avoid hardcoding the algorithm, instead allow for configuration and ensure that secure defaults are provided."
+    },
+    {
+        "misuse": "Improper Error Handling",
+        "vulnerable_code": "crypto.encrypt(\"abc\",\"\");",
+        "description": "The encrypt method is called without handling the exceptions properly. It throws multiple exceptions that could provide information about the encryption process and cryptographic material if not handled correctly.",
+        "recommendation": "Implement proper error handling that logs and handles exceptions without revealing sensitive information."
+    },
+    {
+        "misuse": "Missing Initialization Vector (IV)",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "The code does not specify an Initialization Vector (IV) for encryption. If the cipher is used in CBC mode or another mode that requires an IV, not using an IV or using a predictable one could lead to vulnerabilities such as deterministic encryption, which can be insecure.",
+        "recommendation": "Use a secure random IV for modes of operation that require it."
+    },
+    {
+        "misuse": "Default Encoding",
+        "vulnerable_code": "txt.getBytes()",
+        "description": "The getBytes() method is used without specifying a character set, which may expose the application to platform-dependent behavior.",
+        "recommendation": "Specify a character set, for example txt.getBytes(\"UTF-8\") to ensure consistent and expected behavior across different platforms."
+    }
+]
+```

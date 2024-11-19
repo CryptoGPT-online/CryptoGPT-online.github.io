@@ -1,0 +1,17 @@
+### False Positive Misuse
+
+The report does not include any false positive misuses. The reported cryptographic API misuse is:
+
+```json
+[
+    {
+        "misuse category": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_method": "MessageDigest md = MessageDigest.getInstance(\"MD5\");",
+        "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(\"MD5\");",
+        "description": "MD5 is a weak, broken cryptographic hash function which was widely used in the past. It is no longer considered cryptographically secure. An attacker can generate a message that produces a hash collision, or find preimage attacks that will allow them to generate specific hashes. Also, it is no longer part of the Secure Hash Algorithm (SHA-2).",
+        "recommendation": "Instead of using MD5, it is strongly recommended to use SHA-256 or the stronger SHA-3. Always use the cryptographic API calls securely and make sure they are up-to-date. Never use deprecated or weak cryptographic algorithms. Use stronger, more modern and recommended ones."
+    }
+]
+```
+
+The false positive is because we're only given this block of code. We need to have the full application and its context to determine whether the MD5 usage is legitimate or misuse, which cannot be deduced from the provided context.

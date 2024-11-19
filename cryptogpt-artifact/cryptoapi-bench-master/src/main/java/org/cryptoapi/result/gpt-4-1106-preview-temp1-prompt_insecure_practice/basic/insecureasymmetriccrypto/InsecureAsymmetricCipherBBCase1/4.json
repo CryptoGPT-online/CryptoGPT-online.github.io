@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Key Size",
+        "vulnerable_code": "int keysize = 1024;",
+        "description": "The key size of 1024 bits for RSA is considered weak and potentially insecure. Modern standards require 2048-bit keys or higher for secure encryption.",
+        "recommendation": "Increase the RSA key size to at least 2048 bits."
+    },
+    {
+        "misuse": "Insecure Cipher Usage",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"RSA\");",
+        "description": "Using RSA without specifying a padding scheme (like 'RSA/ECB/PKCS1Padding') leads to using a default, potentially less secure padding method. This can make encrypted data vulnerable to attacks such as the padding oracle attack.",
+        "recommendation": "Specify a secure padding mechanism like 'RSA/ECB/OAEPWithSHA-256AndMGF1Padding'."
+    },
+    {
+        "misuse": "Direct Use of RSA for Bulk Data Encryption",
+        "vulnerable_code": "SealedObject encryptedMessage = new SealedObject(myMessage,cipher);",
+        "description": "Using RSA directly for encrypting the actual message data is not recommended due to limitations on the data size and performance. Instead, RSA is typically used to encrypt only a symmetric encryption key.",
+        "recommendation": "Use RSA to encrypt a symmetric key (like AES key), then use the symmetric key to encrypt the actual data."
+    }
+]
+```

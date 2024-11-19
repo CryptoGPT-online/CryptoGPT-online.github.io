@@ -1,0 +1,18 @@
+The code has a misuse related to CWE-757, "Cryptographic Key Exposure Through Environment Variables". 
+
+The vulnerability is in the use of "AES" as the key generation algorithm in KeyGenerator.getInstance("AES"). The "AES" is considered a weak key size, and using such key sizes can lead to more susceptible key exposure.
+
+```java
+KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+```
+
+The fix is to use a stronger key generation algorithm, for example "AES" with 256-bit keys.
+
+```json
+{
+    "misuse": "CWE-757",
+    "vulnerable_code": "KeyGenerator.getInstance(\"AES\")",
+    "description": "The misuse is in the use of \"AES\" as the key generation algorithm in KeyGenerator.getInstance(\"AES\"), which is considered a weak key size.",
+    "recommendation": "Use a stronger key generation algorithm, for example \"AES\" with 256-bit keys."
+}
+```

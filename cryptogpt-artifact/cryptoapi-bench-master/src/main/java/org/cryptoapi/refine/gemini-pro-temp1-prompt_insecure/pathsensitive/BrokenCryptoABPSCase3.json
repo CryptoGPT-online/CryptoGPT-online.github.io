@@ -1,0 +1,30 @@
+### False Positive Misuses ###
+
+- **CWE-326: Inadequate Encryption Strength**
+  - Vulnerable Code: `KeyGenerator keyGen = KeyGenerator.getInstance("AES");\nSecretKey key = keyGen.generateKey();`
+  - Explanation: The misuse is not applicable since the code generates a new key using `keyGen`. While it's true that `AES` by itself is not sufficient for strong encryption, it is important to consider the context. In this case, the code itself generates a new key and does not hard-code any key material.
+
+- **CWE-256: Plaintext Data Exposure**
+  - Vulnerable Code: `Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");`
+  - Explanation: This misuse is not applicable because the vulnerable code uses `AES/CBC/PKCS5Padding`, which is a secure encryption mode that protects data from plaintext exposure.
+
+### Optimized Misuse JSON ###
+
+```json
+[
+  {
+    "misuse category": "Weak Cryptographic Algorithm (CWE-321)",
+    "vulnerable_method": "Cipher cipher = Cipher.getInstance(\"RC4\");",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"RC4\");",
+    "description": "The RC4 cipher is considered weak and should not be used for encryption.",
+    "recommendation": "Use a more secure cipher such as AES instead."
+  },
+  {
+    "misuse category": "Use of a Broken or Risky Cryptographic Algorithm (CWE-327)",
+    "vulnerable_method": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+    "description": "The AES/CBC/PKCS5Padding mode is vulnerable to padding oracle attacks. An attacker can exploit this vulnerability to recover the plaintext data by manipulating the ciphertext.",
+    "recommendation": "Use a more secure encryption mode, such as GCM or CTR, with a secure padding scheme, such as OAEP."
+  }
+]
+```

@@ -1,0 +1,32 @@
+```json
+[
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": [
+            "String defaultKey = \"defaultkey\";",
+            "byte[] keyBytes = defaultKey.getBytes();",
+            "keyBytes = Arrays.copyOf(keyBytes,16);"
+        ],
+        "description": "The key derived from a default string is not secure. It's also short in length and not randomly generated. This makes the key predictable and susceptible to brute-force attacks.",
+        "recommendation": "Use a secure KeyGenerator to generate a random key of appropriate length."
+    },
+    {
+        "misuse": "Use of Hard-coded Cryptographic Key",
+        "vulnerable_code": [
+            "String defaultKey = \"defaultkey\";"
+        ],
+        "description": "Hard-coded cryptographic keys are insecure because they cannot be easily rotated, and if the code is exposed, so is the key.",
+        "recommendation": "Store cryptographic keys securely (e.g., using a hardware security module) and avoid hard-coding them into source code."
+    },
+    {
+        "misuse": "Weak Encryption Key",
+        "vulnerable_code": [
+            "String defaultKey = \"defaultkey\";",
+            "byte[] keyBytes = defaultKey.getBytes();",
+            "keyBytes = Arrays.copyOf(keyBytes,16);"
+        ],
+        "description": "The encryption key derived from 'defaultkey' is weak because it lacks sufficient entropy. It's also derived from a known default string which could be easily guessed or discovered through source code analysis.",
+        "recommendation": "Generate strong, random keys using a secure method such as KeyGenerator and ensure the key has sufficient entropy and length."
+    }
+]
+```

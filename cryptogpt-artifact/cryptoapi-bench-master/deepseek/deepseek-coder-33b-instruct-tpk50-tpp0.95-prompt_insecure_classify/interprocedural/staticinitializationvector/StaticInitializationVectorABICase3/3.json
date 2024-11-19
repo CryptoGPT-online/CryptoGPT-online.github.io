@@ -1,0 +1,31 @@
+Misuse: CWE-326: Inadequate Encryption Strength
+vulnerable_code: "KeyGenerator keyGen = KeyGenerator.getInstance("AES");" and "Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");"
+description: The code is using the AES algorithm which provides a 128-bit key size by default. Although AES is secure, the AES-128 algorithm is now recognized as a legacy algorithm in the US. For modern applications, AES-256 is recommended for maximum security.
+recommendation: Replace "AES" with "AES/GCM/NoPadding" which provides 256-bit security or "AES/CBC/PKCS7Padding" which is more secure and provides 128-bit security. Also, it is recommended to use SecureRandom to generate your keys and IVs as these methods are more secure than using KeyGenerator. 
+
+Here is a corrected version of your code:
+
+```java
+public class S3 {
+    public static void method2(byte[] bytes) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, InvalidAlgorithmParameterException {
+        SecureRandom secureRandom = new SecureRandom();
+        byte[] iv = new byte[16];
+        secureRandom.nextBytes(iv);
+        IvParameterSpec ivSpec = new IvParameterSpec(iv);
+        KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+        keyGen.init(256, secureRandom);
+        SecretKey key = keyGen.generateKey();
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        cipher.init(Cipher.ENCRYPT_MODE,key,ivSpec);
+    }
+
+    public static void method1 (byte[] bytes) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, InvalidAlgorithmParameterException {
+        method2(bytes);
+    }
+
+    public static void main (String [] args) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, InvalidAlgorithmParameterException {
+        byte [] bytes = "abcde".getBytes();
+        method1(bytes);
+    }
+}
+```

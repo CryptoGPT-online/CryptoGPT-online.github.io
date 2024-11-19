@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "public static String KEY = \"sagar\";",
+        "description": "The encryption key is too short, consisting of only 5 characters, which does not meet the minimum length required for strong security.",
+        "recommendation": "Use a longer key that is randomly generated and has a minimum length of 128 bits (16 bytes)."
+    },
+    {
+        "misuse": "Hardcoded Encryption Key",
+        "vulnerable_code": "public static String KEY = \"sagar\";",
+        "description": "The encryption key is hardcoded and public, making it easily accessible for an attacker.",
+        "recommendation": "Encrypt keys should never be hardcoded and public. Instead, they should be securely managed and stored, for instance, using a secure key management system."
+    },
+    {
+        "misuse": "Weak Password-Based Encryption (PBE)",
+        "vulnerable_code": "pbeKeySpec = new PBEKeySpec(encryptKey,salt,10000,16);",
+        "description": "The PBEKeySpec is initialized with a password converted to a char array. This is vulnerable to weak passwords and reduces entropy, rather than using a strong randomly generated key.",
+        "recommendation": "Use a strong, randomly generated key in conjunction with a key derivation function, and ensure adequate password policies to prevent the use of weak passwords."
+    },
+    {
+        "misuse": "Insecure Salt Generation",
+        "vulnerable_code": "sr.nextBytes(salt);",
+        "description": "The salt used for PBEKeySpec is generated using a SecureRandom instance, which is good practice. However, the security of the salt also depends on the security of the underlying RNG algorithm and its configuration, which is not specified here.",
+        "recommendation": "Ensure that the SecureRandom instance is properly configured to use a strong and properly seeded RNG algorithm."
+    }
+]
+```

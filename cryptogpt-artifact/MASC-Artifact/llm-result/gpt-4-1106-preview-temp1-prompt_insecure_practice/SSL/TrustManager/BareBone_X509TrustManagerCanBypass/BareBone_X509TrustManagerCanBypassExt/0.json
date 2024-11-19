@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Custom X509TrustManager that does not perform certificate validation",
+        "vulnerable_code": "public void checkClientTrusted(X509Certificate[] chain, String authType)",
+        "description": "The custom X509TrustManager implementation does not perform any validation when checkClientTrusted is called, which can allow for MITM attacks as it would trust any client certificate.",
+        "recommendation": "Implement a proper certificate validation in checkClientTrusted method."
+    },
+    {
+        "misuse": "Custom X509TrustManager that does not perform certificate validation",
+        "vulnerable_code": "public void checkServerTrusted(X509Certificate[] chain, String authType)",
+        "description": "The custom X509TrustManager implementation does not perform any validation when checkServerTrusted is called, which can allow for MITM attacks as it would trust any server certificate.",
+        "recommendation": "Implement a proper certificate validation in checkServerTrusted method."
+    },
+    {
+        "misuse": "Custom X509TrustManager that returns an empty set of accepted issuers",
+        "vulnerable_code": "public X509Certificate[] getAcceptedIssuers()",
+        "description": "The getAcceptedIssuers method returning null effectively disables any sort of CA checking. It will not be able to determine if a given certificate chain should be trusted which can result in trusting invalid certificates.",
+        "recommendation": "Return a proper set of accepted CA issuers or implement proper checks in the getAcceptedIssuers method."
+    }
+]
+```

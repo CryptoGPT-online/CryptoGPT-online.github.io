@@ -1,0 +1,34 @@
+```json
+[
+  {
+    "misuse": "Insecure Randomness",
+    "vulnerable_code": "String password = String.valueOf(random.ints());",
+    "description": "The password is generated using a SecureRandom without specifying the length or character set, potentially leading to a weak password.",
+    "recommendation": "Use a reliable password generation method that guarantees sufficient entropy and complies with the system's password policy."
+  },
+  {
+    "misuse": "Hardcoded Keystore Type",
+    "vulnerable_code": "String type = \"JKS\";",
+    "description": "The keystore type is hardcoded to JKS, which is Java's keystore format but may not be the most secure option available.",
+    "recommendation": "Consider using a keystore type such as PKCS12 which is generally considered more secure than JKS."
+  },
+  {
+    "misuse": "Cleartext Transmission of Sensitive Information",
+    "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");\nks.load(cacerts.openStream(), password.toCharArray());",
+    "description": "The code is transmitting the keystore password in cleartext over a stream, which could be intercepted and compromise the keystore.",
+    "recommendation": "Ensure that sensitive information is encrypted and securely transmitted."
+  },
+  {
+    "misuse": "Certificate Validation Ignored",
+    "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");\nks.load(cacerts.openStream(), password.toCharArray());",
+    "description": "The code does not actually verify the SSL/TLS certificate presented by ‘www.google.com’, which leaves the application vulnerable to MITM attacks.",
+    "recommendation": "Implement proper SSL/TLS certificate validation or use a high-level API that abstracts these details."
+  },
+  {
+    "misuse": "Insecure keystore Access",
+    "vulnerable_code": "ks.load(cacerts.openStream(), password.toCharArray());",
+    "description": "The KeyStore is being loaded with a password that could be easily compromised, and there is no evidence of password management or protection mechanism.",
+    "recommendation": "Use a secure password retrieval mechanism, and store the keystore in a secure location with proper access controls."
+  }
+]
+```

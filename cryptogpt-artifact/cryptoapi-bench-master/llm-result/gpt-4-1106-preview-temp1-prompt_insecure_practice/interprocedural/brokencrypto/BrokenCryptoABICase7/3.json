@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Weak Encryption Algorithm",
+        "vulnerable_code": "Cipher.getInstance(String.valueOf(crypto))",
+        "description": "RC4 is an outdated and weak encryption algorithm that is vulnerable to several attacks, such as biases in the key stream which can leak information about the plaintext.",
+        "recommendation": "Replace RC4 with a strong encryption algorithm such as AES (Advanced Encryption Standard)."
+    },
+    {
+        "misuse": "Key Generation without SecureRandom",
+        "vulnerable_code": "KeyGenerator.getInstance(String.valueOf(crypto))",
+        "description": "The KeyGenerator is not explicitly initialized with a SecureRandom instance, which may lead to weak keys if the default randomness source is not secure.",
+        "recommendation": "Explicitly initialize KeyGenerator with a SecureRandom instance that provides a strong source of randomness."
+    },
+    {
+        "misuse": "Improper Initialization Vector (IV) Usage",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key)",
+        "description": "The code does not specify an Initialization Vector (IV) while using a stream cipher. Although stream ciphers like RC4 typically do not use an IV, if the API is switched to a block cipher that requires an IV and the IV is not properly initialized, it could lead to cryptographic vulnerabilities.",
+        "recommendation": "If switching to a block cipher, ensure that an IV is securely generated and used for the initialization of the Cipher."
+    },
+    {
+        "misuse": "Hardcoded Encryption Algorithm",
+        "vulnerable_code": "DEFAULT_CRYPTO",
+        "description": "The encryption algorithm is hardcoded as a constant, which could make the system inflexible and potentially insecure if the algorithm needs to be changed or updated due to new vulnerabilities.",
+        "recommendation": "Avoid hardcoding the encryption algorithm. Instead, use a configuration setting that allows easy updates to cryptographic primitives without changing the source code."
+    }
+]
+```

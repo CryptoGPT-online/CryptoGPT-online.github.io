@@ -1,0 +1,15 @@
+## False Positive Misuse
+None of the reported misuses are false positives. The provided code is susceptible to CWE-295: Improper Certificate Validation as it uses the default SSLSocketFactory and does not validate the server's certificate. 
+
+## Optimized Misuse JSON
+```json
+[
+  {
+    "misuse category": "CWE-295: Improper Certificate Validation",
+    "vulnerable_method": "I1.go(String, int)",
+    "vulnerable_code": "SSLSocket socket = (SSLSocket) ssf.createSocket(hostname,soc);",
+    "description": "The SSLSocket is used without validating the SSL certificate. This can expose the system to man-in-the-middle attacks where an attacker can present a fake certificate and the system would accept it.",
+    "recommendation": "Always validate the SSL certificate. You could use the SSLSocket's startHandshake() method followed by getSession().getPeerCertificates() to retrieve the certificate. Then, you can validate it using a TrustManager."
+  }
+]
+```

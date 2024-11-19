@@ -1,0 +1,14 @@
+The code is not using a cryptographic API insecurely but it's vulnerable to CWE-330 Use of Insufficiently Random Values. In the code, it uses SHA-1 or SHA-256 depending on the choice value. However, the salt (an additional random data) is not used in this code. It means that the same password always has the same hash value.
+
+This is a serious security problem called Rainbow table attack. An attacker can make use of the Rainbow table to crack the password hash, defeating the whole purpose of using a secure hash function. 
+
+So the JSON response is:
+
+```json
+[{
+    "misuse": "CWE-330: Use of Insufficiently Random Values",
+    "vulnerable_code": "md = MessageDigest.getInstance(\"SHA-256\");",
+    "description": "The salt (an additional random data) is not used in this code. It means that the same password always has the same hash value. This can be a serious security problem called Rainbow table attack.",
+    "recommendation": "Always use a salt for storing passwords. The salt should be stored together with the hash and not be a secret. The salt should be a random, application-specific string, and different for every user."
+}]
+```

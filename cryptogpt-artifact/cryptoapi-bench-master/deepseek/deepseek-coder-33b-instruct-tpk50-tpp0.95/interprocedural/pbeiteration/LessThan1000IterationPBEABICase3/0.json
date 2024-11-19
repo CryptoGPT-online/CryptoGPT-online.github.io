@@ -1,0 +1,30 @@
+Misuse type: Insecure Parameter Generation for PBE Parameter Spec
+
+Vulnerable code snippets:
+
+```java
+byte[] salt = new byte[32];
+random.nextBytes(salt);
+
+pbe = new PBEParameterSpec(salt, count);
+```
+
+Description: 
+
+In the provided code, the user is generating the salt and count directly for the PBEParameterSpec. This can pose a security threat because, if the random number generator is not initialized correctly, it can generate predictable values.
+
+Recommendation:
+
+The random number generator should be seeded properly before generating the salt and count. Also, the count value should be chosen with care. A minimum value should be set for the iterations to slow down guessing attempts by brute-forcing.
+
+Here is how the updated code would look:
+
+```java
+SecureRandom random = new SecureRandom();
+byte[] salt = new byte[32];
+random.nextBytes(salt);
+
+int count = 10000; // Choose a higher value for better security.
+
+PBEParameterSpec pbeParamSpec = new PBEParameterSpec(salt, count);
+```

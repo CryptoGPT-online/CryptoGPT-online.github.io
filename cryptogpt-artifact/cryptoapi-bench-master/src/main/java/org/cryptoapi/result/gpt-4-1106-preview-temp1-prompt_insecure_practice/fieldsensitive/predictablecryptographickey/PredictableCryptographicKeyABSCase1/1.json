@@ -1,0 +1,34 @@
+```json
+[
+    {
+        "misuse": "Hardcoded Encryption Key",
+        "vulnerable_code": "crypto = new Co(\"defaultkey\");",
+        "description": "Using a hardcoded encryption key makes the encryption predictable and easier to break.",
+        "recommendation": "Use a securely generated random key and store it in a secure key management system."
+    },
+    {
+        "misuse": "Improper Key Size",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "Key size manipulation can lead to weakening the encryption if not properly handled.",
+        "recommendation": "Do not manipulate key sizes manually; use an appropriate key generation mechanism that ensures keys are of the correct size for the selected algorithm."
+    },
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "byte[] keyBytes = key.getBytes(\"UTF-8\");",
+        "description": "Deriving a key from a predictable source (e.g., using \"UTF-8\" encoding of a string) could compromise the randomness required for cryptographic security.",
+        "recommendation": "Use a secure random number generator to create keys."
+    },
+    {
+        "misuse": "Use of ECB Mode",
+        "vulnerable_code": "String algoSpec = \"AES/CBC/PKCS5Padding\";",
+        "description": "While the code suggests CBC mode, the nomenclature of the variable could imply that ECB mode, which is insecure, may be intended or used somewhere.",
+        "recommendation": "Use a secure mode of operation like AES/GCM. Additionally, ensure variable nomenclature reflects the actual mode of operation used."
+    },
+    {
+        "misuse": "Lack of Initialization Vector (IV)",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE,keySpec);",
+        "description": "Not using an initialization vector (IV) for CBC mode makes the encryption deterministic and vulnerable to certain types of attacks.",
+        "recommendation": "Use a random IV with CBC mode and transmit it along with the encrypted message."
+    }
+]
+```

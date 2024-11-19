@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "crypto = new C6(\"IDEA\");",
+        "description": "IDEA is an outdated encryption algorithm and may not be secure by current standards.",
+        "recommendation": "Use a more secure and updated algorithm, such as AES."
+    },
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);",
+        "description": "The code is generating a new key for each encryption without specifying a secure random instance, which can lead to weak keys if a weak source of randomness is used.",
+        "recommendation": "Specify a secure source of randomness using SecureRandom when generating the encryption key."
+    },
+    {
+        "misuse": "Key Management Issue",
+        "vulnerable_code": "SecretKey key = keyGen.generateKey();",
+        "description": "The encryption key is generated fresh with each call to encrypt without being stored or managed securely. This can cause issues with decryption as the key being used to encrypt data will be lost after the method call.",
+        "recommendation": "Implement a secure key management solution to store and retrieve encryption keys."
+    },
+    {
+        "misuse": "Hardcoded Security Parameter",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(defaultAlgo);",
+        "description": "The code is using a hardcoded algorithm parameter and is not specifying the mode of operation and padding scheme, which may result in using insecure defaults (like ECB mode).",
+        "recommendation": "Explicitly specify secure mode of operation and padding scheme. For example: AES/CBC/PKCS5Padding."
+    }
+]
+```

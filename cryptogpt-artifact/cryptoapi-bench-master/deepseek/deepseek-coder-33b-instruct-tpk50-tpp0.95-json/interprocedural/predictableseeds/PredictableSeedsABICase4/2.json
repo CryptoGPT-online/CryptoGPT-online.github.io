@@ -1,0 +1,8 @@
+[
+    {
+        "misuse": "Insecure Random Number Generation",
+        "vulnerable_code": "SecureRandom sr = new SecureRandom(new byte[]{Byte.parseByte(seed.toString())});",
+        "description": "The code is creating a SecureRandom instance using a single byte. In cryptographic contexts, the use of a single byte or a small seed is not secure. It is susceptible to prediction attacks if the seed value is predictable or can be guessed. This is because the random number generator is likely to be a linear congruential generator (LCG), which is a deterministic algorithm and its state can be reconstructed.",
+        "recommendation": "Consider using SecureRandom.getInstanceStrong() instead, which provides a strong seed to avoid any security weakness. If you absolutely must use a seed, ensure that it is at least 4 bytes (32 bits) long. This will provide a sufficient amount of entropy and reduce the risk of predictable seeds."
+    }
+]

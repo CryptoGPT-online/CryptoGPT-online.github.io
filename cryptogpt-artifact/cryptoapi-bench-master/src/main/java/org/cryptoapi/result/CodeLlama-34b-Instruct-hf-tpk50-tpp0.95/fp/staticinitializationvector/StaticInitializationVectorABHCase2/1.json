@@ -1,0 +1,14 @@
+ [
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+"description": "The KeyGenerator class is not a secure way to generate cryptographic keys. It uses the platform default SecureRandom implementation, which may be insecure. It is recommended to use a secure random number generator, such as SecureRandom.getInstanceStrong(), to generate cryptographic keys.",
+"recommendation": "Use SecureRandom.getInstanceStrong() to generate cryptographic keys instead of KeyGenerator.getInstance(\"AES\")"
+},
+{
+"misuse": "Insecure Random Number Generation",
+"vulnerable_code": "String name = \"abcdef\";\nMap<String,String> hm = new HashMap<String, String>();\nhm.put(\"aaa\", \"abcde\");\nhm.put(\"bbb\", \"fghij\");\nhm.put(\"ccc\", \"klmno\");\nhm.put(\"ddd\", \"pqrst\");\n\nString str = hm.get(\"aaa\");\n\nbyte [] bytes = str.getBytes();\n\nIvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+"description": "The IV (Initialization Vector) for a cipher should be generated using a cryptographically secure random number generator. The code above uses a String as the IV, which is not secure. It is recommended to use a secure random number generator, such as SecureRandom.getInstanceStrong(), to generate the IV.",
+"recommendation": "Use SecureRandom.getInstanceStrong() to generate the IV instead of using a String as the IV."
+}
+]

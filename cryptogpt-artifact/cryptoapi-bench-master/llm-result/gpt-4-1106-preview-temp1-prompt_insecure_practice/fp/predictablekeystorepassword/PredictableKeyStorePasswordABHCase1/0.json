@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "Insecure Randomness",
+    "vulnerable_code": "String.valueOf(random.ints())",
+    "description": "The use of SecureRandom.ints() generates a stream of random integers, which is then converted into a String. This does not guarantee a secure password because the String representation of the integer stream may not be uniformly random or long enough to ensure cryptographic strength.",
+    "recommendation": "Use SecureRandom to generate a byte array directly and then encode it using a method such as base64 encoding to ensure a randomly generated, high entropy password."
+  },
+  {
+    "misuse": "KeyStore Password Exposure",
+    "vulnerable_code": "ks.load(cacerts.openStream(), new String(keyBytes).toCharArray())",
+    "description": "Exposing the password as a String object is insecure because String objects are immutable and their values cannot be modified or removed from memory until garbage collected, which could potentially expose the password in memory dumps.",
+    "recommendation": "Use a char array to store the password, and explicitly overwrite the array with zeros when finished to minimize the window of exposure in memory."
+  },
+  {
+    "misuse": "Improper Certificate Validation",
+    "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");",
+    "description": "The code is loading certificates from a URL without proper certificate validation. If the HTTPS connection to the URL does not verify the server's identity correctly, this could allow man-in-the-middle attacks.",
+    "recommendation": "Ensure that proper hostname verification and certificate chain validation are implemented if custom URL connections are used to download certificate files."
+  }
+]
+```

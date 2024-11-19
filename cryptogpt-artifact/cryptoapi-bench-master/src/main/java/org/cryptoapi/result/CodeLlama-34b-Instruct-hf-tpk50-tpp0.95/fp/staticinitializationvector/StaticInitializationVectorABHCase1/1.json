@@ -1,0 +1,22 @@
+ {
+"misuses": [
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5Padding\")",
+"description": "The use of AES/CBC/PKCS5Padding is vulnerable to padding oracle attacks, which can allow an attacker to recover the plaintext. Instead, use AES/GCM/NoPadding.",
+"recommendation": "Replace AES/CBC/PKCS5Padding with AES/GCM/NoPadding."
+},
+{
+"misuse": "Weak Key Generation",
+"vulnerable_code": "KeyGenerator.getInstance(\"AES\")",
+"description": "The use of AES key generation without setting the key size can result in the use of a weak key. Instead, set the key size to 128 or 256 bits.",
+"recommendation": "Set the key size to 128 or 256 bits when generating an AES key."
+},
+{
+"misuse": "Insecure IV Generation",
+"vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+"description": "The use of a fixed IV can result in a security vulnerability if the same IV is used multiple times. Instead, use a secure random IV generation method.",
+"recommendation": "Replace the fixed IV with a secure random IV generation method, such as using SecureRandom.getInstance(\"SHA1PRNG\")."
+}
+]
+}

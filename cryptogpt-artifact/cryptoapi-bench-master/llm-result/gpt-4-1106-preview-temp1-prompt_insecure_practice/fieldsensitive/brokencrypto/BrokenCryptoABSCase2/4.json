@@ -1,0 +1,46 @@
+```json
+[
+    {
+        "misuse": "Insecure Algorithm",
+        "vulnerable_code": [
+            "crypto = new C3(\"Blowfish\");"
+        ],
+        "description": "The use of 'Blowfish' as a cipher algorithm is considered insecure due to its relatively short block size, which makes it vulnerable to birthday attacks and other collision attacks.",
+        "recommendation": "Use a more secure algorithm such as AES (Advanced Encryption Standard)."
+    },
+    {
+        "misuse": "Weak Key Generation",
+        "vulnerable_code": [
+            "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);",
+            "SecretKey key = keyGen.generateKey();"
+        ],
+        "description": "The key generation does not specify the key size. Blowfish and other algorithms can support different key sizes, and using a default key size without specification can result in weak encryption if the default is too small.",
+        "recommendation": "Specify a key size that is appropriate for the algorithm being used to ensure strong encryption. For AES, use at least a 128-bit key."
+    },
+    {
+        "misuse": "Missing Initialization Vector",
+        "vulnerable_code": [
+            "cipher.init(Cipher.ENCRYPT_MODE, key);"
+        ],
+        "description": "The encryption does not use an initialization vector (IV), which is necessary for achieving semantic security when using block ciphers in modes like CBC.",
+        "recommendation": "Use a securely generated random IV and specify it when initializing the Cipher in encryption mode."
+    },
+    {
+        "misuse": "Insecure Encoding",
+        "vulnerable_code": [
+            "byte [] txtBytes = txt.getBytes();"
+        ],
+        "description": "Encoding a string using the platform's default charset can lead to unexpected behavior when the data is decrypted on a platform with a different default charset.",
+        "recommendation": "Use a standard charset like UTF-8 when converting the string to bytes: `txt.getBytes(StandardCharsets.UTF_8);`"
+    },
+    {
+        "misuse": "Using a New Key for Each Operation",
+        "vulnerable_code": [
+            "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);",
+            "SecretKey key = keyGen.generateKey();"
+        ],
+        "description": "A new key is generated every time the encrypt function is called. Without proper management, these keys might be difficult to track, manage, and could potentially lead to an inability to decrypt data.",
+        "recommendation": "Use a key management system or store the secret key securely so that it can be reused for decryption."
+    }
+]
+```

@@ -1,0 +1,26 @@
+ [
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5Padding\")",
+        "description": "The use of \"AES/CBC/PKCS5Padding\" is less secure than the recommended \"AES/GCM/NoPadding\" because it uses CBC mode, which is vulnerable to padding oracle attacks. Additionally, the use of \"PKCS5Padding\" is less secure than the recommended \"NoPadding\" because it adds padding that can be vulnerable to a timing attack.",
+        "recommendation": "Use \"AES/GCM/NoPadding\" instead."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "SecretKey key = keyGen.generateKey();",
+        "description": "The use of \"AES\" with a 128-bit key is less secure than the recommended 256-bit key. The use of a shorter key size can make the encryption less resistant to brute-force attacks.",
+        "recommendation": "Use a 256-bit key instead."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "bytes = new byte[16];\nsr.nextBytes(bytes);",
+        "description": "The use of a fixed byte size of 16 can make the random bytes predictable, which can lead to a security vulnerability. Additionally, the use of a SecureRandom instance with a poor seed can make the random bytes less random.",
+        "recommendation": "Use a random byte size between 16 and 32, and use a better SecureRandom algorithm."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "byte [] bytes = \"abcde\".getBytes();",
+        "description": "The use of hardcoded credentials can make the code vulnerable to a security vulnerability, as it can be easily extracted by an attacker.",
+        "recommendation": "Use a secure storage mechanism to store the credentials, and retrieve them at runtime."
+    }
+]

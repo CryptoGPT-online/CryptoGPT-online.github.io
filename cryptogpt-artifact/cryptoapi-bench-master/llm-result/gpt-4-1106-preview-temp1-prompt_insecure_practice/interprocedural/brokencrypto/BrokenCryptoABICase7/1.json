@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Weak or Broken Crypto Algorithm",
+        "vulnerable_code": "public static final String DEFAULT_CRYPTO = \"RC4\";",
+        "description": "RC4 is considered a weak and broken encryption algorithm that has various known vulnerabilities, including biases in its keystream that can lead to compromised encryption.",
+        "recommendation": "Replace RC4 with a more secure algorithm, such as AES (Advanced Encryption Standard) with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": [
+            "KeyGenerator keyGen = KeyGenerator.getInstance(String.valueOf(crypto));",
+            "SecretKey key = keyGen.generateKey();"
+        ],
+        "description": "The key size is not explicitly set, which can cause the KeyGenerator to use a default key size that may not provide adequate security, particularly if a weak algorithm like RC4 is used.",
+        "recommendation": "Define and use an explicit key size which is adequate for the encryption algorithm. For secure algorithms like AES, use at least 128 bits."
+    },
+    {
+        "misuse": "Insecure Transformation",
+        "vulnerable_code": [
+            "Cipher cipher = Cipher.getInstance(String.valueOf(crypto));",
+            "cipher.init(Cipher.ENCRYPT_MODE, key);"
+        ],
+        "description": "The transformation in Cipher.getInstance() is derived from a character array, which could lead to unspecified or default transformation modes (ECB, CBC, etc.) if the array is not initialized correctly or manipulated. Moreover, the code directly converts the array to a String without specifying the transformation details like padding or operation mode, which might default to insecure ones.",
+        "recommendation": "Always specify the encryption mode and padding scheme explicitly in the transformation string (e.g., AES/CBC/PKCS5Padding). Avoid using ECB mode due to its vulnerabilities, and use CBC or GCM modes with proper IVs."
+    }
+]
+```

@@ -1,0 +1,23 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": [
+            "rand1.setSeed(seedBytes);",
+            "rand2.setSeed(seedBytes);"
+        ],
+        "description": "Setting the seed for a SecureRandom with a predictable value such as 'Seed' can lead to the generation of predictable random values, which is not sufficiently random for security-sensitive operations.",
+        "recommendation": "Do not set a fixed seed for SecureRandom; allow the SecureRandom instance to self-seed with entropy from the underlying operating system."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": [
+            "byte[] seedBytes = \"Seed\".getBytes(StandardCharsets.UTF_8);",
+            "rand1.setSeed(seedBytes);",
+            "rand2.setSeed(seedBytes);"
+        ],
+        "description": "Using a hardcoded and very short seed 'Seed' may lead to inadequate encryption strength because it does not have enough entropy.",
+        "recommendation": "Avoid hardcoded seed values, especially short ones. Instead, allow SecureRandom to generate a seed with sufficient entropy."
+    }
+]
+```

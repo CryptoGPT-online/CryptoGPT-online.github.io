@@ -1,0 +1,18 @@
+Here's the security misuse classification:
+
+```json
+[
+  {
+    "misuse": "CWE-295: Improper Certificate Validation",
+    "vulnerable_code": "checkServerTrusted(...)",
+    "description": "In this code, the checkServerTrusted(...) method does not perform any certificate validation, which means that it does not verify the server's identity, thereby allowing man-in-the-middle attacks.",
+    "recommendation": "Implement a way to validate the server's certificate, such as using Java's default SSLContext or by creating your own TrustManager and HostnameVerifier."
+  },
+  {
+    "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+    "vulnerable_code": "getAcceptedIssuers()",
+    "description": "getAcceptedIssuers() returns an empty array, which could allow an attacker to bypass the certificate validation process.",
+    "recommendation": "Either return the accepted issuers or, at least, return null to let Java's default trust managers handle certificate validation."
+  }
+]
+```

@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "TrustManager that doesn't check server certificates",
+        "vulnerable_code": "public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {}",
+        "description": "The checkServerTrusted method is empty, meaning it does not verify that the provided certificates come from trusted issuers. This can allow man-in-the-middle attacks, as all server certificates are accepted without validation.",
+        "recommendation": "Implement proper validation of the server certificates using trusted CAs or certificate pinning."
+    },
+    {
+        "misuse": "TrustManager that doesn't check client certificates",
+        "vulnerable_code": "public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {}",
+        "description": "The checkClientTrusted method is empty, which means it does not verify that the provided client certificates are trustworthy. This can lead to trusting unauthorized clients, potentially resulting in a security breach.",
+        "recommendation": "Ensure the checkClientTrusted method validates the client certificates against a set of trusted CAs."
+    },
+    {
+        "misuse": "getAcceptedIssuers returning an empty array",
+        "vulnerable_code": "public X509Certificate[] getAcceptedIssuers() { return new X509Certificate[0]; }",
+        "description": "Returning an empty array from getAcceptedIssuers may bypass other checks and could allow all clients and servers to be trusted, which is not secure.",
+        "recommendation": "Return a meaningful array of trusted X509Certificates or throw an UnsupportedOperationException if the trust manager does not use an accepted issuers field."
+    }
+]
+```

@@ -1,0 +1,41 @@
+### False Positive Misuse ###
+
+```json
+[
+    {
+        "misuse category": "Use of Insufficiently Random Values",
+        "vulnerable_method": "I2.go2, I2.go3",
+        "vulnerable_code": "private static void go2(){KEY_SIZE = DEFAULT_KEY_SIZE;}private static void go3(){keysize = KEY_SIZE;}" ,
+        "description": "The variable 'keysize' is not assigned any value when used in 'KeyPairGenerator.initialize(keysize)'. This could lead to a NullPointerException if 'keysize' is not assigned a value.",
+        "recommendation": "Ensure that 'keysize' is always assigned a value before it is used."
+    }
+]
+```
+
+### Optimized Misuse JSON###
+
+```json
+[
+    {
+        "misuse category": "Inadequate Encryption Strength",
+        "vulnerable_method": "I2.main",
+        "vulnerable_code": "Cipher.getInstance(\"RSA\");kgp.initialize(keysize);",
+        "description": "The RSA encryption is used with a small key size (1024 bits). This is considered a weak encryption algorithm. This could allow attackers to decrypt the encrypted data easily. It is recommended to use a stronger encryption algorithm such as AES with a key size of 256 bits or higher.",
+        "recommendation": "Replace 'RSA' with 'AES'. Also, increase the key size to at least 2048 bits."
+    },
+    {
+        "misuse category": "Use of Insufficiently Random Values",
+        "vulnerable_method": "I2.main",
+        "vulnerable_code": "keysize = KEY_SIZE;",
+        "description": "The key size for RSA key pair generation is set through a variable that can potentially be changed at runtime. This could lead to security issues.",
+        "recommendation": "Use a constant value for the key size, or ensure that the key size is not easily changed at runtime."
+    },
+    {
+        "misuse category": "Improper Certificate Validation",
+        "vulnerable_method": "I2.go",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"RSA\");",
+        "description": "Cipher instances are created using a string that does not specify the padding and mode of operation. This can lead to security issues.",
+        "recommendation": "Specify the padding and mode of operation when creating Cipher instances."
+    }
+]
+```

@@ -1,0 +1,19 @@
+ {
+"misuse": "CWE-295: Improper Certificate Validation",
+"vulnerable_code": "public class D1 implements HostnameVerifier {
+    public boolean verify(String s, SSLSession sslSession) {
+        return true;
+    }
+}",
+"description": "The `D1` class implements `HostnameVerifier` but always returns `true`, which means it accepts any certificate, including self-signed or invalid ones.",
+"recommendation": "Use a secure implementation of `HostnameVerifier` that properly validates the certificate, such as using the default `HttpsURLConnection.getDefaultHostnameVerifier()` or implementing a custom verifier that checks the certificate's signature and other properties."
+},
+{
+"misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+"vulnerable_code": "public class D1 implements HostnameVerifier {
+    public boolean verify(String s, SSLSession sslSession) {
+        return true;
+    }
+}",
+"description": "The `D1` class does not specify any cipher suites to use for the connection, which means it will use the default cipher suites offered by the server. This can lead to the use of less secure algorithms, such as RC4 or DES, which are vulnerable to attacks.",
+"recommendation": "Specify a secure cipher suite for the connection, such as AES-128 or AES-256, and avoid using any cipher suites that are known to be vulnerable."

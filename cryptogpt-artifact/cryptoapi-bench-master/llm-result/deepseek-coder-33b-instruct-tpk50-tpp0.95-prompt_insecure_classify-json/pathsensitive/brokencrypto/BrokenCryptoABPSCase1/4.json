@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"DES/ECB/PKCS5Padding\");\nif (choice > 1)\n    cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "The choice of the encryption algorithm depends on a variable parameter (`choice`). It doesn't seem to be checked in any security-sensitive context, which could lead to the use of a less secure algorithm than initially intended.",
+        "recommendation": "To fix this, you should validate `choice` to ensure it aligns with your intended use of encryption algorithms."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+        "description": "This code generates an AES key, but it doesn't check the strength of the key before using it. The strength of the key is dependent on the specific implementation of the Java runtime environment.",
+        "recommendation": "To fix this, you should check the strength of the AES key before using it. The strength can be checked using the `getEncoded().length` method."
+    }
+]
+```

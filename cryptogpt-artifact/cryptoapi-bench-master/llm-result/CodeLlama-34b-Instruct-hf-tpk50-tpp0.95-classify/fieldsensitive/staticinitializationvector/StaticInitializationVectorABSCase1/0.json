@@ -1,0 +1,34 @@
+ {
+"misuses": [
+{
+"misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+"vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5Padding\")",
+"description": "The use of AES/CBC/PKCS5Padding algorithm is considered broken and should not be used for encryption purposes. It is vulnerable to attacks such as padding oracle attacks and IV attacks. The algorithm should be updated to a more secure algorithm such as AES-GCM or AES-CBC with a secure padding scheme such as PKCS7.",
+"recommendation": "Change the algorithm to a more secure one and use a secure padding scheme. Additionally, consider using a library that automatically selects a secure algorithm and padding scheme based on the given input. "
+},
+{
+"misuse": "CWE-798: Use of Hardcoded Credentials.",
+"vulnerable_code": "byte [] bytes = \"abcde\".getBytes();",
+"description": "The hardcoded credentials are vulnerable to attacks such as code injection and memory dump attacks. The credentials should be stored in a secure location and accessed only by authorized users.",
+"recommendation": "Store the credentials in a secure location such as a credentials file or a password manager. Access the credentials securely using a library that automatically handles the credential management. "
+},
+{
+"misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation.",
+"vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+"description": "The use of a hardcoded key generator algorithm is considered less secure and should not be used for encryption purposes. It is vulnerable to attacks such as key generation attacks and algorithm agility attacks. The algorithm should be updated to a more secure algorithm such as AES-GCM or AES-CBC with a secure padding scheme such as PKCS7.",
+"recommendation": "Change the algorithm to a more secure one and use a secure padding scheme. Additionally, consider using a library that automatically selects a secure algorithm and padding scheme based on the given input."
+},
+{
+"misuse": "CWE-326: Inadequate Encryption Strength.",
+"vulnerable_code": "SecretKey key = keyGen.generateKey();",
+"description": "The generated key is not secure enough and should be generated using a more secure algorithm. The key should be generated using a secure key generation algorithm such as AES-GCM or AES-CBC with a secure padding scheme such as PKCS7.",
+"recommendation": "Change the key generation algorithm to a more secure one and use a secure padding scheme. Additionally, consider using a library that automatically generates a secure key based on the given input."
+},
+{
+"misuse": "CWE-330: Use of Insufficiently Random Values.",
+"vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(passedIV);",
+"description": "The IV parameter is not secure enough and should be generated using a more secure method. The IV should be generated using a secure random number generator such as Random.java or SecureRandom.java.",
+"recommendation": "Change the IV generation method to a more secure one using a secure random number generator. Additionally, consider using a library that automatically generates a secure IV based on the given input."
+}
+]
+}

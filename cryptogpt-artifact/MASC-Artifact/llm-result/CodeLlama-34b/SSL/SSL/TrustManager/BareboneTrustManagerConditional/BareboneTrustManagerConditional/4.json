@@ -1,0 +1,28 @@
+ {
+"misuses": [
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "context.init(null, trustAll, new SecureRandom());",
+"description": "The code uses the SSLContext with a null key manager, which means that the server will accept any certificate, regardless of whether it is valid or not. This is a security vulnerability because it allows man-in-the-middle attacks. The correct way to use the SSLContext is to specify a key manager that contains the correct certificate and private key for the server.",
+"recommendation": "Replace the null key manager with a valid key manager that contains the server's certificate and private key."
+},
+{
+"misuse": "Insecure Crypto Storage",
+"vulnerable_code": "TrustManager[] trustAll = new TrustManager[] {...};",
+"description": "The code defines a TrustManager array that trusts all certificates. This is a security vulnerability because it allows man-in-the-middle attacks. The correct way to use a TrustManager is to specify a list of trusted certificates that are stored securely.",
+"recommendation": "Replace the TrustManager with a list of trusted certificates that are stored securely."
+},
+{
+"misuse": "Weak Random Number Generation",
+"vulnerable_code": "new SecureRandom();",
+"description": "The code uses the SecureRandom class to generate random numbers. However, the SecureRandom class is not cryptographically secure and should not be used for security-sensitive operations. The correct way to generate random numbers is to use a cryptographically secure random number generator, such as the SplittableRandom class in Java 1.7 or later.",
+"recommendation": "Replace the SecureRandom class with a cryptographically secure random number generator, such as the SplittableRandom class in Java 1.7 or later."
+},
+{
+"misuse": "Weak Certificate Validation",
+"vulnerable_code": "if (!(null != s && s.equalsIgnoreCase(\"RSA\"))) {...}",
+"description": "The code checks if the server's certificate is valid by checking if the authType is \"RSA\". This is not a correct way to validate a certificate. The correct way to validate a certificate is to use the certificate's public key to encrypt a message and then decrypt it with the private key. If the decryption is successful, then the certificate is valid.",
+"recommendation": "Replace the certificate validation with a correct certificate validation method, such as using the certificate's public key to encrypt and decrypt a message."
+}
+]
+}

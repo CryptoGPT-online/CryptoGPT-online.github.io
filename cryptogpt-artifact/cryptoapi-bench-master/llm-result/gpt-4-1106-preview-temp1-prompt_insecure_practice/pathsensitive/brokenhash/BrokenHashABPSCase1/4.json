@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Insecure Print of Sensitive Data",
+        "vulnerable_code": "System.out.println(md.digest());",
+        "description": "Printing raw bytes of a cryptographic operation result (like a hash) directly to the console can lead to representation problems, where the console might interpret some byte values as control characters. Additionally, this is a bad practice from a security point of view, as it could leak sensitive data in logs or terminal history.",
+        "recommendation": "Instead of directly printing the raw hash bytes, consider converting them to a hex or base64 encoded string that safely represents the binary data. For example, use `java.util.Base64.getEncoder().encodeToString(md.digest())` for base64 or convert to hex representation using bitwise operations or an existing library."
+    },
+    {
+        "misuse": "Potentially Unsafe Use of getBytes()",
+        "vulnerable_code": "md.update(name.getBytes());",
+        "description": "The use of the `String.getBytes()` method without specifying a charset can cause platform-dependent results, as the default charset of the JVM can vary across different machines or configurations.",
+        "recommendation": "To ensure consistent behavior across all platforms, always specify a charset when calling `String.getBytes()`. For example, use `md.update(name.getBytes(StandardCharsets.UTF_8))` to use UTF-8 encoding."
+    }
+]
+```

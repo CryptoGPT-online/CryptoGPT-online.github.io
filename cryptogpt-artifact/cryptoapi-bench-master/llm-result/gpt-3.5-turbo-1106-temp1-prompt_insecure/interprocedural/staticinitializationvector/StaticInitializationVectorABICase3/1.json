@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Insecure Key Generation",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+        "description": "The KeyGenerator is being used without specifying a secure pseudo-random number generator (PRNG) algorithm, which might use a weak algorithm or have insufficient entropy.",
+        "recommendation": "Use a secure PRNG algorithm when generating the secret key, such as SecureRandom.getInstanceStrong()."
+    },
+    {
+        "misuse": "Incomplete Initialization Vector (IV) Management",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(bytes);\ncipher.init(Cipher.ENCRYPT_MODE,key,ivSpec);",
+        "description": "The initialization vector (IV) is directly derived from the input bytes without proper validation or generation. It should be securely generated and not directly derived from user input.",
+        "recommendation": "Generate a secure random IV using SecureRandom, and validate its length and uniqueness before using it in the cipher initialization."
+    }
+]
+```

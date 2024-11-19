@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "String password = String.valueOf(random.ints());",
+        "description": "The password for the keystore is being generated using a SecureRandom which is not a hardcoded value. However, the usage of random.ints() without specifying a limit can lead to a non-secure and non-repeatable password that might not meet complexity requirements.",
+        "recommendation": "Use a proper password management solution that ensures strong, complex, and securely stored passwords. Avoid using predictable or weak sources for password generation."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "String.valueOf(random.ints());",
+        "description": "While SecureRandom is used, the way it is being used by calling random.ints() without specifying bounds or length may not generate sufficiently random values, as it may include negative numbers and not provide a sufficiently long or complex password.",
+        "recommendation": "Specify the desired password length and character set to ensure the generated random values are suitable for secure passwords. Also, consider user input validation to ensure password strength and complexity."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "ks.load(cacerts.openStream(), new String(keyBytes).toCharArray());",
+        "description": "The code is loading a KeyStore from an HTTPS URL without any visible validation of the certificate presented by the server. If the default trust store is not secure or has been tampered with, this may lead to accepting an invalid certificate.",
+        "recommendation": "Ensure proper certificate validation by using a custom TrustManager that checks the server's certificate chain against trusted CAs. Avoid using the default trust store if it's not guaranteed to be secure."
+    }
+]
+```

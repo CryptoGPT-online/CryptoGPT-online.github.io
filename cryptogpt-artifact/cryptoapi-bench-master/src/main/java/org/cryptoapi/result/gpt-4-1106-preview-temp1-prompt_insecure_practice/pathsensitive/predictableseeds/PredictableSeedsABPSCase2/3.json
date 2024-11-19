@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "Insecure Seeding",
+    "vulnerable_code": "sr2.nextBytes(seed); ... SecureRandom sr = new SecureRandom(seed);",
+    "description": "The code uses a fixed two-byte seed which does not provide enough entropy for secure random number generation. Using such a small and potentially predictable seed can make the random number generator predictable, which is crucial to avoid in a cryptographic context.",
+    "recommendation": "Do not manually seed SecureRandom for cryptographic purposes unless you are certain the seed has sufficient entropy. It is generally better to let the SecureRandom instance seed itself automatically."
+  },
+  {
+    "misuse": "Insufficient Entropy",
+    "vulnerable_code": "byte [] seed = {(byte) 100, (byte) 200};",
+    "description": "The seed array is initialized with a fixed, two-byte array which implies that the entropy is limited to only 16 bits. Such a low entropy value is not secure and can lead to predictable random numbers.",
+    "recommendation": "Remove the manual seeding or if seeding is absolutely necessary, use a source of high entropy for seeding such as SecureRandom.generateSeed(int) method or /dev/random or /dev/urandom on Unix-like systems."
+  }
+]
+```

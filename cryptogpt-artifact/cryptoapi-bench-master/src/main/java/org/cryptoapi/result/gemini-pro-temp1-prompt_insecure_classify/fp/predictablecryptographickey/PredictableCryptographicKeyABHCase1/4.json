@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values",
+    "vulnerable_code": "SecureRandom random = new SecureRandom();",
+    "description": "The `SecureRandom` class is not properly seeded, which may result in predictable or weak randomness. This can lead to security vulnerabilities, such as the ability for an attacker to guess or brute-force keys or other sensitive information.",
+    "recommendation": "Use a cryptographically secure random number generator (CSPRNG) that is properly seeded with a strong source of entropy, such as `/dev/urandom` on Linux or `CryptGenRandom()` on Windows."
+  },
+  {
+    "misuse": "CWE-798: Use of Hardcoded Credentials",
+    "vulnerable_code": "String defaultKey = String.valueOf(random.ints());",
+    "description": "The encryption key is generated using a hardcoded value, which makes it easy for an attacker to obtain. This can lead to the compromise of encrypted data.",
+    "recommendation": "Generate the encryption key using a more secure method, such as a key derivation function (KDF) that takes a user-provided password or passphrase as input."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_code": "byte [] keyBytes = defaultKey.getBytes(\"UTF-8\");\nkeyBytes = Arrays.copyOf(keyBytes,16);\nSecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES\");",
+    "description": "The encryption key is only 16 bytes long, which is not sufficient for AES encryption. This can lead to weak encryption that is vulnerable to attack.",
+    "recommendation": "Use a longer key length, such as 256 bits (32 bytes), for AES encryption."
+  }
+]
+```

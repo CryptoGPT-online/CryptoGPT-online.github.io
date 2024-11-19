@@ -1,0 +1,30 @@
+```json
+[
+  {
+    "misuse": "Insufficient Entropy",
+    "vulnerable_code": [
+      "String defaultKey = String.valueOf(random.ints());",
+      "byte[] keyBytes = defaultKey.getBytes();"
+    ],
+    "description": "The code is using a SecureRandom instance to generate a String representation of random integers and then gets the bytes of this string to use as an AES key. However, using the string representation can lead to insufficient entropy for the key because the 'ints()' method generates a stream of integers which, when converted to a String, may not use the full range of byte values expected in a secure key. This can make the encryption key weaker.",
+    "recommendation": "Use SecureRandom to generate a fixed-length key directly from random bytes rather than converting integers to a string. For example, you can use 'random.generateSeed(16)' for a 128-bit AES key."
+  },
+  {
+    "misuse": "Static IV",
+    "vulnerable_code": [
+      "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5PADDING\");",
+      "cipher.init(Cipher.ENCRYPT_MODE, keySpec);"
+    ],
+    "description": "The code creates a Cipher instance and initializes it without specifying an initialization vector (IV) for AES in CBC mode. Not providing an IV results in using a default IV (usually all zeros), which is not secure. Using static IVs can lead to patterns in the ciphertext if the same key is reused, which can be used to decrypt the data or reveal information about the plaintext.",
+    "recommendation": "Generate a random IV using SecureRandom and specify it when initializing the Cipher. Store the IV along with the ciphertext so that it can be used for decryption."
+  },
+  {
+    "misuse": "Key Length Misinterpretation",
+    "vulnerable_code": [
+      "keyBytes = Arrays.copyOf(keyBytes,16);"
+    ],
+    "description": "The key bytes are truncated or padded to ensure they are 16 bytes in length (128 bits), which may not produce a proper AES key if the original byte array is not exactly this length. Additionally, if the String representation does not have enough entropy or does not fill the full 16 bytes meaningfully, there can be a significant reduction in key strength.",
+    "recommendation": "Generate a key of the correct size using a cryptographic key generator or SecureRandom, and avoid using string representations to generate the key."
+  }
+]
+```

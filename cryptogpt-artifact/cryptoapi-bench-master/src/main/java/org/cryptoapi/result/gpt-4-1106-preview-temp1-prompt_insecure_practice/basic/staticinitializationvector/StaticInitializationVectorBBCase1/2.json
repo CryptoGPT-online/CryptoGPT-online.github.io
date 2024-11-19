@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Initialization Vector (IV)",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+        "description": "A hardcoded IV 'abcde'.getBytes() is used, which makes the encryption predictable and weak against chosen-plaintext attacks.",
+        "recommendation": "Use a securely generated random IV for each encryption operation."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "description": "The default key size for AES may be less than 128 bits, depending on the Java Cryptography Extension (JCE) policy files.",
+        "recommendation": "Specify the key size explicitly when generating the key, for example, keyGen.init(256); for a 256-bit AES key."
+    },
+    {
+        "misuse": "Unpredictable Key Generation",
+        "vulnerable_code": "SecretKey key = keyGen.generateKey();",
+        "description": "The key generation doesn't specify a secure random number generator (RNG), which may result in weak keys if not defaulting to a strong RNG.",
+        "recommendation": "Specify a strong secure random instance during key generation."
+    }
+]
+```

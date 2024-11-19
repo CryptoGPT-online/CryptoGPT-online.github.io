@@ -1,0 +1,24 @@
+The code has a crypto API misuse related to CWE-327. It sets the algorithm to DES and the mode to ECB, when in reality, it should be set to AES and CBC (or CTR, CFB, OFB) respectively. In addition, the key size of AES is less than 256 bits, which is too small.
+
+```json
+[
+  {
+    "misuse": "CWE-327",
+    "vulnerable_code": "Cipher.getInstance(\"DES/ECB/PKCS5Padding\");",
+    "description": "Insecure Cryptographic Algorithm, which is DES. It should be AES.",
+    "recommendation": "Change the cipher algorithm to AES."
+  },
+  {
+    "misuse": "CWE-327",
+    "vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+    "description": "The mode of operation is ECB. It should be CBC (or CTR, CFB, OFB).",
+    "recommendation": "Change the mode of operation to CBC (or CTR, CFB, OFB)."
+  },
+  {
+    "misuse": "CWE-327",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+    "description": "The key size of AES is 256 bits. It should be 128 bits at minimum.",
+    "recommendation": "Change the key size to 128 bits."
+  }
+]
+```

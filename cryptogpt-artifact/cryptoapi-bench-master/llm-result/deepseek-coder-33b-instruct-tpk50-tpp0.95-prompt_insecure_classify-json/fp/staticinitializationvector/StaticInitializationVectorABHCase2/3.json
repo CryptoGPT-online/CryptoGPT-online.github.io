@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values.",
+        "vulnerable_code": "byte [] bytes = str.getBytes();\n\nIvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+        "description": "This code uses a string ('abcde') to generate the IV for AES encryption. This is not secure as a string can be converted to many different byte arrays depending on the encoding, which means that different strings may lead to the same byte array which can lead to problems with security.",
+        "recommendation": "Use a random number generator (RNG) to generate the IV for AES encryption to ensure a secure and random IV."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "This code uses AES encryption with a 128-bit key, which is considered inadequate for modern security needs. It should use a higher encryption strength such as 256-bit AES encryption.",
+        "recommendation": "Change the code to use AES with a key size of 256 bits. This will provide more security for the encrypted data."
+    }
+]
+```

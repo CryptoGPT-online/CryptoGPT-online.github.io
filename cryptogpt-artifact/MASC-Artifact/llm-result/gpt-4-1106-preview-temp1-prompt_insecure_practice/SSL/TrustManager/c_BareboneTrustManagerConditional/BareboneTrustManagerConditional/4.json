@@ -1,0 +1,21 @@
+```json
+[
+  {
+    "misuse": "TrustManager that does not enforce trust (CWE-295)",
+    "vulnerable_code": [
+      "public void checkClientTrusted(java.security.cert.X509Certificate[] arg0, java.lang.String arg1)",
+      "public void checkServerTrusted(java.security.cert.X509Certificate[] arg0, java.lang.String arg1)"
+    ],
+    "description": "The checkClientTrusted and checkServerTrusted methods are empty, which means they do not check whether a chain of certificates can be trusted. This can accept any SSL certificates as valid and leaves the application vulnerable to man-in-the-middle attacks.",
+    "recommendation": "Implement proper certificate chain validation in these methods."
+  },
+  {
+    "misuse": "SecureRandom instance with potentially no seed (CWE-338)",
+    "vulnerable_code": [
+      "new SecureRandom()"
+    ],
+    "description": "Instantiating SecureRandom without seeding might, in some implementations, lead to predictable numbers which could undermine cryptographic operations.",
+    "recommendation": "Use a constructor that specifies a seed or ensure the SecureRandom instance is properly seeded before use if necessary."
+  }
+]
+```

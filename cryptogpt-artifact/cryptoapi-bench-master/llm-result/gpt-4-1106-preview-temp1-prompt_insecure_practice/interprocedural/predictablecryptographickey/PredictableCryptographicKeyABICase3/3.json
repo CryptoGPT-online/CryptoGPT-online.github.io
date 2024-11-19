@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "byte[] keyBytes = key.getBytes();\nkeyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The key size may not be sufficient if the original 'key' is shorter than 16 characters (128 bits) as it does not undergo any key strengthening. It merely pads the byte array to 16 bytes which is not secure.",
+        "recommendation": "Use keys of appropriate length with proper key generation techniques."
+    },
+    {
+        "misuse": "Use of a Constant Key",
+        "vulnerable_code": "String key = \"defaultkey\";",
+        "description": "Using a hardcoded or constant key in the source code can lead to security vulnerabilities because the key can be easily retrieved from the binary or by reverse engineering the application.",
+        "recommendation": "Avoid hardcoding keys in the source code. Use secure methods to manage keys, such as key management services or environment variables."
+    },
+    {
+        "misuse": "Using Default Charset",
+        "vulnerable_code": "byte[] keyBytes = key.getBytes();",
+        "description": "The key is converted to bytes using the platform's default charset, which might lead to unexpected results depending on the platform it is run on.",
+        "recommendation": "Specify a charset when converting the key string to bytes. In case of cryptographic operations, the charset should be 'UTF-8'."
+    }
+]
+```

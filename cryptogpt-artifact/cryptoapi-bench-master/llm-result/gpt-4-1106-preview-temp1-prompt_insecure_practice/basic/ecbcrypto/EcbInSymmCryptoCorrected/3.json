@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Unspecified Initialization Vector (IV)",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");\ncipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "When Cipher Block Chaining (CBC) mode is used without specifying an Initialization Vector (IV), the same plaintext will always result in the same ciphertext if the same key is used, which can lead to pattern leakage and vulnerable to replay attacks.",
+        "recommendation": "Always use a securely generated IV for CBC mode and must be unique for each encryption under the same key."
+    },
+    {
+        "misuse": "Class name is misleading",
+        "vulnerable_code": "EcbInSymmCryptoBBCase1 bc = new EcbInSymmCryptoBBCase1();",
+        "description": "The class instance suggests that it uses ECB mode, which is insecure, although the implemented code uses CBC mode. This might lead to confusion and future errors.",
+        "recommendation": "Rename the class to accurately reflect the encryption mode used."
+    }
+]
+```

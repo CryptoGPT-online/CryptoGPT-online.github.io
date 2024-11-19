@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "String key = \"changeit\";",
+        "description": "The code contains a hardcoded password for the keystore, which can be easily extracted and misused.",
+        "recommendation": "Use a secure method to manage passwords, such as a password manager, environment variables, or a configuration file that is not hard-coded into the source code."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");\nks.load(cacerts.openStream(), passedKey.toCharArray());",
+        "description": "The code is loading a keystore from a hardcoded URL, which may not be a secure or valid certificate authority. Additionally, there's no indication of any certificate validation happening, which could make the application vulnerable to man-in-the-middle attacks.",
+        "recommendation": "Ensure proper certificate validation by using a trusted and valid certificate authority. Implement certificate pinning if necessary to prevent man-in-the-middle attacks."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "String type = \"JKS\";",
+        "description": "JKS (Java KeyStore) is a legacy keystore format that is less secure than the newer PKCS12 format. JKS does not use strong cryptographic standards.",
+        "recommendation": "Migrate the keystore format to PKCS12 which is a more secure keystore format and is widely supported."
+    }
+]
+```

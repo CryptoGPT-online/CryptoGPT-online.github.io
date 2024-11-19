@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "Insecure Randomness",
+    "vulnerable_code": "sr.setSeed(seed);",
+    "description": "The use of a static, predictable seed in SecureRandom can lead to predictable outputs that are not cryptographically secure. The code sets a static seed for SecureRandom, which can make the pseudo-random number generator predictable.",
+    "recommendation": "Remove the setSeed call unless truly random seeds are provided externally, or obtain a random seed from a trusted entropy source."
+  },
+  {
+    "misuse": "Improper Seed Initialization",
+    "vulnerable_code": "private static final byte [] DEFAULT_SEED = {(byte) 100, (byte) 200};",
+    "description": "The seed for SecureRandom is hard-coded and may have insufficient entropy, especially given its very short length (only 2 bytes). In general, seeding SecureRandom is not required as it automatically self-seeds from a high-entropy source.",
+    "recommendation": "Do not manually seed the SecureRandom instance unless it's necessary for the application, and if seeding is required, use a secure source of entropy."
+  },
+  {
+    "misuse": "Unused Code / Dead Code",
+    "vulnerable_code": "//public static final String DEFAULT_SEED = \"456789\";",
+    "description": "There is a commented-out line with DEFAULT_SEED as a String, which is not used in the secure random number generation but represents a security risk if left in the codebase and uncommented without proper security consideration.",
+    "recommendation": "Ensure that any commented-out code or unused code is removed from the codebase before production deployment to prevent security issues arising from their unintended use or activation."
+  }
+]
+```

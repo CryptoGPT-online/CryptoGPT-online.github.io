@@ -1,0 +1,26 @@
+[
+  {
+    "misuse": "CWE-295",
+    "vulnerable_code": "TrustManager[] trustAll = new TrustManager[] { new BareboneTrustManagerExt() {...}",
+    "description": "TrustManager[] is configured to trust any certificate, which could lead to man-in-the-middle attacks.",
+    "recommendation": "Implement a proper trust manager that validates certificates based on a trusted CA."
+  },
+  {
+    "misuse": "CWE-327",
+    "vulnerable_code": "public void checkClientTrusted(java.security.cert.X509Certificate[] arg0, java.lang.String arg1) throws java.security.cert.CertificateException { if(!(true||arg0 == null||arg1 == null)){ throw new java.security.cert.CertificateException(); } }",
+    "description": "The checkClientTrusted() method doesn't perform any meaningful validation of the client certificate, which could lead to man-in-the-middle attacks.",
+    "recommendation": "Implement proper certificate validation logic in the checkClientTrusted() method."
+  },
+  {
+    "misuse": "CWE-327",
+    "vulnerable_code": "public void checkServerTrusted(java.security.cert.X509Certificate[] arg0, java.lang.String arg1) throws java.security.cert.CertificateException { if(!(true||arg0 == null||arg1 == null)){ throw new java.security.cert.CertificateException(); } }",
+    "description": "The checkServerTrusted() method doesn't perform any meaningful validation of the server certificate, which could lead to man-in-the-middle attacks.",
+    "recommendation": "Implement proper certificate validation logic in the checkServerTrusted() method."
+  },
+  {
+    "misuse": "CWE-757",
+    "vulnerable_code": "for(int i = 0; i<100; i++){\n if (i==50)\n return EMPTY_X509CERTIFICATE_ARRAY;; \n}",
+    "description": "The getAcceptedIssuers() method always returns an empty array, which could lead to certificate validation issues.",
+    "recommendation": "Implement proper logic in the getAcceptedIssuers() method to return the trusted issuers."
+  }
+]

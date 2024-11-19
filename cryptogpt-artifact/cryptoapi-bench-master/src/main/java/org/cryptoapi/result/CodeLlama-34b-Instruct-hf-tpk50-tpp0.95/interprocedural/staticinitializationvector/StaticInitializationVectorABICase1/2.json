@@ -1,0 +1,28 @@
+ {
+"misuses": [
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+"description": "The use of a predictable IV in AES/CBC mode can lead to exploitable attacks. The IV should be randomly generated and unique for each encryption operation.",
+"recommendation": "Use a secure random number generator to generate a unique and unpredictable IV for each encryption operation."
+},
+{
+"misuse": "Use of an Insufficient Algorithm",
+"vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+"description": "The use of a weak or broken encryption algorithm can allow for exploitable attacks. AES is a widely used and secure algorithm, but other algorithms such as AES-GCM may be more appropriate for some use cases.",
+"recommendation": "Use a secure and up-to-date encryption algorithm, such as AES-GCM, for encryption operations."
+},
+{
+"misuse": "Missing Salt",
+"vulnerable_code": "SecretKey key = keyGen.generateKey();",
+"description": "The use of a static salt can lead to exploitable attacks. A unique salt should be generated for each encryption operation to prevent attacks that rely on predictable salts.",
+"recommendation": "Use a secure random number generator to generate a unique salt for each encryption operation."
+},
+{
+"misuse": "Use of Insecure Protocol",
+"vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+"description": "The use of an insecure protocol, such as CBC mode, can lead to exploitable attacks. AEAD modes, such as AES-GCM, are more secure and provide authentication and integrity checks.",
+"recommendation": "Use a secure and up-to-date encryption protocol, such as AES-GCM, for encryption operations."
+}
+]
+}

@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "KeyStore ks = KeyStore.getInstance(type);\ncacerts = new URL(\"https://www.google.com\");\nks.load(cacerts.openStream(), key.toCharArray());",
+        "description": "The KeyStore instance is created with the JKS algorithm, which is not recommended for storing sensitive data due to weaknesses and vulnerabilities.",
+        "recommendation": "Consider using a more secure algorithm, such as PKCS12, which is the default type of KeyStore in Java."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": "KeyStore ks = KeyStore.getInstance(type);",
+        "description": "The KeyStore instance is instantiated with a hard-coded algorithm, which is not negotiated during the TLS handshake. This can lead to the negotiation of a less secure algorithm.",
+        "recommendation": "To prevent this, use a protocol that supports secure key exchange (e.g., TLS 1.2 or later) and let the negotiation handle the secure algorithm choice."
+    }
+]
+```

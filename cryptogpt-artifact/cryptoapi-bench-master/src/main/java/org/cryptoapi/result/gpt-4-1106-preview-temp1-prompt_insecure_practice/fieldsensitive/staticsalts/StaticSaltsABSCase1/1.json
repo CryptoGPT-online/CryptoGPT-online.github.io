@@ -1,0 +1,31 @@
+```json
+[
+    {
+        "misuse": "Insecure Salt",
+        "vulnerable_code": "byte[] salt = {(byte) 0xa2};",
+        "description": "The salt used for the encryption is only one byte long, which is not secure. A secure salt should be long and unpredictable to resist brute-force attacks and rainbow table attacks.",
+        "recommendation": "Use a longer and randomly generated salt. Typically, a salt should be at least 16 bytes long."
+    },
+    {
+        "misuse": "Static Salt",
+        "vulnerable_code": "byte[] salt = {(byte) 0xa2};",
+        "description": "The hard-coded static salt means that the same salt is used every time, which can lead to vulnerabilities like making password hash tables (rainbow tables) more effective.",
+        "recommendation": "Generate a unique random salt for each encryption operation."
+    },
+    {
+        "misuse": "Weak Iteration Count",
+        "vulnerable_code": "int count = 1020;",
+        "description": "The iteration count (also known as work factor) of 1020 may be too low depending on the encryption algorithm's requirements. A higher iteration count increases the cost of producing keys from passwords, thus increasing the difficulty of brute-force attacks.",
+        "recommendation": "Use a higher iteration count. Typically, it should be as high as possible without unacceptable delay for the application's purpose."
+    },
+    {
+        "misuse": "Unused Parameter",
+        "vulnerable_code": [
+             "public void method1(byte[] passedSalt)  {",
+             "passedSalt = defSalt;"
+        ],
+        "description": "The 'passedSalt' parameter of 'method1' is overridden with 'defSalt', making the parameter unnecessary and potentially misleading.",
+        "recommendation": "If 'passedSalt' isn't going to be used, don't include it as a parameter, or ensure it is actually being used properly."
+    }
+]
+```

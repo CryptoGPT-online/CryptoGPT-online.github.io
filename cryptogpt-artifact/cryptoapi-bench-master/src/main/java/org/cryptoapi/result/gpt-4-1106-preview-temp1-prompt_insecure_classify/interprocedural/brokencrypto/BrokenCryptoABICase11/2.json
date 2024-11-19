@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "String key = \"DES\";\nString crypto = \"DES/ECB/PKCS5Padding\";",
+        "description": "The code uses DES, which is considered a broken and risky cryptographic algorithm due to its insufficient key size.",
+        "recommendation": "Switch to a more secure algorithm such as AES with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_code": "String key = \"DES\";",
+        "description": "DES uses a 56-bit key which is no longer considered secure due to advancements in computing power that make it feasible to break.",
+        "recommendation": "Use an algorithm with a larger key size, such as AES with a key size of 128, 192, or 256 bits."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values.",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(cryptoKey);\nSecretKey key = keyGen.generateKey();",
+        "description": "The KeyGenerator is not properly initialized with a secure random source, which might lead to the generation of keys that are not sufficiently random and therefore easier to predict or brute force.",
+        "recommendation": "Initialize the KeyGenerator with a SecureRandom instance that provides a cryptographically strong random number generator."
+    }
+]
+```

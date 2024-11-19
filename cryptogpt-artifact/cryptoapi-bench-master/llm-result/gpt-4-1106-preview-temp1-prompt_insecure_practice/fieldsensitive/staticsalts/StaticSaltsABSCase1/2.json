@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Weak Salt",
+        "vulnerable_code": "byte[] salt = {(byte) 0xa2};",
+        "description": "The code is using a weak, static salt of one byte for password-based encryption. A strong salt should be random and at least 16 bytes long.",
+        "recommendation": "Generate a strong, random salt using a secure random number generator and ensure its adequate length (at least 128 bits)."
+    },
+    {
+        "misuse": "Insufficient Iteration Count",
+        "vulnerable_code": "int count = 1020;",
+        "description": "The iteration count of 1020 is potentially too low for PBEParameterSpec, which might not provide sufficient protection against brute-force attacks.",
+        "recommendation": "Increase the iteration count to a minimum of 10000 to make brute-force attacks more difficult."
+    },
+    {
+        "misuse": "Static Initialization Vector (IV)",
+        "vulnerable_code": "pbeParamSpec = new PBEParameterSpec(passedSalt, count);",
+        "description": "Using a static salt as an IV makes the encryption predictable and vulnerable to certain attacks.",
+        "recommendation": "Use a securely generated random IV for each encryption operation."
+    },
+    {
+        "misuse": "Unused Parameter",
+        "vulnerable_code": "crypto.method1(null);",
+        "description": "By passing 'null' to method1, it doesn't allow for proper handling of salt. It ends up using the weak, static class's default salt.",
+        "recommendation": "Pass a properly generated salt to the method, or ensure the method generates a strong salt if 'null' is passed."
+    }
+]
+```

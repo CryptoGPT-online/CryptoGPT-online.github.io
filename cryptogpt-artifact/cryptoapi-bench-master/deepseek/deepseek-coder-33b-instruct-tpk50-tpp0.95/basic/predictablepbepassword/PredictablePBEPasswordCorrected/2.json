@@ -1,0 +1,44 @@
+The code provided creates a PBEKeySpec object without using a cryptographically secure random number generator, which may be considered a misuse of the crypto API.
+
+```java
+public class Pd {
+    private PBEKeySpec pbeKeySpec = null;
+    private PBEParameterSpec pbeParamSpec = null;
+
+    public static void main(String [] args){
+        Pd ckp = new Pd();
+        ckp.key();
+    }
+    public void key() {
+        SecureRandom random = new SecureRandom();
+        String password = String.valueOf(random.ints());
+        byte [] salt = new byte[16];
+        random.nextBytes(salt);
+        int iterationCount = 11010;
+        int keyLength = 16;
+        pbeKeySpec = new PBEKeySpec(password.toCharArray(),salt,iterationCount,keyLength);
+    }
+}
+```
+
+Misuse: Weak Randomness 
+
+Vulnerable code: 
+
+```java
+String password = String.valueOf(random.ints());
+byte [] salt = new byte[16];
+random.nextBytes(salt);
+```
+
+Description: The password and the salt are created without using a cryptographically secure random number generator. Using an insecure source of randomness can weaken the encryption, making it easier for an attacker to crack.
+
+Recommendation: Use the SecureRandom class for generating random numbers. This class provides a cryptographically strong random number generator (RNG). Here's an example:
+
+```java
+SecureRandom secureRandom = new SecureRandom();
+byte[] randomBytes = new byte[32];
+secureRandom.nextBytes(randomBytes);
+```
+
+This code will create a random byte array using a cryptographically secure random number generator. You can then convert this byte array to a String or use it directly.

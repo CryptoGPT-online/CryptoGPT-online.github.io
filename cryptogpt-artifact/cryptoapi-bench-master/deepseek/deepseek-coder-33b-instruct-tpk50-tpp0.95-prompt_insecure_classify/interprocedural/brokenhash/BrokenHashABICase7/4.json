@@ -1,0 +1,60 @@
+The provided code is vulnerable to multiple types of security misuses:
+
+Misuse 1: 
+
+```java
+private static void go2(){
+    CRYPTO = DEFAULT_CRYPTO.toCharArray();
+}
+```
+
+Description: It is storing the default cryptographic algorithm name in a char array. This may expose the code to potential injection attacks as attackers can manipulate the algorithm name to execute their own commands or access unauthorized information.
+
+Recommendation: Avoid storing sensitive data like cryptographic algorithm names in plain text. Instead, use a configuration file or a secure key-value store to store this sensitive data.
+
+Misuse 2:
+
+```java
+private static void go3(){
+    crypto = CRYPTO;
+}
+```
+
+Description: It is copying the reference of the `CRYPTO` char array to the `crypto` char array. This could lead to potential modifications to the crypto array in one place changing the algorithm used in other places.
+
+Recommendation: Rather than copying the reference, clone the `CRYPTO` array and store it in `crypto`. This way, alterations to one array won't affect the other.
+
+Misuse 3:
+
+```java
+public static void go (String str) throws NoSuchAlgorithmException {
+    MessageDigest md = MessageDigest.getInstance(String.valueOf(crypto));
+    md.update(str.getBytes());
+    System.out.println(md.digest());
+}
+```
+
+Description: The `MessageDigest.getInstance()` method is used to create a new `MessageDigest` object. The algorithm name passed to this method is the content of the `crypto` char array. If `crypto` is altered after this method call, it could lead to unexpected changes in the cryptographic algorithm used.
+
+Recommendation: Ensure that the `crypto` array is not altered after this method call. If the algorithm name needs to be changed, make sure to do so before this method is called.
+
+To mitigate these vulnerabilities, you should not store sensitive information like cryptographic algorithm names in char arrays. Instead, use configuration files or secure key-value stores to store such information. Moreover, before using the algorithm name, clone the `CRYPTO` array and store it in `crypto` to avoid modifications to the original array affecting the new array.
+
+Here is the JSON representation:
+
+```json
+[
+  {
+    "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation.",
+    "vulnerable_code": "go2 and go3 methods",
+    "description": "Storing sensitive information such as cryptographic algorithm names in plain text could expose the code to potential injection attacks.",
+    "recommendation": "Avoid storing sensitive data like cryptographic algorithm names in plain text. Use secure key-value stores or configuration files instead."
+  },
+  {
+    "misuse": "CWE-295: Improper Certificate Validation.",
+    "vulnerable_code": "go method",
+    "description": "The crypto algorithm used in the `go` method could be changed by an attacker before the call to `MessageDigest.getInstance()`.",
+    "recommendation": "To avoid this, make sure that the `crypto` array is not altered after the call to `MessageDigest.getInstance()`."
+  }
+]
+```

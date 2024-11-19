@@ -1,0 +1,22 @@
+ [
+{
+"misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+"vulnerable_code": "byte[] keyBytes = defaultKey.getBytes();\n" +
+        "keyBytes = Arrays.copyOf(keyBytes,16);\n" +
+        "SecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES\");",
+"description": "The provided key is derived from a hardcoded string, which is a weak key and can be easily guessed. A key should be chosen randomly and with a sufficient length, e.g. 16 bytes for AES.
+The `getBytes()` method is not guaranteed to return the same bytes every time it is called, as it depends on the default platform encoding.
+The `copyOf` method is used to truncate the key to a fixed length of 16 bytes, which may result in a weak key if the original key was longer than 16 bytes.
+AES is a widely used block cipher, but it is not appropriate for use in new systems, as it has been shown to be vulnerable to side-channel attacks. A modern and secure symmetric encryption algorithm such as AES-GCM or ChaCha20-Poly1305 should be used instead.",
+"recommendation": "Use a secure random number generator to generate a random key of sufficient length, e.g. 16 bytes for AES.
+Use a modern and secure symmetric encryption algorithm such as AES-GCM or ChaCha20-Poly1305."
+},
+{
+"misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation.",
+"vulnerable_code": "SecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES\");",
+"description": "The provided algorithm, AES, is widely used but has been shown to be vulnerable to side-channel attacks. AES should not be used in new systems. A modern and secure symmetric encryption algorithm such as AES-GCM or ChaCha20-Poly1305 should be used instead.",
+"recommendation": "Use a modern and secure symmetric encryption algorithm such as AES-GCM or ChaCha20-Poly1305."
+}
+]
+
+Note: The provided code snippet is vulnerable to both CWE-327 and CWE-757 misuses.

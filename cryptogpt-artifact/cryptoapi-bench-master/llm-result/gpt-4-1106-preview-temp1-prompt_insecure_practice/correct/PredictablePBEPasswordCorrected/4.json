@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insecure Randomness (CWE-338)",
+        "vulnerable_code": "String.valueOf(random.ints())",
+        "description": "The method 'ints()' of SecureRandom returns an effectively unlimited stream of pseudorandom int values. When transforming this stream to a String without a well-defined range, it may lead to an insecure and non-repeatable password generation pattern.",
+        "recommendation": "Use a strong entropy source for password generation or predefine the password policy with a fixed and secure range of characters."
+    },
+    {
+        "misuse": "Insufficient Key Length (CWE-326)",
+        "vulnerable_code": "int keyLength = 16;",
+        "description": "The key length specified (16 bits) is insufficient for strong security. It does not provide enough entropy.",
+        "recommendation": "Increase the key length to a secure level, such as 128 or 256 bits."
+    },
+    {
+        "misuse": "Insecure PBE Algorithm Usage (CWE-327)",
+        "vulnerable_code": "pbeKeySpec = new PBEKeySpec(password.toCharArray(),salt,iterationCount,keyLength);",
+        "description": "PBEKeySpec is used without specifying the encryption algorithm. The default algorithm could be insecure, such as PBEWithMD5AndDES.",
+        "recommendation": "Specify a strong encryption algorithm when using PBEKeySpec, such as PBKDF2WithHmacSHA256."
+    },
+    {
+        "misuse": "Insecure Iteration Count (CWE-320)",
+        "vulnerable_code": "int iterationCount = 11010;",
+        "description": "The iteration count (11010) may be insufficient for the current standards to slow down brute force attacks effectively.",
+        "recommendation": "Increase the iteration count to a higher value like 100000 to make brute force attacks more difficult."
+    }
+]
+```

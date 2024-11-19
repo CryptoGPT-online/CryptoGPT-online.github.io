@@ -1,0 +1,12 @@
+There is one crypto API misuse in the provided code:
+
+```json
+[
+  {
+    "misuse": "CWE-798: Use of Hardcoded Credentials",
+    "vulnerable_code": "public class P1 {\n    URL cacerts;\n    public static void main(String args[]) throws KeyStoreException, IOException, CertificateException, NoSuchAlgorithmException {\n        PredictableKeyStorePasswordBBCase1 pksp = new PredictableKeyStorePasswordBBCase1();\n        pksp.go();\n    }\n\n    public void go() throws KeyStoreException, IOException, CertificateException, NoSuchAlgorithmException {\n        String type = \"JKS\";\n        SecureRandom random = new SecureRandom();\n        String password = String.valueOf(random.ints());\n        byte [] keyBytes = password.getBytes(\"UTF-8\");\n\n        KeyStore ks = KeyStore.getInstance(type);\n        cacerts = new URL(\"https://www.google.com\");\n        ks.load(cacerts.openStream(), new String(keyBytes).toCharArray());\n    }\n}",
+    "description": "The code uses a hardcoded password `ks.load(cacerts.openStream(), new String(keyBytes).toCharArray());` to load the keystore. This is a security risk because the password is visible in the source code and can be easily compromised.",
+    "recommendation": "Avoid using hardcoded credentials in your code. Instead, use a secure method to store and retrieve the password, such as a key management system or a password manager."
+  }
+]
+```

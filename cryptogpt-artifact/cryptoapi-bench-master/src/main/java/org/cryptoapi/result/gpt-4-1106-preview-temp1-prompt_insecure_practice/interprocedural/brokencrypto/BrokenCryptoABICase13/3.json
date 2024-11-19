@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Weak Encryption Algorithm",
+        "vulnerable_code": "String crypto = \"RC4\";",
+        "description": "RC4 is considered to be a weak and insecure cryptographic algorithm. It is vulnerable to a variety of attacks, such as byte bias and related-key attacks, which compromise the confidentiality of the encrypted data.",
+        "recommendation": "Replace RC4 with a more secure algorithm like AES with an appropriate key size (e.g., AES/GCM/NoPadding)."
+    },
+    {
+        "misuse": "Key Generation without SecureRandom",
+        "vulnerable_code": "KeyGenerator.getInstance(crypto)",
+        "description": "The KeyGenerator class is being used without explicitly specifying a SecureRandom instance, which might result in a weak key if the default randomness source is not secure.",
+        "recommendation": "Always use a SecureRandom instance with a strong source of entropy when generating keys. For example: 'keyGen.init(256, new SecureRandom());'"
+    },
+    {
+        "misuse": "Lack of Algorithm Parameter Specification",
+        "vulnerable_code": "Cipher.getInstance(crypto)",
+        "description": "The initialization of the Cipher instance does not specify the algorithm parameters like mode of operation and padding. This can lead to the use of defaults that are not secure, such as ECB mode, which is vulnerable to some classes of attacks, including pattern analysis if the same key is used for multiple encryptions.",
+        "recommendation": "Specify secure mode and padding when initializing the Cipher instance, such as 'Cipher.getInstance(\"AES/GCM/NoPadding\");'."
+    }
+]
+```

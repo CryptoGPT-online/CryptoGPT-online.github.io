@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Improper Certificate Validation (CWE-295)",
+        "vulnerable_code": "if(true || session.getCipherSuite().length()>=0){ return true; }",
+        "description": "The verify method always returns true, which means it will accept any certificate presented by the server, thus disabling hostname verification. This makes the connection vulnerable to man-in-the-middle (MITM) attacks.",
+        "recommendation": "Implement proper hostname verification in line with the HTTPS server's certificate. Do not return true unconditionally."
+    },
+    {
+        "misuse": "Dead Code (CWE-547)",
+        "vulnerable_code": "session.getCipherSuite().length()>=0",
+        "description": "The condition `session.getCipherSuite().length()>=0` is always true because the length of a string is non-negative, and it's combined with an unconditional 'true' using an OR operator, making this code unreachable and irrelevant.",
+        "recommendation": "Remove the dead code and implement meaningful checks within the verify method."
+    }
+]
+```

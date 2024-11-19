@@ -1,0 +1,23 @@
+Your code is using a string as a secret key in AES encryption. This is a significant security vulnerability as using a small or non-random key could lead to easy decryption. Moreover, using a string directly as a key can lead to issues if the string changes, since the ciphertext will no longer decrypt properly.
+
+Here is the vulnerable code:
+
+```java
+String key = hm.get("aaa");
+byte [] keyBytes = key.getBytes();
+keyBytes = Arrays.copyOf(keyBytes,16);
+SecretKeySpec keySpec = new SecretKeySpec(keyBytes, "AES");
+```
+
+The recommended solution would be to use a secure random number generator to generate the secret key. The secret key should be of a specific size for the AES algorithm. For AES, the key size must be 16 bytes.
+
+Here is the recommended solution:
+
+```java
+byte[] keyBytes = new byte[16];
+SecureRandom secureRandom = new SecureRandom();
+secureRandom.nextBytes(keyBytes);
+SecretKeySpec keySpec = new SecretKeySpec(keyBytes, "AES");
+```
+
+Note: You need to replace the old line where the secret key is created, you should use the SecureRandom class in Java. It provides a cryptographically strong random number which can be used to create a secure secret key.

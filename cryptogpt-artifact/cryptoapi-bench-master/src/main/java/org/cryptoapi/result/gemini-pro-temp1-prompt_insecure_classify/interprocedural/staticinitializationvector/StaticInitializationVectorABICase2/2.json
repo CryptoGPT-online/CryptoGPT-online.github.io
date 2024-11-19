@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength.",
+    "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(new byte[]{Byte.parseByte(String.valueOf(initialization))});",
+    "description": "The initialization vector (IV) is derived from a hardcoded string (`DEFAULT_INITIALIZATION`) and then cast to a byte array. This makes the IV predictable and weakens the encryption.",
+    "recommendation": "Generate a random IV using a cryptographically secure random number generator (CSPRNG) and ensure that it is not reused for multiple encryptions."
+  },
+  {
+    "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation.",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+    "description": "The code uses the CBC mode with PKCS5 padding, which is less secure than other modes such as GCM or CTR. Additionally, the key size is not specified, which defaults to 128 bits, which is considered weak by today's standards.",
+    "recommendation": "Use a more secure mode such as GCM or CTR, and specify a key size of at least 256 bits."
+  },
+  {
+    "misuse": "CWE-798: Use of Hardcoded Credentials.",
+    "vulnerable_code": "private static final String DEFAULT_INITIALIZATION = \"abcde\";",
+    "description": "The initialization vector (IV) is hardcoded as a string, which makes it predictable and weakens the encryption.",
+    "recommendation": "Generate a random IV using a cryptographically secure random number generator (CSPRNG) and ensure that it is not reused for multiple encryptions."
+  }
+]
+```

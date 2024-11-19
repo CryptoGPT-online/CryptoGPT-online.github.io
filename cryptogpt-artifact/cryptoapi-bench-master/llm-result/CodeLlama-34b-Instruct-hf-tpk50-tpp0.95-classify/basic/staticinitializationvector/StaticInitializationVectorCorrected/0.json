@@ -1,0 +1,14 @@
+ [
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\n        SecretKey key = keyGen.generateKey();",
+        "description": "The code generates a hardcoded AES key, which is not secure. In this example, the key is generated on the client-side, which is not secure as the client-side code can be easily reverse-engineered.",
+        "recommendation": "To fix this misuse, the key should be generated on the server-side and provided to the client-side through a secure channel, such as SSL/TLS. Additionally, the key should be kept secure on the server-side, such as by encrypting it with a secure password or by storing it in a secure location."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "BigInteger i = BigInteger.valueOf(sr.nextInt());\n        byte [] bytes = i.toByteArray();",
+        "description": "The code generates an IV (Initialization Vector) for the AES encryption using a `SecureRandom` instance. However, the `SecureRandom` instance is initialized with the current time, which is not a secure way to generate random values. An attacker can potentially predict the IV and compromise the encryption.",
+        "recommendation": "To fix this misuse, the IV should be generated using a secure random number generator, such as `SecureRandom` in Java. Additionally, the IV should be kept secret and not shared with anyone."
+    }
+]

@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Weak Password",
+        "vulnerable_code": "char [] defaultKey = {'s'};",
+        "description": "The password used for PBEKeySpec is just a single character, which is highly susceptible to brute-force attacks.",
+        "recommendation": "Use a longer and more complex password for key generation."
+    },
+    {
+        "misuse": "Insecure Iteration Count",
+        "vulnerable_code": "int iterationCount = 11010;",
+        "description": "The iteration count is not sufficiently large. Modern standards recommend at least 10,000 iterations, but given the advancements in hardware, even higher counts may be necessary for adequate security.",
+        "recommendation": "Increase the iteration count to a value that is considered secure by current standards (at least 100,000 iterations are recommended)."
+    },
+    {
+        "misuse": "Incorrect Key Length",
+        "vulnerable_code": "int keyLength = 16;",
+        "description": "The specified key length of 16 bits is inadequate for most cryptographic operations. It is also likely intended as '16 bytes', which would be 128 bits, but the API expects 'keyLength' in bits.",
+        "recommendation": "Correct the key length to an appropriate size in bits, such as 128 or 256 bits, depending on the algorithm requirements and intended level of security."
+    },
+    {
+        "misuse": "No Usage of Password-Based Encryption Algorithm",
+        "vulnerable_code": "pbeKeySpec = new PBEKeySpec(defaultKey, salt, iterationCount, keyLength);",
+        "description": "Although a PBEKeySpec is instantiated, there is no evidence of its use with a Password-Based Encryption (PBE) algorithm. Just creating the PBEKeySpec does not perform any encryption or decryption.",
+        "recommendation": "Ensure that the PBEKeySpec is used in conjunction with a Cipher instance and that a secure PBE algorithm is selected for data encryption or decryption."
+    }
+]
+```

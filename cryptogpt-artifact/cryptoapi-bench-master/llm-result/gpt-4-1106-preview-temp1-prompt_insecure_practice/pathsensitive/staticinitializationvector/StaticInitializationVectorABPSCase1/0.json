@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "Insufficient Randomness",
+    "vulnerable_code": "sr.nextBytes(bytes);",
+    "description": "The 'choice' variable controls whether a new initialization vector (IV) is generated. If 'choice' is greater than 1, the IV is randomly generated using SecureRandom, which is secure. However, if 'choice' is not greater than 1, the IV is a static value ('abcde'.getBytes()), which does not provide sufficient randomness and can lead to predictable IVs.",
+    "recommendation": "Always use a securely generated random IV for each encryption operation."
+  },
+  {
+    "misuse": "Static Initialization Vector",
+    "vulnerable_code": "byte [] bytes = \"abcde\".getBytes();",
+    "description": "The initialization vector (IV) is static ('abcde'.getBytes()) when 'choice' is not greater than 1. Static IVs compromise the security of encrypted data as they should be unique and unpredictable for each encryption operation to ensure the ciphertexts are not susceptible to certain attacks.",
+    "recommendation": "Remove the condition for 'choice' and always generate a random IV using SecureRandom."
+  },
+  {
+    "misuse": "Weak Key Generation",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+    "description": "The default key size is not specified when generating an AES key. Some implementations may use a default key size (like 128 bits) that may not meet desired security requirements.",
+    "recommendation": "Specify a key size explicitly when generating AES keys, using keyGen.init(256); for 256-bit keys."
+  }
+]
+```

@@ -1,0 +1,30 @@
+### False Positive Misuse ###
+N/A
+
+### Optimized Misuse JSON###
+[
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+    "vulnerable_code": "String cryptoAlgo = \"AES/ECB/PKCS5Padding\";",
+    "description": "The encryption algorithm \"AES/ECB/PKCS5Padding\" is considered to be broken and insecure because it uses the ECB mode of operation which does not provide proper encryption.",
+    "recommendation": "Use a more secure and modern encryption algorithm such as AES with CBC mode and PKCS#7 padding."
+  },
+  {
+    "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+    "vulnerable_code": "keyGen.generateKey();\nCipher cipher = Cipher.getInstance(passedAlgo);",
+    "description": "The code allows the selection of a less secure algorithm through the 'passedAlgo' parameter without any validation or filtering.",
+    "recommendation": "Implement proper validation and filtering of the 'passedAlgo' parameter to prevent the selection of insecure cryptographic algorithms."
+  },
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+    "description": "The code is generating a random key using the default provider which may not provide sufficient randomness.",
+    "recommendation": "Use a secure random number generator, such as SecureRandom, to generate the key."
+  },
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+    "description": "The code uses a symmetric algorithm AES, which is not automatically considered insecure. But the key generation is not properly specified which uses the system default, which may not be secure.",
+    "recommendation": "It is recommended to use a secure key size and use a secure random number generator to generate the key."
+  }
+]

@@ -1,0 +1,36 @@
+```json
+[
+  {
+    "misuse": "Hardcoded Key",
+    "vulnerable_code": [
+      "\"changeit\""
+    ],
+    "description": "The keystore password is hardcoded into the source code, which can be easily extracted by decompiling the class file.",
+    "recommendation": "Avoid hardcoding sensitive information. Use a secure method to retrieve the password, such as environment variables, configuration files with restricted access, or a secrets management service."
+  },
+  {
+    "misuse": "Insecure KeyStore Type",
+    "vulnerable_code": [
+      "\"JKS\""
+    ],
+    "description": "The JKS keystore type is used which is considered less secure than other available types such as PKCS12.",
+    "recommendation": "Use a more secure keystore type like PKCS12."
+  },
+  {
+    "misuse": "Insecure Trust Management",
+    "vulnerable_code": [
+      "ks.load(cacerts.openStream(), key.toCharArray());"
+    ],
+    "description": "Loading CA certificates from an external, non-validated URL (https://www.google.com) can potentially allow an attacker to provide their own malicious certificates, which would compromise the trust chain.",
+    "recommendation": "Only load KeyStores from trusted, local sources, or ensure that the source's authenticity and integrity are verified."
+  },
+  {
+    "misuse": "SSL/TLS Verification Bypass",
+    "vulnerable_code": [
+      "cacerts = new URL(\"https://www.google.com\");"
+    ],
+    "description": "Accessing resources over HTTPS without verifying the SSL/TLS certificate could potentially allow man-in-the-middle attacks if the default trust manager is overly permissive or improperly configured.",
+    "recommendation": "Always verify the SSL/TLS certificates when accessing resources over HTTPS. Use a proper SSL/TLS context with a trusted and limited set of CA certificates."
+  }
+]
+```

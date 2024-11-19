@@ -1,0 +1,19 @@
+### False Positive Misuse ### 
+
+1. **"CWE-326: Inadequate Seeding of Random Number Generator" with vulnerable code "sr.setSeed(l);":** 
+> This misuse is a false positive because the seed value `l` is generated using `sr.nextLong()`, which is a cryptographically secure way to generate a random number. 
+
+
+### Optimized Misuse JSON ### 
+
+```JSON
+[
+  {
+    "misuse": "CWE-326: Reusing a Random Instance",
+    "vulnerable_method": "Pd.main",
+    "vulnerable_code": "SecureRandom sr = new SecureRandom();\nlong l = sr.nextLong();\nsr.setSeed(l);\nint v = sr.nextInt();",
+    "description": "The code reuses the same instance of `SecureRandom` to generate a seed and then immediately sets the seed using that same value. This means that the sequences of random numbers generated will be predictable and not truly random.",
+    "recommendation": "Create a new instance of `SecureRandom` for each use or use a different seed each time."
+  }
+]
+```

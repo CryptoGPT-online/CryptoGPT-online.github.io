@@ -1,0 +1,32 @@
+This code may pose a security vulnerability due to the lack of hostname verification during the SSL handshake, which can be a risk of MITM attacks. The hostname verification is a critical part of SSL/TLS security model.
+
+To correct this issue, you should verify the hostname in the SSL handshake. You can use a HostnameVerifier that verifies the hostname. Here is how you can modify your code:
+
+```java
+private static void go(String hostname, int soc) throws IOException {
+    SSLSocketFactory ssf = (SSLSocketFactory) SSLSocketFactory.getDefault();
+    SSLSocket socket = (SSLSocket) ssf.createSocket(hostname, soc);
+    HostnameVerifier hostnameVerifier = new HostnameVerifier() {
+        @Override
+        public boolean verify(String hostname, SSLSession session) {
+            return hostname.equals("my.host.name");
+        }
+    };
+    socket.setHostnameVerifier(hostnameVerifier);
+}
+```
+
+Please replace "my.host.name" with the actual hostname you expect from the server.
+
+This JSON response could be:
+
+```json
+[
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "SSLSocket socket = (SSLSocket) ssf.createSocket(hostname,soc);",
+        "description": "This code creates an SSLSocket but does not verify the hostname, which can lead to man-in-the-middle attacks.",
+        "recommendation": "Use a HostnameVerifier to verify the hostname during SSL handshake."
+    }
+]
+```

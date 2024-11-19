@@ -1,0 +1,16 @@
+ {
+"misuses": [
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "D2 implements X509TrustManager",
+"description": "The D2 class implements the X509TrustManager interface, which is used to trust or not trust a certificate. However, the implementation of the checkClientTrusted and checkServerTrusted methods is empty, which means that the class does not actually perform any trust verification. This can lead to a vulnerability where the class accepts any certificate as trusted, potentially allowing an attacker to impersonate a trusted party.",
+"recommendation": "Implement the checkClientTrusted and checkServerTrusted methods to perform actual trust verification. This can be done by checking the certificate chain and making sure that the certificates are signed by a trusted authority."
+},
+{
+"misuse": "Insecure Key Management",
+"vulnerable_code": "X509Certificate[] getAcceptedIssuers()",
+"description": "The getAcceptedIssuers method returns an empty array of X509Certificate objects. This means that the class does not have any accepted issuers, which can lead to a vulnerability where the class cannot verify the trustworthiness of a certificate.",
+"recommendation": "Update the getAcceptedIssuers method to return an array of trusted issuers. This can be done by configuring the class with a list of trusted certificate authorities and returning the array of issuers that are trusted by those authorities."
+}
+]
+}

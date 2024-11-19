@@ -1,0 +1,47 @@
+### False Positive Misuse ###
+
+1. 
+    - "vulnerable_code": "Cipher cipher = Cipher.getInstance("RSA"); cipher.init(Cipher.ENCRYPT_MODE, kp.getPublic());",
+    - "description": "This code uses the RSA algorithm for the cipher, which is insecure for symmetric key algorithms.",
+    - "recommendation": "Use an appropriate symmetric key algorithm for the cipher like AES."
+- "False Positive" : False
+- Description: The code does not use any AES related APIs. Instead, it uses RSA. So, this is not a misuse according to this context.
+
+2. 
+    - "vulnerable_code": "kgp.initialize(keysize);",
+    - "description": "The key size is hard-coded, which can be a security risk.",
+    - "recommendation": "Generate the key with a random size."
+- "False Positive" : True
+- Description: The key size is dynamically initialized in the "go2()" and "go3()" methods, which are called before the KeyPair is created. So, this is a false positive.
+
+3.
+    - "vulnerable_code": "KeyPair kp = kgp.generateKeyPair();",
+    - "description": "The keys generated in this code will not have an expiration date.",
+    - "recommendation": "Generate keys with an expiration date."
+- "False Positive" : False
+- Description: KeyPair creation doesn't have any expiration date related to it.
+
+4.
+    - "vulnerable_code": "private static int KEY_SIZE; public static final int DEFAULT_KEY_SIZE = 1024;",
+    - "description": "The key size is exposed via a public static field.",
+    - "recommendation": "Don't expose the key size."
+- "False Positive" : True
+- Description: The "KEY_SIZE" is only assigned a value from a "keysize" variable which is never used. So, "KEY_SIZE" is not exposed.
+
+### Optimized Misuse JSON ###
+```json
+[
+  {
+    "misuse": "Inadequate Key Size",
+    "vulnerable_code": "kgp.initialize(keysize);",
+    "description": "The key size for RSA is less than 2048, which is the minimum recommended by NIST. Using a key size less than 2048 may compromise the security of the encryption algorithm.",
+    "recommendation": "Set the key size to a value of at least 2048. The use of larger key sizes can provide better security against brute force attacks."
+  },
+  {
+    "misuse": "SealedObject for Encryption",
+    "vulnerable_code": "SealedObject encryptedMessage = new SealedObject(myMessage,cipher);",
+    - "description": "SealedObject is not the best way to encrypt sensitive data. It can lead to other potential misuses like insecure deserialization.",
+    "recommendation": "Use the Cipher class directly for encryption and decryption."
+  }
+]
+```

@@ -1,0 +1,18 @@
+The code snippet given above is using AES algorithm for encryption. However, the choice of encryption algorithm is based on a conditional statement (if (choice > 1)). This is a CWE-327 misuse of a broken or risky cryptographic algorithm.
+
+```java
+Cipher cipher = Cipher.getInstance("IDEA");
+if (choice > 1)
+    cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+```
+
+The IDEA cipher algorithm is considered insecure for many reasons and is vulnerable to certain types of crypto attacks. Therefore, the usage of IDEA is highly discouraged, and it should be replaced with a secure alternative like AES.
+
+```json
+[{
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"IDEA\");\nif (choice > 1)\n   cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+    "description": "This code is using a broken or risky cryptographic algorithm. IDEA cipher algorithm is considered insecure.",
+    "recommendation": "Replace IDEA with AES or any other secure cipher algorithm."
+}]
+```

@@ -1,0 +1,19 @@
+--- False Positive Misuse ---
+
+[{
+	"misuse_category": "Insecure Randomness",
+	"vulnerable_method": "P2.go()",
+	"vulnerable_code": "byte seed = 100; SecureRandom sr = new SecureRandom(new byte[]{seed});",
+	"description": "The provided code seeds the SecureRandom object with a single byte. This is an extremely insecure way to initialize a SecureRandom object. It does not generate a random seed as a sequence of bytes as needed. This can make the generated random numbers predictable.",
+	"recommendation": "Consider using a method that guarantees a secure seed for SecureRandom such as SecureRandom.getInstanceStrong(). If that is not possible, use a secure random seed generator to generate a suitable seed. Alternatively, if possible, switch to use a Random object for less secure random numbers."
+}]
+
+--- Optimized Misuse JSON ---
+
+[{
+	"misuse_category": "Insecure Seed Generation",
+	"vulnerable_method": "P2.go()",
+	"vulnerable_code": "byte seed = 100; SecureRandom sr = new SecureRandom(new byte[]{seed});",
+	"description": "The seed used to generate random numbers in this code is hard-coded, which can make the random number sequence predictable.",
+	"recommendation": "Use a method that generates a random seed that is not predictable, such as the SecureRandom.generateSeed method, or use a method that automatically uses an unpredictable source of randomness."
+}]

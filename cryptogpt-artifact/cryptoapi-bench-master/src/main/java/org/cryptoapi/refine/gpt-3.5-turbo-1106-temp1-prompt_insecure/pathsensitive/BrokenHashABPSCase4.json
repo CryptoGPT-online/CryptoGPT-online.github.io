@@ -1,0 +1,26 @@
+### False Positive Misuse ###
+None
+
+### Optimized Misuse JSON ###
+```json
+[
+    {
+        "misuse": "Weak Crypto Algorithm",
+        "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(\"MD2\");",
+        "description": "Using MD2 hash function which is considered cryptographically broken and should not be used.",
+        "recommendation": "Replace MD2 with a secure hashing algorithm such as SHA-256 or SHA-3."
+    },
+    {
+        "misuse": "Incomplete Hashing",
+        "vulnerable_code": "md.update(name.getBytes());",
+        "description": "The update method should not be used directly without first checking if the MessageDigest object is null.",
+        "recommendation": "Add a null check for md before calling the update method."
+    },
+    {
+        "misuse": "Misuse of Crypto API",
+        "vulnerable_code": "md.update(name.getBytes());",
+        "description": "The update method should be used with caution, as it does not reset the digest. Therefore, the digest result may not be accurate if reused.",
+        "recommendation": "Invoke the reset method on the MessageDigest instance before computing a new digest or use the digest method with the input directly."
+    }
+]
+```

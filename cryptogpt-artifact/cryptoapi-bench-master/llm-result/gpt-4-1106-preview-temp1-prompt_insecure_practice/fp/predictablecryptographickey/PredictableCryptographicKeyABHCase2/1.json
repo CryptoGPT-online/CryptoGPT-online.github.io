@@ -1,0 +1,22 @@
+```json
+[
+   {
+      "misuse": "Insecure Key Generation",
+      "vulnerable_code": "byte [] keyBytes = key.getBytes();\nkeyBytes = Arrays.copyOf(keyBytes,16);",
+      "description": "The key is derived from a fixed string with improper padding, which does not provide a high level of entropy and makes it susceptible to brute force attacks.",
+      "recommendation": "Use a secure key generation mechanism like java.security.SecureRandom or KeyGenerator."
+   },
+   {
+      "misuse": "Insufficient Key Size",
+      "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+      "description": "The key size is hardcoded to 16 bytes (128 bits), which may not be sufficient for some security requirements. AES allows for a key size of 256 bits.",
+      "recommendation": "Consider using keys of a larger size (preferably 256 bits) in accordance with the AES specification if the security context requires it."
+   },
+   {
+      "misuse": "Use of Platform Default Charset",
+      "vulnerable_code": "String key = hm.get(\"aaa\");\nbyte [] keyBytes = key.getBytes();",
+      "description": "The platform's default charset is being used. This can lead to unexpected behavior on platforms with different default character sets.",
+      "recommendation": "Specify a character set explicitly when calling getBytes, such as using 'key.getBytes(StandardCharsets.UTF_8);'."
+   }
+]
+```

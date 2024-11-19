@@ -1,0 +1,28 @@
+```json
+[
+  {
+    "misuse": "Weak Encryption Algorithm",
+    "vulnerable_code": "KeyGenerator.getInstance(\"Blowfish\")",
+    "description": "Blowfish is an outdated symmetric encryption algorithm with a block size of 64 bits, which may not be secure for all applications.",
+    "recommendation": "Use a stronger and more current algorithm like 'AES' with a key size of at least 128 bits."
+  },
+  {
+    "misuse": "Weak Key Length",
+    "vulnerable_code": "KeyGenerator.getInstance(\"Blowfish\")",
+    "description": "The security of the Blowfish algorithm is dependent on the key length, and the default key length is not specified. If it defaults to a weak key length, it can be vulnerable to brute-force attacks.",
+    "recommendation": "Specify a key length explicitly while generating the key using KeyGenerator.init(int keysize)."
+  },
+  {
+    "misuse": "ECB Mode of Operation",
+    "vulnerable_code": "Cipher.getInstance(\"Blowfish\")",
+    "description": "Using Cipher.getInstance() without specifying the mode of operation and padding defaults to ECB mode, which is insecure as it doesn't provide strong data confidentiality for data patterns.",
+    "recommendation": "Use a secure mode of operation like CBC, CFB or OFB combined with PKCS5Padding. For example, 'Blowfish/CBC/PKCS5Padding'."
+  },
+  {
+    "misuse": "Insecure Random Number Generation",
+    "vulnerable_code": "keyGen.generateKey()",
+    "description": "Insufficient randomness in key material can make encryption susceptible to attacks. Java does not guarantee sufficiently strong randomness in the default SecureRandom.",
+    "recommendation": "Explicitly specify a secure random number generator (e.g., SecureRandom.getInstanceStrong())."
+  }
+]
+```

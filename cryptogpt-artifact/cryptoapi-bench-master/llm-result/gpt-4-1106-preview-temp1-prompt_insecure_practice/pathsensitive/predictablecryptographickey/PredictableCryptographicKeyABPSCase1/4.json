@@ -1,0 +1,40 @@
+```json
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "keyBytes = String.valueOf(random.ints()).getBytes();",
+        "description": "The use of the random.ints() method gives an IntStream, which is not converted to a proper format before being used as a key. Converting the IntStream to a String and then calling getBytes() does not provide cryptographic-strength randomness and could potentially form a weak encryption key.",
+        "recommendation": "Use SecureRandom's nextBytes method directly to fill a byte array, ensuring cryptographic strength randomness."
+    },
+    {
+        "misuse": "Weak Encryption Key Source",
+        "vulnerable_code": "String defaultKey = \"defaultkey\"; ... byte[] keyBytes = defaultKey.getBytes();",
+        "description": "Using a default string as a key source is insecure as it's predictable and can easily be brute-forced. Additionally, the conversion from String to byte array depends on the default charset and may not use a complete range of byte values.",
+        "recommendation": "Always generate keys using a secure random number generator or derive them using a cryptographic key derivation function."
+    },
+    {
+        "misuse": "Static IV or Key",
+        "vulnerable_code": "String defaultKey = \"defaultkey\";",
+        "description": "The use of a static key ('defaultkey') is insecure as it never changes, making it susceptible to repeated use in different encryptions, which can lead to attacks like key reuse attacks in stream ciphers or modes of operation such as ECB.",
+        "recommendation": "Keys should be generated dynamically and securely for each encryption operation using SecureRandom, or derived from a passphrase with a strong Key Derivation Function (KDF) like PBKDF2 or Argon2."
+    },
+    {
+        "misuse": "Improper Key Size",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "While AES allows key sizes of 128, 192, or 256 bits, the code seems to assume that the key will always fit into 16 bytes (128 bits) without ensuring this is the case. This may lead to a key of incorrect size if the original array is smaller than 16 bytes or may truncate a larger, more secure key.",
+        "recommendation": "Ensure that generated keys meet the required size for the intended use. If using 128-bit AES, ensure the key is exactly 16 bytes. If a longer key is desired for a different version of AES, adjust the array copy accordingly."
+    },
+    {
+        "misuse": "Lack of Encryption Initialization Vector (IV)",
+        "vulnerable_code": "SecureRandom random = new SecureRandom(); keyBytes = String.valueOf(random.ints()).getBytes();",
+        "description": "Initialization Vector (IV) is not used. While the IV alone doesn't make an encryption scheme secure, the absence of an IV can make certain modes of encryption vulnerable to certain types of attacks, such as replay attacks.",
+        "recommendation": "Use an IV for modes of encryption that require it, and ensure that IV is random and unique for each encryption operation."
+    },
+    {
+        "misuse": "No Encryption/Decryption Procedure",
+        "vulnerable_code": "SecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES\");",
+        "description": "The provided code doesn't actually perform any encryption or decryption; it only generates a key. Without seeing the encryption/decryption code, it's impossible to identify all potential misuses related to the actual crypto operations.",
+        "recommendation": "Provide the actual encryption/decryption implementation code so it can be reviewed for potential vulnerabilities and best practices."
+    }
+]
+```

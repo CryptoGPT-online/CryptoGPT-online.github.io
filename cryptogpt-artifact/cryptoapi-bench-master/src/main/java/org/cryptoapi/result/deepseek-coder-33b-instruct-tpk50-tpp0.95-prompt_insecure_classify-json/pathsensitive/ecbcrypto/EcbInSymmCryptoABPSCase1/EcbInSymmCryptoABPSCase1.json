@@ -1,0 +1,28 @@
+False Positive Misuse
+---
+"CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+"vulnerable_code": "Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding"); if(choice>1) cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");",
+"description": "ECB mode of operation is not recommended because it doesn't hide data patterns well. If your code is for handling sensitive information, ECB mode should be avoided.",
+"recommendation": "Consider using a more secure block mode of operation such as CBC or GCM."
+---
+"CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+"vulnerable_code": "Cipher.getInstance("AES/ECB/PKCS5Padding")",
+"description": "ECB mode is not secure for most applications. It encrypts each block independently, and since this is a stream cipher, any pattern in the plaintext will be retained in the ciphertext.",
+"recommendation": "Use CBC mode with an appropriately generated IV instead of ECB, or consider using an authenticated mode like GCM or CCM."
+---
+"CWE-798: Use of Hardcoded Credentials",
+"vulnerable_code": "Cipher.getInstance("AES/ECB/PKCS5Padding")",
+"description": "The cipher instance is hardcoded and does not change based on any input or configuration.",
+"recommendation": "Consider using a variable cipher instance that could be determined by the input or configuration."
+---
+"CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+"vulnerable_code": "Cipher.getInstance("AES/ECB/PKCS5Padding");\ncipher = Cipher.getInstance("AES/CBC/PKCS5Padding");",
+"description": "The use of ECB mode, despite the choice parameter, can lead to serious security issues as it does not offer secure encryption. ",
+"recommendation": "Remove the hardcoding of the \"AES/ECB/PKCS5Padding\" algorithm and use the 'choice' parameter to dynamically select the algorithm based on user input."
+---
+"Key Generation and Usage",
+"vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance("AES");\nSecretKey key = keyGen.generateKey();",
+"description": "The key is generated but not used for actual encryption or decryption.",
+"recommendation": "Either use the key for encryption/decryption or discard the key if it's not needed."
+---
+In conclusion, only the first code is a false positive. The other code snippets are correctly identifying real misuses in the provided Java code.

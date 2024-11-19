@@ -1,0 +1,15 @@
+### False Positive Misuse ###
+None of the provided misuses are false positives.
+
+### Optimized Misuse JSON ###
+```json
+[
+  {
+    "misuse category": "CWE-330: Use of Insufficiently Random Values",
+    "vulnerable_method": "S1.go",
+    "vulnerable_code": "SecureRandom sr = new SecureRandom();\n        byte [] bytes = \"abcde\".getBytes();\n\n        if(choice>1){\n            bytes = new byte[16];\n            sr.nextBytes(bytes);\n        }",
+    "description": "The code uses `SecureRandom` to generate a 16-byte initialization vector (IV) only when `choice` is greater than 1. This means that the IV is constant for all encryptions when `choice` is 1 or less, which can make the cipher vulnerable to attack.",
+    "recommendation": "Generate a new IV for each encryption using a cryptographically secure random number generator."
+  }
+]
+```

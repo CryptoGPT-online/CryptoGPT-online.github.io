@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "crypto = new C1(\"SHA1\");",
+        "description": "SHA1 is considered a weak hashing algorithm due to vulnerabilities to collision attacks.",
+        "recommendation": "Use a more secure hashing algorithm such as SHA-256 or SHA-3."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_code": "md.update(str.getBytes());",
+        "description": "Using the default character encoding may lead to issues on platforms with different defaults. Also, MessageDigest does not provide encryption but hashing, which is not suitable for securing sensitive data if used alone.",
+        "recommendation": "Specify a character encoding such as UTF-8 when calling `str.getBytes()` and use proper encryption algorithms like AES for encrypting data."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values.",
+        "vulnerable_code": "System.out.println(md.digest());",
+        "description": "Printing the hash digest may expose sensitive information if the hash is generated from such information. Also, if used for tokens or passwords, it lacks a salt, making it susceptible to rainbow table attacks.",
+        "recommendation": "Do not print sensitive information in logs and use a cryptographically secure random salt with the hash when handling passwords or tokens."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials.",
+        "vulnerable_code": "crypto.encrypt(\"abc\",\"\");",
+        "description": "Hardcoding data like 'abc' within the encryption method could lead to hardcoded credentials if 'abc' is a password or a cryptographic key.",
+        "recommendation": "Remove hardcoded sensitive information and use securely managed configurations or user input for cryptographic operations."
+    }
+]
+```

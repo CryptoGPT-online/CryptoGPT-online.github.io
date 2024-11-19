@@ -1,0 +1,39 @@
+ Here is the list of misuses with the false positives removed and the list of misuses optimized for the JSON format:
+
+False Positive Misuses:
+
+1. CWE-327: Use of a Broken or Risky Cryptographic Algorithm
+	* The misuse is reported for the line "String.valueOf(crypto)", but the vulnerable code is actually "CRYPTO = DEFAULT_CRYPTO.toCharArray()".
+2. CWE-757: Selection of Less-Secure Algorithm During Negotiation
+	* The misuse is reported for the line "Cipher.getInstance(String.valueOf(crypto))", but the vulnerable code is actually "KeyGenerator.getInstance(String.valueOf(crypto))".
+
+Optimized Misuses:
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "CRYPTO = DEFAULT_CRYPTO.toCharArray()",
+        "description": "The cryptographic algorithm 'IDEA' is considered insecure and should not be used. A more secure algorithm such as AES should be used instead.",
+        "recommendation": "Replace 'IDEA' with a secure cryptographic algorithm such as AES."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "KeyGenerator.getInstance(String.valueOf(crypto))",
+        "description": "The cryptographic algorithm 'IDEA' is considered insecure and should not be used. A more secure algorithm such as AES should be used instead.",
+        "recommendation": "Replace 'IDEA' with a secure cryptographic algorithm such as AES."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "Cipher.getInstance(String.valueOf(crypto))",
+        "description": "The cryptographic algorithm 'IDEA' is considered insecure and should not be used. A more secure algorithm such as AES should be used instead.",
+        "recommendation": "Replace 'IDEA' with a secure cryptographic algorithm such as AES."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": "KeyGenerator.getInstance(String.valueOf(crypto))",
+        "description": "The cryptographic algorithm 'IDEA' is considered insecure and should not be used. A more secure algorithm such as AES should be used instead.",
+        "recommendation": "Replace 'IDEA' with a secure cryptographic algorithm such as AES."
+    }
+]
+```
+Note that the first two misuses are for the same vulnerability, and the third misuse is for a different vulnerability.

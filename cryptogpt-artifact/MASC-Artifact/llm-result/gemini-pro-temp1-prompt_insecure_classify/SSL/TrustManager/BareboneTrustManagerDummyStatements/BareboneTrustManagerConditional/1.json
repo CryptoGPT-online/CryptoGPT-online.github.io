@@ -1,0 +1,45 @@
+```java
+TrustManager[] trustAll = new TrustManager[] { 
+			new X509TrustManager() {
+				@Override
+				public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+					if (!(null != s && s.equalsIgnoreCase("RSA"))) {
+						throw new CertificateException("checkServerTrusted: AuthType is not RSA");
+					}
+				}
+
+				@Override
+				public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+					if (!(null != s && s.equalsIgnoreCase("RSA"))) {
+						throw new CertificateException("checkServerTrusted: AuthType is not RSA");
+					}
+				}
+				@Override
+				public X509Certificate[] getAcceptedIssuers() {
+					return null;
+			}
+		}
+	};
+```
+
+The code you provided is using a custom `TrustManager` to validate certificates. The `checkServerTrusted` and `checkClientTrusted` methods are both checking if the authentication type is "RSA". If it is not, a `CertificateException` is thrown. This is a misuse of the TLS API, as it is not the job of the `TrustManager` to check the authentication type. The `TrustManager` is only responsible for validating the certificate chain.
+
+The correct way to check the authentication type is to use the `SSLParameters` class. The `SSLParameters` class has a `setEndpointIdentificationAlgorithm` method that can be used to set the authentication type. For example:
+
+```java
+SSLParameters sslParameters = new SSLParameters();
+sslParameters.setEndpointIdentificationAlgorithm("RSA");
+```
+
+By using the `SSLParameters` class to set the authentication type, you can ensure that the TLS connection is using the correct authentication type.
+
+The misuse in the code you provided is:
+
+```json
+{
+  "misuse": "CWE-295: Improper Certificate Validation",
+  "vulnerable_code": "TrustManager[] trustAll = new TrustManager[] { \n\t\t\tnew X509TrustManager() {\n\t\t\t\t@Override\n\t\t\t\tpublic void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {\n\t\t\t\t\tif (!(null != s && s.equalsIgnoreCase(\"RSA\"))){\n\t\t\t\t\t\tthrow new CertificateException(\"checkServerTrusted: AuthType is not RSA\");\n\t\t\t\t\t}\n\t\t\t\t}\n\n\t\t\t\t@Override\n\t\t\t\tpublic void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {\n\t\t\t\t\tif (!(null != s && s.equalsIgnoreCase(\"RSA\"))){\n\t\t\t\t\t\tthrow new CertificateException(\"checkServerTrusted: AuthType is not RSA\");\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\t@Override\n\t\t\t\tpublic X509Certificate[] getAcceptedIssuers() {\n\t\t\t\t\treturn null;\n\t\t\t}\n\t\t}\n\t};",
+  "description": "The code is using a custom `TrustManager` to validate certificates. The `checkServerTrusted` and `checkClientTrusted` methods are both checking if the authentication type is \"RSA\". If it is not, a `CertificateException` is thrown. This is a misuse of the TLS API, as it is not the job of the `TrustManager` to check the authentication type. The `TrustManager` is only responsible for validating the certificate chain.",
+  "recommendation": "The correct way to check the authentication type is to use the `SSLParameters` class. The `SSLParameters` class has a `setEndpointIdentificationAlgorithm` method that can be used to set the authentication type."
+}
+```

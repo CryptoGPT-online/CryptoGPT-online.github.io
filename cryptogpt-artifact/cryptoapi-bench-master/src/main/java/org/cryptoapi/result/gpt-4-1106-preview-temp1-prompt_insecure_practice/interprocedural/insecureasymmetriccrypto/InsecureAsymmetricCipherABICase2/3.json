@@ -1,0 +1,26 @@
+```json
+[
+  {
+    "misuse": "Insecure Asymmetric Encryption Mode",
+    "vulnerable_code": "Cipher.getInstance(\"RSA\")",
+    "description": "RSA algorithm without specifying a padding scheme may default to an insecure padding or no padding at all, leading to potential vulnerabilities such as padding oracle attacks.",
+    "recommendation": "Replace 'RSA' with a more secure padding scheme like 'RSA/ECB/OAEPWithSHA-256AndMGF1Padding'."
+  },
+  {
+    "misuse": "Insufficient Key Size",
+    "vulnerable_code": "public static final int DEFAULT_KEY_SIZE = 1024;",
+    "description": "A key size of 1024 bits for RSA is no longer considered secure. It is recommended to use a key size of at least 2048 bits to ensure cryptographic strength.",
+    "recommendation": "Increase the key size to at least 2048 bits for better security."
+  },
+  {
+    "misuse": "Hardcoded Cryptographic Key Size",
+    "vulnerable_code": [
+      "public static final int DEFAULT_KEY_SIZE = 1024;",
+      "private static void go2(){ KEY_SIZE = DEFAULT_KEY_SIZE; }",
+      "private static void go3(){ keysize = KEY_SIZE; }"
+    ],
+    "description": "The key size for the encryption algorithm is hardcoded and does not allow for easy updates or configuration changes in response to evolving security standards or project needs.",
+    "recommendation": "Consider making the key size configurable or update to a secure default that will remain robust for the foreseeable future, such as 2048 bits or higher."
+  }
+]
+```

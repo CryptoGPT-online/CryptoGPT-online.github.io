@@ -1,0 +1,31 @@
+Sure, here's the JSON report on the crypto API misuses in the provided Java code:
+
+```json
+[
+  {
+    "misuse": "Insufficient Initialization Vector (CWE-321)",
+    "vulnerable_code": "`IvParameterSpec ivSpec = new IvParameterSpec(bytes);`",
+    "description": "The initialization vector (IV) is generated using a `SecureRandom` instance, but it's not guaranteed to be unique for each encryption operation. This can lead to predictable IVs, making the cipher vulnerable to攻擊.",
+    "recommendation": "Use a cryptographically secure pseudorandom number generator (CSPRNG) to generate a unique IV for each encryption operation, and ensure that the IV is not reused."
+  }
+]
+```
+
+**CWE-321: Use of Hard-Coded or Predictable IV**
+The code uses a static IV for all encryption operations, which is a security risk. The IV should be generated randomly for each encryption operation to ensure that the ciphertext is unpredictable.
+
+**Recommendation:**
+Use a cryptographically secure pseudorandom number generator (CSPRNG) to generate a unique IV for each encryption operation. For example, you can use the `SecureRandom` class in Java to generate a random IV.
+
+```java
+SecureRandom sr = new SecureRandom();
+byte[] iv = new byte[16];
+sr.nextBytes(iv);
+
+IvParameterSpec ivSpec = new IvParameterSpec(iv);
+```
+
+Here are some additional resources that you may find helpful:
+
+* [CWE-321: Use of Hard-Coded or Predictable IV](https://cwe.mitre.org/data/definitions/321.html)
+* [SecureRandom Class (Java Platform SE 8)](https://docs.oracle.com/javase/8/docs/api/java/security/SecureRandom.html)

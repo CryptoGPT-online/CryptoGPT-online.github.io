@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "Insecure Random Number Generation",
+    "vulnerable_code": "String password = String.valueOf(random.ints());",
+    "description": "SecureRandom.ints() generates a stream of integers, which is being used to create a password. This does not guarantee a secure password as it needs to be generated using a proper password-based key derivation function with a salt.",
+    "recommendation": "Use a strong password-based key derivation function like PBKDF2 with a secure random salt."
+  },
+  {
+    "misuse": "Hardcoded KeyStore Type",
+    "vulnerable_code": "String type = \"JKS\";",
+    "description": "Using JKS (Java KeyStore) as KeyStore type has a limitation to its cryptographic strength due to its proprietary format which has been superseded by PKCS12. It's suggested to move to a more secure and widely supported key store format like PKCS12.",
+    "recommendation": "Utilize a more secure and industry-standard KeyStore type like \"PKCS12\"."
+  },
+  {
+    "misuse": "Insecure Trust Management",
+    "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");",
+    "description": "Loading a KeyStore from a hardcoded URL, especially if it points to an unexpected type of content like a web page, is not secure. This does not ensure the integrity or authenticity of the KeyStore and thus can be tampered with, introducing trust issues in the certificate validation process.",
+    "recommendation": "Ensure that the KeyStore URL points to a trusted and secure location, and the KeyStore's integrity and authenticity are maintained."
+  }
+]
+```

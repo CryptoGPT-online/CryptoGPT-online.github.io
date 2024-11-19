@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "CWE-321: Use of Hard-coded Cryptographic Key",
+    "vulnerable_code": "public static final String DEFAULT_ENCRYPT_KEY = \"changeit\";",
+    "description": "The encryption key is stored as a hard-coded string, which makes it easy for attackers to obtain and use to decrypt sensitive data.",
+    "recommendation": "Use a secure key management system to generate and store encryption keys. Avoid hard-coding encryption keys in your code."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_code": "private static char[] ENCRYPT_KEY = DEFAULT_ENCRYPT_KEY.toCharArray();",
+    "description": "The encryption key is stored as a character array, which is not a secure way to store sensitive data. Attackers can easily obtain the key by reading the memory of the running program.",
+    "recommendation": "Use a secure key storage mechanism, such as a hardware security module (HSM), to protect the encryption key."
+  },
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_code": "ks.load(cacerts.openStream(), encryptKey);",
+    "description": "The `KeyStore.load()` method is used to load a keystore from an input stream. However, the `encryptKey` variable is used as the password to protect the keystore, which is not a secure way to store sensitive data. Attackers can easily obtain the password by reading the memory of the running program.",
+    "recommendation": "Use a secure key management system to generate and store the password for the keystore. Avoid using hard-coded passwords or storing passwords in memory."
+  }
+]
+```

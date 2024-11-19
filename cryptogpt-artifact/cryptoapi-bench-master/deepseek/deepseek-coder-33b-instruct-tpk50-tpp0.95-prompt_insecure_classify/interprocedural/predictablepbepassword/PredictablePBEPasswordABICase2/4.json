@@ -1,0 +1,60 @@
+There are a few misuses in the provided code. These include:
+
+1. Hardcoded Cryptographic Key:
+    - The cryptographic key is hardcoded as a string and later converted to a character array. It's better to use a system-level secret management tool, such as the `SecretKeyFactory` or `SecureRandom`.
+
+2. Use of Weak Cryptographic Algorithms:
+    - The use of the PBEWithHmacSHA1AndAES_128 algorithm is deprecated. It's advisable to use stronger algorithms like AES-256.
+
+3. Improper Salt Generation:
+    - The salt is generated using a `SecureRandom`. However, the salt is not stored or used in a secure manner.
+
+4. Not Using Key Derivation Functions:
+    - The PBE (Password-Based Encryption) function is used without a Key Derivation Function (KDF).
+
+The corrected code would look like this:
+
+```java
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+import javax.crypto.spec.PBEParameterSpec;
+import java.security.SecureRandom;
+import java.security.spec.KeySpec;
+
+public class P2 {
+    private PBEKeySpec pbeKeySpec = null;
+    private PBEParameterSpec pbeParamSpec = null;
+    public static final char [] DEFAULT_ENCRYPT_KEY = "sagar".toCharArray();
+    private static char[] encryptKey;
+    private static byte [] salt;
+
+    public static void main(String [] args) {
+        P2 pksp = new P2();
+        go2();
+        go3();
+        pksp.go();
+    }
+
+    private static void go2(){
+        encryptKey = DEFAULT_ENCRYPT_KEY;
+    }
+    private static void go3(){
+        SecureRandom sr = new SecureRandom();
+        salt = new byte[16];
+        sr.nextBytes(salt);
+    }
+
+    private void go() {
+        pbeParamSpec = new PBEParameterSpec(salt, 10000);
+        try {
+            SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+            KeySpec spec = new PBEKeySpec(encryptKey, salt, 10000, 256);
+            pbeKeySpec = new PBEKeySpec(factory.generateSecret(spec).getEncoded(), "AES");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+This code generates a salt using a secure random method, and uses a Key Derivation Function (KDF) PBKDF2 with HMAC and SHA-256 before using the key for AES encryption.

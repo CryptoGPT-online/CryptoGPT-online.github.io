@@ -1,0 +1,24 @@
+The code uses a weak cryptographic algorithm. The cryptographic algorithm "MD2" used in the MessageDigest.getInstance() method may be considered weak and it's already known that it is vulnerable to many attacks, which may lead to data breaches.
+
+The misuse is the following:
+
+```java
+MessageDigest md = MessageDigest.getInstance(String.valueOf(crypto));
+```
+
+The code sets the cryptographic algorithm dynamically and is vulnerable because the string "MD2" is used directly, which can be changed by an attacker. Using hard-coded string values (especially ones that represent cryptographic algorithms) makes the code vulnerable to attacks.
+
+The recommended solution is to use a strong cryptographic algorithm, such as "SHA-256" or "SHA3", and not allow user input for setting the algorithm.
+
+Here is the JSON response:
+
+```json
+[
+    {
+        "misuse": "Weak Crypto Algorithm",
+        "vulnerable_code": "MessageDigest.getInstance(String.valueOf(crypto))",
+        "description": "The cryptographic algorithm used in the MessageDigest.getInstance() method may be weak and known to be vulnerable to many attacks, such as attacks based on length extension.",
+        "recommendation": "Use a strong cryptographic algorithm (such as SHA-256 or SHA3) and ensure the algorithm is not set based on user input."
+    }
+]
+```

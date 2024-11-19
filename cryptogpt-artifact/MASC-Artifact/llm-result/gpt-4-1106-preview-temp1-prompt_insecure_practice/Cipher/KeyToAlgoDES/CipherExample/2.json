@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "String algo = \"DES\";",
+        "description": "DES is considered a weak algorithm due to its small key size of 56 bits, which makes it susceptible to brute-force attacks.",
+        "recommendation": "Use a stronger algorithm like AES with a larger key size."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "KeyGenerator.getInstance(algo);",
+        "description": "Generating a DES key without specifying a larger key size (i.e., at least AES with 128 bits) is insecure.",
+        "recommendation": "Use KeyGenerator to generate keys with sufficient size such as AES keys with at least 128 bits in size."
+    },
+    {
+        "misuse": "Insecure Cipher Mode",
+        "vulnerable_code": "Cipher.getInstance(keygen.getAlgorithm());",
+        "description": "Using Cipher with DES without specifying the mode and padding could lead to ECB mode and PKCS5Padding which are not secure.",
+        "recommendation": "Specify secure mode and padding scheme, for example: 'AES/CBC/PKCS5Padding'."
+    },
+    {
+        "misuse": "Use of static cryptographic key",
+        "vulnerable_code": "SecretKey key = keygen.generateKey();",
+        "description": "The use of static keys within the code can lead to key disclosure and lack of key management. It's assumed to be static because each execution might use the same generated key without proper key management in place.",
+        "recommendation": "Implement proper key management by securely storing and retrieving the keys without hardcoding."
+    }
+]
+```

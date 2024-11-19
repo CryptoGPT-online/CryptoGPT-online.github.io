@@ -1,0 +1,45 @@
+### False Positive Misuse ###
+```json
+{
+  "misuse": "Randomness of key generation",
+  "vulnerable_method": "B1.go(String, String)",
+  "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(keyAlgo);\nSecretKey key = keyGen.generateKey();",
+  "description": "The key generation in this code does not take into account the randomness of keys which can lead to potential security issues.",
+  "recommendation": "Consider using SecureRandom for generating random numbers when generating keys."
+}
+```
+The key generator method does not take into account the randomness of keys for security purposes. The code is not in a production environment. It is not being used in a real-world scenario, hence, it is not a false positive. The usage of SecureRandom for key generation is not suggested in real-world applications as it has been shown in many real-world applications that the usage of non-secure random generators leads to predictability in random number generation.
+
+### Optimized Misuse JSON ###
+```json
+[
+  {
+    "misuse": "Weak Crypto Algorithms",
+    "vulnerable_method": "B1.go(String, String)",
+    "vulnerable_code": "Cipher.getInstance(crypto)",
+    "description": "The DES cipher and key size are too small for modern cryptographic standards.",
+    "recommendation": "Instead of DES, use a stronger cipher such as AES. Or use a key size of 128 bits or more if you absolutely need DES."
+  },
+  {
+    "misuse": "Unsecure use of Cipher",
+    "vulnerable_method": "B1.go(String, String)",
+    "vulnerable_code": "Cipher.getInstance(crypto)",
+    "description": "The cryptographic algorithm DES is not recommended for most new applications due to its relatively short key length. DES keys are only 56 bits, providing an exhaustive search space of 2^56 possible keys. This means an attacker can check all possible keys in less time than it would take to transmit the cipher text across the network. For these reasons, modern cryptographic protocols such as AES should be used.",
+    "recommendation": "Consider using a more secure cryptographic algorithm such as AES."
+  },
+  {
+    "misuse": "DES usage",
+    "vulnerable_method": "B1.go(String, String)",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(keyAlgo);\nSecretKey key = keyGen.generateKey();\nCipher cipher = Cipher.getInstance(crypto);",
+    "description": "DES is a weak cryptography algorithm. It has known vulnerabilities. It should not be used for any new development or system. In this code, it's used for generating a cryptographic key and later used for encryption.",
+    "recommendation": "Replace 'DES' with a stronger cryptographic algorithm like AES (AES-256)."
+  },
+  {
+    "misuse": "ECB mode usage",
+    "vulnerable_method": "B1.go(String, String)",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(crypto);\ncipher.init(Cipher.ENCRYPT_MODE, key);",
+    "description": "ECB is a less secure mode of operation for block cipher. If the input data is divided into blocks and each block is encrypted separately, blocks will encrypt to the same output which can reveal information about the plain text, particularly when identical plaintext blocks repeat in the input. This misuse can lead to information leaks and other vulnerabilities.",
+    "recommendation": "Use a more secure mode of operation. If data needs to be encrypted in multiple blocks, consider using a mode of operation like CBC (Cipher Block Chaining) or CFB (Cipher Feedback)."
+  }
+]
+```

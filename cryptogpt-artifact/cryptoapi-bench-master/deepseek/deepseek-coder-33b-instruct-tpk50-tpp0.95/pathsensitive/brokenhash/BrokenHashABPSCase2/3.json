@@ -1,0 +1,30 @@
+This code sample has the following misuse:
+
+1. Insecure Cryptography API Misuse
+
+Code:
+```java
+if(choice>1)
+    md = MessageDigest.getInstance("SHA-256");
+```
+Description: The code sets the `MessageDigest` to use the SHA-256 algorithm only when `choice` is greater than 1. For most situations, this is insecure because SHA-256 is considered more secure than MD5. If the `choice` is less than or equal to 1, the code defaults to the less secure MD5 algorithm.
+
+Recommendation: Always use secure and trusted algorithms for cryptographic operations. In this case, if `choice` is not 2, the code should default to MD5.
+
+Please note that the output of this code is not easily readable. It's recommended to convert the digest to hexadecimal for easier human readability.
+
+```java
+public class B2 {
+    public static void main (String [] args) throws NoSuchAlgorithmException {
+        String name = "abcdef";
+        int choice = 2;
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        if(choice>1)
+            md = MessageDigest.getInstance("SHA-256");
+        md.update(name.getBytes());
+        byte[] digest = md.digest();
+        String myHash = DatatypeConverter.printHexBinary(digest).toLowerCase();
+        System.out.println(myHash);
+    }
+}
+```

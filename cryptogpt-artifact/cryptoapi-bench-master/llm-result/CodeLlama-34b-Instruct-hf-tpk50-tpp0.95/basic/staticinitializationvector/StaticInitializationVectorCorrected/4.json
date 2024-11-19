@@ -1,0 +1,28 @@
+ {
+"misuses": [
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5Padding\")",
+"description": "The use of the AES/CBC/PKCS5Padding cipher is considered insecure because it uses a variable-length padding scheme that can be vulnerable to padding oracle attacks. It's recommended to use a fixed-length padding scheme, such as AES/CBC/PKCS7Padding, or an authenticated encryption mode, such as AES/GCM.",
+"recommendation": "Replace the AES/CBC/PKCS5Padding cipher with a fixed-length padding scheme, such as AES/CBC/PKCS7Padding, or an authenticated encryption mode, such as AES/GCM."
+},
+{
+"misuse": "Insecure Key Generation",
+"vulnerable_code": "KeyGenerator.getInstance(\"AES\")",
+"description": "The use of the KeyGenerator.getInstance(\"AES\") method without specifying the desired key size is considered insecure because it may generate a weak key. It's recommended to specify the desired key size, such as 128, 192, or 256 bits.",
+"recommendation": "Specify the desired key size, such as 128, 192, or 256 bits, when calling the KeyGenerator.getInstance(\"AES\") method."
+},
+{
+"misuse": "Insecure Random Number Generation",
+"vulnerable_code": "SecureRandom sr = new SecureRandom();\n        byte [] bytes = i.toByteArray();\n        IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+"description": "The use of the SecureRandom class without specifying a seed is considered insecure because it may generate predictable random numbers. It's recommended to use a secure random number generator, such as the SecureRandom class with a seed, or to use a cryptographically secure pseudorandom number generator, such as the SHA-1 or SHA-256 hash function.",
+"recommendation": "Use a secure random number generator, such as the SecureRandom class with a seed, or a cryptographically secure pseudorandom number generator, such as the SHA-1 or SHA-256 hash function."
+},
+{
+"misuse": "Insecure Use of IV",
+"vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+"description": "The use of a predictable IV is considered insecure because it may allow an attacker to deduce information about the encrypted data. It's recommended to use a cryptographically secure pseudorandom number generator, such as the SHA-1 or SHA-256 hash function, to generate the IV.",
+"recommendation": "Use a cryptographically secure pseudorandom number generator, such as the SHA-1 or SHA-256 hash function, to generate the IV."
+}
+]
+}

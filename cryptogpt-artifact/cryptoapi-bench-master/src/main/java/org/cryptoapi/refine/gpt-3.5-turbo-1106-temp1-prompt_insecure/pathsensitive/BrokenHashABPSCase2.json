@@ -1,0 +1,26 @@
+### False Positive Misuse ###
+None
+
+### Optimized Misuse JSON ###
+```json
+[
+    {
+        "misuse": "Insecure Hashing Algorithm",
+        "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(\"MD5\");",
+        "description": "The use of MD5 for hashing is considered insecure and vulnerable to collision attacks.",
+        "recommendation": "Use a more secure hashing algorithm such as SHA-256."
+    },
+    {
+        "misuse": "Dynamic Selection of Cryptographic Hash Function",
+        "vulnerable_code": "if(choice>1)\n    md = MessageDigest.getInstance(\"SHA-256\");",
+        "description": "The code dynamically selects the cryptographic hash function based on the value of the 'choice' variable, which can lead to insecurity.",
+        "recommendation": "Use a single, strong cryptographic hash function throughout the application to avoid insecure dynamic selection of hash function."
+    },
+    {
+        "misuse": "Insecure Algorithm",
+        "vulnerable_code": "md.update(name.getBytes());",
+        "description": "The use of update with MD5 or SHA-256 is prone to insecure usage if the data is manipulated before digest operation.",
+        "recommendation": "Consider using a secure channel or applying digital signatures for data integrity."
+    }
+]
+```

@@ -1,0 +1,28 @@
+```json
+[
+  {
+    "misuse": "Insufficient IV Entropy",
+    "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+    "description": "The initialization vector (IV) should be random and unique for each encryption operation. A constant IV 'abcde' used for encryption increases the risk of nonce reuse and other attacks.",
+    "recommendation": "Generate a random IV using a secure random number generator."
+  },
+  {
+    "misuse": "Improper Initialization Vector Size",
+    "vulnerable_code": "byte [] bytes = \"abcde\".getBytes();",
+    "description": "The IV used is not the correct size for AES (must be 16 bytes for AES). Using an IV of incorrect size can lead to errors or weak encryption.",
+    "recommendation": "Ensure that the IV is 16 bytes long when using AES."
+  },
+  {
+    "misuse": "Key Generation without SecureRandom",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+    "description": "The key generator is not explicitly initialized with a SecureRandom instance. This may result in weak keys if the default randomness source is not secure.",
+    "recommendation": "Initialize the KeyGenerator with a SecureRandom instance."
+  },
+  {
+    "misuse": "Insecure Default Randomness for Key Generation",
+    "vulnerable_code": "SecretKey key = keyGen.generateKey();",
+    "description": "No specific secure random seed or source is set for the key generator. This can lead to weak keys if the environment's default randomness is predictable.",
+    "recommendation": "Specify a source of entropy using SecureRandom for key generation."
+  }
+]
+```

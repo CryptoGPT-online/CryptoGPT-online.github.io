@@ -1,0 +1,14 @@
+The provided code is using AES for encryption, and IV (Initialization Vector) is set to a static value. This is insecure because it can lead to easily predictable and predictable ciphertexts, which can lead to information disclosure or even a potential for attacks. The IV should be a random value and it is different for each encryption operation.
+
+In the provided code, IV is set to "abcde".getBytes("UTF-8"), which is a non-random value.
+
+The following is the JSON response with the identified misuse:
+
+```json
+[{
+    "misuse": "CWE-330: Use of Insufficiently Random Values.",
+    "vulnerable_code": "byte [] bytes = \"abcde\".getBytes(\"UTF-8\");\n\nIvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+    "description": "The IV value is set to a non-random value. It should be generated using a cryptographically strong random number generator.",
+    "recommendation": "Use SecureRandom class to generate a random IV for each encryption operation."
+}]
+```

@@ -1,0 +1,19 @@
+```json
+[
+    {
+        "misuse": "Trust Manager that Accepts Any Certificate (CWE-295)",
+        "vulnerable_code": [
+            "public void checkClientTrusted(X509Certificate[] chain, String authType)\n throws CertificateException {\n}",
+            "public void checkServerTrusted(X509Certificate[] chain, String authType)\n throws CertificateException {\n}"
+        ],
+        "description": "The implementation of the X509TrustManager interface does not validate certificate chains, which allows any certificate to be trusted. This creates a security hole that allows an attacker to use any certificate, including invalid or self-signed ones.",
+        "recommendation": "Implement proper certificate chain validation in both `checkClientTrusted` and `checkServerTrusted` methods. Consider using the default trust managers provided by the Java platform that enforce certificate validation or carefully create a custom trust manager that does verify certificate chains."
+    },
+    {
+        "misuse": "Trust Manager with Empty getAcceptedIssuers Method (CWE-295)",
+        "vulnerable_code": "public java.security.cert.X509Certificate[] getAcceptedIssuers() {\n return null;\n}",
+        "description": "Returning null or an empty array in the `getAcceptedIssuers` method of an `X509TrustManager` effectively bypasses checks during SSL/TLS handshakes. This means that the trust manager does not restrict which Certificate Authorities (CAs) it trusts, potentially accepting certificates from any CA.",
+        "recommendation": "Return a list of accepted issuers that the trust manager should trust, or implement logic to check against a set of trusted issuers."
+    }
+]
+```

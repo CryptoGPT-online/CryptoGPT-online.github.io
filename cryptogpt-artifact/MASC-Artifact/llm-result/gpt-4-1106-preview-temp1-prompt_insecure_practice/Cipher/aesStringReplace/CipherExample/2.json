@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "Weak Encryption Algorithm",
+    "vulnerable_code": "Cipher.getInstance(\"AES\".replace(\"A\", \"D\"))",
+    "description": "The code is intended to use AES encryption, but due to the replacement operation, it mistakenly requests a Cipher instance of 'DES' instead. DES (Data Encryption Standard) is considered weak due to its small key size of 56 bits.",
+    "recommendation": "Use 'AES' or another strong encryption algorithm with a larger key size (e.g. AES-128, AES-192, AES-256). Do not manipulate the algorithm string."
+  },
+  {
+    "misuse": "Incomplete Cipher Initialization",
+    "vulnerable_code": "Cipher.getInstance(\"AES\".replace(\"A\", \"D\"))",
+    "description": "The Cipher instance is not properly initialized with a key and may also be lacking an initialization vector (IV), if one is required for the chosen mode. Uninitialized Cipher instances cannot securely encrypt or decrypt data.",
+    "recommendation": "Initialize the Cipher instance with a SecretKey and, if applicable, an IV. Use SecureRandom for generating keys and IVs if needed."
+  },
+  {
+    "misuse": "Default Cipher Mode and Padding",
+    "vulnerable_code": "Cipher.getInstance(\"AES\".replace(\"A\", \"D\"))",
+    "description": "The code uses getInstance with a single argument which makes it rely on the default mode and padding. Depending on the defaults, this might lead to using an insecure mode of operation such as ECB, and non-optimal padding.",
+    "recommendation": "Explicitly specify a secure mode of operation and padding (e.g., 'AES/CBC/PKCS5Padding')."
+  }
+]
+```

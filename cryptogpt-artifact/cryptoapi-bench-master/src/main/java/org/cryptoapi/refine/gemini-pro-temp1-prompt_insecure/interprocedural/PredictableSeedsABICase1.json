@@ -1,0 +1,29 @@
+### False Positive Misuse ###
+None of the reported misuses are false positives.
+
+### Optimized Misuse JSON ###
+```json
+[
+  {
+    "misuse category": "Inadequate Seed Initialization",
+    "vulnerable_method": "P1.go",
+    "vulnerable_code": "byte [] seed = {(byte) 100, (byte) 200};",
+    "description": "Using a fixed seed value for `SecureRandom` is insecure as it makes the generated random numbers predictable.",
+    "recommendation": "Use a cryptographically secure random number generator like `SecureRandom` and seed it with a strong seed value, such as one generated from `/dev/urandom` or a similar source of entropy."
+  },
+  {
+    "misuse category": "Inadequate Seeding of Random Number Generator",
+    "vulnerable_method": "P1.go",
+    "vulnerable_code": "SecureRandom sr = new SecureRandom();\nsr.setSeed(seed);",
+    "description": "The seed value used to initialize the SecureRandom instance is not cryptographically secure. An attacker could potentially guess or predict the seed value, which would allow them to predict the sequence of random numbers generated.",
+    "recommendation": "Use a cryptographically secure random number generator (CSPRNG) and seed it with a truly random seed value. For example, you could use the `java.security.SecureRandom` class and seed it with a value obtained from a hardware random number generator."
+  },
+  {
+    "misuse category": "Weak Seed Initialization",
+    "vulnerable_method": "P1.go",
+    "vulnerable_code": "SecureRandom sr = new SecureRandom();\nsr.setSeed(seed);",
+    "description": "The `SecureRandom` is initialized with a weak seed value, which makes it predictable and insecure.",
+    "recommendation": "Use a cryptographically secure random number generator (CSPRNG) and initialize it with a strong seed value, such as `/dev/urandom` or `System.currentTimeMillis()`. For example, `SecureRandom sr = new SecureRandom();\nsr.setSeed(SecureRandom.getSeed(16));`."
+  }
+]
+```

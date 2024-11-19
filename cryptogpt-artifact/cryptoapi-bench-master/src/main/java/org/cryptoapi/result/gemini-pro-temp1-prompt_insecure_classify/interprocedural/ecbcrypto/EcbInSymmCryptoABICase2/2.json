@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength.",
+    "vulnerable_code": "private static char[] CRYPTO;\nprivate static char[] crypto;",
+    "description": "Using character arrays to store cryptographic keys or other sensitive data is not secure. This is because character arrays are easily accessible and can be easily modified or compromised.",
+    "recommendation": "Use a secure key store or other mechanism to store cryptographic keys and other sensitive data."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength.",
+    "vulnerable_code": "crypto = CRYPTO;",
+    "description": "Assigning the value of CRYPTO to crypto variable directly without any additional protection or transformation.",
+    "recommendation": "Use a secure key derivation function (KDF) to generate a new key from the original key. This will make it more difficult for an attacker to recover the original key."
+  },
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(String.valueOf(crypto));",
+    "description": "Using ECB (Electronic Codebook) mode for encryption, which is known to be insecure and should not be used.",
+    "recommendation": "Use a more secure block cipher mode such as CBC (Cipher Block Chaining) or CTR (Counter Mode) instead of ECB."
+  }
+]
+```

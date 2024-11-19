@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "CWE-326: Inadequate Entropy for Random Number Generation",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+    "description": "The code uses `KeyGenerator.generateKey()` to generate a secret key for AES encryption. However, it does not specify the key size or provide a source of randomness, which may result in weak or predictable keys.",
+    "recommendation": "Use a secure random number generator (e.g., `SecureRandom`) to generate cryptographically strong keys. Specify an appropriate key size based on the security requirements of the application."
+  },
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+    "description": "The code uses the \"AES/CBC/PKCS5Padding\" cipher, which is a legacy algorithm that has known vulnerabilities and is no longer considered secure. Attackers can exploit these vulnerabilities to recover plaintext or inject malicious data.",
+    "recommendation": "Use a more secure cipher algorithm, such as AES-GCM or ChaCha20-Poly1305."
+  }
+]
+```

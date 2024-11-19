@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "KeyPairGenerator kgp = KeyPairGenerator.getInstance(\"RSA\");",
+        "description": "The code uses KeyPairGenerator.getInstance(\"RSA\") without specifying a secure random number generator algorithm, which may result in insecure key generation.",
+        "recommendation": "Specify a secure random number generator algorithm when creating KeyPairGenerator instance, such as `KeyPairGenerator.getInstance(\"RSA\", \"SUN\")` where \"SUN\" is a provider that utilizes a secure random number generator."
+    },
+    {
+        "misuse": "Insecure Key Size",
+        "vulnerable_code": "int keysize; if (choice>1) keysize = 2048; else keysize = 1024;",
+        "description": "The code uses a key size of 1024 bits when the choice is not greater than 1, which is considered insecure for RSA encryption.",
+        "recommendation": "Use a key size of at least 2048 bits to ensure better security for RSA encryption."
+    },
+    {
+        "misuse": "Incorrect Cipher Initialization",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"RSA\"); cipher.init(Cipher.ENCRYPT_MODE, kp.getPublic());",
+        "description": "The code initializes the Cipher with the mode set to ENCRYPT_MODE, but it is using the public key for encryption, which is not secure for RSA encryption.",
+        "recommendation": "Use the Cipher in DECRYPT_MODE when using the public key for encryption. If it is intended for encryption, use the privateKey instead of publicKey."
+    }
+]
+```

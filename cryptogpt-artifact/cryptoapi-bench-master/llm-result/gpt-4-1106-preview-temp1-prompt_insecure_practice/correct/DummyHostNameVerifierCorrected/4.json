@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Improper Verification of Cryptographic Signature (CWE-347)",
+        "vulnerable_code": "if (\"192.168.0.10\".equals(hostname)) { return true; }",
+        "description": "The code above disables hostname verification when the IP address matches a specific IP which can allow Man-In-The-Middle (MITM) attacks because it trusts the IP without validating the server's certificate against the hostname.",
+        "recommendation": "Remove the IP address check and always verify the hostname against the server's certificate to ensure secure TLS communication."
+    },
+    {
+        "misuse": "Improper Hostname Verification (CWE-297)",
+        "vulnerable_code": "if (\"192.168.0.10\".equals(hostname)) { return true; }",
+        "description": "This code creates a security vulnerability by unconditionally trusting a fixed hostname. In a real-world scenario, the hostname verification should not be skipped as this might allow an attacker with control over DNS responses to redirect traffic to a malicious server.",
+        "recommendation": "Do not override the default hostname verifier to accept a specific address. Rely on the default TLS hostname verification process by removing the conditional override."
+    }
+]
+```

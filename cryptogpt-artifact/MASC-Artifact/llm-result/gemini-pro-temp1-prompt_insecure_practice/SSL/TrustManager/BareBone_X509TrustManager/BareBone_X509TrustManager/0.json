@@ -1,0 +1,31 @@
+```
+[
+  {
+    "misuse": "CWE-757 Improperly Implemented Trust Manager",
+    "vulnerable_code": "static X509TrustManager getTrustmanager() {\n" +
+      "        return new X509TrustManager() {\n" +
+      "\n" +
+      "            @Override\n" +
+      "            public X509Certificate[] getAcceptedIssuers() {\n" +
+      "                // TODO Auto-generated method stub\n" +
+      "                return null;\n" +
+      "            }\n" +
+      "\n" +
+      "            @Override\n" +
+      "            public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {\n" +
+      "                // TODO Auto-generated method stub\n" +
+      "\n" +
+      "            }\n" +
+      "\n" +
+      "            @Override\n" +
+      "            public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {\n" +
+      "                // TODO Auto-generated method stub\n" +
+      "\n" +
+      "            }\n" +
+      "        };\n" +
+      "    }",
+    "description": "The code creates a custom X509TrustManager without implementing all the required methods, such as `checkServerTrusted` and `checkClientTrusted`. This can lead to insecure behavior, such as trusting all certificates or failing to validate certificates properly.",
+    "recommendation": "Implement all the required methods of the `X509TrustManager` interface, and ensure that the implementation properly validates certificates according to the intended security policy."
+  }
+]
+```

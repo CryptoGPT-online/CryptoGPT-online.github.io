@@ -1,0 +1,16 @@
+ {
+"misuses": [
+{
+"misuse": "Weak IV",
+"vulnerable_code": "new IvParameterSpec(bytes);",
+"description": "The IV is generated using SecureRandom, which is not a cryptographically secure RNG, and can lead to a weak IV that can be predicted and lead to plaintext attacks.",
+"recommendation": "Use a cryptographically secure RNG such as /dev/urandom or the Random class from the Java Security API to generate the IV."
+},
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+"description": "The AES algorithm used in this code is vulnerable to attacks such as padding oracle attacks, which can lead to the decryption of the ciphertext.",
+"recommendation": "Use a more secure encryption algorithm such as AES-GCM or ChaCha20-Poly1305, and use a secure mode of operation such as GCM or CTR mode."
+}
+]
+}

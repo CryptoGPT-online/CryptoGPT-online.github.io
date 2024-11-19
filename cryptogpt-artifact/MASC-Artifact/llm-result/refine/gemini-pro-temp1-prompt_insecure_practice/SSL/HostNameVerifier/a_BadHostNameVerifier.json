@@ -1,0 +1,28 @@
+### False Positive Misuse ###
+1. **Misuse:** CWE-291: Improper Validation of Certificate Trust
+**Vulnerable Code:** `boolean verify(String hostname, SSLSession session) {\nreturn true;\n}`
+**Reason:** This code is part of a custom hostname verifier, which is used to verify the hostname in the SSL certificate. By always returning true, this code is accepting any hostname, which can lead to man-in-the-middle attacks. However, this is not a misuse of the cryptographic API, but rather a misuse of the hostname verifier.
+
+2. **Misuse:** Broken Crypto Algorithm
+**Vulnerable Code:** `new HostnameVerifier(){...}`
+**Reason:** This code creates a custom hostname verifier, which is used to verify the hostname in the SSL certificate. By always returning true, this code is accepting any hostname, which can lead to man-in-the-middle attacks. However, this is not a misuse of the cryptographic API, but rather a misuse of the hostname verifier.
+
+### Optimized Misuse JSON ###
+```json
+[
+  {
+    "misuse category": "CWE-297: Improper Validation of Certificate Trust",
+    "vulnerable_method": "HostnameVerifier.verify",
+    "vulnerable_code": "new HostnameVerifier(){....}",
+    "description": "This code creates a custom hostname verifier that always returns `true`, which means that it will accept any SSL certificate, regardless of whether it is trusted or not. This can lead to man-in-the-middle attacks, where an attacker can intercept the connection and impersonate the server.",
+    "recommendation": "Use a proper hostname verifier that checks the certificate chain and hostname against a list of trusted certificates."
+  },
+  {
+    "misuse category": "CWE-350: Use of Hard-Coded Credentials",
+    "vulnerable_method": "HostnameVerifier.verify",
+    "vulnerable_code": "public class Be {\n\n    public static void main(String[] args) {\n        new HostnameVerifier(){\n\n            @Override\n            public boolean verify(String hostname, SSLSession session) {\n                // TODO Auto-generated method stub\n                return true;\n            }\n        };\n    }\n}",
+    "description": "The code uses a hard-coded value for the hostname verification, which can be easily bypassed by an attacker.",
+    "recommendation": "Use a proper hostname verification mechanism, such as using a certificate authority (CA) to verify the hostname."
+  }
+]
+```

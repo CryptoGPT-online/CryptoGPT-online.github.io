@@ -1,0 +1,34 @@
+```json
+[
+  {
+    "misuse": "Insecure Randomness",
+    "vulnerable_code": "String password = String.valueOf(random.ints());",
+    "description": "The method used for random number generation is not secure. Calling ints() on a SecureRandom instance does not guarantee a securely random password because the ints stream needs to be limited to a proper character set and collected into an appropriately sized string.",
+    "recommendation": "Use a more secure method to generate a random password, ensuring that the characters are chosen from a defined set and the string length is sufficient for security."
+  },
+  {
+    "misuse": "Insecure trust of SSL/TLS server certificate",
+    "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");",
+    "description": "The server certificate is not being verified against a list of known and trusted Certificate Authorities (CAs). By loading a KeyStore with a URL stream, the trustworthiness of the SSL/TLS connection cannot be guaranteed.",
+    "recommendation": "Use a properly initialized TrustManager that checks server certificates against trusted CAs. Also, the KeyStore should be loaded with known certificates."
+  },
+  {
+    "misuse": "Improper Validation of Certificate Expiration",
+    "vulnerable_code": "ks.load(cacerts.openStream(), password.toCharArray());",
+    "description": "The code is loading a KeyStore from a URL without validating the certificate chain, which includes checking certificate expiration dates.",
+    "recommendation": "Implement proper SSL/TLS certificate chain validation including expiration checks."
+  },
+  {
+    "misuse": "Exposing sensitive information",
+    "vulnerable_code": "String password = String.valueOf(random.ints());",
+    "description": "The password for the KeyStore is generated and used in memory, which could potentially expose it to memory dumps or other processes.",
+    "recommendation": "Handle sensitive information such as passwords more securely by zeroing out or encrypting in-memory representations after use, and minimizing exposure time in memory."
+  },
+  {
+    "misuse": "Incorrect Exception handling",
+    "vulnerable_code": "public static void main(String args[]) throws KeyStoreException, IOException, CertificateException, NoSuchAlgorithmException",
+    "description": "The main method declares to throw several exceptions instead of handling them, which may not be appropriate for its execution environment.",
+    "recommendation": "Catch and handle exceptions appropriately within the main method, providing proper error logging and recovery paths."
+  }
+]
+```

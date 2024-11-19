@@ -1,0 +1,31 @@
+```json
+[
+    {
+        "misuse": "Insecure Asymmetric Encryption Padding",
+        "vulnerable_code": [
+            "Cipher cipher = Cipher.getInstance(\"RSA\");",
+            "Cipher dec = Cipher.getInstance(\"RSA\");"
+        ],
+        "description": "The code is using RSA without specifying a padding scheme, which means it defaults to the insecure 'NoPadding' or 'PKCS1Padding' scheme. This can make the encryption vulnerable to padding oracle attacks.",
+        "recommendation": "When using RSA, always specify a secure padding scheme. For example, use 'RSA/ECB/OAEPWithSHA-256AndMGF1Padding' to ensure that the encryption is not susceptible to padding oracle attacks and provides proper security."
+    },
+    {
+        "misuse": "Small RSA Key Size",
+        "vulnerable_code": [
+            "int key = 1024;",
+            "kgp.initialize(key);"
+        ],
+        "description": "The RSA key size of 1024 bits is no longer considered secure. It is susceptible to factorization attacks which could compromise the encrypted data.",
+        "recommendation": "Use a larger RSA key size. It is recommended to use at least a 2048-bit key for RSA to ensure a sufficient level of security."
+    },
+    {
+        "misuse": "Direct Use of RSA for Encryption/Decryption of Bulk Data",
+        "vulnerable_code": [
+            "SealedObject encryptedMessage = new SealedObject(myMessage,cipher);",
+            "String message = (String) encryptedMessage.getObject(dec);"
+        ],
+        "description": "Using RSA directly to encrypt/decrypt messages is not recommended for large amounts of data due to performance issues and potential security vulnerabilities. RSA is generally designed for encrypting small pieces of data such as keys.",
+        "recommendation": "Instead of encrypting the message directly with RSA, use RSA to encrypt a symmetric key, and then use a secure symmetric encryption algorithm like AES to encrypt the actual message with the symmetric key."
+    }
+]
+```

@@ -1,0 +1,24 @@
+```json
+[
+  {
+    "misuse": "Insecure Use of Seed",
+    "vulnerable_code": [
+      "byte [] seed = {(byte) 100, (byte) 200};",
+      "if(choice>1)",
+      "  sr2.nextBytes(seed);",
+      "...",
+      "SecureRandom sr = new SecureRandom(seed);"
+    ],
+    "description": "Overriding the seed of a SecureRandom can compromise the randomness of the values it generates, especially if the seed is predefined or predictable.",
+    "recommendation": "Do not manually set the seed for SecureRandom; allow it to self-seed using default entropy sources."
+  },
+  {
+    "misuse": "Insufficient Seed Length",
+    "vulnerable_code": [
+      "byte [] seed = {(byte) 100, (byte) 200};"
+    ],
+    "description": "A short seed length can lead to insufficient entropy, especially when the seed value is small or not complex which could make the generated values predictable.",
+    "recommendation": "Do not specify a seed, let SecureRandom obtain enough entropy from the system. If a seed is necessary, ensure it is sufficiently long and randomly generated."
+  }
+]
+```

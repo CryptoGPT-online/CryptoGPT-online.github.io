@@ -1,0 +1,25 @@
+```json
+[
+    {
+        "misuse": "Insufficient Entropy",
+        "vulnerable_code": "String defaultKey = String.valueOf(random.ints());",
+        "description": "The way the random.ints() is converted into a string and then into a byte array may not provide a sufficiently random key. The randomness is crucial for the security of the encryption key.",
+        "recommendation": "Use a proper key management solution to generate, store, and retrieve cryptographic keys."
+    },
+    {
+        "misuse": "Static Initialization Vector",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, keySpec);",
+        "description": "The code does not specify an initialization vector (IV) for AES in CBC mode. This leads to using a static IV, which is insecure because it makes the encryption deterministic.",
+        "recommendation": "Generate a random IV for each encryption operation and provide it when initializing the cipher instance."
+    },
+    {
+        "misuse": "Key Derivation from Insufficient Entropy",
+        "vulnerable_code": [
+            "String defaultKey = String.valueOf(random.ints());",
+            "byte[] keyBytes = defaultKey.getBytes();"
+        ],
+        "description": "Deriving an encryption key directly from a random.ints() cast to a string may result in a key with insufficient entropy. This is not a secure way to generate a cryptographic key.",
+        "recommendation": "Use a secure key derivation function, like PBKDF2, with appropriate parameters to derive keys from passwords or other low-entropy sources."
+    }
+]
+```

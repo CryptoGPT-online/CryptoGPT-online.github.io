@@ -1,0 +1,20 @@
+ [
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "PBEParameterSpec pbeParamSpec = null;\npbeParamSpec = new PBEParameterSpec(new byte[]{Byte.parseByte(salt.toString())}, count);",
+        "description": "The salt is being generated using a fixed string, which is not secure. The salt should be generated using a secure random number generator and be unique for each password.",
+        "recommendation": "Generate the salt using a secure random number generator, such as SecureRandom.getInstance(\"SHA1PRNG\") and store it securely."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": "PBEParameterSpec pbeParamSpec = null;\npbeParamSpec = new PBEParameterSpec(new byte[]{Byte.parseByte(salt.toString())}, count);",
+        "description": "The PBEParameterSpec class is being used with a fixed iteration count, which may not be sufficient for modern hardware.",
+        "recommendation": "Use a more secure iteration count, such as 100,000 or more, and consider using a variable iteration count."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "public static final String DEFAULT_SALT = \"12345\";",
+        "description": "The salt is being stored as a hardcoded string, which can be easily extracted and used to compromise the security of the system.",
+        "recommendation": "Store the salt securely, such as in a configuration file or as a secure environment variable."
+    }
+]

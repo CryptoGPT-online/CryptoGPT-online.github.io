@@ -1,0 +1,23 @@
+Misuse Type: Weak Randomness
+
+Vulnerable Code:
+
+```java
+SecureRandom sr = new SecureRandom();
+sr.nextBytes(salt);
+```
+
+Description: The iteration count is set to 11010, which is not high enough for secure encryption and could make the process faster. Also, the size of the salt is not sufficient (only 16 bytes). This makes the hashing process less secure.
+
+Recommendation: Increase the iteration count and salt size. For example, consider using a high iteration count (such as 100000) and a large random salt (e.g., 128 bytes).
+
+```java
+int iterationCount = 100000;
+byte [] salt = new SecureRandom().generateSeed(128);
+```
+
+Please note, high iteration counts can make the PBKDF function more CPU-intensive, which can make password cracking attacks more feasible. Therefore, it is recommended to choose the trade-off balance between security and performance.
+
+```json
+[{"misuse": "Weak Randomness", "vulnerable_code": "sr.nextBytes(salt);","description": "The iteration count is not high enough and salt size is not sufficient which makes the hashing process less secure.","recommendation": "Increase the iteration count and salt size. For example, consider using a high iteration count (such as 100000) and a large random salt (e.g., 128 bytes)."}]
+```

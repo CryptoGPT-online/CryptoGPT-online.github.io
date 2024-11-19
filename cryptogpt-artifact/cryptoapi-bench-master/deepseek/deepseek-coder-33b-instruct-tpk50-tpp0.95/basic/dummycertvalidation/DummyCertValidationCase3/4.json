@@ -1,0 +1,45 @@
+There are no apparent issues with the provided Java code, but it could potentially lead to a security issue due to the lack of implementation in the `checkClientTrusted` and `checkServerTrusted` methods.
+
+If you are using this class to provide a custom trust manager in a SSLContext, these methods should be implemented to verify the identity of the client or server certificate, respectively. The current implementation is not verifying any certificate at all, which is a critical misuse.
+
+For example, you could have something like:
+
+```java
+public class D3 implements X509TrustManager {
+    @Override
+    public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+        if (x509Certificates == null || x509Certificates.length == 0) {
+            throw new CertificateException("No trusted certificates provided");
+        }
+        // implement certificate verification logic
+    }
+
+    @Override
+    public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+        if (x509Certificates == null || x509Certificates.length == 0) {
+            throw new CertificateException("No trusted certificates provided");
+        }
+        // implement certificate verification logic
+    }
+
+    @Override
+    public X509Certificate[] getAcceptedIssuers() {
+        return null;
+    }
+}
+```
+
+Please note that this is a minimal example and you should implement your own certificate verification logic based on your requirements.
+
+Here's the JSON response for this misuse:
+
+```json
+[
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "@Override public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {...}\n@Override public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {...}",
+        "description": "The checkClientTrusted and checkServerTrusted methods are not implementing any certificate validation logic, which can lead to potential security issues such as man-in-the-middle attacks.",
+        "recommendation": "Implement certificate validation logic in the checkClientTrusted and checkServerTrusted methods, using a standard algorithm or custom logic that aligns with your security requirements."
+    }
+]
+```

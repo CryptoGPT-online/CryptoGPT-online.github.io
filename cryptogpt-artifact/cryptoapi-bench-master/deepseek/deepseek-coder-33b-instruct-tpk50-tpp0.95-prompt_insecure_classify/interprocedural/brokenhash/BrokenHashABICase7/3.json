@@ -1,0 +1,33 @@
+Misuse: CWE-327: Use of a Broken or Risky Cryptographic Algorithm.
+
+Misuse Code: 
+```java
+private static void go3(){
+    crypto = CRYPTO;
+}
+```
+
+Description: The crypto algorithm used in go3() method is not secure. The programmer simply copies a reference to the array CRYPTO to the array crypto. This means that any changes to crypto would also change CRYPTO, since they both refer to the same array in memory. This makes the code vulnerable to changes to the crypto algorithm from another part of the code. Furthermore, the use of the MD4 algorithm is a risky choice as it has been proven to be insecure. 
+
+Recommendation: It is suggested to use a secure and proven cryptographic algorithm. Also, to ensure the integrity of the crypto algorithm, we should clone it during the go3() method. Here is the modified code:
+
+```java
+private static void go3(){
+    crypto = CRYPTO.clone();
+}
+```
+
+Misuse: CWE-330: Use of Insufficiently Random Values.
+
+Misuse Code: 
+```java
+private static void go2(){
+    CRYPTO = DEFAULT_CRYPTO.toCharArray();
+}
+```
+
+Description: The crypto algorithm is hardcoded as a string in the program. It is a bad practice to hardcode values like this, as it can lead to insecurities. 
+
+Recommendation: The crypto algorithm should be randomly generated or chosen from a set of secure algorithms. It is also suggested to use a SecureRandom or another cryptographically strong random number generator to generate values that require a secure seed.
+
+Please note, the program is not calling the MessageDigest.getInstance() method directly. However, if we assume the program will call the method like this in the future, the above misuse and recommendation is applicable.

@@ -1,0 +1,45 @@
+```json
+[
+  {
+    "misuse": "Broken Crypto Algorithm",
+    "vulnerable_code": [
+      "crypto = new C6(\"IDEA\");"
+    ],
+    "description": "The IDEA encryption algorithm is outdated and not considered secure for modern applications. Using IDEA could make encrypted data susceptible to cryptographic attacks.",
+    "recommendation": "Replace IDEA with a more secure algorithm such as AES."
+  },
+  {
+    "misuse": "Missing Initialization Vector (IV)",
+    "vulnerable_code": [
+      "cipher.init(Cipher.ENCRYPT_MODE, key);"
+    ],
+    "description": "The encryption method does not use an initialization vector (IV) for the cipher which should be used in CBC mode or other modes that require an IV to ensure that encryption is semantically secure.",
+    "recommendation": "Use an IV with an appropriate block cipher mode."
+  },
+  {
+    "misuse": "Use of static/empty key",
+    "vulnerable_code": [
+      "crypto.encrypt(\"abc\",\"\");"
+    ],
+    "description": "Passing an empty string as the encryption key can lead to weak cryptography if it is interpreted as a key with no entropy.",
+    "recommendation": "Use secure key management to pass a strong key to the encryption function."
+  },
+  {
+    "misuse": "Potentially predictable key",
+    "vulnerable_code": [
+      "SecretKey key = keyGen.generateKey();"
+    ],
+    "description": "The generation of the encryption key doesn't specify a secure random number generator. This may lead to the generation of predictable keys if the default RNG is not secure.",
+    "recommendation": "Use a secure RNG when generating keys."
+  },
+  {
+    "misuse": "Inconsistent use of encryption algorithm",
+    "vulnerable_code": [
+      "KeyGenerator.getInstance(defaultAlgo);",
+      "Cipher.getInstance(defaultAlgo);"
+    ],
+    "description": "The code implies that the same algorithm name will be used for both key generation and cipher operations, which might not always work if the algorithm names do not match exactly, leading to potential errors.",
+    "recommendation": "Ensure that the algorithm names used for key generation and cipher operations match and are compatible."
+  }
+]
+```

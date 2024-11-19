@@ -1,0 +1,40 @@
+```json
+[
+    {
+        "misuse": "Use of a Non-Random IV for CBC Mode",
+        "vulnerable_code": [
+            "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5PADDING\");",
+            "cipher.init(Cipher.ENCRYPT_MODE, keySpec);"
+        ],
+        "description": "The code does not specify an initialization vector (IV) for AES in CBC mode which causes the Cipher instance to use a default IV which might not be random or could even be a static IV, leading to potential vulnerabilities if the same key is reused.",
+        "recommendation": "A random IV must be generated for each encryption operation. Use SecureRandom to generate a random IV, and specify it when initializing the cipher instance using an IvParameterSpec."
+    },
+    {
+        "misuse": "Insecure Key Derivation from Insufficiently Random Source",
+        "vulnerable_code": [
+            "SecureRandom random = new SecureRandom();",
+            "String defaultKey = String.valueOf(random.ints());",
+            "byte[] keyBytes = defaultKey.getBytes();",
+            "keyBytes = Arrays.copyOf(keyBytes,16);"
+        ],
+        "description": "The key derivation from the SecureRandom ints() call is insecure. The call to ints() returns an IntStream, which is not directly suitable as a cryptographic key. When converted to a String and then to bytes, the result may not be uniformly random or have the proper cryptographic strength.",
+        "recommendation": "Use a key derivation function (KDF) or a secure random byte generator to generate a key directly. Ensure that the key has the proper size and cryptographic strength for AES (which is 128, 192, or 256 bits)."
+    },
+    {
+        "misuse": "Static or Insufficiently Random Key",
+        "vulnerable_code": [
+            "String defaultKey = String.valueOf(random.ints());"
+        ],
+        "description": "Using SecureRandom.ints() in this way may result in insufficient entropy for key generation, and calling String.valueOf on this can lead to reproducible keys if not used correctly. If the resulting key is reused across multiple executions with the same random seed, it would result in the same key being generated.",
+        "recommendation": "A proper key management system should be in place. Generate keys using a cryptographically secure random byte generation function, and ensure keys are not inadvertently reused."
+    },
+    {
+        "misuse": "Hardcoding of IV or Key",
+        "vulnerable_code": [
+            "String defaultKey = String.valueOf(random.ints());"
+        ],
+        "description": "The code appears to be a placeholder for a default key, which implies a possibility of hardcoding keys. Hardcoded keys or IVs in source code can be easily retrieved by an attacker and should never be used in a secure application.",
+        "recommendation": "Remove any hardcoded placeholder keys or IVs. Instead, ensure that keys and IVs are generated dynamically and securely, avoiding any hardcoded values."
+    }
+]
+```

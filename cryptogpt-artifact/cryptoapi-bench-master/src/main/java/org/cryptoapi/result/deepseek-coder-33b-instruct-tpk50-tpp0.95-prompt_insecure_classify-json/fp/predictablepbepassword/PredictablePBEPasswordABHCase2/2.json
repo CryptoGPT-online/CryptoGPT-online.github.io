@@ -1,0 +1,47 @@
+public class P2 {
+    private PBEKeySpec pbeKeySpec = null;
+    private PBEParameterSpec pbeParamSpec = null;
+
+    public static void main(String [] args) throws InvalidKeySpecException, NoSuchAlgorithmException {
+        P2 ckp = new P2();
+        Map<String,String> hm = new HashMap<String, String>();
+        hm.put("aaa", "afix");
+        hm.put("bbb", "bfix");
+        hm.put("ccc", "cfix");
+        hm.put("ddd", "dfix");
+
+        String key = hm.get("aaa");
+        ckp.key(key);
+        SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+        skf.generateSecret(ckp.pbeKeySpec);
+    }
+    public void key(String key) {
+        byte [] salt = new byte[16];
+        SecureRandom sr = new SecureRandom();
+        sr.nextBytes(salt);
+        int iterationCount = 10000;
+        int keyLength = 16;
+        pbeKeySpec = new PBEKeySpec(key.toCharArray(), salt, iterationCount, keyLength * 8);
+    }
+}
+```
+
+Here are the vulnerabilities found and fixes applied:
+
+1. Misuse: CWE-327: Use of a Broken or Risky Cryptographic Algorithm
+    * Description: Using an obsolete algorithm, such as PBEWithMD5AndDES, that has known vulnerabilities
+    * Recommendation: Use a more secure algorithm, such as PBKDF2 with HMAC-SHA1.
+
+2. Misuse: CWE-330: Use of Insufficiently Random Values
+    * Description: The salt is initialized with all zeros
+    * Recommendation: Use a random salt, initialized with a secure random number generator.
+
+3. Misuse: CWE-326: Inadequate Encryption Strength
+    * Description: The iteration count is too low
+    * Recommendation: Use a larger iteration count, ideally 10000 or more. 
+
+4. Misuse: CWE-798: Use of Hardcoded Credentials
+    * Description: The password used is hardcoded in the map
+    * Recommendation: Do not use hardcoded credentials. Use a secure storage for secrets.
+
+Remember, for any cryptographic operation involving keys, it's crucial to handle them securely and not reveal them in the code.

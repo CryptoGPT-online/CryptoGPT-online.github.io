@@ -1,0 +1,21 @@
+```json
+[
+    {
+        "misuse": "Trust Manager that trusts all certificates",
+        "vulnerable_code": [
+            "public void checkClientTrusted(X509Certificate[] x509Certificates, String s)",
+            "public void checkServerTrusted(X509Certificate[] x509Certificates, String s)"
+        ],
+        "description": "The custom X509TrustManager implementation does not perform any validation to ensure the presented certificate is trusted. It only throws an exception if the authType is not RSA, which is not a proper way to validate the trust chain.",
+        "recommendation": "Implement proper certificate validation checking if the certificate is issued by a trusted CA and is not expired, revoked, or otherwise invalid."
+    },
+    {
+        "misuse": "Insecure Random Number Generator",
+        "vulnerable_code": [
+            "context.init(null, trustAll, new SecureRandom())"
+        ],
+        "description": "Using new instance of `SecureRandom()` without specifically setting a secure random number generator algorithm could lead to using a weak RNG depending on the platform's default.",
+        "recommendation": "Specify a strong secure random number generator when calling the `SecureRandom` instance (e.g., `SecureRandom.getInstanceStrong()`)."
+    }
+]
+```

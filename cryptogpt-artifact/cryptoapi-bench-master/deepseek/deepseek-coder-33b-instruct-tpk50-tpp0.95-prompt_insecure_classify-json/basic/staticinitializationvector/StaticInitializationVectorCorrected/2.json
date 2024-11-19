@@ -1,0 +1,14 @@
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "description": "This code generates an AES key, which is considered weak compared to other modern encryption algorithms. This may make it easier for attackers to decrypt the data.",
+        "recommendation": "Consider using stronger encryption algorithms like AES-256 or RSA. It is also recommended to use encryption keys with a length of 256 bits, or more."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "byte [] bytes = i.toByteArray();",
+        "description": "The IV (initialization vector) used for CBC (Cipher Block Chaining) mode should be a random, unpredictable number. Using a deterministic random number generator (like 'SecureRandom') to generate a BigInteger and then converting this to a byte array isn't sufficient. It could be predicted by an attacker and result in weaker encryption.",
+        "recommendation": "Instead of creating a 'BigInteger', use 'SecureRandom.nextBytes()' to generate the IV. This way, a random, secure IV is generated each time."
+    }
+]

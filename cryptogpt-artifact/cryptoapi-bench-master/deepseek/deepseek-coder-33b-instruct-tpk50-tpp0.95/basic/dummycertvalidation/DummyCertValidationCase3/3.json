@@ -1,0 +1,36 @@
+Misuse Type: Empty Trust Manager Implementation
+Misuse Code: 
+```java
+public class D3 implements X509TrustManager {
+    @Override
+    public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+
+    }
+
+    @Override
+    public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+
+    }
+
+    @Override
+    public X509Certificate[] getAcceptedIssuers() {
+        return null;
+    }
+}
+```
+Description: An empty implementation of a TrustManager (in this case, X509TrustManager) is not considered a secure practice because it effectively disables all certificate validation. This means that any SSL/TLS connection will be considered trusted, including potentially self-signed certificates.
+
+Recommendation: Always consider using a proper TrustManager implementation instead of creating an empty one. It should typically validate the server's certificate according to a set of trust rules. Consider using a TrustManagerFactory, which is capable of creating TrustManagers for common uses.
+
+{
+    "misuse": "Empty Trust Manager Implementation",
+    "vulnerable_code": [
+        {
+            "class": "D3",
+            "method": "getAcceptedIssuers",
+            "line": 11
+        }
+    ],
+    "description": "An empty implementation of a TrustManager is not considered a secure practice because it effectively disables all certificate validation.",
+    "recommendation": "Always consider using a proper TrustManager implementation instead of creating an empty one. It should typically validate the server's certificate according to a set of trust rules. Consider using a TrustManagerFactory, which is capable of creating TrustManagers for common uses."
+}

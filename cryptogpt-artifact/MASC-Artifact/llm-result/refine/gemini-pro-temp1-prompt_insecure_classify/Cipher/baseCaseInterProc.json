@@ -1,0 +1,23 @@
+### False Positive Misuse ###
+1. `"misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+    "vulnerable_code": "Cipher c = Cipher.getInstance(new CipherExample().methodA().methodB().getCipherName());",
+    "description": "The code first sets the cipher name to \"AES/GCM/NoPadding\" in methodA(), then changes it to \"DES\" in methodB(), and finally gets the cipher name in getCipherName(). This allows an attacker to specify a weak cipher algorithm (such as DES) by calling methodB() before methodA().",
+    "recommendation": "The code should set the cipher name to the strongest supported algorithm in methodA() and ensure that it cannot be changed in subsequent methods."`
+Explanation: This misuse report is a false positive because the code is not actually allowing an attacker to specify the cipher algorithm. The cipherName variable is set to "AES/GCM/NoPadding" in methodA(), and then it is set to "DES" in methodB(). However, the getCipherName() method returns the value of cipherName that was set in methodA(), which is "AES/GCM/NoPadding". Therefore, the code is not vulnerable to this type of attack.
+
+### Optimized Misuse JSON###
+
+1. {
+    "misuse category": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_method": "CipherExample methodB()",
+    "vulnerable_code": "`cipherName = \"DES\";`",
+    "description": "The DES algorithm is considered insecure and should not be used for new applications.",
+    "recommendation": "Use a more secure algorithm, such as AES."
+  }
+2. {
+    "misuse category": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_method": "CipherExample methodA()",
+    "vulnerable_code": "`cipherName = \"AES/GCM/NoPadding\";`",
+    "description": "The AES/GCM/NoPadding cipher is not authenticated and should not be used for applications that require authentication.",
+    "recommendation": "Use a more secure authenticated encryption algorithm, such as AES/GCM/AuthenticatedEncryption."
+  }

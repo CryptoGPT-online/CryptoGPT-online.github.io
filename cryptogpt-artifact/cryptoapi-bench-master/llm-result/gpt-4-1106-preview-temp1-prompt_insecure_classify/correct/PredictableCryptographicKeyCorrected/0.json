@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "String defaultKey = String.valueOf(random.ints());",
+        "description": "The method 'ints()' from SecureRandom is used without specifying the size of the random number array, which may lead to insufficient entropy for the cryptographic key.",
+        "recommendation": "Use 'random.ints(size)' to generate a sufficiently large array of random numbers for the cryptographic key."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The cryptographic key is truncated or padded to fit 16 bytes, which corresponds to an AES-128 key. Depending on the context, AES-128 may not provide adequate encryption strength.",
+        "recommendation": "Consider using AES with a larger key size such as AES-256 for stronger encryption, if deemed necessary by the security requirements."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "byte[] keyBytes = defaultKey.getBytes();",
+        "description": "The way the key material is created from a string may not provide sufficient randomness and entropy for secure key generation.",
+        "recommendation": "Use a proper key derivation function (KDF) to generate a key from a high-entropy source or securely store and manage cryptographic keys."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5PADDING\");",
+        "description": "While AES itself is not broken, the CBC mode of operation without an unpredictable IV is risky as it can lead to certain types of attacks like predictable IV attacks if the same key is used to encrypt multiple plaintexts.",
+        "recommendation": "Use a secure mode of operation like GCM which also provides authentication, and always use a unique, unpredictable IV for each encryption operation."
+    }
+]
+```

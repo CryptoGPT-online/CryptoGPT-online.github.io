@@ -1,0 +1,26 @@
+Misuse Type: Weak Encryption Algorithm
+
+Vulnerable Code Snippet: 
+
+```
+public C1(String algo) {
+    defAlgo = algo;
+}
+
+public void method1(String passedAlgo) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException {
+
+    if(passedAlgo.isEmpty()){
+        passedAlgo = defAlgo;
+    }
+
+    KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+    SecretKey key = keyGen.generateKey();
+    Cipher cipher = Cipher.getInstance(passedAlgo);
+    cipher.init(Cipher.ENCRYPT_MODE, key);
+
+}
+```
+
+Description: In the above code, the cryptographic algorithm used for the cipher instance is determined by the passedAlgo parameter. However, it might be possible that this parameter can be controlled by an untrusted source, which can lead to insecure use of cryptography. Also, AES/ECB/PKCS5Padding is a weak encryption algorithm choice due to ECB mode of operation which is easily broken.
+
+Recommendation: The recommended way would be to hard-code the cryptographic algorithm and mode of operation in the source code and not to allow it to be changed at runtime. Also, use stronger encryption algorithms such as AES/CBC/PKCS5Padding with a properly generated, random, initialization vector.

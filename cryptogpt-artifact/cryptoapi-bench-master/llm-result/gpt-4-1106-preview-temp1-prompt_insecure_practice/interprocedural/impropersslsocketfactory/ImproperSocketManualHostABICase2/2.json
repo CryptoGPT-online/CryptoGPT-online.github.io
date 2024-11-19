@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "Improper Hostname Verification",
+    "vulnerable_code": "ssf.createSocket(hostName.toString(),soc)",
+    "description": "The application creates an SSLSocket without verifying the hostname against the certificate. This could allow man-in-the-middle attacks if an attacker can control DNS or the network.",
+    "recommendation": "Implement a HostnameVerifier that checks the server's hostname against its certificate or use HTTPS with certificate pinning."
+  },
+  {
+    "misuse": "Insecure Defaults",
+    "vulnerable_code": "SSLSocketFactory.getDefault()",
+    "description": "Using the default SSLSocketFactory without customizing the security settings might be insecure if it defaults to weak protocols or cipher suites.",
+    "recommendation": "Create and configure a SSLContext with secure protocol versions and cipher suites, then get the SSLSocketFactory from this context."
+  },
+  {
+    "misuse": "Type Confusion in hostname Conversion",
+    "vulnerable_code": "hostName.toString()",
+    "description": "Calling toString on a char array does not convert the char array into a String; it just prints the object reference. This will not allow you to properly specify the hostname for the socket connection",
+    "recommendation": "Use new String(hostName) to properly convert the character array into a string representing the hostname."
+  }
+]
+```

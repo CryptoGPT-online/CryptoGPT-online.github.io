@@ -1,0 +1,17 @@
+### False Positive Misuse ###
+
+None of the misuses in the list are false positives.
+
+### Optimized Misuse JSON ###
+
+```json
+[
+  {
+    "misuse category": "CWE-295: Improper Certificate Validation",
+    "vulnerable_method": "TrustManager[] trustAll = new TrustManager[] { ... }",
+    "vulnerable_code": "TrustManager[] trustAll = new TrustManager[] { \n\t\t new X509TrustManager() {\n\t\t\t@Override\n\t\t\tpublic void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {\n\t\t\t\tif (!(null != s && s.equalsIgnoreCase(\"RSA\")) {\n\t\t\t\t\tthrow new CertificateException(\"checkServerTrusted: AuthType is not RSA\");\n\t\t\t\t}\n\t\t\t}\n\n\t\t\t@Override\n\t\t\tpublic void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {\n\t\t\t\tif (!(null != s && s.equalsIgnoreCase(\"RSA\")) {\n\t\t\t\t\tthrow new CertificateException(\"checkServerTrusted: AuthType is not RSA\");\n\t\t\t\t}\n\t\t\t}\n\t\t\t@Override\n\t\t\tpublic X509Certificate[] getAcceptedIssuers() {\n\t\t\t\treturn null;\n\t\t}\n\t} };",
+    "description": "The code trusts all certificates without proper validation. This can allow an attacker to impersonate a trusted party and intercept sensitive information.",
+    "recommendation": "Use a proper certificate validation mechanism, such as hostname verification or certificate pinning."
+  }
+]
+```

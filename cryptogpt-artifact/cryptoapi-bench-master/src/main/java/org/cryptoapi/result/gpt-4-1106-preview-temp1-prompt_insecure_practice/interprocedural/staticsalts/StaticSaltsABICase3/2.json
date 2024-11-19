@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insecure Parameter Specification",
+        "vulnerable_code": "byte[] salt = {(byte) 0xa2};",
+        "description": "The salt for PBE (Password-Based Encryption) is too short and not random which makes it susceptible to dictionary attacks.",
+        "recommendation": "Use a longer and randomly generated salt (at least 128 bits)."
+    },
+    {
+        "misuse": "Weak Encryption Parameters",
+        "vulnerable_code": "int count = 1020;",
+        "description": "The number of iterations (1020) is potentially too low. It may not offer sufficient protection against brute-force attacks.",
+        "recommendation": "Increase the iteration count to a higher number, such as 10000, to increase the time required for brute-force attacks."
+    },
+    {
+        "misuse": "Missing PBE Key/Algorithm",
+        "vulnerable_code": "pbeParamSpec = new PBEParameterSpec(salt, count);",
+        "description": "Instance creation of PBEParameterSpec but missing PBE key generation and PBE algorithm specification.",
+        "recommendation": "Generate a secure PBE key using a strong algorithm and initialize Cipher with it."
+    },
+    {
+        "misuse": "Missing Encryption/Decryption Logic",
+        "vulnerable_code": "pbeParamSpec = new PBEParameterSpec(salt, count);",
+        "description": "There is no encryption/decryption logic using the PBEParameterSpec making it incomplete for any cryptographic operation.",
+        "recommendation": "Implement the encryption or decryption logic using a Cipher initialized with PBEKeySpec and PBEParameterSpec."
+    }
+]
+```

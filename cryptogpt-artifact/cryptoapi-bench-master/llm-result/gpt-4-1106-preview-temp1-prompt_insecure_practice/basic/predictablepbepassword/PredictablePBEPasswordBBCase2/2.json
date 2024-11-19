@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Weak Password-Based Encryption Key",
+        "vulnerable_code": "new PBEKeySpec(defaultKey,salt,iterationCount,keyLength);",
+        "description": "PBEKeySpec is being initialized with a weak password ('s'). The strength of encryption is highly dependent on the complexity of the password. A single character password is extremely weak and can be easily brute-forced.",
+        "recommendation": "Use a strong, complex password for key generation."
+    },
+    {
+        "misuse": "Short Salt",
+        "vulnerable_code": "byte [] salt = new byte[16];",
+        "description": "While a 16-byte salt may be considered generally acceptable, it is recommended to use a salt of at least 32 bytes to provide better protection against dictionary and rainbow table attacks.",
+        "recommendation": "Increase the salt size to at least 32 bytes."
+    },
+    {
+        "misuse": "Weak Iteration Count",
+        "vulnerable_code": "int iterationCount = 11010;",
+        "description": "The iteration count (11010) used in PBEKeySpec may not be sufficient to prevent attackers from performing brute-force attacks due to advancements in computing power.",
+        "recommendation": "Increase the iteration count significantly, commonly recommended values are 100,000 or more."
+    },
+    {
+        "misuse": "Insufficient Key Length",
+        "vulnerable_code": "int keyLength = 16;",
+        "description": "The key length of 16 (128-bit) for PBEKeySpec may not be enough for certain use-cases that require higher security, such as when using AES-256 which requires a 256-bit key.",
+        "recommendation": "Use an appropriate key length depending on the encryption algorithm requirements. For AES-256, use a 256-bit key."
+    }
+]
+```

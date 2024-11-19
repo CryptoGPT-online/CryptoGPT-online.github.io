@@ -1,0 +1,14 @@
+[
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_code": "String algo = \"DES\";\nKeyGenerator keygen = KeyGenerator.getInstance(algo);",
+    "description": "The DES cryptographic algorithm is considered broken and insecure, and its use is not recommended for secure applications.",
+    "recommendation": "Use a secure and modern encryption algorithm, such as AES, instead of DES."
+  },
+  {
+    "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+    "vulnerable_code": "Cipher c = Cipher.getInstance(keygen.getAlgorithm());",
+    "description": "The code is using the algorithm obtained directly from the KeyGenerator, which may not be the most secure option and could result in the selection of a less-secure algorithm during negotiation.",
+    "recommendation": "Explicitly specify a secure algorithm, such as AES, for the Cipher instantiation rather than using keygen.getAlgorithm(), and ensure that both sides of any communication agree on a strong algorithm."
+  }
+]

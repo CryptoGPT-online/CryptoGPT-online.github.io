@@ -1,0 +1,23 @@
+The misuse here is the use of weak cryptographic algorithm. The IDEA is not considered a secure algorithm anymore and there are more secure algorithms like AES in the code.
+
+The misuse code snippets:
+
+```java
+KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+Cipher cipher = Cipher.getInstance("IDEA");
+```
+
+Description: 
+In the given code snippet, the IDEA algorithm is used as the cipher. IDEA is a weak algorithm and has been broken by several cryptanalysis attacks. It is vulnerable to attacks such as differential cryptanalysis and linear cryptanalysis.
+
+Recommendation:
+Use a secure cipher such as AES, RSA or ECC, which are considered strong and should be used over the weak IDEA algorithm.
+
+```json
+[{
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nCipher cipher = Cipher.getInstance(\"IDEA\");",
+    "description": "The IDEA algorithm is weak and has been broken by several cryptanalysis attacks. It is not considered secure anymore.",
+    "recommendation": "Use a secure cipher such as AES, RSA or ECC, which are considered strong and should be used over the weak IDEA algorithm."
+}]
+```

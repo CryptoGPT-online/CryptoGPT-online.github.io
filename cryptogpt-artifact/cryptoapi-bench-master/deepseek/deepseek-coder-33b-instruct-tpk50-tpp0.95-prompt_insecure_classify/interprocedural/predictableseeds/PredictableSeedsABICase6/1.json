@@ -1,0 +1,14 @@
+The code provided uses a SecureRandom with a small seed, which is not secure enough according to the Cryptographic Strength Standard. The seed is only 1 byte long. 
+
+CWE-327: Use of a Broken or Risky Cryptographic Algorithm.
+
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "SecureRandom sr = new SecureRandom(new byte[]{seed});",
+        "description": "The SecureRandom constructor with a seed is insecure because the entropy in the seed is not sufficient.",
+        "recommendation": "Instead of using a small seed, use a seed that is as long as the SecureRandom.getSeed call requires. This can usually be up to 32 bytes. Consider using SecureRandom's built-in seeding mechanism if possible."
+    }
+]
+```

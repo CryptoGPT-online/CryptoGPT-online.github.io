@@ -1,0 +1,17 @@
+### False Positive Misuse ###
+
+None of the provided misuses are false positives.
+
+### Optimized Misuse JSON ###
+
+```json
+[
+  {
+    "misuse category": "CWE-295: Improper Certificate Validation",
+    "vulnerable_method": "public class D3 implements X509TrustManager",
+    "vulnerable_code": "public class D3 implements X509TrustManager {@Override\n    public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {\n\n    }\n\n    @Override\n    public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {\n\n    }\n\n    @Override\n    public X509Certificate[] getAcceptedIssuers() {\n        return null;\n    }}",
+    "description": "The code implements a custom `X509TrustManager` without validating the certificates in the `checkClientTrusted` and `checkServerTrusted` methods. This can lead to accepting invalid or untrusted certificates.",
+    "recommendation": "Implement proper certificate validation in the `checkClientTrusted` and `checkServerTrusted` methods to ensure that only trusted certificates are accepted."
+  }
+]
+```

@@ -1,0 +1,52 @@
+### False Positive Misuse ###
+
+1. "Hardcoded Crypto Keys" - This is a false positive because the code does not show any encryption key usage, and the empty string in `crypto.encrypt("abc","")` is not used as a key but as an algorithm identifier, which defaults to the `crypto` instance variable.
+
+2. "Missing Encryption" - This is a false positive because the code is not intended for encryption but for hashing. The `System.out.println(md.digest())` is not exposing encrypted data but a hash digest.
+
+3. "Improper Clearing of Heap Memory Before Release ('Heap Inspection') (CWE-244)" - This is a false positive because the code is not dealing with sensitive data that would remain in heap memory after use. The misuse is related to printing the hash to the console, which is a separate concern.
+
+4. "Inappropriate Encryption Strength (CWE-326)" - This is a false positive because the code is not performing encryption, so the strength of encryption is not applicable. The concern about specifying a Charset is valid, but it is not related to encryption strength.
+
+### Optimized Misuse JSON###
+
+```json
+[
+  {
+    "misuse": "Weak Hash Algorithm",
+    "vulnerable_code": "crypto = new C2(\"MD5\");",
+    "description": "MD5 is a weak hash algorithm that is vulnerable to collision attacks and should not be used in security-critical contexts.",
+    "recommendation": "Use a stronger hash function like SHA-256 or SHA-3."
+  },
+  {
+    "misuse": "Inadequate Method Naming",
+    "vulnerable_code": "public void encrypt(String str, String passedAlgo)",
+    "description": "The method name 'encrypt' is misleading as the method performs hashing, not encryption.",
+    "recommendation": "Rename the method to accurately reflect its functionality, such as 'hash' or 'computeHash'."
+  },
+  {
+    "misuse": "Insecure Output Encoding",
+    "vulnerable_code": "System.out.println(md.digest());",
+    "description": "The hashed value is printed out to the console directly as a byte array, which may result in an unreadable or incorrect representation. This can lead to information leakage or misuse of the hashed value.",
+    "recommendation": "Encode the output in a proper format such as hexadecimal or Base64 when displaying or transmitting."
+  },
+  {
+    "misuse": "Hardcoded Weak Cryptographic Hash Function",
+    "vulnerable_code": "crypto = new C2(\"MD5\");",
+    "description": "Using a hardcoded weak cryptographic hash function like MD5 does not allow for easy updates or migration to stronger algorithms without code changes.",
+    "recommendation": "Avoid hard-coding the cryptographic algorithm. Instead, use a configuration item that can be updated without modifying the codebase."
+  },
+  {
+    "misuse": "Unvalidated Algorithm Selection",
+    "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(crypto);",
+    "description": "The algorithm is being selected based on a passed or default string without validation, which could lead to using an insecure algorithm or introduce vulnerabilities if the string is manipulated.",
+    "recommendation": "Validate the algorithm string against a list of secure, accepted algorithms before instantiating the MessageDigest."
+  },
+  {
+    "misuse": "Insecure Encoding",
+    "vulnerable_code": "md.update(str.getBytes());",
+    "description": "The code does not specify a character encoding when converting the string to bytes, potentially leading to different results on platforms with different default charsets.",
+    "recommendation": "Specify a charset when converting strings to bytes, for example, str.getBytes(StandardCharsets.UTF_8)."
+  }
+]
+```

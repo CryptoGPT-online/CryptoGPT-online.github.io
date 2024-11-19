@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Key Generation",
+        "vulnerable_code": "byte[] keyBytes = key.getBytes();\nkeyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The encryption key is derived from a fixed string and truncating or padding to meet the required length, which is not a cryptographically secure method for key generation.",
+        "recommendation": "Use a secure key generation technique, such as KeyGenerator for generating a random key or use a strong Key Derivation Function (KDF) like PBKDF2 with a random salt."
+    },
+    {
+        "misuse": "Weak Encryption Key",
+        "vulnerable_code": "String key = \"defaultkey\";",
+        "description": "The key is hardcoded and is a simple string that could be easily guessed or brute-forced.",
+        "recommendation": "Never hardcode keys in the source code. Use an environment variable or configuration file to inject keys securely at runtime, and ensure keys are complex enough to withstand brute-force attacks."
+    },
+    {
+        "misuse": "Default Charset",
+        "vulnerable_code": "byte[] keyBytes = key.getBytes();",
+        "description": "The getBytes() method without specifying a charset could behave differently on various platforms. The platform default is not guaranteed to be a secure choice, potentially resulting in an unexpected key on different systems.",
+        "recommendation": "Always specify a charset when invoking getBytes, e.g., key.getBytes(StandardCharsets.UTF_8);."
+    }
+]
+```

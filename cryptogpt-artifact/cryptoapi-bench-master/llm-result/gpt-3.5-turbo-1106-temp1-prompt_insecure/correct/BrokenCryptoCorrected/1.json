@@ -1,0 +1,10 @@
+```json
+[{"misuse": "Broken Crypto Algorithm", 
+  "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");", 
+  "description": "Using KeyGenerator.getInstance(\"AES\") without specifying a provider can lead to different behaviors across platforms and may result in a weak or vulnerable key generation. It is recommended to use getInstance with a specific provider to ensure consistent behavior and security.", 
+  "recommendation": "Specify a provider when calling getInstance, e.g., KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\", \"BC\"); where \"BC\" is the Bouncy Castle provider."},
+ {"misuse": "Weak Key Generation", 
+  "vulnerable_code": "SecretKey key = keyGen.generateKey();", 
+  "description": "The default method for generating a secret key may not provide sufficient entropy, resulting in weak or predictable keys. It is recommended to use a secure random number generator for key generation.", 
+  "recommendation": "Use a secure random number generator to generate the secret key, e.g., SecureRandom random = new SecureRandom(); keyGen.init(random); SecretKey key = keyGen.generateKey();"}]
+```

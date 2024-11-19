@@ -1,0 +1,42 @@
+```json
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "String crypto = \"RC4\";",
+        "description": "RC4 is an outdated and vulnerable stream cipher that is considered to be broken and should not be used for secure data encryption.",
+        "recommendation": "Use a strong and currently recommended cipher like AES with an appropriate key size (e.g. AES/GCM/NoPadding)."
+    },
+    {
+        "misuse": "Hardcoded Crypto Algorithm",
+        "vulnerable_code": "String crypto = \"RC4\";",
+        "description": "The use of a hardcoded algorithm does not allow for flexibility or updates if vulnerabilities are found in the future.",
+        "recommendation": "Design the application so that the choice of cryptographic algorithm can be changed easily without modifying the code."
+    },
+    {
+        "misuse": "Insecure Initialization",
+        "vulnerable_code": [
+            "Cipher cipher = Cipher.getInstance(crypto);",
+            "cipher.init(Cipher.ENCRYPT_MODE, key);"
+        ],
+        "description": "The cipher is initialized without specifying a secure mode of operation and padding scheme. The default mode and padding combination might not be secure.",
+        "recommendation": "Specify a secure mode of operation and padding scheme when initializing the cipher (e.g., Cipher.getInstance(\"AES/CBC/PKCS5Padding\"))."
+    },
+    {
+        "misuse": "Key Generation without Secure Random",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(crypto);",
+        "description": "The KeyGenerator is initialized without explicitly specifying a SecureRandom instance, potentially leading to weak keys if the platform default is not secure.",
+        "recommendation": "Explicitly initialize the KeyGenerator with a SecureRandom instance for secure key generation."
+    },
+    {
+        "misuse": "Lack of Exception Handling",
+        "vulnerable_code": [
+            "KeyGenerator keyGen = KeyGenerator.getInstance(crypto);",
+            "SecretKey key = keyGen.generateKey();",
+            "Cipher cipher = Cipher.getInstance(crypto);",
+            "cipher.init(Cipher.ENCRYPT_MODE, key);"
+        ],
+        "description": "The methods that handle encryption are not encapsulated in try-catch blocks, which can result in unmanaged exceptions if cryptographic errors occur.",
+        "recommendation": "Use proper exception handling to manage errors securely and avoid potential crashes or undefined behavior."
+    }
+]
+```

@@ -1,0 +1,20 @@
+```json
+[
+  {
+    "misuse": "Insecure Randomness for IV",
+    "vulnerable_code": [
+      "cipher.init(Cipher.ENCRYPT_MODE, key);"
+    ],
+    "description": "The code initializes cipher in CBC mode without specifying an Initialization Vector (IV). Using a predictable IV leads to vulnerabilities because identical plain text blocks are encrypted to the same cipher text block.",
+    "recommendation": "Ensure that a secure random IV is used and is unique for each encryption operation."
+  },
+  {
+    "misuse": "Class Name Typo",
+    "vulnerable_code": [
+      "EcbInSymmCryptoBBCase1 bc = new EcbInSymmCryptoBBCase1();"
+    ],
+    "description": "The code suggests the class name 'EcbInSymmCryptoBBCase1' might imply the use of ECB mode, but the class 'Ed' is actually being implemented using CBC mode. This is confusing and potentially misleading if 'EcbInSymmCryptoBBCase1' class has ECB related vulnerabilities.",
+    "recommendation": "Refactor 'EcbInSymmCryptoBBCase1' to 'CbcInSymmCryptoBBCase1' if it is indeed using CBC mode, or change the code to actually use ECB mode if that's the intent, noting that ECB mode is not recommended due to its insecurity."
+  }
+]
+```

@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength (use of a weak encryption algorithm DES)",
+    "vulnerable_code": "public static final String DEFAULT_CRYPTO = \"DES/ECB/PKCS5Padding\";",
+    "description": "The code uses the DES algorithm, which is considered weak and insecure by today's standards. DES has a small key size of 56 bits, making it vulnerable to brute-force attacks.",
+    "recommendation": "Use a stronger encryption algorithm, such as AES-256."
+  },
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values (using the same key for multiple encryptions)",
+    "vulnerable_code": "SecretKey key = keyGen.generateKey();\nCipher cipher = Cipher.getInstance(String.valueOf(crypto));\ncipher.init(Cipher.ENCRYPT_MODE, key);",
+    "description": "The code generates a single key and uses it for multiple encryptions. This is insecure because an attacker could potentially obtain the key and decrypt all of the encrypted messages.",
+    "recommendation": "Generate a new key for each encryption operation."
+  }
+]
+```

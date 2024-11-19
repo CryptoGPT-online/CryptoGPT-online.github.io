@@ -1,0 +1,18 @@
+```json
+[
+    {
+        "misuse": "Improper Certificate Validation (CWE-295)",
+        "vulnerable_code": 
+        "public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {\n\t// TODO Auto-generated method stub\n}\n\npublic void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {\n\t// TODO Auto-generated method stub\n}",
+        "description": "The implementation of checkServerTrusted and checkClientTrusted are empty, allowing any certificate to be accepted without validation, which can lead to Man-in-the-Middle (MitM) attacks.",
+        "recommendation": "Implement certificate validation in checkServerTrusted and checkClientTrusted methods. Use the default validation or create a proper validation mechanism that checks the validity of certificates against trusted CAs."
+    },
+    {
+        "misuse": "Incomplete Certificate Validation (CWE-295)",
+        "vulnerable_code": 
+        "public X509Certificate[] getAcceptedIssuers() {\n\t// TODO Auto-generated method stub\n\treturn null;\n}",
+        "description": "Returning null in getAcceptedIssuers means no specific issuers are returned, which can lead to accepting any issuer, thus not correctly restricting the set of trusted authorities.",
+        "recommendation": "Return a non-empty array of acceptable CA issuer certificates or implement logic to verify issuer's certificates against a trusted store."
+    }
+]
+```

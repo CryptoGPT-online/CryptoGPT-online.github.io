@@ -1,0 +1,31 @@
+### False Positive Misuse ###
+
+None of the misuses are false positives.
+
+### Optimized Misuse JSON###
+
+```json
+[
+  {
+    "misuse category": "Broken Crypto Algorithm",
+    "vulnerable_method": "C4.C4",
+    "vulnerable_code": "`crypto = new C4(\"RC4\");`",
+    "description": "Using RC4 algorithm for encryption is considered insecure due to its known weaknesses.",
+    "recommendation": "Replace RC4 with a more secure algorithm such as AES."
+  },
+  {
+    "misuse category": "Weak Key Generation",
+    "vulnerable_method": "C4.encrypt",
+    "vulnerable_code": "`KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);`",
+    "description": "Generating a secret key without specifying the key size or using a secure random number generator can lead to weak keys.",
+    "recommendation": "Use `SecureRandom` for generating keys and specify an appropriate key size."
+  },
+  {
+    "misuse category": "Empty IV",
+    "vulnerable_method": "C4.encrypt",
+    "vulnerable_code": "`cipher.init(Cipher.ENCRYPT_MODE, key);`",
+    "description": "Not explicitly providing an initialization vector (IV) when encrypting data can lead to predictable ciphertext, making it easier for attackers to break the encryption.",
+    "recommendation": "Generate a random IV and explicitly pass it to the cipher initialization method."
+  }
+]
+```

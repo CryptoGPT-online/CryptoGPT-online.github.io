@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "Insecure Initialization Vector (IV)",
+    "vulnerable_code": "byte [] bytes = \"abcde\".getBytes();\nIvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+    "description": "The code uses a hardcoded, non-random Initialization Vector (IV) for the AES encryption algorithm which can compromise encryption security. IV should be random and unique for each encryption operation.",
+    "recommendation": "Use a secure random IV for encryption by generating it through SecureRandom class."
+  },
+  {
+    "misuse": "Key Generation without Secure Random",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+    "description": "The AES key generator does not explicitly specify a secure random instance for key generation which may result in weak keys if the default is not secure.",
+    "recommendation": "Specify a secure random instance when generating the AES key, for example, by calling keyGen.init(keySize, secureRandom)."
+  },
+  {
+    "misuse": "Insufficient IV Length",
+    "vulnerable_code": "byte [] bytes = \"abcde\".getBytes();\nIvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+    "description": "The length of the IV should be equal to the block size of the cipher (16 bytes for AES), but the hardcoded IV is too short.",
+    "recommendation": "Use an IV with the correct length equal to the cipher's block size (16 bytes for AES)."
+  }
+]
+```

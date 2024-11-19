@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Static Initialization Vector",
+        "vulnerable_code": "defIV = bytes;",
+        "description": "The initialization vector (IV) should be random for each encryption to prevent patterns from forming. Using a static IV as is done here can allow attackers to deduce information about the plaintext.",
+        "recommendation": "Use a securely generated random IV for each encryption operation."
+    },
+    {
+        "misuse": "Short Initialization Vector",
+        "vulnerable_code": "byte [] bytes = \"abcde\".getBytes();",
+        "description": "The IV used in CBC mode should be as long as the block size, which for AES is 128 bits (16 bytes). An IV shorter than this weakens the cryptographic strength of the encryption algorithm.",
+        "recommendation": "Ensure the IV is at least 128 bits long when using AES in CBC mode."
+    },
+    {
+        "misuse": "Insecure Random Number Generation",
+        "vulnerable_code": "KeyGenerator.getInstance(\"AES\");",
+        "description": "The KeyGenerator does not specify a SecureRandom instance for key generation, relying on default seeding which may not provide sufficient randomness.",
+        "recommendation": "Explicitly specify a SecureRandom instance when generating keys."
+    }   
+]
+```

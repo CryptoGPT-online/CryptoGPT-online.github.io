@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "Trusting All Certificates",
+    "vulnerable_code": "trustManager.checkClientTrusted(x509Certificates,s);",
+    "description": "This code trusts any client certificate without performing any validation. This can lead to a man-in-the-middle attack, where an attacker can impersonate a trusted client and gain access to sensitive information.",
+    "recommendation": "Use a proper X509TrustManager implementation that validates client certificates based on a trusted certificate authority (CA)."
+  },
+  {
+    "misuse": "Trusting All Certificates",
+    "vulnerable_code": "//Trust any remote server (no certificate validation)",
+    "description": "This code trusts any server certificate without performing any validation. This can lead to a man-in-the-middle attack, where an attacker can impersonate a trusted server and intercept sensitive information.",
+    "recommendation": "Use a proper X509TrustManager implementation that validates server certificates based on a trusted certificate authority (CA)."
+  },
+  {
+    "misuse": "Returning an Empty Array",
+    "vulnerable_code": "return new X509Certificate[0];",
+    "description": "Returning an empty array from `getAcceptedIssuers` means that the trust manager will trust any certificate, regardless of its issuer. This can lead to a man-in-the-middle attack, where an attacker can issue a certificate for any domain and the trust manager will accept it.",
+    "recommendation": "Return a non-empty array of trusted certificate issuers. This can be obtained from a trusted certificate authority (CA)."
+  }
+]
+```

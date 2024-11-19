@@ -1,0 +1,21 @@
+```json
+[
+    {
+        "misuse": "Empty Trust Manager",
+        "vulnerable_code": [
+            "public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {}",
+            "public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {}"
+        ],
+        "description": "The TrustManager interface is responsible for managing the trust material that is used when making trust decisions, and for deciding whether credentials presented by a peer should be accepted. This custom implementation of X509TrustManager does nothing, which means it doesn't validate any certificate. Thus, it will accept any certificate, including self-signed ones, which facilitates man-in-the-middle attacks.",
+        "recommendation": "Implement validation logic in 'checkClientTrusted' and 'checkServerTrusted' methods to check the validity of the certificates against trusted Certificate Authorities or a whitelist of allowed certificates. Do not leave them empty."
+    },
+    {
+        "misuse": "Insecure Trust Manager",
+        "vulnerable_code": [
+            "public X509Certificate[] getAcceptedIssuers() { return null; }"
+        ],
+        "description": "Returning 'null' from 'getAcceptedIssuers' method may bypass checks for server's certificate chain and disable any downstream validation, leading to accepting any certificate without validation which is insecure.",
+        "recommendation": "Return a non-null list of acceptable CA issuer certificates or throw an exception."
+    }
+]
+```

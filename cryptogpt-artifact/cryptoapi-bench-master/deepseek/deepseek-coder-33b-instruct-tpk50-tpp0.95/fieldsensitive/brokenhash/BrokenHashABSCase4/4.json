@@ -1,0 +1,28 @@
+Misuse: 
+   Misuse Type: Use of Insecure Cryptographic Algorithm (CWE-327)
+
+Vulnerable Code:
+```java
+MessageDigest md = MessageDigest.getInstance(crypto);
+```
+
+Description: 
+   The code is using the MessageDigest class with the instance of the crypto algorithm (crypto). The crypto algorithm used, "MD2", is a weak hash algorithm which is not recommended for new applications anymore. It's also known to have vulnerabilities like collision problems.
+
+Recommendation:
+   To fix the issue, replace the use of "MD2" with a secure cryptographic algorithm like "SHA-256", "SHA-3", or "SHA3-256" etc. You can replace the instance creation with the selected algorithm.
+
+Here is a solution:
+
+```java
+public void encrypt(String str, String passedAlgo) throws UnsupportedEncodingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, NoSuchPaddingException {
+        if(passedAlgo.isEmpty()){
+            passedAlgo = crypto;
+        }
+
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        md.update(str.getBytes());
+        System.out.println(md.digest());
+
+    }
+```

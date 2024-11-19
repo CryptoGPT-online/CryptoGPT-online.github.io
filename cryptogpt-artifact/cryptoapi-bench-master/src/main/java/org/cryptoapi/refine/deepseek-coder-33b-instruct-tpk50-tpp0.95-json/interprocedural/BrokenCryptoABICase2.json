@@ -1,0 +1,28 @@
+The false positive misuse reports are:
+
+1. Insecure Use of Cryptographic Algorithm:
+    - Vulnerable Code: `KeyGenerator keyGen = KeyGenerator.getInstance(crypto);`
+    - Description: The `crypto` parameter is user-controlled, but it is ensured that it is a valid cryptographic algorithm in this case (Blowfish).
+    - Recommendation: This is not a false positive. It's about ensuring that only trusted cryptographic algorithms are used.
+    
+2. Insecure Use of Cryptographic Algorithm:
+    - Vulnerable Code: `Cipher cipher = Cipher.getInstance(crypto);`
+    - Description: The `crypto` parameter is user-controlled, but it is ensured that it is a valid cryptographic algorithm in this case (Blowfish).
+    - Recommendation: This is not a false positive. It's about ensuring that only trusted cryptographic algorithms are used.
+
+And the optimized misuse reports are:
+
+1. Broken Crypto Algorithm:
+    - Vulnerable Code: `Cipher.getInstance(crypto)`
+    - Description: Blowfish is known to have vulnerabilities.
+    - Recommendation: Don't use Blowfish, use a stronger algorithm like AES.
+
+2. Broken Crypto Algorithm:
+    - Vulnerable Code: `Cipher.getInstance(crypto)`
+    - Description: Blowfish is known to have vulnerabilities.
+    - Recommendation: Don't use Blowfish, use a stronger algorithm like AES.
+
+3. Use of Blowfish algorithm:
+    - Vulnerable Code: `KeyGenerator keyGen = KeyGenerator.getInstance(crypto); SecretKey key = keyGen.generateKey(); Cipher cipher = Cipher.getInstance(crypto); cipher.init(Cipher.ENCRYPT_MODE, key);`
+    - Description: Blowfish is known to have vulnerabilities.
+    - Recommendation: Don't use Blowfish, use a stronger algorithm like AES. Always use a key size of 128 bits.

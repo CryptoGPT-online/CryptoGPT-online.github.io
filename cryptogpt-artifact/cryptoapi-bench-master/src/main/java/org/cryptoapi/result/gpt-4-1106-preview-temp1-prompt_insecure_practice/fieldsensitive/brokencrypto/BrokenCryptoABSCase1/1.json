@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insecure Encryption Algorithm",
+        "vulnerable_code": "crypto = new C2(\"DES/ECB/PKCS5Padding\");",
+        "description": "The DES algorithm is considered insecure due to its small key size, and using ECB mode exposes patterns in plaintext.",
+        "recommendation": "Use a stronger encryption algorithm like AES with a secure mode of operation such as CBC or GCM."
+    },
+    {
+        "misuse": "Weak Randomness",
+        "vulnerable_code": "SecretKey key = keyGen.generateKey();",
+        "description": "The KeyGenerator instance is generated without securely setting a seed. This could potentially lead to weak keys if the default PRNG is not secure.",
+        "recommendation": "Ensure that the KeyGenerator is securely seeded with a Strong SecureRandom instance."
+    },
+    {
+        "misuse": "Weak Encryption Mode",
+        "vulnerable_code": "Cipher.getInstance(defaultAlgo);",
+        "description": "ECB mode is used, which does not provide serious data confidentiality. Identical plaintext blocks result in identical ciphertext blocks, revealing patterns.",
+        "recommendation": "Use a secure chaining mode like CBC with a unique initialization vector for each encryption or GCM for additional integrity protection."
+    },
+    {
+        "misuse": "Hardcoded Encryption Algorithm",
+        "vulnerable_code": "defaultAlgo = defAlgo;",
+        "description": "The algorithm is hardcoded and inflexible. This does not allow for easy updates or compliance with cryptography standards.",
+        "recommendation": "Implement configuration options to select the algorithm and mode during runtime and ensure they are secure."
+    }
+]
+```

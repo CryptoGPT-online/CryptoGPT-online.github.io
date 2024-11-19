@@ -1,0 +1,74 @@
+### False Positive Misuse ###
+
+1. "Hardcoded Crypto Algorithm" is not a false positive, but it is a design choice that may affect flexibility and security in the future. However, it is not a misuse in the context of the provided code snippet, as the algorithm is passed as a parameter to the `go` method.
+
+2. "Missing IV for CBC mode" is a false positive because the code does not specify that CBC mode is being used. Without explicit mode specification, it defaults to ECB mode for which an IV is not required. However, ECB mode is not recommended for use.
+
+3. "Weak Crypto Algorithm" is not a false positive per se, as Blowfish is indeed considered less secure than AES, but it is not inherently weak or broken. It is more about the relative strength compared to newer algorithms.
+
+4. "Key Generation without Secure Random" is a false positive because the `KeyGenerator` class is designed to use a secure random number generator by default.
+
+### Optimized Misuse JSON###
+
+```json
+[
+  {
+    "misuse": "Insufficient Key Length",
+    "vulnerable_code": [
+      "KeyGenerator.getInstance(crypto)",
+      "keyGen.generateKey()"
+    ],
+    "description": "Blowfish algorithm key size is not explicitly defined and can result in a weak key if the default size is used, which can be less than 128 bits.",
+    "recommendation": "Explicitly define a key size of at least 128 bits when using Blowfish."
+  },
+  {
+    "misuse": "Weak Encryption Mode",
+    "vulnerable_code": [
+      "Cipher.getInstance(crypto)"
+    ],
+    "description": "The 'cipher' instance is created using only the algorithm name without specifying the mode and padding, thus relying on defaults which might be insecure, such as ECB mode, which is vulnerable to pattern analysis if used on multiple blocks of data with the same key.",
+    "recommendation": "Specify a secure mode and padding scheme, such as Blowfish/CBC/PKCS5Padding."
+  },
+  {
+    "misuse": "Algorithm Parameter Not Defined",
+    "vulnerable_code": [
+      "KeyGenerator.getInstance(crypto)",
+      "Cipher.getInstance(crypto)"
+    ],
+    "description": "When initializing the 'KeyGenerator' and 'Cipher' instances, the crypto parameters are not completely defined, which can result in default parameters being used that might not be secure.",
+    "recommendation": "Define all cryptographic parameters explicitly, including encryption mode, padding mechanism, and key size."
+  },
+  {
+    "misuse": "Incomplete/Insecure Cipher Initialization",
+    "vulnerable_code": "Cipher.getInstance(crypto)",
+    "description": "The Cipher.getInstance() method is being called with a single argument, which means it does not explicitly specify a mode of operation or padding. This may result in the use of a default mode or padding, which could be ECB mode and PKCS5Padding. ECB mode, for instance, is not semantically secure because identical plaintext blocks are encrypted to identical ciphertext blocks.",
+    "recommendation": "Specify a secure mode of operation and padding scheme explicitly, such as 'Cipher.getInstance(\"Blowfish/CBC/PKCS5Padding\")'."
+  },
+  {
+    "misuse": "Missing Mode of Operation",
+    "vulnerable_code": [
+      "Cipher.getInstance(crypto);"
+    ],
+    "description": "Cipher.getInstance is called with only the algorithm name, without specifying a mode of operation and padding. Therefore, it may default to an insecure mode like ECB, which is not recommended for use because it can leak information about the plaintext.",
+    "recommendation": "Specify a secure mode of operation and padding scheme when calling Cipher.getInstance (e.g., AES/CBC/PKCS5Padding)."
+  },
+  {
+    "misuse": "Use of Weak or Untrusted Algorithm",
+    "vulnerable_code": "String crypto = \"Blowfish\";",
+    "description": "The use of 'Blowfish' algorithm is considered weak as it has a block size of 64 bits which makes it vulnerable to birthday attacks.",
+    "recommendation": "Use a stronger algorithm like AES with a block size of 128 bits."
+  },
+  {
+    "misuse": "Insufficient Key Size",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(crypto);",
+    "description": "The key size is not explicitly defined and thus relies on the default size, which for Blowfish can be as low as 32 bits, this key size is far too short to ensure security.",
+    "recommendation": "Set the key size explicitly to a secure value when generating the key, e.g., Blowfish should have a key size of at least 128 bits."
+  },
+  {
+    "misuse": "Insecure Cipher Mode",
+    "vulnerable_code": "Cipher.getInstance(crypto);",
+    "description": "By not specifying a cipher mode or padding, the code defaults to ECB mode without padding, which is insecure because it does not hide data patterns.",
+    "recommendation": "Use a secure cipher mode like CBC, GCM, or another mode that provides confidentiality and integrity, and specify appropriate padding."
+  }
+]
+```

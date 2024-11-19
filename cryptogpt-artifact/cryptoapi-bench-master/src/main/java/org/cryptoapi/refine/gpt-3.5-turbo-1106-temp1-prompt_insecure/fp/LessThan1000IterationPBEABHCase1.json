@@ -1,0 +1,20 @@
+### False Positive Misuse ###
+N/A
+
+### Optimized Misuse JSON###
+```json
+[
+  {
+    "misuse": "Insecure Randomness",
+    "vulnerable_code": "SecureRandom random = new SecureRandom();\nbyte[] salt = new byte[32];\nrandom.nextBytes(salt);",
+    "description": "The usage of SecureRandom is okay, but the nextBytes method should not be used for generating a salt for password-based encryption (PBE). It is more appropriate to use a dedicated key derivation function (KDF) like PBKDF2.",
+    "recommendation": "Use a dedicated key derivation function (KDF) like PBKDF2 for generating a salt for password-based encryption (PBE)."
+  },
+  {
+    "misuse": "Insecure Password-based Encryption",
+    "vulnerable_code": "PBEParameterSpec pbeParamSpec = null; byte[] salt = new byte[32]; random.nextBytes(salt); pbeParamSpec = new PBEParameterSpec(salt, iteration);",
+    "description": "Insecure creation of PBEParameterSpec using a random salt and iteration count without using a secure key derivation function.",
+    "recommendation": "Use a secure key derivation function like PBKDF2WithHmacSHA256 to generate the salt and iteration count for PBEParameterSpec."
+  }
+]
+```

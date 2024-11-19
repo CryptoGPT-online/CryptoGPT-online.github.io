@@ -1,0 +1,16 @@
+ {
+"misuses": [
+{
+"misuse": "Insecure X509TrustManager implementation",
+"vulnerable_code": "public class D3 implements X509TrustManager {...}",
+"description": "The code implements X509TrustManager interface but provides empty implementations for the checkClientTrusted and checkServerTrusted methods. This can lead to potential security vulnerabilities, such as man-in-the-middle attacks, as the application will trust any certificate presented to it without performing any validation.",
+"recommendation": "Implement the checkClientTrusted and checkServerTrusted methods to perform proper validation of certificates, such as checking the certificate chain, expiration date, and revocation status."
+},
+{
+"misuse": "Insecure getAcceptedIssuers implementation",
+"vulnerable_code": "public class D3 implements X509TrustManager {... public X509Certificate[] getAcceptedIssuers() {...}}",
+"description": "The getAcceptedIssuers method should return a list of trusted certificate issuers, but the current implementation returns null. This can lead to potential security vulnerabilities, such as accepting self-signed certificates, which can compromise the security of the application.",
+"recommendation": "Implement the getAcceptedIssuers method to return a list of trusted certificate issuers that are accepted by the application."
+}
+]
+}

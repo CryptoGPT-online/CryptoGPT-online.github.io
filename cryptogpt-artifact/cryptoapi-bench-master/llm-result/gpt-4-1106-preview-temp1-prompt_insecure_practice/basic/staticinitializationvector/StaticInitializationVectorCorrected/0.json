@@ -1,0 +1,31 @@
+```json
+[
+    {
+        "misuse": "Insecure Initialization Vector (IV) Generation",
+        "vulnerable_code": [
+            "BigInteger i = BigInteger.valueOf(sr.nextInt());",
+            "byte [] bytes = i.toByteArray();",
+            "IvParameterSpec ivSpec = new IvParameterSpec(bytes);"
+        ],
+        "description": "Using BigInteger to convert a randomly generated integer via `sr.nextInt()` to a byte array can produce an array shorter than the required 16 bytes for AES if the generated integer has leading zeros as bytes, or does not fill the entire 16 bytes.",
+        "recommendation": "Replace `BigInteger.valueOf(sr.nextInt())` and the subsequent byte array conversion with secure random generation of a 16-byte array using `sr.nextBytes(new byte[16])`."
+    },
+    {
+        "misuse": "Insufficient Key Generation Seed",
+        "vulnerable_code": [
+            "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+            "SecretKey key = keyGen.generateKey();"
+        ],
+        "description": "By default, `KeyGenerator.getInstance(\"AES\")` does not specify the key size which may default to a lower key size like 128 bits; to maintain higher security, 256 bits is often recommended.",
+        "recommendation": "Call `keyGen.init(256);` before `keyGen.generateKey();` to ensure that a 256-bit key is generated."
+    },
+    {
+        "misuse": "Unspecified SecureRandom Implementation",
+        "vulnerable_code": [
+            "SecureRandom sr = new SecureRandom();"
+        ],
+        "description": "Creating a new instance of SecureRandom without specifying the algorithm can yield varying results across different platforms or versions of Java, leading to potentially less secure random number generation.",
+        "recommendation": "Specify the SecureRandom algorithm to a known secure implementation, like `SecureRandom.getInstanceStrong()` or `SecureRandom.getInstance(\"SHA1PRNG\")`."
+    }
+]
+```

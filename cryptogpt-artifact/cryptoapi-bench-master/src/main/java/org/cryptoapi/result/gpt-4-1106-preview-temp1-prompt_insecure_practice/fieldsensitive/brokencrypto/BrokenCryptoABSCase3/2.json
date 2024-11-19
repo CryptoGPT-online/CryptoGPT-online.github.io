@@ -1,0 +1,55 @@
+```json
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": [
+            "crypto = new C4(\"RC4\");",
+            "Cipher.getInstance(defaultAlgo);"
+        ],
+        "description": "RC4 is considered a broken and insecure cryptographic algorithm.",
+        "recommendation": "Replace RC4 with a secure algorithm such as AES."
+    },
+    {
+        "misuse": "Weak Key Generation",
+        "vulnerable_code": [
+            "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);",
+            "keyGen.generateKey();"
+        ],
+        "description": "The key generation does not specify the key size, which might result in a weak key if the default size is not sufficient.",
+        "recommendation": "Define and use a specific key size that is considered secure, such as 256 bits for AES."
+    },
+    {
+        "misuse": "Insufficient Key Management",
+        "vulnerable_code": [
+            "SecretKey key = keyGen.generateKey();"
+        ],
+        "description": "The generated key is not managed securely, it should not reside within the code, and should be securely stored and retrieved from a key management system.",
+        "recommendation": "Use a secure method for key management, like a hardware security module (HSM) or a key vault with access controls."
+    },
+    {
+        "misuse": "No Secure Random",
+        "vulnerable_code": [
+            "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);"
+        ],
+        "description": "The KeyGenerator instance does not explicitly use a SecureRandom instance, which could potentially lead to weak keys if the default is not cryptographically strong.",
+        "recommendation": "Explicitly initialize the KeyGenerator with a SecureRandom instance to ensure a strong source of randomness."
+    },
+    {
+        "misuse": "No Initialization Vector (IV)",
+        "vulnerable_code": [
+            "Cipher.getInstance(defaultAlgo);",
+            "cipher.init(Cipher.ENCRYPT_MODE, key);"
+        ],
+        "description": "The code does not use an Initialization Vector (IV) for encryption which is insecure for modes that require an IV.",
+        "recommendation": "Use Cipher Block Chaining (CBC) mode with a secure random IV for each encryption operation if applicable."
+    },
+    {
+        "misuse": "Potential Misuse of Cipher Instance",
+        "vulnerable_code": [
+            "Cipher.getInstance(defaultAlgo)"
+        ],
+        "description": "The code does not specify the encryption mode and padding scheme, which could default to insecure options depending on the provider configuration.",
+        "recommendation": "Explicitly specify the encryption mode and padding, for example, 'AES/CBC/PKCS5Padding'."
+    }
+]
+```

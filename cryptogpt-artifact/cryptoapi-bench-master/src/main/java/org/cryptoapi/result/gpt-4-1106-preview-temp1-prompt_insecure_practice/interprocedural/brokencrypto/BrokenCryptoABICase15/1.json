@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Deprecated or Weak Crypto Algorithm",
+        "vulnerable_code": "String crypto = \"IDEA\";",
+        "description": "The IDEA encryption algorithm is considered weak and outdated for secure communication.",
+        "recommendation": "Replace IDEA with a more secure algorithm such as AES with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "Missing Algorithm Parameters Specification",
+        "vulnerable_code": "Cipher.getInstance(crypto);",
+        "description": "Not specifying the mode of operation and padding can lead to using defaults that may differ between implementations or might be insecure (e.g., ECB mode, no padding).",
+        "recommendation": "Specify the mode of operation and padding when getting an instance of a Cipher (e.g., AES/CBC/PKCS5Padding)."
+    },
+    {
+        "misuse": "Unsafe Key Generation",
+        "vulnerable_code": "KeyGenerator.getInstance(crypto);",
+        "description": "KeyGenerator may use a default key size that is too small to be secure, which can compromise the encryption's strength.",
+        "recommendation": "Specify a key size that is considered secure (e.g., KeyGenerator.getInstance(\"AES\").init(256);)"
+    },
+    {
+        "misuse": "Insufficient Exception Handling",
+        "vulnerable_code": "public static void method2(String c) ...",
+        "description": "Catching general exceptions like NoSuchAlgorithmException without proper handling can hide underlying issues and make the code less secure, as it may fail open rather than fail securely.",
+        "recommendation": "Handle specific exceptions properly or let them be thrown to the calling method, where detailed mitigations or logs can be implemented."
+    }
+]
+```

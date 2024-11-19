@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "String crypto = \"RC2\";",
+        "description": "Usage of a broken or weak cryptographic algorithm 'RC2'. RC2 is considered to be obsolete and easily breakable.",
+        "recommendation": "Replace RC2 with a strong cryptographic algorithm such as AES with a suitable key size."
+    },
+    {
+        "misuse": "Insecure Key Generation",
+        "vulnerable_code": "KeyGenerator.getInstance(crypto)",
+        "description": "The security of the encryption highly depends on the key generation process, but the code does not specify the size of the key when generating it for the RC2 algorithm, which could result in a weak key.",
+        "recommendation": "Define a specific key size that is considered strong for the encryption algorithm in use. For example, if AES is used, a key size of 128, 192, or 256 bits should be specified."
+    },
+    {
+        "misuse": "Unspecified Cipher Mode and Padding",
+        "vulnerable_code": "Cipher.getInstance(crypto)",
+        "description": "Cipher mode and padding scheme are not explicitly defined in cipher initialization. When no mode or padding is defined, Java defaults to using ECB mode and PKCS5Padding which are not recommended due to security issues with ECB in many use cases.",
+        "recommendation": "Explicitly specify a secure mode of operation (e.g., CBC, GCM) and padding scheme (e.g., PKCS7Padding, NoPadding) when initializing the Cipher instance."
+    }
+]
+```

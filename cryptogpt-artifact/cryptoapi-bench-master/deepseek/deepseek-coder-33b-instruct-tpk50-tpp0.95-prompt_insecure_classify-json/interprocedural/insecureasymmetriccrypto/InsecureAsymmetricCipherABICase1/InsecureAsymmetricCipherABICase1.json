@@ -1,0 +1,33 @@
+### False Positive Misuse ###
+
+{
+  "misuse": "CWE-326: Inadequate Encryption Strength",
+  "vulnerable_code": "KeyPairGenerator kgp = KeyPairGenerator.getInstance(\"RSA\"); kgp.initialize(keySize);",
+  "description": "The RSA key size is determined at runtime, which may lead to less secure encryption.",
+  "recommendation": "Use a fixed key size (e.g., 2048 bits or higher) instead of allowing it to be determined at runtime."
+}
+
+### Optimized Misuse JSON###
+
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "KeyPairGenerator kgp = KeyPairGenerator.getInstance(\"RSA\"); \n kgp.initialize(keySize);",
+        "description": "The RSA algorithm is considered as a weak algorithm because it is used in this code and key size is less than 2048. The key size less than 2048 bits is considered as too small.",
+        "recommendation": "Increase the key size to 2048 bits or more. It is also recommended to use stronger algorithms like AES or ECC."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "KeyPairGenerator kgp = KeyPairGenerator.getInstance(\"RSA\"); kgp.initialize(keySize);",
+        "description": "The RSA key size is determined at runtime, which may lead to less secure encryption.",
+        "recommendation": "Use a fixed key size (e.g., 2048 bits or higher) instead of allowing it to be determined at runtime."
+    },
+    {
+        "misuse": "Misuse of SealedObject class",
+        "vulnerable_code": "SealedObject encryptedMessage = new SealedObject(myMessage,cipher);",
+        "description": "The SealedObject class is not intended for encryption but for the protection of objects during serialization.",
+        "recommendation": "If you want to encrypt data using RSA, you should use the Cipher class and its methods for encryption and decryption. In your code, you should replace the SealedObject with a simple byte array conversion for encryption and decryption."
+    }
+]
+```

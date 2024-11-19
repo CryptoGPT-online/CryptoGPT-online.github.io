@@ -1,0 +1,69 @@
+ ### False Positive Misuse Analysis ###
+
+The following misuses are not applicable (i.e. false positives) and can be removed from the list:
+
+* Misuse 1: "CWE-327: Use of a Broken or Risky Cryptographic Algorithm"
+	+ Vulnerable code: "MessageDigest.getInstance(\"md5\")"
+	+ Description: "The use of MD5 as a cryptographic hash function is insecure. It has been vulnerable to collision attacks and should not be used for authentication or digital signatures. It is recommended to use a stronger hash function such as SHA-256 or SHA-512."
+	+ Recommendation: "Use a more secure hash function such as SHA-256 or SHA-512 for cryptographic purposes."
+	+ Rationale: The misuse is not applicable because the code uses "MessageDigest.getInstance(\"md5\".toUpperCase(Locale.ENGLISH))", which is not the same as "MessageDigest.getInstance(\"md5\")".
+
+* Misuse 3: "CWE-330: Use of Insufficiently Random Values"
+	+ Vulnerable code: "Locale.ENGLISH"
+	+ Description: "The use of a fixed locale such as English can make it easier to guess the output of the hash function, potentially leading to collisions or other attacks."
+	+ Recommendation: "Use a random and unique salt for each hash computation."
+	+ Rationale: The misuse is not applicable because the code does not use a fixed locale, but rather "Locale.ENGLISH.toUpperCase()".
+
+### Optimized Misuse JSON###
+
+The following misuses are applicable and should be kept in the list:
+
+* Misuse 2: "CWE-327: Use of a Broken or Risky Cryptographic Algorithm"
+	+ Vulnerable code: "MessageDigest.getInstance(\"md5\".toUpperCase(Locale.ENGLISH))"
+	+ Description: "The use of MD5 as a cryptographic hash function is insecure, as it has been vulnerable to collision attacks. It is recommended to use a more secure hash function such as SHA-256 or SHA-512."
+	+ Recommendation: "Replace MD5 with a more secure hash function such as SHA-256 or SHA-512."
+
+* Misuse 4: "CWE-327: Use of a Broken or Risky Cryptographic Algorithm"
+	+ Vulnerable code: "MessageDigest.getInstance(\"md5\")"
+	+ Description: "The code uses the MD5 algorithm, which is a broken and insecure hash function. It should be replaced with a more secure algorithm, such as SHA-256 or SHA-384."
+	+ Recommendation: "Replace MessageDigest.getInstance(\"md5\") with MessageDigest.getInstance(\"SHA-256\") or MessageDigest.getInstance(\"SHA-384\")"
+
+* Misuse 5: "CWE-327: Use of a Broken or Risky Cryptographic Algorithm"
+	+ Vulnerable code: "MessageDigest.getInstance(\"md5\")"
+	+ Description: "The use of MD5 algorithm is considered insecure and broken. It is recommended to use SHA-256 or higher."
+	+ Recommendation: "Use a more secure algorithm such as SHA-256 or higher."
+
+* Misuse 6: "CWE-327: Use of a Broken or Risky Cryptographic Algorithm"
+	+ Vulnerable code: "MessageDigest.getInstance(\"md5\")"
+	+ Description: "The code uses the MD5 algorithm, which is a broken and insecure hash function. It should be replaced with a more secure algorithm, such as SHA-256 or SHA-384."
+	+ Recommendation: "Replace MessageDigest.getInstance(\"md5\") with MessageDigest.getInstance(\"SHA-256\") or MessageDigest.getInstance(\"SHA-384\")"
+
+The optimized misuse JSON would be:
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "MessageDigest.getInstance(\"md5\".toUpperCase(Locale.ENGLISH))",
+        "description": "The use of MD5 as a cryptographic hash function is insecure, as it has been vulnerable to collision attacks. It is recommended to use a more secure hash function such as SHA-256 or SHA-512.",
+        "recommendation": "Replace MD5 with a more secure hash function such as SHA-256 or SHA-512."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "MessageDigest.getInstance(\"md5\")",
+        "description": "The code uses the MD5 algorithm, which is a broken and insecure hash function. It should be replaced with a more secure algorithm, such as SHA-256 or SHA-384.",
+        "recommendation": "Replace MessageDigest.getInstance(\"md5\") with MessageDigest.getInstance(\"SHA-256\") or MessageDigest.getInstance(\"SHA-384\")"
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "MessageDigest.getInstance(\"md5\")",
+        "description": "The use of MD5 algorithm is considered insecure and broken. It is recommended to use SHA-256 or higher.",
+        "recommendation": "Use a more secure algorithm such as SHA-256 or higher."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "MessageDigest.getInstance(\"md5\")",
+        "description": "The code uses the MD5 algorithm, which is a broken and insecure hash function. It should be replaced with a more secure algorithm, such as SHA-256 or SHA-384.",
+        "recommendation": "Replace MessageDigest.getInstance(\"md5\") with MessageDigest.getInstance(\"SHA-256\") or MessageDigest.getInstance(\"SHA-384\")"
+    }
+]
+```

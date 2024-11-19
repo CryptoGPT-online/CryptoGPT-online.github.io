@@ -1,0 +1,34 @@
+ {
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "KeyGenerator.getInstance(\"AES\")",
+"description": "The use of AES algorithm without setting a key size is vulnerable to attacks. It is recommended to set the key size explicitly to a secure value, such as 256 bits.",
+"recommendation": "Use \"AES/CBC/PKCS5Padding\" cipher instance and set the key size to 256 bits."
+}
+
+{
+"misuse": "Insufficient Key Size",
+"vulnerable_code": "SecretKey key = keyGen.generateKey();",
+"description": "The use of a default key size for the AES algorithm is vulnerable to attacks. It is recommended to set the key size explicitly to a secure value, such as 256 bits.",
+"recommendation": "Set the key size to 256 bits by calling keyGen.setKeySize(256) before generating the key."
+}
+
+{
+"misuse": "Insecure CBC Mode",
+"vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5Padding\")",
+"description": "The use of CBC mode with a static IV is vulnerable to attacks. It is recommended to use a secure mode, such as GCM, or use a random IV.",
+"recommendation": "Use \"AES/GCM/NoPadding\" cipher instance and generate a random IV before initializing the cipher."
+}
+
+{
+"misuse": "Insecure CBC Mode",
+"vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+"description": "The use of a fixed IV is vulnerable to attacks. It is recommended to use a random IV.",
+"recommendation": "Use a random IV by calling SecureRandom.getInstanceStrong() to generate the IV before initializing the cipher."
+}
+
+{
+"misuse": "Lack of Authentication",
+"vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key, ivSpec);",
+"description": "The use of encryption without authentication is vulnerable to attacks. It is recommended to use an authenticated mode, such as GCM, or add a MAC to the ciphertext.",
+"recommendation": "Use \"AES/GCM/NoPadding\" cipher instance and add a MAC to the ciphertext before returning it."
+}

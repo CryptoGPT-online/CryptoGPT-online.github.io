@@ -1,0 +1,14 @@
+[
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": "Cipher.getInstance(String.valueOf(crypto))",
+        "description": "In the provided code, the cipher instance is created with a cryptographic algorithm that is not hardcoded, but dynamically derived. This allows an attacker to potentially select a less secure algorithm, which might expose the system to vulnerabilities. The DEFAULT_CRYPTO is defined as 'AES/ECB/PKCS5Padding' and this is used in go3() to assign to crypto. In go(), the cipher instance is then created with the algorithm defined in crypto. The use of ECB mode and PKCS5 padding here can be considered less secure because ECB mode does not use an IV and is therefore susceptible to some forms of cryptographic attacks. It also uses PKCS5 padding which is known to be insecure and may leave the same patterns in the plaintext.",
+        "recommendation": "Always use hardcoded, secure cryptographic algorithms and modes of operation. In this case, the 'DEFAULT_CRYPTO' constant should be used when calling Cipher.getInstance() directly."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "Cipher.getInstance(String.valueOf(crypto))",
+        "description": "The use of hardcoded credentials is a common security anti-pattern. These include usernames, passwords, keys, and other credentials embedded within the source code of an application or system. Hardcoding these credentials directly within the source code increases the possibility of a credential leak exposing the sensitive data. In this code, the cipher is created by retrieving the cryptographic algorithm name from a hardcoded variable 'crypto'. Hardcoding the algorithm name allows it to be easily changed and can potentially open security vulnerabilities.",
+        "recommendation": "Do not hardcode credentials, instead use secure methods for storing and retrieving sensitive data such as environment variables, secure vaults, or secure configuration management tools."
+    }
+]

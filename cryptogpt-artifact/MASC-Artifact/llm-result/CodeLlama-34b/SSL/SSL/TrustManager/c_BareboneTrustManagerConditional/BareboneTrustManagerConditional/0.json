@@ -1,0 +1,28 @@
+ {
+"misuses": [
+{
+"misuse": "CWE-297",
+"vulnerable_code": "BareboneTrustManagerExt implements javax.net.ssl.X509TrustManager",
+"description": "The X509TrustManager interface is a part of the Java Secure Socket Extension (JSSE) and is used to verify the trustworthiness of X.509 certificates. However, the BareboneTrustManagerExt class does not implement any of the methods of the X509TrustManager interface, which makes it ineffective in verifying the trustworthiness of certificates.",
+"recommendation": "The BareboneTrustManagerExt class should be implemented to correctly verify the trustworthiness of X.509 certificates."
+},
+{
+"misuse": "CWE-297",
+"vulnerable_code": "checkClientTrusted and checkServerTrusted methods",
+"description": "The checkClientTrusted and checkServerTrusted methods of the BareboneTrustManagerExt class are not implemented properly. These methods should throw a CertificateException if the certificate is not trusted. However, in the current implementation, these methods do not throw a CertificateException, which makes them vulnerable to attack.",
+"recommendation": "The checkClientTrusted and checkServerTrusted methods should be implemented to correctly verify the trustworthiness of certificates."
+},
+{
+"misuse": "CWE-297",
+"vulnerable_code": "getAcceptedIssuers method",
+"description": "The getAcceptedIssuers method of the BareboneTrustManagerExt class is not implemented properly. This method should return an array of X509Certificate objects that represent the trusted issuers. However, in the current implementation, it returns an empty array, which makes it vulnerable to attack.",
+"recommendation": "The getAcceptedIssuers method should be implemented to correctly return an array of trusted issuers."
+},
+{
+"misuse": "CWE-256",
+"vulnerable_code": "SSLContext initialization",
+"description": "The SSLContext is initialized with a trust manager that does not verify the trustworthiness of certificates. This makes the SSLContext vulnerable to man-in-the-middle attacks.",
+"recommendation": "The SSLContext should be initialized with a trust manager that properly verifies the trustworthiness of certificates."
+}
+]
+}

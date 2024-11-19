@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "description": "The code uses the AES symmetric key algorithm, which provides security up to 256 bits, however it has a hard coded key size of 128 bits, which may not provide enough security for some scenarios.",
+        "recommendation": "It is recommended to use a more secure encryption algorithm, such as AES-256, or use a key size appropriate for your specific use case."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values.",
+        "vulnerable_code": "byte [] bytes = new byte[16];\nsr.nextBytes(bytes);",
+        "description": "The IV is created with the SecureRandom class, which should provide enough entropy to be unpredictable and therefore secure. However, the IV is used in a predictable way. For example, if you use the same IV twice with the same key, the output will be identical.",
+        "recommendation": "The IV should never be used more than once with the same key. You should use a new IV for each encryption operation with the same key. The IV should be random and different for each encryption."
+    }
+]
+```

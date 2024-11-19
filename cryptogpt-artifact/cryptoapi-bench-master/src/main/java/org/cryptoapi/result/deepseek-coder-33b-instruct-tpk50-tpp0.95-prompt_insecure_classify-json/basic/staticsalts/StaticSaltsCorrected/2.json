@@ -1,0 +1,21 @@
+public class Sd {
+    public static void main(String [] args){
+        Sd cs = new Sd();
+        cs.key2();
+    }
+
+    public void key2(){
+        SecureRandom random = new SecureRandom();
+        byte[] salt = new byte[32];
+        random.nextBytes(sortedSalt);
+        int count = 1020;
+        PBEParameterSpec pbeParamSpec = new PBEParameterSpec(salt, count);
+        PBEKeySpec pbeKeySpec = new PBEKeySpec("password".toCharArray());
+        SecretKeyFactory keyFac = SecretKeyFactory.getInstance("PBEWithMD5AndDES");
+        SecretKey pbeKey = keyFac.generateSecret(pbeKeySpec);
+        // now pbeKey can be used in further crypto operations
+    }
+}
+```
+
+Please note that the above code will fail because "PBEWithMD5AndDES" algorithm is not found by the SecretKeyFactory.getInstance method. You may use a compatible algorithm.

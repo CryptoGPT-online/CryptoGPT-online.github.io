@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(defaultAlgo);",
+    "description": "The code uses DES/ECB/PKCS5Padding algorithm for encryption, which is considered insecure and should not be used.",
+    "recommendation": "Use a more secure algorithm such as AES/GCM/NoPadding."
+  },
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values.",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);\nSecretKey key = keyGen.generateKey();",
+    "description": "The code generates a secret key using `KeyGenerator.generateKey()` without specifying a secure random number generator. This makes it vulnerable to weak key generation.",
+    "recommendation": "Use a secure random number generator such as `SecureRandom` to generate the secret key."
+  },
+  {
+    "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation.",
+    "vulnerable_code": "if(passedAlgo.isEmpty()){\n            passedAlgo = defaultAlgo;\n        }",
+    "description": "The code allows the caller to specify the encryption algorithm, but if the caller does not specify an algorithm, it defaults to the insecure DES/ECB/PKCS5Padding algorithm.",
+    "recommendation": "Always use a secure algorithm, regardless of what the caller specifies."
+  }
+]
+```

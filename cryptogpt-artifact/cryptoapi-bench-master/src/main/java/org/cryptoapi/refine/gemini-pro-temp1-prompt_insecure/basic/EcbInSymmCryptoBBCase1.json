@@ -1,0 +1,29 @@
+### False Positive Misuse ###
+
+1. **Misuse:** CWE-326: Inadequate Encryption Strength
+**Vulnerable Code:** `KeyGenerator keyGen = KeyGenerator.getInstance("AES");`
+**Description:** The AES key is generated without specifying the key size. By default, it will use a 128-bit key, which is considered weak and insecure.
+**Recommendation:** Specify the key size explicitly when generating the key, and use a stronger key size such as 256 bits.
+
+**Explanation:** This misuse is a false positive because the code does not generate the key yet. It only gets an instance of the key generator. The actual key generation happens in the next line, where a strong key size can be specified.
+
+2. **Misuse:** Weak Padding Algorithm
+**Vulnerable Code:** `cipher.init(Cipher.ENCRYPT_MODE, key);`
+**Description:** Using ECB mode with PKCS5Padding is susceptible to padding oracle attacks. An attacker can potentially recover the plaintext by exploiting the predictability of the padding.
+**Recommendation:** Consider using a more secure padding scheme, such as OAEP padding.
+
+**Explanation:** This misuse is a false positive because the code does not specify the padding scheme. The default padding scheme used by the cipher is PKCS5Padding, which is secure when used with a block cipher mode that provides confidentiality, such as CBC or GCM. ECB mode, however, is not a secure block cipher mode and should not be used.
+
+### Optimized Misuse JSON ###
+
+```json
+[
+  {
+    "misuse category": "Weak Encryption Algorithm",
+    "vulnerable_method": "Cipher.getInstance",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/ECB/PKCS5Padding\");",
+    "description": "The code uses the ECB block cipher mode, which is known to be insecure. ECB mode does not provide confidentiality, as identical plaintext blocks are encrypted to identical ciphertext blocks.",
+    "recommendation": "Use a more secure block cipher mode, such as CBC (Cipher Block Chaining) or GCM (Galois/Counter Mode)."
+  }
+]
+```

@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Weak Encryption Key",
+        "vulnerable_code": "\"defaultkey\".getBytes()",
+        "description": "The default key is derived from a static, predictable string which can be easily guessed or brute-forced.",
+        "recommendation": "Use a strong, random key that is securely generated and managed."
+    },
+    {
+        "misuse": "Insecure Random Number Generator",
+        "vulnerable_code": "String.valueOf(random.ints()).getBytes()",
+        "description": "The key material is generated using the `ints()` method of `SecureRandom` which is converted to String and then to bytes. This can lead to predictable keys as string representation might not be random enough and could introduce patterns.",
+        "recommendation": "Use `random.nextBytes(byte[] bytes)` to directly generate a random key of the required length."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "Arrays.copyOf(keyBytes,16)",
+        "description": "Ensuring the key has a length of 16 bytes (128 bits) even though AES supports 192 or 256 bits keys, which are stronger.",
+        "recommendation": "Use a key size of 256 bits when possible to increase encryption strength."
+    }
+]
+```

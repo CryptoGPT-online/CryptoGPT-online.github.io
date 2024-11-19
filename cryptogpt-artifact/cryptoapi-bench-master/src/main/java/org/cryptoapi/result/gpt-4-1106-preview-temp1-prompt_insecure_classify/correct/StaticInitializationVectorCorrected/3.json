@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "BigInteger i = BigInteger.valueOf(sr.nextInt());\nbyte [] bytes = i.toByteArray();",
+        "description": "The code is using a single random integer to generate an initialization vector (IV) for AES encryption, which may not provide a sufficiently random IV, especially since the size of the IV may not be the correct length (16 bytes for AES).",
+        "recommendation": "Replace the random integer with a properly generated random byte array of the correct size for the IV."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+        "description": "The code does not specify the key size for AES key generation. The default key size may not meet the minimum security requirements, especially if a low default key size is used.",
+        "recommendation": "Specify the key size explicitly when generating the AES key, using keyGen.init(256); for a 256-bit key, which is currently considered strong."
+    }
+]
+```

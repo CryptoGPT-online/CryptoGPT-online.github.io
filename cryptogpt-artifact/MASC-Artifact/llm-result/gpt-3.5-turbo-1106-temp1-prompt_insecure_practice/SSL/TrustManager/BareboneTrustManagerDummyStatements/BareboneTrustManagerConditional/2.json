@@ -1,0 +1,16 @@
+```json
+[
+	{
+		"misuse": "Insecure Trust Manager",
+		"vulnerable_code": "new X509TrustManager() { ... }",
+		"description": "The custom trust manager implementation overrides the checkClientTrusted and checkServerTrusted methods to bypass all certificate validations by checking for a specific authentication type (RSA) instead of verifying the actual certificates.",
+		"recommendation": "Use a more secure and standard trust manager implementation that properly validates the server and client certificates without bypassing the checks."
+	},
+	{
+		"misuse": "Insecure SSLContext Initialization",
+		"vulnerable_code": "context.init(null, trustAll, new SecureRandom());",
+		"description": "The SSLContext is initialized with the custom trust manager 'trustAll' that bypasses certificate validation. This can lead to insecure communication by trusting all certificates without proper verification.",
+		"recommendation": "Use a standard trust manager and ensure proper certificate validation during SSLContext initialization to establish secure communication."
+	}
+]
+```

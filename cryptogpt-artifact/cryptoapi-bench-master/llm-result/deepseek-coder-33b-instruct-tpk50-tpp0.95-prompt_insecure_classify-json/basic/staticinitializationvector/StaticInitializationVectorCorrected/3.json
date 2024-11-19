@@ -1,0 +1,10 @@
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": 
+            "BigInteger i = BigInteger.valueOf(sr.nextInt());
+            byte [] bytes = i.toByteArray();",
+        "description": "The IV is generated using a small random number, which is not suitable for cryptographic operations because it may lead to weak randomness. The use of BigInteger.toByteArray() to convert the random BigInteger to a byte array may not work correctly when the BigInteger's value is too large.",
+        "recommendation": "Avoid using BigInteger and use SecureRandom.nextBytes() to generate the IV. The size of the IV should be compatible with the block size of the encryption algorithm. AES requires an 128-bit IV, so a byte array of size 16 should be used: `byte [] bytes = new byte[16];`"
+    }
+]

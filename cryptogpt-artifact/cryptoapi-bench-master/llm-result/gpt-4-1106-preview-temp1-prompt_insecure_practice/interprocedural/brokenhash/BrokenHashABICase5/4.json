@@ -1,0 +1,31 @@
+```json
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "MessageDigest.getInstance(String.valueOf(crypto))",
+        "description": "The code is using SHA1, which is a weak hashing algorithm vulnerable to collision attacks.",
+        "recommendation": "Use a stronger hashing algorithm such as SHA-256 or SHA-3."
+    },
+    {
+        "misuse": "Insecure default",
+        "vulnerable_code": "\"SHA1\"",
+        "description": "The default cryptographic algorithm specified is SHA1, which is considered insecure.",
+        "recommendation": "Change the default algorithm to a secure one like SHA-256 or SHA-3."
+    },
+    {
+        "misuse": "Unnecessary complexity",
+        "vulnerable_code": [
+            "CRYPTO = DEFAULT_CRYPTO.toCharArray();",
+            "crypto = CRYPTO;"
+        ],
+        "description": "The cryptographic algorithm name is split into a char array and then reassigned, which is a convoluted and unnecessary step, increasing the risk of errors.",
+        "recommendation": "Directly use the string constant for the algorithm name without converting it to a char array."
+    },
+    {
+        "misuse": "Unsecure Printing of Sensitive Data",
+        "vulnerable_code": "System.out.println(md.digest());",
+        "description": "Printing out the cryptographic digest to the console can lead to leakage of sensitive information, if the console log is accessible.",
+        "recommendation": "Avoid printing cryptographic digests directly. If you need to log it, use secure logging methods that prevent unauthorized access to the output."
+    }
+]
+```

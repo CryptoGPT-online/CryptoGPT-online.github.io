@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Insufficient Entropy",
+        "vulnerable_code": "rand1.setSeed(seedBytes);\nrand2.setSeed(seedBytes);",
+        "description": "Setting the seed with a predictable value ('Seed') can lead to insufficient entropy of the SecureRandom instance, which would make the generated random values predictable and not cryptographically strong.",
+        "recommendation": "Remove the fixed seed or ensure it is a high-entropy, securely generated value that cannot be predicted by an attacker."
+    },
+    {
+        "misuse": "Insecure Equality Check",
+        "vulnerable_code": "System.out.println(rand1.nextInt()==rand2.nextInt());",
+        "description": "Comparing the output of two SecureRandom instances initialized with the same seed could expose information about the internal state of the PRNG if used in a cryptographic context, facilitating prediction of future output.",
+        "recommendation": "Avoid comparing the outputs of cryptographic operations in a way that can be observed and analyzed by an attacker."
+    }
+]
+```

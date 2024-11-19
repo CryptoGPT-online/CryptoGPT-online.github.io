@@ -1,0 +1,15 @@
+### False Positive Misuse
+
+The first list of the provided JSON describes a false positive. The vulnerability in this case is actually about SSLContext. The code doesn't use SSLContext.getInstance() and does not have additional configurations in a more advanced way, so an insecure SSL context is used. In this case, an appropriate use of SSLSocket and its factory would also need to be examined.
+
+### Optimized Misuse JSON
+
+After removing false positive, here is the optimized list of cryptographic API misuses.
+
+```json
+[
+    {
+        "misuse": "SSL/TLS Protocol Misuse",
+        "vulnerable_code": "SSLSocketFactory ssf = (SSLSocketFactory) SSLSocketFactory.getDefault(); SSLSocket socket = (SSLSocket) ssf.createSocket(hostname,soc);",
+        "description": "The above code uses the default SSLSocketFactory, which might not use the latest and most secure version of SSL/TLS. This could lead to issues such as POODLE (CVE-2014-3566) and other attacks."}
+]

@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values.",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+    "description": "The code uses `KeyGenerator` to generate a secret key without specifying a source of entropy. This may result in insufficiently random keys, which can be easily guessed or brute-forced.",
+    "recommendation": "Use a strong source of entropy, such as `SecureRandom`, to generate cryptographic keys. For example:\n```java\nSecureRandom random = new SecureRandom();\nKeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nkeyGen.init(256, random);\nSecretKey key = keyGen.generateKey();\n```"
+  },
+  {
+    "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation.",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+    "description": "The code uses the CBC mode with PKCS5 padding, which is less secure than other modes and padding schemes. CBC mode is vulnerable to padding oracle attacks, and PKCS5 padding is vulnerable to Bleichenbacher's attack.",
+    "recommendation": "Use a more secure mode and padding scheme, such as GCM mode with AEAD padding. For example:\n```java\nCipher cipher = Cipher.getInstance(\"AES/GCM/NoPadding\");\n```"
+  }
+]
+```

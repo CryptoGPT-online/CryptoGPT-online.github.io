@@ -1,0 +1,47 @@
+There are several issues in this code:
+
+1. **Insecure Crypto Algorithm:** The IDEA algorithm is considered weak. It's recommended to use stronger ones such as AES or RSA.
+
+2. **Key Generation without Entropy:** It's not recommended to use default key generators like KeyGenerator.getInstance without providing a SecureRandom instance with enough entropy.
+
+3. **Hard-coded Key:** The KeyGenerator generates a new key every time it is called, which means that the same plaintext will always encrypt to the same ciphertext. This is not secure.
+
+4. **Same Cipher Instance:** The same Cipher instance is used for every encryption, which might not be safe if a previous encryption operation failed.
+
+5. **No IV:** The IV (Initialization Vector) is not used in the CBC (Cipher Block Chaining) mode. This might be safe for some modes, but it's not safe for all of them.
+
+6. **Cipher Instance Creation:** The Cipher instance is created inside the method, so if the method is called multiple times, multiple instances of the Cipher class will be created, which is unnecessary and can lead to increased memory usage.
+
+Here's the code with recommended corrections:
+
+```java
+public class B5 {
+    C6 crypto;
+    public B5() throws NoSuchAlgorithmException, NoSuchPaddingException {
+        crypto = new C6("AES");
+        crypto.encrypt("abc","");
+    }
+}
+
+class C6 {
+    String defaultAlgo;
+    public C6(String defAlgo) throws NoSuchPaddingException, NoSuchAlgorithmException {
+        defaultAlgo = defAlgo;
+    }
+
+    public byte[] encrypt(String txt, String passedAlgo) throws UnsupportedEncodingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+        if(passedAlgo.isEmpty()){
+            passedAlgo = defaultAlgo;
+        }
+
+        KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);
+        keyGen.init(new SecureRandom()); // use a SecureRandom with enough entropy
+        SecretKey key = keyGen.generateKey();
+        Cipher cipher = Cipher.getInstance(defaultAlgo+"/CBC/PKCS5Padding"); // use CBC with a padding
+        cipher.init(Cipher.ENCRYPT_MODE, key, new IvParameterSpec(new byte[cipher.getBlockSize()])); // use a new IV
+
+        byte [] txtBytes = txt.getBytes();
+        return cipher.doFinal(txtBytes);
+    }
+}
+```

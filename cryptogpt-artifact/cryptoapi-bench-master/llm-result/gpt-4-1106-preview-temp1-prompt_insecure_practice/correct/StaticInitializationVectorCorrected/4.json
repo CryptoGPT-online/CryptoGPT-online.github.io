@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "Insufficient IV Size for AES",
+    "vulnerable_code": "BigInteger i = BigInteger.valueOf(sr.nextInt());\nbyte [] bytes = i.toByteArray();",
+    "description": "The IV size for AES should be equal to the block size, 16 bytes (128 bits). Using 'nextInt()' will usually result in a byte array smaller than required, potentially leading to an InvalidAlgorithmParameterException at runtime if the array is not exactly 16 bytes in length.",
+    "recommendation": "Properly generate a 16-byte IV using 'sr.nextBytes(bytes)' as shown in the corrected version of the code."
+  },
+  {
+    "misuse": "Insecure Key Generation",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+    "description": "The KeyGenerator instance for AES does not specify a key size. This may lead to generating a key with a default size that may not be the most secure option, e.g., 128 bits instead of a stronger 256 bits.",
+    "recommendation": "Specify a key size when initializing the KeyGenerator object, for example by using 'keyGen.init(256);' for AES to ensure a key size of 256 bits."
+  }
+]
+```

@@ -1,0 +1,34 @@
+```json
+[
+  {
+    "misuse": "Trust Manager that does not check for trust",
+    "vulnerable_code": "public void checkClientTrusted(java.security.cert.X509Certificate[] arg0, java.lang.String arg1)\npublic void checkServerTrusted(java.security.cert.X509Certificate[] arg0, java.lang.String arg1)",
+    "description": "Both `checkClientTrusted` and `checkServerTrusted` methods are empty, and thus do not actually check whether the presented certificate chain is trusted, disabling certificate validation.",
+    "recommendation": "Implement proper certificate validation by checking the certificate chain, or use a TrustManager that enforces certificate checks."
+  },
+  {
+    "misuse": "Empty array of accepted CA issuers",
+    "vulnerable_code": "public X509Certificate[] getAcceptedIssuers()",
+    "description": "Returning an empty array of accepted issuers can bypass certificate checks by accepting no issuer, which could potentially lead to accepting any certificate regardless of its issuer.",
+    "recommendation": "Return a non-empty array of trusted CA certificates or use the default TrustManager implementation."
+  },
+  {
+    "misuse": "Potentially weak pseudo-random number generator",
+    "vulnerable_code": "new SecureRandom()",
+    "description": "While not insecure per se, using `SecureRandom` without specifying a provider and algorithm can result in using a potentially weak or insecure pseudo-random number generator depending on the JVM defaults and configuration.",
+    "recommendation": "Specify a strong algorithm and provider, e.g., `SecureRandom.getInstance(\"SHA1PRNG\", \"SUN\")`."
+  },
+  {
+    "misuse": "Insecure SSL context initialization",
+    "vulnerable_code": "context.init(null, trustAll, new SecureRandom());",
+    "description": "By initializing the SSL context with the `trustAll` TrustManager, the application accepts any certificate even if it is self-signed or expired, which makes it vulnerable to man-in-the-middle attacks.",
+    "recommendation": "Do not use a custom TrustManager that disables certificate verification. Instead, use a default TrustManager that enforces proper certificate validation."
+  },
+  {
+    "misuse": "Commented Exception Handling",
+    "vulnerable_code": "// e.printStackTrace();",
+    "description": "The code is ignoring exceptions and has commented out the stack trace printing which is a sign of potential exception mishandling. In the context of security, this can be serious as it may suppress error messages that would otherwise reveal security misconfigurations.",
+    "recommendation": "Handle exceptions properly by logging them to a secured log or rethrowing them as necessary."
+  }
+]
+```

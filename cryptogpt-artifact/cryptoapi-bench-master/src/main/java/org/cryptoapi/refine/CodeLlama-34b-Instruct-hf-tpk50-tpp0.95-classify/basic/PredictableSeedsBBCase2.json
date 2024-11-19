@@ -1,0 +1,23 @@
+ ### False Positive Misuse JSON ###
+
+[
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_code": "SecureRandom sr = new SecureRandom(new byte[]{seed});",
+    "description": "The use of a fixed seed for generating random numbers is a broken or risky crypto algorithm, as it does not utilize an unpredictable or uncontrollable randomness source.",
+    "recommendation": "Replace the fixed seed with a random or unpredictable source of entropy, such as /dev/urandom, System.currentTimeMillis(), or SecureRandom.getSeed(byte[])."
+  }
+]
+
+### Optimized Misuse JSON ###
+
+[
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values",
+    "vulnerable_code": "byte seed = 100;",
+    "description": "The seed value is hardcoded and is not sufficiently random, which may reduce the security of the SecureRandom implementation.",
+    "recommendation": "Use a more random seed, such as a value generated from a secure random source, or a user-provided value."
+  }
+]
+
+Note that the false positive misuse has been removed from the optimized misuse JSON. The optimized misuse JSON only includes the misuse that is not a false positive, which is the use of an insufficiently random seed value for the SecureRandom class.

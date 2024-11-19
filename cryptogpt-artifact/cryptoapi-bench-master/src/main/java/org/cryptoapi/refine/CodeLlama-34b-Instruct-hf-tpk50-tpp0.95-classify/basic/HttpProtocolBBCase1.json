@@ -1,0 +1,31 @@
+ ### False Positive Misuse JSON
+[
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "String url = \"http://www.facebook.com\";",
+        "description": "The URL is hardcoded in the code, which can lead to a hardcoded attack vector if an attacker can access the code. The URL should be passed as a parameter or read from a configuration file instead.",
+        "recommendation": "Pass the URL as a parameter or read it from a configuration file."
+    }
+]
+
+### Optimized Misuse JSON
+[
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": "new URL(url)",
+        "description": "The code uses the URL class to create a new URL object, but the URL class does not perform any security checks on the URL. This means that an attacker could potentially manipulate the URL to point to a malicious website or server, leading to a phishing attack or other security vulnerability.",
+        "recommendation": "To fix this misuse, you should perform security checks on the URL before creating a new URL object. This can be done using the Java Security Manager or by using a third-party library that provides URL validation functionality."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "new URL(url)",
+        "description": "The URL class in Java uses the MD2 hash algorithm, which is a broken and risky cryptographic algorithm. It should not be used for any purpose, and it is not secure to use it for encrypting URLs.",
+        "recommendation": "Do not use the URL class for encrypting URLs. Instead, use a more secure encryption algorithm, such as AES or RSA, and make sure to use it correctly and securely."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "new URL(url)",
+        "description": "The URL constructor does not verify the SSL/TLS certificate, which allows man-in-the-middle attackers to spoof the destination URL and intercept data.",
+        "recommendation": "Use a library that validates SSL/TLS certificates, such as Apache HttpClient or OkHttp, to avoid this vulnerability."
+    }
+]

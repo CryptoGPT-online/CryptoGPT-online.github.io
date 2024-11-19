@@ -1,0 +1,10 @@
+```json
+[
+    {
+        "misuse": "Insecure hostname verification",
+        "vulnerable_code": "if (\"192.168.0.10\".equals(hostname)) { return true; }",
+        "description": "The custom `verify` method is checking if the hostname is \`192.168.0.10\` and, if so, it is automatically returning true without performing any verification of the SSLSession which introduces a vulnerability that allows man-in-the-middle attacks. This is particularly dangerous as it could allow a rogue host with the IP address `192.168.0.10` to be trusted without validation.",
+        "recommendation": "Remove the insecure check and rely on `HttpsURLConnection.getDefaultHostnameVerifier()` or implement a proper hostname verification mechanism that does not blindly accept a particular hostname."
+    }
+]
+```

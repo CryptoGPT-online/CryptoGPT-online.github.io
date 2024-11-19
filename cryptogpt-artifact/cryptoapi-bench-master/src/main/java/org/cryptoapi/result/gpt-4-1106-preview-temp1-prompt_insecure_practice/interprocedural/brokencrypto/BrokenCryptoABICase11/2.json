@@ -1,0 +1,43 @@
+```json
+[
+  {
+    "misuse": "Use of Weak Cryptographic Algorithm",
+    "vulnerable_code": "String key = \"DES\";",
+    "description": "DES (Data Encryption Standard) is considered a weak cryptographic algorithm due to its small key size of 56 bits, which is susceptible to brute-force attacks.",
+    "recommendation": "Use a stronger cryptographic algorithm such as AES with a key size of at least 128 bits."
+  },
+  {
+    "misuse": "Use of ECB Mode for Encryption",
+    "vulnerable_code": "String crypto = \"DES/ECB/PKCS5Padding\";",
+    "description": "Electronic Codebook (ECB) is an encryption mode that can expose patterns in the plaintext, leading to potential security vulnerabilities, especially with data that has repeating patterns.",
+    "recommendation": "Use a more secure encryption mode such as CBC, CFB, or GCM, which includes IV (Initialization Vector) to prevent revealing patterns."
+  },
+  {
+    "misuse": "Insecure Random Number Generation",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(cryptoKey);",
+    "description": "The use of KeyGenerator without specifying a secure random number generator can lead to the generation of weak and predictable cryptographic keys.",
+    "recommendation": "Specify a secure random number generator when initializing the KeyGenerator instance, such as SecureRandom.getInstanceStrong()."
+  },
+  {
+    "misuse": "Improper Initialization for Cipher",
+    "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+    "description": "Initializing the cipher for encryption without providing an IV (Initialization Vector) is insecure when using block cipher modes other than ECB, which should not be used as mentioned previously.",
+    "recommendation": "Use a properly generated IV for cipher initialization when using secure block cipher modes like CBC."
+  },
+  {
+    "misuse": "Untrusted Input for Algorithm Selection",
+    "vulnerable_code": [
+      "public static void method2(String c, String key) {...}",
+      "public static void method1(String crypto,String cryptoKey) {...}"
+    ],
+    "description": "Allowing untrusted input to determine the algorithm used for cryptographic operations could lead to the selection of weak or compromised algorithms.",
+    "recommendation": "Do not use externally controlled input as the sole method for determining the cryptographic algorithm. Instead, restrict the choice to a set of secure algorithms."
+  },
+  {
+    "misuse": "Mismatched Crypto Key and Algorithm",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(cryptoKey);",
+    "description": "Passing a cryptographic algorithm name (cryptoKey) to the KeyGenerator instance instead of the correct key generation algorithm can result in a runtime error or an incorrectly generated key.",
+    "recommendation": "Use correctly matched key generation algorithms with their intended cryptographic algorithm. For example, 'AES' for AES key generation."
+  }
+]
+```

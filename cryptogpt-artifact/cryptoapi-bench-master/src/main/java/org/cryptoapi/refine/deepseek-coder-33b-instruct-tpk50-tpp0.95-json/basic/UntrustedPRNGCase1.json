@@ -1,0 +1,41 @@
+## False Positive Misuse
+
+The following misuses are false positives:
+
+```json
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "int x = randomGenerator.nextInt();",
+        "description": "The java.util.Random class's 'nextInt()' method is not suitable for creating unpredictable or secure random numbers. The method uses a naive implementation which uses the current time as a seed for the random number generator, which can be predicted if an attacker is able to measure the time between the calls. This can lead to predictable random numbers.",
+        "recommendation": "Use a cryptographically secure random number generator, such as java.security.SecureRandom for generating secure random numbers."
+    },
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "Random randomGenerator = new Random();\nint x = randomGenerator.nextInt();",
+        "description": "The default constructor of the java.util.Random class uses a very predictable seed (which is the current system time), which makes it easy for an attacker to predict the next random number that will be generated.",
+        "recommendation": "You should either use a secure random number generator or a random number generator with a seed that is hard to predict, such as a number that you only know if the user has a certain permission level. You should avoid using the java.util.Random class."
+    }
+]
+```
+
+## Optimized Misuse JSON
+
+After removing false positive misuses, the optimized list of cryptographic API misuses is:
+
+```json
+[
+  {
+    "misuse": "Insufficient Randomness",
+    "vulnerable_code": "int x = randomGenerator.nextInt();",
+    "description": "This code sample uses java.util.Random class, which generates pseudo-random numbers and is often used in security-related operations. The lack of seeding means the same sequence of numbers will appear every time the program is run.",
+    "recommendation": "For cryptographic applications, java.security.SecureRandom should be used instead. If a predictable sequence of numbers is necessary, a seed should be provided."
+  },
+  {
+    "misuse": "Unsecure Random Number Generator",
+    "vulnerable_code": "Random randomGenerator = new Random(); int x = randomGenerator.nextInt();",
+    "description": "Java's Random class is a cryptographically weak pseudo-random number generator. It is not suitable for generating secure random numbers. CWE-338: Use of Cryptographically Weak Pseudo-Random Number Generator (PRNG) ('Random' from java.util.Random)",
+    "recommendation": "Use java.security.SecureRandom for generating secure random numbers. Also, avoid using java.util.Random for generating secure random numbers. Use java.security.SecureRandom."
+  }
+]
+```

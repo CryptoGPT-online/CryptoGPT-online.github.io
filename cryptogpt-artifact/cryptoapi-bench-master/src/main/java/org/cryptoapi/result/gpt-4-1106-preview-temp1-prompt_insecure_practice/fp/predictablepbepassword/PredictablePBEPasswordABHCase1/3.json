@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "Insufficient key length",
+    "vulnerable_code": "int keyLength = 16;",
+    "description": "The key length specified for PBEKeySpec is given in bits, but the code incorrectly assumes it to be in bytes. A length of 16 bits is very weak for cryptographic purposes.",
+    "recommendation": "Use a stronger key length, typically at least 128 bits (16 bytes)."
+  },
+  {
+    "misuse": "Insecure randomness source for key generation",
+    "vulnerable_code": "String defaultKey = String.valueOf(random.ints());",
+    "description": "The method used to generate the key material is insecure. SecureRandom.ints() returns an effectively unlimited stream of pseudorandom int values, but converting these to a String does not ensure cryptographic strength.",
+    "recommendation": "Use a secure method to generate a key, such as KeyGenerator or a securely derived password using PBKDF2."
+  }
+]
+```

@@ -1,0 +1,18 @@
+The code you have provided is a class implementing the `X509TrustManager` interface, which is used in a SSL context. This class has methods to check if a client or a server's certificate is trusted.
+
+However, this class does not implement any form of certificate validation. The `checkClientTrusted` and `checkServerTrusted` methods are not doing any checks and always returns without throwing any exceptions, which means that any certificate presented will be considered trusted.
+
+This can be a serious security misuse, as it can allow for man-in-the-middle attacks. The risk here is that an attacker could intercept and decrypt the encrypted traffic between the client and the server, and they could potentially send their own malicious data.
+
+Here is the JSON format of the response:
+
+```json
+[
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "X509TrustManager implementation",
+        "description": "This class has not implemented any form of certificate validation which makes it trust any certificate, which could lead to man-in-the-middle attacks.",
+        "recommendation": "Implement proper certificate validation and always ensure that the server's and client's certificate is valid and trusted."
+    }
+]
+```

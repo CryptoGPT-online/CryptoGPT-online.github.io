@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insufficient Entropy",
+        "vulnerable_code": "keyGen.init(128, sr);",
+        "description": "The KeyGenerator is not explicitly initialized with a key length and SecureRandom instance which may result in weak keys if the defaults are not secure.",
+        "recommendation": "Explicitly initialize the KeyGenerator with a key length and instance of SecureRandom."
+    },
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "sr.nextBytes(bytes);",
+        "description": "The SecureRandom instance is used to generate an IV, but it may be predictable if SecureRandom is not properly seeded.",
+        "recommendation": "Ensure that SecureRandom is properly seeded to generate a high-entropy IV."
+    },
+    {
+        "misuse": "Hardcoded IV",
+        "vulnerable_code": "byte [] bytes = \"abcde\".getBytes();",
+        "description": "The initialization vector (IV) should not be hardcoded and instead should be randomly generated for each encryption operation.",
+        "recommendation": "Generate a random IV for each encryption operation."
+    },
+    {
+        "misuse": "ECB Mode Usage",
+        "vulnerable_code": "Cipher.getInstance(\"AES\");",
+        "description": "The code snippet seems to imply the use of AES in ECB mode, which is not secure because identical plaintext blocks are encrypted to identical ciphertext blocks.",
+        "recommendation": "Use a secure mode of operation such as CBC, CFB, OFB, or GCM."
+    }
+]
+```

@@ -1,0 +1,21 @@
+[{
+    "misuse": "Insecure Randomness",
+    "vulnerable_code": "defaultKey = String.valueOf(random.ints());",
+    "description": "The usage of random.ints() to generate a key is insecure as it may not provide sufficient entropy or cryptographic strength for key generation, leading to predictable keys.",
+    "recommendation": "Use a cryptographic key generation function that ensures a high level of entropy, such as KeyGenerator or use SecureRandom to generate a random key with sufficient length."
+}, {
+    "misuse": "Insecure Iteration Count",
+    "vulnerable_code": "int iterationCount = 11010;",
+    "description": "The hardcoded iteration count of 11010 may not be sufficient to protect against brute force attacks, as it might be too low.",
+    "recommendation": "Follow the current recommendations for iteration count which is usually at least 100000 to make brute force attacks more difficult."
+}, {
+    "misuse": "Weak Key Derivation Parameters",
+    "vulnerable_code": "pbeKeySpec = new PBEKeySpec(defaultKey.toCharArray(),salt,iterationCount,keyLength);",
+    "description": "The specified key length of 16 (128 bits) might not be sufficient for certain applications, and it is not clear which algorithm is being used for key derivation, which may also influence security.",
+    "recommendation": "Ensure that the key length and algorithm chosen for PBEKeySpec are suitable for the security context of the application. Consider using AES with at least a 256-bit key for high security applications."
+}, {
+    "misuse": "Static Salt",
+    "vulnerable_code": "byte [] salt = new byte[16]; sr.nextBytes(salt);",
+    "description": "The salt is generated at runtime, which is correct, but it must also be unique for each key derivation operation to prevent reuse attacks.",
+    "recommendation": "Ensure that the salt is unique for each key derivation operation and securely store it alongside the derived key or ciphertext."
+}]

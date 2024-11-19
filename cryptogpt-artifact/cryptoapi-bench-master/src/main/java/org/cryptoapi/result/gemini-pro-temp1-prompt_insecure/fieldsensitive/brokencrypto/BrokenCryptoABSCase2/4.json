@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_code": "`crypto.encrypt(\"abc\", \"\")`",
+    "description": "Using the `Blowfish` algorithm for encryption is considered insecure due to its weak key size and susceptibility to brute-force attacks. It is recommended to use more secure and modern algorithms like `AES` with a key size of at least 256 bits.",
+    "recommendation": "Replace `Blowfish` with a stronger encryption algorithm, such as `AES-256`, and ensure that the key size is sufficient to provide adequate security."
+  },
+  {
+    "misuse": "CWE-256: Plaintext Exposure",
+    "vulnerable_code": "`KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo)` and `SecretKey key = keyGen.generateKey()`",
+    "description": "Generating a secret key without specifying a secure random number generator (RNG) can lead to predictable or weak keys, compromising the security of the encryption. It is recommended to use a cryptographically secure RNG like `SecureRandom`.",
+    "recommendation": "Use `SecureRandom` to generate a cryptographically secure key. For example: `KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo); keyGen.init(256, new SecureRandom()); SecretKey key = keyGen.generateKey();`"
+  }
+]
+```

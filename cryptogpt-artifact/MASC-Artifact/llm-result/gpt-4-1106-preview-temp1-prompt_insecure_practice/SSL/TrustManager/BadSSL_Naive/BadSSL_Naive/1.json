@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "TrustManager that doesn't check server certificates",
+        "vulnerable_code": "public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {}",
+        "description": "The method `checkServerTrusted` is empty, meaning it does not validate the server's SSL certificate, which makes the connection vulnerable to Man-in-the-Middle (MITM) attacks.",
+        "recommendation": "Implement proper certificate validation in `checkServerTrusted` method."
+    },
+    {
+        "misuse": "Use of SSL context",
+        "vulnerable_code": "SSLContext.getInstance(\"SSL\")",
+        "description": "The 'SSL' protocol is considered insecure. `SSLContext` should not use `SSL` as a protocol due to a number of vulnerabilities found over the years in 'SSL'.",
+        "recommendation": "Use 'TLS' instead, for example `SSLContext.getInstance(\"TLS\")`."
+    },
+    {
+        "misuse": "Insecure Hostname Verifier",
+        "vulnerable_code": "// HttpsURLConnection.setDefaultHostnameVerifier(new DefaultHostnameVerifier());",
+        "description": "While it is commented and not active in the code, suggesting the use of a `DefaultHostnameVerifier` would suppress hostname verification which can lead to MITM attacks.",
+        "recommendation": "Ensure the hostname is verified against the certificate presented by the server or use the default hostname verifier provided by the library."
+    }
+]
+```

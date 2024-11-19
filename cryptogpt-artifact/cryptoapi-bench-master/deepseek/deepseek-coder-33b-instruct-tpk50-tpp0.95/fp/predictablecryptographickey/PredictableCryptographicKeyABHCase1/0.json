@@ -1,0 +1,16 @@
+```
+[
+  {
+    "misuse": "Insufficient Entropy Source",
+    "vulnerable_code": "SecureRandom random = new SecureRandom();",
+    "description": "The default SecureRandom constructor uses a weak PRNG (Pseudo Random Number Generator). It relies on a system-specific entropy source (/dev/random on Unix-like systems, CNG on Windows, etc.) which may not be sufficiently random for all applications and may be exploitable.",
+    "recommendation": "Consider using a more secure random number generator, or use one of the pre-initialized secure random number generators like the one provided by the java.security.SecureRandom class."
+  },
+  {
+    "misuse": "Lack of Key Validation",
+    "vulnerable_code": "byte [] keyBytes = defaultKey.getBytes(\"UTF-8\");\nkeyBytes = Arrays.copyOf(keyBytes,16);",
+    "description": "The AES-128 algorithm requires a 128-bit (16-byte) key, however, the given code only uses a 16-bit key due to converting the String representation of the key to bytes. This could lead to a loss of security.",
+    "recommendation": "Always generate keys of the right length for the encryption algorithm you are using."
+  }
+]
+```

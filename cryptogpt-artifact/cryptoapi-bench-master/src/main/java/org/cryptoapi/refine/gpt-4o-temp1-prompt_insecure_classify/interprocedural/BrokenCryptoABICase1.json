@@ -1,0 +1,20 @@
+### False Positive Misuse ###
+CWE-757: Selection of Less-Secure Algorithm During Negotiation. The report states that using "Cipher cipher = Cipher.getInstance(crypto);" with ECB mode is insecure. However, this is already covered by the misuse of using "DES/ECB/PKCS5Padding" under CWE-327, making this misuse a duplicate and thereby a false positive.
+
+### Optimized Misuse JSON###
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "String crypto = \"DES/ECB/PKCS5Padding\";",
+        "description": "The use of DES algorithm is insecure due to its short key size. Additionally, ECB mode is not semantically secure.",
+        "recommendation": "Use a stronger algorithm such as AES with a secure mode of operation like GCM or CBC with a random IV."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_code": "String keyAlgo = \"DES\";",
+        "description": "DES uses a 56-bit key which is considered inadequate for modern security standards.",
+        "recommendation": "Consider using AES with at least a 128-bit key, preferably 256-bit for stronger security."
+    }
+]
+```

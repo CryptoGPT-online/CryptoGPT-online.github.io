@@ -1,0 +1,28 @@
+```json
+[
+  {
+    "misuse": "Insufficient Key Size",
+    "vulnerable_code": "int keySize = 1024;",
+    "description": "The key size of 1024 bits for RSA is no longer considered secure. Modern standards require a minimum key size of 2048 bits.",
+    "recommendation": "Use a key size of at least 2048 bits."
+  },
+  {
+    "misuse": "Unspecified Encryption Mode and Padding Scheme",
+    "vulnerable_code": [
+        "Cipher cipher = Cipher.getInstance(\"RSA\");",
+        "Cipher dec = Cipher.getInstance(\"RSA\");"
+    ],
+    "description": "By not specifying the encryption mode and padding scheme (e.g., 'RSA/ECB/PKCS1Padding'), the code relies on the provider’s default settings which may vary and could result in a less secure configuration.",
+    "recommendation": "Specify the encryption mode and padding scheme explicitly, such as 'RSA/ECB/PKCS1Padding' for the Cipher.getInstance() method."
+  },
+  {
+    "misuse": "RSA Without Secure Padding",
+    "vulnerable_code": [
+        "Cipher cipher = Cipher.getInstance(\"RSA\");",
+        "Cipher dec = Cipher.getInstance(\"RSA\");"
+    ],
+    "description": "Using RSA without specifying a secure padding scheme can make the encryption susceptible to padding oracle attacks.",
+    "recommendation": "Use RSA with OAEP padding scheme by setting Cipher.getInstance() to 'RSA/ECB/OAEPWithSHA-256AndMGF1Padding'."
+  }
+]
+```

@@ -1,0 +1,10 @@
+The given code snippet is using a byte as a seed value for SecureRandom. The byte value, when used as a seed, has a risk of producing the same sequence of random numbers each time, which is insecure. The byte type can only hold a value from -128 to 127, so it's possible to predict the output sequence of random numbers if you know the seed.
+
+```java
+{
+  "misuse": "CWE-330: Use of Insufficiently Random Values",
+  "vulnerable_code": "SecureRandom sr = new SecureRandom(new byte[]{seed});",
+  "description": "The given code uses a byte as a seed for a SecureRandom object, which is not secure as the range of byte values is too small (from -128 to 127) to produce random sequences. Predictable or weak seeds can lead to security vulnerabilities.",
+  "recommendation": "Use a larger data type for the seed value, such as an array of bytes or a string. A larger data type will provide a larger range of values and make it harder for an attacker to guess the seed."
+}
+```

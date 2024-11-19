@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Misuse of 'toString' method on char array",
+        "vulnerable_code": "keyBytes = encryptKey.toString().getBytes();",
+        "description": "The 'toString' method may expose sensitive data, especially when used on an array of characters. This can be a potential security risk if sensitive data was stored in the char array.",
+        "recommendation": "Avoid using the 'toString' method on an array of characters unless it is explicitly intended to convert the array to a String for display or other non-security related purposes."
+    },
+    {
+        "misuse": "Key truncation or padding",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The key is being truncated or padded to a fixed length of 16 bytes. This can potentially leak information about the original key and can negatively affect the strength of the encryption.",
+        "recommendation": "Instead of truncating or padding the key, consider using a cryptographic padding scheme, such as PKCS7, which is secure and does not leak information about the original key."
+    }
+]
+```

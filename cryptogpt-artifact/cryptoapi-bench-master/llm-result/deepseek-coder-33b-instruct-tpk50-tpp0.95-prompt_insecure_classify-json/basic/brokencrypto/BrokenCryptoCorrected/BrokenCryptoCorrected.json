@@ -1,0 +1,39 @@
+### False Positive Misuse ###
+
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "description": "This code uses the 'AES' algorithm which is known to have relatively weak encryption strength. This could potentially allow attackers to decrypt the encrypted data easily.",
+        "recommendation": "Consider using a stronger encryption algorithm like 'AES-256' instead of 'AES'. Alternatively, you can use 'DES' which is known for its high security."
+    }
+]
+
+### Optimized Misuse JSON ###
+
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "description": "In the provided code, a KeyGenerator instance is created and the method generateKey() is called. This method will generate a key using the default key length, which is considered to be weak.",
+        "recommendation": "Consider explicitly setting a secure key size. For AES, the commonly accepted key sizes are 128, 192, or 256 bits. It is also recommended to use a secure Random object for generating the key."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "In the provided code, a Cipher instance is created without providing an Initialization Vector (IV). For CBC (Cipher Block Chaining) mode, an IV is mandatory, which should be a random, non-reused value. If not provided, the Cipher will generate a default one, which is considered to be a weak default value.",
+        "recommendation": "Always explicitly provide an Initialization Vector when using CBC mode, using a secure Random object to generate the IV."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5Padding\")",
+        "description": "AES is a good choice for symmetric encryption, but the implementation chosen by the developer has some known vulnerabilities. The chosen mode of operation (CBC) is vulnerable to padding oracle attacks. Other modes of operation like GCM or CTR are less vulnerable.",
+        "recommendation": "You should replace the \"AES/CBC/PKCS5Padding\" string with a more secure choice such as \"AES/GCM/NoPadding\"."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values.",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "description": "In cryptography, keys are usually generated randomly, and should not be reused for different encryptions. This code generates a static key using a KeyGenerator, which is generally not secure and can lead to vulnerabilities.",
+        "recommendation": "For each encryption operation, you should generate a random key using a secure random number generator."
+    }
+]

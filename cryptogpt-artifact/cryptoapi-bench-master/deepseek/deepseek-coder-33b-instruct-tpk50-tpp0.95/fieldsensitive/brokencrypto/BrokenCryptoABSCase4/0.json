@@ -1,0 +1,14 @@
+[
+  {
+    "misuse": "Key Size Misuse",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);\nSecretKey key = keyGen.generateKey();",
+    "description": "The key size used for encryption/decryption is generally not appropriate for RC2. The key size for RC2 should be 40 to 128 bits. Some versions of RC2 also support a 64-bit key size. However, it is not considered secure and should not be used.",
+    "recommendation": "Review the key size used for RC2 and use an appropriate key size. For RC2, it is recommended to use a key size between 40 to 128 bits."
+  },
+  {
+    "misuse": "Unreliability on Encrypting Password-Based Scheme",
+    "vulnerable_code": "SecretKey key = keyGen.generateKey();",
+    "description": "KeyGenerator generate a key that is not suitable for password-based encryption scheme such as PBE (Password-Based Encryption). The secret key should not be derived from a user-supplied password.",
+    "recommendation": "Use KeySpec and SecretKeyFactory to derive a key from a user-supplied password for password-based encryption."
+  }
+]

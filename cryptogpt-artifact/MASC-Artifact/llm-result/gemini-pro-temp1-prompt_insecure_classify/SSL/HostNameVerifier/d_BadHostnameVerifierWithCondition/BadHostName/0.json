@@ -1,0 +1,10 @@
+```json
+[
+  {
+    "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+    "vulnerable_code": "public boolean verify(String hostname, SSLSession session) {\n                if(true || session.getCipherSuite().length()>=0){\n                    return true;\n                }\n                return false;\n            }",
+    "description": "The code uses a custom HostNameVerifier that always returns true, regardless of the cipher suite used. This means that the server's cipher suite selection is not being validated, which could allow an attacker to negotiate a weak cipher suite and intercept or decrypt communications.",
+    "recommendation": "Use a HostNameVerifier that validates the server's cipher suite selection. For example, the following HostNameVerifier will only allow connections that use a cipher suite that is at least 128 bits strong:"
+  }
+]
+```

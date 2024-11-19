@@ -1,0 +1,40 @@
+```json
+[
+  {
+    "misuse": "Insufficient Key Size",
+    "vulnerable_code": "int keyLength = 16;",
+    "description": "The specified key length of 16 bits is insufficient for a secure cryptosystem which requires at least 128 bits as the minimal key length.", 
+    "recommendation": "Use at least a 128-bit key size (e.g., keyLength = 128)."
+  },
+  {
+    "misuse": "Weak PBE Algorithm",
+    "vulnerable_code": "pbeKeySpec = new PBEKeySpec(new String(keyBytes).toCharArray(),salt,iterationCount,keyLength);",
+    "description": "The PBEKeySpec is being used without specifying an algorithm which could lead to the use of a weak default algorithm.",
+    "recommendation": "Explicitly define a strong Password-Based Encryption (PBE) algorithm (e.g., 'PBEWithHmacSHA256AndAES_128')."
+  },
+  {
+    "misuse": "Inappropriate Use of SecureRandom",
+    "vulnerable_code": "String defaultKey = String.valueOf(random.ints());",
+    "description": "The use of SecureRandom to generate a key as a string of integers is insecure. The output of random.ints() is not meant for cryptographic purposes.",
+    "recommendation": "Generate cryptographic keys using KeyGenerator or equivalent method that is intended for cryptographic use."
+  },
+  {
+    "misuse": "Weak Salt Generation",
+    "vulnerable_code": "sr.nextBytes(salt);",
+    "description": "Although SecureRandom is used, the default salt size of 16 bytes may be insufficient to guard against attacks involving pre-computed hashes.",
+    "recommendation": "Use a salt with at least 32 bytes in length to provide adequate entropy."
+  },
+  {
+    "misuse": "Iteration Count",
+    "vulnerable_code": "int iterationCount = 11010;",
+    "description": "The iteration count for PBE may not be sufficient. A low iteration count can be processed quickly by attackers, making it less secure.",
+    "recommendation": "Use a higher iteration count to increase the time to compute hash values, provided that the value does not unduly affect application performance. A recommended iteration count should be at least 10000; however, the specific number should be periodically re-evaluated as hardware gets faster."
+  },
+  {
+    "misuse": "Direct Use of Password as a Key",
+    "vulnerable_code": "pbeKeySpec = new PBEKeySpec(new String(keyBytes).toCharArray(),salt,iterationCount,keyLength);",
+    "description": "Directly converting a string to a char array and then using it as a key without any proper key derivation function (KDF) can lead to a weak key.",
+    "recommendation": "Employ a proper key derivation function to generate a cryptographic key from a password."
+  }
+]
+```

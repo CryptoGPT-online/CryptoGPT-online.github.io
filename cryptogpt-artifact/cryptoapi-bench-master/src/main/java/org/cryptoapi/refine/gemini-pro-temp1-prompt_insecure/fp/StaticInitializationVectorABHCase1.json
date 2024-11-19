@@ -1,0 +1,35 @@
+### False Positive Misuse ###
+1. CWE-321: Use of Hard-coded Cryptographic Key (Initial list 1)
+2. CWE-321: Use of Hard-coded Cryptographic Key (Initial list 2)
+
+**Explanation**: In both cases, the "hard-coded key" is actually an Initialization Vector (IV). An IV is not a cryptographic key, and it is not used to encrypt or decrypt data. It is simply used to initialize the cipher, and it does not need to be kept secret.
+
+### Optimized Misuse JSON ###
+1. {
+    "misuse category": "Inadequate Encryption Strength",
+    "vulnerable_method": "KeyGenerator.getInstance",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+    "description": "The code uses the default key size for AES, which is 128 bits. This is considered inadequate for most applications, as it can be broken with a brute-force attack in a reasonable amount of time.",
+    "recommendation": "Use a stronger key size, such as 256 bits."
+  }
+2. {
+    "misuse category": "Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_method": "Cipher.getInstance",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+    "description": "The code uses CBC mode with PKCS5 padding, which is vulnerable to padding oracle attacks. Attackers can exploit this vulnerability to recover plaintext from encrypted data.",
+    "recommendation": "Use a more secure mode of operation, such as GCM, with a secure padding scheme like OAEP."
+  }
+3. {
+    "misuse category": "Use of a Weak Key Generation Algorithm",
+    "vulnerable_method": "KeyGenerator.getInstance",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+    "description": "The code uses the default key generation algorithm for AES, which is PBKDF2WithHmacSHA1. This algorithm is considered weak and should not be used for generating keys for cryptographic purposes.",
+    "recommendation": "Use a stronger key generation algorithm, such as BCrypt."
+  }
+4. {
+    "misuse category": "Use of Hard-coded Cryptographic Key",
+    "vulnerable_method": "IvParameterSpec",
+    "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+    "description": "The code uses a hard-coded initialization vector (IV). This makes the cipher vulnerable to attack, as an attacker can simply guess the IV and decrypt the ciphertext.",
+    "recommendation": "Generate a random IV for each encryption operation."
+  }

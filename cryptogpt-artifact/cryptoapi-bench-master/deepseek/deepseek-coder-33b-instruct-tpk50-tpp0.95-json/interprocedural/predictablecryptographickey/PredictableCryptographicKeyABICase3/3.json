@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Weak Cryptographic Key",
+        "vulnerable_code": "String key = \"defaultkey\";",
+        "description": "The key used here is a static string, which is not secure. In cryptography, keys should be randomly generated and stored securely. Using a static key, such as a default string, can be a security risk as it makes the encryption algorithm easily breakable.",
+        "recommendation": "Generate a random key for each encryption operation. Use a cryptographic secure random number generator to generate keys."
+    },
+    {
+        "misuse": "Short Key Size",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The key is copied to a new byte array that is 16 bytes long. The size of the key is determined by the length of the input string, which may be less than 16 bytes. This is a security risk, as smaller keys are less secure. The AES algorithm requires a 128-bit key, or 16 bytes. Using a smaller key may make the encryption less secure and possibly vulnerable to brute-force attacks.",
+        "recommendation": "Ensure that the key size matches the required size for the specific algorithm being used (128-bit for AES). If the input key is smaller than the required size, use padding to increase the size. Do not simply copy the key to fill the entire array because this can introduce security risks."
+    }
+]
+```

@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Cipher Mode",
+        "vulnerable_code": "Cipher.getInstance(\"AES/ECB/PKCS5Padding\")",
+        "description": "Usage of ECB mode for AES encryption is insecure because it does not provide serious message confidentiality which might lead to data leakage especially when encrypting plaintext with repeating patterns.",
+        "recommendation": "Switch to a more secure mode such as CBC, CFB, OFB, or GCM with an appropriate Initialization Vector (IV)."
+    },
+    {
+        "misuse": "Missing IV for CBC mode",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key)",
+        "description": "While the ECB mode does not use an IV, transitioning to a more secure mode like CBC would require the correct use of an IV to ensure the same plaintext block encrypts to different ciphertext blocks based on the IV.",
+        "recommendation": "If you switch to CBC mode or any other mode that requires an IV, you must generate a secure random IV and pass it in the cipher initialization."
+    },
+    {
+        "misuse": "Weak Key Generation",
+        "vulnerable_code": "KeyGenerator.getInstance(\"AES\")",
+        "description": "There is no explicit key size set for AES which may lead to a default key size that could be less than the recommended 256 bits.",
+        "recommendation": "Explicitly set the key size to 256 bits by calling keyGen.init(256);"
+    }
+]
+```

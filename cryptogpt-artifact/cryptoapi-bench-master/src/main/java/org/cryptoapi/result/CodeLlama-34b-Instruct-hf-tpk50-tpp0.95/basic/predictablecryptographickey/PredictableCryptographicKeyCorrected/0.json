@@ -1,0 +1,26 @@
+ [
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "String defaultKey = String.valueOf(random.ints());\nbyte[] keyBytes = defaultKey.getBytes();\nkeyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The generated key is only 16 bytes long, which is insufficient for the AES algorithm, which requires a key size of at least 256 bits (32 bytes).",
+        "recommendation": "Use a SecureRandom object to generate a random key, and specify the desired key size in bytes using the SecureRandom.generateSeed(int size) method."
+    },
+    {
+        "misuse": "Insufficient IV Size",
+        "vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5PADDING\");",
+        "description": "The specified cipher transformation does not include a proper Initialization Vector (IV), which is required for the CBC mode of operation. The recommended size for the IV is 128 bits (16 bytes).",
+        "recommendation": "Use a random IV for each encryption operation, and specify the IV size using the Cipher.getInstance(String transformation, String ivAlgorithm) method."
+    },
+    {
+        "misuse": "Use of ECB Mode",
+        "vulnerable_code": "Cipher.getInstance(\"AES/ECB/PKCS5PADDING\");",
+        "description": "The specified cipher transformation uses the Electronic Codebook (ECB) mode of operation, which is vulnerable to plaintext attacks. The recommended mode is CBC or GCM.",
+        "recommendation": "Use a different cipher transformation that uses a secure mode of operation, such as CBC or GCM."
+    },
+    {
+        "misuse": "Use of NoPadding",
+        "vulnerable_code": "Cipher.getInstance(\"AES/CBC/NoPadding\");",
+        "description": "The specified cipher transformation uses the NoPadding padding mode, which can lead to plaintext attacks. The recommended padding mode is PKCS5Padding or PKCS7Padding.",
+        "recommendation": "Use a different cipher transformation that uses a secure padding mode, such as PKCS5Padding or PKCS7Padding."
+    }
+]

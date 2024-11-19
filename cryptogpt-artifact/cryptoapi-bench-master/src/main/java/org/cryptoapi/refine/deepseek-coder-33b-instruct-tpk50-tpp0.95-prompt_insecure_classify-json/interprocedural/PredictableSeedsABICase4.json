@@ -1,0 +1,21 @@
+### False Positive Misuses:
+
+1. `Inadequate Encryption Strength:` It is a false positive misuse because even if a single byte is used as a seed, it does not violate the principle of security. 
+
+2. `Use of Hardcoded Credentials:` It is also a false positive misuse. The DEFAULT_SEED value "100" is hardcoded and does not violate the principle of security if it is used correctly in a secure manner. 
+
+### Optimized Misuse JSON:
+
+```json
+[
+  {
+    "misuse category": "CWE-330: Use of Insufficiently Random Values",
+    "vulnerable_method": "go()",
+    "vulnerable_code": "new SecureRandom(new byte[]{Byte.parseByte(seed.toString())});",
+    "description": "The seed for the SecureRandom object is not generated in a cryptographically secure manner.",
+    "recommendation": "Generate the seed in a cryptographically secure manner, for example by using a hard-to-guess or auto-generated value."
+  }
+]
+```
+
+The `CWE-330: Use of Insufficiently Random Values` misuse is valid and it is not a false positive misuse. The seed for the SecureRandom object is not generated in a secure manner which could lead to a predictable random numbers sequence.

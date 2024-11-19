@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Weak Encryption Algorithm",
+        "vulnerable_code": "String algo = \"DES\";",
+        "description": "DES (Data Encryption Standard) is considered a weak encryption algorithm due to its short key length of 56 bits, which makes it vulnerable to brute-force attacks.",
+        "recommendation": "Switch to a more secure algorithm such as AES with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "Deterministic Encryption",
+        "vulnerable_code": "c.doFinal(\"something\".getBytes());",
+        "description": "Using the Cipher's `doFinal` method without proper Initialization Vector (IV) can lead to deterministic encryption, where the same plaintext will always result in the same ciphertext when using the same key, making the encryption more susceptible to certain attacks.",
+        "recommendation": "Use a secure random IV for each encryption and ensure it is used in Cipher initialization."
+    },
+    {
+        "misuse": "Hardcoded Encryption Algorithm",
+        "vulnerable_code": "Cipher.getInstance(keygen.getAlgorithm());",
+        "description": "The method `getInstance` can be tricked into initializing the `Cipher` with an unintended algorithm if `keygen.getAlgorithm()` returns a manipulated value. Although it doesn't return a manipulated value in the provided code, relying on the `KeyGenerator`'s algorithm as an argument to `Cipher.getInstance` is not a best practice and could inadvertently lead to using a different algorithm.",
+        "recommendation": "Specify the exact algorithm/mode/padding combination such as 'AES/CBC/PKCS5Padding'."
+    },
+    {
+        "misuse": "Default cryptographic provider",
+        "vulnerable_code": "Cipher.getInstance(keygen.getAlgorithm());",
+        "description": "Using default cryptographic provider may result in platform-dependent and potentially vulnerable cryptography.",
+        "recommendation": "Specify a cryptographic provider that is known to be secure."
+    }
+]
+```

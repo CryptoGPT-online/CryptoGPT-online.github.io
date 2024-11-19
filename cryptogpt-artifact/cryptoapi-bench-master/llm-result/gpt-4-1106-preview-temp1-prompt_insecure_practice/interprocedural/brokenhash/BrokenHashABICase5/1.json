@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Weak Hashing Algorithm",
+        "vulnerable_code": "MessageDigest.getInstance(String.valueOf(crypto))",
+        "description": "The use of 'SHA1' as a cryptographic hashing algorithm is insecure, because SHA1 is considered weak and vulnerable to collision attacks.",
+        "recommendation": "Use a stronger hashing algorithm like SHA-256 or SHA-3."
+    },
+    {
+        "misuse": "Poor Use of API",
+        "vulnerable_code": "String.valueOf(crypto)",
+        "description": "Converting the character array directly to a string to indicate the algorithm name is error-prone and unconventional. It could lead to getting the wrong algorithm or might result in unexpected behavior or errors if the character array is modified or not properly initialized.",
+        "recommendation": "Directly use strings to specify algorithm names and avoid unnecessary conversions."
+    },
+    {
+        "misuse": "Insecure Data Handling",
+        "vulnerable_code": "md.update(str.getBytes())",
+        "description": "The string encoding is not specified, which can cause the hash value to differ based on the platform's default charset. This can lead to issues in data integrity when the software is used in different environments.",
+        "recommendation": "Specify a charset when converting the string to bytes for hashing, such as 'str.getBytes(StandardCharsets.UTF_8)'."
+    },
+    {
+        "misuse": "Inadequate Output Handling",
+        "vulnerable_code": "System.out.println(md.digest())",
+        "description": "The output of the 'md.digest()' is a byte array, and printing it directly will not produce a readable hash value. Instead, it will print the reference to the byte array object.",
+        "recommendation": "Convert the byte array to a hexadecimal string or use a proper encoding before printing."
+    }
+]
+```

@@ -1,0 +1,34 @@
+```json
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "crypto = new C4(\"MD2\");",
+        "description": "MD2 is an outdated and cryptographically broken hash function that should not be used for any cryptographic purposes as it is susceptible to collision attacks.",
+        "recommendation": "Use a secure hash function like SHA-256 or SHA-3."
+    },
+    {
+        "misuse": "Insecure Hash Usage",
+        "vulnerable_code": "md.update(str.getBytes());\nSystem.out.println(md.digest());",
+        "description": "The code uses a hash function directly for encryption purposes, which is insecure. Hash functions are not encryption algorithms and do not provide confidentiality on their own.",
+        "recommendation": "Use a proper cryptographic encryption algorithm (e.g., AES) with a secure mode of operation."
+    },
+    {
+        "misuse": "Hardcoded Crypto Algorithm",
+        "vulnerable_code": "crypto = new C4(\"MD2\");",
+        "description": "The cryptographic algorithm is hardcoded as 'MD2', which might lead to difficulties in upgrading to stronger algorithms in the future as vulnerabilities are discovered.",
+        "recommendation": "Instead of hardcoding, use a configuration setting to specify the cryptographic algorithm, allowing for easier updates when needed."
+    },
+    {
+        "misuse": "Improper Error Handling",
+        "vulnerable_code": "public void encrypt(String str, String passedAlgo)...",
+        "description": "The method 'encrypt' might throw multiple exceptions related to cryptographic operations, but it does not provide any specific error handling or logging. This could lead to leaking sensitive information about the cryptographic implementation or configuration in case of failure.",
+        "recommendation": "Implement proper error handling and avoid printing exception information to standard output in a production environment."
+    },
+    {
+        "misuse": "Potential Misleading Variable Naming",
+        "vulnerable_code": "String crypto;",
+        "description": "The variable 'crypto' could be misleading as it suggests it may store a cryptographic algorithm for encryption or decryption, whereas it actually stores a hash function, which is not meant for encrypting data.",
+        "recommendation": "Rename the variable to something more appropriate, such as 'hashAlgorithm', to avoid confusion."
+    }
+]
+```

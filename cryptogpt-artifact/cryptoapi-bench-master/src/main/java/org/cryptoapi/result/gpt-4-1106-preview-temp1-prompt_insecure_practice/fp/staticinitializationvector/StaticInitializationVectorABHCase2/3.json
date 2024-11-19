@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Key Generation",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+        "description": "By default, KeyGenerator may not guarantee a strong key size. The key size should be explicitly defined to ensure a secure key length.",
+        "recommendation": "Specify a key size for AES that is considered secure, such as 128, 192 or 256 bits. Example: keyGen.init(256);"
+    },
+    {
+        "misuse": "Invalid IV Generation",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+        "description": "The initialization vector (IV) should be random and unpredictable. Using deterministic data such as a fixed string can lead to vulnerabilities.",
+        "recommendation": "Use a secure random generator to produce the IV."
+    },
+    {
+        "misuse": "Inadequate Exception Handling",
+        "vulnerable_code": "public static void main (String [] args) throws ...",
+        "description": "The method throws generic exceptions which can leak sensitive information about the cryptographic operations if not handled properly.",
+        "recommendation": "Catch and handle cryptographic exceptions specifically and cautiously without exposing sensitive details."
+    }
+]
+```

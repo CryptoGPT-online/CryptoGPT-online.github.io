@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Use of weak password-based encryption",
+        "vulnerable_code": "pbeKeySpec = new PBEKeySpec(encryptKey,salt,10000,16);",
+        "description": "The code uses a user-supplied password, 'sagar', as the encryption key with a PBEKeySpec, which does not meet minimum security requirements for sensitive data encryption. Password-based keys without sufficient complexity can be easily brute-forced.",
+        "recommendation": "Use a strong secret key management system or a cryptographically secure randomly generated key instead of user-supplied passwords. Also, consider using a more secure algorithm with a stronger key derivation function."
+    },
+    {
+        "misuse": "Insufficient key size",
+        "vulnerable_code": "pbeKeySpec = new PBEKeySpec(encryptKey,salt,10000,16);",
+        "description": "The specified key size is 16 bits, which is not secure for modern standards. Modern encryption algorithms typically require a minimum key size of 128 bits.",
+        "recommendation": "Increase the key size to at least 128 bits. Ensure that the key size is appropriate for the encryption algorithm selected."
+    },
+    {
+        "misuse": "Hardcoded encryption key",
+        "vulnerable_code": "public static String KEY = \"sagar\";",
+        "description": "The encryption key is hardcoded in the source code, which makes it easy to extract and compromise by an attacker.",
+        "recommendation": "Do not hardcode encryption keys in the source code. Use secure key management systems to handle encryption keys."
+    },
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "SecureRandom sr = new SecureRandom();",
+        "description": "SecureRandom without specifying a secure random number generator (RNG) algorithm can potentially fall back to less secure defaults depending on the JRE and the OS.",
+        "recommendation": "Always specify a secure RNG algorithm when using SecureRandom. For example: 'SecureRandom.getInstance(\"SHA1PRNG\")'."
+    }
+]
+```

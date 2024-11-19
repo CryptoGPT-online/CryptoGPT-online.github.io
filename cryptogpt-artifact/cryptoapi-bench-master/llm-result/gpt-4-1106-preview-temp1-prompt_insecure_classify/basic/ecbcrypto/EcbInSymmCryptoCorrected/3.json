@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+        "description": "The AES key is generated without specifying a secure random number generator or a specific key size, which could lead to the use of a weak key.",
+        "recommendation": "Specify a key size (e.g., 256 bits for AES) and use a SecureRandom instance for key generation."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "description": "The code does not specify the key size for AES. Depending on the default implementation this might result in a key size (e.g., 128 bits) which might not be considered strong enough for certain applications.",
+        "recommendation": "Explicitly specify a key size when generating the key, such as AES-256 for a stronger key."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "While not explicitly insecure, CBC mode is less secure than other modes like GCM because it doesn't provide integrity checks. Using CBC mode could potentially make the system more vulnerable to padding oracle attacks.",
+        "recommendation": "Use AES in GCM mode with proper nonce management to provide both encryption and integrity."
+    }
+]
+```

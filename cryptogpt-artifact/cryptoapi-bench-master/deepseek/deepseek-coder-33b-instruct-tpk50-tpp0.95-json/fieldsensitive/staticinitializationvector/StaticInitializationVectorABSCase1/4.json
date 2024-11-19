@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Reusing a secret key",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+        "description": "AES secret key should not be reused or shared among different encryption operations. Reusing the same secret key may lead to information disclosure.",
+        "recommendation": "Each time you are about to encrypt/decrypt data, you should generate a new secret key."
+    },
+    {
+        "misuse": "Using a weak initialization vector",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(passedIV);",
+        "description": "AES CBC mode requires an initialization vector (IV) that is unpredictable and unique. Reusing the IV may lead to security vulnerabilities. Also, passing null or hardcoded IV is considered insecure.",
+        "recommendation": "Always use a securely generated, random Initialization Vector (IV). Use the SecureRandom class in Java to generate a secure random IV."
+    }
+]
+```

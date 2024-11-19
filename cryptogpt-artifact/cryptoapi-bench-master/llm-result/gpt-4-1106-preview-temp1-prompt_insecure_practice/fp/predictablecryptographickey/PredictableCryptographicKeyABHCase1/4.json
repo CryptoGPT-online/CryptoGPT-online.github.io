@@ -1,0 +1,25 @@
+```json
+[
+    {
+        "misuse": "Weak/Insufficient Key Generation",
+        "vulnerable_code": "String defaultKey = String.valueOf(random.ints());",
+        "description": "The key material is being generated using the `ints()` method without proper encoding which may result in a weak key due to insufficient entropy and representational issues.",
+        "recommendation": "Use a robust key generation approach by directly utilizing the `random` instance with `SecureRandom#nextBytes(byte[] bytes)`."
+    },
+    {
+        "misuse": "Key Size Potentially Insufficient",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The key is being truncated or padded to 16 bytes regardless of its original size, without checks for a minimum key length. This may lead to weak cryptographic keys if the original key material is not enough.",
+        "recommendation": "Ensure that the key material has enough entropy and is at least the minimum size required for AES (128 bits). Consider throwing an exception or error if this is not the case."
+    },
+    {
+        "misuse": "Potential Risk of Predictable Keys",
+        "vulnerable_code": [
+            "SecureRandom random = new SecureRandom();",
+            "String defaultKey = String.valueOf(random.ints());"
+        ],
+        "description": "The code is converting an integer stream directly into a string which could lead to predictable keys if the random number generator is not seeded properly or due to the string representation.",
+        "recommendation": "Properly generate cryptographic keys by using `SecureRandom#nextBytes(byte[] bytes)` and ensure that SecureRandom is seeded appropriately, if not automatically handled by the platform."
+    }
+]
+```

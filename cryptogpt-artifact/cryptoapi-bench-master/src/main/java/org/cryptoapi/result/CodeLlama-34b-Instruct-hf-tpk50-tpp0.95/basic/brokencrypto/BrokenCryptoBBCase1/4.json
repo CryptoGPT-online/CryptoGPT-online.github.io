@@ -1,0 +1,27 @@
+ {
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"DES\");",
+"description": "The code uses the DES encryption algorithm, which is considered broken and should not be used for any security-related purposes. DES has a 56-bit key, which is too short to be secure, and it has been shown to be vulnerable to attacks such as brute force and linear cryptanalysis.",
+"recommendation": "Replace DES with a secure encryption algorithm such as AES."
+}
+
+{
+"misuse": "ECB Mode",
+"vulnerable_code": "Cipher cipher = Cipher.getInstance(\"DES/ECB/PKCS5Padding\");",
+"description": "The code uses ECB mode, which is a broken mode of operation for block ciphers. ECB mode does not provide any confidentiality or integrity guarantees, and it should not be used for any security-related purposes. Using ECB mode can lead to plaintext attacks, such as padding oracle attacks.",
+"recommendation": "Replace ECB mode with a secure mode of operation such as CBC mode."
+}
+
+{
+"misuse": "Static IV",
+"vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+"description": "The code uses a static IV, which is not secure. The IV should be a randomly generated value for each encryption operation. Using a static IV can lead to a variety of attacks, such as block reuse attacks and padding oracle attacks.",
+"recommendation": "Generate a random IV for each encryption operation and store it along with the encrypted data."
+}
+
+{
+"misuse": "No Integrity Check",
+"vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+"description": "The code does not perform any integrity checks on the encrypted data. Without an integrity check, it is possible for an attacker to modify the encrypted data without being detected. This can lead to a variety of attacks, such as data tampering and replay attacks.",
+"recommendation": "Add an integrity check, such as an HMAC, to the encryption algorithm."
+}

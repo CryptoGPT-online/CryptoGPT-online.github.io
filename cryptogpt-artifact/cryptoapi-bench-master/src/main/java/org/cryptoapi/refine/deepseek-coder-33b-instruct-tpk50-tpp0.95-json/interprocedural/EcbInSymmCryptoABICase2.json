@@ -1,0 +1,42 @@
+### False Positive Misuse
+
+[
+    {
+        "misuse category": "Easily Inferable Algorithm",
+        "vulnerable_method": "E2.main(String[])",
+        "vulnerable_code": "Cipher.getInstance(String.valueOf(crypto));",
+        "description": "The crypto variable here is used directly with no user inputs or user defined defaults. This may lead to an insecure algorithm being used. The exact crypto instance could vary during execution.",
+        "recommendation": "Use a constant or a default algorithm instead of a variable. And validate the input from user or data source. Always allow user to decide the algorithm."
+    },
+    {
+        "misuse category": "Unverified Cryptography Primitive",
+        "vulnerable_method": "E2.main(String[])",
+        "vulnerable_code": "Cipher.getInstance(String.valueOf(crypto));",
+        "description": "Here, no check is made to ensure that the provided crypto instance is valid. This could be a security risk if an invalid or untrusted crypto instance is provided.",
+        "recommendation": "Add a check to ensure that the provided crypto instance is valid before using it. This could be done by using a whitelist of allowed algorithms."
+    }
+]
+
+### Optimized Misuse JSON###
+```json
+[
+    {
+        "misuse": "Insecure Use of Crypto API",
+        "vulnerable_code": "Cipher.getInstance(String.valueOf(crypto))",
+        "description": "The crypto algorithm used by Cipher.getInstance() is hard-coded in the code. It can be changed at runtime, which might make the code vulnerable.",
+        "recommendation": "Do not use hard-coded crypto algorithms. Instead, use a constant that can be safely exposed without making your application vulnerable."
+    },
+    {
+        "misuse": "Insecure Cipher Mode (ECB)",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(String.valueOf(crypto));",
+        "description": "The Cipher is instantiated with ECB mode which is insecure. ECB mode does not use an Initialization Vector (IV). When dealing with multiple blocks of plain text, it can be attacked using statistical methods. If the same data is being encrypted multiple times (either in the same execution or across different executions), the resulting cipher text will be identical if the data length is a multiple of the block size.",
+        "recommendation": "Consider using a more secure mode of operation like CBC or GCM. In case of CBC, it should be used with an Initialization Vector (IV). In case of GCM, an Initialization Vector (IV) and an Authentication Tag (AAD) are required."
+    },
+    {
+        "misuse": "Hard-coded Cryptography",
+        "vulnerable_code": "Cipher.getInstance(String.valueOf(crypto))",
+        "description": "The crypto algorithm is hard-coded in the code as a string. If there is a mistake in the hard-coded String, it could lead to vulnerabilities.",
+        "recommendation": "Do not hard-code the crypto algorithm. Instead, store it in a configuration file and read it at runtime. This will allow for the algorithm to be easily changed without modifying and recompiling the code."
+    }
+]
+```

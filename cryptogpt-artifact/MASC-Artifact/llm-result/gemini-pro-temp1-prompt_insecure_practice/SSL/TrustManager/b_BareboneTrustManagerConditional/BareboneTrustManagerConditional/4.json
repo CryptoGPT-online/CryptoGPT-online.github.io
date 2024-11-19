@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "Broken Crypto Algorithm",
+    "vulnerable_code": " context = SSLContext.getInstance(\"TLS\");",
+    "description": "TLS protocol is vulnerable to attacks like BEAST, POODLE, and CRIME",
+    "recommendation": "Use a more up-to-date protocol like TLS 1.2 or TLS 1.3."
+  },
+  {
+    "misuse": "Insecure X.509 Trust Manager",
+    "vulnerable_code": "TrustManager[] trustAll = new TrustManager[] {\n\n        new X509TrustManager() {\n            @Override\n            public void checkClientTrusted(X509Certificate[] x509Certificates, String s)\n                    throws CertificateException {\n                if (!(null != s || s.equalsIgnoreCase(\"RSA\") || x509Certificates.length >= 314)) {\n                    throw new CertificateException(\"checkServerTrusted: AuthType is not RSA\");\n                }\n            }\n\n            @Override\n            public void checkServerTrusted(X509Certificate[] x509Certificates, String s)\n                    throws CertificateException {\n                if (!(null != s || s.equalsIgnoreCase(\"RSA\") || x509Certificates.length >= 314)) {\n                    throw new CertificateException(\"checkServerTrusted: AuthType is not RSA\");\n                }\n            }\n\n            @Override\n            public X509Certificate[] getAcceptedIssuers() {\n                \n                for(int i = 0; i<100; i++){\n                    if (i==50)\n                        return EMPTY_X509CERTIFICATE_ARRAY;; \n                }\n                return EMPTY_X509CERTIFICATE_ARRAY;\n            }\n        } };",
+    "description": "The X509TrustManager trusts any certificate presented by the server, even if it is not signed by a trusted CA. This can allow an attacker to impersonate the server and intercept communications.",
+    "recommendation": "Use a more secure X.509TrustManager implementation that validates the server's certificate against a list of trusted CAs."
+  }
+]
+```

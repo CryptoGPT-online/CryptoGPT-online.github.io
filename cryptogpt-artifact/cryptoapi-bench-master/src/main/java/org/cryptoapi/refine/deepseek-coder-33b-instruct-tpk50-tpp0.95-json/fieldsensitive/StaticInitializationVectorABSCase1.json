@@ -1,0 +1,24 @@
+### False Positive Misuse ###
+
+The misuse in the first list above is not false positive since we are passing null value to the method which is used to create the IvParameterSpec object in the second line which is a hard coded IV.
+
+### Optimized Misuse JSON ###
+
+```json
+[
+    {
+        "misuse category": "Hard-Coded Initialization Vector (IV)",
+        "vulnerable_method": "C1.method1",
+        "vulnerable_code": "passedIV = defIV; IvParameterSpec ivSpec = new IvParameterSpec(passedIV);",
+        "description": "The code uses a hard-coded IV for each encryption operation. This is a bad practice as it can lead to security vulnerabilities. The same IV should never be used for multiple encryption operations under the same key.",
+        "recommendation": "Instead of using a hard-coded IV for each operation, a unique IV should be randomly generated for each encryption operation using a secure random number generator."
+    },
+    {
+        "misuse category": "Use of Weak or Non-standard Cryptographic Algorithms",
+        "vulnerable_method": "C1.method1",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "The use of 'AES/CBC/PKCS5Padding' is considered weak or non-standard for many reasons. 'CBC' mode is susceptible to padding oracle attacks, 'AES' is also considered insecure for certain uses and 'PKCS5Padding' is vulnerable to timing attacks.",
+        "recommendation": "Consider using more secure and up-to-date encryption algorithms, modes, and padding schemes. For example, 'AES/GCM/NoPadding' would be a secure alternative."
+    }
+]
+```

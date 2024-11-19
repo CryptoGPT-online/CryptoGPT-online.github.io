@@ -1,0 +1,20 @@
+```json
+[{
+    "misuse": "Missing Initialization Vector (IV)",
+    "vulnerable_code": [
+        "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "cipher.init(Cipher.ENCRYPT_MODE, key);"
+    ],
+    "description": "The code snippet uses AES in CBC mode without specifying an initialization vector (IV). Using a static IV or no IV can lead to patterns being observable in ciphertext, which can compromise the encryption's security.",
+    "recommendation": "An unpredictable IV should be generated for each encryption operation. The IV should be securely generated using a SecureRandom instance and stored along with the ciphertext."
+},
+{
+    "misuse": "Insecure Randomness",
+    "vulnerable_code": [
+        "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "SecretKey key = keyGen.generateKey();"
+    ],
+    "description": "The KeyGenerator instance does not specify a SecureRandom instance for key generation. Depending on the provider and JVM defaults, this could potentially lead to weak keys if the default is not secure.",
+    "recommendation": "When generating a key, always specify a strong source of randomness by passing a SecureRandom instance to the init method of KeyGenerator."
+}]
+```

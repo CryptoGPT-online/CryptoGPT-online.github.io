@@ -1,0 +1,28 @@
+```json
+[
+  {
+    "misuse": "CWE-321: Use of Hard-coded Cryptographic Key",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+    "description": "The code is using a hard-coded key for encryption, which is insecure and can be easily compromised.",
+    "recommendation": "Instead of using a hard-coded key, the code should generate a random key and store it securely, or use a key management system to securely manage and distribute keys."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Key Strength",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+    "description": "The code is using the AES algorithm with an unspecified key size. By default, AES uses a 128-bit key, which is considered insecure for most applications.",
+    "recommendation": "The code should specify a key size of at least 256 bits, or use a stronger encryption algorithm such as AES-256."
+  },
+  {
+    "misuse": "CWE-327: Use of a Weak or Insecure Cipher",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"DES/ECB/PKCS5Padding\");",
+    "description": "The code is using the DES encryption algorithm, which is considered insecure and should not be used for any new applications.",
+    "recommendation": "The code should use a more secure encryption algorithm such as AES or ChaCha20."
+  },
+  {
+    "misuse": "CWE-754: Improper Check for Cryptographic Weakness",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"DES/ECB/PKCS5Padding\");\nif (choice > 1)\n            cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+    "description": "The code is using the DES encryption algorithm by default, and only switches to AES if a specific condition is met. This is a weak security practice, as it allows an attacker to force the use of the insecure DES algorithm by manipulating the input to the program.",
+    "recommendation": "The code should always use a secure encryption algorithm, regardless of the input."
+  }
+]
+```

@@ -1,0 +1,32 @@
+The code provided is using the MD4 hashing algorithm which is deprecated and considered as weak. MD4 algorithm was designed in 1990 and it is known that it has some weaknesses and is easily crackable. This can allow an attacker to generate MD4 hash collisions.
+
+Misuse of Crypto API is a critical vulnerability. The code can be fixed by using a stronger algorithm such as SHA-256.
+
+Here is the corrected code:
+
+```java
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+public class B3 {
+    public static void main (String [] args) throws NoSuchAlgorithmException {
+        String name = "abcdef";
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        md.update(name.getBytes());
+        System.out.println(md.digest());
+    }
+}
+```
+
+In the JSON format:
+
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "md = MessageDigest.getInstance(\"MD4\");",
+        "description": "The code is using the MD4 hashing algorithm, which is considered weak and broken. MD4 algorithm was designed in 1990 and it is known that it has some weaknesses and is easily crackable. This can allow an attacker to generate MD4 hash collisions.",
+        "recommendation": "Use a stronger algorithm such as SHA-256. Replace \"MD4\" with \"SHA-256\"."
+    }
+]
+```

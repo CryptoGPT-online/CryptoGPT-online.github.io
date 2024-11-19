@@ -1,0 +1,25 @@
+```json
+[
+  {
+    "misuse": "Weak Key Size",
+    "vulnerable_code": "int keysize = 1024;",
+    "description": "The key size of 1024 bits for RSA is considered weak and can be broken with sufficient computational resources.",
+    "recommendation": "Use a larger key size, such as 2048 or 4096 bits, which are currently considered secure."
+  },
+  {
+    "misuse": "Insecure Cipher Mode",
+    "vulnerable_code": [
+      "Cipher cipher = Cipher.getInstance(\"RSA\");",
+      "Cipher dec = Cipher.getInstance(\"RSA\");"
+    ],
+    "description": "The code uses RSA without specifying a padding scheme in the Cipher.getInstance() method, which will default to no padding (or platform default) and is not secure.",
+    "recommendation": "Use RSA with a secure padding scheme, such as 'RSA/ECB/OAEPWithSHA-256AndMGF1Padding'."
+  },
+  {
+    "misuse": "String Initialization",
+    "vulnerable_code": "String myMessage = new String(\"Secret Message\");",
+    "description": "Directly creating a String object with sensitive information can leave the data in memory longer than necessary, potentially exposing it to memory dumps, as Strings are immutable and handled by the garbage collector in an unpredictable way.",
+    "recommendation": "Use a char array to store sensitive information, and clear the array immediately after use."
+  }
+]
+```

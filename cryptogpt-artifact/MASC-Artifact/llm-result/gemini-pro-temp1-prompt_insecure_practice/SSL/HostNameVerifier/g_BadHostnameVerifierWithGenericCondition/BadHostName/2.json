@@ -1,0 +1,10 @@
+```json
+[
+  {
+    "misuse": "CWE-297 - Improper Validation of Certificate Trust",
+    "vulnerable_code": "new HostNameVerifier(){ @Override public boolean verify(String hostname, SSLSession session) { if(true || session == null){ return true; } return false; } };",
+    "description": "The code does not properly validate the certificate trust. It always returns true, which means that any certificate will be accepted, even if it is not trusted. This could allow an attacker to impersonate a trusted server and intercept communications.",
+    "recommendation": "The code should be modified to properly validate the certificate trust. This can be done by using the `SSLContext.init()` method to initialize the SSL context with a `TrustManager` that implements the desired trust policy."
+  }
+]
+```

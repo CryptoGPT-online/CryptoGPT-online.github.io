@@ -1,0 +1,34 @@
+```json
+[
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "public void checkClientTrusted(X509Certificate[] x509Certificates, String s)",
+        "description": "The checkClientTrusted method does not properly validate the certificate, it only checks the authType 'RSA' and not the certificate itself.",
+        "recommendation": "Implement proper certificate validation by inspecting the X509Certificate chain."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "public void checkServerTrusted(X509Certificate[] x509Certificates, String s)",
+        "description": "The checkServerTrusted method does not properly validate the certificate, it only checks the authType 'RSA' and not the certificate itself.",
+        "recommendation": "Implement proper certificate validation by inspecting the X509Certificate chain."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "context = SSLContext.getInstance(\"SSL\")",
+        "description": "The SSLContext is initialized with 'SSL', which is considered insecure. Modern applications should use 'TLS'.",
+        "recommendation": "Change 'SSL' to 'TLS' when acquiring an instance of SSLContext."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "context.init(null, trustAll, new SecureRandom())",
+        "description": "While new SecureRandom() is meant to generate a secure random number, improperly initializing or using it could lead to insufficient randomness in some contexts. The code itself does not misuse SecureRandom, but the provided context implies insufficiency.",
+        "recommendation": "Ensure that SecureRandom is properly used throughout the application to guarantee sufficient randomness."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "new X509TrustManager() { ... }",
+        "description": "Returning null from getAcceptedIssuers effectively disables any trust anchor checks, which can allow connections with arbitrary, untrusted certificates.",
+        "recommendation": "Return a meaningful set of trust anchors in getAcceptedIssuers."
+    }
+]
+```

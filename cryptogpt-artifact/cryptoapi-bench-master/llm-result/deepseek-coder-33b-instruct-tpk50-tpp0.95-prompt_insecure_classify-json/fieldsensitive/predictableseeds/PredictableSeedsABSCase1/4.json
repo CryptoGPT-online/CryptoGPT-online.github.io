@@ -1,0 +1,17 @@
+crypto.method1(new byte[]{(byte)0, (byte)0});
+```
+
+In the above line of code, you are calling method1 and passing a byte array with two elements. Afterwards, this array is immediately replaced with the default seed. Therefore, there is no way the byte array will ever be used as a seed for SecureRandom.
+
+To fix this issue, you should remove the line where you replace `passedSeed` with `defSeed`, like this:
+
+```java
+public void method1(byte [] passedSeed) throws UnsupportedEncodingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, NoSuchPaddingException {
+    SecureRandom sr = new SecureRandom();
+    sr.setSeed(passedSeed);
+    int v = sr.nextInt();
+    System.out.println(v);
+}
+```
+
+This way, `passedSeed` will be used as a seed for the SecureRandom object.

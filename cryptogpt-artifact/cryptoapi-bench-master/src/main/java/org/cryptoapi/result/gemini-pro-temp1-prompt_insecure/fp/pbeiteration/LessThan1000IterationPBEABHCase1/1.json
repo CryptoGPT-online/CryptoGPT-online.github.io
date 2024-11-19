@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "CWE-326: Inadequate Key Generation for Symmetric Ciphers",
+    "vulnerable_code": "SecureRandom random = new SecureRandom();",
+    "description": "The `SecureRandom` class is not properly seeded before generating the salt for the PBEParameterSpec. This means that the salt is predictable and could allow an attacker to recover the plaintext.",
+    "recommendation": "Use a strong random number generator, such as `java.security.SecureRandom` or `java.util.Random`, and seed it with a secure seed."
+  },
+  {
+    "misuse": "CWE-256: Plaintext Exposure via Encrypted Key Storage",
+    "vulnerable_code": "PBEParameterSpec pbeParamSpec = null;\nbyte[] salt = new byte[32];\nrandom.nextBytes(salt);",
+    "description": "The salt is stored in plaintext, which means that an attacker could recover it and use it to attack the encrypted data.",
+    "recommendation": "Store the salt in a secure location, such as a hardware security module (HSM)."
+  }
+]
+```

@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "TrustManager that trusts all certificates",
+    "vulnerable_code": "new X509TrustManager() {...}",
+    "description": "The custom X509TrustManager provided doesn't check the certificate chain, making it trust all certificates. This can lead to vulnerabilities such as MITM (Man-in-the-Middle) attacks.",
+    "recommendation": "Use a TrustManager that checks the server's certificates against a list of trusted CAs."
+  },
+  {
+    "misuse": "SSL (Secure Sockets Layer) protocol usage",
+    "vulnerable_code": "SSLContext.getInstance(\"SSL\")",
+    "description": "The code uses 'SSL' as the instance type for SSLContext, which refers to an obsolete version of the SSL protocol and might be susceptible to security flaws.",
+    "recommendation": "Change from 'SSL' to 'TLS', and preferably specify the latest version (e.g., 'TLSv1.3')."
+  },
+  {
+    "misuse": "Nullifying getAcceptedIssuers()",
+    "vulnerable_code": "return null;",
+    "description": "Returning 'null' from the 'getAcceptedIssuers()' method prevents proper validation of certificate authorities which are trusted, potentially allowing untrusted CAs.",
+    "recommendation": "Implement 'getAcceptedIssuers()' to return a list of trusted CAs."
+  }
+]
+```

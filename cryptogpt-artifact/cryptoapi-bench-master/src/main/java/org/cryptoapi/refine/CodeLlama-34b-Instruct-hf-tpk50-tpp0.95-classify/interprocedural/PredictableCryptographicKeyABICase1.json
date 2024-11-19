@@ -1,0 +1,42 @@
+ The JSON response should contain the following optimized misuse report:
+
+{
+{
+"misuse": "CWE-798: Use of Hardcoded Credentials",
+"vulnerable_code": "String key = \"defaultkey\";",
+"description": "The code uses a hardcoded key, which can be easily extracted and used by an attacker to access the encrypted data.",
+"recommendation": "Do not hardcode credentials. Instead, use a secure method to store and manage credentials, such as environment variables or a secure credential store."
+}
+,
+{
+"misuse": "CWE-330: Use of Insufficiently Random Values",
+"vulnerable_code": "byte[] keyBytes = key.getBytes();",
+"description": "The code uses a predictable key generation method that is not secure. The use of 'defaultkey' as a key is not secure and can be easily guessed by an attacker.",
+"recommendation": "Use a secure method to generate random keys, such as the Java SecureRandom class."
+}
+,
+{
+"misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+"vulnerable_code": "SecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES\");",
+"description": "The encryption algorithm used, AES, is a broken or risky cryptographic algorithm. AES keys should be at least 128 bits long, and the key provided is only 32 bits long.",
+"recommendation": "Use a more secure encryption algorithm, such as AES-GCM or AES-CCM, and use a key length of at least 128 bits."
+}
+,
+{
+"misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+"vulnerable_code": "key.getBytes();\n        keyBytes = Arrays.copyOf(keyBytes,16);\n        SecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES\");",
+"description": "The code uses the AES algorithm with a hardcoded key that is not secure. The key is also hardcoded, which makes it vulnerable to a dictionary attack.",
+"recommendation": "Use a secure random key generation algorithm, such as SecureRandom.getInstanceStrong(), to generate a secure key. Also, do not hardcode the key, but instead store it securely and retrieve it as needed."
+}
+}
+
+The false positive misuse report should contain the following JSON response:
+
+{
+{
+"misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+"vulnerable_code": "byte[] keyBytes = key.getBytes();",
+"description": "The function uses the default `key.getBytes()` method to convert a string to a byte array, which can result in non-deterministic output and vulnerabilities due to potential issues with the platform's default charset. A better approach would be to use a specific, consistent charset such as UTF-8.",
+"recommendation": "Use a specific, consistent charset such as UTF-8 for converting strings to byte arrays in cryptographic operations."
+}
+}

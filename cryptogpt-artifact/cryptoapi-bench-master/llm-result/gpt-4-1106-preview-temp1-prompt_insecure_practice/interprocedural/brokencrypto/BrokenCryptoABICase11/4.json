@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Cryptographic Algorithm",
+        "vulnerable_code": "String key = \"DES\";",
+        "description": "DES is considered an insecure cryptographic algorithm because it uses a 56-bit key which is susceptible to brute-force attacks.",
+        "recommendation": "Use a stronger cryptographic algorithm like AES with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "ECB Mode of Operation",
+        "vulnerable_code": "String crypto = \"DES/ECB/PKCS5Padding\";",
+        "description": "ECB (Electronic Codebook) is an insecure block cipher mode of operation as it does not use an IV and thus encrypts identical plaintext blocks into identical ciphertext blocks. This can leak pattern information about the plaintext.",
+        "recommendation": "Use a more secure mode of operation such as CBC or GCM which uses an Initialization Vector (IV)."
+    },
+    {
+        "misuse": "Improper use of KeyGenerator",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(cryptoKey);",
+        "description": "The KeyGenerator is being improperly used because 'cryptoKey' is meant to be the algorithm not the key itself. Passing 'DES' to KeyGenerator.getInstance() is incorrect use of the API.",
+        "recommendation": "Specify the correct algorithm to KeyGenerator.getInstance() and then generate a secure random key. If 'DES' is used, ensure that KeyGenerator is called with 'AES', 'DESede', etc., not with the key itself."
+    }
+]
+```

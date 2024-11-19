@@ -1,0 +1,11 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "byte[] keyBytes = key.getBytes(); keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The code uses a fixed default key and it's not secure. Moreover, it also does not check if the key's byte array is longer than 16. If the length of key is less than 16, it fills the remaining bytes with 0.",
+        "recommendation": "Instead of using a static key, it is recommended to use a randomly generated key using SecureRandom. For AES encryption, the key length should be 128, 192, or 256 bits. You can generate a new random key using the KeyGenerator class."
+    }
+]
+```
+Please note that the usage of the same key for encrypting and decrypting data is a known vulnerability and can lead to security issues. Always ensure that keys used for encryption are not disclosed or used multiple times.

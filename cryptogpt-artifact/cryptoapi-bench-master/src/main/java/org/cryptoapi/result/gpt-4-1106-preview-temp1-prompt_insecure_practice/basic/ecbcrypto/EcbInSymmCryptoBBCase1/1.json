@@ -1,0 +1,30 @@
+```json
+[
+    {
+        "misuse": "Static Key",
+        "vulnerable_code": [
+            "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+            "SecretKey key = keyGen.generateKey();"
+        ],
+        "description": "The AES key is generated statically without a SecureRandom instance as the entropy source, which could lead to less randomness in key generation.",
+        "recommendation": "Pass a properly initialized SecureRandom instance to KeyGenerator.init() when generating the key."
+    },
+    {
+        "misuse": "ECB Mode",
+        "vulnerable_code": [
+            "Cipher cipher = Cipher.getInstance(\"AES/ECB/PKCS5Padding\");"
+        ],
+        "description": "ECB mode is used for encryption, which is insecure as it doesn't provide serious message confidentiality. The same plaintext blocks are encrypted to the same ciphertext blocks, leading to potential data pattern leakage.",
+        "recommendation": "Use a stronger encryption mode, such as CBC or GCM, with proper IV management."
+    },
+    {
+        "misuse": "Missing SecureRandom Initialization",
+        "vulnerable_code": [
+            "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+            "SecretKey key = keyGen.generateKey();"
+        ],
+        "description": "The KeyGenerator is used without securely initializing it with a SecureRandom instance, which may lead to weak keys due to insufficient entropy.",
+        "recommendation": "Ensure that KeyGenerator is initialized with a strong source of randomness using keyGen.init(keySize, secureRandom);."
+    }
+]
+```

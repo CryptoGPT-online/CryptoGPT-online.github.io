@@ -1,0 +1,14 @@
+ {
+"misuses": [
+{
+"misuse": "CWE-295: Improper Certificate Validation",
+"vulnerable_code": "public class D1 implements HostnameVerifier {
+    public boolean verify(String s, SSLSession sslSession) {
+        return true;
+    }
+}",
+"description": "The verify() method in the D1 class always returns true, regardless of the hostname or SSLSession object. This allows any hostname to be validated as trusted, which can lead to man-in-the-middle attacks.",
+"recommendation": "To fix this vulnerability, the verify() method should validate the hostname and SSLSession object using a proper certificate validation mechanism, such as using the javax.net.ssl.HostnameVerifier interface."
+}
+]
+}

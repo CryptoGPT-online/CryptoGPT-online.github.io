@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "random.ints()",
+        "description": "The method random.ints() generates an effectively unlimited stream of pseudorandom int values; thus, using it for a password without proper selection and encoding may be insecure.",
+        "recommendation": "Generate a strong password using a secure mechanism specifically designed for passwords, such as `java.security.SecureRandom` with proper encoding."
+    },
+    {
+        "misuse": "Inadequate Key Length",
+        "vulnerable_code": "int keyLength = 16;",
+        "description": "The key length is specified in bits, and using a length of 16 bits for a password-based encryption key is insecure. Modern encryption standards require much longer keys.",
+        "recommendation": "Increase the key length to be at least 128 bits (16 bytes) for symmetric encryption."
+    },
+    {
+        "misuse": "Weak Encryption Algorithm",
+        "vulnerable_code": "new PBEKeySpec(password.toCharArray(),salt,iterationCount,keyLength);",
+        "description": "Not specifying the encryption algorithm may lead to the use of a default and potentially weak algorithm. Also, the API used `PBEKeySpec` is known to default to weaker algorithms such as PBEWithMD5AndDES.",
+        "recommendation": "Specify a strong algorithm when creating the PBEKeySpec instance, such as `PBEWITHHMACSHA256ANDAES_256`."
+    },
+    {
+        "misuse": "Insufficient Iteration Count",
+        "vulnerable_code": "int iterationCount = 11010;",
+        "description": "The iteration count of 11010 may not be sufficient to provide adequate security against brute-force attacks.",
+        "recommendation": "Increase the iteration count to a higher number such as 100,000 or more to make brute-force attacks more difficult."
+    }
+]
+```

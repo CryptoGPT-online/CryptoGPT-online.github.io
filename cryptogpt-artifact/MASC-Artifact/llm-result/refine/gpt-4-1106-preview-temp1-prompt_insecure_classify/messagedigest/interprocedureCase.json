@@ -1,0 +1,20 @@
+### False Positive Misuse ###
+
+While all the misuse reports indicate the use of MD5 being a vulnerability, there is in fact no false positive in the provided misuse reports. Although the `MessageDigestComplex` class includes a method `A()` that sets the `digestName` to "SHA-256", the `main()` method calls `A().B()`, which results in `digestName` being set to "MD5", overriding the previous "SHA-256" value.
+
+Therefore, the actual cryptographic algorithm used in the `MessageDigest.getInstance()` method is indeed "MD5", which is known to be a broken and risky cryptographic algorithm. All the reports that mark the use of "MD5" as a misuse are correct.
+
+### Optimized Misuse JSON###
+
+However, the reports are redundant, as they all point out the same issue with different wording. It suffices to include only one report in the optimized list as a representative of the misuse. Here is the optimized list:
+
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "cryptoDigest = MessageDigest.getInstance(new MessageDigestComplex().A().B().getName());",
+        "description": "MD5 is used as the cryptographic algorithm, which is considered broken and vulnerable to collision attacks.",
+        "recommendation": "Use a stronger hashing algorithm like SHA-256, SHA-3 or SHA-512."
+    }
+]
+```

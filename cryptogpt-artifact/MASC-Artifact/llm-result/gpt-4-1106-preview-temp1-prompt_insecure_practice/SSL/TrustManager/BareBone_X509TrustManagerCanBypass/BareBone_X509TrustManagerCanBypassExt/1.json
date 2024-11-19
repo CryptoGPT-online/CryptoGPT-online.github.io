@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "Insecure Trust Manager",
+    "vulnerable_code": "public void checkClientTrusted(X509Certificate[] chain, String authType) {...} public void checkServerTrusted(X509Certificate[] chain, String authType) {...}",
+    "description": "The implemented X509TrustManager does not perform any validation, allowing any client or server certificate to be trusted. This can create vulnerabilities such as 'Man-in-the-middle' (MITM) attacks.",
+    "recommendation": "Implement validation logic in the checkClientTrusted and checkServerTrusted methods to properly verify the certificate chain according to the application's trust policy."
+  },
+  {
+    "misuse": "Empty getAcceptedIssuers",
+    "vulnerable_code": "public X509Certificate[] getAcceptedIssuers() {return null;}",
+    "description": "Returning null from getAcceptedIssuers can lead to accepting any certificate as the trust manager does not have a list of accepted issuers to compare against.",
+    "recommendation": "Return a proper list of accepted issuers that the trust manager should trust."
+  }
+]
+```

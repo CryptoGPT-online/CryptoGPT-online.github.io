@@ -1,0 +1,29 @@
+```json
+[
+    {
+        "misuse": "Weak Encryption Algorithm",
+        "vulnerable_code": [
+            "KeyGenerator.getInstance(\"IDEA\")",
+            "Cipher.getInstance(\"IDEA\")"
+        ],
+        "description": "The IDEA encryption algorithm is less common and not recommended for use in secure contexts due to the existence of more secure alternatives like AES.",
+        "recommendation": "Use a more secure and standard encryption algorithm such as AES with a proper key size (e.g., 128, 192, or 256 bits)."
+    },
+    {
+        "misuse": "Missing Secure Random Number Generator",
+        "vulnerable_code": [
+            "keyGen.generateKey()"
+        ],
+        "description": "The KeyGenerator instance is used without specifying a SecureRandom instance, which could potentially lead to a weak key if the default randomness source is not secure.",
+        "recommendation": "Use KeyGenerator.init(int keysize, SecureRandom random) to explicitly initialize the KeyGenerator with a specified key size and a secure source of randomness."
+    },
+    {
+        "misuse": "Unspecified Cipher Mode and Padding",
+        "vulnerable_code": [
+            "Cipher.getInstance(\"IDEA\")"
+        ],
+        "description": "Cipher is getting initialized with IDEA algorithm without specifying the mode of operation and padding scheme. This can lead to the use of a default mode and padding which might be insecure, like ECB mode which doesn't provide serious message confidentiality.",
+        "recommendation": "Specify secure mode of operation and padding scheme, such as 'AES/CBC/PKCS5Padding'."
+    }
+]
+```

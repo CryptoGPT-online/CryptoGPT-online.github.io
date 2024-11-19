@@ -1,0 +1,25 @@
+public class Pd {
+    public static void main(String args[]) throws KeyStoreException, IOException, CertificateException, NoSuchAlgorithmException {
+        Pd pksp = new Pd();
+        pksp.go();
+    }
+
+    public void go() throws KeyStoreException, IOException, CertificateException, NoSuchAlgorithmException {
+        String type = "JKS";
+        KeyStore ks = KeyStore.getInstance(type);
+
+        String password = "securePassword123";
+        String keyStorePath = "path_to_your_keystore_file";
+
+        try (FileInputStream fis = new FileInputStream(keyStorePath)) {
+            ks.load(fis, password.toCharArray());
+        } catch (FileNotFoundException e) {
+            System.err.println("File not found: " + keyStorePath);
+        } catch (IOException | KeyStoreException | NoSuchAlgorithmException | CertificateException e) {
+            System.err.println("Error loading KeyStore: " + e.getMessage());
+        }
+    }
+}
+```
+
+Please replace `"securePassword123"` and `"path_to_your_keystore_file"` with your actual KeyStore password and file path.

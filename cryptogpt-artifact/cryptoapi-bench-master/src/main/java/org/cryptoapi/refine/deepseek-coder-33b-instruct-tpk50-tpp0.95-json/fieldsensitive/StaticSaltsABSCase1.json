@@ -1,0 +1,29 @@
+## False Positive Misuse
+```json
+{
+    "misuse": "Hard-coded salt",
+    "vulnerable_code": "byte[] salt = {(byte) 0xa2};",
+    "description": "The salt is hard-coded in the constructor of C1, and it's only one byte long. This is not a secure way to manage salt as it provides no extra entropy for the algorithm.",
+    "recommendation": "Generate a random salt and provide enough entropy for your salt."
+}
+```
+The misuse is a false positive as the salt is used in the context of PBE (Password-Based Encryption). The salt adds randomness to the encryption, not security. It's a one-byte value, but PBE generally takes a salt of at least 8 bytes.
+
+## Optimized Misuse JSON
+```json
+[
+    {
+        "misuse": "Unintentionally Overwriting salt value",
+        "vulnerable_code": "passedSalt = defSalt;",
+        "description": "This line of code will overwrite the `passedSalt` with the default salt, which may not be intended",
+        "recommendation": "Either use a different variable name for `passedSalt` or don't overwrite the value."
+    },
+    {
+        "misuse": "High number of iterations for PBE",
+        "vulnerable_code": "int count = 1020;",
+        "description": "The number of iterations for PBE is high, which may slow down the process and potentially reduce security.",
+        "recommendation": "Consider reducing the number of iterations for PBE based on security requirements."
+    }
+]
+```
+ These two misuses are not false positives as they refer to an important aspect of security in the code. The first misuse refers to accidental overwrite of the `passedSalt`, a potentially dangerous mistake. The second misuse refers to the high number of iterations for PBE, which significantly affects the performance of the process and potentially negatively impacts the security.

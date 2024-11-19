@@ -1,0 +1,29 @@
+### False Positive Misuse ###
+
+1. "Missing Secure Random Number Generator" - This is a false positive because the Java `KeyGenerator` class is designed to use a secure random number generator by default if none is provided. Therefore, explicitly specifying a `SecureRandom` instance is not strictly necessary unless there is a specific requirement for a non-default source of randomness.
+
+2. "Insufficient Key Size" - This is a false positive because IDEA has a fixed key size of 128 bits, which is generally considered secure for most applications. While it is true that some high-security applications may require larger key sizes, the IDEA algorithm does not support key sizes other than 128 bits, so this misuse is not applicable to the IDEA algorithm.
+
+### Optimized Misuse JSON###
+
+```json
+[
+    {
+        "misuse": "Weak Encryption Algorithm",
+        "vulnerable_code": [
+            "KeyGenerator.getInstance(\"IDEA\")",
+            "Cipher.getInstance(\"IDEA\")"
+        ],
+        "description": "The IDEA encryption algorithm is considered to be less secure compared to more modern algorithms like AES. It is susceptible to certain cryptographic attacks and is not recommended for use in secure contexts.",
+        "recommendation": "Replace the IDEA algorithm with a more secure algorithm such as AES ('AES/CBC/PKCS5Padding')."
+    },
+    {
+        "misuse": "Unspecified Cipher Mode and Padding",
+        "vulnerable_code": [
+            "Cipher.getInstance(\"IDEA\")"
+        ],
+        "description": "Cipher is getting initialized with IDEA algorithm without specifying the mode of operation and padding scheme. This can lead to the use of a default mode and padding which might be insecure, like ECB mode which doesn't provide serious message confidentiality.",
+        "recommendation": "Specify secure mode of operation and padding scheme, such as 'AES/CBC/PKCS5Padding'."
+    }
+]
+```

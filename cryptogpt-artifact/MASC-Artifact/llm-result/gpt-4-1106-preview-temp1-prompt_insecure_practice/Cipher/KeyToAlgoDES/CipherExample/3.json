@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Weak Encryption Algorithm",
+        "vulnerable_code": "String algo = \"DES\";",
+        "description": "DES is considered a weak encryption algorithm due to its small key size of 56 bits, making it susceptible to brute-force attacks.",
+        "recommendation": "Use a stronger algorithm like AES with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "Unspecified Cipher Mode and Padding",
+        "vulnerable_code": "Cipher c = Cipher.getInstance(keygen.getAlgorithm());",
+        "description": "Not specifying the cipher mode and padding can result in the use of defaults which may vary between different Java implementations or might be insecure, like ECB mode or PKCS5Padding.",
+        "recommendation": "Specify the cipher mode and padding scheme explicitly when calling Cipher.getInstance(), e.g., AES/CBC/PKCS5Padding."
+    },
+    {
+        "misuse": "Unsecure Random Number Generation",
+        "vulnerable_code": "KeyGenerator keygen = KeyGenerator.getInstance(algo);",
+        "description": "The KeyGenerator does not specify a secure random number generator, relying on the default which may not always be secure.",
+        "recommendation": "Specify a secure random number generator when initializing the key generator, e.g., by using keygen.init(128, new SecureRandom())."
+    }
+]
+```

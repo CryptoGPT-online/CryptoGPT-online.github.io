@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Key Size",
+        "vulnerable_code": "int keySize = 1024;",
+        "description": "The key size of 1024 bits for RSA is no longer considered secure. It may be vulnerable to cryptographic attacks such as factoring.",
+        "recommendation": "Use a larger key size, such as 2048 or 4096 bits, for RSA encryption."
+    },
+    {
+        "misuse": "ECB Mode (Implicit)",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"RSA\");",
+        "description": "No padding and mode of operation is specified for RSA encryption, which defaults to ECB mode with PKCS1Padding. While ECB mode for RSA doesn't have the same weaknesses as block ciphers, explicit padding should be specified for clarity and to ensure secure practices.",
+        "recommendation": "Specify the padding mechanism explicitly when getting an instance of Cipher, e.g., 'RSA/ECB/OAEPWithSHA-256AndMGF1Padding'."
+    },
+    {
+        "misuse": "Potential Padding Oracle",
+        "vulnerable_code": "Cipher dec = Cipher.getInstance(\"RSA\");",
+        "description": "By default, the 'RSA' transformation uses 'RSA/ECB/PKCS1Padding', which could be vulnerable to padding oracle attacks when used improperly, especially in a networked application.",
+        "recommendation": "Use OAEP padding ('RSA/ECB/OAEPWithSHA-256AndMGF1Padding') instead of PKCS#1 to prevent padding oracle attacks."
+    }
+]
+```

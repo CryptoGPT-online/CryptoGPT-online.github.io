@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "TrustManager that accepts any certificates",
+        "vulnerable_code": "public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {}",
+        "description": "The implementation of `checkServerTrusted` is empty, allowing all server certificates, even invalid ones, which makes it vulnerable to MITM attacks.",
+        "recommendation": "Replace with a proper TrustManager implementation that checks server certificates against a list of known/trusted CAs."
+    },
+    {
+        "misuse": "Using an obsolete or insecure protocol",
+        "vulnerable_code": "SSLContext.getInstance(\"SSL\")",
+        "description": "The code is using 'SSL' which is considered insecure. SSL has been deprecated due to numerous vulnerabilities.",
+        "recommendation": "Use 'TLS' protocol instead of 'SSL' for secure communication."
+    },
+    {
+        "misuse": "Allowing any hostname verifier",
+        "vulnerable_code": "// HttpsURLConnection.setDefaultHostnameVerifier(new DefaultHostnameVerifier());",
+        "description": "If a default hostname verifier that accepts any domain were to be used, it would allow the client to accept any hostname, even if it does not match the certificate.",
+        "recommendation": "Use the default hostname verifier, or implement a custom verifier that securely checks that the hostname matches the certificate."
+    },
+    {
+        "misuse": "SecureRandom with potentially insufficient randomness",
+        "vulnerable_code": "context.init(null, trustAll, new SecureRandom());",
+        "description": "While the use of `SecureRandom` is not directly an issue, it is contextually insecure due to the combination with the previously mentioned insecure TrustManager implementation.",
+        "recommendation": ""
+    }
+]
+```

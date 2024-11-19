@@ -1,0 +1,12 @@
+The code is using a static cryptographic algorithm, which is not secure and can lead to vulnerabilities. The static `DEFAULT_CRYPTO` field is set to "SHA1", which is a well-known cryptographic algorithm, but is nowadays considered to be weak. Moreover, the usage of static fields for cryptographic algorithm makes the code vulnerable to attackers who can manipulate these values.
+
+The `MessageDigest.getInstance()` method takes a string argument which represents the name of the algorithm to be used for hashing. However, it's not recommended to use a static field for specifying the algorithm. This can lead to vulnerabilities, as the algorithm can be manipulated by untrusted code.
+
+```java
+{
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+    "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(String.valueOf(crypto));",
+    "description": "The code uses a static cryptographic algorithm which is not secure and can lead to vulnerabilities. The algorithm (SHA1) is considered to be weak and not secure for many applications.",
+    "recommendation": "It is recommended to use a safe and secure cryptographic algorithm for your application. You can choose from a list of cryptographic algorithms provided by the Java Cryptography Architecture. If you have to use a less secure algorithm, make sure to choose one that is as strong as your data's protection requirements allow."
+}
+```

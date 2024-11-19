@@ -1,0 +1,25 @@
+```json
+[
+  {
+    "misuse": "Use of ECB mode",
+    "vulnerable_code": "\"AES/ECB/PKCS5Padding\"",
+    "description": "ECB (Electronic Codebook) mode is a weak encryption algorithm mode because it doesn't provide serious data confidentiality. It encrypts identical plaintext blocks into identical ciphertext blocks, making it susceptible to pattern analysis.",
+    "recommendation": "Switch to a secure mode of operation like CBC (Cipher Block Chaining), GCM (Galois/Counter Mode), or CTR (Counter Mode) with a proper initialization vector (IV)."
+  },
+  {
+    "misuse": "Missing IV for CBC mode and equivalents",
+    "vulnerable_code": [
+      "Cipher.getInstance(crypto)",
+      "cipher.init(Cipher.ENCRYPT_MODE, key)"
+    ],
+    "description": "When using CBC mode (or any equivalent mode that requires an IV), it's important that the IV is random and unique for every encryption session. This sample code does not provide a mechanism to use an IV.",
+    "recommendation": "Generate a unique IV for each encryption session and provide it when initializing the Cipher instance with cipher.init()."
+  },
+  {
+    "misuse": "Insecure Randomness",
+    "vulnerable_code": "SecretKey key = keyGen.generateKey();",
+    "description": "It's not clear if a secure randomness source or sufficient key length is being used for key generation, which can lead to predictable keys.",
+    "recommendation": "Ensure a secure source of randomness and sufficient key length (e.g., 256 bits for AES) when generating the key."
+  }
+]
+```

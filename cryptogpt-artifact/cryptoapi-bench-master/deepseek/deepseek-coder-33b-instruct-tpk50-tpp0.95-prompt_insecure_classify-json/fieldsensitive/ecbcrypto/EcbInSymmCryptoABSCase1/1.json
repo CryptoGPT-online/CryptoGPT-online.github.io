@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "description": "The code is generating a symmetric encryption key with AES, which is a good encryption algorithm, but it is using the default key size of 128 bits. This size is considered relatively small for today's standards, and could be inadequate to protect sensitive data.",
+        "recommendation": "Consider increasing the key size. AES supports a key size of 128, 192, or 256 bits. For better security, consider using a longer key size of 256 bits."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(passedAlgo);",
+        "description": "The code is using the Cipher class to create an instance of a Cipher object. This class is used for encryption and decryption. The code is passing a variable to the getInstance() method, which can potentially be controlled by an attacker. If an attacker can control the passedAlgo variable, they could potentially choose a less secure encryption algorithm that is known to have weaknesses.",
+        "recommendation": "Validate and sanitize the passedAlgo variable before using it in the getInstance() method to prevent the use of less secure algorithms. Also, it's recommended to ensure that the encryption algorithms are up-to-date with the latest recommendations from the cryptographic community."
+    }
+]
+```

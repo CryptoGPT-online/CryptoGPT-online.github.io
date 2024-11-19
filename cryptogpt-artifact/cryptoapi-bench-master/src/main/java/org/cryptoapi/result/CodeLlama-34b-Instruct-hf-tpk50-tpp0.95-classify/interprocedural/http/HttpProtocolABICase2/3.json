@@ -1,0 +1,10 @@
+ {
+"misuses": [
+{
+"misuse": "CWE-295: Improper Certificate Validation",
+"vulnerable_code": "public class H2 {\n    public static final String DEFAULT_URL = \"http://www.google.com\";\n    private static char[] URL;\n    private static char[] url;\n    public static void main(String [] args) throws MalformedURLException {\n        go2();\n        go3();\n        go();\n    }\n    private static void go2(){\n        URL = DEFAULT_URL.toCharArray();\n    }\n    private static void go3(){\n        url = URL;\n    }\n\n    private static void go() throws MalformedURLException {\n        System.out.println(new URL(url.toString()));\n    }\n}",
+"description": "The code does not validate the SSL/TLS certificate of the URL before establishing a connection, which can lead to man-in-the-middle attacks.",
+"recommendation": "Use a secure connection by validating the SSL/TLS certificate of the URL before establishing a connection."
+}
+]
+}

@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insufficient IV Size for Encryption",
+        "vulnerable_code": "new IvParameterSpec(val.getBytes(),0,8)",
+        "description": "An initialization vector (IV) should be unpredictable and unique for CBC mode encryption schemes. Here, a fixed set of characters is used, and only 8 bytes are taken while modern encryption schemes require IVs of at least 16 bytes (128 bits) for AES.",
+        "recommendation": "Use a secure random number generator to create a sufficiently long IV of the correct size required by the encryption algorithm being used, typically 16 bytes for AES."
+    },
+    {
+        "misuse": "Use of Non-random IV",
+        "vulnerable_code": "new IvParameterSpec(val.getBytes(),0,8)",
+        "description": "The IV is supposed to be random and unpredictable. Using a predictable IV derived from fixed characters reduces the security of modes of operation (like CBC) which require an IV. The code snippet uses a static value, making it vulnerable to attacks.",
+        "recommendation": "Generate a new IV for each encryption operation using a cryptographically secure random number generator."
+    },
+    {
+        "misuse": "Potential Misuse of Encoding",
+        "vulnerable_code": "new String(ivSpec.getIV())\nnew String(val.getBytes())",
+        "description": "String constructors are used without specifying a character set. This can lead to inconsistencies across different platforms if they have different default charsets. This isn't directly a crypto API misuse but can become one if the IV or cryptographic material is mishandled because of encoding issues.",
+        "recommendation": "Always specify a charset when converting between Strings and byte arrays, such as using UTF-8: new String(bytes, StandardCharsets.UTF_8)."
+    }
+]
+```

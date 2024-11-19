@@ -1,0 +1,33 @@
+```json
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "crypto = new C3(\"MD4\");",
+        "description": "The MD4 hashing algorithm is considered to be weak and vulnerable to collision attacks.",
+        "recommendation": "Use a more secure hashing algorithm like SHA-256 or SHA-3."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": [
+            "public B3() throws NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {",
+            "crypto.encrypt(\"abc\",\"\");",
+            "public void encrypt(String str, String passedAlgo) throws UnsupportedEncodingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, NoSuchPaddingException {",
+            "MessageDigest md = MessageDigest.getInstance(crypto);"
+        ],
+        "description": "The encryption process doesn't specify key generation or any key size, which may be insufficient for secure encryption.",
+        "recommendation": "Ensure that keys are generated using a secure key generation process and are of a sufficient length to prevent brute force attacks."
+    },
+    {
+        "misuse": "Incomplete Encryption",
+        "vulnerable_code": "crypto.encrypt(\"abc\",\"\");",
+        "description": "The encryption function seems to be using a hashing algorithm (MessageDigest) rather than encryption. Hash functions do not encrypt data, they digest it into a hash.",
+        "recommendation": "If encryption is intended, use Cipher.getInstance and relevant encryption algorithms along with a proper key."
+    },
+    {
+        "misuse": "Use of a Non-Standard Algorithm",
+        "vulnerable_code": "crypto = new C3(\"MD4\");",
+        "description": "The use of non-standard cryptographic algorithms like MD4 can potentially introduce security weaknesses, as these algorithms are not as thoroughly tested and vetted as standard ones.",
+        "recommendation": "Adhere to using standard cryptographic algorithms that are known to be strong and have withstood the test of time."
+    }
+]
+```

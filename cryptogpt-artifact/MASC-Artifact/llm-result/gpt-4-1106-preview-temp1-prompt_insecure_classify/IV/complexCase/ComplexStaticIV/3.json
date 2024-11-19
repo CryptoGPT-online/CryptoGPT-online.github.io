@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "new IvParameterSpec(val.getBytes(),0,8)",
+        "description": "The initialization vector (IV) is created from a deterministic source (a string of sequential ASCII characters), which is predictable and not random. This can lead to IV reuse or predictability, reducing the security of cryptographic operations.",
+        "recommendation": "Use a secure random number generator to create the IV. Java provides SecureRandom for this purpose."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "new IvParameterSpec(val.getBytes(),0,8)",
+        "description": "The IV size of 8 bytes is potentially being used, which is less than the recommended size for block ciphers (normally at least 16 bytes for AES, for example).",
+        "recommendation": "Use an IV that is at least as long as the block size of the cipher being used (typically 16 bytes for AES) and ensure it is generated using a secure random source."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "for(int i = 65; i < 75; i++){ val += (char) i; }",
+        "description": "The code is constructing a string from hardcoded values which are then used directly to create an IV. If this pattern is replicated with keys or other cryptographic parameters, it would be a hardcoded credential vulnerability.",
+        "recommendation": "Do not hardcode cryptographic secrets in the source code. Use securely stored, environment-specific configuration or secure storage mechanisms to manage keys and other secrets."
+    }
+]
+```

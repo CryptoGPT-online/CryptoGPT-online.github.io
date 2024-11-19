@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "Broken Crypto Algorithm",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+    "description": "Using the default AES key size (128 bits) is not secure. It is recommended to use a key size of at least 256 bits.",
+    "recommendation": "Use a strong key generator with a key size of at least 256 bits, such as `KeyGenerator.getInstance(\"AES\", \"SunJCE\")`."
+  },
+  {
+    "misuse": "ECB mode is used",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+    "description": "ECB mode is vulnerable to a variety of attacks, including the ECB mode encryption oracle attack. It is recommended to use a block cipher mode that is more secure, such as CBC or CTR.",
+    "recommendation": "Use a secure block cipher mode, such as CBC or CTR, instead of ECB. For example, `Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");`"
+  }
+]
+```

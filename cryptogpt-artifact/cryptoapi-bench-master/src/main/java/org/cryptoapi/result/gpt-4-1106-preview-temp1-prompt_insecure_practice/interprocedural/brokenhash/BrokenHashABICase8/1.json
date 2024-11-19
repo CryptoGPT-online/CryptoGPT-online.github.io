@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "MessageDigest.getInstance(String.valueOf(crypto))",
+        "description": "The MD2 algorithm is used which is considered cryptographically broken and unsuitable for further use.",
+        "recommendation": "Replace MD2 with a secure hashing algorithm, such as SHA-256."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "DEFAULT_CRYPTO.toCharArray()",
+        "description": "Using the toCharArray on a string representing a cryptographic algorithm does not relate to key size but could lead to confusion. The constant DEFAULT_CRYPTO is misnamed, potentially misleading maintainers about its usage.",
+        "recommendation": "Remove conversion of algorithm name to char array and directly use the string for the algorithm. Ensure the algorithm name accurately represents its usage and ensure key sizes are properly managed when utilizing cryptographic keys."
+    },
+    {
+        "misuse": "Insecure Data Handling",
+        "vulnerable_code": "System.out.println(md.digest())",
+        "description": "Logging raw cryptographic digest in the console may lead to information leakage.",
+        "recommendation": "Avoid logging sensitive cryptographic operations outputs. Use appropriate encoding (such as hex or base64) if logging is essential for debugging purposes, and ensure logs are properly managed and protected."
+    }
+]
+```

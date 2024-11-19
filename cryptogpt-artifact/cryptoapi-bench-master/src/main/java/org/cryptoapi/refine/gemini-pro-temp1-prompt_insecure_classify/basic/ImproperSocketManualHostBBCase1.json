@@ -1,0 +1,22 @@
+### False Positive Misuse ###
+There are no false positives in the provided misuse lists.
+
+### Optimized Misuse JSON ###
+```json
+[
+  {
+    "misuse category": "CWE-798: Use of Hardcoded Credentials",
+    "vulnerable_method": "SSLSocketFactory ssf = (SSLSocketFactory) SSLSocketFactory.getDefault();",
+    "vulnerable_code": "SSLSocketFactory ssf = (SSLSocketFactory) SSLSocketFactory.getDefault();",
+    "description": "The code uses the default SSLSocketFactory without specifying any trust manager or hostname verifier, which means it will accept any certificate presented by the server, including self-signed or expired certificates. This can lead to man-in-the-middle attacks.",
+    "recommendation": "To fix this issue, you should configure the SSLSocketFactory to validate the server's certificate against a trusted certificate authority (CA). This can be done by setting the socket factory's trust manager to a TrustManager that verifies the certificate chain."
+  },
+  {
+    "misuse category": "CWE-295: Improper Certificate Validation",
+    "vulnerable_method": "SSLSocket socket = (SSLSocket) ssf.createSocket(\"my.host.name\", 443);",
+    "vulnerable_code": "SSLSocket socket = (SSLSocket) ssf.createSocket(\"my.host.name\", 443);",
+    "description": "The code creates an SSL socket without validating the certificate of the peer. This can lead to man-in-the-middle attacks.",
+    "recommendation": "To fix this issue, you should set the SSL socket's hostname verifier to a HostnameVerifier that verifies the certificate of the peer. This can be done by calling the setHostnameVerifier method on the SSL socket."
+  }
+]
+```

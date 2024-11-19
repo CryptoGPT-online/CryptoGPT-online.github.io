@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "String defaultKey = \"defaultkey\";",
+        "description": "The use of a hardcoded key for cryptographic operations is insecure. An attacker who has access to the code could easily extract the key and decrypt any data that was encrypted with it.",
+        "recommendation": "Instead of using a hardcoded key, generate a secure random key and store it using a secure method, such as a key management service or environment variables that are not hard-coded into the application."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "keyBytes = String.valueOf(random.ints()).getBytes();",
+        "description": "Converting the result of SecureRandom.ints() to a String and then getting its bytes does not guarantee a sufficiently random or uniformly distributed set of bytes suitable for cryptographic use.",
+        "recommendation": "Use SecureRandom to generate a byte array directly instead of converting from an integer stream to a String. For example, use random.nextBytes(new byte[16]); to generate a 16-byte key."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "If the initial key material is not random or does not have enough entropy, simply padding the key to a certain length does not increase its strength. This can lead to weak cryptographic keys.",
+        "recommendation": "Ensure that the key material is derived from a high-entropy source and is of adequate length before using it as a cryptographic key. Use a key derivation function if starting from a password or other low-entropy input."
+    }
+]
+```

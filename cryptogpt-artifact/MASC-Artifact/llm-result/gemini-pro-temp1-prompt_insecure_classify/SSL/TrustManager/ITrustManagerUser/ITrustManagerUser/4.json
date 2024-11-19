@@ -1,0 +1,25 @@
+```json
+[
+  {
+    "misuse": "CWE-295: Improper Certificate Validation",
+    "vulnerable_code": "new ITrustManager() {\n" +
+      "			@Override\n" +
+      "			public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {\n" +
+      "\n" +
+      "			}\n" +
+      "\n" +
+      "			@Override\n" +
+      "			public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {\n" +
+      "\n" +
+      "			}\n" +
+      "\n" +
+      "			@Override\n" +
+      "			public X509Certificate[] getAcceptedIssuers() {\n" +
+      "				return new X509Certificate[0];\n" +
+      "			}\n" +
+      "		};",
+    "description": "The code creates an instance of an `ITrustManager` and overrides the `checkClientTrusted` and `checkServerTrusted` methods to do nothing. This means that any certificate will be accepted, which can lead to man-in-the-middle attacks.",
+    "recommendation": "Implement the `checkClientTrusted` and `checkServerTrusted` methods to properly validate certificates."
+  }
+]
+```

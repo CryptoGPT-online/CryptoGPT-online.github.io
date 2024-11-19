@@ -1,0 +1,29 @@
+The provided code is using the MD2 cryptographic hash function. MD2 is a weak hash function that was used for digital signatures in the original Public Key Infrastructure (PKI). MD2 and MD5 are not considered secure anymore. 
+
+This is a misuse of CWE-327: Use of a Broken or Risky Cryptographic Algorithm. The vulnerability exists because MD2, which was designed for secure hashing, is being used for the encryption.
+
+The cryptographic algorithm is passed through the B4 constructor, without any sanity checking. It's also hardcoded to "MD2" and there is no way to change this.
+
+```java
+public class B4 {
+    C4 crypto;
+    public B4() throws NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
+        crypto = new C4("MD2");
+        crypto.encrypt("abc","");
+    }
+}
+```
+
+Below is the suggested fix, which uses a more secure hash algorithm:
+
+```java
+public class B4 {
+    C4 crypto;
+    public B4() throws NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
+        crypto = new C4("SHA-256");
+        crypto.encrypt("abc","");
+    }
+}
+```
+
+This will use SHA-256, a more secure cryptographic algorithm. This recommendation should be taken with care, as the use of a more secure algorithm may result in other security issues if not properly handled.

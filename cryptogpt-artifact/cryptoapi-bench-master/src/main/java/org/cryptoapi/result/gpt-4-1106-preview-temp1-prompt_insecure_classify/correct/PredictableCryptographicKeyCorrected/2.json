@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "String.valueOf(random.ints())",
+        "description": "The use of random.ints() without specifying a proper range can lead to insufficient randomness in the generated values, especially when converting the random stream to a string.",
+        "recommendation": "Use SecureRandom to generate a sufficiently random key or, ideally, use a key derivation function (KDF) to generate a cryptographic key from a password or passphrase."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The key may not have adequate entropy since it is derived from a base representation of random integers and truncated or padded to fit the key size, which does not guarantee cryptographic strength.",
+        "recommendation": "Use a properly generated cryptographic key instead of truncating or padding user input or random data. Keys should be generated using a cryptographic key generator."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "String defaultKey = String.valueOf(random.ints());",
+        "description": "While not hardcoded in the traditional sense, the string representation of the random ints could potentially be predictable or reused between instances, mimicking hardcoded credentials behavior.",
+        "recommendation": "Use a secure and unpredictable source of randomness for cryptographic keys, and do not encode them as strings that might be reused."
+    }
+]
+```

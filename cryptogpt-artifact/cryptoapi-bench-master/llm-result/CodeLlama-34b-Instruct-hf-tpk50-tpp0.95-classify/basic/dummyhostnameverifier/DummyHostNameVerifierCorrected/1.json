@@ -1,0 +1,8 @@
+ {
+"misuse": "CWE-295: Improper Certificate Validation",
+"vulnerable_code": "if (\"192.168.0.10\".equals(hostname)) {
+            return true;
+        }",
+"description": "The `verify` method is not properly verifying the certificate of the remote host. It only checks if the hostname is equal to \"192.168.0.10\", which is not a robust way of verifying the certificate. An attacker could potentially use a self-signed certificate with the same hostname to bypass the verification and gain unauthorized access to the host.",
+"recommendation": "The `verify` method should properly verify the certificate of the remote host using the `HostnameVerifier` class provided by the Java `HttpsURLConnection` class. The `HostnameVerifier` class provides a standard way of verifying the hostname and certificate of the remote host. The `verify` method should also check the certificate chain to ensure that the certificate is valid and has not been revoked."
+}

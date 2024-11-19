@@ -1,0 +1,34 @@
+## False Positive Misuse
+
+```json
+[
+    {
+        "misuse category": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_method": "Ed.go",
+        "vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "The CBC mode of operation is not recommended for AES encryption as it has known vulnerabilities. These include replay attacks where an attacker can capture an encrypted message and reuse it if the encryption key is known. AES in ECB mode of operation can be broken using frequency analysis.",
+        "recommendation": "Use a secure mode of operation like CTR for AES encryption. This will provide better security."
+    }
+]
+```
+
+## Optimized Misuse JSON
+
+```json
+[
+    {
+        "misuse category": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_method": "Ed.go",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+        "description": "In the provided code, a KeyGenerator is used to generate a key. While the \"AES\" algorithm is used, the default KeyGenerator is used which might produce less random results.",
+        "recommendation": "Use a secure random number generator to generate keys. The SecureRandom class provides a cryptographically strong random number generator. This generator should be used to initialize KeyGenerator."
+    },
+    {
+        "misuse category": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_method": "SecureCrypto.go",
+        "vulnerable_code": "IvParameterSpec ivParameterSpec = new IvParameterSpec(iv);",
+        "description": "An Initialization Vector (IV) should be randomly generated for each encryption to ensure security. Using a fixed IV could lead to vulnerabilities.",
+        "recommendation": "Use a secure random number generator to generate an IV for each encryption operation. The SecureRandom class provides a cryptographically strong random number generator."
+    }
+]
+```

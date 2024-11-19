@@ -1,0 +1,8 @@
+```json
+[{
+    "misuse": "Insecure Cryptographic Storage",
+    "vulnerable_code": "byte b = hm.get(\"aaa\");\nbyte[] salt = {b,b};",
+    "description": "The HashMap stores bytes in a Byte object. When retrieving these values using the get() method, they are automatically unboxed to byte primitives. However, the code doesn't properly handle the situation when the value is null. If the value of \"aaa\" is null in the HashMap, the code will throw a NullPointerException at runtime.",
+    "recommendation": "It is recommended to use the Byte object's .byteValue() method to obtain the actual byte value. This can be done as follows: byte b = hm.get(\"aaa\").byteValue();. It's also good practice to check if the HashMap contains the key before attempting to access its value. This can be done using the .containsKey() method."
+}]
+```

@@ -1,0 +1,36 @@
+```json
+[
+  {
+    "misuse": "Broken Crypto Algorithm",
+    "vulnerable_code": [
+      "crypto = new C5(\"RC2\");"
+    ],
+    "description": "The code specifies the use of 'RC2' which is an outdated and weak encryption algorithm known for its vulnerabilities.",
+    "recommendation": "Switch to a strong encryption algorithm such as AES with a key size of at least 128 bits."
+  },
+  {
+    "misuse": "Hardcoded Encryption Algorithm",
+    "vulnerable_code": [
+      "defaultAlgo = defAlgo;"
+    ],
+    "description": "The encryption algorithm is hardcoded and can be inflexible if there's a need to change the algorithm in the future.",
+    "recommendation": "Avoid hardcoding the encryption algorithm. Instead, use a standard configuration management system for selecting the algorithm."
+  },
+  {
+    "misuse": "Use of ECB Mode",
+    "vulnerable_code": [
+      "Cipher.getInstance(defaultAlgo);"
+    ],
+    "description": "The 'Cipher.getInstance' method with a single argument defaults to ECB mode which is insecure as it doesn't provide serious message confidentiality.",
+    "recommendation": "Use a more secure mode of operation like CBC, CFB, OFB, or GCM which require an initialization vector (IV)."
+  },
+  {
+    "misuse": "Missing Initialization Vector (IV)",
+    "vulnerable_code": [
+      "cipher.init(Cipher.ENCRYPT_MODE, key);"
+    ],
+    "description": "ECB mode does not use an IV. For modes that use an IV, not using a securely generated IV could make the encryption susceptible to certain types of attacks, such as the IvParameterSpec class in Java.",
+    "recommendation": "Always use a securely generated random IV for modes that require them."
+  }
+]
+```

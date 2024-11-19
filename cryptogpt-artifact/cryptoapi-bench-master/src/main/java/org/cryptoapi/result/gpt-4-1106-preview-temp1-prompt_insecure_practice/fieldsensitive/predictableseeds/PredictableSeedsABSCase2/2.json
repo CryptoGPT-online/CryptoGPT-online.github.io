@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insecure Random Number Generation",
+        "vulnerable_code": "SecureRandom sr = new SecureRandom(new byte[]{passedSeed});",
+        "description": "Using a static seed for SecureRandom can predict the output of the random number generator, which is insecure for cryptographic operations that require randomness.",
+        "recommendation": "Use SecureRandom without a seed or with a seed that is unpredictable and kept secret."
+    },
+    {
+        "misuse": "Insecure Random Number Seed",
+        "vulnerable_code": "byte seed = 100;",
+        "description": "The use of a constant value as seed makes the output predictable, which can lead to cryptographic attacks.",
+        "recommendation": "Use a secure and unpredictable source for seed values when seeding random number generators."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "byte seed = 100;",
+        "description": "Using a single byte as a seed, which implies a key size of 8 bits, is insufficient for any cryptographic use and can be brute-forced easily.",
+        "recommendation": "Ensure that cryptographic keys use a secure minimum key length, typically at least 128 bits for modern encryption algorithms."
+    },
+    {
+        "misuse": "Static Assignment of Seed",
+        "vulnerable_code": "passedSeed = defSeed;",
+        "description": "Overwriting the method parameter 'passedSeed' with a static class member 'defSeed' suggests that a static value will be used as seed, which is not cryptographically secure.",
+        "recommendation": "Do not overwrite method parameters with insecure static values; use secure random seeds instead."
+    }
+]
+```

@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+    "vulnerable_code": "crypto = new C2(\"DES/ECB/PKCS5Padding\");",
+    "description": "The DES algorithm is considered insecure and should not be used. It is susceptible to brute-force attacks and other cryptanalytic techniques.",
+    "recommendation": "Use AES or other modern and secure cryptographic algorithm."
+  },
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values.",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);\nSecretKey key = keyGen.generateKey();",
+    "description": "Generating a secret key without specifying a secure random number generator (RNG) can result in weak or predictable keys, compromising the security of the encryption.",
+    "recommendation": "Use a cryptographically secure RNG to generate the secret key, such as `SecureRandom`."
+  },
+  {
+    "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation.",
+    "vulnerable_code": "if(passedAlgo.isEmpty()){\n            passedAlgo = defaultAlgo;\n        }",
+    "description": "The code allows an empty string to be passed as the `passedAlgo` parameter, which results in the usage of the default algorithm. This may lead to negotiation and selection of weak or insecure algorithms during communication.",
+    "recommendation": "Validate the `passedAlgo` parameter and ensure that it contains a strong and secure algorithm before using it."
+  }
+]
+```

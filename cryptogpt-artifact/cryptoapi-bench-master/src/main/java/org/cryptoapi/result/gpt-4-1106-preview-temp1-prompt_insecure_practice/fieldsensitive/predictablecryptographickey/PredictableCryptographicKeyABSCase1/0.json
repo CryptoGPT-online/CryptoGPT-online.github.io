@@ -1,0 +1,34 @@
+```json
+[
+    {
+        "misuse": "Weak Key Generation",
+        "vulnerable_code": "byte[] keyBytes = key.getBytes(\"UTF-8\"); keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "Key material is derived from a String without a secure key-derivation function. Additionally, the key is truncated or padded to 16 bytes which can lead to weak keys if the input is short.",
+        "recommendation": "Use a secure key-derivation function such as PBKDF2, and ensure keys are of adequate length."
+    },
+    {
+        "misuse": "No Secure Random for IV",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE,keySpec);",
+        "description": "When using CBC mode (Cipher Block Chaining), it requires an initialization vector (IV) that is unpredictable and unique for each encryption. The code does not set an IV, which defaults to a predictable IV (possibly all zeros) making the encryption susceptible to certain attacks like 'cipher-text attack'.",
+        "recommendation": "Generate a secure random IV and specify it in the cipher initialization. Make sure to store or transmit the IV along with the encrypted data and use a unique IV for each encryption operation."
+    },
+    {
+        "misuse": "Using Default Key",
+        "vulnerable_code": "crypto = new Co(\"defaultkey\");",
+        "description": "The constructor of 'Co' class accepts a key and defaults to 'defaultkey' which is a hardcoded and insecure practice as it may lead to using weak default keys if proper key management is not implemented.",
+        "recommendation": "Avoid using hard-coded default keys. Implement proper key management by generating keys in a secure manner and storing them safely."
+    },
+    {
+        "misuse": "Use of System Properties for Key Retrieval",
+        "vulnerable_code": "String passKey = P1.getKey(\"pass.key\");",
+        "description": "The method 'getKey' retrieves key material from system properties which might not be secure, especially if the properties can be accessed or manipulated by an untrusted source.",
+        "recommendation": "Store keys in a secure manner, such as using a hardware security module (HSM), keystore, or using environment variables that are accessible only to authorized processes."
+    },
+    {
+        "misuse": "No Integrity Protection",
+        "vulnerable_code": "return cipher.doFinal(txtBytes);",
+        "description": "The code is using CBC mode without Message Authentication Code (MAC) or other integrity checks. This can leave the encryption scheme vulnerable to padding oracle attacks.",
+        "recommendation": "Use authenticated encryption modes such as GCM (Galois/Counter Mode) that provide both confidentiality and integrity. Alternatively, apply HMAC in Encrypt-then-MAC mode."
+    }
+]
+```

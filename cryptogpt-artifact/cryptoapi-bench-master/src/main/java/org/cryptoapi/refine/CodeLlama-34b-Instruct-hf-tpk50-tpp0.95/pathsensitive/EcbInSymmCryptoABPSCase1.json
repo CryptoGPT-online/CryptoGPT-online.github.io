@@ -1,0 +1,32 @@
+ ### False Positive Misuse JSON ###
+[
+  {
+    "misuse": "Broken Crypto Algorithm",
+    "vulnerable_code": "Cipher.getInstance(\"AES/ECB/PKCS5Padding\");",
+    "description": "The use of AES in ECB mode is insecure and can lead to plaintext recovery attacks. The attacker can use the ECB encryption of a given message and the ciphertext of another message to recover the XOR of the two messages, which can reveal sensitive information.",
+    "recommendation": "Use a secure mode of operation, such as GCM or CBC with a random IV, and avoid the use of ECB mode."
+  },
+  {
+    "misuse": "Broken Crypto Algorithm",
+    "vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+    "description": "The encryption mode used in the code is CBC (Cipher Block Chaining), which is vulnerable to padding oracle attacks. An attacker can use this vulnerability to decrypt the ciphertext and recover the plaintext.",
+    "recommendation": "Use a modern encryption mode such as GCM (Galois/Counter Mode) or EAX (EAX Mode) instead."
+  },
+  {
+    "misuse": "Insufficient Key Size",
+    "vulnerable_code": "SecretKey key = keyGen.generateKey();",
+    "description": "The use of a small key size, such as 128 bits, can result in a short amount of time to perform a brute force attack on the encrypted data. A larger key size, such as 256 bits, should be used to increase the resistance to brute force attacks.",
+    "recommendation": "Use a larger key size, such as 256 bits, to increase the resistance to brute force attacks."
+  },
+  {
+    "misuse": "Insecure Input Validation",
+    "vulnerable_code": "if(choice>1)",
+    "description": "The code does not validate the input parameter 'choice' before using it to determine the encryption mode. An attacker could potentially provide an invalid value for 'choice' to bypass the encryption mechanism and gain unauthorized access to the data.",
+    "recommendation": "Implement input validation to ensure that the value of 'choice' is within the expected range and that the input data is properly sanitized and formatted."
+  }
+] {
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "Cipher.getInstance(\"AES/ECB/PKCS5Padding\")",
+"description": "The use of ECB mode is vulnerable to attack, and should be replaced with a mode that provides semantic security, such as CBC or GCM.",
+"recommendation": "Replace ECB mode with CBC or GCM mode, and use an IV of the appropriate length for the mode being used."
+}

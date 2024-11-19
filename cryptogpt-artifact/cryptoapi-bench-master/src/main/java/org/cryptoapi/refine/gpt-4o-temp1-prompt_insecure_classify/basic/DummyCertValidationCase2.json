@@ -1,0 +1,14 @@
+### False Positive Misuse ###
+There are no false positives in this code. Both methods, `checkClientTrusted` and `checkServerTrusted`, are not implementing any validation logic, which poses a risk by allowing all certificates without verification. Thus, the misuse reports are valid.
+
+### Optimized Misuse JSON###
+```json
+[
+    {
+        "misuse": "CWE-295: Improper Certificate Validation.",
+        "vulnerable_code": "public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {} public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {}",
+        "description": "The methods checkClientTrusted and checkServerTrusted are overridden with empty implementations, leading to improper certificate validation. This can result in accepting potentially insecure or malicious certificates, making the application vulnerable to man-in-the-middle attacks.",
+        "recommendation": "Implement proper certificate validation within the checkClientTrusted and checkServerTrusted methods to ensure that certificates are correctly validated against a set of trusted certificates."
+    }
+]
+```

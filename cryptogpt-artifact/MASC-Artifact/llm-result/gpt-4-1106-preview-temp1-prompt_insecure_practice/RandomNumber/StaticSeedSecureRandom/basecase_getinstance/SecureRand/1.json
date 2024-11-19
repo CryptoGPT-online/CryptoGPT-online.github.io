@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "rand1.setSeed(seedBytes);\nrand2.setSeed(seedBytes);",
+        "description": "Setting the same seed on two instances of SecureRandom generates the same sequence of pseudo-random numbers, which can be predictable and not suitable for cryptographic purposes.",
+        "recommendation": "Avoid manually setting seeds with predictable values. Allow SecureRandom to self-seed from system entropy sources."
+    },
+    {
+        "misuse": "Insufficient Entropy",
+        "vulnerable_code": "byte[] seedBytes = \"Seed\".getBytes(StandardCharsets.UTF_8);",
+        "description": "Using a hardcoded and human-readable seed reduces the randomness and unpredictability of the generated random numbers. This is crucial when the SecureRandom instance is used for cryptographic purposes.",
+        "recommendation": "Do not use a hardcoded seed. Instead, rely on the SecureRandom's default seeding mechanism, which typically uses system-provided entropy sources."
+    }
+]
+```

@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insecure Cipher Mode",
+        "vulnerable_code": "Cipher.getInstance(crypto)",
+        "description": "The code uses ECB mode for encryption, which is insecure because it does not provide serious message confidentiality. The same plaintext block will always encrypt to the same ciphertext block, making it susceptible to pattern attacks.",
+        "recommendation": "Use a more secure mode like CBC, CFB, OFB, or GCM with an appropriate initialization vector for each encryption operation."
+    },
+    {
+        "misuse": "Lack of Secure Random Initialization Vector (IV)",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key)",
+        "description": "When using modes like CBC, an initialization vector (IV) is required to ensure that identical plaintext blocks will result in different ciphertext blocks. This code does not provide an IV, which would be insecure in modes other than ECB, which itself is insecure.",
+        "recommendation": "Generate a secure random IV and use it during cipher initialization when using a secure mode other than ECB."
+    },
+    {
+        "misuse": "Hardcoded Crypto Algorithm",
+        "vulnerable_code": "String crypto = \"AES/ECB/PKCS5Padding\"",
+        "description": "The cryptographic algorithm is hardcoded within the application. This reduces flexibility and could make it harder to update the algorithm or mode in the future.",
+        "recommendation": "Consider making the cryptographic algorithm and mode configurable from a secure external source."
+    },
+    {
+        "misuse": "Insufficient Key Length",
+        "vulnerable_code": "KeyGenerator.getInstance(\"AES\")",
+        "description": "The code does not specify a key length for AES. The default key size for AES in Java is typically 128 bits, which is generally considered secure, but depending on the context, a larger key size such as 256 bits may be more appropriate.",
+        "recommendation": "Specify an explicit key length that is appropriate for the security level required in the algorithm parameters when generating a key."
+    }
+]
+```

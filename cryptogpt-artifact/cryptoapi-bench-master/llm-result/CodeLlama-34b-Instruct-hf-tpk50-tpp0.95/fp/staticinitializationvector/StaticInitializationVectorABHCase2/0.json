@@ -1,0 +1,22 @@
+ {
+"misuses": [
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5Padding\")",
+"description": "The AES encryption algorithm used in this code is vulnerable to attacks, such as padding oracles, which can allow an attacker to recover the encryption key. It is recommended to use a more secure encryption algorithm, such as AES-GCM or AES-CTR, which are not vulnerable to these types of attacks.",
+"recommendation": "Replace the AES/CBC/PKCS5Padding cipher with a more secure one, such as AES-GCM or AES-CTR."
+},
+{
+"misuse": "Insecure Random Number Generation",
+"vulnerable_code": "String name = \"abcdef\";\nMap<String,String> hm = new HashMap<String, String>();\nhm.put(\"aaa\", \"abcde\");\nhm.put(\"bbb\", \"fghij\");\nhm.put(\"ccc\", \"klmno\");\nhm.put(\"ddd\", \"pqrst\");\n\nString str = hm.get(\"aaa\");\n\nbyte [] bytes = str.getBytes();",
+"description": "The code generates a random string and uses it as the initialization vector (IV) for the AES encryption algorithm. However, the way the random string is generated is not secure. Specifically, the string is generated using the Java String.random() method, which is not a cryptographically secure random number generator. It is recommended to use a more secure random number generator, such as SecureRandom, to generate the IV.",
+"recommendation": "Replace the String.random() method with a more secure random number generator, such as SecureRandom, to generate the IV."
+},
+{
+"misuse": "Insecure Key Generation",
+"vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+"description": "The code generates an encryption key using the KeyGenerator class, but it does not specify the length of the key or the algorithm used to generate it. It is recommended to specify the length of the key and the algorithm used to generate it to ensure that the key is secure and unpredictable.",
+"recommendation": "Specify the length of the key and the algorithm used to generate it when generating the encryption key."
+}
+]
+}

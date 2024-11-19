@@ -1,0 +1,21 @@
+```json
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": [
+            "SecureRandom sr = new SecureRandom(new byte[]{seed});"
+        ],
+        "description": "Using a static seed value leads to a predictable output from SecureRandom, which reduces randomness and may allow an attacker to predict future outputs.",
+        "recommendation": "Remove the static seed, allowing SecureRandom to use its default seeding strategy which is designed to be secure."
+    },
+    {
+        "misuse": "Insufficient Entropy",
+        "vulnerable_code": [
+            "byte seed = 100;",
+            "SecureRandom sr = new SecureRandom(new byte[]{seed});"
+        ],
+        "description": "Using a single-byte seed does not provide sufficient entropy for cryptographic operations, as it only offers 256 possible seeds which can be easily brute-forced.",
+        "recommendation": "Do not manually seed SecureRandom for cryptographic operations unless using a source with sufficient entropy. Rely on the default, platform-specific seeding mechanism."
+    }
+]
+```

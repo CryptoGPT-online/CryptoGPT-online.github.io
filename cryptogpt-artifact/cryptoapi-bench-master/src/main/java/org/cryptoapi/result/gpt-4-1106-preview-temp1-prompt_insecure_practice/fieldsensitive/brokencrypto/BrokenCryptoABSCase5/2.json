@@ -1,0 +1,28 @@
+```json
+[{
+    "misuse": "Insecure Crypto Algorithm",
+    "vulnerable_code": "crypto = new C6(\"IDEA\");",
+    "description": "The 'IDEA' cipher algorithm is considered insecure due to its relatively small key size and known vulnerabilities.",
+    "recommendation": "Replace 'IDEA' with a secure algorithm such as 'AES/GCM/NoPadding'."
+}, {
+    "misuse": "Hardcoded Encryption Algorithm",
+    "vulnerable_code": "public C6(String defAlgo)",
+    "description": "The encryption algorithm is hardcoded and based on an input string, which may lead to the use of weak or outdated algorithms.",
+    "recommendation": "Use a well-known secure algorithm and avoid making it configurable by external input."
+}, {
+    "misuse": "Missing Initialization Vector (IV)",
+    "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+    "description": "The encryption does not specify an initialization vector (IV), which is important for certain modes of encryption to ensure the same plaintext will not result in the same ciphertext when encrypted multiple times.",
+    "recommendation": "Use an IV with an appropriate secure random value for modes that require it, such as CBC."
+}, {
+    "misuse": "Insecure Random Number Generation",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);",
+    "description": "It is possible that the default algorithm might not produce a cryptographically strong key if not used properly.",
+    "recommendation": "Ensure the KeyGenerator is initialized with a secure random instance or specify a secure algorithm explicitly."
+}, {
+    "misuse": "Using default character encoding",
+    "vulnerable_code": "byte [] txtBytes = txt.getBytes();",
+    "description": "Calling getBytes() without specifying the character encoding can produce different outcomes depending on platform defaults which can be an issue for cross-platform compatibility and predictability of output.",
+    "recommendation": "Specify a character set when calling getBytes(), for instance, 'txt.getBytes(StandardCharsets.UTF_8);'"
+}]
+```

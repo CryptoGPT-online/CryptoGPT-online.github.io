@@ -1,0 +1,22 @@
+```json
+[
+   {
+      "misuse": "Insecure Cipher Algorithm Mode",
+      "vulnerable_code": "Cipher.getInstance(keygen.getAlgorithm())",
+      "description": "The code uses AES encryption without specifying the mode of operation and padding scheme, which defaults to ECB mode and PKCS5Padding. ECB mode is susceptible to pattern analysis and is not recommended for use in cryptographic protocols.",
+      "recommendation": "Always specify a secure mode and padding when initializing a Cipher instance, such as AES/CBC/PKCS5Padding or AES/GCM/NoPadding for authenticated encryption."
+   },
+   {
+      "misuse": "Insufficient Key Length",
+      "vulnerable_code": "KeyGenerator.getInstance(algo)",
+      "description": "The KeyGenerator is initialized without specifying a key size. The default key size might not meet the security requirements, possibly leading to a weaker encryption key. Java usually defaults to 128 bits, which might be considered secure, but for stronger security, 256-bit keys are recommended.",
+      "recommendation": "Explicitly set a key size that meets security requirements when generating a key, such as keygen.init(256)."
+   },
+   {
+      "misuse": "Use of System Charset",
+      "vulnerable_code": "\"something\".getBytes()",
+      "description": "The String.getBytes method is called without specifying a character encoding. This can lead to platform-dependent behavior, as it uses the system's default character set, which can result in cryptographic operations that are not reproducible across different systems or configurations.",
+      "recommendation": "Always specify the character encoding when calling getBytes, such as \"something\".getBytes(StandardCharsets.UTF_8)."
+   }
+]
+```

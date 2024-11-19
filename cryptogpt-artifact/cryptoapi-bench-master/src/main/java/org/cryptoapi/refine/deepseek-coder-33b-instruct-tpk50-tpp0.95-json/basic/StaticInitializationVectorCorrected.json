@@ -1,0 +1,18 @@
+### False Positive Misuse
+[]
+
+### Optimized Misuse JSON
+[{
+  "misuse category": "Weak Random Number Generation",
+  "vulnerable_method": "go()",
+  "vulnerable_code": "byte [] bytes = new byte[16]; sr.nextBytes(bytes);",
+  "description": "The provided code uses a fixed-size byte array to generate the IV. Using a fixed-size byte array might increase the likelihood of successful key prediction, which is not secure.",
+  "recommendation": "Use `SecureRandom.nextBytes()` method to generate random IV which ensures a fixed 16 bytes for AES/CBC mode, as it is the standard way to initialize the IV."
+},
+{
+  "misuse category": "Insecure IV Generation",
+  "vulnerable_method": "go()",
+  "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+  "description": "The provided code uses a static IV. Using a static IV increases the risk of certain types of attacks, such as IV reuse attacks.",
+  "recommendation": "Always use a secure random number generator to generate a random IV. The SecureRandom class is a good example of a secure random number generator."
+}]

@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation.",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "This code is using AES with CBC mode for encryption. CBC mode is not secure, it doesn't provide integrity and confidentiality. This mode is also vulnerable to padding oracle attacks. It would be better to use authenticated encryption like AES-GCM or EAX mode or to use a secure protocol like TLS.",
+        "recommendation": "Change the encryption algorithm to a more secure mode like AES-GCM or EAX or use a secure protocol like TLS."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values.",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(new byte[]{Byte.parseByte(String.valueOf(initialization))});",
+        "description": "In this code, the Initialization Vector (IV) is initialized with a static value. This IV should be randomly generated for each encryption operation to ensure that encrypting the same data twice doesn't yield the same ciphertext, which can lead to serious security vulnerabilities.",
+        "recommendation": "Generate a new random IV for each encryption operation using a secure random number generator."
+    }
+]
+```

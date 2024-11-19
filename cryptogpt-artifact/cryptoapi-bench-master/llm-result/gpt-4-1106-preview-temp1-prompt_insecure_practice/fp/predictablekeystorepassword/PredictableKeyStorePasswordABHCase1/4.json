@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "String password = String.valueOf(random.ints());",
+        "description": "The use of SecureRandom to generate a password via 'ints()' method and then converting it to String is insecure, because it doesn't provide sufficient randomness and complexity for the password.",
+        "recommendation": "Use a secure password generation mechanism with sufficient complexity and entropy. Consider using a password-based key derivation function (PBKDF2 or equivalent)."
+    },
+    {
+        "misuse": "Hardcoded Keystore Type",
+        "vulnerable_code": "String type = \"JKS\";",
+        "description": "The keystore type JKS is Java's default implementation, which was historically considered less secure than PKCS12 due to its weaker cryptographic strength.",
+        "recommendation": "Switch to using \"PKCS12\" as the keystore type to ensure usage of a stronger cryptographic standard."
+    },
+    {
+        "misuse": "Improper Certificate Validation",
+        "vulnerable_code": "cacerts = new URL(\"https://www.google.com\"); ks.load(cacerts.openStream(), new String(keyBytes).toCharArray());",
+        "description": "Loading a KeyStore directly from a URL assumes that the server at the URL is trustworthy and that the connection to it is secure. However, it does not account for the possibility of man-in-the-middle attacks that might compromise the certificate.",
+        "recommendation": "Certificates should be obtained from a trusted CA. Retrieve the certificate in a secure manner outside of the application, validate it, and then load it into the keystore."
+    },
+    {
+        "misuse": "Unnecessary Code Complexity",
+        "vulnerable_code": "byte [] keyBytes = password.getBytes(\"UTF-8\");\nnew String(keyBytes).toCharArray();",
+        "description": "Converting the generated password into a byte array and then back into a string to create a character array is an unnecessary and convoluted process that might be error-prone.",
+        "recommendation": "Generate a secure password and directly convert it into a character array if needed, without the unnecessary byte array conversion."
+    }
+]
+```

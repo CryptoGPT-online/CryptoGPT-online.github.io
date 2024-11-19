@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "Cipher.getInstance(\"Blowfish\")",
+        "description": "The Blowfish algorithm is considered risky and not recommended for use in secure contexts due to its small block size.",
+        "recommendation": "Replace Blowfish with a more secure algorithm such as AES."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_code": "KeyGenerator.getInstance(\"AES\")",
+        "description": "The AES KeyGenerator does not specify a key size, which may result in a default size that could be too small.",
+        "recommendation": "Specify a key size when generating the AES key, such as keyGen.init(256)."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values.",
+        "vulnerable_code": "keyGen.generateKey()",
+        "description": "The key generation does not specify a secure random source, which may result in weak keys if the default is not cryptographically strong.",
+        "recommendation": "Use SecureRandom with a strong source of randomness for key generation."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation.",
+        "vulnerable_code": "if (choice > 1)\n    cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "The code allows for the selection of either Blowfish or AES based on a variable 'choice', which could lead to the use of the less secure Blowfish algorithm.",
+        "recommendation": "Remove the conditional algorithm selection and consistently use a secure algorithm such as AES with a secure mode and padding."
+    }
+]
+```

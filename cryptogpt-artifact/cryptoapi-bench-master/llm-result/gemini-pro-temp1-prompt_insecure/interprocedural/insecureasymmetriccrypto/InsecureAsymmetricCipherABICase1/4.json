@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "CWE-338: Use of Weak Cryptographic Algorithm",
+    "vulnerable_code": "KeyPairGenerator kgp = KeyPairGenerator.getInstance(\"RSA\");\n        kgp.initialize(keySize);",
+    "description": "The code uses RSA with a key size of 1024 bits, which is considered weak and insecure by current standards. Attackers can use brute-force attacks to crack 1024-bit RSA keys relatively easily.",
+    "recommendation": "Use a stronger cryptographic algorithm such as RSA with a key size of at least 2048 bits or use a more modern and secure algorithm like Elliptic Curve Cryptography (ECC)."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"RSA\");\n        cipher.init(Cipher.ENCRYPT_MODE, kp.getPublic());",
+    "description": "The code uses RSA in ECB mode, which is a legacy encryption mode that is vulnerable to various attacks. Attackers can exploit the ECB mode to recover plaintext information.",
+    "recommendation": "Use a more secure encryption mode such as CBC, CFB, or OFB, which are less vulnerable to attacks."
+  }
+]
+```

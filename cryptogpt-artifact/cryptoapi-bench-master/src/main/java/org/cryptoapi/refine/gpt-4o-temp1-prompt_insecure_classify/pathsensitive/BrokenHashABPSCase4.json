@@ -1,0 +1,11 @@
+### False Positive Misuse ###
+
+Upon reviewing the provided code snippets and misuse reports, we notice that while the use of "MD2" is pointed out as a misuse, the code conditionally switches to using "SHA-256" if `choice > 1`. In this specific piece of code, the assignment `MessageDigest md = MessageDigest.getInstance("MD2");` is immediately overwritten by `md = MessageDigest.getInstance("SHA-256");` due to the condition `choice > 1` being true, as `choice` is set to 2. Therefore, the overall implemented logic doesn't leave any real-world scenario where MD2 would be used, rendering the reported misuse of "MD2" as a false positive based on the provided context.
+
+### Optimized Misuse JSON ###
+
+```json
+[]
+```
+
+In this specific basic code execution path, there's actually no misuse occurring since MD2 is not effectively utilized at runtime. However, care is advised to ensure that initialization or default values in other contexts or more complex implementations do not inadvertently allow weak algorithms to be used, which could become relevant misuses.

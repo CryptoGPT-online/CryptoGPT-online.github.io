@@ -1,0 +1,14 @@
+ [
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "byte[] keyBytes = defaultKey.getBytes();\nkeyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The encryption key is derived from a hardcoded password, which is less secure than using a properly generated random key.",
+        "recommendation": "Use a randomly generated key with sufficient entropy, such as a 256-bit AES key."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": "SecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES\");",
+        "description": "The AES algorithm is used, but the key size is only 16 bytes, which is less secure than the recommended 256-bit key size.",
+        "recommendation": "Use a 256-bit AES key and a secure key generation method, such as a password-based key derivation function (PBKDF) or a random number generator (RNG)."
+    }
+]

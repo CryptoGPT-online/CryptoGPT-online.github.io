@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "CWE-321: Use of Hard-Coded Password",
+    "vulnerable_code": "public static final String DEFAULT_COUNT = \"20\";",
+    "description": "Hard-coding the value of `DEFAULT_COUNT` in the source code can lead to a fixed value for the salt used in PBKDF2, making it easier for attackers to crack the password.",
+    "recommendation": "Avoid hard-coding values for cryptographic parameters like salt. Instead, generate salt randomly for each password."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Session Handling",
+    "vulnerable_code": "private static char[] COUNT;",
+    "description": "The `COUNT` array is declared as a static field, which means it is shared among all instances of the `L2` class. This makes it possible for one instance to modify the `COUNT` array, potentially affecting the security of other instances.",
+    "recommendation": "Avoid declaring sensitive data as static fields. If you need to share data among instances, use thread-safe mechanisms like `ConcurrentHashMap`."
+  },
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_code": "SecureRandom random = new SecureRandom();",
+    "description": "The `SecureRandom` class is not inherently broken or risky, but it requires a strong entropy source to generate truly random numbers. If the entropy source is weak, an attacker could potentially predict the generated random numbers and compromise the security of the application.",
+    "recommendation": "Ensure that the `SecureRandom` instance is initialized with a strong entropy source. You can use `/dev/urandom` on Linux or `CryptGenRandom()` on Windows for this purpose."
+  }
+]
+```

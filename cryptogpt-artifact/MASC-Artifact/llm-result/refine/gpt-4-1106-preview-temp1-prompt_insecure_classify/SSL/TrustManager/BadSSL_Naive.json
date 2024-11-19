@@ -1,0 +1,28 @@
+### False Positive Misuse ###
+
+There are no false positives in these reports—all the reported issues reflect actual bad practices or vulnerabilities in the use of Java's cryptographic APIs. However, the reports have overlapping misuse cases as they repeatedly describe the same vulnerabilities, such as the improper implementation of `checkServerTrusted` and the use of outdated `SSL` protocol. Once this redundancy is removed, we will have an optimized list of misuses.
+
+### Optimized Misuse JSON ###
+
+```json
+[
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "checkServerTrusted(X509Certificate[] chain, String authType)",
+        "description": "The method checkServerTrusted of the custom X509TrustManager has been overridden to do nothing. This defeats the purpose of certificate validation, allowing potentially malicious certificates to be accepted, exposing the application to man-in-the-middle attacks.",
+        "recommendation": "Implement proper certificate validation logic in checkServerTrusted or utilize the default trust manager provided by Java that performs certificate validation correctly."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "SSLContext.getInstance(\"SSL\")",
+        "description": "The use of 'SSL' as a protocol for obtaining an instance of SSLContext is deprecated and insecure due to known vulnerabilities. The code does not opt for a more secure version of the protocol.",
+        "recommendation": "Replace 'SSL' with 'TLS', preferably specifying a secure and recent version like 'TLSv1.2' or 'TLSv1.3'."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "context.init(null, trustAll, new SecureRandom());",
+        "description": "Use of new SecureRandom() does provide a cryptographically strong random number generator, but its use is overshadowed by the insecure initialization of SSLContext with a non-validating TrustManager. Without validation against a known trust store, the use of SecureRandom does not ensure secure communication.",
+        "recommendation": "Properly initialize SSLContext with a valid TrustManager to perform certificate validation, thus optimizing the effective use of SecureRandom."
+    }
+]
+```

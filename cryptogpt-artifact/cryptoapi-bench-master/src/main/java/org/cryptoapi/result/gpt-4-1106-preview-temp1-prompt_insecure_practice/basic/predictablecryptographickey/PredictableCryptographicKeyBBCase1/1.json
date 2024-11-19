@@ -1,0 +1,32 @@
+```json
+[
+    {
+        "misuse": "Use of a Hard-coded Cryptographic Key",
+        "vulnerable_code": "String defaultKey = \"defaultkey\";",
+        "description": "Using a hard-coded key for cryptographic operations is insecure because the key will be the same across multiple installations and can be easily extracted from the application.",
+        "recommendation": "Generate cryptographic keys dynamically using a secure random number generator, store them securely, and rotate them periodically."
+    },
+    {
+        "misuse": "Use of weak key derivation from password",
+        "vulnerable_code": [
+            "String defaultKey = \"defaultkey\";",
+            "byte[] keyBytes = defaultKey.getBytes();",
+            "keyBytes = Arrays.copyOf(keyBytes,16);"
+        ],
+        "description": "The key is directly derived from a String using its bytes representation without a proper key-derivation function. This can lead to weak keys that can be easily brute-forced or guessed.",
+        "recommendation": "Use a strong key-derivation function such as PBKDF2, bcrypt, or scrypt with a random salt and sufficient iterations to derive keys from passwords."
+    },
+    {
+        "misuse": "Insufficient key size",
+        "vulnerable_code": "\"defaultkey\".getBytes()",
+        "description": "If the default key is less than 128 bits (16 bytes), which is the minimum key length recommended for AES, the key is considered weak.",
+        "recommendation": "Ensure that the cryptographic keys are at least 128 bits in length for AES encryption."
+    },
+    {
+        "misuse": "Insecure Character Encoding",
+        "vulnerable_code": "\"defaultkey\".getBytes()",
+        "description": "The code uses the platform's default charset to convert the string to byte array. This can produce different results on different platforms or configurations.",
+        "recommendation": "Specify a character set encoding, such as UTF-8, to ensure consistent behavior across different platforms."
+    }
+]
+```

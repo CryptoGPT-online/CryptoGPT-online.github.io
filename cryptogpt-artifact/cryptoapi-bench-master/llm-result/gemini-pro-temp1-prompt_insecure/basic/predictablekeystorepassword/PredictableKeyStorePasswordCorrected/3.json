@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "CWE-326: Insufficient Entropy",
+    "vulnerable_code": "String password = String.valueOf(random.ints());",
+    "description": "Generating a password using only `SecureRandom` is not sufficient to ensure high entropy. An attacker could potentially guess or brute-force the password.",
+    "recommendation": "Use a more secure password generator that combines multiple sources of randomness."
+  },
+  {
+    "misuse": "CWE-650: Use of Broken or Risky Cryptographic Algorithm",
+    "vulnerable_code": "KeyStore ks = KeyStore.getInstance(type);",
+    "description": "The code uses the default JKS keystore type, which is considered weak and insecure. It is vulnerable to brute-force attacks and provides limited protection against unauthorized access.",
+    "recommendation": "Use a more secure keystore type, such as PKCS12 or JCEKS."
+  },
+  {
+    "misuse": "CWE-759: Use of Hard-Coded Credentials",
+    "vulnerable_code": "ks.load(cacerts.openStream(), password.toCharArray());",
+    "description": "The code loads the keystore using a hard-coded password generated from `SecureRandom`. Hard-coding credentials like passwords in the code is a security risk as it exposes them to potential attackers.",
+    "recommendation": "Avoid hard-coding credentials in the code. Instead, use secure credential management practices, such as storing passwords in a secure vault or using environment variables."
+  }
+]
+```

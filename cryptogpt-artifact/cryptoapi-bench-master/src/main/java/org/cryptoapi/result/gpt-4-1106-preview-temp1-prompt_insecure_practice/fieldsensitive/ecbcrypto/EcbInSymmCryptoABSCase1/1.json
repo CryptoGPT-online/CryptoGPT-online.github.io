@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Cipher Mode",
+        "vulnerable_code": "\"AES/ECB/PKCS5Padding\"",
+        "description": "AES in ECB mode is vulnerable to known-plaintext attacks and does not provide confidentiality against active adversaries. It also does not offer integrity or authenticity.",
+        "recommendation": "Use AES in a more secure mode such as CBC, CFB, OFB, or GCM with a unique IV for each encryption."
+    },
+    {
+        "misuse": "Static Initialization Vector (IV)",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "This code does not specify an IV for CBC mode or any other modes that require an IV. Using a static IV or not using an IV at all can lead to predictable ciphertexts and vulnerability to various attacks.",
+        "recommendation": "Generate a new, random IV for each encryption operation, and securely share the IV with the decryption side."
+    },
+    {
+        "misuse": "Weak Key Generation",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+        "description": "The key generator does not specify a key size. The default key size could potentially be insufficient for strong security, depending on what default the crypto provider is configured to use.",
+        "recommendation": "Specify a secure key size explicitly when generating keys. For AES, use a key size of 128, 192, or 256 bits."
+    }
+]
+```

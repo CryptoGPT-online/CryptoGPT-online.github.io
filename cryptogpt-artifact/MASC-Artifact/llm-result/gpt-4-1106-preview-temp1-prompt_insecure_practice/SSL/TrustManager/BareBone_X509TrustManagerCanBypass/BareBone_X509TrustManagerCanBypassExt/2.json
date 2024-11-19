@@ -1,0 +1,14 @@
+```json
+[
+  {
+    "misuse": "Trust Manager that accepts any certificate",
+    "vulnerable_code": [
+      "public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {",
+      "public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {",
+      "public X509Certificate[] getAcceptedIssuers() { return null; }"
+    ],
+    "description": "The implementation of X509TrustManager accepts any certificate without validation, which can allow malicious individuals to perform man-in-the-middle attacks.",
+    "recommendation": "Implement proper certificate validation inside the 'checkClientTrusted' and 'checkServerTrusted' methods. Do not return null in 'getAcceptedIssuers' if certificate chain validation is required."
+  }
+]
+```

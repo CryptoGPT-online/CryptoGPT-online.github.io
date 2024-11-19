@@ -1,0 +1,17 @@
+### False Positive Misuse ###
+
+1. **Misuse:** CWE-330: Use of Insufficiently Random Values  
+   **Explanation:** Although the IV is derived from string bytes, this is actually already covered by the misuse related to inadequate encryption strength due to the lack of randomness. Listing it separately under CWE-330 without distinctively different reasoning leads to redundancy. 
+
+### Optimized Misuse JSON###
+
+```json
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "byte [] bytes = str.getBytes(); IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+        "description": "The initialization vector (IV) is created using a string retrieved from a map, which is not random and too short to be a secure IV for AES encryption. A secure IV should be random and of the appropriate size (16 bytes for AES).",
+        "recommendation": "Generate a secure random IV using a strong random number generator with the appropriate length for AES, e.g., byte[] ivBytes = new byte[16]; SecureRandom random = new SecureRandom(); random.nextBytes(ivBytes); IvParameterSpec ivSpec = new IvParameterSpec(ivBytes);"
+    }
+]
+```

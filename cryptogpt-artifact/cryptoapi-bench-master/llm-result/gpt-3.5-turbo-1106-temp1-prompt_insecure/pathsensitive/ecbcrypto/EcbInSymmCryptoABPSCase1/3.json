@@ -1,0 +1,14 @@
+```json
+[{"misuse": "Use of ECB mode for encryption", 
+  "vulnerable_code": "Cipher.getInstance(\"AES/ECB/PKCS5Padding\");",
+  "description": "ECB mode is insecure and should not be used for encryption as it does not hide patterns well.",
+  "recommendation": "Prefer using modes like CBC or GCM which provide better security properties."},
+ {"misuse": "Insecure key generation", 
+  "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+  "description": "The KeyGenerator is used without specifying a provider, which may lead to using a weak or insecure implementation. Additionally, the key generation process should employ secure random number generation.",
+  "recommendation": "Specify a secure provider, securely generate random keys using SecureRandom class."},
+ {"misuse": "Unspecified key size",
+  "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+  "description": "The key size for AES is not specified, which may result in using the default key size that is not considered secure.",
+  "recommendation": "Specify an appropriate key size using KeyGenerator.init method to ensure a secure key size is used."}]
+```

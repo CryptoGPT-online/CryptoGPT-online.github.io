@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Incompatible Key and Cipher",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"Blowfish\");\n        cipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "The generated key is for the AES algorithm, but the cipher instance created initially is for Blowfish. Using an AES key with a Blowfish cipher will lead to an InvalidKeyException at runtime.",
+        "recommendation": "Ensure that the key algorithm matches the cipher algorithm."
+    },
+    {
+        "misuse": "Insecure Cipher Mode",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"Blowfish\");",
+        "description": "The use of Blowfish in ECB mode (default when no mode is specified) could be insecure due to well-known weaknesses of ECB such as pattern preservation in the ciphertext.",
+        "recommendation": "Use a more secure mode of operation like CBC, CFB, OFB, or GCM."
+    },
+    {
+        "misuse": "Static IV in CBC mode",
+        "vulnerable_code": "cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "The code does not explicitly define an initialization vector (IV) for CBC mode, which might lead to the use of a static IV. Static IVs increase the predictability of encrypted data, leading to vulnerabilities.",
+        "recommendation": "Generate a random IV for each encryption operation."
+    },
+    {
+        "misuse": "Using a Weak Random Number Generator for Key Generation",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\n        SecretKey key = keyGen.generateKey();",
+        "description": "The code does not specify a SecureRandom instance for the KeyGenerator, which might result in a less secure random number generator being used.",
+        "recommendation": "Explicitly specify a secure random number generator when generating keys."
+    }
+]
+```

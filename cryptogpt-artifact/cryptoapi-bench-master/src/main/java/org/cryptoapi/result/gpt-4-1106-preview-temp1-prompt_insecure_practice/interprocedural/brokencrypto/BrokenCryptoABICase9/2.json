@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Weak/Deprecated Encryption Algorithm",
+        "vulnerable_code": "String crypto = \"IDEA\";",
+        "description": "International Data Encryption Algorithm (IDEA) is considered weak or deprecated and should not be used in secure contexts.",
+        "recommendation": "Switch to a more secure algorithm such as AES (Advanced Encryption Standard)."
+    },
+    {
+        "misuse": "Cipher getInstance with no mode or padding",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(crypto);",
+        "description": "By only specifying the encryption algorithm and not explicitly defining the block mode and padding, the Java crypto API uses a default which may not be secure, depending on the provider. For example, ECB mode is not recommended for use as patterns present in the plaintext can be observed in the ciphertext.",
+        "recommendation": "Always define a secure block mode and padding in conjunction with the algorithm, such as 'AES/CBC/PKCS5Padding'."
+    },
+    {
+        "misuse": "KeyGenerator without specified key length",
+        "vulnerable_code": "KeyGenerator.getInstance(crypto);",
+        "description": "Using a KeyGenerator without specifying key length can lead to generating keys of insufficient length, which can be insecure.",
+        "recommendation": "Specify the key length appropriate for the chosen algorithm to ensure the security level of the keys, such as 'keyGen.init(256);' for a 256-bit key in the case of AES."
+    }
+]
+```

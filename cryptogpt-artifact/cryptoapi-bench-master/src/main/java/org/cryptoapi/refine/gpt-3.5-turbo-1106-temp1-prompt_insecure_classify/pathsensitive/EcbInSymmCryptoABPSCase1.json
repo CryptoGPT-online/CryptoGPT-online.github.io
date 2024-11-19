@@ -1,0 +1,24 @@
+### False Positive Misuse ###
+None
+
+### Optimized Misuse JSON###
+[
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_code": "Cipher.getInstance(\"AES/ECB/PKCS5Padding\")",
+    "description": "The code uses ECB mode, which is considered less secure than other modes of operation like CBC or GCM.",
+    "recommendation": "Use a more secure mode of operation like CBC or GCM, instead of ECB."
+  },
+  {
+    "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/ECB/PKCS5Padding\"); if(choice>1) cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+    "description": "The code uses ECB mode of AES encryption when the choice variable is 1 or less. ECB mode is vulnerable to many attacks due to its deterministic nature and lack of data integrity protection.",
+    "recommendation": "Always use secure encryption modes like CBC or GCM, which provide confidentiality and data integrity. Avoid using ECB mode for encryption."
+  },
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+    "description": "The code uses the KeyGenerator class to generate a symmetric key for AES encryption. However, it does not specify a secure random number generator algorithm, which may result in insufficiently random key generation.",
+    "recommendation": "Specify a secure random number generator algorithm when generating keys, such as \"SHA1PRNG\" or \"NativePRNG\"."
+  }
+]

@@ -1,0 +1,36 @@
+Misuse: CWE-295: Improper Certificate Validation
+Misuse Code: SSLSocketFactory.getDefault();
+Description: The SSLSocketFactory.getDefault() method is used to get a default SSLSocketFactory. However, this method does not provide any controls over the certificate validation process, which might leave the program vulnerable to man-in-the-middle attacks.
+Recommendation: Always use a properly configured SSLSocketFactory instance for secure communication. You should preferably disable or configure certificate hostname verifier or use a custom hostname verifier.
+
+Misuse: CWE-326: Inadequate Encryption Strength
+Misuse Code: (SSLSocketFactory) SSLSocketFactory.getDefault();
+Description: The default SSLSocketFactory might use weak encryption algorithms or key sizes. This could potentially weaken the security of the communication channel, allowing eavesdropping by attackers.
+Recommendation: Always use a properly configured SSLSocketFactory instance for secure communication. You should preferably configure the SSLSocketFactory to use stronger encryption algorithms. You might also need to configure the acceptable cipher suites.
+
+Here is a suggestion to enable the hostname verifier:
+```java
+SSLSocketFactory sslSocketFactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
+
+try {
+    SSLSocket socket = (SSLSocket) sslSocketFactory.createSocket(hostname, soc);
+
+    // Enable hostname verifier
+    HostnameVerifier hostnameVerifier = new HostnameVerifier() {
+        @Override
+        public boolean verify(String hostname, SSLSession session) {
+            return true; // this disables hostname verification
+        }
+    };
+
+    socket.setHostnameVerifier(hostnameVerifier);
+
+    // Rest of your code
+
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+Please note that disabling the hostname verification is not secure. You should rather use a hostname verifier that checks the hostname against the server's actual hostname in the certificate. You might need to implement a custom hostname verifier for this.
+
+Please note that the Java Secure Socket Extension (JSSE) does not provide a secure default configuration out of the box. It is recommended to specify the JSSE configuration manually to ensure proper security.

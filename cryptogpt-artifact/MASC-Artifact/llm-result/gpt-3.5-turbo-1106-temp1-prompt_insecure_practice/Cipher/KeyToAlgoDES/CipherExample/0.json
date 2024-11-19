@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "KeyGenerator keygen = KeyGenerator.getInstance(algo);\nCipher c = Cipher.getInstance(keygen.getAlgorithm());",
+        "description": "Using DES algorithm for encryption is not recommended due to its vulnerability to brute force attacks.",
+        "recommendation": "Replace DES algorithm with a more secure algorithm such as AES."
+    },
+    {
+        "misuse": "Insecure Key Generation",
+        "vulnerable_code": "SecretKey key = keygen.generateKey();",
+        "description": "Generating a key without specifying key size can lead to use of weak keys.",
+        "recommendation": "Specify a key size and use a strong key generation algorithm."
+    },
+    {
+        "misuse": "Insecure Encryption Initialization",
+        "vulnerable_code": "c.init(Cipher.ENCRYPT_MODE, key);\nc.doFinal(\"something\".getBytes());",
+        "description": "Using ECB mode for encryption can lead to security vulnerabilities and lack of data confidentiality.",
+        "recommendation": "Use a more secure mode of operation such as CBC or GCM for encryption."
+    }
+]
+```

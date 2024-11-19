@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Insecure Key Size",
+        "vulnerable_code": "keysize = 1024;",
+        "description": "Using a key size of 1024 bits for RSA is no longer considered secure. It is prone to be broken with enough computational resources.",
+        "recommendation": "Use a key size of at least 2048 bits for RSA, as this is generally considered the minimum safe key length currently."
+    },
+    {
+        "misuse": "Insecure Padding Scheme",
+        "vulnerable_code": "Cipher.getInstance(\"RSA\")",
+        "description": "The code is using RSA without specifying a padding scheme, which defaults to insecure PKCS#1 v1.5 padding (or no padding at all, depending on provider). This can make the encryption susceptible to padding oracle attacks.",
+        "recommendation": "Use RSA with OAEP (Optimal Asymmetric Encryption Padding). Modify the cipher instance creation to 'Cipher.getInstance(\"RSA/ECB/OAEPWithSHA-256AndMGF1Padding\")'."
+    }
+]
+```

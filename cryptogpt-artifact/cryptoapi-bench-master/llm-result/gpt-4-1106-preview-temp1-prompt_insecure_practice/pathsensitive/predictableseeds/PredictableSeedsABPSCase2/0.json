@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insufficient Entropy for SecureRandom",
+        "vulnerable_code": "sr2.nextBytes(seed);",
+        "description": "The seed for SecureRandom is being set to a predictable byte array if 'choice' variable is greater than 1. This could make the generated random numbers predictable.",
+        "recommendation": "Remove the manual seeding with a hardcoded value. Let SecureRandom self-seed with sufficient entropy."
+    },
+    {
+        "misuse": "Static Seed",
+        "vulnerable_code": "byte [] seed = {(byte) 100, (byte) 200};",
+        "description": "The seed is hardcoded and static, which means it does not change and can lead to reproducible random numbers that are not secure.",
+        "recommendation": "Do not set a static seed. Let SecureRandom self-seed with its own entropy gathering process."
+    },
+    {
+        "misuse": "Small Seed Size",
+        "vulnerable_code": "byte [] seed = {(byte) 100, (byte) 200};",
+        "description": "The seed is only 2 bytes long, which does not provide enough entropy for cryptographic purposes.",
+        "recommendation": "Ensure that if you have to provide a seed, it should be of a sufficient length (ideally the native byte-length of the underlying algorithm) and randomness."
+    }
+]
+```

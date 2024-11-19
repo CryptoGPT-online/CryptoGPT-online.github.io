@@ -1,0 +1,17 @@
+ {"misuses": [
+{"misuse": "Insufficient Password Entropy",
+"vulnerable_code": "String defaultKey = 'saagar'",
+"description": "The password is a hardcoded string with low entropy, making it easier for an attacker to guess or crack the password.",
+"recommendation": "Use a password generation tool or library to generate high-entropy passwords, and store the password securely."
+},
+{"misuse": "Weak Password-based Key Derivation Function (PBKDF)",
+"vulnerable_code": "PBEKeySpec pbeKeySpec = new PBEKeySpec(defaultKey.toCharArray(), salt, iterationCount, keyLength)",
+"description": "The PBKDF used is based on SHA1, which is now considered weak. An attacker can use a precomputed table of SHA1 hashes to efficiently crack the password.",
+"recommendation": "Use a more secure password-based key derivation function, such as PBKDF2 or Argon2, which use a more secure hashing algorithm and are more computationally expensive."
+},
+{"misuse": "Fixed Iteration Count",
+"vulnerable_code": "int iterationCount = 11010",
+"description": "The iteration count is fixed and does not increase as computational power increases, making the hash function more vulnerable to brute force attacks.",
+"recommendation": "Use a dynamic iteration count that increases as computational power increases, or use a variable iteration count that is adjusted based on the password strength."
+}
+]}

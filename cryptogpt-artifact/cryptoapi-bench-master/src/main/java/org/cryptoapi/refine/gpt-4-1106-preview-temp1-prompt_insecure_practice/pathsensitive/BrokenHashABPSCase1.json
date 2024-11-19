@@ -1,0 +1,32 @@
+### False Positive Misuse ###
+
+1. The misuse "Inadequate Key Size" is a false positive. The key size is not directly applicable to the use of a hashing function like SHA-256. SHA-256 has a fixed output size of 256 bits, which is considered secure and does not have a configurable key size like symmetric encryption algorithms do.
+
+2. The misuse "Insecure Hash Algorithm" related to SHA-256 is a false positive. SHA-256 is currently considered a secure hashing algorithm and does not have any known vulnerabilities that would make it insecure. The recommendation to migrate to SHA-3 is more of a best practice for future-proofing rather than a current security necessity.
+
+3. The misuse "Use of a Broken Crypto Algorithm" is partially a false positive. While SHA-1 is indeed considered weak, the code is conditionally using SHA-256 when `choice > 1`, which is a secure algorithm. Therefore, the misuse should only apply when SHA-1 is actually used.
+
+### Optimized Misuse JSON###
+
+```json
+[
+    {
+        "misuse": "Use of a Weak Hashing Function",
+        "vulnerable_code": "MessageDigest.getInstance(\"SHA1\")",
+        "description": "SHA-1 is considered to be no longer secure against well-funded attackers. It is prone to collision attacks, where two different inputs produce the same hash.",
+        "recommendation": "Replace SHA-1 with a more secure hashing algorithm such as SHA-256 or SHA-3."
+    },
+    {
+        "misuse": "Insecure Output Encoding",
+        "vulnerable_code": "System.out.println(md.digest())",
+        "description": "Using System.out.println() to output the raw binary result of a cryptographic hash may result in an incorrect or unreadable representation of the hash value.",
+        "recommendation": "Encode the hash output with a safe encoding like hexadecimal or Base64 before printing or storing it."
+    },
+    {
+        "misuse": "Potentially Unsafe Use of getBytes()",
+        "vulnerable_code": "md.update(name.getBytes());",
+        "description": "The use of the `String.getBytes()` method without specifying a charset can cause platform-dependent results, as the default charset of the JVM can vary across different machines or configurations.",
+        "recommendation": "To ensure consistent behavior across all platforms, always specify a charset when calling `String.getBytes()`. For example, use `md.update(name.getBytes(StandardCharsets.UTF_8))` to use UTF-8 encoding."
+    }
+]
+```

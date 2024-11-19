@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Missing Initialization Vector (IV)",
+        "vulnerable_code": "Cipher.getInstance(\"AES/GCM/NoPadding\")",
+        "description": "The code does not specify an initialization vector (IV) for AES in GCM mode. While it does not directly show the IV being reused or improperly generated, this is a common mistake when initializing a cipher that may lead to vulnerabilities if the IV is not handled securely in actual encryption scenarios.",
+        "recommendation": "Ensure that a secure random IV is generated for each encryption operation and that this IV is properly passed to the Cipher initialization."
+    },
+    {
+        "misuse": "Not Specifying SecureRandom Implementation",
+        "vulnerable_code": "Cipher.getInstance(\"AES/GCM/NoPadding\")",
+        "description": "The code lacks the specification of a SecureRandom implementation when it would be needed to create an IV or key. Default implementations may vary between different Java versions or providers and could potentially be insecure.",
+        "recommendation": "Explicitly specify a SecureRandom implementation such as 'new SecureRandom()' when generating IVs or keys, or at least ensure the default one meets the security requirements."
+    }
+]
+```

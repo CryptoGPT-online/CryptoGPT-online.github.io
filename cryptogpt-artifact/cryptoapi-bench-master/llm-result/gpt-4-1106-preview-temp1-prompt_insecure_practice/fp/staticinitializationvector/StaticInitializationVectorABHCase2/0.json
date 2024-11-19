@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Initialization Vector",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+        "description": "The code uses a fixed string 'abcde' from a HashMap as the IV for AES/CBC encryption, which is predictable and not cryptographically secure. IV should be random and unique for every encryption operation.",
+        "recommendation": "Use a secure random IV for every encryption operation. This IV can then be stored or transmitted alongside the ciphertext. The SecureRandom class can be used to generate a random IV."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "description": "The code generates an AES key without specifying the key size. Java defaults to a key size of 128 bits, which may not meet certain security requirements.",
+        "recommendation": "Specify the key size when generating the key using keyGen.init(256) to ensure a 256-bit key is created, and ensure that the necessary cryptographic policies are in place to support 256-bit keys."
+    },
+    {
+        "misuse": "Missing SecureRandom for Key Generation",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "description": "The code does not specify a SecureRandom instance for the KeyGenerator which may lead to less entropy in key generation, depending on the default security provider configurations.",
+        "recommendation": "Pass a SecureRandom instance to KeyGenerator's init method to ensure sufficient randomness: keyGen.init(256, new SecureRandom());"
+    }
+]
+```

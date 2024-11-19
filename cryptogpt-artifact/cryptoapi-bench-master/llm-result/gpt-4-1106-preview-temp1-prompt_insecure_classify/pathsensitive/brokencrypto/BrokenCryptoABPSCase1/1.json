@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "Cipher.getInstance(\"DES/ECB/PKCS5Padding\")",
+        "description": "DES is considered a weak encryption algorithm due to its key size being too small to resist brute-force attacks.",
+        "recommendation": "Use a more secure algorithm such as AES with a suitable key size (e.g., 128, 192, or 256 bits)."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_code": "KeyGenerator.getInstance(\"AES\")",
+        "description": "The key generator does not specify the key size, which could lead to using a default key size that may not provide adequate encryption strength.",
+        "recommendation": "Specify the key size explicitly when generating the key, such as using keyGen.init(256) for a 256-bit AES key."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values.",
+        "vulnerable_code": "keyGen.generateKey()",
+        "description": "The code does not specify a secure random number generator for the key generation, potentially using a weak source of randomness.",
+        "recommendation": "Use a SecureRandom instance with a strong source of randomness when generating keys."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5Padding\")",
+        "description": "The code does not specify the usage of an initialization vector (IV) for CBC mode, which is necessary for security.",
+        "recommendation": "Generate a random IV and use it in the cipher initialization. Make sure to transmit the IV alongside the encrypted data securely."
+    }
+]
+```

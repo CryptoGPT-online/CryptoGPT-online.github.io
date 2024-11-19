@@ -1,0 +1,39 @@
+The provided code is not directly vulnerable but there is a potential misuse in cryptographic practices:
+
+CWE-327: Use of a Broken or Risky Cryptographic Algorithm.
+
+Misuse Code Snippet:
+```
+private static void go3(){
+    crypto = CRYPTO;
+}
+
+public static void go (String str) throws NoSuchAlgorithmException {
+    MessageDigest md = MessageDigest.getInstance(String.valueOf(crypto));
+    md.update(str.getBytes());
+    System.out.println(md.digest());
+}
+```
+
+Description:
+In this piece of code, `crypto` variable is assigned the `CRYPTO` char array. Both `CRYPTO` and `crypto` refer to the same array. Afterward, `crypto` is used in `MessageDigest.getInstance()`, which may lead to unexpected results or errors as the algorithm is not recognized properly. In this case, `crypto` is equal to "M","D","5", which is not a valid message digest algorithm.
+
+Recommendation:
+To fix this misuse, a new array should be created for `crypto` and it should be filled with the same elements as `CRYPTO`. You should also check the validity of the cryptographic algorithm before using it. For instance:
+
+```
+private static void go3(){
+    crypto = DEFAULT_CRYPTO.toCharArray();
+}
+
+public static void go (String str) throws NoSuchAlgorithmException {
+    String algorithm = new String(crypto);
+    if(Arrays.asList(Security.getAlgorithms("MessageDigest")).contains(algorithm)){
+        MessageDigest md = MessageDigest.getInstance(algorithm);
+        md.update(str.getBytes());
+        System.out.println(md.digest());
+    }
+}
+```
+
+In this updated code, `DEFAULT_CRYPTO` is used directly in `MessageDigest.getInstance()`, ensuring that a valid cryptographic algorithm is used. The validity of the algorithm is checked using `Security.getAlgorithms("MessageDigest")` which provides a list of all valid message digest algorithms.

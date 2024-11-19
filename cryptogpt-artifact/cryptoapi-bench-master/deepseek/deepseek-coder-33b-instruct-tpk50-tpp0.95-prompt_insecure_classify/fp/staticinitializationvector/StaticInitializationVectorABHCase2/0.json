@@ -1,0 +1,15 @@
+
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+        "description": "The initialization vector (IV) used in the AES/CBC encryption is derived from a non-random source (the ASCII values of the 'abcde' string). This could make the encryption less secure as the same input will always produce the same ciphertext, making it easier to attack.",
+        "recommendation": "Generate the IV using a secure random number generator rather than a string conversion to bytes."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "description": "The code uses AES, which is a widely recognized and robust encryption algorithm, but it does not specify the key size. This might lead to weaker encryption in case the key size is less than the recommended key size of 256 bits for AES, hence it should be considered as weak encryption.",
+        "recommendation": "When generating the key, specify the key size, like `KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");SecureRandom secureRandom = new SecureRandom();keyGen.init(256, secureRandom);`"
+    }
+]

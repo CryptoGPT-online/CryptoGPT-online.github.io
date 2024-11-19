@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insecure Algorithm",
+        "vulnerable_code": "Cipher.getInstance(\"RC2\")",
+        "description": "The RC2 cipher algorithm is considered weak and insecure due to its small key size and known vulnerabilities.",
+        "recommendation": "Use a stronger algorithm such as AES with an appropriate mode of operation (e.g., AES/GCM/NoPadding)."
+    },
+    {
+        "misuse": "Insecure Cipher Mode",
+        "vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5Padding\")",
+        "description": "CBC mode in AES cipher is susceptible to padding oracle attacks. Although it is not directly exploitable in this isolated code snippet, in a real-world scenario, if an attacker can get error messages based on padding validation, it can lead to compromise of the encrypted data.",
+        "recommendation": "Use AEAD modes like GCM (AES/GCM/NoPadding) that provide both encryption and authentication."
+    },
+    {
+        "misuse": "Use of Static IV",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key)",
+        "description": "The code does not explicitly specify an initialization vector (IV) for CBC mode (when choice > 1), which can lead to the use of a default or static IV. Using a static IV with CBC mode is insecure as it can allow attackers to deduce information about the plaintext of similar pieces of encrypted text.",
+        "recommendation": "Generate a random IV for each encryption operation and provide it to Cipher.init along with the SecretKey."
+    },
+    {
+        "misuse": "Key Management Issue",
+        "vulnerable_code": "keyGen.generateKey()",
+        "description": "The key generation does not specify a key size; hence, it relies on the default size. The default size may not meet the required security standards, especially if it falls under 128 bits for AES.",
+        "recommendation": "Explicitly set a key size that is secure, such as 256 bits when invoking KeyGenerator.getInstance, e.g., keyGen.init(256)."
+    }
+]
+```

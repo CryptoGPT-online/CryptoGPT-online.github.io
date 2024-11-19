@@ -1,0 +1,16 @@
+### False Positive Misuse ###
+
+In this specific code snippet, there is a condition that switches from "SHA-1" to "SHA-256" when the `choice` variable is greater than 1. While this condition indicates a code path leading to "SHA-256", the presence of SHA-1 is still a valid concern because of its initial usage before the condition. Hence, despite the conditional switch to "SHA-256", this cannot be considered a false positive because the code indeed initially sets up a "SHA-1" instance. Every entry in the misuse list correctly identifies the use of SHA-1 as a problem, and none can be considered a false positive in this context.
+
+### Optimized Misuse JSON###
+
+```json
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "MessageDigest.getInstance(\"SHA1\")",
+        "description": "SHA-1 is considered a weak hashing algorithm since it is vulnerable to collision attacks.",
+        "recommendation": "Replace \"SHA1\" with a stronger hashing algorithm such as \"SHA-256\"."
+    }
+]
+```

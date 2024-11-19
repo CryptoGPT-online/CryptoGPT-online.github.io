@@ -1,0 +1,14 @@
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();\nCipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "The AES algorithm is used to generate the key which is a weak encryption algorithm. AES is a symmetric key algorithm and is known to have vulnerability issues. It uses a static 128-bit key which is less than the recommended 128-bit symmetric key length.",
+        "recommendation": "Use a stronger encryption algorithm, such as AES-256 with a 256-bit key length. You may also want to consider using a key derivation function like PBKDF2 or bcrypt to increase the difficulty of brute-forcing the encryption key."
+    },
+    {
+        "misuse": "CWE-321: Use of Hard-coded Cryptographic Key",
+        "vulnerable_code": "byte [] bytes = \"abcde\".getBytes();\nIvParameterSpec ivSpec = new IvParameterSpec(bytes);\n\ncipher.init(Cipher.ENCRYPT_MODE,key,ivSpec);",
+        "description": "The IV (initialization vector) in this code is hardcoded. This is not secure because it may be susceptible to guessing or prediction.",
+        "recommendation": "Generate a unique random IV for each encryption to increase the security of the encryption. You can use the `SecureRandom` class in Java to generate random IVs."
+    }
+]

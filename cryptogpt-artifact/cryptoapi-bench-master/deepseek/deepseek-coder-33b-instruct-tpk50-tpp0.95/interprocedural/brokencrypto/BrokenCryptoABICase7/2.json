@@ -1,0 +1,20 @@
+[
+    {
+        "misuse": "Hardcoded cryptographic algorithm",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(String.valueOf(crypto));\nCipher cipher = Cipher.getInstance(String.valueOf(crypto));",
+        "description": "The cryptographic algorithm is hardcoded. This could potentially expose the application to cryptographic vulnerabilities. For instance, it allows an attacker to replace the cryptographic algorithm with a weaker one or even a non-existent algorithm, thereby weakening the overall security of the application.",
+        "recommendation": "Do not hardcode cryptographic algorithms. The cryptographic algorithm should be selected from a trusted and secure list. Also, consider using a configuration mechanism to select the algorithm, such as environment variables or a configuration file."
+    },
+    {
+        "misuse": "Use of Weak Cryptographic Algorithm",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(String.valueOf(crypto));\nCipher cipher = Cipher.getInstance(String.valueOf(crypto));",
+        "description": "The chosen algorithm, which in this case is 'RC4', is considered weak and should not be used. It offers limited security. Instead, use stronger algorithms such as AES (GCM/CBC), ChaCha20-Poly1305, or RSA (OAEP/PSS).",
+        "recommendation": "Change the cryptographic algorithm to a stronger one that provides sufficient security."
+    },
+    {
+        "misuse": "Hardcoded Cryptographic Keys",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(String.valueOf(crypto));\nCipher cipher = Cipher.getInstance(String.valueOf(crypto));",
+        "description": "The cryptographic key is created in the code, and if not stored securely or not rotated, could potentially lead to the compromise of the encryption/decryption. Using a cryptographic library to generate keys automatically (such as the use of KeyGenerator) is generally advised.",
+        "recommendation": "Do not hardcode cryptographic keys. Instead, use cryptographic libraries to generate keys. If keys need to be stored, ensure they are stored securely and rotated regularly."
+    }
+]

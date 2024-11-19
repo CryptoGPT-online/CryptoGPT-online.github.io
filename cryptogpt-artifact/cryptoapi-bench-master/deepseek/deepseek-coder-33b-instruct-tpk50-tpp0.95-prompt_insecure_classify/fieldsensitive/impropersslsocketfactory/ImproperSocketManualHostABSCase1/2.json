@@ -1,0 +1,31 @@
+Based on the provided code, there is a misuse in the use of SSLSocketFactory with hostnames and ports that are passed by the user:
+
+```java
+public void encrypt(String passedHostname,int passedSoc) throws IOException {
+    if(passedHostname.isEmpty()) {
+        passedHostname = defHostname;
+        passedSoc = defSoc;
+    }
+    SSLSocketFactory ssf = (SSLSocketFactory) SSLSocketFactory.getDefault();
+    SSLSocket socket = (SSLSocket) ssf.createSocket(passedHostname,passedSoc);
+}
+```
+
+This code is creating an SSLSocket using the provided hostname and port, but if either is empty, it will instead use the default hostname and port specified in the constructor of C1. 
+
+However, there are several reasons to be cautious about using this code:
+
+1. **Potential for Hostname Spoofing**: If an attacker is able to control the hostname or port that is passed to this method, they could potentially impersonate a trusted server or service.
+
+2. **Default Credentials**: It's also not clear from the code snippet if default hostname and port or any credentials are being used to establish the SSL connection. If no credentials are used, the connection might not be secure.
+
+To fix the issue, you should use the provided hostname and port, not the default ones, whenever possible. Additionally, ensure that any credentials used for the SSL connection are secure and not hardcoded.
+
+```json
+[{
+    "misuse": "CWE-295: Improper Certificate Validation", 
+    "vulnerable_code": "SSLSocketFactory.createSocket(passedHostname,passedSoc)",
+    "description": "The code does not perform any hostname or certificate validation which could allow man-in-the-middle attacks and the use of an incorrect or a self-signed certificate.", 
+    "recommendation": "Ensure that hostname validation and certificate validation are properly performed when creating SSL sockets."
+}]
+```

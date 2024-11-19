@@ -1,0 +1,18 @@
+### False Positive Misuse ###
+{
+  "misuse": "Insecure Cryptographic Algorithm",
+  "vulnerable_code": "Cipher.getInstance(\"Blowfish\")",
+  "description": "The Blowfish algorithm is considered insecure and should not be used for new cryptographic applications.",
+  "recommendation": "Use a secure algorithm like AES for new cryptographic applications. Replace 'Blowfish' with 'AES/CBC/PKCS5Padding' in the second cipher instance creation."
+}
+
+### Optimized Misuse JSON###
+
+[
+  {
+    "misuse": "Insecure Key Generation",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\"); SecretKey key = keyGen.generateKey();",
+    "description": "The code uses KeyGenerator.getInstance to generate a random secret key using the AES algorithm. This key is not cryptographically strong enough and can be easily guessed if the attacker has access to the key. It's recommended to use a key length of at least 128 bits for AES.",
+    "recommendation": "Use a key length of at least 128 bits for AES. An example is shown below: KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\"); keyGen.init(128); SecretKey key = keyGen.generateKey();"
+  }
+]

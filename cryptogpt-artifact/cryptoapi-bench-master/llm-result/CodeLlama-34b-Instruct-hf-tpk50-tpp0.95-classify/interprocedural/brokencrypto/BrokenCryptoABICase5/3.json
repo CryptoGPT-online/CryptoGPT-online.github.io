@@ -1,0 +1,32 @@
+ [
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "DES/ECB/PKCS5Padding",
+        "description": "The code uses the DES algorithm, which is a broken algorithm that should not be used for new systems. It's also using the ECB mode, which is not semantically secure. Additionally, the key is generated using a fixed password and salt, which is a bad practice.",
+        "recommendation": "Use a secure and up-to-date encryption algorithm, such as AES, and use a secure key generation method, such as using a random number generator or a password-based key derivation function."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "KeyGenerator.getInstance(String.valueOf(crypto_algo))",
+        "description": "The code uses the KeyGenerator class to generate a secret key, but it does not check the validity of the algorithm specified. An attacker could potentially manipulate the algorithm to be something weak or broken, which could lead to a security vulnerability.",
+        "recommendation": "Always validate the validity of the algorithm before using it to generate a secret key. Use a secure and up-to-date encryption algorithm, such as AES."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "SecretKey key = keyGen.generateKey()",
+        "description": "The code uses the generateKey() method of the KeyGenerator class to generate a secret key, but it does not use a secure source of randomness. An attacker could potentially manipulate the key generation to produce a predictable key, which could lead to a security vulnerability.",
+        "recommendation": "Always use a secure source of randomness when generating a secret key. Use a random number generator or a password-based key derivation function."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key)",
+        "description": "The code uses the Cipher class to encrypt data, but it does not specify a key length or iteration number. This could lead to a security vulnerability if the key or iteration number is too small.",
+        "recommendation": "Always specify a key length and iteration number when using the Cipher class to encrypt data. Use a secure and up-to-date encryption algorithm, such as AES, and use a secure key generation method, such as using a random number generator or a password-based key derivation function."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "private static char[] CRYPTO = DEFAULT_CRYPTO.toCharArray();",
+        "description": "The code defines the cryptographic algorithm and key as hardcoded constants. This could lead to a security vulnerability if the hardcoded values are not secure or if the key is not properly stored and managed.",
+        "recommendation": "Do not hardcode cryptographic algorithms or keys. Use a secure and up-to-date encryption algorithm, such as AES, and use a secure key generation method, such as using a random number generator or a password-based key derivation function."
+    }
+]

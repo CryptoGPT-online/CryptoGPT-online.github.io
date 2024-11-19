@@ -1,0 +1,22 @@
+try {
+    SSLSocket socket = (SSLSocket) sslSocketFactory.createSocket(hostname, soc);
+
+    // Enable hostname verifier
+    HostnameVerifier hostnameVerifier = new HostnameVerifier() {
+        @Override
+        public boolean verify(String hostname, SSLSession session) {
+            return true; // this disables hostname verification
+        }
+    };
+
+    socket.setHostnameVerifier(hostnameVerifier);
+
+    // Rest of your code
+
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+Please note that disabling the hostname verification is not secure. You should rather use a hostname verifier that checks the hostname against the server's actual hostname in the certificate. You might need to implement a custom hostname verifier for this.
+
+Please note that the Java Secure Socket Extension (JSSE) does not provide a secure default configuration out of the box. It is recommended to specify the JSSE configuration manually to ensure proper security.

@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "Weak Encryption Algorithm",
+    "vulnerable_code": "Cipher.getInstance(String.valueOf(crypto))",
+    "description": "The code uses RC4, which is considered a weak and broken encryption algorithm. It is prone to various types of attacks and is no longer considered secure for use in cryptographic protocols.",
+    "recommendation": "Replace RC4 with a secure encryption algorithm like AES."
+  },
+  {
+    "misuse": "Insecure Random Number Generation",
+    "vulnerable_code": "KeyGenerator.getInstance(String.valueOf(crypto))",
+    "description": "The security of the cryptographic key depends on the KeyGenerator's implementation. If it uses a weak or predictable pseudo-random number generator (PRNG), it could lead to the generation of weak keys that can be easily broken.",
+    "recommendation": "Ensure that a secure PRNG is used for key generation, such as SecureRandom with a strong seed."
+  },
+  {
+    "misuse": "Conversion of String to Char Array",
+    "vulnerable_code": "crypto = DEFAULT_CRYPTO.toCharArray()",
+    "description": "Storing sensitive information such as cryptographic keys or algorithms in char arrays can be risky, as they may not be wiped from memory immediately after use, thus potentially exposing the sensitive data.",
+    "recommendation": "Avoid storing sensitive data in static fields that could reside in memory for long periods, and ensure proper erasure or secure storage techniques."
+  }
+]
+```

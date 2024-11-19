@@ -1,0 +1,26 @@
+ False Positive Misuses:
+
+[
+  {
+    "misuse": "Inappropriate use of MalformedURLException",
+    "vulnerable_code": "throws MalformedURLException",
+    "description": "MalformedURLException is thrown if the URL provided is incorrect. However, this might not always be the case when it's simply about creating a URL object. Using MalformedURLException in this scenario might hide potential errors.",
+    "recommendation": "Be sure to understand the needs of your code before using MalformedURLException and consider whether it's necessary to catch and handle the exception."
+  }
+]
+
+ Optimized Misuse JSON:
+
+```json
+[
+  {
+    "misuse": "URL Handling Misuse",
+    "vulnerable_method": "C1.method1(String passedURL)",
+    "vulnerable_code": "new URL(passedURL)",
+    "description": "If the passedURL is controlled by an attacker, they could potentially cause a malformed URL exception. This could potentially be used to execute a denial-of-service attack.",
+    "recommendation": "You should validate the URL before using it. You can use URL.toURI() method to verify it. Make sure to handle MalformedURLException properly."
+  }
+]
+```
+
+Please note that the misuses that have been marked as false positives are removed as they are not directly related to creating a URL object. The rest of the misuses are still valid and should be fixed.

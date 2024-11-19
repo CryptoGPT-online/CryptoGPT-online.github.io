@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "String password = String.valueOf(random.ints());",
+        "description": "The use of SecureRandom.ints() without specifying a limit can lead to an arbitrarily long sequence of integers being generated, which when converted to a String, may not be suitable for use as a password. This is inherent with potential predictability and insufficient entropy issues.",
+        "recommendation": "Use SecureRandom to generate a fixed-length byte array directly for the password, or use a strong algorithm to derive a key of appropriate length from random numbers."
+    },
+    {
+        "misuse": "Insecure KeyStore Password Handling",
+        "vulnerable_code": "new String(keyBytes).toCharArray()",
+        "description": "The password for keyStore is derived from the UTF-8 representation of a random sequence of integers. This could lead to a non-uniform distribution of characters and potentially weaken the strength of the password. Additionally, converting the byte array to a String and then to a char array is unnecessary and may cause encoding issues.",
+        "recommendation": "Generate a secure, high-entropy password using a suitable cryptographic function or character set. Avoid unnecessary conversions between byte arrays and strings."
+    },
+    {
+        "misuse": "Hardcoded KeyStore Type",
+        "vulnerable_code": "String type = \"JKS\";",
+        "description": "\"JKS\" is a Java KeyStore type that is considered less secure compared to \"PKCS12\" which is the industry standard. JKS does not support secret keys and uses weaker cryptographic algorithms.",
+        "recommendation": "Use \"PKCS12\" instead of \"JKS\" for the KeyStore type."
+    },
+    {
+        "misuse": "Insecure Trust Management",
+        "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");\nks.load(cacerts.openStream(), new String(keyBytes).toCharArray());",
+        "description": "Loading a KeyStore directly from a URL stream without validating the certificate chain presents a risk of man-in-the-middle attacks. This code trusts the certificate presented by any server without verification.",
+        "recommendation": "Always perform proper certificate chain validation when loading KeyStores over a network. Prefer storing and loading the KeyStore from a trusted and secure local source."
+    }
+]
+```

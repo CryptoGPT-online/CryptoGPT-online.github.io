@@ -1,0 +1,36 @@
+Misuse category: CWE-327: Use of a Broken or Risky Cryptographic Algorithm
+Vulnerable code:
+```java
+KeyGenerator keyGen = KeyGenerator.getInstance(cryptoKey);
+SecretKey key = keyGen.generateKey();
+Cipher cipher = Cipher.getInstance(crypto);
+cipher.init(Cipher.ENCRYPT_MODE, key);
+```
+Description: In this code snippet, we are generating DES keys with KeyGenerator and using DES cipher for encryption. DES is considered a weak encryption algorithm and is now officially recognized as insecure. Using such algorithms can increase the possibility of sensitive information being exposed.
+
+Recommendation: Use stronger encryption algorithms like AES for encryption. You can replace `crypto` parameter in `method1` with AES like so: `"AES/CBC/PKCS5Padding"`
+
+Also, ensure to use a secure and random key for encryption. For example, use a random generated string for `cryptoKey`.
+
+Here is the corrected code:
+
+```java
+public static void method2(String c, String key) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+        String cryptoAlgo = c;
+        method1(cryptoAlgo,key);
+}
+public static void method1(String crypto,String cryptoKey) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+        KeyGenerator keyGen = KeyGenerator.getInstance(cryptoKey);
+        SecretKey key = keyGen.generateKey();
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        cipher.init(Cipher.ENCRYPT_MODE, key);
+}
+
+public static void main (String [] args) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+        String key = "AES";
+        String crypto = "AES/CBC/PKCS5Padding";
+        method2(crypto,key);
+}
+```
+
+Please note that the main method and the method2 parameters have been modified as well.

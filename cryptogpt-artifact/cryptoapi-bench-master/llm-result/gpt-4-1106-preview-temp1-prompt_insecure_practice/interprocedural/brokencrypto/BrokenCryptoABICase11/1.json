@@ -1,0 +1,18 @@
+[{
+  "misuse": "Insecure Key Generation",
+  "vulnerable_code": "KeyGenerator.getInstance(cryptoKey)",
+  "description": "The code appears to be using the crypto algorithm name as the key generation algorithm name, which can lead to the use of inappropriate or weak key generation methods that may not match the intended cryptographic algorithm requirements.",
+  "recommendation": "Use a secure key generation algorithm that is intended for the specified cryptographic cipher. For DES, the KeyGenerator should be correctly initialized with 'DES' instead of using the crypto algorithm name for key generation."
+},
+{
+  "misuse": "Use of a Weak Cryptographic Algorithm",
+  "vulnerable_code": "\"DES\"",
+  "description": "DES (Data Encryption Standard) is considered to be a weak cryptographic algorithm due to its small key size of 56 bits, which can be brute-forced by modern computers.",
+  "recommendation": "Use a stronger cryptographic algorithm such as AES with a key size of at least 128 bits."
+},
+{
+  "misuse": "Electronic Codebook (ECB) Mode",
+  "vulnerable_code": "\"DES/ECB/PKCS5Padding\"",
+  "description": "ECB mode is not recommended for use in cryptographic protocols because identical plaintext blocks are encrypted into identical ciphertext blocks; thus, it does not sufficiently hide data patterns. This makes the encryption susceptible to certain types of attacks, such as pattern analysis.",
+  "recommendation": "Use a more secure encryption mode like CBC (Cipher Block Chaining) or GCM (Galois/Counter Mode) with proper initialization vector (IV) handling."
+}]

@@ -1,0 +1,14 @@
+[
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(defaultAlgo);",
+    "description": "The algorithm 'RC2' is a weak cryptographic algorithm and is not recommended for use in any circumstance. It has been shown to be vulnerable to attacks and provides insufficient security for most applications.",
+    "recommendation": "Replace the cryptographic algorithm with a more secure one. Some recommended options are AES (for symmetrical encryption), RSA (for asymmetrical encryption) or ECC (for digital signatures). Also consider using key sizes of 128 or larger."
+  },
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values",
+    "vulnerable_code": "SecretKey key = keyGen.generateKey();",
+    "description": "This line of code generates the encryption key using a KeyGenerator. If the seed for the random number generator is not properly set, the generated key might be weak and predictable.",
+    "recommendation": "Use a cryptographically strong random number generator to generate keys. In addition, the crypto API should be used to generate keys, not a KeyGenerator. For example, KeyGenerator should not be used in most cases, instead it is recommended to generate the key with KeyPairGenerator or use the SecretKeyFactory to transform the encoded key specification into a SecretKey."
+  }
+]

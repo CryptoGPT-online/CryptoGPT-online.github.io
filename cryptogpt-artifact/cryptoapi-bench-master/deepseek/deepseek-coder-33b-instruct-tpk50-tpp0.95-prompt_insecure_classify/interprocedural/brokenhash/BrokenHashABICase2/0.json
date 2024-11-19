@@ -1,0 +1,32 @@
+The code above is insecure because it uses the MD5 hashing algorithm which is considered weak and not secure for most purposes, and it is no longer recommended for cryptographic use due to attacks like collision attacks. The recommended cryptographic hash function is SHA-256.
+
+Here's how you might modify it:
+
+```java
+public class B2 {
+    public static void main (String [] args) throws NoSuchAlgorithmException {
+        String str = "abcdef";
+        String crypto = "SHA-256"; // use SHA-256 instead
+        go(str, crypto);
+    }
+    
+    public static void go (String str, String crypto) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance(crypto);
+        md.update(str.getBytes());
+        System.out.println(md.digest());
+    }
+}
+```
+
+Misuse:
+
+```json
+[
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(crypto);",
+    "description": "The code is using MD5 which is a weak hash function. It is not suitable for any cryptographic usage.",
+    "recommendation": "Use a secure hashing function such as SHA-256."
+  }
+]
+```

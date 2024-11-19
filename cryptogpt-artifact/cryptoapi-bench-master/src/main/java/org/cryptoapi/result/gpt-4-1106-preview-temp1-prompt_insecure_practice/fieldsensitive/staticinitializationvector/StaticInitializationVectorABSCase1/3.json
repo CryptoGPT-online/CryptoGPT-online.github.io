@@ -1,0 +1,28 @@
+```json
+[
+  {
+    "misuse": "Hardcoded IV",
+    "vulnerable_code": "byte [] bytes = \"abcde\".getBytes();",
+    "description": "Using a hardcoded Initialization Vector (IV) reduces security because it is supposed to be a random and unique value for each encryption operation.",
+    "recommendation": "Replace the hardcoded IV with a securely generated random value for each encryption."
+  },
+  {
+    "misuse": "Insufficient IV Size",
+    "vulnerable_code": "byte [] bytes = \"abcde\".getBytes();",
+    "description": "The IV size for AES should be 16 bytes (128 bits). The provided IV is only 5 bytes long, which is insufficient and could lead to security vulnerabilities.",
+    "recommendation": "Ensure that the IV is the correct length (16 bytes for AES) and is generated securely."
+  },
+  {
+    "misuse": "Weak Key Generation",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+    "description": "The key generator does not specify a key size. Without specifying a key size, a weak key may be generated which can lead to vulnerabilities.",
+    "recommendation": "Specify the key size when generating the AES key (e.g., keyGen.init(128 or 256))."
+  },
+  {
+    "misuse": "Inappropriate exception handling",
+    "vulnerable_code": "\"public S1() throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException\"",
+    "description": "Catching or declaring to throw general exceptions such as Exception, RuntimeException, Throwable, and Error can hide the failure stack trace and make the cryptographic operation unreliable.",
+    "recommendation": "Catch or explicitly throw the specific exceptions that relate to the cryptographic issues being managed."
+  }
+]
+```

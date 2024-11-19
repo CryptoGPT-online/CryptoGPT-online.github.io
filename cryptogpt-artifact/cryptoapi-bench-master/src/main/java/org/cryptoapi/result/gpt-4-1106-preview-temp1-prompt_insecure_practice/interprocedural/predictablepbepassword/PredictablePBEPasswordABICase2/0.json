@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insecure Key Generation",
+        "vulnerable_code": "public static String KEY = \"sagar\";",
+        "description": "The encryption key is derived from a hard-coded, low-entropy string, which makes it predictable and vulnerable to brute-force attacks.",
+        "recommendation": "Use a strong, randomly generated key instead of hard-coded literals, and consider using a secure key management system."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "pbeKeySpec = new PBEKeySpec(encryptKey,salt,10000,16);",
+        "description": "The key size specified here is 16 bits, which is not secure for any modern encryption standards. The number of bits in the fourth argument of PBEKeySpec constructor refers to the derived key length.",
+        "recommendation": "Use an adequately large key size, e.g., 128 bits or higher for symmetric encryption."
+    },
+    {
+        "misuse": "Weak Password-Based Encryption",
+        "vulnerable_code": "pbeKeySpec = new PBEKeySpec(encryptKey,salt,10000,16);",
+        "description": "The encryption uses a password-based key without specifying which encryption algorithm is used. Default or weak algorithms might be selected, leading to insecure encryption.",
+        "recommendation": "Explicitly specify a strong and secure PBE algorithm, such as PBKDF2WithHmacSHA256, and ensure to use a proper key length."
+    },
+    {
+        "misuse": "Hardcoded Sensitive Data",
+        "vulnerable_code": "public static String KEY = \"sagar\";",
+        "description": "Sensitive information such as encryption keys should never be hardcoded, as it becomes visible to anyone who has access to the codebase.",
+        "recommendation": "Remove hardcoded sensitive information from the code. Store keys securely in configuration files or use a secure key management system, and access them in a way that is not visible in the code."
+    }
+]
+```

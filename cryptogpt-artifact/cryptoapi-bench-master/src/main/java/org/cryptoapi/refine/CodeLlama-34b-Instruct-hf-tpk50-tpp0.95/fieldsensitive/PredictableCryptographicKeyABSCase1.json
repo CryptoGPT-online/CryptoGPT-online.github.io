@@ -1,0 +1,96 @@
+ #JSON response:
+{
+"misuses": [
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "Co crypto;",
+"description": "The Co class uses a hardcoded default key for encryption, which can be easily reversed by an attacker. Additionally, the class uses the AES/CBC/PKCS5Padding algorithm, which has known vulnerabilities.",
+"recommendation": "Use a secure key management system to generate and manage encryption keys. Additionally, use a secure encryption algorithm, such as AES/CBC/PKCS5Padding with a random Initialization Vector (IV), to protect against known attacks."
+},
+{
+"misuse": "Insecure Input",
+"vulnerable_code": "String passKey = P1.getKey(\"pass.key\");",
+"description": "The P1 class gets the encryption key from a hardcoded filename, which can be easily accessed by an attacker. Additionally, the getKey() method does not validate the input, which can lead to potential security issues.",
+"recommendation": "Use a secure key management system to generate and manage encryption keys. Additionally, validate the input to ensure that it is in the expected format and does not contain any malicious data."
+},
+{
+"misuse": "Insecure Storage",
+"vulnerable_code": "String keyStr = P1.getKey(src);",
+"description": "The P1 class stores the encryption key in a static variable, which can be easily accessed by an attacker. Additionally, the getKey() method does not validate the input, which can lead to potential security issues.",
+"recommendation": "Use a secure key management system to generate and manage encryption keys. Additionally, validate the input to ensure that it is in the expected format and does not contain any malicious data."
+},
+{
+"misuse": "Insecure Encryption",
+"vulnerable_code": "return crypto.method1(pass, keyStr);",
+"description": "The Co class uses a hardcoded Initialization Vector (IV) for encryption, which can be easily reversed by an attacker. Additionally, the class does not use any additional authentication data, which can lead to potential attacks.",
+"recommendation": "Use a secure encryption algorithm, such as AES/CBC/PKCS5Padding with a random Initialization Vector (IV), to protect against known attacks. Additionally, use an HMAC with the encryption key to ensure authentication of the encrypted data."
+}
+]
+}
+# Misuse Report JSON:
+{
+"misuses": [
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "Co.method1()",
+"description": "The method uses AES/CBC/PKCS5Padding, which is a weak encryption algorithm. Attackers may be able to use weaknesses in the algorithm to break the encryption and access the encrypted data.",
+"recommendation": "Use a stronger encryption algorithm, such as AES/GCM/NoPadding, and make sure to use the latest version of the Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files."
+},
+{
+"misuse": "Insecure Key Derivation",
+"vulnerable_code": "Co.method1()",
+"description": "The method derives the encryption key from the user-provided key, which may not be secure. If the user-provided key is weak or insecure, an attacker may be able to guess the key and access the encrypted data.",
+"recommendation": "Use a secure key derivation function, such as PBKDF2 or Argon2, to derive the encryption key from the user-provided key."
+},
+{
+"misuse": "Insecure Key Storage",
+"vulnerable_code": "P1.getKey()",
+"description": "The method stores the encryption key in a static variable, which may not be secure. If an attacker gains access to the running Java process, they may be able to extract the encryption key and access the encrypted data.",
+"recommendation": "Do not store the encryption key in a static variable. Instead, generate a new key for each encryption operation and do not store it."
+},
+{
+"misuse": "Insecure Random Number Generation",
+"vulnerable_code": "Co.method1()",
+"description": "The method uses the default random number generator of the Java Virtual Machine (JVM), which may not be secure. If an attacker is able to predict the random numbers generated, they may be able to guess the encryption key and access the encrypted data.",
+"recommendation": "Use a secure random number generator, such as SecureRandom, to generate the initialization vector for the encryption."
+}
+]
+}
+
+# False Positive Misuse JSON
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "Co crypto;",
+"description": "The Co class uses a hardcoded default key for encryption, which can be easily reversed by an attacker. Additionally, the class uses the AES/CBC/PKCS5Padding algorithm, which has known vulnerabilities.",
+"recommendation": "Use a secure key management system to generate and manage encryption keys. Additionally, use a secure encryption algorithm, such as AES/CBC/PKCS5Padding with a random Initialization Vector (IV), to protect against known attacks."
+}
+
+# Optimized Misuse JSON
+{
+"misuses": [
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "Co.method1()",
+"description": "The method uses AES/CBC/PKCS5Padding, which is a weak encryption algorithm. Attackers may be able to use weaknesses in the algorithm to break the encryption and access the encrypted data.",
+"recommendation": "Use a stronger encryption algorithm, such as AES/GCM/NoPadding, and make sure to use the latest version of the Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files."
+},
+{
+"misuse": "Insecure Key Derivation",
+"vulnerable_code": "Co.method1()",
+"description": "The method derives the encryption key from the user-provided key, which may not be secure. If the user-provided key is weak or insecure, an attacker may be able to guess the key and access the encrypted data.",
+"recommendation": "Use a secure key derivation function, such as PBKDF2 or Argon2, to derive the encryption key from the user-provided key."
+},
+{
+"misuse": "Insecure Key Storage",
+"vulnerable_code": "P1.getKey()",
+"description": "The method stores the encryption key in a static variable, which may not be secure. If an attacker gains access to the running Java process, they may be able to extract the encryption key and access the encrypted data.",
+"recommendation": "Do not store the encryption key in a static variable. Instead, generate a new key for each encryption operation and do not store it."
+},
+{
+"misuse": "Insecure Random Number Generation",
+"vulnerable_code": "Co.method1()",
+"description": "The method uses the default random number generator of the Java Virtual Machine (JVM), which may not be secure. If an attacker is able to predict the random numbers generated, they may be able to guess the encryption key and access the encrypted data.",
+"recommendation": "Use a secure random number generator, such as SecureRandom, to generate the initialization vector for the encryption."
+}
+]
+}

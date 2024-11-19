@@ -1,0 +1,10 @@
+The code you provided is vulnerable to the following misuse:
+
+[
+  {
+    "misuse": "Insecure Random Number Generator (PRNG)",
+    "vulnerable_code": "SecureRandom sr = new SecureRandom(new byte[]{Byte.parseByte(seed.toString())});",
+    "description": "The code uses a user-supplied seed for the SecureRandom PRNG which is insecure because an attacker can predict future outputs of the PRNG if they know the seed. Also, seed value is not always an integer. The seed can be any byte value.",
+    "recommendation": "Don't use user-provided seeds for SecureRandom. Use SecureRandom sr = new SecureRandom(); or SecureRandom sr = new SecureRandom(SecureRandom.getSeed(1024)); if you want an initial seeding. You can use the generated random number for SecureRandom.setSeed(random_number);"
+  }
+]

@@ -1,0 +1,8 @@
+[
+  {
+    "misuse": "Insecure Randomness",
+    "vulnerable_code": "SecureRandom random = new SecureRandom();\nbyte[] salt = new byte[32];\nrandom.nextBytes(salt);",
+    "description": "The SecureRandom instance 'random' is being used to generate a salt for password-based encryption (PBE), but the code does not specify a specific cryptographic algorithm that the SecureRandom should use. In certain cases, the default SecureRandom algorithm may not provide sufficient randomness for cryptographic operations, which could weaken the security of the application.",
+    "recommendation": "Specify a specific cryptographic algorithm when creating the SecureRandom instance, for example: SecureRandom random = SecureRandom.getInstance(\"SHA1PRNG\"); to ensure that a strong cryptographic algorithm is used for generating the salt."
+  }
+]

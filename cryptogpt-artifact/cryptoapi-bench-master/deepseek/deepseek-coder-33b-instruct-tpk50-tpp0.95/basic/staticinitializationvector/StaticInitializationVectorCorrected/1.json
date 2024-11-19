@@ -1,0 +1,30 @@
+Your code uses a fixed IV (Initialization Vector) every time the program is run, which is a security risk. If an attacker is able to observe multiple ciphertexts, they could perform a chosen-plaintext attack to determine the encryption key.
+
+The fix for this problem is to use a unique IV for each encryption operation, and to securely store the IV with the ciphertext. The IV should be randomly generated for each encryption and it must also be unique for each encryption.
+
+Here is a corrected version of your code:
+
+```java
+public class Sd {
+    public void go() throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, InvalidAlgorithmParameterException {
+        KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+        SecretKey key = keyGen.generateKey();
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+
+        SecureRandom sr = new SecureRandom();
+
+        byte [] ivBytes = new byte[16];
+        sr.nextBytes(ivBytes);
+        IvParameterSpec ivSpec = new IvParameterSpec(ivBytes);
+
+        cipher.init(Cipher.ENCRYPT_MODE,key,ivSpec);
+    }
+
+    public static void main (String [] args) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, InvalidAlgorithmParameterException {
+        Sd siv = new Sd();
+        siv.go();
+    }
+}
+```
+
+This code generates a new random IV each time the `go()` method is called, ensuring that it is not the same for multiple encryption operations.

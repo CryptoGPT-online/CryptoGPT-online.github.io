@@ -1,0 +1,22 @@
+```
+[
+    {
+        "misuse": "Hardcoded Cryptographic Key",
+        "vulnerable_code": "public static String KEY = \"sagar\";\npublic static char [] DEFAULT_ENCRYPT_KEY = KEY.toCharArray();\nprivate static char[] ENCRYPT_KEY;",
+        "description": "The cryptographic key is hardcoded into the source code. This is a major security risk as an attacker could easily discover this key and use it for decryption.",
+        "recommendation": "You should not hardcode sensitive data like cryptographic keys into your source code. Use environment variables or secure key vault systems to store these keys."
+    },
+    {
+        "misuse": "Use of Static Initializers",
+        "vulnerable_code": "private static void go2(){\n ENCRYPT_KEY = DEFAULT_ENCRYPT_KEY;\n}",
+        "description": "Static initializers are executed once the class is loaded by the ClassLoader. They are not thread safe and can cause race conditions. In this case, the static ENCRYPT_KEY could be overwritten by another thread.",
+        "recommendation": "Avoid using static initializers in a multithreaded environment. Instead, use methods to initialize your class's fields."
+    },
+    {
+        "misuse": "Use of PBEKeySpec",
+        "vulnerable_code": "pbeKeySpec = new PBEKeySpec(encryptKey,salt,10000,16);",
+        "description": "PBEKeySpec takes an array of chars as a parameter. This can cause a problem as the array can be modified by the caller. In this case, the array could be modified by another thread after it was passed to PBEKeySpec. This could lead to unexpected behavior or security vulnerabilities.",
+        "recommendation": "Ensure that arrays that are passed to PBEKeySpec are not modified after they are passed. You could clone the array before passing it to PBEKeySpec to ensure that the original array is not modified."
+    }
+]
+```

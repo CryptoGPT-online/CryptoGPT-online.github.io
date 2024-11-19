@@ -1,0 +1,26 @@
+There is a misuse related to CWE-759 (Use of a One-Way Hash with a Predictable Salt), CWE-760 (Use of a One-Way Hash with a Small Subspace, and CWE-321 (Use of Hard-coded Cryptographic Key).
+
+"AES" algorithm is being used with an unsecure IV value. In the code provided, IV is initialized by using hard-coded initialization byte array. This is a common vulnerability in cryptographic operations and allows an attacker to decipher ciphertext by using knowledge of plaintext.
+
+The go2 and go3 methods are setting the "INITIALIZATION" variable to the hard-coded DEFAULT_INITIALIZATION string, and then "initialization" is being set to "INITIALIZATION". In the "go" method, it uses the "initialization" array as the IV for the AES/CBC/PKCS5Padding Cipher. The problem is that "initialization" is being assigned a byte array from the char array "INITIALIZATION", but this is being done using a single byte from each char in the array. This results in the IV being a single byte which is too short and not secure enough.
+
+[
+  {
+    "misuse": "CWE-759",
+    "vulnerable_code": "IVSpec initialization",
+    "description": "AES/CBC/PKCS5Padding is being used with an unsecure IV value.",
+    "recommendation": "Use a secure and random IV for encryption."
+  },
+  {
+    "misuse": "CWE-760",
+    "vulnerable_code": "Hard-coded Initialization",
+    "description": "IVSpec is hard-coded in the code, which can be easily guessed.",
+    "recommendation": "Use a random IV for each encryption operation."
+  },
+  {
+    "misuse": "CWE-321",
+    "vulnerable_code": "Hard-coded Initialization",
+    "description": "The initializations are hard-coded in the program which can be easily guessed.",
+    "recommendation": "The initialization should be randomly generated for each use, never hard-coded."
+  }
+]

@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Hardcoded Initialization Vector (IV)",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");\n        cipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "Using Cipher Block Chaining (CBC) mode without specifying an Initialization Vector (IV) makes the encryption deterministic. This can allow attackers to infer patterns in the encrypted data, which can lead to the breach of confidentiality.",
+        "recommendation": "Use a randomly generated IV for each encryption operation."
+    },
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\n        SecretKey key = keyGen.generateKey();",
+        "description": "The KeyGenerator is not securely randomized. This can potentially allow an attacker to predict or reproduce the key used for encryption.",
+        "recommendation": "Use SecureRandom to seed the KeyGenerator instance."
+    },
+    {
+        "misuse": "Missing Key Size Specification",
+        "vulnerable_code": "KeyGenerator.getInstance(\"AES\")",
+        "description": "The AES key size is not specified. When the key size is not explicitly defined, different Java implementations may use different default key sizes, which may not be strong enough for required security.",
+        "recommendation": "Specify the key size explicitly when generating the key."
+    }
+]
+```

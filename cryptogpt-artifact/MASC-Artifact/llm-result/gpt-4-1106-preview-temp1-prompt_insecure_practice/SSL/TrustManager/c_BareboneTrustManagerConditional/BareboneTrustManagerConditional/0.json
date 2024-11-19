@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "Trust Manager that does not validate certificate chains",
+    "vulnerable_code": "new BareboneTrustManagerExt() {...}",
+    "description": "The custom TrustManager implementation does not properly validate certificate chains thus allowing any certificate to be trusted. This creates a severe security vulnerability by accepting any SSL certificate presented by the server, effectively bypassing SSL/TLS security.",
+    "recommendation": "Implement proper validation of certificate chains following the X.509 standard. Do not leave checkClientTrusted or checkServerTrusted methods empty."
+  },
+  {
+    "misuse": "Return of empty trust anchors in getAcceptedIssuers",
+    "vulnerable_code": "public X509Certificate[] getAcceptedIssuers() {...}",
+    "description": "The getAcceptedIssuers method returns an empty array, which implies the TrustManager trusts no certificates, conflicting with the actual behavior of checkClientTrusted and checkServerTrusted.",
+    "recommendation": "The getAcceptedIssuers method should return a non-empty array of certificates that the system can trust by default, or if the TrustManager is intended to trust all certificates (usually not recommended), then the checkClientTrusted and checkServerTrusted methods should not be made void, but rather should implement proper validation."
+  }
+]
+```

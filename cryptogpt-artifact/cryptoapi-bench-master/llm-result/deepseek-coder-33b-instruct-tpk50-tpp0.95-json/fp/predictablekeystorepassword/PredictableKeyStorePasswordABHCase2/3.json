@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Hardcoded Credentials",
+        "vulnerable_code": "String key = hm.get(\"aaa\");",
+        "description": "The use of hardcoded credentials makes the code very insecure. If the password used for these hardcoded credentials is guessed, it can lead to an unauthorized user gaining access to your system.",
+        "recommendation": "It is better to use secure methods to store credentials. It is recommended to avoid hardcoding passwords and instead, use environment variables, configuration files, or secure credential stores."
+    },
+    {
+        "misuse": "Not Using Secure KeyStore Type",
+        "vulnerable_code": "KeyStore ks = KeyStore.getInstance(type);",
+        "description": "The use of the JKS (Java KeyStore) is not a secure option for storing keys. JKS stores keys in a Java specific format and is not platform independent, making it less secure compared to secure options such as PKCS#12.",
+        "recommendation": "Consider using a more secure KeyStore type such as PKCS#12, which is designed to store cryptographic keys in a platform-independent manner. If you need a secure alternative for JKS, consider using a hardware security module."
+    },
+    {
+        "misuse": "Lack of Certificate Validation",
+        "vulnerable_code": "ks.load(cacerts.openStream(), key.toCharArray());",
+        "description": "This code is loading the key store from a URL that does not contain a trusted certificate, which can lead to potential security issues such as man-in-the-middle attacks. The KeyStore class does not provide a method for automatic certificate validation, and it needs to be done manually.",
+        "recommendation": "Implement certificate validation while loading the keystore, or use a secure protocol such as HTTPS to ensure the transport security of the keystore."
+    }
+]
+```

@@ -1,0 +1,16 @@
+### False Positive Misuse ###
+
+- CWE-798: Use of Hardcoded Credentials:
+  - The reported misuse for the iteration count being hardcoded to 20 is a false positive. While it is generally not recommended to hardcode sensitive values, the iteration count in this case is used as a parameter to the PBEParameterSpec class, which is used to configure a Password-Based Encryption (PBE) algorithm. The iteration count specifies the number of times the encryption algorithm should be applied, and it is not considered a sensitive value. Therefore, this misuse can be considered a false positive.
+
+### Optimized Misuse JSON ###
+
+[
+  {
+    "misuse category": "CWE-330: Use of Insufficiently Random Values",
+    "vulnerable_method": "`java.security.SecureRandom`",
+    "vulnerable_code": "`SecureRandom random = new SecureRandom();`",
+    "description": "The `SecureRandom` class is not properly seeded, which may result in predictable or weak random values.",
+    "recommendation": "Use a cryptographically secure random number generator (CSPRNG) that is properly seeded from a secure source of randomness, such as `/dev/urandom` on Unix-like systems or `CryptGenRandom` on Windows."
+  }
+]

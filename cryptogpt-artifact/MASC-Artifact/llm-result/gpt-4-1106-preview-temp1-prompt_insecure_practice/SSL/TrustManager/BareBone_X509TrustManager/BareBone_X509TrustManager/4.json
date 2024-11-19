@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Trust Manager that does not check server certificates",
+        "vulnerable_code": "public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {\n    // TODO Auto-generated method stub\n    \n}",
+        "description": "The custom X509TrustManager implementation does not verify the certificate chain of the server. This can allow man-in-the-middle attacks to succeed as all server certificates are trusted.",
+        "recommendation": "Implement validation logic in checkServerTrusted method to properly verify the server's certificate chain against trusted Certificate Authorities."
+    },
+    {
+        "misuse": "Trust Manager that does not check client certificates",
+        "vulnerable_code": "public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {\n    // TODO Auto-generated method stub\n    \n}",
+        "description": "The custom X509TrustManager implementation does not verify the certificate chain of the client. This can allow unauthorized clients to be trusted which poses security risks.",
+        "recommendation": "Implement validation logic in checkClientTrusted method to properly verify the client's certificate chain against trusted Certificate Authorities."
+    },
+    {
+        "misuse": "Returning 'null' in getAcceptedIssuers",
+        "vulnerable_code": "public X509Certificate[] getAcceptedIssuers() {\n    return null;\n}",
+        "description": "Returning 'null' from getAcceptedIssuers may cause NullPointerException in some SSL/TLS implementations when they attempt to retrieve the list of trusted issuers.",
+        "recommendation": "Return a non-null array of acceptable CA issuer certificates."
+    }
+]
+```

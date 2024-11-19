@@ -1,0 +1,26 @@
+### False Positive Misuse ###
+N/A
+
+### Optimized Misuse JSON ###
+```json
+[
+    {
+        "misuse": "Incomplete or Incorrect Validation",
+        "vulnerable_code": "public boolean verify(String hostname, SSLSession session) {\n    return true;\n}",
+        "description": "The custom HostnameVerifier implementation is returning true unconditionally, which effectively disables the hostname verification process for SSL/TLS connections. This can make the application vulnerable to man-in-the-middle attacks.",
+        "recommendation": "Ensure the verify method performs proper hostname verification by checking the hostname against the SSLSession's peer host and implementing a secure verification logic."
+    },
+    {
+        "misuse": "Incomplete Hostname Verification",
+        "vulnerable_code": "new HostnameVerifier(){...}",
+        "description": "The custom hostname verifier implementation does not perform any actual hostname verification, which can lead to potential man-in-the-middle attacks.",
+        "recommendation": "Use a proper hostname verification implementation to validate the hostname in SSL connections."
+    },
+    {
+        "misuse": "Incorrect Hostname Verification",
+        "vulnerable_code": "public boolean verify(String hostname, SSLSession session) { return true; }",
+        "description": "The custom HostnameVerifier always returns true, which bypasses the hostname verification in SSL/TLS connections. This can lead to Man-in-the-Middle (MitM) attacks.",
+        "recommendation": "Use a proper hostname verification mechanism, such as the default hostname verifier or a custom implementation that performs thorough hostname checks."
+    }
+]
+```

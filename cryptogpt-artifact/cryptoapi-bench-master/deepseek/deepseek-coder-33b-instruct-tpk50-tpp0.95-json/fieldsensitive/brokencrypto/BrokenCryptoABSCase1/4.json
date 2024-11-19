@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Key Generation",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo); SecretKey key = keyGen.generateKey();",
+        "description": "KeyGenerator.getInstance() uses the default keysize for the given algorithm which may not be secure. The keysize used in the KeyGenerator may be insufficient.",
+        "recommendation": "A securely generated key should be used instead of a keysize-based default key. Use a secure random number generator to create your keys. In case of DES, it is recommended to use a key size of 56 bits, not 64."
+    },
+    {
+        "misuse": "Unprotected Keys",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(defaultAlgo); cipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "The key is being used directly without any protection. This can be exploited if a key is leaked or if the key is stored insecurely. It could also be used for decryption later on.",
+        "recommendation": "Never store, share or use keys without proper protection. Ideally, keys should be stored securely (encrypted) and should not be directly accessible. Use secure key management tools or services for storing, sharing and using keys."
+    },
+    {
+        "misuse": "Insufficient Initialization Vector",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(defaultAlgo);",
+        "description": "DES/ECB/PKCS5Padding does not require an initialization vector. However, ECB mode is not semantically secure for most purposes because it does not hide data patterns well. It is vulnerable to chosen plaintext attacks and should not be used without understanding and mitigating these risks.",
+        "recommendation": "Consider using authenticated encryption to detect errors. Or use other modes of operation like CBC (Cipher Block Chaining) or CTR (Counter) mode which requires an initialization vector."
+    }
+]
+```

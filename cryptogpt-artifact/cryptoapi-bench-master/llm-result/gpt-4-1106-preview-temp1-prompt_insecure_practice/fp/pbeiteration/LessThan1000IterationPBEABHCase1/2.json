@@ -1,0 +1,19 @@
+```json
+[
+  {
+    "misuse": "Insufficient Iteration Count",
+    "vulnerable_code": "int iteration = hm.get(\"bbb\");",
+    "description": "The iteration count for password-based encryption (PBE) is retrieved from a HashMap and set to 20, which is too low to provide adequate protection against brute-force attacks.",
+    "recommendation": "Increase the iteration count to a value that is currently considered safe by cryptographic standards (e.g., at least 10,000 iterations)"
+  },
+  {
+    "misuse": "Use of a Hardcoded Salt",
+    "vulnerable_code": [
+        "byte[] salt = new byte[32];",
+        "random.nextBytes(salt);"
+    ],
+    "description": "Although the code uses SecureRandom to generate a salt, the salt is not saved or reused, which defeats the purpose of salt in password-based encryption. Salts must be unique and stored for each encryption operation so they can be used for decryption.",
+    "recommendation": "Generate a unique salt for every encryption operation and store it securely so that it can be retrieved for the decryption process."
+  }  
+]
+```

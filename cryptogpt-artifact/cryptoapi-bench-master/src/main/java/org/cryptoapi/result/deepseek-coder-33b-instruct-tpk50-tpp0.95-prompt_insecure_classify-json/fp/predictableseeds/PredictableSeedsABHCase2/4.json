@@ -1,0 +1,10 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values.",
+        "vulnerable_code": "byte b = hm.get(\"aaa\");\nbyte [] seed = {b,b};\nSecureRandom sr = new SecureRandom();\nsr.setSeed(seed);",
+        "description": "The `SecureRandom` object is being seeded with an insufficiently random value. In this case, `b` is a Byte object which is not cryptographically secure. It's not a strong random number generator. `b` may be very predictable which will affect the security of the system.",
+        "recommendation": "Use a cryptographically secure random number generator. The `java.security.SecureRandom` class can be used to generate secure random numbers. For example, instead of `new Byte((byte) 100)`, use `java.security.SecureRandom` to generate random numbers."
+    }
+]
+```

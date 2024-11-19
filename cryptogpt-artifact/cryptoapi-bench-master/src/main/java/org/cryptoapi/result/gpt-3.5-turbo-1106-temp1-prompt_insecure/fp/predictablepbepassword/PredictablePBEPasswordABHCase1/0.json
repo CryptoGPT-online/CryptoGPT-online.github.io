@@ -1,0 +1,14 @@
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "SecureRandom random = new SecureRandom();\nString defaultKey = String.valueOf(random.ints());",
+        "description": "Using SecureRandom for generating a secret key and initialization vector would be more secure than using random integers. There is also no guarantee that the key generated from the random integers would be of the length required for secure cryptography.",
+        "recommendation": "Use SecureRandom to generate a secure random key and initialization vector for cryptographic operations."
+    },
+    {
+        "misuse": "Hardcoded Key",
+        "vulnerable_code": "String defaultKey = String.valueOf(random.ints());\nbyte [] keyBytes = defaultKey.getBytes(\"UTF-8\");",
+        "description": "The code is using a randomly generated string converted to bytes as the secret key without any secure key generation algorithm. This approach is not secure and the key should be generated using a secure key generation algorithm.",
+        "recommendation": "Use a secure key generation algorithm such as KeyGenerator to generate secret keys."
+    }
+]

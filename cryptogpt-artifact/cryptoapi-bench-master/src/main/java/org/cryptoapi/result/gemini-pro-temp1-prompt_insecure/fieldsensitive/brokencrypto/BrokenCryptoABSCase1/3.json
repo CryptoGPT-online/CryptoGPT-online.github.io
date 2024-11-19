@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);\nSecretKey key = keyGen.generateKey();",
+    "description": "The code uses the default key generator and does not specify the key size, which may result in weak encryption.",
+    "recommendation": "Use a strong key generator and specify an appropriate key size, such as 256 bits for AES."
+  },
+  {
+    "misuse": "CWE-321: Use of Hard-Coded Credentials",
+    "vulnerable_code": "crypto = new C2(\"DES/ECB/PKCS5Padding\");",
+    "description": "The encryption algorithm and padding are hard-coded, which makes the code inflexible and difficult to maintain.",
+    "recommendation": "Use a configuration file or environment variables to specify the encryption algorithm and padding, so that they can be easily changed if needed."
+  },
+  {
+    "misuse": "CWE-256: Plaintext Data Improperly Protected",
+    "vulnerable_code": "public byte[] encrypt(String txt, String passedAlgo) throws UnsupportedEncodingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, NoSuchPaddingException {\n        if(passedAlgo.isEmpty()){\n            passedAlgo = defaultAlgo;\n        }\n\n        KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);\n        SecretKey key = keyGen.generateKey();\n        Cipher cipher = Cipher.getInstance(defaultAlgo);\n        cipher.init(Cipher.ENCRYPT_MODE, key);\n\n        byte [] txtBytes = txt.getBytes();\n        return cipher.doFinal(txtBytes);\n    }",
+    "description": "The code does not check the integrity of the ciphertext before returning it, which could allow an attacker to tamper with the data.",
+    "recommendation": "Use a message authentication code (MAC) to verify the integrity of the ciphertext before returning it."
+  }
+]
+```

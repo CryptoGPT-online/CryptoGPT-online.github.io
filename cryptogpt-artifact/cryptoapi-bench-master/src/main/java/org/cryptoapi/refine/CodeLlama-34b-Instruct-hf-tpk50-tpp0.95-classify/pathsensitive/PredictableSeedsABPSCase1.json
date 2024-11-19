@@ -1,0 +1,27 @@
+ ### False Positive Misuse JSON ###
+
+[
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_code": "sr.setSeed(bytes);",
+    "description": "The SecureRandom object is used with a predetermined seed, which is not recommended as it can lead to predictable behavior.",
+    "recommendation": "Use a properly generated random seed, such as using SecureRandom.getInstanceStrong() instead."
+  }
+]
+
+### Optimized Misuse JSON ###
+
+[
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values",
+    "vulnerable_code": "byte [] bytes = {(byte) 100, (byte) 200};",
+    "description": "The SecureRandom class is used to generate cryptographically secure random values, but the values used to seed it are not generated randomly. The seed is set using a fixed set of values, which can be guessed by an attacker.",
+    "recommendation": "Use a truly random seed to generate the secure random values."
+  },
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_code": "sr.setSeed(bytes)",
+    "description": "The SecureRandom class is designed to be used as a secure source of randomness, but it can be misused if the seed is not properly generated. In this case, the seed is set to a static array of bytes, which can be easily guessed. This can lead to predictable random numbers and potentially insecure cryptographic operations.",
+    "recommendation": "Use a secure random number generator to generate the seed, such as `SecureRandom.getInstanceStrong()`"
+  }
+]

@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "CWE-321: Use of Hard-coded Cryptographic Key",
+    "vulnerable_code": "byte [] keyBytes = key.getBytes();",
+    "description": "The keyBytes variable is initialized with the bytes of the key string. This means that the encryption key is hard-coded in the program. Hard-coded keys are vulnerable to disclosure and compromise.",
+    "recommendation": "Generate the encryption key securely using a cryptographically secure random number generator (CSPRNG) and store it in a secure location, such as a hardware security module (HSM) or a key management system (KMS)."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_code": "SecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES\");",
+    "description": "The SecretKeySpec object is initialized with the keyBytes array and the AES algorithm. However, the key size is not specified. By default, AES uses a 128-bit key, which is considered insecure. To ensure adequate encryption strength, it is recommended to use a key size of at least 256 bits.",
+    "recommendation": "Specify the key size explicitly when creating the SecretKeySpec object. For example, `SecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES\", \"AES-256\");`."
+  }
+]
+```

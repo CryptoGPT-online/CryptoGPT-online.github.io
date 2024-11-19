@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "String.valueOf(random.ints())",
+        "description": "The use of SecureRandom.ints() without specifying a bound generates an effectively unlimited stream of random integers, which is then converted to a string. This does not guarantee a sufficiently random and properly sized cryptographic key.",
+        "recommendation": "Use SecureRandom to generate a proper cryptographic key by directly creating a byte array of the required size for AES (e.g., 16 bytes for AES-128) and populating it with random data."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16)",
+        "description": "The key material is derived from a random integer stream and truncated or padded to fit the key size. This may result in weak keys if the source does not provide enough entropy or if the conversion process introduces predictability.",
+        "recommendation": "Ensure that the cryptographic key is derived from a high-entropy source and is of appropriate length for the chosen encryption algorithm. Use a key derivation function (KDF) if starting from a password or a seed."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5PADDING\")",
+        "description": "While AES itself is not broken, the use of AES in CBC mode without specifying an Initialization Vector (IV) leads to deterministic encryption for the same plaintext. This can be exploited in some scenarios and does not provide semantic security.",
+        "recommendation": "Use a securely generated, random IV for CBC mode and provide it along with the ciphertext. The IV does not need to be kept secret, but it must be unpredictable and unique for each encryption under the same key."
+    }
+]
+```

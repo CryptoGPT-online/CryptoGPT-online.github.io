@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);\nSecretKey key = keyGen.generateKey();",
+        "description": "The KeyGenerator.getInstance() is used without specifying a secure random number generator (RNG), which may result in using a weak or predictable key. Additionally, it's unclear whether the key length is specified, which may result in a default and potentially insecure key length.",
+        "recommendation": "Use a secure random number generator (RNG) like SecureRandom to initialize the KeyGenerator, and specify a strong key length using the KeyGenerator.init() method."
+    },
+    {
+        "misuse": "Insecure Encryption",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(defaultAlgo);\ncipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "The encryption is being performed without specifying any padding mechanism. Depending on the algorithm and mode, this can lead to padding oracle attacks and other vulnerabilities.",
+        "recommendation": "Always specify a secure padding mechanism when initializing the Cipher instance to ensure secure encryption, for example, using AES/GCM/NoPadding mode for authenticated encryption."
+    }
+]
+```

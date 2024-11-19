@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "Cipher.getInstance(String.valueOf(crypto))",
+        "description": "The IDEA encryption algorithm is considered weak and outdated, which makes it a risky choice for cryptographic operations.",
+        "recommendation": "Use a more secure algorithm such as AES with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values.",
+        "vulnerable_code": "KeyGenerator.getInstance(String.valueOf(crypto))",
+        "description": "It's not shown how the 'crypto' array is populated, but if it relies on non-cryptographically secure randomness or hardcoded values, it could lead to predictable keys.",
+        "recommendation": "Ensure that a secure source of randomness is used for key generation."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_code": "Cipher.getInstance(String.valueOf(crypto))",
+        "description": "The IDEA algorithm has a 64-bit block size, which is less secure compared to modern algorithms with larger block sizes.",
+        "recommendation": "Switch to an algorithm with a larger block size and a strong mode of operation, such as AES/GCM."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials.",
+        "vulnerable_code": "public static final String DEFAULT_CRYPTO = \"IDEA\";",
+        "description": "Using a hardcoded cryptographic algorithm ('IDEA') makes the application less flexible and potentially vulnerable if the algorithm needs to be changed.",
+        "recommendation": "Avoid hardcoding the cryptographic algorithm. Instead, use a configuration file or environment variables to specify the algorithm."
+    }
+]
+```

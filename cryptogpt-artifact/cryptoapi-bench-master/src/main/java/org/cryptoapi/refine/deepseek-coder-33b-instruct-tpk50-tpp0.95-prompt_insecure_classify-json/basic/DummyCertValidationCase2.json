@@ -1,0 +1,35 @@
+### False Positive Misuse 
+
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {\n}\n\npublic void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {\n}",
+        "description": "The methods 'checkClientTrusted' and 'checkServerTrusted' are empty. This means no certificates are being validated which can lead to a man-in-the-middle attack.",
+        "recommendation": "Implement certificate validation or use a trust manager provided by Java."
+    }
+]
+```
+
+This is a false positive misuse. The code does not implement certificate validation, but it extends `X509TrustManager` which is a misuse of the library for custom TrustManagers. The `checkClientTrusted` and `checkServerTrusted` methods are there but empty, and Java's `SSLContext` class requires TrustManagers to handle certificate validation or it throws `CertificateException`. Therefore, the provided misuse is not applicable in the provided code.
+
+### Optimized Misuse JSON
+
+The other misuse misuses are not false positive:
+
+```json
+[
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException",
+        "description": "The checkServerTrusted method is left blank, which means the trust manager will accept all certificates without any validation.",
+        "recommendation": "You should implement proper certificate validation. You can use the CertificateFactory and X509Certificate classes to do this."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "This code does not check if the certificate is valid or not.",
+        "description": "This code does not verify if the certificate presented by the server is valid and not revoked. In a production environment, you would want to use a trust store that includes a list of trusted certificates and verify that the presented certificate is in the trust store. Additionally, the certificate should be validated by checking the validity period and the signature.",
+        "recommendation": "You should validate the X509 certificate chain to ensure it is properly issued by a trusted CA and hasn't been revoked."
+    }
+]
+```

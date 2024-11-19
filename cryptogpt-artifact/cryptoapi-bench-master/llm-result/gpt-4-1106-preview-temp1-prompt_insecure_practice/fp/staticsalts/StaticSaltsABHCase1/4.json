@@ -1,0 +1,42 @@
+```json
+[
+    {
+        "misuse": "Insufficient Salt Size",
+        "vulnerable_code": [
+            "byte[] salt = {b,b};"
+        ],
+        "description": "The salt size used for PBEParameterSpec should be at least 64 bits (8 bytes) to ensure cryptographic strength, but only two bytes are being used in this context.",
+        "recommendation": "Use a sufficiently long random salt value, typically at least 8 bytes long."
+    },
+    {
+        "misuse": "Weak Key Derivation Iteration Count",
+        "vulnerable_code": [
+            "int count = 1020;"
+        ],
+        "description": "The iteration count (1020) for key derivation is below the recommended minimum of 10,000 to withstand brute force attacks.",
+        "recommendation": "Increase the iteration count to at least 10,000 or more depending on performance considerations."
+    },
+    {
+        "misuse": "Insecure Map Key Usage",
+        "vulnerable_code": [
+            "\"aaa\", new Byte((byte) 0xa2)",
+            "\"bbb\", new Byte((byte) 0xa4)",
+            "\"ccc\", new Byte((byte) 0xa6)",
+            "\"ddd\", new Byte((byte) 0xa8)"
+        ],
+        "description": "The static keys used from the map for cryptographic operations may lead to predictable and insecure cryptosystems.",
+        "recommendation": "Do not use hardcoded values for cryptographic operations. Use a secure random generator to create keys."
+    },
+    {
+        "misuse": "Prohibited Boxed Primitive Constructor",
+        "vulnerable_code": [
+            "new Byte((byte) 0xa2)",
+            "new Byte((byte) 0xa4)",
+            "new Byte((byte) 0xa6)",
+            "new Byte((byte) 0xa8)"
+        ],
+        "description": "Boxed primitives should not be created using constructors, as they create unnecessary objects and may lead to subtle bugs and security issues if comparing objects instead of primitive values.",
+        "recommendation": "Use the static factory method Byte.valueOf() instead of constructors, or rely on auto-boxing."
+    }
+]
+```

@@ -1,0 +1,28 @@
+ {
+"misuses": [
+{
+"misuse": "Insecure Crypto Algorithm",
+"vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+"description": "The use of AES/CBC/PKCS5Padding is not secure as it does not provide authenticated encryption. An attacker can modify the ciphertext without being detected.",
+"recommendation": "Use a secure authenticated encryption mode such as AES/GCM/NoPadding or AES/CCM/NoPadding. These modes provide both confidentiality and authenticity of the data, and are resistant to attacks such as padding oracles."
+},
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+"description": "The use of AES/CBC/PKCS5Padding is broken as it does not properly handle padding of the plaintext. An attacker can exploit this vulnerability to inject malicious data into the encrypted message.",
+"recommendation": "Use a secure and correct implementation of the AES algorithm, such as AES/GCM/NoPadding or AES/CCM/NoPadding. These modes provide both confidentiality and authenticity of the data, and are resistant to attacks such as padding oracles."
+},
+{
+"misuse": "Insecure IV",
+"vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(passedIV);",
+"description": "The IV (Initialization Vector) is not secure as it is derived from the user-provided password. An attacker can easily predict the IV and gain access to the encrypted data.",
+"recommendation": "Use a secure random number generator to generate a random IV. This will ensure that the IV is unique for each encryption, and an attacker will not be able to predict it."
+},
+{
+"misuse": "Key Derivation",
+"vulnerable_code": "SecretKey key = keyGen.generateKey();",
+"description": "The key is derived from the user-provided password using a KeyGenerator. This is not secure as the key is not properly generated, and an attacker can exploit this vulnerability to obtain the key and gain access to the encrypted data.",
+"recommendation": "Use a secure key derivation function, such as PBKDF2 or Argon2, to generate the key. This will ensure that the key is properly generated and is resistant to attacks such as brute force and rainbow tables."
+}
+]
+}

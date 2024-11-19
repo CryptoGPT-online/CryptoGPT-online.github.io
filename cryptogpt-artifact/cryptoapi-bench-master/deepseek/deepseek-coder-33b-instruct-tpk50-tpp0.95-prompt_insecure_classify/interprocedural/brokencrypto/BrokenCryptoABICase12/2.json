@@ -1,0 +1,34 @@
+Here's the code snippet with the identified misuse:
+
+```java
+public static void method1(String crypto) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+    KeyGenerator keyGen = KeyGenerator.getInstance(crypto);
+    SecretKey key = keyGen.generateKey();
+    Cipher cipher = Cipher.getInstance(crypto);
+    cipher.init(Cipher.ENCRYPT_MODE, key);
+}
+```
+
+Misuse Description: 
+
+In this code, the encryption/decryption algorithm used (i.e., the crypto parameter) is hardcoded and directly passed into the `KeyGenerator.getInstance()` and `Cipher.getInstance()` methods. This can make the application vulnerable to attacks where an attacker may discover this and then try to use a less secure algorithm for encryption.
+
+Recommendation: 
+
+The cryptographic algorithm to be used should be chosen dynamically based on the security policy of the system. It should not be hardcoded. Instead, it should be configurable and the administrator should set it based on the available security policy.
+
+Response (in JSON format):
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": {
+            "file": "B2.java",
+            "method": "method1",
+            "line": 4
+        },
+        "description": "The crypto algorithm used is hardcoded and directly passed into the KeyGenerator.getInstance() and Cipher.getInstance() methods. This can make the application vulnerable to attacks where an attacker may discover this and then try to use a less secure algorithm for encryption.",
+        "recommendation": "The cryptographic algorithm to be used should be chosen dynamically based on the security policy of the system. It should not be hardcoded. Instead, it should be configurable and the administrator should set it based on the available security policy."
+    }
+]
+```

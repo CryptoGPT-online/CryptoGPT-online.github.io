@@ -1,0 +1,20 @@
+ [
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "public C1(byte [] seed) throws NoSuchPaddingException, NoSuchAlgorithmException {
+        defSeed = seed;
+    }
+
+    public void method1(byte [] passedSeed) throws UnsupportedEncodingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, NoSuchPaddingException {
+
+        passedSeed = defSeed;
+
+        SecureRandom sr = new SecureRandom();
+        sr.setSeed(passedSeed);
+        int v = sr.nextInt();
+        System.out.println(v);
+    }",
+        "description": "The `SecureRandom` instance is seeded with a static value `defSeed` which is set in the constructor of `C1`. This can lead to a predictable sequence of random numbers and potentially exploitable patterns in the generated random numbers.",
+        "recommendation": "Instead of using a static seed, use a truly random source of entropy, such as `/dev/urandom` on Linux systems, to seed the `SecureRandom` instance. This can ensure that the generated random numbers are unpredictable and more secure."
+    }
+]

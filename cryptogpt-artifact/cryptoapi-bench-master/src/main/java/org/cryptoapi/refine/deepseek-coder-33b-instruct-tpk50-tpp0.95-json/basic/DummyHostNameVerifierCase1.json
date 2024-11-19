@@ -1,0 +1,20 @@
+### False Positive Misuse ###
+[]
+
+### Optimized Misuse JSON ###
+[
+  {
+    "misuse_category": "Insecure Implementation of SSL/TLS",
+    "vulnerable_method": "D1.verify(String, SSLSession)",
+    "vulnerable_code": "return true;",
+    "description": "The provided code is insecure because it allows all SSL/TLS connections to proceed regardless of the certificate presented by the server, including those from untrusted or invalid sources. This can potentially allow an attacker to decrypt the traffic.",
+    "recommendation": "The code should not simply return true for all host names. Instead, it should verify the SSL certificate presented by the server. Use standard cryptographic functions such as those provided by the SSLContext class, or consider using a third-party library that offers certificate validation."
+  },
+  {
+    "misuse_category": "Broken Crypto Algorithm",
+    "vulnerable_method": "D1.verify(String, SSLSession)",
+    "vulnerable_code": "return true;",
+    "description": "The provided code disables certificate verification entirely. This can lead to a man-in-the-middle attack where a malicious entity can pretend to be a trusted server. This is particularly dangerous because sensitive information could be transmitted between the client and server without any security.",
+    "recommendation": "Always use certificate verification to ensure the client is connecting to the correct server. If you need to accept self-signed certificates, consider using a custom TrustManager that trusts only those specific certificates. Do not accept any other certificates without verifying they are indeed signed by a trusted authority."
+  }
+]

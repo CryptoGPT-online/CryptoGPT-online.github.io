@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "pbeKeySpec = new PBEKeySpec(password.toCharArray(),salt,iterationCount,keyLength);",
+        "description": "In this code, a PBEKeySpec object is created with the given password, salt, iteration count and key length. However, it is not ensured that the password is validated properly before being used to derive a secret key. If an attacker is able to control the password or its hashing, they may be able to perform a dictionary or brute force attack on the derived key.",
+        "recommendation": "Implement proper certificate validation procedures to ensure that the password or hash of the password is correct before creating the PBEKeySpec object."
+    },
+    {
+        "misuse": "CWE-327: Broken or Risky Crypto Algorithm",
+        "vulnerable_code": "pbeKeySpec = new PBEKeySpec(password.toCharArray(),salt,iterationCount,keyLength);",
+        "description": "The PBKDF2 algorithm is considered broken and should not be used for deriving cryptographic keys. It uses a single hash function and does not incorporate a key schedule, which makes it vulnerable to both brute force and GPU-based attacks.",
+        "recommendation": "Consider using a different algorithm like bcrypt, scrypt or Argon2 for deriving cryptographic keys."
+    },
+    {
+        "misuse": "CWE-321: Use of Hard-coded Cryptographic Key",
+        "vulnerable_code": "pbeKeySpec = new PBEKeySpec(password.toCharArray(),salt,iterationCount,keyLength);",
+        "description": "In this code, the iteration count is hard-coded as 11010. This value was chosen arbitrarily and is not widely considered to be secure for cryptographic applications. The iteration count should be chosen based on the resources available to an attacker. As a rule of thumb, the number should be as large as possible, but without significantly increasing the time needed to compute the derived key.",
+        "recommendation": "The iteration count should be chosen based on the resources available to an attacker. As a rule of thumb, the number should be as large as possible, but without significantly increasing the time needed to compute the derived key."
+    }
+]
+```

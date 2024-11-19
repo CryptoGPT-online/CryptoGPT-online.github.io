@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "sr.nextBytes(salt);",
+        "description": "The use of SecureRandom to generate a salt is not a misuse per se, but the salt should be stored or communicated to be used for password verification, otherwise it defeats its purpose.",
+        "recommendation": "Store or safely transmit the salt along with the encrypted data, so that it can be used for password verification in the future."
+    },
+    {
+        "misuse": "Hardcoded Sensitive Data",
+        "vulnerable_code": "String password = \"sagar\";",
+        "description": "Hardcoding passwords in source code is a security risk because the codebase could be exposed or accessed by unauthorized users.",
+        "recommendation": "Remove hardcoded passwords from the codebase. Use a secure method to obtain passwords, such as prompting the user at runtime or using environment variables or configuration files with proper access restrictions."
+    },
+    {
+        "misuse": "Weak Password-Based Encryption (PBE) Parameters",
+        "vulnerable_code": "pbeKeySpec = new PBEKeySpec(passedPassword.toCharArray(),salt,iterationCount,keyLength);",
+        "description": "The key length specified for PBEKeySpec is only 16 bits, which is likely a typo since valid key lengths are typically 128, 192, or 256 bits for AES. Moreover, the code does not specify the algorithm to be used for PBE, which could default to a weak algorithm.",
+        "recommendation": "Correct the keyLength to a secure value, such as 128, 192, or 256 for AES encryption. Specify a secure PBE algorithm explicitly when creating the PBEKeySpec instance."
+    },
+    {
+        "misuse": "Missing Encryption/Decryption Algorithm Specification",
+        "vulnerable_code": "new PBEKeySpec(passedPassword.toCharArray(),salt,iterationCount,keyLength);",
+        "description": "The code does not specify which encryption or decryption algorithm is used for the PBEKeySpec which might lead to the use of default or weak algorithms.",
+        "recommendation": "Explicitly specify a secure and strong encryption/decryption algorithm when initializing PBEKeySpec."
+    }
+]
+```

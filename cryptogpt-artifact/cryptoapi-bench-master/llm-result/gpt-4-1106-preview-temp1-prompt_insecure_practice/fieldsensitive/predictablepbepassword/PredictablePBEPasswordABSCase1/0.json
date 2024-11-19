@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Random Salt Generation",
+        "vulnerable_code": "byte [] salt = new byte[16];\nSecureRandom sr = new SecureRandom();\nsr.nextBytes(salt);",
+        "description": "The salt is generated using a new instance of SecureRandom every time the method is invoked, which might not be an issue by itself. But, reusing the salt for the same password for different users or using a predictable salt can lead to vulnerabilities.",
+        "recommendation": "Use a unique salt for each password and ensure it is securely stored for re-use during password verification."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "int keyLength = 16;",
+        "description": "The specified key length is 16 bits, which is extremely short and insecure for any encryption standard.",
+        "recommendation": "Use an adequate key length. For PBEKeySpec, 'keyLength' should specify the key length in bits, not bytes. So, use a key length of at least 128 bits (e.g., `keyLength = 128`)."
+    },
+    {
+        "misuse": "Hardcoded Password",
+        "vulnerable_code": "String password = \"sagar\";",
+        "description": "Using a hardcoded password 'sagar' in the source code is insecure, because it can be easily extracted by an adversary.",
+        "recommendation": "Remove the hardcoded password and implement a more secure way to handle passwords, such as prompting the user for input or using environment variables or a secure configuration file."
+    }
+]
+```

@@ -1,0 +1,21 @@
+```json
+[
+    {
+        "misuse": "Insecure Trust Management",
+        "vulnerable_code": [
+            "SSLSocketFactory ssf = (SSLSocketFactory) SSLSocketFactory.getDefault();",
+            "SSLSocket socket = (SSLSocket) ssf.createSocket(passedHostname,passedSoc);"
+        ],
+        "description": "The default SSLSocketFactory is being used which relies on the default trust manager. If the default trust manager is not properly set with robust validation mechanisms, it could trust all certificates which might lead to man-in-the-middle attacks.",
+        "recommendation": "Ensure that a custom SSLSocketFactory with a strict X509TrustManager implementation is used so that certificate validation is appropriately performed."
+    },
+    {
+        "misuse": "Lack of Hostname Verification",
+        "vulnerable_code": [
+            "SSLSocket socket = (SSLSocket) ssf.createSocket(passedHostname,passedSoc);"
+        ],
+        "description": "The code does not explicitly verify the hostname against the certificate presented by the server during the SSL handshake. Without hostname verification, the connection may be susceptible to man-in-the-middle attacks.",
+        "recommendation": "Implement and enforce hostname verification. This can often be done by configuring the SSL parameters or using a HostnameVerifier when working with higher-level APIs."
+    }
+]
+```

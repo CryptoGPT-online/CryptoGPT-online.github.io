@@ -1,0 +1,20 @@
+ [
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+        "description": "The code uses the AES algorithm to generate a secret key, which is a broken or risky cryptographic algorithm. AES is a widely used and secure algorithm, but it should be used with a proper key size, which is not the case in this code.",
+        "recommendation": "Use a more secure key generation algorithm, such as AES-256, and make sure to use a proper key size."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "byte [] bytes = \"abcde\".getBytes();",
+        "description": "The code uses a hardcoded byte array as a secret key, which is a vulnerability as it can be easily discovered by an attacker.",
+        "recommendation": "Do not use hardcoded credentials, and instead use a proper key management system to securely store and manage secrets."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+        "description": "The code uses a byte array as an initialization vector (IV) for the AES encryption, which is a vulnerability as the IV should be randomly generated and not predictable.",
+        "recommendation": "Use a proper random number generator to generate the IV for the AES encryption."
+    }
+]

@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insufficient IV Entropy",
+        "vulnerable_code": "new IvParameterSpec(val.getBytes(),0,8)",
+        "description": "The initialization vector (IV) should be random and unpredictable. Using a predictable IV, which is derived from a string incrementing characters from 'A' to 'J', can allow attackers to perform attacks such as ciphertext manipulation or facilitate cryptanalysis.",
+        "recommendation": "Use a secure random number generator to produce the IV. For example, `SecureRandom random = new SecureRandom(); byte[] iv = new byte[16]; random.nextBytes(iv); IvParameterSpec ivSpec = new IvParameterSpec(iv);`"
+    },
+    {
+        "misuse": "Hardcoded Credentials",
+        "vulnerable_code": "\"\"",
+        "description": "As the posted code provides no context on how it handles secrets, it's important to ensure that cryptographic keys and other sensitive information are not hard-coded or easily guessable within the application. Hardcoded secrets can be easily retrieved from the application's code or memory.",
+        "recommendation": "Avoid hardcoding secrets; instead, use secure storage mechanisms such as a key management system or environment variables with appropriate access control, ensuring that the secrets are managed securely and in accordance with security best practices."
+    },
+    {
+        "misuse": "Potentially Incomplete Encryption Routine",
+        "vulnerable_code": "IV is generated, but there is no encryption routine present",
+        "description": "The code snippet demonstrates the generation and printout of an IV, but doesn't show the actual encryption routine. This could lead to a situation where IV is managed improperly or encryption is not happening correctly, leading to potential vulnerabilities if this pattern is followed in production.",
+        "recommendation": "Ensure that encryption routines are fully implemented using secure algorithms and that the IV is used appropriately in the context of a complete encryption process."
+    }
+]
+```

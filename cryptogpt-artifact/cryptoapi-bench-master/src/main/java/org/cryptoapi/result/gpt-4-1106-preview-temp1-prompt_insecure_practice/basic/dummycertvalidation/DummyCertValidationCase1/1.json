@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Improper Certificate Validation",
+        "vulnerable_code": "public void checkClientTrusted(X509Certificate[] x509Certificates, String s)",
+        "description": "The method checkClientTrusted is supposed to validate the client's certificate chain. However, the code comments suggest that no certificate validation is happening, which is insecure as it trusts any client certificate.",
+        "recommendation": "Implement proper validation of the client certificate against a set of trusted Certificate Authorities."
+    },
+    {
+        "misuse": "Improper Certificate Validation",
+        "vulnerable_code": "public void checkServerTrusted(X509Certificate[] x509Certificates, String s)",
+        "description": "The method checkServerTrusted is supposed to validate the server's certificate chain and throw a CertificateException if trust cannot be established. However, the implementation is empty, which means it trusts all server certificates without any validation.",
+        "recommendation": "Implement proper validation of the server certificate against a set of trusted Certificate Authorities."
+    },
+    {
+        "misuse": "Empty Trust Manager",
+        "vulnerable_code": "public X509Certificate[] getAcceptedIssuers()",
+        "description": "The getAcceptedIssuers method should return a list of acceptable CA issuer certificates. Returning an empty array or null effectively disables certificate chain validation which is a critical security component in establishing trust.",
+        "recommendation": "Return an array of trusted root CA certificates that the trust manager is supposed to trust."
+    }
+]
+```

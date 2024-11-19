@@ -1,0 +1,34 @@
+```json
+[
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The code potentially cuts the key to 16 bytes (128 bits), which, if not used properly, does not meet the highest security standards where a 256-bit key would be preferred.",
+        "recommendation": "Use a 256-bit key for AES if security requirements dictate a stronger encryption algorithm."
+    },
+    {
+        "misuse": "Static Encryption Key",
+        "vulnerable_code": "public static final String DEFAULT_ENCRYPT_KEY = \"defaultkey\";",
+        "description": "The encryption uses a hardcoded, static key that can be easily discovered by reviewing the source code.",
+        "recommendation": "Use a dynamic, and preferably, a securely generated key that is not stored in plain text within the source code."
+    },
+    {
+        "misuse": "Insecure Key Derivation",
+        "vulnerable_code": "byte[] keyBytes = encryptKey.toString().getBytes();",
+        "description": "Deriving the encryption key directly from a String without any secure key derivation function may lead to a weak key that is vulnerable to attacks.",
+        "recommendation": "Use a secure key derivation function such as PBKDF2, bcrypt, or scrypt, with a random salt."
+    },
+    {
+        "misuse": "Weak Encoding for Key Conversion",
+        "vulnerable_code": "byte[] keyBytes = encryptKey.toString().getBytes();",
+        "description": "Calling toString on a char[] will not convert the character array into a string with its content, but gives the object address. Also, getBytes without specifying a charset uses the default charset of the system, which may vary across environments.",
+        "recommendation": "Use new String(encryptKey).getBytes(\"UTF-8\") to reliably convert the characters to bytes using a consistent character encoding."
+    },
+    {
+        "misuse": "Hardcoded Encryption Mode",
+        "vulnerable_code": "SecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES\");",
+        "description": "The code fails to specify the mode and padding scheme for AES, and may rely on the defaults which can be insecure, like ECB mode, or padding schemes that are not resistant to padding oracle attacks.",
+        "recommendation": "Specify the encryption mode and padding scheme explicitly using Cipher.getInstance method with a string such as \"AES/CBC/PKCS5Padding\"."
+    }
+]
+```

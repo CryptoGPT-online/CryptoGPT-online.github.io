@@ -1,0 +1,31 @@
+Misuse:
+Misuse of cryptographic algorithm
+
+Vulnerable Code:
+Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+
+Description:
+In this code, the cipher instance is created with "AES/CBC/PKCS5Padding" even if the choice is less than 2, which is not a good practice. This can potentially make the code more vulnerable if the code is updated later. It is always recommended to always use the default or specific algorithms used, as opposed to a choice of algorithms. 
+
+Recommendation:
+It would be better to have the instance creation logic within a separate method, and only decide there if you want to use "RC4" or "AES/CBC/PKCS5Padding". This way, you can ensure that your cryptographic algorithm is always being used consistently. For example:
+
+```
+public Cipher getCipher(int choice) throws NoSuchPaddingException, NoSuchAlgorithmException {
+    if (choice > 1)
+        return Cipher.getInstance("AES/CBC/PKCS5Padding");
+    else
+        return Cipher.getInstance("RC4");
+}
+```
+
+And in your `go` method:
+
+```
+public void go(int choice) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+    KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+    SecretKey key = keyGen.generateKey();
+    Cipher cipher = getCipher(choice);
+    cipher.init(Cipher.ENCRYPT_MODE, key);
+}
+```

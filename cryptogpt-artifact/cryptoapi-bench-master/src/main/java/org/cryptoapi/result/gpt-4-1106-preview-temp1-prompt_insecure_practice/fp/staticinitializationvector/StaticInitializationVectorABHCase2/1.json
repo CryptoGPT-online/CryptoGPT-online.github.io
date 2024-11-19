@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insufficient IV Size for CBC Mode",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+        "description": "An Initialization Vector (IV) should be the same size as the block size of the cipher (16 bytes for AES), and must be unpredictable. Directly using the 'str' bytes without ensuring it is the correct length and sufficiently random can result in weak IVs.",
+        "recommendation": "Use a cryptographically strong random generator to create a 16-byte IV for AES in CBC mode."
+    },
+    {
+        "misuse": "Static IV",
+        "vulnerable_code": "String str = hm.get(\"aaa\");",
+        "description": "The IV should be unique and unpredictable for each encryption operation. Using a constant or predictable IV, such as string retrieved from a fixed map, leads to cryptanalysis attacks.",
+        "recommendation": "Generate a new, random IV for each encryption operation."
+    },
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "description": "The code generates a key without specifying a secure random instance or a seed which might result in insufficient entropy.",
+        "recommendation": "Use SecureRandom with a specified seed to generate the key."
+    },
+    {
+        "misuse": "Key Length Not Specified",
+        "vulnerable_code": "\"KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\"",
+        "description": "Default key size for AES may not be adequate for security as the code does not specify the key size. It might default to a lower key size (e.g., 128 bits) instead of a more secure one (e.g., 256 bits).",
+        "recommendation": "Specify the key size during key generation to ensure strong encryption strength."
+    }
+]
+```

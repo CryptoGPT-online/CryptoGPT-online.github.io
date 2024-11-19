@@ -1,0 +1,25 @@
+### False Positive Misuse ###
+
+**Insecure Default**
+
+* **Reported Misuse:** The default hostname and port are hardcoded, which can be insecure if the application is intended to connect to different endpoints.
+* **Explanation:** This is not a misuse in the given context. The code is creating a client socket with a default hostname and port, which is common for many applications that connect to a specific server. If the application needs to connect to different endpoints, it can override the default hostname and port when creating the socket.
+
+### Optimized Misuse JSON ###
+
+```json
+[
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_code": "SSLSocketFactory ssf = (SSLSocketFactory) SSLSocketFactory.getDefault();\nSSLSocket socket = (SSLSocket) ssf.createSocket(passedHostname,passedSoc);",
+    "description": "Using the default SSLSocketFactory and SSLSocket without specifying the encryption algorithms and protocols can lead to weak encryption.",
+    "recommendation": "Use a specific SSLSocketFactory and SSLSocket that supports strong encryption algorithms and protocols."
+  },
+  {
+    "misuse": "CWE-321: Use of Hard-coded Cryptographic Key",
+    "vulnerable_code": "String defHostname = hostname;\nint defSoc = soc;",
+    "description": "The cryptographic key (hostname and socket) is hardcoded in the code, which makes it easy for attackers to obtain and use to decrypt or forge messages.",
+    "recommendation": "Avoid hardcoding cryptographic keys. Instead, use a secure method to generate and store the keys, such as a key management system (KMS) or a hardware security module (HSM)."
+  }
+]
+```

@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "Hard-coded Salt",
+    "vulnerable_code": "SecureRandom sr = new SecureRandom(); sr.nextBytes(salt);",
+    "description": "Hard-coding a salt can potentially lead to predictable keys, which can compromise security. The salt should ideally be randomly generated.",
+    "recommendation": "Use a randomly generated salt instead of a hard-coded one."
+  },
+  {
+    "misuse": "Insufficient iteration count in PBKDF2",
+    "vulnerable_code": "int iterationCount = 11010;",
+    "description": "The current iteration count is considered insecure as it is too low. Using a higher iteration count (like 10000 or more) would make it significantly harder for an attacker to crack the key.",
+    "recommendation": "Increase the iteration count to at least 10,000."
+  },
+  {
+    "misuse": "Weak password in PBEKeySpec",
+    "vulnerable_code": "passedPassword = defPassword;",
+    "description": "The password used in PBEKeySpec is a default one, which might be weak itself. Using a user-supplied password as a salt can be less secure. It's recommended to use a separate random salt for each password.",
+    "recommendation": "Use a separate, randomly generated salt for each password. Additionally, consider strengthening the security of the default password."
+  }
+]
+```

@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "description": "The AES key is generated without specifying the key size, which may result in a key size that is not sufficiently secure.",
+        "recommendation": "Specify the key size when generating the AES key. For example, use 'keyGen.init(256);' to ensure a 256-bit key size, which is considered strong."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "The code does not specify the encryption key size. While AES is a secure algorithm, using a key size less than 128 bits is not recommended.",
+        "recommendation": "Ensure that the encryption key size is at least 128 bits. It is better to use a key size of 256 bits for higher security."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": "EcbInSymmCryptoBBCase1 bc = new EcbInSymmCryptoBBCase1();",
+        "description": "The class name 'EcbInSymmCryptoBBCase1' suggests that ECB mode might be used elsewhere in the code, which is insecure for encryption as it does not provide strong data confidentiality for block ciphers.",
+        "recommendation": "Replace ECB mode with a more secure mode such as CBC, CFB, or GCM, which provide better confidentiality by using an initialization vector (IV)."
+    }
+]
+```

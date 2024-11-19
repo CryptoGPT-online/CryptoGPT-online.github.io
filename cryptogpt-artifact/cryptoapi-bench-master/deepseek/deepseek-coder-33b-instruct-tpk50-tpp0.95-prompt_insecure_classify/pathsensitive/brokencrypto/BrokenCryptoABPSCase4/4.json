@@ -1,0 +1,25 @@
+Here are the crypto API misuses and their descriptions:
+
+1. 
+```java
+KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+SecretKey key = keyGen.generateKey();
+```
+The above code generates a key using AES algorithm which is a good choice.
+
+2. 
+```java
+Cipher cipher = Cipher.getInstance("RC2");
+```
+However, here the cipher instance is created using RC2 algorithm which is a weak algorithm. RC2 is a block cipher, whose keys can be 40, 56, 64, 80, 128, 192 or 256 bits long. This algorithm is susceptible to exhaustive key search attacks. As such, it should not be used for new protocols, and should be replaced by new designs.
+
+The JSON response would be:
+
+```json
+[{
+"misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.", 
+"vulnerable_code": "Cipher.getInstance(\"RC2\");",
+"description": "The code is using the RC2 algorithm which is a broken or risky cryptographic algorithm.",
+"recommendation": "Replace RC2 with a strong cryptographic algorithm such as AES."
+}]
+```

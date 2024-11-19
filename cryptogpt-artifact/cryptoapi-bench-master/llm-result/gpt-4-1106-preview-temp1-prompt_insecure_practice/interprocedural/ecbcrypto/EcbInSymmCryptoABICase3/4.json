@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "ECB Mode Usage",
+        "vulnerable_code": "Cipher.getInstance(crypto);",
+        "description": "AES in ECB (Electronic Codebook) mode is considered insecure because it does not provide serious message confidentiality. The same plaintext blocks are encrypted into the same ciphertext blocks, making it susceptible to various attacks.",
+        "recommendation": "Use a more secure mode of operation such as CBC (Cipher Block Chaining) with a unique, unpredictable initialization vector (IV) for each encryption."
+    },
+    {
+        "misuse": "Lack of Secure Randomness",
+        "vulnerable_code": "KeyGenerator.getInstance(\"AES\");",
+        "description": "The code does not explicitly specify a secure random number generator (RNG) for key generation, relying on the JVM's default. This might result in weak keys if the default RNG is not secure enough.",
+        "recommendation": "Specify a secure RNG for key generation by using 'SecureRandom.getInstanceStrong()' or similar secure RNG methods."
+    },
+    {
+        "misuse": "Potential hardcoded sensitive information",
+        "vulnerable_code": "String crypto = \"AES/ECB/PKCS5Padding\";",
+        "description": "Using hardcoded cryptographic algorithm specifications may pose a security risk if the algorithm needs to be changed due to future weaknesses discovered. It can also restrict flexibility in choosing different algorithms for different security requirements.",
+        "recommendation": "Avoid hardcoding cryptographic algorithm specifications. Instead, use a configurable mechanism that can be easily updated if required."
+    }
+]
+```

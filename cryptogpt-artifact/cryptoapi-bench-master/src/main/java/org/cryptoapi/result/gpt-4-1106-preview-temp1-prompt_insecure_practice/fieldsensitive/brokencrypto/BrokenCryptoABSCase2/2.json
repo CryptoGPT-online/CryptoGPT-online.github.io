@@ -1,0 +1,34 @@
+```json
+[
+    {
+        "misuse": "Use of a Weak or Insecure Cryptographic Algorithm",
+        "vulnerable_code": "crypto = new C3(\"Blowfish\");",
+        "description": "Blowfish is an older symmetric encryption algorithm which can be considered weak due to its 64-bit block size, making it susceptible to birthday attacks when encrypting large amounts of data.",
+        "recommendation": "Switch to a more secure encryption algorithm with a larger block size such as AES."
+    },
+    {
+        "misuse": "Use of Insecure or Predictable Random Number Generator",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);",
+        "description": "The code does not specify a secure random number generator, which might result in the use of a non-secure default.",
+        "recommendation": "Explicitly define and use a secure random number generator, such as SecureRandom, when generating keys."
+    },
+    {
+        "misuse": "No Specification of Cipher Mode and Padding Scheme",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(defaultAlgo);",
+        "description": "The code does not specify a cipher mode or padding scheme when initializing the Cipher instance. Using default values can be insecure (e.g., ECB mode is not recommended due to its patterns in ciphertext).",
+        "recommendation": "Specify a secure mode of operation along with an appropriate padding scheme, for example, 'AES/GCM/NoPadding' for AES with GCM mode and no padding."
+    },
+    {
+        "misuse": "Weak Encryption Key Management",
+        "vulnerable_code": "SecretKey key = keyGen.generateKey();",
+        "description": "The encryption key is generated each time and not stored or managed securely, which makes data decryption and key rotation harder or even impossible.",
+        "recommendation": "Implement a secure key management system that stores, protects, and rotates encryption keys securely."
+    },
+    {
+        "misuse": "Missing Initialization Vector (IV) for Cipher Modes Requiring IvParameterSpec",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "The encryption cipher is initialized without providing an initialization vector (IV), which is insecure for modes like CBC, that require a unique IV for each encryption operation to ensure security.",
+        "recommendation": "Properly generate and use a unique IV for each encryption operation if a mode requiring IV is used."
+    }
+]
+```

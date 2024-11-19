@@ -1,0 +1,33 @@
+ ### False Positive Misuse JSON ###
+[
+  {
+    "misuse": "Broken Crypto Algorithm",
+    "vulnerable_code": "key.getBytes(); keyBytes = Arrays.copyOf(keyBytes,16); SecretKeySpec keySpec = new SecretKeySpec(keyBytes, "AES");",
+    "description": "The encryption algorithm used is AES, which is a symmetric-key block cipher. However, the key provided is a string, which is a vulnerable key type as it can be easily guessed or obtained by an attacker. Also, the key is being copied to another array without any checking, which can lead to key misuse and data breaches.",
+    "recommendation": "Use a secure key generation mechanism, such as SecureRandom, to generate a cryptographically secure key. Also, use a key derivation function, such as PBKDF2, to derive a secure key from the provided string. Additionally, check the length of the key and make sure it is not less than the recommended length for the encryption algorithm used."
+  }
+]
+
+### Optimized Misuse JSON ###
+[
+  {
+    "misuse": "Weak Key Generation",
+    "vulnerable_code": "String.getBytes()",
+    "description": "The key is generated using the String.getBytes() method, which uses the platform's default character encoding. This can lead to a weak key, as the key will be generated using a single byte per character. Using a weak key can make the encryption vulnerable to brute force attacks.",
+    "recommendation": "Use a secure random number generator to generate the key, and make sure the key is at least 128 bits long. You should also consider using a more secure cipher algorithm, such as AES-GCM or AES-CBC with a random initialization vector."
+  },
+  {
+    "misuse": "Insecure Data Storage",
+    "vulnerable_code": "String key = \"defaultkey\"",
+    "description": "The key is stored as a string in the code, which is not secure. This can lead to the key being exposed to unauthorized parties, as it is not encrypted or hashed. Using a secure storage mechanism, such as a secure database or a hardware security module, can help protect the key securely.",
+    "recommendation": "Use a secure storage mechanism, such as a secure database or a hardware security module, to store the key securely. You should also consider using a secure key transport mechanism, such as HTTPS or SSH, to protect the key during transmission."
+  },
+  {
+    "misuse": "Insecure Key Transport",
+    "vulnerable_code": "method1(key)",
+    "description": "The key is passed as a parameter to the method1() function, which is not secure. This can lead to the key being exposed to unauthorized parties, as it is not encrypted or hashed. Using a secure key transport mechanism, such as HTTPS or SSH, can help protect the key during transmission.",
+    "recommendation": "Use a secure key transport mechanism, such as HTTPS or SSH, to protect the key during transmission. You should also consider using a secure storage mechanism, such as a secure database or a hardware security module, to store the key securely."
+  }
+]
+
+Note: The optimized misuse list only includes the misuses that are relevant and not false positives.

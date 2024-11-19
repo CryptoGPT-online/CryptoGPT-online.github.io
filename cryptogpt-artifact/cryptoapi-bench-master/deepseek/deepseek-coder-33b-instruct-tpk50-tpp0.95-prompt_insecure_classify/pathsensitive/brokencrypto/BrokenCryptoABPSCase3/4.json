@@ -1,0 +1,18 @@
+The misuse is:
+
+CWE-327: Use of a Broken or Risky Cryptographic Algorithm
+
+The misuse code snippets:
+```java
+Cipher cipher = Cipher.getInstance("RC4");
+```
+and
+```java
+cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+```
+
+The description:
+The code instantiates a cipher for the RC4 stream cipher, which is a proprietary algorithm developed by RSA Security Inc. and based on the encryption algorithm RC4, but is no longer specified in the official standards. In addition, the key size for RC4 is variable but is commonly 128-bits. Although it is not deprecated, it is obsolete and its security has been severely compromised. Furthermore, the code uses the CBC mode of operation of the AES cipher, which is also not secure for many scenarios and should not be used if compatibility is a concern. AES has been the Advanced Encryption Standard for many years and it is widely recognized and used. 
+
+The recommendation:
+The code should use a secure and recognized cipher, such as AES, with a secure mode of operation, such as GCM or CCM. Furthermore, the code should use a secure key size for AES, such as 128 or 256 bits.

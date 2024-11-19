@@ -1,0 +1,46 @@
+```json
+[
+  {
+    "misuse": "Hardcoded Encryption Key",
+    "vulnerable_code": "\"defaultkey\"",
+    "description": "Using a hardcoded 'defaultkey' as a fallback encryption key is insecure because it is readable in the source code and can be extracted easily by an attacker, making the encryption trivial to bypass.",
+    "recommendation": "Use a securely generated encryption key, and securely manage it, for instance, using a secure key management system."
+  },
+  {
+    "misuse": "Use of Static Salt or Initialization Vector",
+    "vulnerable_code": "String algoSpec = \"AES/CBC/PKCS5Padding\";",
+    "description": "The AES mode 'CBC' requires an initialization vector (IV) for each encryption operation to ensure security. Without a unique and unpredictable IV, encryption with the same key and plaintext will result in the same ciphertext, making the system susceptible to attacks like pattern analysis.",
+    "recommendation": "Generate a new random IV for each encryption operation, and safely transmit it alongside the ciphertext."
+  },
+  {
+    "misuse": "Insecure Key Derivation",
+    "vulnerable_code": [
+      "byte[] keyBytes = key.getBytes(\"UTF-8\");",
+      "keyBytes = Arrays.copyOf(keyBytes,16);"
+    ],
+    "description": "The way the encryption key is derived from the given string is insecure. The key is simply obtained by getting the byte array representation of the string, and truncated or null-padded to fit the required key length, which does not provide enough entropy and could lead to weak keys.",
+    "recommendation": "Use a key derivation function (KDF) such as PBKDF2 with a random salt to generate secure keys from passwords or passphrases."
+  },
+  {
+    "misuse": "Unspecified Charset",
+    "vulnerable_code": "byte [] txtBytes = txt.getBytes();",
+    "description": "Using the default character encoding to get the byte representation of a string can lead to unpredictable results across different platforms. If the platform's default encoding is not UTF-8, it could result in incorrect decryption or encryption.",
+    "recommendation": "Always specify a charset when calling 'String.getBytes()', for example, 'txt.getBytes(StandardCharsets.UTF_8)'."
+  },
+  {
+    "misuse": "Potential Null pointer Dereference",
+    "vulnerable_code": [
+      "if(passKey == null) { crypto = new Co(\"defaultkey\"); }",
+      "crypto = new Co(passKey);"
+    ],
+    "description": "There is a potential null pointer dereference where the 'crypto' variable can still be null if 'passKey' is null. If the first condition is true and assigns a new 'Co' to 'crypto', the next statement overwrites it, potentially with null.",
+    "recommendation": "Ensure that 'crypto' is not set to null after checking for null and setting a default value."
+  },
+  {
+    "misuse": "Missing Error Handling",
+    "vulnerable_code": "byte[] encryptPass(String pass, String src)",
+    "description": "The method 'encryptPass' uses the 'P1.getKey()' method without checking if it returns null, which can cause 'IllegalArgumentException' when the key is null or empty on 'method1'.",
+    "recommendation": "Add proper null/empty checks and error handling for key retrieval."
+  }
+]
+```

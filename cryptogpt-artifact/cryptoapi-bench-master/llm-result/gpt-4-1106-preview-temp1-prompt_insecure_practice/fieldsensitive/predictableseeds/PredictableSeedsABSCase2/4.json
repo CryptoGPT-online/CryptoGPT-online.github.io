@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Random Number Generation",
+        "vulnerable_code": "SecureRandom sr = new SecureRandom(new byte[]{passedSeed});",
+        "description": "The code is initializing a SecureRandom instance with a static seed, which makes the random number generation predictable.",
+        "recommendation": "Do not use a static seed. Instead, allow SecureRandom to self-seed or use a properly generated seed value."
+    },
+    {
+        "misuse": "Static Cryptographic Key",
+        "vulnerable_code": "byte seed = 100;\ncrypto = new C2(seed);",
+        "description": "The seed is static and only one byte long, this could be used as a cryptographic key, which would be highly insecure as it lacks entropy and is predictable.",
+        "recommendation": "Use a secure key management system to generate, store, and manage cryptographic keys, ensuring keys have high entropy and are properly protected."
+    },
+    {
+        "misuse": "Weak Cryptographic Algorithm Configuration",
+        "vulnerable_code": "not directly shown in the snippet",
+        "description": "The code may be part of a larger cryptographic function that utilizes a weak algorithm configuration due to the potential static or insufficient seed. However, the code snippet provided does not explicitly show the use of any cryptographic algorithm.",
+        "recommendation": "Ensure that any cryptographic algorithm used is properly configured with secure initialization vectors and keys where necessary."
+    }
+]
+```

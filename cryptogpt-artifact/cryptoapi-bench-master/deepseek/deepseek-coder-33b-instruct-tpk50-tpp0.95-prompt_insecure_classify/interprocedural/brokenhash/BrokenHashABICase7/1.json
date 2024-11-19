@@ -1,0 +1,20 @@
+CWE-327: Use of a Broken or Risky Cryptographic Algorithm
+
+Misuse:
+```
+MessageDigest md = MessageDigest.getInstance(String.valueOf(crypto));
+```
+Vulnerable Code:
+```java
+MessageDigest md = MessageDigest.getInstance(String.valueOf(crypto));
+```
+
+Description:
+MD4 is considered a weak algorithm for cryptographic use and is no longer considered to be secure by the U.S. National Institute of Standards and Technology (NIST). It is also not supported in Java's MessageDigest, which throws a NoSuchAlgorithmException when it attempts to use it. This will result in a cryptographic failure if not properly handled.
+
+Recommendation:
+Don't use MD4 for secure purposes. Instead, use a secure and recommended algorithm such as SHA-256.
+
+```java
+MessageDigest md = MessageDigest.getInstance("SHA-256");
+```

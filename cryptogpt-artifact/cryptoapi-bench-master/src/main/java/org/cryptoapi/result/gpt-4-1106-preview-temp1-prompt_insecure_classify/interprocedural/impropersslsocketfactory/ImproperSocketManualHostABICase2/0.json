@@ -1,0 +1,30 @@
+```json
+[
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": [
+            "SSLSocketFactory ssf = (SSLSocketFactory) SSLSocketFactory.getDefault();",
+            "SSLSocket socket = (SSLSocket) ssf.createSocket(hostName.toString(),soc);"
+        ],
+        "description": "The code is using the default SSL socket factory without any custom trust management or hostname verification. This can lead to trusting all certificates, which is insecure.",
+        "recommendation": "Implement and use a custom X509TrustManager to check server certificates and possibly a HostnameVerifier to check that the hostname matches the certificate."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": [
+            "public static final String DEFAULT_HOST_NAME = \"my.host.name\";"
+        ],
+        "description": "The hostname for the SSL connection is hardcoded, which can lead to inflexibility and potential security issues if the hostname is sensitive information.",
+        "recommendation": "Remove the hardcoded hostname and retrieve it from a configuration file or environment variables."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": [
+            "private static char[] HOST_NAME;",
+            "private static char[] hostName;"
+        ],
+        "description": "Although not directly related to crypto API misuse, having static or predictable hostnames can contribute to predictability in other parts of a cryptographic protocol, potentially leading to vulnerabilities.",
+        "recommendation": "Ensure that any values that need to be random or unpredictable are generated using a secure random number generator."
+    }
+]
+```

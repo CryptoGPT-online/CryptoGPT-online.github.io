@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+    "vulnerable_code": "if(true || session.getCipherSuite().length()>=0)",
+    "description": "The code always returns true, regardless of the cipher suite used by the SSL session. This means that the server will accept any cipher suite, even if it is weak or insecure.",
+    "recommendation": "The code should be changed to only accept cipher suites that are known to be secure. For example, the code could be changed to:
+    
+    if (session.getCipherSuite().equals(\"TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384\")) {
+      return true;
+    } else {
+      return false;
+    }"
+  }
+]
+```

@@ -1,0 +1,11 @@
+ {
+"misuse": "Insecure Hostname Verification",
+"vulnerable_code": "if (\"192.168.0.10\".equals(hostname)) {
+                return true;
+            } else {
+                HostnameVerifier hv = HttpsURLConnection.getDefaultHostnameVerifier();
+                return hv.verify(hostname, sslSession);
+            }",
+"description": "This code is vulnerable to hostname verification bypass. The `verify()` method is called with a default `HostnameVerifier` which may not be secure. Attackers can use this vulnerability to perform man-in-the-middle attacks and steal sensitive information.",
+"recommendation": "Use a secure `HostnameVerifier` implementation, such as the one provided by `SSLContext`. Alternatively, you can use a `HostnameVerifier` that checks the hostname against a predefined list of trusted hosts."
+}

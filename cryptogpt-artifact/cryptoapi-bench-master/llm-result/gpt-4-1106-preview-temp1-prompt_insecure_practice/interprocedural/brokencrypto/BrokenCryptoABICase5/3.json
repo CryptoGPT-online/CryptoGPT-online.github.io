@@ -1,0 +1,28 @@
+```json
+[
+  {
+    "misuse": "Weak Encryption Algorithm",
+    "vulnerable_code": "KeyGenerator.getInstance(String.valueOf(crypto_algo))",
+    "description": "The DES algorithm is considered weak and outdated due to its short key length of 56 bits which can be brute-forced with modern computing power.",
+    "recommendation": "Use a stronger encryption algorithm such as AES with a key size of at least 128 bits."
+  },
+  {
+    "misuse": "Insecure Mode of Operation",
+    "vulnerable_code": "Cipher.getInstance(String.valueOf(crypto))",
+    "description": "ECB (Electronic Codebook) mode is insecure because identical plaintext blocks are encrypted into identical ciphertext blocks, which can leak information about the plaintext.",
+    "recommendation": "Use a more secure mode of operation like CBC (Cipher Block Chaining) with a strong Initialization Vector (IV)."
+  },
+  {
+    "misuse": "Static Crypto Variables",
+    "vulnerable_code": "private static char[] CRYPTO; private static char[] CRYPTO_ALGO;",
+    "description": "Storing cryptographic variables as static may lead to thread-safety issues and unintended sharing of cryptographic data between instances.",
+    "recommendation": "Avoid static storage of cryptographic parameters, and ensure thread-safe management of keys, algorithms, and other sensitive data."
+  },
+  {
+    "misuse": "Key Generation without SecureRandom",
+    "vulnerable_code": "keyGen.generateKey()",
+    "description": "Key generation without specifying a SecureRandom instance could result in a weak key if the default randomness source is not secure.",
+    "recommendation": "Use KeyGenerator with a specified SecureRandom instance that provides strong randomness."
+  }
+]
+```

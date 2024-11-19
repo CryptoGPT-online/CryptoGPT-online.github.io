@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insecure Random Number Generator",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);",
+        "description": "KeyGenerator.getInstance() method is used to generate cryptographic keys. It is an insecure source of randomness as it uses the current time as a source of randomness. This may allow an attacker to predict future keys if they are able to guess when the KeyGenerator instance is created.",
+        "recommendation": "Use a cryptographically secure random number generator for generating keys."
+    },
+    {
+        "misuse": "Incorrect Padding",
+        "vulnerable_code": "byte [] txtBytes = txt.getBytes(); return cipher.doFinal(txtBytes);",
+        "description": "No padding is used when encrypting the text. This means that if the text is not a multiple of the block size, the final block may be incorrectly padded, which can lead to incorrect decryption and potential security vulnerabilities.",
+        "recommendation": "Always use a padding scheme when encrypting. For example, PKCS5Padding for block ciphers."
+    },
+    {
+        "misuse": "Hardcoded Cipher Algorithm",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(defaultAlgo);",
+        "description": "The cipher algorithm is hardcoded to Blowfish in the constructor of class C3. This can lead to a serious security vulnerability as Blowfish is considered to be a weak cipher. It is not recommended to use insecure or weak ciphers for encryption.",
+        "recommendation": "Always use a secure and up-to-date cipher algorithm. For example, AES is a widely accepted and secure algorithm."
+    },
+    {
+        "misuse": "Reusing the Cipher Instance",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(defaultAlgo);",
+        "description": "The same Cipher instance is being reused to encrypt different data. This can lead to serious security vulnerabilities as the same key is used to encrypt different data. In addition, it might expose the key to a variety of attacks.",
+        "recommendation": "Generate a new Cipher instance for each encryption operation with a new key."
+    }
+]
+```

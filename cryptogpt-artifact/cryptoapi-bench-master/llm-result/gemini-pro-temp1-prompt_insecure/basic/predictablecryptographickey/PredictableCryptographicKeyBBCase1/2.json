@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "Weak Key (CWE-321)",
+    "vulnerable_code": "byte[] keyBytes = defaultKey.getBytes();",
+    "description": "The key is derived from a password string using the `getBytes()` method, which uses the platform's default character encoding. This may result in a weak key if the password contains non-ASCII characters or if the platform's default encoding is weak.",
+    "recommendation": "Use a strong key generation algorithm, such as `SecureRandom`, to generate a random key. Alternatively, use a key derivation function (KDF) to derive a key from a password string."
+  },
+  {
+    "misuse": "Hardcoded Key (CWE-327)",
+    "vulnerable_code": "String defaultKey = \"defaultkey\";",
+    "description": "The key is hardcoded in the source code, which makes it easy for an attacker to obtain the key and compromise the encryption.",
+    "recommendation": "Avoid hardcoding cryptographic keys in the source code. Instead, store the keys securely, such as in a key management system or a hardware security module (HSM)."
+  },
+  {
+    "misuse": "Key Size (CWE-326)",
+    "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+    "description": "The key size is fixed to 16 bytes, which is the minimum allowed key size for AES. A longer key size is more secure.",
+    "recommendation": "Use a longer key size, such as 256 bits, for better security."
+  }
+]
+```

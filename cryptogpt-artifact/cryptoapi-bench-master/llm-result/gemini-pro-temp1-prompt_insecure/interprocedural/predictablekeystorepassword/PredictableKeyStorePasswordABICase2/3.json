@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "CWE-321: Use of Hard-coded Cryptographic Key",
+    "vulnerable_code": "public static final String DEFAULT_ENCRYPT_KEY = \"changeit\";",
+    "description": "The encryption key 'changeit' is hard-coded in the source code, which makes it easily accessible to attackers.",
+    "recommendation": "Generate and store the encryption key securely, such as using a key management system or a hardware security module (HSM)."
+  },
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_code": "KeyStore ks = KeyStore.getInstance(type);",
+    "description": "The code uses the default JKS (Java Key Store) algorithm, which is known to be vulnerable to various attacks.",
+    "recommendation": "Use a more secure key store algorithm, such as PKCS12 or Bouncy Castle's OpenPGP."
+  },
+  {
+    "misuse": "CWE-326: Inappropriate Encryption",
+    "vulnerable_code": "ks.load(cacerts.openStream(), encryptKey);",
+    "description": "The code loads a keystore from a URL ('https://www.google.com') using a hard-coded encryption key. This practice is insecure as it exposes the keystore to potential interception and compromise.",
+    "recommendation": "Avoid loading keystores from untrusted sources or over unencrypted channels. Use secure protocols like HTTPS or TLS when accessing remote keystores."
+  }
+]
+```

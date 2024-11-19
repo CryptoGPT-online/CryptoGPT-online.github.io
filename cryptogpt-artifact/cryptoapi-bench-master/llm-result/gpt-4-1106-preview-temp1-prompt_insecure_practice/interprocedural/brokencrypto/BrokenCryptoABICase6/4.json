@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "Cipher.getInstance(String.valueOf(crypto))",
+        "description": "Blowfish is an outdated encryption algorithm with block size issues which might lead to vulnerabilities such as the Sweet32 attack. It uses a 64-bit block size, which is considered insufficient by current standards.",
+        "recommendation": "Replace Blowfish with a more secure algorithm, such as AES with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "Insecure Key Generation",
+        "vulnerable_code": "KeyGenerator.getInstance(String.valueOf(crypto))",
+        "description": "The KeyGenerator is not initialized with a specific key size, which may result in a weak key if the default size is not sufficient.",
+        "recommendation": "Initialize the KeyGenerator with a specific key size that is considered secure (e.g., for AES, use a 128-bit key or higher)."
+    },
+    {
+        "misuse": "Potential Use of Insecure Cipher Mode",
+        "vulnerable_code": "Cipher.getInstance(String.valueOf(crypto))",
+        "description": "When obtaining an instance of a Cipher, if the algorithm is specified without a mode and padding (such as 'Cipher/Mode/Padding'), the JVM could provide a default that may not be secure.",
+        "recommendation": "Explicitly define the cipher mode and padding scheme when getting an instance of Cipher. Preferably use 'Cipher.getInstance(\"AES/CBC/PKCS5Padding\")' for AES with a secure mode and padding."
+    }
+]
+```

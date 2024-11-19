@@ -1,0 +1,25 @@
+Here is the code:
+
+```java
+public class B1 {
+    public static void main (String [] args) throws NoSuchAlgorithmException {
+        String str = "abcdef";
+        String crypto = "SHA1";
+        go(str,crypto);
+    }
+    public static void go (String str, String crypto) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance(crypto);
+        md.update(str.getBytes());
+        System.out.println(md.digest());
+    }
+}
+```
+
+---misuses list begin:---
+[{
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(crypto);",
+    "description": "The code uses the SHA1 cryptographic algorithm for hashing a string which is a known to be broken and risky.",
+    "recommendation": "It is recommended to use a secure cryptographic algorithm that provides the desired level of security. For example, SHA-256 or SHA-3 would be better alternatives."
+}]
+---misuses lists end---

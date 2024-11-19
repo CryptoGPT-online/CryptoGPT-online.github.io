@@ -1,0 +1,14 @@
+```json
+[{"misuse": "Weak Cryptographic Algorithm", 
+  "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");", 
+  "description": "Using AES algorithm without specifying key size can lead to use of weaker key sizes, making the encryption vulnerable to brute force attacks.", 
+  "recommendation": "Specify the key size when generating the AES key using KeyGenerator.init(int keySize). For example, use keyGen.init(256) to specify a 256-bit AES key size."}, 
+ {"misuse": "Insecure Key Generation", 
+  "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+  "description": "The key generation does not specify a secure random number generator, which may result in weak keys being generated.", 
+  "recommendation": "Use a secure random number generator like SecureRandom to initialize the KeyGenerator, for example, KeyGenerator.getInstance(\"AES\").init(256, new SecureRandom())."}, 
+ {"misuse": "Insecure Initialization Vector (IV)", 
+  "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");\ncipher.init(Cipher.ENCRYPT_MODE, key);",
+  "description": "The initialization vector (IV) is not being specified, which can lead to vulnerabilities in the encryption.", 
+  "recommendation": "Generate a secure random IV using SecureRandom and pass it as a parameter to the cipher.init() method, for example, byte[] iv = new byte[cipher.getBlockSize()]; SecureRandom.getInstanceStrong().nextBytes(iv); cipher.init(Cipher.ENCRYPT_MODE, key, new IvParameterSpec(iv));"}]
+```

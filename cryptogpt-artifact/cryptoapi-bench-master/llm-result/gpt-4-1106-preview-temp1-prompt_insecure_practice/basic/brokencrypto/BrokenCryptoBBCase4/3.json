@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "KeyGenerator.getInstance(\"RC2\")",
+        "description": "The use of 'RC2' algorithm is considered insecure as it is an old and obsolete encryption algorithm with known weaknesses, including a relatively small block size and key strength that do not provide adequate defense against modern brute-force attacks.",
+        "recommendation": "Switch to a more secure, modern encryption algorithm such as AES with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"RC2\"); keyGen.generateKey();",
+        "description": "RC2 by default may generate a key size that's considered too small to be secure. The default size is often 64 bits which is insufficient for modern security requirements.",
+        "recommendation": "Use a secure algorithm with a sufficiently large key size; for AES, use a key size of at least 128 bits."
+    },
+    {
+        "misuse": "ECB Mode of Operation",
+        "vulnerable_code": "Cipher.getInstance(\"RC2\")",
+        "description": "By not specifying the mode of operation in the Cipher.getInstance() method, it defaults to ECB (Electronic Codebook) mode, which is insecure as it doesn't provide serious message confidentiality in cases where input data contains repeated patterns. The same plaintext blocks result in the same ciphertext blocks, which can be exploited by an attacker.",
+        "recommendation": "Use a more secure mode of operation like CBC, CFB, OFB, or GCM which all require initialization vectors (IVs) to provide semantic security."
+    },
+    {
+        "misuse": "Missing Initialization Vector (IV)",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "The cipher is initialized without an initialization vector (IV) which is insecure when using block cipher modes like CBC that require an IV for each encryption operation.",
+        "recommendation": "Generate a secure random IV and use it to initialize the cipher along with the encryption key."
+    }
+]
+```

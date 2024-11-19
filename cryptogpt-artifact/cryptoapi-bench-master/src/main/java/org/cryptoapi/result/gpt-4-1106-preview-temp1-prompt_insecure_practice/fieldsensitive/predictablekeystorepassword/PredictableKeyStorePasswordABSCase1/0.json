@@ -1,0 +1,34 @@
+```json
+[
+    {
+        "misuse": "Hardcoded Encryption Key",
+        "vulnerable_code": "\"changeit\"",
+        "description": "The encryption key is hardcoded into the source code, which makes it easier to extract and compromise by an attacker.",
+        "recommendation": "Use a secure method to manage encryption keys, such as a hardware security module or a key management service, and never hardcode keys."
+    },
+    {
+        "misuse": "Insecure Trust Management",
+        "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");\nks.load(cacerts.openStream(), passedKey.toCharArray());",
+        "description": "The method loads KeyStore entries from a hardcoded URL, which does not validate the certificate chain, potentially trusting all certificates, even self-signed ones. This leads to a vulnerability where an attacker could intercept the connection and present their own certificate, leading to a Man-In-The-Middle (MITM) attack.",
+        "recommendation": "Ensure that proper certificate validation is in place when connecting to external services. Do not load KeyStore entries from an untrusted or non-validated source."
+    },
+    {
+        "misuse": "KeyStore Type",
+        "vulnerable_code": "\"JKS\"",
+        "description": "JKS (Java KeyStore) is considered less secure than other available types such as PKCS12 because JKS does not use strong cryptographic hash functions.",
+        "recommendation": "Use a more secure KeyStore type, like PKCS12, which uses stronger cryptographic hash functions."
+    },
+    {
+        "misuse": "Use of Default Password",
+        "vulnerable_code": "\"changeit\"",
+        "description": "The code uses a default password ('changeit') for the KeyStore, which is widely known and easily guessable, reducing the security of the KeyStore.",
+        "recommendation": "Use a strong, unique password for KeyStores and manage it securely, avoiding default passwords."
+    },
+    {
+        "misuse": "Dead Code",
+        "vulnerable_code": "\"passedKey = defKey;\"",
+        "description": "The parameter 'passedKey' is immediately overwritten with 'defKey', which makes the parameter useless and the method misleading. This could lead to security misconfigurations if the method is improperly used.",
+        "recommendation": "Remove dead code and ensure that method parameters are used appropriately."
+    }
+]
+```

@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "sr.setSeed(passedSeed);",
+        "description": "Explicitly setting a seed value may compromise the randomness of SecureRandom, making the generated numbers predictable.",
+        "recommendation": "Do not explicitly set the seed unless there is a requirement to produce a repeatable series of secure random numbers, it's typically safer to rely on the default seed."
+    },
+    {
+        "misuse": "Static Cryptographic Key",
+        "vulnerable_code": "byte [] seed = {(byte) 100, (byte) 200};",
+        "description": "Using a hard-coded cryptographic seed/key can compromise security, as it is embedded in the source code and could be extracted by an attacker.",
+        "recommendation": "Use a secure method to generate, manage, and store cryptographic keys securely. Avoid using hard-coded keys."
+    },
+    {
+        "misuse": "Ignoring Returned Values",
+        "vulnerable_code": "passedSeed = defSeed;",
+        "description": "The assignment statement 'passedSeed = defSeed;' has no effect, as 'passedSeed' is a method parameter and reassigning it does not change the caller's argument. As a result, the method does not use the 'passedSeed' as one may expect.",
+        "recommendation": "If the method is intended to modify the passed argument, it should modify the contents of the array rather than reassigning the parameter. If the intention is to use a default seed, it should be clearly documented and handled appropriately."
+    }
+]
+```

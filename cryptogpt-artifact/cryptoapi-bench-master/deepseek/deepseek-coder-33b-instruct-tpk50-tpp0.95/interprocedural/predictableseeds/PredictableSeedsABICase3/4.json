@@ -1,0 +1,7 @@
+Misuse: Insecure Seed for Secure Random Generator
+Vulnerable Code Snippet: 
+```java
+sr.setSeed(seed);
+```
+Description: SecureRandom.setSeed() method is vulnerable to attack because if the seed data is predictable and if an attacker has the ability to guess the seed, they can potentially predict future SecureRandom generated numbers. The provided seed is not suitable for generating a secure random number. The seed used is not sufficient randomness to provide a secure seed. It is merely a two-byte array with static, non-secure data. 
+Recommendation: When using a seed with SecureRandom, ensure that it's truly random, and preferably kept secret to prevent an attacker from guessing the seed. This could involve using a high-entropy source to generate a seed (e.g., /dev/random on Linux, KeyGenerator.getInstance("AES").generateKey().getEncoded() on Java), and storing it securely.

@@ -1,0 +1,29 @@
+```json
+[
+  {
+    "misuse": "Insufficient Encryption Key Length",
+    "vulnerable_code": [
+      "KeyGenerator.getInstance(algo)",
+      "keygen.generateKey()"
+    ],
+    "description": "The code does not specify the key size for the AES encryption algorithm. Using the default key size might be insecure depending on the provider and could potentially be inferior to the current best practice of 256-bit keys.",
+    "recommendation": "Specify the key length explicitly using keygen.init(256);"
+  },
+  {
+    "misuse": "Insecure Cipher Mode",
+    "vulnerable_code": [
+      "Cipher.getInstance(keygen.getAlgorithm())"
+    ],
+    "description": "The code only specifies 'AES' but does not specify a cipher mode or padding scheme. This can default to ECB mode with PKCS5Padding depending on the provider, which is not secure for encrypting multiple blocks of data because it does not provide ciphertext integrity or confidentiality.",
+    "recommendation": "Use a secure cipher mode and padding scheme, such as 'Cipher.getInstance(\"AES/GCM/NoPadding\");'"
+  },
+  {
+    "misuse": "Hardcoded Encryption Algorithm",
+    "vulnerable_code": [
+      "String algo = \"AES\""
+    ],
+    "description": "While not necessarily a vulnerability on its own, hardcoding the encryption algorithm does not provide flexibility and might create a maintenance issue if the algorithm needs to be changed later.",
+    "recommendation": "Consider storing encryption algorithm names in configuration files or allowing them to be changed through a secure method."
+  }
+]
+```

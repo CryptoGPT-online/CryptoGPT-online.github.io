@@ -1,0 +1,39 @@
+```java
+public class B
+
+    static X509TrustManager getTrustmanager(){
+        return new X509TrustManager(){
+        
+            @Override
+            public X509Certificate[] getAcceptedIssuers() {
+                // TODO Auto-generated method stub
+                return null;
+            }
+        
+            @Override
+            public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+                // TODO Auto-generated method stub
+                
+            }
+        
+            @Override
+            public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+                // TODO Auto-generated method stub
+                
+            }
+        };
+    }
+    public static void main(String[] args) {
+        getTrustmanager();
+    }
+}
+```
+
+The provided code has the following crypto API misuse:
+
+{
+"misuse": "CWE-295: Improper Certificate Validation",
+"vulnerable_code": "The `checkServerTrusted` and `checkClientTrusted` methods of the custom `X509TrustManager` are not implemented, which means that any certificate will be accepted without validation.",
+"description": "The purpose of the `X509TrustManager` interface is to validate the trustworthiness of X.509 certificates. By not implementing the `checkServerTrusted` and `checkClientTrusted` methods, the custom `X509TrustManager` is effectively accepting any certificate without performing any validation. This could allow an attacker to impersonate a trusted party or to intercept and modify communications.",
+"recommendation": "Implement the `checkServerTrusted` and `checkClientTrusted` methods to properly validate the trustworthiness of X.509 certificates."
+}

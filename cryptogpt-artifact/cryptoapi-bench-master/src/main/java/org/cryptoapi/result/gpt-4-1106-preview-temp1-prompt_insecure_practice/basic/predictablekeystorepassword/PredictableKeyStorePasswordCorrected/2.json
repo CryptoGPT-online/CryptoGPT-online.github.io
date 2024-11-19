@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Hardcoded Key",
+        "vulnerable_code": "\"https://www.google.com\"",
+        "description": "Loading a KeyStore from a hardcoded URL could expose the application to risk if the URL is compromised or not trusted.",
+        "recommendation": "The URL should not be hardcoded, and instead should be configurable through a secure method such as a configuration file with proper access control. Also, consider proper certificate validation and management."
+    },
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "String.valueOf(random.ints())",
+        "description": "Using a SecureRandom object to generate a KeyStore password does not ensure confidentiality because the password is not securely managed and might be predictable or not sufficiently random.",
+        "recommendation": "Use a strong, secret passphrase for the KeyStore that is securely generated and stored, not just a random number converted to a string."
+    },
+    {
+        "misuse": "Improper Certificate Validation",
+        "vulnerable_code": "cacerts.openStream()",
+        "description": "The code is opening a connection to a URL and using it to load a KeyStore without validating the server's SSL certificate, which might be subjected to man-in-the-middle attacks.",
+        "recommendation": "Implement proper SSL/TLS certificate validation when opening connections to URLs to ensure the authenticity of the certificate provided by the server."
+    },
+    {
+        "misuse": "Sensitive Data Exposure",
+        "vulnerable_code": "String.valueOf(random.ints())",
+        "description": "Exposing a KeyStore password generated at runtime can lead to the leakage of sensitive information if not handled properly.",
+        "recommendation": "Ensure that the KeyStore password is securely generated and stored, and not logged or exposed to unauthorized entities."
+    }
+]
+```

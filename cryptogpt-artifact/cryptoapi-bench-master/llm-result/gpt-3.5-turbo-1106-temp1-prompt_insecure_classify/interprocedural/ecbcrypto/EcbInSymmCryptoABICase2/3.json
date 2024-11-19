@@ -1,0 +1,14 @@
+[
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_code": "KeyGenerator.getInstance(\"AES\")",
+    "description": "The code uses default encryption algorithm AES with ECB mode and PKCS5Padding for padding, which is considered to have inadequate encryption strength. ECB mode does not provide proper security for encrypting blocks of data, as it applies the same key for each block independently, resulting in patterns that can be exploited. Additionally, PKCS5Padding has known vulnerabilities in certain scenarios.",
+    "recommendation": "Consider using a more secure encryption mode like CBC or CTR with a cryptographically strong padding scheme like PKCS7Padding or OAEP. Also, consider using a longer key length like 256 bits for AES encryption."
+  },
+  {
+    "misuse": "CWE-798: Use of Hardcoded Credentials",
+    "vulnerable_code": "private static char[] CRYPTO;\n    private static char[] crypto;\n\n    private static void go2(){\n        CRYPTO = DEFAULT_CRYPTO.toCharArray();\n    }\n    private static void go3(){\n        crypto = CRYPTO;\n    }",
+    "description": "The code uses hardcoded encryption algorithm parameters in the DEFAULT_CRYPTO constant and stores them in char arrays. Hardcoding encryption details like algorithm and padding in the code can expose the application to risks, as it becomes difficult to update or change the encryption parameters securely.",
+    "recommendation": "Instead of hardcoding encryption details, consider storing them in a secure configuration file or using a secure key management system. This will allow for easier updates and management of encryption parameters without exposing them in the code."
+  }
+]

@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Use of Insecure Random Numbers",
+        "vulnerable_code": "String defaultKey = String.valueOf(random.ints());",
+        "description": "The usage of the random ints directly as a key without proper key derivation function could lead to an insecure key, as SecureRandom is not designed to generate cryptographic keys.",
+        "recommendation": "Use a key derivation function like PBKDF2 or generate a key using a cryptographic key generator."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The key size may not be sufficient if the initial defaultKey does not have enough entropy or if it does not use a secure key derivation process.",
+        "recommendation": "Ensure a full entropy 128/192/256-bit key is used (typically 16/24/32 bytes respectively). Derive the key using a secure key derivation function."
+    },
+    {
+        "misuse": "Hardcoded Encryption Initialization Vector (IV)",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, keySpec);",
+        "description": "For security reasons, the IV for AES encryption should be random and not reused. The code is missing an IV, and CBC mode requires a unique IV for each encryption to be secure.",
+        "recommendation": "Generate a random IV using 'SecureRandom', pass it to 'cipher.init' along with the encryption key, and transmit the IV along with the ciphertext."
+    }
+]
+```

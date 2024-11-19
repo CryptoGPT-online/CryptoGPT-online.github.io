@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "SSLSocketFactory ssf = (SSLSocketFactory) SSLSocketFactory.getDefault();",
+        "description": "The SSLSocketFactory.getDefault() method is used to get the default SSLSocketFactory. The default implementation may not be the most secure one and it's recommended to use specific implementations instead.",
+        "recommendation": "Replace the use of SSLSocketFactory.getDefault() with the specific implementation. It's also recommended to use TLS protocol."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "SSLSocket socket = (SSLSocket) ssf.createSocket(\"my.host.name\", 443);",
+        "description": "The code doesn't verify the server certificate and accepts any server with a trusted certificate.",
+        "recommendation": "Always perform certificate validation. You can use hostname verification by implementing a custom HostnameVerifier or accept all certificates by installing a trust manager."
+    }
+]
+```

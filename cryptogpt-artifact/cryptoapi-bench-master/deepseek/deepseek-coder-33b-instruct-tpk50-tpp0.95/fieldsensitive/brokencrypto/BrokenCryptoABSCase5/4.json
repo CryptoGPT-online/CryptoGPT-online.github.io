@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "CBC (Cipher Block Chaining) Mode Not Being Used",
+        "vulnerable_code": "Cipher.getInstance(defaultAlgo)",
+        "description": "CBC mode is used in most symmetric encryption systems. This mode provides confidentiality in case of a chosen ciphertext attack (CCA). It's recommended to use CBC mode with any symmetric encryption.",
+        "recommendation": "Modify Cipher.getInstance(defaultAlgo) to Cipher.getInstance(defaultAlgo + "/CBC/PKCS5Padding"). This will ensure CBC mode is used with the provided algorithm and appropriate padding is used."
+    },
+    {
+        "misuse": "Using Default Key Generator",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);",
+        "description": "It's important to note that the `KeyGenerator` provided by the Java Cryptography Extension (JCE) is not recommended for generating encryption keys. The generated keys can be weak and vulnerable to attacks. The default key generation is not suitable for cryptographic operations.",
+        "recommendation": "Instead of using the default key generator, consider using a dedicated and secure key generator. For instance, you can use `SecretKeyFactory` and `PBEKeySpec` classes for generating a key from a password."
+    }
+]
+```

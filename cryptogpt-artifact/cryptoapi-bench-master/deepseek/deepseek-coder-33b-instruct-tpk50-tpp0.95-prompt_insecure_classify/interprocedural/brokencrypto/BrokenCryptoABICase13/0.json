@@ -1,0 +1,48 @@
+CWE-327: Use of a Broken or Risky Cryptographic Algorithm
+
+Misuse code snippets: 
+```java
+String cryptoAlgo = c;
+method1(cryptoAlgo);
+```
+and
+```java
+Cipher cipher = Cipher.getInstance(crypto);
+```
+
+Description: 
+The method 'getInstance()' of the Cipher class in Java accepts a string argument which represents the cryptographic algorithm to be used for the Cipher instance. If you pass a string that doesn't correspond to a known and available algorithm (or if the string is null), 'getInstance()' throws a NoSuchAlgorithmException. For example, "RC4" is a weak cryptographic algorithm and should not be used in modern cryptographic protocols. Using a weak cryptographic algorithm can make it easier for attackers to decrypt sensitive information.
+
+Recommendation:
+Check crypto string that comes from the outside before passing it to 'getInstance()' function. You can verify if the algorithm is supported in the runtime environment. If it's not supported, use a secure and up-to-date algorithm such as AES, DES or RSA.
+
+CWE-326: Inadequate Encryption Strength
+
+Misuse code snippets:
+```java
+KeyGenerator keyGen = KeyGenerator.getInstance(crypto);
+SecretKey key = keyGen.generateKey();
+```
+
+Description:
+KeyGenerator.getInstance(crypto).generateKey() is used to create a symmetric encryption key. The size of the key that is generated is determined by the crypto algorithm used. For "RC4", the key size is 40 bits by default. This is considered an insecure and weak encryption strength as it's too small.
+
+Recommendation:
+For "RC4" cryptography, it's not recommended to use keys of less than 40 bits. Instead, consider using stronger algorithms like AES, which provides a key size of 128 bits, 192 bits, or 256 bits. These are the industry standard for encryption keys.
+
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "method1(crypto)\nCipher cipher = Cipher.getInstance(crypto);",
+        "description": "The crypto algorithm \"RC4\" is known to have vulnerabilities and should not be used.",
+        "recommendation": "Use a secure and up-to-date algorithm such as AES, DES or RSA."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(crypto)\nSecretKey key = keyGen.generateKey();",
+        "description": "The key generated for the \"RC4\" algorithm is too small (40 bits), making it an insecure and weak encryption strength.",
+        "recommendation": "For \"RC4\", consider using a key size of 128 bits, 192 bits, or 256 bits, which is the industry standard for encryption keys."
+    }
+]
+```

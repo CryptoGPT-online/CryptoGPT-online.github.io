@@ -1,0 +1,11 @@
+[{
+  "misuse": "Uninitialized Cipher IV",
+  "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+  "description": "The code does not explicitly set an initialization vector (IV) for AES in CBC mode, which can lead to weak cryptography if the same IV is used for multiple encryptions.",
+  "recommendation": "Always use a securely generated random IV that is equal to the block size of the cipher (16 bytes for AES). Use Cipher.init with an IvParameterSpec to set the IV."
+}, {
+  "misuse": "Insecure Randomness",
+  "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+  "description": "The default KeyGenerator does not specify a secure random instance and relies on the platform's default, which may not be secure.",
+  "recommendation": "Explicitly set a SecureRandom instance when generating a key to ensure the use of a secure seed. Example: SecureRandom secureRandom = new SecureRandom(); keyGen.init(keySize, secureRandom);"
+}]

@@ -1,0 +1,38 @@
+```json
+[
+    {
+        "misuse": "Weak Encryption Algorithm",
+        "vulnerable_code": "crypto = new C4(\"RC4\");",
+        "description": "RC4 is considered to be a weak encryption algorithm due to various vulnerabilities including biases in the output stream.",
+        "recommendation": "Use stronger encryption algorithms like AES (Advanced Encryption Standard) with a 128 or 256-bit key size."
+    },
+    {
+        "misuse": "Missing Encryption Mode and Padding Scheme",
+        "vulnerable_code": "Cipher.getInstance(defaultAlgo);",
+        "description": "Cipher.getInstance() is called without specifying the encryption mode and padding scheme. This can lead to vulnerabilities if a block cipher mode without an integrity check is used.",
+        "recommendation": "Specify the encryption mode and padding scheme when getting an instance of Cipher (e.g., AES/CBC/PKCS5Padding)."
+    },
+    {
+        "misuse": "Insecure Random Key Generation",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);",
+        "description": "Using KeyGenerator without specifying the key size can lead to generation of keys with default size, which might not be secure.",
+        "recommendation": "Explicitly specify the key size during key generation to ensure strong keys (e.g., keyGen.init(256); for a 256-bit AES key)."
+    },
+    {
+        "misuse": "Hardcoded Encryption Algorithm",
+        "vulnerable_code": [
+            "crypto = new C4(\"RC4\");",
+            "KeyGenerator.getInstance(defaultAlgo);",
+            "Cipher.getInstance(defaultAlgo);"
+        ],
+        "description": "The encryption algorithm is hardcoded, reducing flexibility and potentially using an insecure default algorithm (RC4 in this case).",
+        "recommendation": "A configurable option should be provided for selecting the encryption algorithm, and the default should be a secure algorithm (e.g., AES)."
+    },
+    {
+        "misuse": "No Use of Secure Random in Key Generation",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);",
+        "description": "It's not clear if a secure random source is used in key generation, which could compromise key security.",
+        "recommendation": "Always use a known secure random source for key generation (e.g., SecureRandom.getInstanceStrong())."
+    }
+]
+```

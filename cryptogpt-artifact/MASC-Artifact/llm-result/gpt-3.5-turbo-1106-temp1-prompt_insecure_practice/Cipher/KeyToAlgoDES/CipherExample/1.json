@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Insecure Key Generation",
+        "vulnerable_code": "KeyGenerator keygen = KeyGenerator.getInstance(algo);\nSecretKey key = keygen.generateKey();",
+        "description": "Using the default provider and not specifying a SecureRandom algorithm can lead to insecure and predictable key generation.",
+        "recommendation": "Specify a strong and secure random number generator (SecureRandom) algorithm and the provider. For example, KeyGenerator keygen = KeyGenerator.getInstance(algo, \"SunJCE\");\nkeygen.init(new SecureRandom());\nSecretKey key = keygen.generateKey();"
+    },
+    {
+        "misuse": "Hardcoded Cipher Algorithm",
+        "vulnerable_code": "Cipher c = Cipher.getInstance(keygen.getAlgorithm());",
+        "description": "Using hardcoded cipher algorithm can lead to insecure or weak encryption.",
+        "recommendation": "Use a strong and secure cipher algorithm, and avoid using hardcoded values. Example: String cipherAlgorithm = \"AES/CBC/PKCS5Padding\";\nCipher c = Cipher.getInstance(cipherAlgorithm);"
+    }
+]
+```

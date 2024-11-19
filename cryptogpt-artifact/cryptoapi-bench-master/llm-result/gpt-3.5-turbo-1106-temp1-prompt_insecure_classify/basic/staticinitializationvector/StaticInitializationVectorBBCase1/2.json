@@ -1,0 +1,14 @@
+[{"misuse": "CWE-326: Inadequate Encryption Strength", 
+ "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();", 
+ "description": "The AES algorithm is used with the default key size, which is considered to be inadequate for strong encryption. The default key size for AES is 128 bits. Using a smaller key size can make the encryption vulnerable to brute-force attacks.", 
+ "recommendation": "Use a key size of at least 256 bits for AES encryption to ensure stronger security."}, 
+
+{"misuse": "CWE-326: Inadequate Encryption Strength", 
+ "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");", 
+ "description": "The PKCS5Padding is used, which is considered to be insecure. It is recommended to use PKCS7Padding instead.", 
+ "recommendation": "Change the padding scheme to PKCS7Padding for improved security."}, 
+
+{"misuse": "CWE-326: Inadequate Encryption Strength", 
+ "vulnerable_code": "byte [] bytes = \"abcde\".getBytes();\nIvParameterSpec ivSpec = new IvParameterSpec(bytes);", 
+ "description": "A static IV (Initialization Vector) is used, which is insecure. The IV should be randomly generated for each encryption process to ensure stronger security.", 
+ "recommendation": "Generate a random IV for each encryption process using a secure random number generator."}]

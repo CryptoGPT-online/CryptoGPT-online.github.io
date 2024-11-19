@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Weak Encryption Algorithm",
+        "vulnerable_code": "KeyGenerator.getInstance(\"Blowfish\")",
+        "description": "Using Blowfish as an encryption algorithm is not recommended as it is considered weak due to its shorter block size (64 bits) which makes it susceptible to birthday attacks.",
+        "recommendation": "Switch to a more secure encryption algorithm with a larger block size, such as AES with a block size of 128 bits."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "keyGen.generateKey()",
+        "description": "Blowfish's default key size may not provide sufficient security. The default key size can vary depending on Java's implementation, and could potentially be less than the recommended 128 bits.",
+        "recommendation": "Explicitly specify a key size of at least 128 bits when generating the key."
+    },
+    {
+        "misuse": "ECB Mode of Operation",
+        "vulnerable_code": "Cipher.getInstance(\"Blowfish\")",
+        "description": "ECB (Electronic Codebook) mode is used for encryption as it is the default when not specified. ECB mode is insecure because it doesn't provide serious message confidentiality in many situations and allows for easy detection of patterns within the data.",
+        "recommendation": "Use a more secure mode of operation like CBC (Cipher Block Chaining) with a strong initialization vector or GCM (Galois/Counter Mode) that also provides authentication."
+    },
+    {
+        "misuse": "Missing Secure Random Implementation",
+        "vulnerable_code": "Cipher.getInstance(\"Blowfish\")",
+        "description": "The Cipher object is being initialized without a secure random implementation. When not explicitly set, the provider will use its default source of randomness which might not be secure.",
+        "recommendation": "Specify a secure random implementation when initializing the Cipher object by adding SecureRandom to the init() method."
+    }
+]
+```

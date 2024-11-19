@@ -1,0 +1,18 @@
+[{
+  "misuse": "Predictable Key Store Password",
+  "vulnerable_code": "hm.put(\"aaa\", \"afix\");\nks.load(cacerts.openStream(), key.toCharArray());",
+  "description": "The code snippet utilizes a hard-coded predictable key store password (\"afix\") retrieved from a map, which can be easily guessed or retrieved by an attacker.",
+  "recommendation": "Replace the hard-coded password with a securely generated and managed secret, such as one stored in a secure environment variable, obtained through a secured configuration management system, or derived from a user-input at runtime."
+},
+{
+  "misuse": "Insecure Trust Manager",
+  "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");\nks.load(cacerts.openStream(), key.toCharArray());",
+  "description": "Loading a KeyStore from an arbitrary URL without any validation can expose the application to man-in-the-middle attacks if an attacker can intercept the KeyStore download or if the downloaded content from the URL is compromised.",
+  "recommendation": "Ensure that the KeyStore is fetched from a trusted and secure source. Utilize proper certificate validation and possibly pinning to prevent man-in-the-middle attacks."
+},
+{
+  "misuse": "Insecure Protocol",
+  "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");",
+  "description": "The usage of 'JKS' type for KeyStore is considered less secure since it doesn't support certain modern encryption standards and uses a proprietary format. Additionally, trusting certificates from a non-specific source like the main page of a commercial website for KeyStore initiation could be risky and insecure.",
+  "recommendation": "Consider using 'PKCS12' as the KeyStore type instead of 'JKS' because PKCS12 is an industry-standard format. Ensure that the source of the KeyStore is intended for this purpose and is service-specific rather than a generic webpage."
+}]

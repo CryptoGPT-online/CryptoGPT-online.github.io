@@ -1,0 +1,16 @@
+ {
+"misuses": [
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "SecureRandom sr = new SecureRandom(new byte[]{seed});",
+"description": "The provided seed is a single byte, which is not a secure way to initialize a secure random number generator. A single byte can be easily brute-forced, which can lead to predictable random numbers.",
+"recommendation": "Use a secure seed, such as a randomly generated seed, or use a more secure random number generator, such as a cryptographically secure pseudo-random number generator (CSPRNG)."
+},
+{
+"misuse": "Insecure Use of Crypto API",
+"vulnerable_code": "int v = sr.nextInt();",
+"description": "The nextInt() method of the SecureRandom class does not provide a secure way to generate random numbers. It uses the Random class under the hood, which is not a secure way to generate random numbers.",
+"recommendation": "Use the nextBytes() method of the SecureRandom class to generate secure random bytes, and then use a secure algorithm, such as a cryptographic hash function, to convert the random bytes into a secure random number."
+}
+]
+}

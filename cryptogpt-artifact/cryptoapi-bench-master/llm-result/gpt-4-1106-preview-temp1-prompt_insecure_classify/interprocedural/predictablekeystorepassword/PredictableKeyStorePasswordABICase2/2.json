@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "public static final String DEFAULT_ENCRYPT_KEY = \"changeit\";",
+        "description": "The encryption key is hardcoded and set to a common default value, which could be easily guessed or obtained by an attacker.",
+        "recommendation": "Use a secure method to manage encryption keys, such as a dedicated key management service or environment variables, and avoid hardcoding sensitive information."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "ENCRYPT_KEY = DEFAULT_ENCRYPT_KEY.toCharArray();",
+        "description": "The encryption key derived from the hardcoded value is likely to be of inadequate length and complexity, resulting in weak encryption.",
+        "recommendation": "Use a stronger, randomly generated key with an adequate length and complexity. Consider using key derivation functions like PBKDF2 to generate a strong key from a passphrase."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "cacerts.openStream()",
+        "description": "The code is loading a KeyStore from a URL using an openStream() method without any visible certificate validation, which may leave it vulnerable to man-in-the-middle attacks.",
+        "recommendation": "Implement proper SSL/TLS certificate validation when connecting to a URL. Use a trust manager that checks the server's certificate chain and hostname against trusted CAs."
+    }
+]
+```

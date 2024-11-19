@@ -1,0 +1,32 @@
+### False Positive Misuse ###
+None
+
+### Optimized Misuse JSON ###
+```json
+[
+    {
+        "misuse": "Weak Crypto Algorithm",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "description": "Using KeyGenerator without specifying the provider may result in the use of a weak cryptographic algorithm or a weak key size",
+        "recommendation": "Specify the provider and key size for KeyGenerator.getInstance method to use a stronger cryptographic algorithm and key size"
+    },
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+        "description": "The KeyGenerator is used without specifying a specific random number generation (RNG) algorithm, which can lead to insecure randomness.",
+        "recommendation": "Use a secure random number generation algorithm like SHA1PRNG by specifying it explicitly when getting the KeyGenerator instance: KeyGenerator.getInstance(\"AES\", \"SUN\"), or directly use a secure key generation algorithm like KeyGenerator.getInstance(\"AES\", \"SUN\");"
+    },
+    {
+        "misuse": "Misuse of Initialization Vector (IV)",
+        "vulnerable_code": "passedIV = defIV;",
+        "description": "The IV is set to a default value here, which does not provide proper initialization for the IV and may lead to security vulnerabilities.",
+        "recommendation": "The IV should be generated using a cryptographically secure pseudo-random number generator (CSPRNG) and should not be fixed or set to a default value. Use SecureRandom to generate a random IV: SecureRandom random = new SecureRandom();\nbyte[] iv = new byte[16];\nrandom.nextBytes(iv);\nIvParameterSpec ivSpec = new IvParameterSpec(iv);"
+    },
+    {
+        "misuse": "Misuse of Crypto API", 
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE,key,ivSpec);",
+        "description": "The initialization vector (IV) is set to the default IV 'defIV' without using the passedIV parameter, which invalidates the purpose of having a parameter for IV.",
+        "recommendation": "Use the passedIV parameter as the IV in the cipher initialization instead of the default IV."
+    }
+]
+```

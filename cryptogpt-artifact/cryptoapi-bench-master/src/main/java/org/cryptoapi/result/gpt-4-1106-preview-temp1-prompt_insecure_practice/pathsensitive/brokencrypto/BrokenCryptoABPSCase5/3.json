@@ -1,0 +1,34 @@
+```json
+[
+  {
+    "misuse": "Broken Crypto Algorithm",
+    "vulnerable_code": "Cipher.getInstance(\"IDEA\")",
+    "description": "The IDEA encryption algorithm is considered weak and can be broken with modern computational power. It should not be used for secure data encryption.",
+    "recommendation": "Switch to a more secure algorithm such as AES with an appropriate key size and block mode."
+  },
+  {
+    "misuse": "Inappropriate Cipher Initialization",
+    "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key)",
+    "description": "When using AES in CBC mode, it requires an initialization vector (IV) for security. Without proper IV management, the encryption scheme is vulnerable to various attacks such as replay attacks.",
+    "recommendation": "Initialize the Cipher with an IV by using a IvParameterSpec or use a mode that does not require an IV, such as ECB (though ECB has its own set of vulnerabilities)."
+  },
+  {
+    "misuse": "Inconsistent Encryption",
+    "vulnerable_code": [
+      "Cipher.getInstance(\"IDEA\")",
+      "cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\")"
+    ],
+    "description": "The choice of encryption algorithm should not change based on user input or conditions not related to the cryptographic operation's security. The code snippet shows an inconsistent use of cryptographic algorithms.",
+    "recommendation": "Avoid allowing external factors to determine the encryption algorithm. Decide on a secure algorithm and consistently use it across the application."
+  },
+  {
+    "misuse": "Hardcoded Encryption Algorithm Selection",
+    "vulnerable_code": [
+      "Cipher.getInstance(\"IDEA\")",
+      "cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\")"
+    ],
+    "description": "The encryption algorithm should not be changed dynamically in production code as it can lead to vulnerabilities if not managed securely.",
+    "recommendation": "The chosen encryption algorithm should be vetted and hardcoded, and any changes should be tested and reviewed thoroughly."
+  }
+]
+```

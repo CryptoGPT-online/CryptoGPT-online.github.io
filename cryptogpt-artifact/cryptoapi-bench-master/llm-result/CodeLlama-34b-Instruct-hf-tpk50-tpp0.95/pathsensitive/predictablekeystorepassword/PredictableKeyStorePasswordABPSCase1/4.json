@@ -1,0 +1,22 @@
+ {
+"misuses": [
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "KeyStore.getInstance(type);",
+"description": "The `KeyStore.getInstance(type)` method is used to get an instance of the KeyStore class with the specified type. However, the type parameter is not properly sanitized, which allows an attacker to inject arbitrary values and potentially cause the code to use a broken or vulnerable crypto algorithm.",
+"recommendation": "Use a hardcoded value for the `type` parameter, or validate the value to ensure it is a valid and secure crypto algorithm."
+},
+{
+"misuse": "Weak Randomness",
+"vulnerable_code": "SecureRandom random = new SecureRandom();\ndefaultKey = String.valueOf(random.ints());",
+"description": "The `SecureRandom.ints()` method returns a pseudorandom integer from the specified range. However, the `SecureRandom` class is not seeded with enough entropy to produce secure random numbers. This can lead to predictable and weak randomness, which can compromise the security of the code.",
+"recommendation": "Use a more secure random number generator, such as the `SecureRandom` class with a proper seed, or use a crypto-strength random number generator."
+},
+{
+"misuse": "Insecure Use of Password",
+"vulnerable_code": "defaultKey = String.valueOf(random.ints());",
+"description": "The password for the KeyStore is generated using a weak random number generator and is then converted to a string using `String.valueOf()`. This can lead to predictable and weak passwords, which can be easily guessed or brute-forced by an attacker.",
+"recommendation": "Use a more secure password generation mechanism, such as a crypto-strength random number generator or a password derivation function with a strong hashing algorithm."
+}
+]
+}

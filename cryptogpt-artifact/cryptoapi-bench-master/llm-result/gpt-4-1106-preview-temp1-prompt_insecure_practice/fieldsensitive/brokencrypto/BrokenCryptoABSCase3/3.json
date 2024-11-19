@@ -1,0 +1,34 @@
+```json
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "crypto = new C4(\"RC4\");",
+        "description": "The RC4 encryption algorithm is considered to be broken and insecure. Its use can result in weak encryption that can be easily decrypted by attackers.",
+        "recommendation": "Switch to a secure, modern encryption algorithm like AES."
+    },
+    {
+        "misuse": "Hardcoded Encryption Algorithm",
+        "vulnerable_code": "defaultAlgo = defAlgo;",
+        "description": "The encryption algorithm is hard-coded, reducing flexibility and potentially leading to the use of insecure algorithms if not properly managed.",
+        "recommendation": "Avoid hardcoding the encryption algorithm; instead, allow it to be configurable through a secure manner."
+    },
+    {
+        "misuse": "Use of ECB Mode",
+        "vulnerable_code": "Cipher.getInstance(defaultAlgo);",
+        "description": "If 'defaultAlgo' is set to an algorithm that defaults to ECB mode when not specified, ECB mode is insecure because identical plaintext blocks are encrypted to identical ciphertext blocks.",
+        "recommendation": "Specify a secure mode of operation (like CBC, CFB, OFB or GCM) and use a unique, unpredictable initialization vector (IV) for each encryption."
+    },
+    {
+        "misuse": "Weak Key Generation",
+        "vulnerable_code": "KeyGenerator.getInstance(defaultAlgo);",
+        "description": "Key generation is based on the default algorithm without specifying key size, which could lead to generating weak keys if the default key size is not secure.",
+        "recommendation": "Specify a secure key size explicitly when generating keys."
+    },
+    {
+        "misuse": "Missing Initialization Vector",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "No Initialization Vector (IV) is used, which is insecure if the chosen mode of operation requires unpredictability for security (like CBC mode).",
+        "recommendation": "Always use a securely generated IV when the mode of operation requires it."
+    }
+]
+```

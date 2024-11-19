@@ -1,0 +1,11 @@
+```json
+[{
+    "misuse": "CWE-295: Improper Certificate Validation",
+    "vulnerable_code": [
+        "SSLSocketFactory ssf = (SSLSocketFactory) SSLSocketFactory.getDefault();",
+        "SSLSocket socket = (SSLSocket) ssf.createSocket(\"my.host.name\", 443);"
+    ],
+    "description": "The code snippet shows the creation of an SSLSocket without any visible certificate validation. If the certificate validation is not properly implemented elsewhere in the application, this could allow man-in-the-middle attacks.",
+    "recommendation": "Implement proper SSL/TLS certificate validation. Ensure that the SSLSocket is configured to verify the server's certificate chain and the hostname. This can be done by using a custom javax.net.ssl.X509TrustManager that implements the necessary checks, or by configuring the socket's SSLParameters with an appropriate EndpointIdentificationAlgorithm."
+}]
+```

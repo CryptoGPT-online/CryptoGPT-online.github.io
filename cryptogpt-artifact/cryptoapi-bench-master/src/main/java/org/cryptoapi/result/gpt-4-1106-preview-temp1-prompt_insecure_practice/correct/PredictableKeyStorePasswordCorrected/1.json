@@ -1,0 +1,28 @@
+```json
+[
+  {
+    "misuse": "Insecure KeyStore password",
+    "vulnerable_code": "String password = String.valueOf(random.ints());",
+    "description": "Using a SecureRandom to generate a password adds unnecessary complexity and can potentially lead to a weak password. It does not guarantee a secure password if the random values are converted directly to a string as this can result in a non-uniform distribution and potentially predictable patterns.",
+    "recommendation": "Instead of generating a password via SecureRandom, use a securely generated, fixed password of adequate length and complexity, or securely manage passwords."
+  },
+  {
+    "misuse": "Insecure Trust Management",
+    "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");",
+    "description": "The code is loading a KeyStore from an arbitrary URL (in this case https://www.google.com), this could expose the application to an untrusted SSL certificate if the URL is not under the control of the application developer or trusted entity.",
+    "recommendation": "Ensure that the KeyStore is loaded from a trusted and secure source. If it is necessary to load the KeyStore over the network, use a URL with mutual authentication and secure transport (e.g., TLS with certificate pinning)."
+  },
+  {
+    "misuse": "KeyStore loaded without proper error handling",
+    "vulnerable_code": "ks.load(cacerts.openStream(), password.toCharArray());",
+    "description": "The code lacks proper error handling for cases where the KeyStore might fail to load due to various reasons (e.g. network issues, incorrect password, corrupt keystore). This could lead to unhandled exceptions and potentially inconsistent state or security vulnerabilities.",
+    "recommendation": "Implement proper error handling for KeyStore loading. Catch relevant exceptions and handle them appropriately."
+  },
+  {
+    "misuse": "Irrelevant KeyStore Type",
+    "vulnerable_code": "String type = \"JKS\";",
+    "description": "The code sets the KeyStore type to JKS, which is an older type of keystore that is generally considered less secure compared to PKCS12.",
+    "recommendation": "Switch to a more secure KeyStore type like PKCS12 which uses stronger cryptographic algorithms."
+  }
+]
+```

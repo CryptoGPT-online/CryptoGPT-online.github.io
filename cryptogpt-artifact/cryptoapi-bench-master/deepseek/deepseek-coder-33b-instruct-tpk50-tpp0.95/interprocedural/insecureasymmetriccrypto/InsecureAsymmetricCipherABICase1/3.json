@@ -1,0 +1,20 @@
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "KeyPairGenerator kgp = KeyPairGenerator.getInstance(\"RSA\");\nkgp.initialize(keySize);",
+        "description": "The key size is determined using user-provided input, potentially allowing an attacker to supply an insecure key size that's easier to break.",
+        "recommendation": "Use a hard-coded, secure key size. Use a recommended key size for the specific algorithm being used (e.g. 2048 for RSA)."
+    },
+    {
+        "misuse": "Insecure Mode of Operation",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"RSA\");\ncipher.init(Cipher.ENCRYPT_MODE, kp.getPublic());",
+        "description": "Cipher.ENCRYPT_MODE should not be used with RSA. RSAES-OAEP and RSAES-PKCS1-v1_5 are secure modes of operation for RSA encryption.",
+        "recommendation": "Use one of the secure modes of operation for RSA encryption like RSA/ECB/OAEPPadding."
+    },
+    {
+        "misuse": "Unsealed Object Creation",
+        "vulnerable_code": "SealedObject encryptedMessage = new SealedObject(myMessage,cipher);",
+        "description": "The object 'myMessage' is not sealed using the same cipher object when it's created and when it's unsealed.",
+        "recommendation": "Ensure that the object is sealed and unsealed with the same cipher instance."
+    }
+]

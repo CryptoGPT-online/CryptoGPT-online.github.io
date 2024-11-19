@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Hard-coded Credentials",
+        "vulnerable_code": "String key = \"changeit\";",
+        "description": "Hard-coded credentials pose a significant security risk. If an attacker gains access to the source code, they could extract sensitive data such as database passwords, API keys, and other credentials. The 'changeit' string might be a default value which should not be used in a production environment.",
+        "recommendation": "Consider using environment variables to store sensitive data like this. For Java, you can use System.getenv('YOUR_SECRET_KEY') to get the secret key from the environment where the application is running."
+    },
+    {
+        "misuse": "Insecure Cryptography Storage",
+        "vulnerable_code": "KeyStore ks = KeyStore.getInstance(type);\ncacerts = new URL(\"https://www.google.com\");\nks.load(cacerts.openStream(), passedKey.toCharArray());",
+        "description": "Loading a KeyStore from a remote URL can lead to several issues. Firstly, this URL could be malicious and an attacker could exploit this to download malicious code or extract sensitive information. Secondly, this operation is being performed over HTTP, which sends the keystore data in plaintext and is vulnerable to network interception attacks.",
+        "recommendation": "Use a secure channel for transmitting keystore data. For example, you could use HTTPS to fetch the keystore and use a secure file system to store keystores and ensure only authorized users have access to the storage location."
+    }
+]
+```

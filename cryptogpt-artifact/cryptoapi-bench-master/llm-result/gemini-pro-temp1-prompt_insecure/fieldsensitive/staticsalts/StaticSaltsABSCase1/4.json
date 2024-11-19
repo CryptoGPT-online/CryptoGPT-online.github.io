@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "Insufficient Entropy for Key Derivation",
+    "vulnerable_code": "byte[] salt = {(byte) 0xa2};\ncrypto = new C1(salt);",
+    "description": "Using a hardcoded salt value that is too short (only 1 byte) for key derivation makes it easier for an attacker to brute-force the key.",
+    "recommendation": "Generate a cryptographically secure random salt value with a sufficient length (e.g., 16 bytes) and use it for key derivation."
+  },
+  {
+    "misuse": "Hardcoded Iteration Count for PBKDF2",
+    "vulnerable_code": "int count = 1020;\nPBEParameterSpec pbeParamSpec = null;\npbeParamSpec = new PBEParameterSpec(passedSalt, count);",
+    "description": "Using a hardcoded iteration count (1020) for PBKDF2 makes it easier for an attacker to perform a brute-force attack on the derived key.",
+    "recommendation": "Use a secure random number generator to generate a unique iteration count for each password-based encryption operation."
+  }
+]
+```

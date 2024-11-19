@@ -1,0 +1,14 @@
+ [
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "byte[] salt = {(byte) 0xa2};\nif(choice>1)\n    sr2.nextBytes(salt);",
+        "description": "The salt is initialized to a static value of {(byte) 0xa2}, which is not sufficient for generating a secure key. If the user chooses a high enough value for `choice`, the salt will not be randomized, which can lead to a vulnerability in the cryptographic system.",
+        "recommendation": "Use a random salt that is generated for each key generation process, and make sure to use a sufficient amount of entropy to prevent predictable salts."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": "PBEParameterSpec pbeParamSpec = new PBEParameterSpec(salt, count);",
+        "description": "The `PBEParameterSpec` class is used to generate a key, but the `PBEParameterSpec` constructor is not used correctly. The `count` parameter should be a large, random value to increase the security of the key generation process.",
+        "recommendation": "Use a large, random value for the `count` parameter and make sure to use a secure random number generator to generate the random value."
+    }
+]

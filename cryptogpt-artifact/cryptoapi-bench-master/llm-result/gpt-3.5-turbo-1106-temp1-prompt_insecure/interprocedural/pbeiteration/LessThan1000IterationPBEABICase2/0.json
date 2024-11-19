@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "SecureRandom random = new SecureRandom();\nbyte[] salt = new byte[32];\nrandom.nextBytes(salt);",
+        "description": "Using SecureRandom without specifying a specific algorithm or provider can lead to insecure randomness.",
+        "recommendation": "Specify a specific algorithm and provider when creating SecureRandom instance, such as 'SecureRandom.getInstanceStrong()' to use a cryptographically strong PRNG."
+    },
+    {
+        "misuse": "Weak Key Derivation",
+        "vulnerable_code": "PBEParameterSpec pbeParamSpec = null;\nbyte[] salt = new byte[32];\nrandom.nextBytes(salt);\npbeParamSpec = new PBEParameterSpec(salt, Integer.parseInt(String.valueOf(count)));",
+        "description": "Using PBE with a weak key derivation function and insufficient iteration count can lead to weak key generation.",
+        "recommendation": "Use stronger key derivation functions like PBKDF2WithHmacSHA256 and choose a sufficiently high iteration count to derive a secure key."
+    }
+]
+```

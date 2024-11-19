@@ -1,0 +1,28 @@
+```json
+[
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values",
+    "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(new byte[]{Byte.parseByte(String.valueOf(initialization))});",
+    "description": "The IV (initialization vector) is not random; it is derived from a static, non-random source which can lead to predictable IVs and weaken the cryptographic strength.",
+    "recommendation": "Use SecureRandom to generate a random IV."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_code": "KeyGenerator.getInstance(\"AES\")",
+    "description": "The key size for AES is not specified, and by default, it may use a size (like 128 bits) that could be considered not strong enough for certain applications.",
+    "recommendation": "Specify the key size explicitly by calling keyGen.init(256); for AES-256, which is considered stronger."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(new byte[]{Byte.parseByte(String.valueOf(initialization))});",
+    "description": "The initialization vector (IV) is created from a static, hardcoded source and is not of adequate length, which may lead to weakened encryption.",
+    "recommendation": "Use SecureRandom to generate an IV of the proper length (16 bytes for AES)."
+  },
+  {
+    "misuse": "CWE-798: Use of Hardcoded Credentials",
+    "vulnerable_code": "public static final String DEFAULT_INITIALIZATION = \"abcde\";",
+    "description": "The initialization vector is derived from a hardcoded string, which is a potential vulnerability as it doesn't change and can be easily discovered.",
+    "recommendation": "Do not hardcode the initialization vector; generate it randomly for each session."
+  }
+]
+```

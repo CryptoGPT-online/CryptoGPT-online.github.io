@@ -1,0 +1,26 @@
+This code snippet contains a misuse of the PBEKeySpec class from Java Cryptography Extension (JCE) which is related to crypto algorithm and password based encryption scheme. 
+
+The vulnerability is in the following line:
+
+```java
+String password = String.valueOf(random.ints());
+```
+
+The `random.ints()` function is generating an unlimited number of random integers but only first 9 random integers are converted to string and stored into the password variable which may cause buffer overflow in other parts of the code. 
+
+Recommendation:
+
+Limit the size of the password or use more secure random number generation methods which is recommended by the crypto API developers.
+
+The complete JSON response is as follows:
+
+```json
+[
+    {
+        "misuse": "Buffer overflow",
+        "vulnerable_code": "String password = String.valueOf(random.ints());",
+        "description": "Incorrect handling of password generation that may lead to buffer overflow.",
+        "recommendation": "Use secure ways to generate random passwords, limit their size or use SecureRandom class."
+    }
+]
+```

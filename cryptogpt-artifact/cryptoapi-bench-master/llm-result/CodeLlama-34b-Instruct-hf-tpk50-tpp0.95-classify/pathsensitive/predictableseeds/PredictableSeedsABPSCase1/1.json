@@ -1,0 +1,10 @@
+ {
+"misuses": [
+{
+"misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+"vulnerable_code": "SecureRandom sr = new SecureRandom();\n        int choice=2;\n        byte [] bytes = {(byte) 100, (byte) 200};\n        if(choice>1)\n            sr.nextBytes(bytes);\n\n        sr.setSeed(bytes);\n        int v = sr.nextInt();\n        System.out.println(v);",
+"description": "The code uses `SecureRandom` class to generate cryptographically secure random numbers. However, the seed used for `SecureRandom` is not properly set. The `setSeed` method is called with a static array of bytes, which may not be secure. It is recommended to use a proper seeding mechanism to ensure that the random numbers generated are truly random and unpredictable.",
+"recommendation": "Use a secure seeding mechanism, such as `SecureRandom.getInstance(\"SHA1PRNG\").setSeed(mySeed)` where `mySeed` is a properly seeded SecureRandom object."
+}
+]
+}

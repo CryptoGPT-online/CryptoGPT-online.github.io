@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "Predictable Randomness",
+    "vulnerable_code": "String.valueOf(random.ints())",
+    "description": "Using 'String.valueOf(random.ints())' results in predictable randomness since it calls 'ints()' without specifying a bound, leading to a stream of potentially unlimited integer numbers that are not suitable for secure password generation.",
+    "recommendation": "Use a cryptographically strong random number generator and ensure the generated value is uniformly distributed and of adequate length for key generation. For passwords or keys, use SecureRandom's 'nextBytes' method with a predefined byte array size."
+  },
+  {
+    "misuse": "Insecure KeyStore Password",
+    "vulnerable_code": "new String(keyBytes).toCharArray()",
+    "description": "Converting byte array to String and then to a char array is an insecure way of setting a KeyStore password. When using 'String.getBytes', platform's default charset could lead to non-uniform behavior across different environments. Moreover, the randomness is not guaranteed because of the usage of 'ints()' without a limit.",
+    "recommendation": "Avoid using the SecureRandom integer stream for password generation. Instead, securely generate a random number of appropriate length with SecureRandom's 'nextBytes' function, and use that byte array directly or encode it securely (e.g., Base64 encode) for its usage as password."
+  },
+  {
+    "misuse": "Inadequate Exception Handling",
+    "vulnerable_code": "ks.load(cacerts.openStream(), new String(keyBytes).toCharArray())",
+    "description": "Not handling exceptions in a secure manner. If an IOException or other exception occurs during the loading of the keystore, it might expose sensitive information or lead to insecure state.",
+    "recommendation": "Implement proper exception handling that ensures sensitive information is not leaked and any cryptographic operations are not continued in an insecure state."
+  }
+]
+```

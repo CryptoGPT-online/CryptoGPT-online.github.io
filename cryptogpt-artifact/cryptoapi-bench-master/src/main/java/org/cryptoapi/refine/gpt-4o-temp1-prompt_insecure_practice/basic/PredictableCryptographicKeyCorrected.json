@@ -1,0 +1,24 @@
+### False Positive Misuse ###
+
+1. **Misuse: Static Key Size**
+   - **Vulnerable Code:** `keyBytes = Arrays.copyOf(keyBytes,16);`
+   - **Reason:** The operation of resizing a byte array to a specific length (e.g., 16 bytes) is standard when preparing a key for a fixed-length encryption algorithm such as AES, which requires a key of certain length. The mention here seems more about ensuring the derived key has sufficient entropy, but it is not directly related to static key size misuse.
+
+### Optimized Misuse JSON###
+
+```json
+[
+    {
+        "misuse": "Weak Key Generation",
+        "vulnerable_code": "String defaultKey = String.valueOf(random.ints());",
+        "description": "The key generation process is using a random integer converted to a string, which does not provide proper bit strength and may result in a weak encryption key. Key material should be of an appropriate size for the cryptographic algorithm.",
+        "recommendation": "Use a secure random method that generates a byte array of appropriate length for the key, such as `byte[] keyBytes = new byte[16]; random.nextBytes(keyBytes);` for a 128-bit AES key."
+    },
+    {
+        "misuse": "Missing IV (Initialization Vector)",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, keySpec);",
+        "description": "In CBC mode, it is crucial to use an Initialization Vector (IV) to ensure that the same plaintext encrypts to different ciphertexts each time. Not using an IV can lead to predictable ciphertext, which is a security flaw.",
+        "recommendation": "Properly generate and use an IV by calling `cipher.init(Cipher.ENCRYPT_MODE, keySpec, new IvParameterSpec(iv))`, where `iv` is a securely generated random byte array of the block size (e.g., 16 bytes for AES)."
+    }
+]
+```

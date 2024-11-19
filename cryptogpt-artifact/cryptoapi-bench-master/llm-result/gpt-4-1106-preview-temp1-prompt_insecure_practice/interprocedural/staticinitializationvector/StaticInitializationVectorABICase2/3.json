@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Hardcoded Initialization Vector",
+        "vulnerable_code": "new IvParameterSpec(new byte[]{Byte.parseByte(String.valueOf(initialization))})",
+        "description": "Using a static, hardcoded initialization vector (IV) could lead to predictable IVs, which weakens the cryptographic strength of encryption.",
+        "recommendation": "Use a secure random IV for each encryption operation."
+    },
+    {
+        "misuse": "Insufficient Key Generation",
+        "vulnerable_code": "keyGen.generateKey()",
+        "description": "KeyGenerator is used without specifying key size for AES key generation. It may default to a key size that is less secure (e.g., 128 bits).",
+        "recommendation": "Define a specific key size that is considered secure, like 256 bits."
+    },
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": " Byte.parseByte(String.valueOf(initialization))",
+        "description": "The initialization variable is derived from a default hardcoded string, leading to predictable randomness.",
+        "recommendation": "Use SecureRandom to generate random bytes for IV."
+    },
+    {
+        "misuse": "Improper Initialization Vector Conversion",
+        "vulnerable_code": "Byte.parseByte(String.valueOf(initialization))",
+        "description": "Converting chars to bytes in this manner is incorrect and could lead to an invalid IV. The 'parseByte' method does not convert chars to their proper byte representation for an IV.",
+        "recommendation": "Ensure proper conversion of characters to bytes when creating the IV."
+    }
+]
+```

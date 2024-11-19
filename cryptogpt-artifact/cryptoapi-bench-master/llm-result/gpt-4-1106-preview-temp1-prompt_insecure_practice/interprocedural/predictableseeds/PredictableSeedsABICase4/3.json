@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "SecureRandom sr = new SecureRandom(new byte[]{Byte.parseByte(seed.toString())});",
+        "description": "The random number generator is initialized with a predictable seed value, which can lead to predictable outputs from the random generator.",
+        "recommendation": "Do not use a static seed. Instead, allow SecureRandom to self-seed or provide a truly random seed value."
+    },
+    {
+        "misuse": "Incorrect Seed Conversion",
+        "vulnerable_code": "Byte.parseByte(seed.toString())",
+        "description": "The conversion of the SEED character array to a byte array is incorrect. The `seed.toString()` does not convert the character array to a String correctly, it will call `Object.toString()` which returns a string representation of the object and not the array content. This will cause a NumberFormatException at runtime.",
+        "recommendation": "Convert the character array to a string properly with `new String(seed)` before parsing it to byte. And then, generate a secure random seed or let SecureRandom generate its own seed."
+    },
+    {
+        "misuse": "Broken Crypto Primitive",
+        "vulnerable_code": "new SecureRandom(new byte[]{Byte.parseByte(seed.toString())})",
+        "description": "The code is attempting to use a single byte as the seed for SecureRandom, which is not sufficient for cryptographic security.",
+        "recommendation": "Use a more complex, less predictable seed for SecureRandom, and remove the dependency on the 'seed' variable. It is better to rely on the default seeding mechanism provided by SecureRandom."
+    }
+]
+```

@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insecure Cryptographic Algorithm",
+        "vulnerable_code": "KeyGenerator.getInstance(\"Blowfish\");",
+        "description": "Blowfish is an outdated cryptographic algorithm with a relatively small block size, which can lead to potential security vulnerabilities.",
+        "recommendation": "Use a more secure algorithm like AES with a larger block size and which is currently considered strong by cryptographic standards."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "KeyGenerator.getInstance(\"Blowfish\");",
+        "description": "Default key size for Blowfish may not be sufficient for security, typically Blowfish key size should be at least 128 bits.",
+        "recommendation": "Specify a key size that is considered secure, e.g., keyGen.init(128); or use an algorithm that has secure default key sizes like AES."
+    },
+    {
+        "misuse": "ECB Mode",
+        "vulnerable_code": "Cipher.getInstance(\"Blowfish\");",
+        "description": "Cipher getInstance without specifying the mode of operation will default to ECB (Electronic Codebook) mode, which is insecure because it doesn't provide serious message confidentiality in many cases.",
+        "recommendation": "Use a more secure mode of operation like CBC (Cipher Block Chaining) with an initialization vector or GCM (Galois/Counter Mode) mode that also provides authentication."
+    },
+     {
+        "misuse": "Missing Initialization Vector",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "When using CBC mode or another mode that requires an IV, the initialization vector (IV) should be random and unique. The code does not specify an IV, having implications on security when modes like CBC are chosen.",
+        "recommendation": "Use a securely generated IV when initializing the Cipher object for encryption in modes like CBC."
+    }
+]
+```

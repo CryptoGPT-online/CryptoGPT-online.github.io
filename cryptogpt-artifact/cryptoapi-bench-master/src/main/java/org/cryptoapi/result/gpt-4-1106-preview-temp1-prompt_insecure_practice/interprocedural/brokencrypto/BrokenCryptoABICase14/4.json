@@ -1,0 +1,31 @@
+```json
+[
+  {
+    "misuse": "Weak Encryption Algorithm",
+    "vulnerable_code": [
+      "String crypto = \"RC2\";",
+      "KeyGenerator.getInstance(crypto);",
+      "Cipher.getInstance(crypto);"
+    ],
+    "description": "RC2 is a legacy encryption algorithm that is known to be weak and vulnerable to attacks, such as exhaustive key search attacks.",
+    "recommendation": "Use a strong encryption algorithm such as AES with an appropriate key size (e.g., AES/GCM/NoPadding with a 128-bit key)."
+  },
+  {
+    "misuse": "Insecure Key Generation",
+    "vulnerable_code": [
+      "KeyGenerator keyGen = KeyGenerator.getInstance(crypto);",
+      "SecretKey key = keyGen.generateKey();"
+    ],
+    "description": "The KeyGenerator instance does not specify the key size, which can lead to generating weak keys if a weak default size is used.",
+    "recommendation": "Specify a secure key size during key generation. For AES, use at least a 128-bit key (e.g., keyGen.init(128))."
+  },
+  {
+    "misuse": "Hardcoded Crypto Algorithm",
+    "vulnerable_code": [
+      "String crypto = \"RC2\";"
+    ],
+    "description": "Hardcoding the crypto algorithm can lead to difficulties in updating the algorithm and may lead to the use of outdated or deprecated algorithms.",
+    "recommendation": "Do not hardcode the algorithm. Instead, define it as a configurable parameter, allowing an easy update to a stronger algorithm when needed."
+  }
+]
+```

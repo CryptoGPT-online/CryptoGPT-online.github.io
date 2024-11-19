@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "String password = String.valueOf(random.ints());",
+        "description": "The use of a random number as a password is insecure because it is not intended for cryptographic purposes and it's not managed securely.",
+        "recommendation": "Use a secure method to handle passwords, such as using a password manager or securely prompting the user."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "SecureRandom random = new SecureRandom();\nString password = String.valueOf(random.ints());",
+        "description": "Using SecureRandom to generate a password is not appropriate as it does not ensure high entropy suitable for cryptographic password strength requirements.",
+        "recommendation": "Use a dedicated password generation API that ensures sufficient complexity and entropy appropriate for passwords."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");\nks.load(cacerts.openStream(), password.toCharArray());",
+        "description": "The code is loading certificates from a URL without any form of validation to ensure its authenticity, this could leave the application vulnerable to man-in-the-middle attacks.",
+        "recommendation": "Implement proper certificate validation by verifying the certificate chain and hostname verification."
+    }
+]
+```

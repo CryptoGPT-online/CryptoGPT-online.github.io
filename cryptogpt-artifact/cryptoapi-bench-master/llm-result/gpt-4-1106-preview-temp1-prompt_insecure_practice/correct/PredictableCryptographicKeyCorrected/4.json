@@ -1,0 +1,34 @@
+```json
+[
+  {
+    "misuse": "Insufficient Entropy",
+    "vulnerable_code": "String.valueOf(random.ints())",
+    "description": "The key is generated using a weak method that does not guarantee high entropy, which could make it easier to predict or brute-force.",
+    "recommendation": "Use a cryptographic key generation function with sufficient entropy, such as 'KeyGenerator.getInstance(\"AES\").generateKey()'."
+  },
+  {
+    "misuse": "Hardcoded Encryption Key",
+    "vulnerable_code": "String defaultKey = String.valueOf(random.ints());",
+    "description": "Even though the key is generated at runtime, the approach is not secure because the key is not safeguarded and could potentially be recovered if the random values can be predicted.",
+    "recommendation": "Never hardcode encryption keys in the source code. Retrieve keys from a secure external source or use a secure key management system."
+  },
+  {
+    "misuse": "Lack of SecureRandom Initialization",
+    "vulnerable_code": "SecureRandom random = new SecureRandom();",
+    "description": "The SecureRandom instance is not securely initialized with a seed. While default initialization is typically secure, explicit seeding with a known value can ensure the randomness is not predictable.",
+    "recommendation": "Explicitly seed SecureRandom with a known random value for better security."
+  },
+  {
+    "misuse": "No Integrity Protection",
+    "vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5PADDING\");",
+    "description": "The code is using AES in CBC mode without an integrity check, which can make the encrypted data susceptible to padding oracle attacks.",
+    "recommendation": "Use an authenticated encryption mode like AES-GCM or combine AES-CBC with HMAC for integrity protection."
+  },
+  {
+    "misuse": "Static Initialization Vector (IV)",
+    "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, keySpec);",
+    "description": "The code does not explicitly specify an initialization vector (IV) for the cipher, meaning the same IV (derived from default values) is used for each encryption. This weakens the security as patterns can be observed if the same data block is encrypted multiple times.",
+    "recommendation": "Generate a secure random IV for each encryption operation and prepend it to the ciphertext."
+  }
+]
+```

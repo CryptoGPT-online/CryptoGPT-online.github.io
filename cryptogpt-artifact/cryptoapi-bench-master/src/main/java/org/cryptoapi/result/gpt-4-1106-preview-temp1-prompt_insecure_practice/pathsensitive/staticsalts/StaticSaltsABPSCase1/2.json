@@ -1,0 +1,34 @@
+```json
+[
+  {
+    "misuse": "Insufficient Salt Size",
+    "vulnerable_code": "byte[] salt = {(byte) 0xa2};",
+    "description": 
+      "The salt size should be at least 128 bits (16 bytes) to ensure proper security, but the provided salt is only 1 byte long.",
+    "recommendation": 
+      "Generate a larger salt of at least 128 bits using a secure random number generator."
+  },
+  {
+    "misuse": "Predictable Salt",
+    "vulnerable_code": 
+      [
+        "SecureRandom sr2 = new SecureRandom();",
+        "byte[] salt = {(byte) 0xa2};",
+        "if(choice>1)",
+        "  sr2.nextBytes(salt);"
+      ],
+    "description": 
+      "The salt is initially set to a predictable value and then conditionally re-generated. If 'choice' is not greater than 1, a static salt is used, which is not secure in a cryptographic context as it reduces the complexity of attacks.",
+    "recommendation": 
+      "Always generate a new, random salt whenever a password-based encryption key is created."
+  },
+  {
+    "misuse": "Weak Iteration Count",
+    "vulnerable_code": "int count = 1020;",
+    "description": 
+      "The iteration count of 1020 is potentially too low. The higher the iteration count, the more resistant the key derivation process is against brute force attacks.",
+    "recommendation": 
+      "Use a higher iteration count (at least tens of thousands iterations, or more based on current best practices)."
+  }
+]
+```

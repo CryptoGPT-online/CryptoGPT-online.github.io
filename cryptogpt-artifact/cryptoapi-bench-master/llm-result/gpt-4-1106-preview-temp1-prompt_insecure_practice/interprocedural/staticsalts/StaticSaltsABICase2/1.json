@@ -1,0 +1,32 @@
+```json
+[
+  {
+    "misuse": "Use of a Hardcoded Salt",
+    "vulnerable_code": "public static final String DEFAULT_SALT = \"12345\";",
+    "description": "The salt used for password-based encryption should be unique and random to provide security against dictionary attacks.",
+    "recommendation": "Generate a unique, random salt for each user or use case."
+  },
+  {
+    "misuse": "Inappropriate Conversion of Salt to Byte Array",
+    "vulnerable_code": "pbeParamSpec = new PBEParameterSpec(new byte[]{Byte.parseByte(salt.toString())}, count);",
+    "description": "Converting a character array to a string and then parsing it as a byte does not properly convert it to a byte array which is needed for cryptographic operations.",
+    "recommendation": "Properly convert the character array to a byte array using a character encoding like UTF-8."
+  },
+  {
+    "misuse": "Insufficient Iteration Count",
+    "vulnerable_code": "int count = 1020;",
+    "description": "The iteration count (1020) for the key derivation function is less than the recommended number (at least 10000) to deter brute-force attacks.",
+    "recommendation": "Increase the iteration count to at least 10000."
+  },
+  {
+    "misuse": "Static Initialization of Salt",
+    "vulnerable_code": [
+      "private static void go2(){",
+      "    SALT = DEFAULT_SALT.toCharArray();",
+      "}"
+    ],
+    "description": "The static initialization and handling of the salt as character arrays and the associated static methods could lead to the salt instance being reused, which is not secure practice.",
+    "recommendation": "Avoid static methods and variables for salt management, and ensure the salt is not reused."
+  }
+]
+```

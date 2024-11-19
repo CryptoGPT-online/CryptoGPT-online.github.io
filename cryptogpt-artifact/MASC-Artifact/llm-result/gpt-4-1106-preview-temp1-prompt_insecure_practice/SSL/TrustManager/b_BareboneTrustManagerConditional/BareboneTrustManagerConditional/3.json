@@ -1,0 +1,28 @@
+```json
+[
+  {
+    "misuse": "TrustManager that doesn't check server certificates",
+    "vulnerable_code": "new X509TrustManager() {...}",
+    "description": "The implemented X509TrustManager does not properly verify that the server's certificate chain complies with trust requirements. It will accept any certificate, which makes it vulnerable to man-in-the-middle attacks.",
+    "recommendation": "Implement proper validation within 'checkClientTrusted' and 'checkServerTrusted' methods or use the default X509TrustManager."
+  },
+  {
+    "misuse": "Potentially misleading implementation of getAcceptedIssuers",
+    "vulnerable_code": "public X509Certificate[] getAcceptedIssuers() {...}",
+    "description": "The 'getAcceptedIssuers' method's implementation is potentially misleading because it always returns an empty array, which could suggest that no issuers are accepted or the verification step may be skipped altogether.",
+    "recommendation": "Return a valid array of acceptable CA issuer certificates or implement the verification to avoid insecure acceptance of all certificates."
+  },
+  {
+    "misuse": "Usage of SecureRandom() without seed",
+    "vulnerable_code": "new SecureRandom()",
+    "description": "While 'new SecureRandom()' is typically considered safe, not providing an explicit seed may cause issues if used in a context where a predictable random number generator is a security problem.",
+    "recommendation": "If the context requires a non-predictable secure random number generator, consider properly seeding SecureRandom or using a more appropriate source of randomness."
+  },
+  {
+    "misuse": "Empty catch blocks which swallow exceptions",
+    "vulnerable_code": "// TODO Auto-generated catch block",
+    "description": "The empty catch blocks for 'NoSuchAlgorithmException' and 'KeyManagementException' are a security risk as they silently swallow any exceptions that occur during SSLContext initialization, which could prevent the proper functioning of SSL/TLS connections.",
+    "recommendation": "Handle exceptions appropriately to ensure the secure initialization of SSLContext and to avoid silent failures."
+  }
+]
+```

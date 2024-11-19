@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Insecure Random Number Generator (PRNG)",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);\nSecretKey key = keyGen.generateKey();",
+        "description": "The KeyGenerator class uses a PRNG to generate a secret key. PRNG algorithms, like SecureRandom, generate numbers from a random seed, which can be easily predicted when the seed is known. In this case, it uses the default seed and not a cryptographically strong random number generator.",
+        "recommendation": "Instead of using KeyGenerator, it is recommended to use a cryptographically strong random number generator. The following can be used: SecureRandom random = SecureRandom.getInstanceStrong();"
+    },
+    {
+        "misuse": "Sensitive Cryptographic Material Not Destroyed",
+        "vulnerable_code": "SecretKey key = keyGen.generateKey();",
+        "description": "The SecretKey generated is not destroyed after usage. Even if it is no longer required, it is still in memory. Overwriting the reference to the SecretKey does not eliminate the SecretKey from memory. Therefore, this could lead to memory dumping and secret keys may be recovered.",
+        "recommendation": "Overwrite the SecretKey variable with a new value and then call the finalize method before exiting, or call the destroy method of the SecretKey object to eliminate the sensitive data. But this might make sense to use less frequent."
+    }
+]
+```

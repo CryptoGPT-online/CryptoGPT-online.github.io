@@ -1,0 +1,30 @@
+```json
+[
+    {
+        "misuse": "Lack of Secure Socket Protocol Specification",
+        "vulnerable_code": [
+            "SSLSocketFactory ssf = (SSLSocketFactory) SSLSocketFactory.getDefault();",
+            "SSLSocket socket = (SSLSocket) ssf.createSocket(passedHostname,passedSoc);"
+        ],
+        "description": "The code does not explicitly specify the SSL/TLS protocol version to use. Relying on the default setting could lead to the use of a less secure protocol version, like SSLv3, which is known to be insecure and vulnerable to attacks such as POODLE.",
+        "recommendation": "Specify a secure protocol version (e.g., TLSv1.2 or TLSv1.3) when creating the SSLSocketFactory instance, using `SSLContext.getInstance(\"TLSv1.2\").getSocketFactory()`."
+    },
+    {
+        "misuse": "Missing Hostname Verification",
+        "vulnerable_code": [
+            "SSLSocketFactory ssf = (SSLSocketFactory) SSLSocketFactory.getDefault();",
+            "SSLSocket socket = (SSLSocket) ssf.createSocket(passedHostname,passedSoc);"
+        ],
+        "description": "The code does not perform hostname verification post-handshake. This could lead to a man-in-the-middle attack because the client would trust an invalid certificate if it's from a seemingly valid CA.",
+        "recommendation": "Implement and enforce hostname verification. Use `HttpsURLConnection.setDefaultHostnameVerifier()` if using HTTPS connections, or check the certificate's CN (Common Name) and SAN (Subject Alternative Name) fields manually if using low-level SSLSocket."
+    },
+    {
+        "misuse": "Insecure Error Handling",
+        "vulnerable_code": [
+            "public void encrypt(String passedHostname,int passedSoc) throws IOException"
+        ],
+        "description": "The method signature specifies throwing a generic IOException, which does not give insight into the exact nature of the SSL/TLS handshake issues. As a result, detailed SSL errors may not be properly logged or handled.",
+        "recommendation": "Catch more specific SSL-related exceptions such as `javax.net.ssl.SSLHandshakeException` and `javax.net.ssl.SSLException` and handle them appropriately."
+    }
+]
+```

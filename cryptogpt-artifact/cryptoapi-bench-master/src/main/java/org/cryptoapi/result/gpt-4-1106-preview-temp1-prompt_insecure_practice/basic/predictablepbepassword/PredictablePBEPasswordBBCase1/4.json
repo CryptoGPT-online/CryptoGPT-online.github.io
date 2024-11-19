@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Use of Password-Based Encryption without Secure Password",
+        "vulnerable_code": "pbeKeySpec = new PBEKeySpec(defaultKey.toCharArray(),salt,iterationCount,keyLength);",
+        "description": "The hardcoded password 'saagar' is used directly for creating a PBEKeySpec which is insecure. Password-Based Encryption keys must be derived from high-entropy user input to ensure the strength of the derived key.",
+        "recommendation": "Ensure that the password is not hardcoded and has enough complexity. Prompt the user for a password, or use a secure method to retrieve it."
+    },
+    {
+        "misuse": "Insufficient Key Length",
+        "vulnerable_code": "int keyLength = 16;",
+        "description": "A key length of 16 bits is not secure enough for modern security standards; as this length is easily brute-forceable.",
+        "recommendation": "Use a key length of at least 128 bits for symmetric cryptography, or consider even longer keys for higher security."
+    },
+    {
+        "misuse": "Weak Password-Based Encryption Scheme",
+        "vulnerable_code": "pbeKeySpec = new PBEKeySpec(defaultKey.toCharArray(),salt,iterationCount,keyLength);",
+        "description": "The PBEKeySpec does not explicitly define the encryption algorithm to be used, nor does it ensure it uses a strong encryption scheme. Default parameters or weak algorithms might be used as a result.",
+        "recommendation": "Specify a strong PBE encryption algorithm when creating PBEKeySpec, such as PBKDF2WithHmacSHA256."
+    }
+]
+```

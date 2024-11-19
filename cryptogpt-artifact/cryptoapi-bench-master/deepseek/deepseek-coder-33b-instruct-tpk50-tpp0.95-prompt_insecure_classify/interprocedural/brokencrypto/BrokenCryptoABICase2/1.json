@@ -1,0 +1,14 @@
+CWE-326: Inadequate Encryption Strength. (e.g. Low key/salt length or iteration number, static password/salt...)
+vulnerable_code: "KeyGenerator keyGen = KeyGenerator.getInstance(crypto);"
+description: The code is using the Blowfish algorithm for symmetric encryption, which has a block size of 64 bits. The key length is 56 bits, which is short for encryption, leading to inadequate encryption strength.
+recommendation: It's recommended to use stronger encryption algorithms like AES (which is considered to be the gold standard of encryption), with a key size of at least 128 bits for AES.
+
+CWE-327: Use of a Broken or Risky Cryptographic Algorithm.
+vulnerable_code: "Cipher cipher = Cipher.getInstance(crypto);"
+description: The code is using the Blowfish algorithm for symmetric encryption. Although Blowfish has been used in the past, it has known cryptographic weaknesses and has been proven to be not as secure as other modern encryption algorithms.
+recommendation: Consider switching to a modern encryption algorithm, such as AES.
+
+CWE-330: Use of Insufficiently Random Values.
+vulnerable_code: "SecretKey key = keyGen.generateKey();"
+description: The generated key is not using a secure random number generator (RNG), which means it can be predicted and is therefore not secure.
+recommendation: You should replace the KeyGenerator with the SecureRandom class to generate a secure random key.

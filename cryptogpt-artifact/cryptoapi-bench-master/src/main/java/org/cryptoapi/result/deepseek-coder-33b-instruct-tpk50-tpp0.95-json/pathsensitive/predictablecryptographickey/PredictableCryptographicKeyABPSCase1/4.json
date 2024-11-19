@@ -1,0 +1,10 @@
+```json
+[
+    {
+        "misuse": "AES Key Generation",
+        "vulnerable_code": "SecureRandom random = new SecureRandom(); \nkeyBytes = String.valueOf(random.ints()).getBytes();",
+        "description": "This code generates AES keys by converting a random integer to a string and then to a byte array. This method is insecure because it does not provide enough entropy for generating cryptographic keys. A proper method for generating AES keys would be to use a cryptographically secure random number generator.",
+        "recommendation": "Consider using SecureRandom.getInstanceStrong() for generating a secure random number generator. The generated number can be used directly for generating the AES key. If your application needs to run in environments that don't support SecureRandom.getInstanceStrong(), you should implement a fallback mechanism. Also, consider using the KeyGenerator class for generating AES keys, which provides a higher level API for secure key generation."
+    }
+]
+```

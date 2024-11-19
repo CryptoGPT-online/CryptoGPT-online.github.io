@@ -1,0 +1,37 @@
+```json
+[
+    {
+        "misuse": "Insecure Encryption Algorithm",
+        "vulnerable_code": [
+            "String crypto = \"RC4\";"
+        ],
+        "description": "The RC4 encryption algorithm is considered insecure and can be easily broken due to its weak key scheduling and the existence of various attacks that can exploit its vulnerabilities.",
+        "recommendation": "Use a more secure encryption algorithm like AES (Advanced Encryption Standard)."
+    },
+    {
+        "misuse": "Unspecified Cipher Mode and Padding",
+        "vulnerable_code": [
+            "Cipher.getInstance(crypto);"
+        ],
+        "description": "Using Cipher.getInstance with just the algorithm name (e.g., RC4) without specifying the mode of operation and padding can lead to vulnerabilities, as insecure defaults might be used depending on the Java Cryptography Architecture (JCA) provider configuration.",
+        "recommendation": "Explicitly specify the mode of operation and padding scheme. For example, use 'Cipher.getInstance(\"AES/CBC/PKCS5Padding\")' for AES encryption."
+    },
+    {
+        "misuse": "Key Management",
+        "vulnerable_code": [
+            "KeyGenerator keyGen = KeyGenerator.getInstance(crypto);",
+            "SecretKey key = keyGen.generateKey();"
+        ],
+        "description": "Key management is crucial in cryptography, and generating a key without securely storing it or without specifying key size and source of randomness can create security vulnerabilities.",
+        "recommendation": "Ensure that the SecretKey generated is stored securely and use a strong source of randomness. Also, explicitly define the key size for the KeyGenerator where applicable."
+    },
+    {
+        "misuse": "Hardcoded Cryptographic Algorithm",
+        "vulnerable_code": [
+            "String crypto = \"RC4\";"
+        ],
+        "description": "Hardcoding the cryptographic algorithm can lead to inflexibility and potential security issues if the algorithm becomes outdated or is found to be vulnerable.",
+        "recommendation": "Avoid hardcoding cryptographic algorithms. Instead, use a configuration file or other means to specify the algorithm so it can be easily updated without changing the source code."
+    }
+]
+```

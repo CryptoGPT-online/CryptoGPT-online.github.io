@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "String.valueOf(random.ints())",
+        "description": "The use of SecureRandom.ints() without specifying a limit can produce a variable number of integers, which are then converted to a string. This does not guarantee a sufficiently random or appropriately sized key.",
+        "recommendation": "Use SecureRandom to generate a byte array directly, ensuring that the byte array is the correct size for the key."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "Key material is being truncated or padded to fit a 16-byte array, which for AES implies a key length of 128 bits. This might not meet the required security policy if 256-bit keys are expected.",
+        "recommendation": "Ensure that the key length meets the security requirements, potentially using AES-256 by generating a 32-byte key if stronger encryption is needed."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "\"UTF-8\"",
+        "description": "While not inherently a security flaw, the use of a hardcoded character encoding could lead to issues if the encoding needs to be changed or if it does not support all characters used in the key material.",
+        "recommendation": "Use a standard charset object (e.g., StandardCharsets.UTF_8) instead of a hardcoded string for the character encoding."
+    }
+]
+```

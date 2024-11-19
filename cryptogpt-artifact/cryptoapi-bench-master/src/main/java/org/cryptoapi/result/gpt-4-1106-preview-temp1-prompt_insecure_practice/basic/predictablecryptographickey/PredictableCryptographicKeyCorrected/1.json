@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "String defaultKey = String.valueOf(random.ints());",
+        "description": "The way 'random.ints()' is used to generate a key is insecure because it generates random numbers in the default range which does not ensure a cryptographically strong key.",
+        "recommendation": "Use a strong key generation mechanism like 'KeyGenerator.getInstance(\"AES\").generateKey()' instead of 'random.ints()'."
+    },
+    {
+        "misuse": "Static IV",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, keySpec);",
+        "description": "The code does not explicitly set an initialization vector (IV) for AES in CBC mode. Using a static IV (or none at all) makes the encryption predictable and vulnerable to some attacks, like dictionary attacks.",
+        "recommendation": "Generate a new, random IV for each encryption operation and transmit it alongside the ciphertext."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The code forcefully truncates or pads the key to 16 bytes without ensuring its strength. An insufficient key size or poorly generated key can lead to cryptographic vulnerabilities.",
+        "recommendation": "Ensure the cryptographic key has a proper size for the chosen algorithm (such as 128, 192, or 256 bits for AES) and is generated using a cryptographically secure method."
+    }
+]
+```

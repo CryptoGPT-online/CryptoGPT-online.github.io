@@ -1,0 +1,16 @@
+[{
+  "misuse": "Weak Encryption Algorithm",
+  "vulnerable_code": "\"IDEA\"",
+  "description": "The International Data Encryption Algorithm (IDEA) is considered weak and it's not recommended for use in cryptographic protocols. Modern applications should use more secure algorithms that have not been compromised or are not subject to current cryptographic weaknesses.",
+  "recommendation": "Use a stronger algorithm that is widely considered secure such as AES (Advanced Encryption Standard)."
+}, {
+  "misuse": "Insufficient Key Size",
+  "vulnerable_code": "KeyGenerator.getInstance(crypto);\n        keyGen.generateKey();",
+  "description": "The code does not specify the key size for the KeyGenerator. Depending on the default key size of the underlying Java Cryptography Extension (JCE) provider, this can result in generation of a key size that is considered insecure.",
+  "recommendation": "Always specify the key size upon key generation and ensure it is sufficient for the security context. For AES, a minimum of 128 bits is generally considered secure, with 256 bits being even more preferable."
+}, {
+  "misuse": "Ambiguous Encryption Mode and Padding Scheme",
+  "vulnerable_code": "Cipher.getInstance(crypto)",
+  "description": "By not specifying the mode of operation and padding scheme explicitly, the code is relying on the defaults of the Java Cryptography Extension (JCE) provider which may vary and could potentially be insecure. Without the mode of operation, algorithms such as CBC, CTR, or GCM cannot be chosen, which may lead to vulnerabilities like padding oracle attacks.",
+  "recommendation": "Specify the mode of operation and padding scheme explicitly when obtaining an instance of Cipher. For example, use 'AES/CBC/PKCS5Padding' for AES with CBC mode and PKCS#5 padding scheme."
+}]

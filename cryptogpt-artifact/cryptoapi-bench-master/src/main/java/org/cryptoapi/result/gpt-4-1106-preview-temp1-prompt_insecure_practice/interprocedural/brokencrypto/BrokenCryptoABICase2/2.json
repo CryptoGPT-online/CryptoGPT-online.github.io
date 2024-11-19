@@ -1,0 +1,38 @@
+```json
+[{
+  "misuse": "Hardcoded Crypto Algorithm",
+  "vulnerable_code": [
+    "String crypto = \"Blowfish\";"
+  ],
+  "description": "The crypto algorithm Blowfish is hardcoded, making it inflexible and potentially problematic if the algorithm is found to be vulnerable in the future.",
+  "recommendation": "Use a secure, configurable approach to select the crypto algorithm, preferably one that easily allows updates to stronger algorithms as they become available."
+}, {
+  "misuse": "Weak Crypto Algorithm",
+  "vulnerable_code": [
+    "String crypto = \"Blowfish\";"
+  ],
+  "description": "Blowfish is considered less secure than newer algorithms like AES due to its smaller block size and known issues with weak keys.",
+  "recommendation": "Replace Blowfish with a stronger algorithm such as AES with a secure key size (e.g., AES-256)."
+}, {
+  "misuse": "Missing Mode of Operation",
+  "vulnerable_code": [
+    "Cipher.getInstance(crypto);"
+  ],
+  "description": "Cipher.getInstance is called with only the algorithm name, without specifying a mode of operation and padding. Therefore, it may default to an insecure mode like ECB, which is not recommended for use because it can leak information about the plaintext.",
+  "recommendation": "Specify a secure mode of operation and padding scheme when calling Cipher.getInstance (e.g., AES/CBC/PKCS5Padding)."
+}, {
+  "misuse": "Missing IV for CBC mode",
+  "vulnerable_code": [
+    "cipher.init(Cipher.ENCRYPT_MODE, key);"
+  ],
+  "description": "When using block cipher modes such as CBC that require an initialization vector (IV), not providing a randomly generated IV for each encryption can lead to security vulnerabilities.",
+  "recommendation": "Ensure that an IV is provided and is generated using a secure random source when using CBC mode. The IV must also be transmitted along with the ciphertext securely."
+}, {
+  "misuse": "Predictable Key Generation",
+  "vulnerable_code": [
+    "keyGen.generateKey();"
+  ],
+  "description": "The key generator does not specify a secure randomness source or key size, which may lead to weak and potentially predictable keys.",
+  "recommendation": "Use a secure randomness source and define an appropriate key size when generating keys. For Blowfish, ensure the key size is acceptable, and for AES, use 128, 192, or 256 bits."
+}]
+```

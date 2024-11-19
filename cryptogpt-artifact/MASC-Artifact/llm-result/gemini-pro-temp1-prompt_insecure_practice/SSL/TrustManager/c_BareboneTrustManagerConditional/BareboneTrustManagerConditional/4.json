@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "CWE-326: Not Using X509TrustManager's check[Client/Server]Trusted Properly",
+    "vulnerable_code": "if(!(true||arg0 == null||arg1 == null)){ \n\t\t\t\t\t  throw new java.security.cert.CertificateException();\n\t\t\t\t  }",
+    "description": "The code uses the || operator to check if the `arg0` and `arg1` arguments are null. This is not a proper way to use `X509TrustManager`'s `checkClientTrusted` and `checkServerTrusted` methods. The correct way to use these methods is to throw a `CertificateException` if the certificate is not trusted.",
+    "recommendation": "Use the `X509TrustManager`'s `checkClientTrusted` and `checkServerTrusted` methods properly. Throw a `CertificateException` if the certificate is not trusted."
+  },
+  {
+    "misuse": "CWE-297: Improper Implementation of Custom X509TrustManager",
+    "vulnerable_code": "if(!(true||arg0 == null||arg1 == null)){ \n\t\t\t\t\t  throw new java.security.cert.CertificateException();\n\t\t\t\t  }",
+    "description": "The code uses the `||` operator to check if the `arg0` and `arg1` arguments are null. This is not a proper way to implement a custom `X509TrustManager`. The correct way to implement a custom `X509TrustManager` is to override the `checkClientTrusted` and `checkServerTrusted` methods and perform the necessary checks to determine if the certificate is trusted.",
+    "recommendation": "Implement a custom `X509TrustManager` properly. Override the `checkClientTrusted` and `checkServerTrusted` methods and perform the necessary checks to determine if the certificate is trusted."
+  }
+]
+```

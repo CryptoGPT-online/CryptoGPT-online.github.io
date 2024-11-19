@@ -1,0 +1,34 @@
+```json
+[
+    {
+        "misuse": "Unspecified Initialization Vector (IV)",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+        "description": "The IV used for AES/CBC encryption should be random and not predictable. Using predictable IV is insecure.",
+        "recommendation": "Use a securely generated random IV. Java provides SecureRandom for this purpose."
+    },
+    {
+        "misuse": "Insufficient Key Management",
+        "vulnerable_code": "SecretKey key = keyGen.generateKey();",
+        "description": "The AES key generated is not saved, managed, or protected. After the go() method finishes, the key is lost, which is not practical for real encryption usages where the key must be reused for decryption.",
+        "recommendation": "Implement secure key management by securely storing and retrieving the key, for example, using a KeyStore."
+    },
+    {
+        "misuse": "Use of Static Data as IV",
+        "vulnerable_code": "byte [] bytes = str.getBytes();",
+        "description": "Using the bytes of a string from a map as an IV is insecure because it's not random and possibly not the correct length. A proper IV should be unpredictable and unique for each encryption operation.",
+        "recommendation": "Generate a random IV using SecureRandom."
+    },
+    {
+        "misuse": "Incorrect IV Size",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+        "description": "The IV size for AES should be equal to the block size, which is 128 bits (16 bytes). Using an incorrect IV size can cause security weaknesses and runtime errors.",
+        "recommendation": "Ensure that the IV size is 16 bytes (128 bits) for AES encryption."
+    },
+    {
+        "misuse": "No Exception Handling",
+        "vulnerable_code": "siv.go();",
+        "description": "The method go() throws various exceptions which are not handled in the main method. Appropriate exception handling is required for secure code.",
+        "recommendation": "Add proper exception handling around the go() method to handle cryptographic errors appropriately."
+    }
+]
+```

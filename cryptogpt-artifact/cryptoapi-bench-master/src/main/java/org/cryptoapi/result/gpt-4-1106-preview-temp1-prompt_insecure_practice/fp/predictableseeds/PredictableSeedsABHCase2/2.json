@@ -1,0 +1,18 @@
+[{
+    "misuse": "Insecure Randomness",
+    "vulnerable_code": [
+        "byte [] seed = {b,b};",
+        "sr.setSeed(seed);"
+    ],
+    "description": "The random number generator is seeded with a value that has an extremely low entropy and is predictable, which could be exploited to predict the outcome of 'nextInt()'.",
+    "recommendation": "Use a more secure source of entropy for seeding the SecureRandom instance, such as 'SecureRandom.getInstanceStrong()' or let it pick the default seeding strategy."
+},
+{
+    "misuse": "Improper Restriction of Range of Values",
+    "vulnerable_code": [
+        "hm.put(\"ccc\", new Byte((byte) 300));",
+        "hm.put(\"ddd\", new Byte((byte) 400));"
+    ],
+    "description": "The range of a byte in Java is from -128 to 127. Values like 300 and 400 will wrap around, resulting in incorrect values stored in the map and could lead to unexpected behavior if used in a security-relevant context.",
+    "recommendation": "Ensure that values assigned to a byte variable are within the valid range."
+}]

@@ -1,0 +1,24 @@
+Misuse of cryptographic API misuses: 
+- MD4 is a broken cryptographic algorithm
+- It uses a 4-round structure
+
+Misuse code snippets:
+
+```java
+MessageDigest md = MessageDigest.getInstance(crypto);
+```
+
+Description:
+The MD4 algorithm is considered broken because it is not collision resistant and it can be exploited for specific attacks. As of this time, no security standard for cryptographic hash functions considers MD4 suitable for new applications.
+
+Recommendation:
+Use a stronger cryptographic algorithm that provides collision resistance and has not been found to have a significant weakness. Candidates include SHA-256, SHA-384, or SHA-512.
+
+```json
+[{
+  "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+  "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(crypto);",
+  "description": "The use of MD4 is considered broken and insecure because it is not collision resistant and it can be exploited for specific attacks.",
+  "recommendation": "Use a stronger cryptographic algorithm like SHA-256, SHA-384, or SHA-512."
+}]
+```

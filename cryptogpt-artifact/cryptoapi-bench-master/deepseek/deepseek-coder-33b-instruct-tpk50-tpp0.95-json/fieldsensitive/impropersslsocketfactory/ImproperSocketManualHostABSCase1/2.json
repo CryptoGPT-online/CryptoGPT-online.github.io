@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Improper Default",
+        "vulnerable_code": "C1(String hostname, int soc)",
+        "description": "Default values are hardcoded in the constructor of the C1 class. If the hostname or port are empty or incorrect, the code will still use these hardcoded values, which may cause a security risk. For instance, if the default hostname is set to a malicious server, the code will still connect to it instead of the intended server.",
+        "recommendation": "Replace the hardcoded default values with user-supplied values or set them to null if they should be optional. Then check whether the values are set before using them in the SSLSocket creation."
+    },
+    {
+        "misuse": "Improper Error Handling",
+        "vulnerable_code": "SSLSocket socket = (SSLSocket) ssf.createSocket(passedHostname,passedSoc);",
+        "description": "There is no error handling in the code. If createSocket() fails, an IOException might be thrown, but there is no catch block to handle this exception. The program will terminate abruptly, which could be a security risk.",
+        "recommendation": "Add a try-catch block to handle potential exceptions. You can catch the exception and either handle it or re-throw it."
+    }
+]
+```

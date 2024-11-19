@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": " CWE-256: Plaintext Transmission of Secret Data Over Network",
+    "vulnerable_code": "TrustManager[] trustAll = new TrustManager[] {...};\nSSLContext context; ...\ncontext.init(null, trustAll, new SecureRandom());",
+    "description": "The code uses a custom `X509TrustManager` to trust all certificates, which is insecure. This can lead to man-in-the-middle attacks, where an attacker can intercept and decrypt the transmitted data.",
+    "recommendation": "Use a proper certificate validation mechanism, such as using a trusted certificate authority (CA) to validate the server's certificate."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Session Key Length",
+    "vulnerable_code": "SSLContext context = SSLContext.getInstance(\"TLS\");",
+    "description": "The code uses the default TLS protocol, which may use a weak session key length. This can lead to the session key being compromised, allowing an attacker to decrypt the transmitted data.",
+    "recommendation": "Use a strong TLS protocol, such as TLSv1.2 or TLSv1.3, and specify a strong session key length, such as 256 bits."
+  }
+]
+```

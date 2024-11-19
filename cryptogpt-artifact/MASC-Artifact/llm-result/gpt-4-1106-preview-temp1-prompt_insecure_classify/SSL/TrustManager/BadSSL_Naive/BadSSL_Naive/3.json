@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {\n    // TODO Auto-generated method stub\n    \n}",
+        "description": "The `checkServerTrusted` method is empty, which means it does not validate the certificate chain at all. By not performing any validation, an attacker could easily perform a man-in-the-middle attack.",
+        "recommendation": "Implement proper certificate validation in both `checkServerTrusted` and `checkClientTrusted` methods."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "SSLContext context = SSLContext.getInstance(\"SSL\");",
+        "description": "The code uses 'SSL', which is an outdated protocol and has multiple vulnerabilities. Instead, 'TLS' which is the more secure successor should be used.",
+        "recommendation": "Switch to using 'SSLContext.getInstance(\"TLS\")' to avoid using outdated and insecure protocols."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": "SSLContext context = SSLContext.getInstance(\"SSL\");",
+        "description": "Using the 'SSL' protocol for SSLContext could result in the selection of less secure algorithms during the SSL/TLS handshake.",
+        "recommendation": "Use 'SSLContext.getInstance(\"TLS\")' to ensure a more secure algorithm is negotiated."
+    }
+]
+```

@@ -1,0 +1,20 @@
+ [
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "byte seed = 100; SecureRandom random = new SecureRandom(); String str = String.valueOf(random.ints()); byte[] seed = str.getBytes();",
+        "description": "The code uses a hardcoded seed value to initialize the SecureRandom object, which is not a cryptographically secure random number generator (CSPRNG). This makes it easier for an attacker to predict the random numbers generated, which can be used to compromise the security of the system.",
+        "recommendation": "Use a cryptographically secure random number generator (CSPRNG) that is not initialized with a hardcoded seed value, such as the SecureRandom class in Java."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "Map<String,Byte> hm = new HashMap<String, Byte>(); hm.put(\"aaa\", new Byte((byte) 100)); hm.put(\"bbb\", new Byte((byte) 200)); hm.put(\"ccc\", new Byte((byte) 300)); hm.put(\"ddd\", new Byte((byte) 400));",
+        "description": "The code uses hardcoded values as credentials for the SecureRandom object, which can be easily extracted by an attacker and used to compromise the security of the system.",
+        "recommendation": "Do not use hardcoded credentials for cryptographic operations, instead use a secure and tamper-evident mechanism to store and manage the credentials."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "byte b = hm.get(\"aaa\"); SecureRandom sr = new SecureRandom(new byte[]{b}); int v = sr.nextInt();",
+        "description": "The code uses a hardcoded value as the seed for the SecureRandom object, which can be easily extracted by an attacker and used to compromise the security of the system. Moreover, the code uses a low-entropy seed value, which can lead to a weak random number generation and reduce the overall security of the system.",
+        "recommendation": "Use a cryptographically secure random number generator (CSPRNG) that is not initialized with a hardcoded seed value, and use a high-entropy seed value to improve the randomness and security of the system."
+    }
+]

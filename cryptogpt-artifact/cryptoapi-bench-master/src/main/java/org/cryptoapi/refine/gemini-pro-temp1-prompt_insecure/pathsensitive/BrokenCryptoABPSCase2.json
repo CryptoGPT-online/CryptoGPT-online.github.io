@@ -1,0 +1,24 @@
+### False Positive Misuse ###
+1. **Misuse**: Use of Weak Cryptographic Algorithm (CWE-256)
+   - **Vulnerable Code**: Cipher cipher = Cipher.getInstance("Blowfish");
+   - **Reason**: Blowfish is a legacy cipher that is no longer considered secure. However, in this case, it is used to encrypt data with a user-defined choice. If the user chooses a different, more secure cipher, this misuse is not applicable.
+
+### Optimized Misuse JSON ###
+```json
+[
+  {
+    "misuse category": "Inadequate Key Generation",
+    "vulnerable_method": "KeyGenerator.getInstance()",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\")",
+    "description": "The code generates an AES key without specifying the key size. By default, AES keys are generated with a 128-bit key size, which is considered insecure for modern cryptographic applications.",
+    "recommendation": "Specify a secure key size when generating AES keys. For example, use `keyGen.init(256)` to generate a 256-bit AES key."
+  },
+  {
+    "misuse category": "Use of Hard-Coded Cryptographic Key",
+    "vulnerable_method": "Cipher.init()",
+    "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+    "description": "The code uses the same hard-coded key to encrypt data. This makes the encrypted data vulnerable to attack, as an attacker could easily obtain the key and decrypt the data.",
+    "recommendation": "Generate a new, random key for each encryption operation. This can be done using a `SecureRandom` object."
+  }
+]
+```

@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Key Generation",
+        "vulnerable_code": "byte[] keyBytes = key.getBytes();\nkeyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The key is derived from a string that could potentially be weak and not generated in a cryptographically secure manner. The use of 'defaultkey' and resizing with copyOf without any form of key-strengthening can lead to a predictable key which can be easily brute-forced.",
+        "recommendation": "Use a proper key derivation function (KDF) such as PBKDF2, with a random salt and sufficient iterations, or use a strong key generation mechanism provided by a cryptographic library."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "For AES, using a 16-byte key corresponds to AES-128. While AES-128 is still considered secure, it is advisable to use a longer key (e.g., 256 bits) for higher security, especially for future-proofing purposes.",
+        "recommendation": "Consider using a 256-bits key for AES, ensuring better security."
+    },
+    {
+        "misuse": "Use of Platform Default Encoding",
+        "vulnerable_code": "byte[] keyBytes = key.getBytes();",
+        "description": "The getBytes() method is called without specifying a charset. This uses the platform's default charset, which can vary across different platforms and can lead to inconsistent behavior and potentially improper key generation.",
+        "recommendation": "Specify a charset when calling getBytes(), such as UTF-8, to ensure consistent behavior across different platforms."
+    }
+]
+```

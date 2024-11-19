@@ -1,0 +1,31 @@
+False Positive Misuse
+[
+  {
+    "misuse": "Insecure Key Generation",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"Blowfish\"); SecretKey key = keyGen.generateKey();",
+    "description": "This code creates a new random key for each encryption/decryption operation, which makes the encryption and decryption useless as the same key is used for encryption and decryption. In real-world scenarios, the same key must be used for encryption and decryption. This can be solved by reusing the same key for each operation.",
+    "recommendation": "Use a single key for all operations. The key must be stored securely and must not be lost. It's highly recommended to generate a new key for each application run."
+  },
+  {
+    "misuse": "Blowfish Cipher Algorithm",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"Blowfish\");\nSecretKey key = keyGen.generateKey();",
+    "description": "Blowfish is a symmetric-key block cipher, now considered to be insecure. It's not approved for federal government use or for use in mission-critical applications. It uses a fixed block size of 64 bits and a variable key size from 32 to 448 bits.",
+    "recommendation": "Consider using stronger encryption algorithms such as AES, RSA, or the Twofish algorithm instead of Blowfish. You can use a 256-bit key for AES and RSA."
+  }
+]
+
+Optimized Misuse JSON
+[
+  {
+    "misuse": "Unsecure Randomness",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"Blowfish\"); SecretKey key = keyGen.generateKey();",
+    "description": "The key generation is insecure due to the use of a not-cryptographically secure random number generator. This could lead to crypto attacks that could be feasible.",
+    "recommendation": "Use SecureRandom instead of KeyGenerator for generating keys. SecureRandom is cryptographically strong. "
+  },
+  {
+    "misuse": "Initialization Vector is not generated properly",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"Blowfish\"); cipher.init(Cipher.ENCRYPT_MODE, key);",
+    "description": "In cryptography, an initialization vector (IV) is a fixed-size input to a cryptographic primitive that is typically required to be random or pseudorandom. Blowfish doesn't require an IV, but if an IV is needed for any other modes of operation (like CBC or OFB), it is recommended to be securely generated.",
+    "recommendation": "For all modes of operations that require an IV, it is highly recommended to securely generate the IV. If IV is not required for the specified mode of operation, no IV should be specified."
+  }
+]

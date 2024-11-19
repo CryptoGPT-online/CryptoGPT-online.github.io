@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Initialization Vector (IV)",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(val.getBytes(),0,8);",
+        "description": "The IV is derived from a predictable source (the current date and time) which can be easily guessed by an attacker. Reusing IV with the same key potentially allows attackers to mount attacks like the 'two-time pad' or to deduce information about the plaintexts of encrypted messages.",
+        "recommendation": "Use a strong, randomly generated IV for each encryption operation."
+    },
+    {
+        "misuse": "Insufficient IV Size",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(val.getBytes(),0,8);",
+        "description": "The IV size is hardcoded to 8 bytes which is less than the recommended size of 16 bytes (128 bits) for strong cryptographic algorithms.",
+        "recommendation": "Ensure that the IV length is appropriate for the encryption algorithm in use, which is typically 128 bits (16 bytes) for AES."
+    },
+    {
+        "misuse": "Potential Encoding Issues",
+        "vulnerable_code": "val.getBytes()",
+        "description": "Using the default charset to convert a string to bytes can lead to inconsistent behavior across different platforms. An inconsistent charset can affect the IV and break decryption if it's inconsistent between the encryption and decryption environments.",
+        "recommendation": "Specify a charset when calling getBytes, such as 'val.getBytes(StandardCharsets.UTF_8)'."
+    }
+]
+```

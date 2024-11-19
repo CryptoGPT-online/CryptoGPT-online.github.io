@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\"); SecretKey key = keyGen.generateKey();",
+        "description": "This is a static key generator, and it's not recommended to use static keys because they are not secure. They should be generated randomly for each encryption.",
+        "recommendation": "Consider using a secure random number generator to generate your keys."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/ECB/PKCS5Padding\"); if(choice>1) cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "ECB mode of operation is not recommended because it doesn't hide data patterns well. If your code is for handling sensitive information, ECB mode should be avoided.",
+        "recommendation": "Consider using a more secure block mode of operation such as CBC or GCM."
+    }
+]
+```

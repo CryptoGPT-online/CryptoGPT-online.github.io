@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "crypto = new C2(\"MD5\");",
+        "description": "MD5 is a widely considered broken and insecure cryptographic hash function, not suitable for further use because it can be attacked and collisions can be found.",
+        "recommendation": "Use a more secure hash function like SHA-256 or SHA-3."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(crypto);",
+        "description": "The use of MD5 hash function results in inadequate encryption strength due to its vulnerability to collision attacks.",
+        "recommendation": "Replace MD5 with a cryptographically strong hash function."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values.",
+        "vulnerable_code": "crypto.encrypt(\"abc\",\"\");",
+        "description": "The method 'encrypt' does not actually encrypt data but rather digests it using a hashing algorithm. Additionally, no secure random salt is used, which is a standard practice for secure hashing to prevent dictionary and rainbow table attacks.",
+        "recommendation": "Ensure that actual encryption is performed if needed and use a cryptographically secure random value as a salt."
+    },
+    {
+        "misuse": "CWE-758: Reliance on Undefined, Unspecified, or Implementation-Defined Behavior",
+        "vulnerable_code": "crypto.encrypt(\"abc\",\"\");",
+        "description": "The encrypt method is misleading as it does not perform encryption but rather hashing. This could lead to confusion and misuse of the function for encryption purposes.",
+        "recommendation": "Rename the method to 'hash' or 'digest' to accurately describe its functionality and avoid confusion."
+    }
+]
+```

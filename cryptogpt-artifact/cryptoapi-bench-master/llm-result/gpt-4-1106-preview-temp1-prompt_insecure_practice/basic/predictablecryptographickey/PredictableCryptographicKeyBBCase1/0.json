@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Insecure Key Generation",
+        "vulnerable_code": "byte[] keyBytes = defaultKey.getBytes();\nkeyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The key is derived from a hard-coded string which is predictable and not cryptographically strong. Furthermore, the conversion method from String to byte[] might not always use a secure encoding, additionally Arrays.copyOf does not provide secure padding for keys.",
+        "recommendation": "Use a proper key derivation function (KDF) like PBKDF2 or equivalents and generate keys from a cryptographically secure random source."
+    },
+    {
+        "misuse": "Inadequate Key Size",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The key size is manually set to 16 bytes (128 bits). While 128-bit AES keys are commonly considered secure, this method of key size assignment does not allow for easy switching to larger key sizes such as 256 bits which are inherently stronger.",
+        "recommendation": "If stronger encryption is required, modify the code to support a larger key size such as 256 bits and ensure that keyBytes has a length accordingly."
+    }
+]
+```

@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Hardcoded Cryptographic Key",
+        "vulnerable_code": "String key = \"changeit\";",
+        "description": "The use of a hardcoded cryptographic key could compromise security, as it is a common default value and not a secret which makes it easier for attackers to perform a brute-force or dictionary attack.",
+        "recommendation": "Use a secure key management system or prompt for a password where possible. The key should never be hardcoded, and should preferably be derived from a strong password-based key derivation function (e.g., PBKDF2)."
+    },
+    {
+        "misuse": "Insecure Trust Management",
+        "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");\nks.load(cacerts.openStream(), key.toCharArray());",
+        "description": "The keystore is loaded from a hard-coded URL which is not meant to be used as a certificate authority keystore. This may lead to trusting incorrect or malicious certificates if the URL is compromised or not the intended certificate authority.",
+        "recommendation": "Ensure that proper certificate validation is performed and a legitimate, trusted keystore is used. Avoid hardcoding URLs that are not meant for keystore retrieval. The application should only trust properly validated and appropriate certificate sources."
+    },
+    {
+        "misuse": "SSL/TLS certificate validation might be disabled",
+        "vulnerable_code": "ks.load(cacerts.openStream(), key.toCharArray());",
+        "description": "The code is loading a KeyStore over an HTTPS connection, but it does not explicitly show the validation of SSL/TLS certificates which could leave the connection vulnerable to man-in-the-middle attacks.",
+        "recommendation": "Ensure proper SSL/TLS certificate validation is enabled when performing connections over HTTPS. You should use a proper SSLContext with TrustManager that validates the server's certificate."
+    }
+]
+```

@@ -1,0 +1,26 @@
+### False Positive Misuse ###
+
+1. **Misuse:** CWE-321: Use of Hard-coded Cryptographic Key
+   **Vulnerable Code:** `"SHA-256".replace("SHA-256", "MD5")`
+   **Reason:** The misuse report is a false positive because the code snippet does not use a hard-coded cryptographic key. Instead, it uses a string concatenation to specify the algorithm name.
+
+### Optimized Misuse JSON ###
+
+```json
+[
+  {
+    "misuse category": "Weak Cryptographic Algorithm",
+    "vulnerable_method": "MessageDigest.getInstance",
+    "vulnerable_code": "MessageDigest cryptoDigest = MessageDigest.getInstance(\"SHA-256\".replace(\"SHA-256\", \"MD5\"));",
+    "description": "The code uses MD5, a weak cryptographic algorithm, to compute message digests. MD5 is not collision-resistant and should not be used for security purposes.",
+    "recommendation": "Use a strong cryptographic algorithm such as SHA-256 or SHA-512 instead of MD5."
+  },
+  {
+    "misuse category": "Use of insecure/deprecated algorithm",
+    "vulnerable_method": "MessageDigest.getInstance",
+    "vulnerable_code": "cryptoDigest = MessageDigest.getInstance(\"SHA-256\".replace(\"SHA-256\", \"MD5\"));",
+    "description": "The code uses MD5 algorithm, which is insecure and should not be used for cryptographic purposes.",
+    "recommendation": "Use a more secure algorithm, such as SHA-256 or SHA-512."
+  }
+]
+```

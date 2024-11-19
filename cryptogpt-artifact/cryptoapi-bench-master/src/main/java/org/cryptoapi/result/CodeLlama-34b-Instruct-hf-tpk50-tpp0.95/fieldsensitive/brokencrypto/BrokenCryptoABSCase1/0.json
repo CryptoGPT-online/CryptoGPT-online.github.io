@@ -1,0 +1,50 @@
+ {
+"misuses": [
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "new C2(\"DES/ECB/PKCS5Padding\")",
+"description": "The C2 class is using a broken crypto algorithm (DES) which is not recommended for use due to its weakness.",
+"recommendation": "Use a stronger encryption algorithm such as AES, and also consider using an authenticated encryption mode like GCM or EAX."
+}
+{
+"misuse": "Insufficient Entropy",
+"vulnerable_code": "KeyGenerator.getInstance(defaultAlgo);",
+"description": "The KeyGenerator is using a default algorithm which may not have sufficient entropy to generate a secure key.",
+"recommendation": "Use a secure random number generator to generate the key material."
+}
+{
+"misuse": "Weak IV",
+"vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+"description": "The IV is being generated randomly by the Cipher class, which may not be secure enough. ",
+"recommendation": "Use a secure random number generator to generate the IV."
+}
+{
+"misuse": "Encryption without Authentication",
+"vulnerable_code": "cipher.doFinal(txtBytes);",
+"description": "The data is being encrypted without authentication, which can lead to attacks such as padding oracle attacks.",
+"recommendation": "Use an authenticated encryption mode such as GCM or EAX to ensure data is encrypted and authenticated."
+}
+],
+"security issues": [
+{
+"issue": "Insecure Crypto Algorithm",
+"vulnerable_code": "new C2(\"DES/ECB/PKCS5Padding\")",
+"description": "The C2 class is using a broken crypto algorithm (DES) which is not recommended for use due to its weakness."
+}
+{
+"issue": "Insufficient Entropy",
+"vulnerable_code": "KeyGenerator.getInstance(defaultAlgo);",
+"description": "The KeyGenerator is using a default algorithm which may not have sufficient entropy to generate a secure key."
+}
+{
+"issue": "Weak IV",
+"vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+"description": "The IV is being generated randomly by the Cipher class, which may not be secure enough."
+}
+{
+"issue": "Encryption without Authentication",
+"vulnerable_code": "cipher.doFinal(txtBytes);",
+"description": "The data is being encrypted without authentication, which can lead to attacks such as padding oracle attacks."
+}
+]
+}

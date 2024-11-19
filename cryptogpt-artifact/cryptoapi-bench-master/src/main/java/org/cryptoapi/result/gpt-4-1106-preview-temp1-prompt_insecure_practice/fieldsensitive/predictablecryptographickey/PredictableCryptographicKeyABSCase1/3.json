@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Weak Encryption Key",
+        "vulnerable_code": "byte[] keyBytes = key.getBytes(\"UTF-8\");\nkeyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The encryption key is derived from a string without a secure key derivation function, which makes it susceptible to brute force or dictionary attacks especially if the string is not complex enough.",
+        "recommendation": "Use a secure key derivation function like PBKDF2, bcrypt or scrypt with a random salt."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The code is enforcing a 128-bit key by truncating or padding the user-supplied key, which might be less secure than using a larger key size, such as 256 bits, for AES.",
+        "recommendation": "Use a 256-bit key for AES if the security requirements call for a higher level of security and the cryptographic provider supports it."
+    },
+    {
+        "misuse": "No Initialization Vector (IV)",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE,keySpec);",
+        "description": "The code does not specify an initialization vector (IV) for encryption in CBC mode, resorting to a default IV which could be predictable or static, and thus susceptible to certain attack vectors like replay attacks.",
+        "recommendation": "Use a random IV for each encryption operation and transmit the IV along with the ciphertext."
+    },
+    {
+        "misuse": "Static Salt or No Salt for Key Derivation",
+        "vulnerable_code": "",
+        "description": "Although not explicitly shown in the code, the absence of salting during key derivation especially if a key derivation function is used can lead to dictionary attacks on keys.",
+        "recommendation": "Introduce a random salt when deriving keys and ensure that it is used throughout the encryption process."
+    }
+]
+```

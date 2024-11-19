@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "Insufficient Key Size",
+    "vulnerable_code": "public static final int DEFAULT_KEY_SIZE = 1024;",
+    "description": "The RSA key length of 1024 bits is no longer considered secure. It is susceptible to being broken with enough computing resources.",
+    "recommendation": "Increase the key size to at least 2048 bits, as recommended by NIST."
+  },
+  {
+    "misuse": "ECB Mode in Cipher Instance",
+    "vulnerable_code": "Cipher.getInstance(\"RSA\")",
+    "description": "When no padding scheme or mode of operation is specified, Java defaults to ECB mode for block ciphers, which is vulnerable to pattern attacks because it encrypts identical plaintext blocks into identical ciphertext blocks.",
+    "recommendation": "Specify a secure mode of operation and padding scheme when initializing the Cipher instance (e.g., 'RSA/ECB/OAEPPadding')."
+  },
+  {
+    "misuse": "Default Padding Scheme Might Be Unsafe",
+    "vulnerable_code": "Cipher.getInstance(\"RSA\")",
+    "description": "By not explicitly specifying a padding scheme, the code might be defaulting to an insecure padding like PKCS1Padding which is vulnerable to padding oracle attacks.",
+    "recommendation": "Explicitly specify a secure padding scheme such as 'RSA/ECB/OAEPPadding'."
+  }
+]
+```

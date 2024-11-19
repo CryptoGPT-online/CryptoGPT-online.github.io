@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Cipher Mode",
+        "vulnerable_code": "\"AES/ECB/PKCS5Padding\"",
+        "description": "ECB (Electronic Codebook) mode is considered insecure for sensitive data because it does not provide serious message confidentiality; identical plaintext blocks are encrypted into identical ciphertext blocks.",
+        "recommendation": "Use a more secure mode such as CBC (Cipher Block Chaining) with an appropriate initialization vector, or GCM (Galois/Counter Mode) for added integrity."
+    },
+    {
+        "misuse": "Insecure Key Generation",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\n        SecretKey key = keyGen.generateKey();",
+        "description": "The key generator does not specify a key size. This may result in using a key size that is not considered strong enough for AES.",
+        "recommendation": "Specify the key size when generating a key by using keyGen.init(256); to ensure that a key with a strong key size is generated."
+    },
+    {
+        "misuse": "Lack of Secure Random Source",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "description": "A secure random source is not explicitly set for the key generation. Although the underlying implementation is supposed to provide a secure randomness, specifying the source can avoid defaults that may not be secure.",
+        "recommendation": "Use SecureRandom to generate a secure random source and pass it as an argument to the key generator's init method."
+    }
+]
+```

@@ -1,0 +1,27 @@
+False Positive Misuse:
+[]
+
+Optimized Misuse JSON:
+```json
+[{
+  "misuse_category": "Insecure Key Generation",
+  "vulnerable_method": "B1.method2()",
+  "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(cryptoKey);",
+  "description": "The cryptoKey parameter to getInstance() should not be user input. Instead, it should be the name of a cryptographic algorithm. In this case, the string \"DES\" is provided as the cryptoKey argument, which could be dangerous. This will create a DES key, which is considered broken and not secure enough for current standards.",
+  "recommendation": "The cryptoKey should be checked against a whitelist of acceptable keys. It should not be user provided input. It could be hardcoded to a secure algorithm like \"AES\"."
+},
+{
+  "misuse_category": "Insecure Cipher Usage",
+  "vulnerable_method": "B1.method2()",
+  "vulnerable_code": "Cipher cipher = Cipher.getInstance(crypto);",
+  "description": "The crypto parameter in getInstance() should not be user input. Instead, it should be the name of a cryptographic algorithm. In this case, the string \"DES/ECB/PKCS5Padding\" is provided as the crypto argument, which could be dangerous. This will create a DES cipher, which is considered broken and not secure enough for current standards.",
+  "recommendation": "The crypto parameter should be checked against a whitelist of acceptable ciphers. It should not be user provided input. It could be hardcoded to a secure algorithm like \"AES/GCM/NoPadding\" or \"AES/CBC/PKCS5Padding\"."
+},
+{
+  "misuse_category": "Incorrect key for KeyGenerator.getInstance()",
+  "vulnerable_method": "B1.method2()",
+  "vulnerable_code": "KeyGenerator.getInstance(cryptoKey)",
+  "description": "The KeyGenerator.getInstance() method requires a transformation string, not a key. This code swaps the cryptoAlgorithm and cryptoKey variables.",
+  "recommendation": "Correct the arguments for the KeyGenerator.getInstance() method. This code should be KeyGenerator.getInstance(crypto)."
+}]
+```

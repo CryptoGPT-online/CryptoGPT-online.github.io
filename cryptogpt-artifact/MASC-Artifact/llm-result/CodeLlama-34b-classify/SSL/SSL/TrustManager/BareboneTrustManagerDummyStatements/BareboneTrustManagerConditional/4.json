@@ -1,0 +1,26 @@
+ [
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "context = SSLContext.getInstance(\"SSL\");",
+        "description": "The SSLContext instance is created with the \"SSL\" protocol, which is a deprecated protocol and should not be used.",
+        "recommendation": "Use a more secure protocol such as TLS 1.2 or higher instead."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "trustAll = new TrustManager[] {new X509TrustManager() {...}};",
+        "description": "The TrustManager implementation provided is accepting all certificates without validating them, which can lead to trusting malicious certificates.",
+        "recommendation": "Implement proper certificate validation using a trust store or a custom TrustManager that validates certificates based on a trusted certificate authority."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "context.init(null, trustAll, new SecureRandom());",
+        "description": "The SecureRandom instance is not seeded with a secure random number generator, which can lead to weak randomness.",
+        "recommendation": "Use a secure random number generator, such as SecureRandom.getInstanceStrong(), to seed the SecureRandom instance."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "if (!(null != s && s.equalsIgnoreCase(\"RSA\"))) {...}",
+        "description": "The hardcoded string \"RSA\" is used to validate the authentication type, which can be tampered with and lead to accepting a certificate with a different authentication type.",
+        "recommendation": "Do not hardcode authentication type or any other sensitive information. Instead, use a configuration file or a secure storage mechanism to store and retrieve them."
+    }
+]

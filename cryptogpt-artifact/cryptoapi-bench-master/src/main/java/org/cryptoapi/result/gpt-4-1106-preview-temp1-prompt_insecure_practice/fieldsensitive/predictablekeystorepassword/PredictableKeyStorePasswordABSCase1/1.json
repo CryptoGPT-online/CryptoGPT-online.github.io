@@ -1,0 +1,28 @@
+```json
+[
+  {
+    "misuse": "Hardcoded Cryptographic Key",
+    "vulnerable_code": "String key = \"changeit\";",
+    "description": "Using a hard-coded encryption key ('changeit') can compromise security because the key is static and easily discoverable within the code base.",
+    "recommendation": "Generate a strong unique key for each deployment automatically or provide a secure way for operators to generate and input their own key."
+  },
+  {
+    "misuse": "Insecure TrustStore Management",
+    "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");\nks.load(cacerts.openStream(), passedKey.toCharArray());",
+    "description": "This code is loading a KeyStore from a hard-coded URL which is not even a valid keystore location (https://www.google.com). This does not relate to any trusted certificate store but rather is simply loading web content as a keystore.",
+    "recommendation": "Ensure that the keystore is obtained from a secure source and reflects the application's truststore requirements. The truststore should only contain certificates that are necessary for trust decisions."
+  },
+  {
+    "misuse": "Credentials Management",
+    "vulnerable_code": "passedKey = defKey;",
+    "description": "Assigning the default key to the 'passedKey' variable even if a different key is passed suggests there is no effective use of provided keys, which can be a potential security risk if default keys are used over secure runtime-provided keys.",
+    "recommendation": "Remove hardcoded default keys and implement a secure key management system."
+  },
+  {
+    "misuse": "Unvalidated Input in a Security Decision",
+    "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");",
+    "description": "Loading a keystore from an untrusted URL that is not validated can lead to trusting malicious certificates if the URL is under attacker control or is pointed to the wrong destination.",
+    "recommendation": "Use a trusted and validated keystore source. Any input determining the location or contents of a keystore should be validated."
+  }
+]
+```

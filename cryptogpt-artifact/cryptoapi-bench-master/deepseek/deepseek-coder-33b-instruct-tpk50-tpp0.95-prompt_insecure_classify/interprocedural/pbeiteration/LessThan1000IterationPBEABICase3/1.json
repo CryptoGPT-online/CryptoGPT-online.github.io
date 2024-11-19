@@ -1,0 +1,20 @@
+CWE-327: Use of a Broken or Risky Cryptographic Algorithm.
+CWE-330: Use of Insufficiently Random Values.
+
+Misuse: CWE-327: Use of a Broken or Risky Cryptographic Algorithm.
+Vulnerable code:
+```java
+PBEParameterSpec pbeParamSpec = null;
+method1(c,random,pbeParamSpec);
+```
+Description: This code segment creates a PBEParameterSpec object with a constant iteration count, which could potentially leak information if the iteration count is low or predictable.
+Recommendation: Instead of using a constant iteration count, use a random number generator to generate a high-entropy iteration count.
+
+Misuse: CWE-330: Use of Insufficiently Random Values.
+Vulnerable code:
+```java
+byte[] salt = new byte[32];
+random.nextBytes(salt);
+```
+Description: This code segment generates a salt using a fixed length of 32 bytes. Low-entropy salt could potentially lead to weaker cryptographic security.
+Recommendation: Use a cryptographically secure random number generator to generate a salt with high entropy. The length of the salt should also be appropriate for the cryptographic algorithm being used.

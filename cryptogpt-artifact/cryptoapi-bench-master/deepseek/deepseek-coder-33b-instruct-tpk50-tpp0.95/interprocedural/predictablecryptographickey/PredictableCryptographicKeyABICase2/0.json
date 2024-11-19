@@ -1,0 +1,14 @@
+[
+  {
+    "misuse": "CWE-256",
+    "vulnerable_code": "byte[] keyBytes = encryptKey.toString().getBytes();\nkeyBytes = Arrays.copyOf(keyBytes,16);\nSecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES\");",
+    "description": "The encryption key is taken as a string, converted to bytes, and then copied to a fixed size. This is insecure, because it can leave sensitive data in memory longer than necessary. Moreover, when converted to bytes, special characters and non-ascii characters can lead to incorrect key length and potential key derivation failures.",
+    "recommendation": "The key should be properly derived using a secure derivation function such as PBKDF2 or Argon2. Instead of copying the key to a fixed size, the resulting key should be truncated or padded to match the required key length."
+  },
+  {
+    "misuse": "CWE-338",
+    "vulnerable_code": "ENCRYPT_KEY = DEFAULT_ENCRYPT_KEY.toCharArray();\nencryptKey = ENCRYPT_KEY;",
+    "description": "The encryption key is stored in a field that is publicly accessible. This exposes the encryption key to all code running in the same JVM, including classes that the attacker controls.",
+    "recommendation": "To prevent unauthorized access, the key should not be exposed directly, and it should only be stored in a secure way, such as using a dedicated class or a dedicated key store."
+  }
+]

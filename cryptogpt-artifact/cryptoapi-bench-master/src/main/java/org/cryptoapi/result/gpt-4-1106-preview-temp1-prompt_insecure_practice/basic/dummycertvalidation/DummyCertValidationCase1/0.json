@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Improper Certificate Validation",
+        "vulnerable_code": "public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {\n    trustManager.checkClientTrusted(x509Certificates,s);\n}",
+        "description": "The method checkClientTrusted should validate the client's certificate but instead is delegating to another, potentially unsafe, trust manager without performing any checks.",
+        "recommendation": "Perform proper certificate validation within checkClientTrusted."
+    },
+    {
+        "misuse": "Improper Certificate Validation",
+        "vulnerable_code": "public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {\n    //Trust any remote server (no certificate validation)\n\n}",
+        "description": "The method checkServerTrusted is empty, meaning it does not validate the server's SSL certificate, making it vulnerable to Man-in-the-Middle (MITM) attacks.",
+        "recommendation": "Implement server certificate validation in checkServerTrusted."
+    },
+    {
+        "misuse": "Improper Certificate Validation",
+        "vulnerable_code": "public X509Certificate[] getAcceptedIssuers() {\n    //return null;\n    return new X509Certificate[0];\n}",
+        "description": "The getAcceptedIssuers method should return a list of certificates that are trusted, but it's returning an empty array, indicating no trust anchors.",
+        "recommendation": "Return an array of trusted CA certificates in getAcceptedIssuers."
+    }
+]
+```

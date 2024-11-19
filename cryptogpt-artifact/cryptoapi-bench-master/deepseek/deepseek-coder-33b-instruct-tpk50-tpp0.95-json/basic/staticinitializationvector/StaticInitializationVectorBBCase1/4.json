@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\"); SecretKey key = keyGen.generateKey();",
+        "description": "KeyGenerator uses a default PRNG (Pseudo Random Number Generator) which produces predictable keys. This makes the keys easy to guess and predict.",
+        "recommendation": "Instead of using KeyGenerator, specify a SecureRandom instance to generate the key. Here is how you can do it: KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\"); SecureRandom random = new SecureRandom(); keyGen.init(256, random); SecretKey key = keyGen.generateKey();"
+    },
+    {
+        "misuse": "Insecure IV (Initialization Vector)",
+        "vulnerable_code": "byte [] bytes = \"abcde\".getBytes(); IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+        "description": "Using a predictable IV increases the chance of reusing a IV which might lead to data leakage or more severe attacks like those exploiting the padding oracle attack. Even using random bytes as IV doesn't fully protect you against this kind of attacks.",
+        "recommendation": "Always use a SecureRandom instance to generate the IV. You can do it like this: byte[] ivBytes = new byte[16]; new SecureRandom().nextBytes(ivBytes); IvParameterSpec ivSpec = new IvParameterSpec(ivBytes);"
+    }
+]
+```

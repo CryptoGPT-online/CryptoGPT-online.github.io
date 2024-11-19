@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Deprecated Crypto Algorithm",
+        "vulnerable_code": "String crypto = \"IDEA\";",
+        "description": "The 'IDEA' cipher algorithm is considered as a weak crypto algorithm. It is deprecated and not recommended for use in cryptographic operations due its limited key size and known vulnerabilities.",
+        "recommendation": "Use a stronger encryption standard such as 'AES/GCM/NoPadding' which is widely considered to be strong and secure."
+    },
+    {
+        "misuse": "Insufficient Key Length",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(crypto);",
+        "description": "When using cryptographic algorithms, not specifying the key size can lead to the creation of keys with default size that may be insufficient for security, depending on the algorithm used.",
+        "recommendation": "Always specify key size explicitly when generating keys and ensure to use sufficient key length as per the latest security recommendations (e.g., 256-bit keys for AES)."
+    },
+    {
+        "misuse": "No Secure Random Specified",
+        "vulnerable_code": "SecretKey key = keyGen.generateKey();",
+        "description": "Using KeyGenerator without specifying a source of secure randomness can potentially lead to using a non-secure random number generator depending on the implementation.",
+        "recommendation": "Always specify a secure random instance when generating keys to ensure unpredictability and resistance to attacks, such as 'SecureRandom.getInstanceStrong()'."
+    },
+    {
+        "misuse": "Incomplete Cipher Specification",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(crypto);",
+        "description": "Specifying only the algorithm name without specifying the mode of operation and padding scheme can cause the application to use insecure defaults.",
+        "recommendation": "When obtaining a Cipher instance, always specify the algorithm/mode/padding, such as 'AES/GCM/NoPadding', which provides authenticated encryption with associated data (AEAD) to ensure confidentiality, integrity, and authenticity."
+    }
+]
+```

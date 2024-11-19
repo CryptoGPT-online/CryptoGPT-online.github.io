@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "defaultKey = String.valueOf(random.ints());",
+        "description": "Using the SecureRandom's `ints()` method directly does not guarantee a cryptographic-strength secure string for a key.",
+        "recommendation": "Generate security-sensitive keys using a strong cryptographic function or key derivation function (KDF)."
+    },
+    {
+        "misuse": "Weak Key Derivation Parameters",
+        "vulnerable_code": "pbeKeySpec = new PBEKeySpec(defaultKey.toCharArray(),salt,iterationCount,keyLength);",
+        "description": "The specified key length of 16 bytes (128 bits) may not be sufficient for all security contexts. Additionally, the iteration count of 11010 may not provide adequate key-stretching.",
+        "recommendation": "Increase the iteration count and key length to strengthen the key. Choose values based on current best practices and consider using a robust key derivation function like PBKDF2 with adequate iterations."
+    },
+    {
+        "misuse": "Hardcoded Sensitive Data",
+        "vulnerable_code": "String defaultKey = \"saagar\";",
+        "description": "The default key 'saagar' is hardcoded, which is a security risk if used as a key for encryption, potentially leading to easy decryption of sensitive data.",
+        "recommendation": "Use a securely generated random key instead of a hardcoded value. Ensure that keys are managed securely and not embedded in the code."
+    }
+]
+```

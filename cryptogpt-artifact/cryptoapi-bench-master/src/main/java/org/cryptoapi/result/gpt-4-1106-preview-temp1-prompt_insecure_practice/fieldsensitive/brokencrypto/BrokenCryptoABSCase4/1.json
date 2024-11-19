@@ -1,0 +1,34 @@
+```json
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "crypto = new C5(\"RC2\");",
+        "description": "The RC2 algorithm is considered weak and has been deprecated in modern cryptographic applications. It employs a small key size which can be brute-forced with current computing power, making it insecure for encrypting sensitive data.",
+        "recommendation": "Use a strong encryption algorithm such as AES with a proper key size (e.g., AES/CBC/PKCS7Padding)."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "KeyGenerator.getInstance(defaultAlgo);",
+        "description": "The code does not specify a key size for the RC2 algorithm, which means it could potentially use a weak default size. Insufficient key size can make the encryption easier to break.",
+        "recommendation": "Specify an adequate key size when generating keys or use secure defaults provided by strong algorithms."
+    },
+    {
+        "misuse": "Use of Default Encoding",
+        "vulnerable_code": "txt.getBytes()",
+        "description": "The use of the getBytes method without specifying an encoding may lead to different behaviors on different platforms as it relies on the platform's default charset, which can introduce security issues.",
+        "recommendation": "Use getBytes with a specific charset like 'UTF-8'."
+    },
+    {
+        "misuse": "Hardcoded Encryption Algorithm",
+        "vulnerable_code": "Cipher.getInstance(defaultAlgo);",
+        "description": "The encryption algorithm is hardcoded and determined at runtime based on the string input. If an insecure algorithm or mode is passed, it could lead to vulnerabilities.",
+        "recommendation": "Ensure that only secure encryption algorithms and modes are used and do not allow insecure algorithms to be specified at runtime."
+    },
+    {
+        "misuse": "Use of ECB Mode",
+        "vulnerable_code": "Cipher.getInstance(defaultAlgo);",
+        "description": "The code might default to using ECB mode if it is not explicitly specified in the string 'defaultAlgo'. ECB mode is generally insecure as it does not provide proper cryptographic diffusion.",
+        "recommendation": "Use a mode of operation that provides cryptographic diffusion, such as Cipher Block Chaining (CBC) or Galois/Counter Mode (GCM) with an appropriate initialization vector."
+    }
+]
+```

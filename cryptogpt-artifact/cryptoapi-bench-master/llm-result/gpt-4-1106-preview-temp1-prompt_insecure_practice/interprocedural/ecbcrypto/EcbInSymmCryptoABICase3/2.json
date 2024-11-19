@@ -1,0 +1,25 @@
+```json
+[
+  {
+    "misuse": "Insecure Cipher Mode",
+    "vulnerable_code": [
+      "\"AES/ECB/PKCS5Padding\"",
+      "Cipher.getInstance(crypto)"
+    ],
+    "description": "ECB (Electronic Codebook) is an insecure block cipher mode of operation because it does not provide serious message confidentiality. It's vulnerable to replay and pattern analysis attacks as identical plaintext blocks are encrypted into identical ciphertext blocks. ECB mode encryption should be avoided in favor of more secure modes like CBC or GCM which include IV (Initial Vector) to provide better security.",
+    "recommendation": "Change to a more secure mode of operation like CBC or GCM and ensure to use a secure random IV for each encryption operation."
+  },
+  {
+    "misuse": "Insufficient Key Size",
+    "vulnerable_code": "KeyGenerator.getInstance(\"AES\")",
+    "description": "The code does not specify a key size for AES. It may default to a lower key size like 128 bits, which is considered secure, but AES-256 is recommended for higher security levels. Without explicitly setting the key size, the security of the encryption may be weaker than intended.",
+    "recommendation": "Specify an explicit key size when generating the AES key, such as 256 bits to enhance security."
+  },
+  {
+    "misuse": "Hardcoded Encryption Algorithm",
+    "vulnerable_code": "\"AES/ECB/PKCS5Padding\"",
+    "description": "The encryption algorithm, mode, and padding are hardcoded, which is a poor security practice because it doesn't allow for easy updates or configurability in case advances in cryptanalysis render the chosen algorithm or mode insecure or if there is a need to comply with new security standards.",
+    "recommendation": "Abstract the algorithm and mode settings to allow for configurability and easier updates. Also, validate any user-provided or external configuration to ensure it doesn't specify weak or insecure algorithm/mode combinations."
+  }
+]
+```

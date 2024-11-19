@@ -1,0 +1,14 @@
+[
+    {
+        "misuse": "Weak Random Number Generator",
+        "vulnerable_code": "new PBEParameterSpec(new byte[]{Byte.parseByte(salt.toString())}, count);",
+        "description": "Byte.parseByte(salt.toString()) uses a weak random number generator since converting salt to a String and then to Byte can lead to predictable numbers.",
+        "recommendation": "Consider using a cryptographically secure random number generator to generate salt."
+    },
+    {
+        "misuse": "Storing sensitive information in clear",
+        "vulnerable_code": "private static char[] SALT = DEFAULT_SALT.toCharArray();",
+        "description": "DEFAULT_SALT is a constant and is not stored securely. It could be found in the class file and can be easily reverse-engineered.",
+        "recommendation": "Encrypt the salt or secure it with a proper key management system."
+    }
+]

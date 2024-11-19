@@ -1,0 +1,40 @@
+
+### False Positive Misuse ###
+
+[
+  {
+    "misuse": "Incorrect Encryption Algorithm",
+    "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(crypto);",
+    "description": "The MessageDigest.getInstance() method creates a new MessageDigest object for the specified crypto provider. In this case, it's creating an MD2 message digest, which is not the intended use case. MD2 is not a message digest algorithm, it's a hash function, which is not used for encryption or decryption. It's generally recommended to use a hash function for storing passwords rather than encrypting them.",
+    "recommendation": "For encryption and decryption tasks, use a block cipher algorithm like AES. For hashing tasks, use a hash function like SHA-256."
+  }
+]
+
+
+### Optimized Misuse JSON###
+
+[
+    {
+        "misuse category": "Weak Cryptography",
+        "vulnerable_method": "C4.C4(String)",
+        "vulnerable_code": "crypto = new C4("
+        MD2
+        ");",
+        "description": "MD2 is a weak cryptographic algorithm that has been broken. It's considered harmful to keep it for security purposes.",
+        "recommendation": "Use stronger cryptographic algorithms such as AES or RSA."
+    },
+    {
+        "misuse category": "Weak Cryptography",
+        "vulnerable_method": "C4.encrypt(String, String)",
+        "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(crypto);",
+        "description": "MD2 is a weak cryptographic algorithm. It is not considered secure anymore. Using it for cryptographic operations could result in security vulnerabilities. You should use stronger algorithms like SHA-256, SHA-3 or BLAKE2B. Additionally, it's good practice to select a hash algorithm that is appropriate for your specific use case to avoid potential vulnerabilities.",
+        "recommendation": "Replace 'MD2' with a stronger cryptographic hash algorithm like 'SHA-256'. Here is an example: MessageDigest md = MessageDigest.getInstance(\"SHA-256\");"
+    },
+    {
+        "misuse category": "Information Disclosure",
+        "vulnerable_method": "C4.encrypt(String, String)",
+        "vulnerable_code": "System.out.println(md.digest());",
+        "description": "Messages encrypted with MessageDigest are byte arrays and cannot be read without decoding. Printing them directly can make them difficult to understand.",
+        "recommendation": "Encode encrypted messages using Base64 or Hex before printing or transmitting."
+    }
+]

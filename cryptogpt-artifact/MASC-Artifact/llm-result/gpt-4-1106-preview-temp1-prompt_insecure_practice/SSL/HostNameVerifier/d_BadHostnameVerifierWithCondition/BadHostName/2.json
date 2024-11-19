@@ -1,0 +1,18 @@
+```json
+[
+    {
+        "misuse": "Weak Hostname Verification (CWE-297)",
+        "vulnerable_code": [
+            "@Override",
+            "public boolean verify(String hostname, SSLSession session) {",
+            "    if(true || session.getCipherSuite().length()>=0){",
+            "        return true;",
+            "    }",
+            "    return false;",
+            "}"
+        ],
+        "description": "This custom HostnameVerifier implementation always returns true, which means it does not enforce hostname verification. This bypasses any checks against the hostname in the certificate presented by the server, making the application vulnerable to man-in-the-middle (MITM) attacks.",
+        "recommendation": "Remove the custom HostnameVerifier implementation or implement proper hostname verification logic."
+    }
+]
+```

@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Weak Hash Algorithm",
+        "vulnerable_code": "crypto = new C2(\"MD5\");",
+        "description": "MD5 is an outdated hashing algorithm that has been vulnerable to collision attacks, where two different inputs produce the same hash value.",
+        "recommendation": "Consider using a more secure hashing algorithm like SHA-256 or SHA-3."
+    },
+    {
+        "misuse": "Non-configurable encryption method",
+        "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(crypto);",
+        "description": "The application uses a fixed cryptographic hash function given by the crypto variable, which should be configurable to use secure and updated algorithms.",
+        "recommendation": "Ensure that the hash function can be securely configured, ideally defaulted to use a more secure hash function like SHA-256."
+    },
+    {
+        "misuse": "Console output of sensitive data",
+        "vulnerable_code": "System.out.println(md.digest());",
+        "description": "Printing out cryptographic hashes can leak sensitive information as it should not be exposed in logs or console output.",
+        "recommendation": "Avoid directly printing sensitive information and instead use secure logging mechanisms if necessary."
+    },
+    {
+        "misuse": "Improper use of encryption",
+        "vulnerable_code": "crypto.encrypt(\"abc\",\"\");",
+        "description": "This code is claimed to be for encryption but actually it is implementing hashing, not encryption. This can mislead developers and users of the API.",
+        "recommendation": "Correct the method naming and functionality to reflect whether it is performing hashing or encryption and ensure correct cryptographic principles are applied."
+    }
+]
+```

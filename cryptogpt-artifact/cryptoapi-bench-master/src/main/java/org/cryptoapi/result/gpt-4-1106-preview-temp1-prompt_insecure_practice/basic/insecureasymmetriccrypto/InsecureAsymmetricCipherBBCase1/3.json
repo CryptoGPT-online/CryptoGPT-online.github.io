@@ -1,0 +1,37 @@
+```json
+[
+    {
+        "misuse": "Weak Encryption Key Length",
+        "vulnerable_code": "int keysize = 1024;",
+        "description": "The key length used for RSA encryption is 1024 bits which is not considered secure for modern standards. Recent recommendations dictate a minimum key size of 2048 bits to ensure data remains confidential against advancements in computing power.",
+        "recommendation": "Increase the RSA key length to at least 2048 bits."
+    },
+    {
+        "misuse": "Insecure RSA Padding",
+        "vulnerable_code": [
+            "Cipher cipher = Cipher.getInstance(\"RSA\")",
+            "Cipher dec = Cipher.getInstance(\"RSA\")"
+        ],
+        "description": "RSA encryption without specifying the padding scheme (in this case, using the default one) is insecure. The default padding scheme may vary across different platforms and versions of Java and could result in using insecure padding schemes like RSA/ECB/PKCS1Padding which are vulnerable to padding oracle attacks.",
+        "recommendation": "Always specify a secure padding mechanism when initializing Cipher instances, such as OAEP with SHA-256 and MGF1 (e.g., \"RSA/ECB/OAEPWithSHA-256AndMGF1Padding\")."
+    },
+    {
+        "misuse": "Use of ECB Mode",
+        "vulnerable_code": [
+            "Cipher cipher = Cipher.getInstance(\"RSA\")",
+            "Cipher dec = Cipher.getInstance(\"RSA\")"
+        ],
+        "description": "Using ECB mode as the default with RSA may lead to cryptographically insecure operations because it does not provide serious message confidentiality. The same plaintext block will always encrypt to the same ciphertext block, which can leak information.",
+        "recommendation": "Use an alternate mode of operation that provides better security properties, such as CBC, CFB, or OFB, and combine with secure padding mechanisms."
+    },
+    {
+        "misuse": "Direct Use of SealedObject",
+        "vulnerable_code": [
+            "SealedObject encryptedMessage = new SealedObject(myMessage,cipher);",
+            "String message = (String) encryptedMessage.getObject(dec);"
+        ],
+        "description": "Direct usage of SealedObject with a potentially insecure Cipher instance might pose a security risk if the Cipher is not initialized with a safe mode and padding. SealedObject doesn't ensure the actual strength of the encryption.",
+        "recommendation": "Ensure that the Cipher instance passed to SealedObject is configured with secure settings, including a safe encryption mode and padding scheme."
+    }
+]
+```

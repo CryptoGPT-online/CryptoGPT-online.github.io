@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Inadequate Salt Size",
+        "vulnerable_code": "byte[] salt = new byte[32];",
+        "description": "While the salt size used is 32 bytes which is actually adequate, it's important to ensure that the salt is unique and ideally as large as the hash function output to prevent attacks.",
+        "recommendation": "Ensure salts are unique for each operation and are of an adequate size relative to the hash function used."
+    },
+    {
+        "misuse": "Insufficient Iteration Count",
+        "vulnerable_code": "int iteration = hm.get(\"bbb\");",
+        "description": "The iteration count of 20 (stored under key 'bbb' in a map) is too low for modern standards, significantly reducing the time needed for an attacker to perform a brute force attack.",
+        "recommendation": "Increase the iteration count to a value that offers a balance between security and performance. A minimum of 10,000 iterations is typically recommended."
+    },
+    {
+        "misuse": "Unencrypted Key Storage",
+        "vulnerable_code": "\"aaa\", new Integer(1020)",
+        "description": "The code snippet demonstrates storing a key value '1020' in a Map without encryption, which could lead to key disclosure if the map is accessed by unauthorized entities.",
+        "recommendation": "Always store keys securely, for example using a secure key management system and avoid storing them in plain text or in a recoverable format."
+    },
+    {
+        "misuse": "PBEParameterSpec without a Secure Algorithm",
+        "vulnerable_code": "pbeParamSpec = new PBEParameterSpec(salt, iteration);",
+        "description": "The PBEParameterSpec is being used without specifying or ensuring the use of a secure password-based encryption algorithm.",
+        "recommendation": "Always specify a secure, industry-standard algorithm when initializing the PBEParameterSpec, and ensure that the algorithm is implemented correctly and securely."
+    }
+]
+```

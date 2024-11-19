@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Hostname Verification Bypass",
+        "vulnerable_code": "if (\"192.168.0.10\".equals(hostname)) { return true; }",
+        "description": "By always returning true when the hostname is \"192.168.0.10\", the hostname verification process is bypassed, which can allow man-in-the-middle attacks.",
+        "recommendation": "Remove the hardcoded bypass, and ensure that hostname verification is properly enforced."
+    },
+    {
+        "misuse": "Incomplete Hostname Verification",
+        "vulnerable_code": "HostnameVerifier hv = HttpsURLConnection.getDefaultHostnameVerifier(); return hv.verify(hostname, sslSession);",
+        "description": "The custom hostname verifier delegates to the default verifier without additional checks. If the default verifier is not secure or is not set to verify all hostnames rigorously, it might introduce a vulnerability.",
+        "recommendation": "Ensure that the default verifier is properly configured to securely verify hostnames or implement a comprehensive hostname verification mechanism."
+    }
+]
+```

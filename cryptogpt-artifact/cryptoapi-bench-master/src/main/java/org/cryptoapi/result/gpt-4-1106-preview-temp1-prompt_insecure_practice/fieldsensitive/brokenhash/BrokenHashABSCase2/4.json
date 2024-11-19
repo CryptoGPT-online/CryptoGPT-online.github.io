@@ -1,0 +1,45 @@
+```json
+[
+  {
+    "misuse": "Weak Hash Algorithm",
+    "vulnerable_code": [
+      "MessageDigest md = MessageDigest.getInstance(crypto);",
+      "crypto = new C2(\"MD5\");"
+    ],
+    "description": "The code uses MD5 algorithm, which is considered cryptographically broken and unsuitable for further use.",
+    "recommendation": "Use a more secure hash algorithm such as SHA-256 or SHA-3."
+  },
+  {
+    "misuse": "Insecure Encoding",
+    "vulnerable_code": [
+      "md.update(str.getBytes());"
+    ],
+    "description": "The code does not specify a character encoding when converting the string to bytes, potentially leading to different results on platforms with different default charsets.",
+    "recommendation": "Specify a charset when converting strings to bytes, for example, str.getBytes(StandardCharsets.UTF_8)."
+  },
+  {
+    "misuse": "Not Encrypting Data",
+    "vulnerable_code": [
+      "public void encrypt(String str, String passedAlgo)"
+    ],
+    "description": "The method named 'encrypt' does not perform encryption, it calculates a hash, which could be misleading in terms of functionality.",
+    "recommendation": "Rename the method to better reflect its actual purpose like 'computeHash', and use actual encryption methods if encryption is required."
+  },
+  {
+    "misuse": "Insecure Printing of Sensitive Data",
+    "vulnerable_code": [
+      "System.out.println(md.digest());"
+    ],
+    "description": "The code may be leaking sensitive data by printing raw hash bytes to the console which might be visible in logs or console outputs.",
+    "recommendation": "Avoid printing sensitive data to the console. If needed, convert it to a hex or base64 string which is the standard way of representing binary data."
+  },
+  {
+    "misuse": "Missing Algorithm Parameter Validation",
+    "vulnerable_code": [
+      "public void encrypt(String str, String passedAlgo)"
+    ],
+    "description": "The method takes an algorithm as a parameter, but does not validate it, which might result in the use of an unsafe or non-existent algorithm leading to a runtime exception.",
+    "recommendation": "Validate the 'passedAlgo' parameter to ensure it's a secure and supported algorithm before using it."
+  }
+]
+```

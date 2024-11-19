@@ -1,0 +1,45 @@
+```json
+[
+    {
+        "misuse": "Insecure Encryption Algorithm",
+        "vulnerable_code": [
+            "crypto = new C6(\"IDEA\");"
+        ],
+        "description": "The IDEA encryption algorithm is not considered secure due to its relatively small key size and vulnerabilities that have been found. Cipher blocks should be at least 128 bits.",
+        "recommendation": "Switch to a more secure encryption algorithm such as AES with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "Use of Static IV or No IV",
+        "vulnerable_code": [
+            "cipher.init(Cipher.ENCRYPT_MODE, key);"
+        ],
+        "description": "The encryption method initializes the cipher without specifying an initialization vector (IV). This can lead to vulnerabilities since the same plaintext will always result in the same ciphertext when using the same key, which is not secure.",
+        "recommendation": "Use a cryptographically strong random value for the IV and use Cipher Block Chaining (CBC) mode with an IV, or use an algorithm/mode that does not require IV if those provide better security guarantees in the specific context (e.g., GCM mode)."
+    },
+    {
+        "misuse": "Hardcoded Encryption Key",
+        "vulnerable_code": [
+            "KeyGenerator.getInstance(defaultAlgo);"
+        ],
+        "description": "The encryption method generates a new key for every operation without the ability to set a predefined key. This could lead to not being able to decrypt the data if the key is not stored or transmitted securely.",
+        "recommendation": "The encryption and decryption process should use a key-management strategy that maintains key confidentiality and integrity. Allow the use of predefined keys that are securely managed and stored."
+    },
+    {
+        "misuse": "Improper Exception Handling",
+        "vulnerable_code": [
+            "public B5() throws NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException"
+        ],
+        "description": "The constructor of the B5 class declares a broad array of exceptions without handling them, potentially exposing sensitive information about the crypto framework in use if an exception is thrown.",
+        "recommendation": "Catch and handle exceptions properly within the class, and consider using custom exception types that don't expose sensitive information."
+    },
+    {
+        "misuse": "Lack of Input Validation",
+        "vulnerable_code": [
+            "public byte[] encrypt(String txt, String passedAlgo)",
+            "if(passedAlgo.isEmpty()){"
+        ],
+        "description": "The method does not validate the passed algorithm string, which might lead to the selection of an insecure algorithm or an algorithm not suitable for encryption.",
+        "recommendation": "Validate the input `passedAlgo` to ensure that it refers to a secure and appropriate encryption algorithm before using it."
+    }
+]
+```

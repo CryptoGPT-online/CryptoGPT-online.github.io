@@ -1,0 +1,28 @@
+ {
+"misuses": [
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "AES/ECB/PKCS5Padding",
+"description": "The cipher algorithm used, AES/ECB/PKCS5Padding, is vulnerable to side-channel attacks, such as those related to the use of ECB mode. In this case, the encryption is deterministic and the same plaintext will always produce the same ciphertext, allowing an attacker to potentially infer information about the plaintext. Additionally, the use of ECB mode without chaining is also vulnerable to known-plaintext attacks.",
+"recommendation": "Replace the use of AES/ECB/PKCS5Padding with a secure cipher algorithm such as AES/CBC/PKCS5Padding or AES/GCM/NoPadding."
+},
+{
+"misuse": "Weak Key Generation",
+"vulnerable_code": "KeyGenerator.getInstance(\"AES\")",
+"description": "The key generation method used, KeyGenerator.getInstance(\"AES\"), is a weak key generation method that is not suitable for use in a production environment. It is important to use a secure key generation method that generates keys that are cryptographically secure and resistant to attacks.",
+"recommendation": "Replace the use of KeyGenerator.getInstance(\"AES\") with a secure key generation method such as SecureRandom or a randomness extractor."
+},
+{
+"misuse": "Insecure Key Length",
+"vulnerable_code": "SecretKey key = keyGen.generateKey();",
+"description": "The key length used, 128 bits, is not sufficient to provide adequate security. In this case, the key length is too short to resist attacks such as brute force attacks. It is important to use a secure key length that provides adequate security against attacks.",
+"recommendation": "Replace the use of SecretKey key = keyGen.generateKey(); with a secure key length such as 256 bits."
+},
+{
+"misuse": "Insecure IV Generation",
+"vulnerable_code": "Cipher cipher = Cipher.getInstance(passedAlgo);",
+"description": "The IV generation method used, Cipher.getInstance(passedAlgo), is an insecure IV generation method that is not suitable for use in a production environment. It is important to use a secure IV generation method that generates IVs that are cryptographically secure and resistant to attacks.",
+"recommendation": "Replace the use of Cipher.getInstance(passedAlgo) with a secure IV generation method such as SecureRandom or a randomness extractor."
+}
+]
+}

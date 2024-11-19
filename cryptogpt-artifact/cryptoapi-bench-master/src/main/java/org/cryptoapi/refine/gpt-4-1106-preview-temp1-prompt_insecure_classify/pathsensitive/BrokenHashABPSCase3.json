@@ -1,0 +1,13 @@
+### False Positive Misuse ###
+
+In the misuse lists provided, it appears that the report for the use of MD4 has been flagged in every list. However, closer inspection of the code shows that while MD4 is indeed instantiated using `MessageDigest.getInstance("MD4")`, later in the code there is a conditional statement that assigns SHA-256 to the `md` variable if the `choice` is greater than 1. Given that `choice` is hard-coded to 2, the application will actually use SHA-256, not MD4, when it performs the message digest operation. 
+
+Therefore, the reported misuse of MD4 is a false positive because the reality of the code execution path ensures that SHA-256 will be used, which is a cryptographically secure hashing algorithm.
+
+### Optimized Misuse JSON###
+
+Since all the misuse reports in the lists redundantly flag the use of MD4, which is not actually used due to the conditional logic in the code, the entire list can be considered a false positive. Thereby, we can provide an empty list as the optimized misuse JSON, indicating no actual misuses were found.
+
+```json
+[]
+```

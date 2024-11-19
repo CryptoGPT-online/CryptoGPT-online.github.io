@@ -1,0 +1,5 @@
+ {
+"misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+"vulnerable_code": "public class H1 {\n    C1 crypto;\n    public H1() throws MalformedURLException {\n        String url = \"http://gmail.com\";\n        crypto = new C1(url);\n        crypto.method1(\"\");\n    }\n}\n\nclass C1 {\n    String defURL;\n\n    public C1(String url){\n        defURL = url;\n    }\n\n    public void method1(String passedURL) throws MalformedURLException {\n\n        if(passedURL.isEmpty()){\n            passedURL = defURL;\n        }\n        System.out.println(new URL(passedURL));\n    }\n}",
+"description": "In the provided code, the `H1` class is using the `C1` class to perform a cryptographic operation. However, the `C1` class is using a less secure algorithm for the operation, which could be vulnerable to attack.",
+"recommendation": "To fix this misuse, the `C1` class should use a more secure algorithm for the cryptographic operation. Additionally, the `H1` class should check for the availability of the more secure algorithm and use it if possible."

@@ -1,0 +1,34 @@
+```json
+[
+    {
+        "misuse": "Inadequate Key Length",
+        "vulnerable_code": "int keyLength = 16;",
+        "description": "The specified key length of 16 bits is inadequate for secure encryption, which makes the encryption strength very weak.",
+        "recommendation": "Ensure that the key length is set to a secure value. For AES, this should be at least 128 bits, and ideally 256 bits."
+    },
+    {
+        "misuse": "Use of Key Generation from Low-Entropy Strings",
+        "vulnerable_code": "String defaultKey = String.valueOf(random.ints());",
+        "description": "The code generates a key from a low-entropy string derived from a sequence of pseudo-random numbers, which could be predictable or not have enough randomness for cryptographic purposes, leading to easy brute-force attacks.",
+        "recommendation": "Use a secure key management system to generate, store, and retrieve cryptographic keys instead of generating them from pseudo-random number sequences."
+    },
+    {
+        "misuse": "Weak Password-Based Encryption",
+        "vulnerable_code": "pbeKeySpec = new PBEKeySpec(new String(keyBytes).toCharArray(),salt,iterationCount,keyLength);",
+        "description": "Password-based encryption with low iteration counts and weak key lengths is not secure against brute-force attacks. Also, transforming the bytes directly into a string and back to a char array may result in unintended encoding issues, which could weaken the entropy of the key.",
+        "recommendation": "Use a higher iteration count and proper key derivation function such as PBKDF2. Ensure the use of securely generated keys and not from simple string conversions."
+    },
+    {
+        "misuse": "Use of Unspecified PBE Algorithm",
+        "vulnerable_code": "pbeKeySpec = new PBEKeySpec(new String(keyBytes).toCharArray(),salt,iterationCount,keyLength);",
+        "description": "The PBEKeySpec is being used without specifying the Password-Based Encryption algorithm, making it dependent on default settings which might not be secure.",
+        "recommendation": "Explicitly define the PBE algorithm to be used, such as 'PBEWithHmacSHA256AndAES_256', to ensure a secure algorithm is chosen."
+    },
+    {
+        "misuse": "Not Clearing Sensitive Data",
+        "vulnerable_code": "pbeKeySpec = new PBEKeySpec(new String(keyBytes).toCharArray(),salt,iterationCount,keyLength);",
+        "description": "Sensitive data like cryptographic keys and passwords should be cleared from memory after their usage to prevent memory dump attacks.",
+        "recommendation": "Clear the key data from memory by overwriting it immediately after use by filling the character array with zeros or using a method like 'Arrays.fill(array, (char) 0)' on the 'PBEKeySpec' password property."
+    }
+]
+```

@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Trust Anchor",
+        "vulnerable_code": "ks.load(cacerts.openStream(), passedKey.toCharArray());",
+        "description": "The code is loading a KeyStore from an HTTP URL, which can be intercepted and replaced by an attacker.",
+        "recommendation": "Load the KeyStore from a trusted and secure source, such as a local file or a URL served over HTTPS with proper host validation."
+    },
+    {
+        "misuse": "Hardcoded Crypto Key",
+        "vulnerable_code": "String key = \"changeit\";",
+        "description": "The encryption key is hardcoded in the source code, which could be easily extracted by an attacker.",
+        "recommendation": "Use a secure method to manage encryption keys, such as a dedicated key management service or secure key storage."
+    },
+    {
+        "misuse": "Static Cryptographic Key",
+        "vulnerable_code": "passedKey = defKey;",
+        "description": "The KeyStore is being loaded with a static key that is the same across different instances, increasing the risk if the key is compromised.",
+        "recommendation": "Use a different, preferably randomly generated key for each instance."
+    }
+]
+```

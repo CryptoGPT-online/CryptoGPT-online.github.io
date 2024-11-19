@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Invalid Algorithm Specification",
+        "vulnerable_code": "\"IDEA\"",
+        "description": "IDEA cipher suite is specified, but it is not compatible with the AES key generated.",
+        "recommendation": "Ensure that the cipher suite matches the type of key being used. For AES keys, use an AES-compatible cipher suite."
+    },
+    {
+        "misuse": "Missing Initialization Vector (IV)",
+        "vulnerable_code": "\"AES/CBC/PKCS5Padding\"",
+        "description": "CBC mode is being used without specifying an initialization vector (IV), which can lead to vulnerable encryption.",
+        "recommendation": "Generate a secure random IV and initialize the Cipher with it by using IvParameterSpec."
+    },
+    {
+        "misuse": "Weak Key Generation",
+        "vulnerable_code": "KeyGenerator.getInstance(\"AES\")",
+        "description": "The key generator does not specify the key size, which may result in a weak key if the default size is not adequate.",
+        "recommendation": "Specify the key size when generating the key by calling keyGen.init(256) for a 256-bit key, ensuring a strong encryption key."
+    },
+    {
+        "misuse": "Error Propagation",
+        "vulnerable_code": "public void go(int choice)",
+        "description": "Method 'go' throws generic exceptions, which can propagate cryptographic errors without proper handling.",
+        "recommendation": "Catch and handle specific cryptographic exceptions within the method where they occur, to avoid leaking sensitive information through exception messages."
+    }
+]
+```

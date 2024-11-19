@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "Unsecure Randomness",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"Blowfish\"); SecretKey key = keyGen.generateKey();",
+    "description": "The key generation is insecure due to the use of a not-cryptographically secure random number generator. This could lead to crypto attacks that could be feasible.",
+    "recommendation": "Use SecureRandom instead of KeyGenerator for generating keys. SecureRandom is cryptographically strong. "
+  },
+  {
+    "misuse": "Initialization Vector is not generated properly",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"Blowfish\"); cipher.init(Cipher.ENCRYPT_MODE, key);",
+    "description": "In cryptography, an initialization vector (IV) is a fixed-size input to a cryptographic primitive that is typically required to be random or pseudorandom. Blowfish doesn't require an IV, but if an IV is needed for any other modes of operation (like CBC or OFB), it is recommended to be securely generated.",
+    "recommendation": "For all modes of operations that require an IV, it is highly recommended to securely generate the IV. If IV is not required for the specified mode of operation, no IV should be specified."
+  }
+]
+```

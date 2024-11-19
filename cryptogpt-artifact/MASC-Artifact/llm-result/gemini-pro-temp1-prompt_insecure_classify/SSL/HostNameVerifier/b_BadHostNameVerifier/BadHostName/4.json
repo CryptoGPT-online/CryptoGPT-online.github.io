@@ -1,0 +1,43 @@
+There is one crypto API misuse identified in your code: 
+
+```java
+public class Be {
+    public static void main(String[] args) {
+        new HostnameVerifier(){
+            @Override
+            public boolean verify(String hostname, SSLSession session) {
+                return true;
+            }
+        };
+    }
+}
+```
+
+**Misuse**: CWE-295: Improper Certificate Validation.
+
+**Vulnerable Code**: 
+```java
+new HostnameVerifier(){
+            @Override
+            public boolean verify(String hostname, SSLSession session) {
+                return true;
+            }
+        };
+```
+**Description**: This code overrides the `verify` method of the `HostnameVerifier` class. It returns `true` unconditionally, which means that it will accept any hostname for a given SSL session. This is insecure because it can allow an attacker to spoof a website and trick users into providing sensitive information.
+
+**Recommendation**: 
+Use the `SSLSocketFactory` class to create an SSL socket and pass in a hostname verifier that performs proper validation. For example:
+
+
+```java
+SSLSocketFactory factory = (SSLSocketFactory) SSLSocketFactory.getDefault();
+SSLSocket socket = (SSLSocket) factory.createSocket("hostname", 443);
+socket.setHostnameVerifier(new HostnameVerifier() {
+    @Override
+    public boolean verify(String hostname, SSLSession session) {
+        // Perform proper hostname validation here
+        return true;
+    }
+});
+```

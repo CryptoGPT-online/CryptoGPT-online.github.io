@@ -1,0 +1,12 @@
+[{
+    "misuse": "Insecure Randomness",
+    "vulnerable_code": "SecureRandom sr = new SecureRandom(new byte[]{seed});",
+    "description": "The constructor of SecureRandom is being seeded with a predictable byte array, which decreases the randomness and makes it easier to predict the output.",
+    "recommendation": "Instead of seeding SecureRandom with a predictable value, allow it to use its default seeding mechanism which is designed to be cryptographic secure. Remove the manual seeding or use SecureRandom.getInstanceStrong() to get a strong instance of SecureRandom if running on Java 8 or newer."
+},
+{
+    "misuse": "Insufficient Entropy",
+    "vulnerable_code": "new byte[]{seed}",
+    "description": "By using only a single byte to seed the SecureRandom instance, there is insufficient entropy for cryptographic security. The seed needs to be unpredictable and have adequate entropy.",
+    "recommendation": "Ensure that the seed provided to SecureRandom has adequate entropy (is long and unpredictable). Typically, seeds should be at least 128 to 256 bits in length, depending on the security requirements."
+}]

@@ -1,0 +1,24 @@
+### False Positive Misuse ###
+N/A
+
+### Optimized Misuse JSON ###
+```json
+{
+  "misuse": "Insecure Randomness",
+  "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+  "description": "The KeyGenerator.getInstance(\"AES\") method does not specify a SecureRandom algorithm for key generation, which may result in insecure or predictable key generation.",
+  "recommendation": "Specify a secure random algorithm by using KeyGenerator.getInstance(\"AES\") with a specific provider that supports secure random generation, such as \"KeyGenerator.getInstance(\"AES\", \"SUN\");\""
+},
+{
+  "misuse": "Insecure Crypto Algorithm",
+  "vulnerable_code": "Cipher cipher = Cipher.getInstance(String.valueOf(crypto));",
+  "description": "The use of ECB mode for AES is insecure and can lead to vulnerabilities. Additionally, relying on a specified char array for the cryptographic algorithm can lead to potential insecure algorithm usage.",
+  "recommendation": "Avoid using ECB mode for AES. Instead, use secure modes such as GCM or CBC. Use the actual crypto algorithm string directly (e.g., \"AES/ECB/PKCS5Padding\") rather than relying on a char array."
+},
+{
+  "misuse": "Hardcoded Key",
+  "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+  "description": "The code is generating a random AES key, but the key is not being securely stored or managed.",
+  "recommendation": "Use a secure key management system such as KeyStore to store and manage the cryptographic keys."
+}
+```

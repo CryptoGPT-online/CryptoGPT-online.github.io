@@ -1,0 +1,24 @@
+### False Positive Misuse ###
+N/A
+
+### Optimized Misuse JSON ###
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "description": "The code uses AES encryption algorithm with default key length, which is considered weak and insecure. AES should be used with a key length of 128, 192, or 256 bits for secure encryption.",
+        "recommendation": "Generate AES keys with a key length of 128, 192, or 256 bits to ensure strong encryption."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(new byte[]{Byte.parseByte(String.valueOf(initialization))});",
+        "description": "The initialization vector (IV) should be a random and unique value for each encryption operation. In this code, the IV is derived from the `initialization` variable, which is likely not a random value.",
+        "recommendation": "Generate a random and unique IV using a secure random number generator."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "public static final String DEFAULT_INITIALIZATION = \"abcde\";",
+        "description": "The code uses a hardcoded initialization vector (IV) for AES encryption. Hardcoded credentials can be easily extracted from the code, reducing the security of the encryption.",
+        "recommendation": "Generate a random initialization vector (IV) for each encryption operation to enhance security."
+    }
+]

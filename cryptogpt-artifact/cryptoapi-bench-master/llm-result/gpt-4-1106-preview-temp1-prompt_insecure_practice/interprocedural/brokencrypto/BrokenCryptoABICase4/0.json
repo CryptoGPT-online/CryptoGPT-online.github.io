@@ -1,0 +1,30 @@
+[{
+    "misuse": "Broken Crypto Algorithm",
+    "vulnerable_code": "String crypto = \"RC2\";",
+    "description": "The use of a broken or risky cryptographic algorithm 'RC2' is identified, which is known to be vulnerable to cryptanalysis.",
+    "recommendation": "Replace 'RC2' with a secure cryptographic algorithm such as AES."
+},
+{
+    "misuse": "Insufficient Key Size",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(crypto);",
+    "description": "The code doesn't specify a key size for the KeyGenerator. The default key size for RC2 is not considered secure.",
+    "recommendation": "Define an explicit key size that is considered secure for the cryptographic algorithm being used, such as 128 bits or higher for AES."
+},
+{
+    "misuse": "Incomplete Crypto Algorithm Specification",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(crypto);",
+    "description": "The cipher is initialized without specifying the mode of operation and padding scheme. This may result in the use of insecure defaults.",
+    "recommendation": "Specify the cipher transformation fully, including the algorithm, mode of operation, and padding, such as 'AES/CBC/PKCS5Padding'."
+},
+{
+    "misuse": "Hardcoded Crypto Algorithm",
+    "vulnerable_code": "String crypto = \"RC2\";",
+    "description": "The cryptographic algorithm is hardcoded, reducing flexibility and potentially weakening security if the algorithm requires replacement.",
+    "recommendation": "Design the application to allow the cryptographic algorithm to be defined in a configuration file or through a secure management interface."
+},
+{
+    "misuse": "Unpredictable Random Number Generation",
+    "vulnerable_code": "SecretKey key = keyGen.generateKey();",
+    "description": "The default SecureRandom implementation may not provide a sufficient level of randomness for the key generation, especially if not properly initialized.",
+    "recommendation": "Initialize the SecureRandom with a high-quality entropy source, or specify a SecureRandom implementation known to provide sufficient randomness."
+}]

@@ -1,0 +1,26 @@
+### False Positive Misuse ###
+None
+
+### Optimized Misuse JSON ###
+```json
+[
+  {
+    "misuse": "Insecure Randomness",
+    "vulnerable_code": "ENCRYPT_KEY = DEFAULT_ENCRYPT_KEY.toCharArray();",
+    "description": "The use of a static default encryption key may lead to insecure cryptographic operations.",
+    "recommendation": "Generate a strong, random encryption key for each execution of the program and avoid storing it in plain text within the codebase."
+  },
+  {
+    "misuse": "Insecure Key Generation",
+    "vulnerable_code": "byte[] keyBytes = encryptKey.toString().getBytes();",
+    "description": "The use of toString() and getBytes() to generate a key from a char array is not secure and may result in weak keys.",
+    "recommendation": "Use a secure random key generation algorithm such as SecureRandom to generate cryptographic keys."
+  },
+  {
+    "misuse": "Insecure Encryption Algorithm",
+    "vulnerable_code": "SecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES\");",
+    "description": "The code is using AES encryption without specifying a mode and padding, which may lead to insecure encryption.",
+    "recommendation": "Specify a secure mode and padding, such as GCM mode with random IV, and secure padding method like PKCS5Padding."
+  }
+]
+```

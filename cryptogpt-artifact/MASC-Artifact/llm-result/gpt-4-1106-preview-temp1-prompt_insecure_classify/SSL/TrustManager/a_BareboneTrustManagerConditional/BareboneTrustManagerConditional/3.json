@@ -1,0 +1,29 @@
+```json
+[
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": [
+            "public void checkClientTrusted(X509Certificate[] x509Certificates, String s)",
+            "public void checkServerTrusted(X509Certificate[] x509Certificates, String s)"
+        ],
+        "description": "The implemented X509TrustManager methods checkClientTrusted and checkServerTrusted does not properly verify whether the provided certificates are trustworthy. They do not perform any validation, defeating the purpose of certificate chain verification.",
+        "recommendation": "Implement proper certificate verification by checking the certificate chain, validity dates, issuer, and revocation status."
+    },
+    {
+        "misuse": "CWE-335: Incorrect Usage of Seeds in Pseudo-Random Number Generator (PRNG)",
+        "vulnerable_code": [
+            "// context.init(null, trustAll, new SecureRandom());"
+        ],
+        "description": "Even though it's commented out, if used, initializing the SSLContext with a new instance of SecureRandom without a specified seed makes it predictable on some platforms.",
+        "recommendation": "Use a seed from a reliable entropy source by not explicitly creating a new instance of SecureRandom unless necessary."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": [
+            "for(int i = 0; i<100; i++){ if (i==50) return EMPTY_X509CERTIFICATE_ARRAY;; }"
+        ],
+        "description": "The getAcceptedIssuers method contains a loop with a condition that will always result in returning the same value, which could potentially be used in a predictable manner.",
+        "recommendation": "Ensure that secure random values are used where randomness is required for security decisions or keys."
+    }
+]
+```

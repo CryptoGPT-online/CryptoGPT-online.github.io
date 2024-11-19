@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Trust Anchors",
+        "vulnerable_code": "return true;",
+        "description": "The code is implementing a custom HostnameVerifier that automatically returns true for a specific hostname (192.168.0.10), without performing any validation of the certificate. This could lead to man-in-the-middle attacks on connections thought to be secure.",
+        "recommendation": "Remove the custom HostnameVerifier and trust the default verifier. Ensure that proper certificate validation is performed."
+    },
+    {
+        "misuse": "Broken Authentication",
+        "vulnerable_code": "if (\"192.168.0.10\".equals(hostname)) { return true; }",
+        "description": "The code is also insecure because it checks only against a static IP, which means any certificate presented by a server at that IP is trusted, regardless of its validity. The HostnameVerifier should check that the hostname matches the one specified in the server's certificate.",
+        "recommendation": "Do not override the default HostnameVerifier to return true. Use the default hostname verification mechanism provided by the SSL/TLS library, or if necessary to use a custom verifier, implement proper checks against the certificate's Common Name (CN) or Subject Alternative Names (SANs)."
+    }
+]
+```

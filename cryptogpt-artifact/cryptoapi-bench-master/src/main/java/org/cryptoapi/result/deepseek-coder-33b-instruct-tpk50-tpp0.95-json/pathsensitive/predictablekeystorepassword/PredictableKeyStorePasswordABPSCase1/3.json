@@ -1,0 +1,20 @@
+[
+  {
+    "misuse": "Insecure use of SecureRandom",
+    "vulnerable_code": "SecureRandom random = new SecureRandom();",
+    "description": "The method ints() of class SecureRandom returns an IntStream and converting it to a String could lead to the loss of entropy and vulnerability. It's better to avoid converting random numbers to String.",
+    "recommendation": "Don't convert the generated SecureRandom integers to String. Instead, use the integers as is or store them securely after converting to a byte array."
+  },
+  {
+    "misuse": "Usage of Hardcoded Credentials",
+    "vulnerable_code": "String defaultKey = \"changeit\";",
+    "description": "The password \"changeit\" is a default password in many application and frameworks. Avoid using it for real-world applications.",
+    "recommendation": "Avoid hardcoding credentials. Use environment variables or secure vaults to store sensitive data."
+  },
+  {
+    "misuse": "Insecure use of SSL/TLS Certificate",
+    "vulnerable_code": "ks.load(cacerts.openStream(), defaultKey.toCharArray());",
+    "description": "The certificate 'cacerts' is downloaded from a URL and used without any verification. This might be a part of a MITM attack. In real-world applications, this URL should not be used.",
+    "recommendation": "Always use verified SSL/TLS certificates or any secure methods to verify the source of the downloaded KeyStore."
+  }
+]

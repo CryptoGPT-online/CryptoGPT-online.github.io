@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "Insufficient Key Size",
+    "vulnerable_code": "KeyGenerator.getInstance(\"AES\");",
+    "description": "The code does not specify the key size for the AES encryption. Default key sizes may be insufficient, typically 128 bits. Stronger key sizes, such as 256 bits, are recommended.",
+    "recommendation": "Specify a key size when generating the AES key. Example: keyGen.init(256);"
+  },
+  {
+    "misuse": "Missing Initialization Vector (IV)",
+    "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+    "description": "When using AES in CBC mode, it requires an Initialization Vector (IV) for security. The code does not specify an IV; using a static IV or no IV can lead to vulnerabilities such as the possibility of pattern detection in ciphertext.",
+    "recommendation": "Generate a random IV and use it when initializing the Cipher. Example: cipher.init(Cipher.ENCRYPT_MODE, key, new IvParameterSpec(ivBytes));"
+  },
+  {
+    "misuse": "Static or Predictable Key",
+    "vulnerable_code": "keyGen.generateKey();",
+    "description": "The code generates a key using the KeyGenerator class without specifying a secure random instance. This may result in a key that can be predictable if the default random number generator is not secure.",
+    "recommendation": "Use a SecureRandom instance for key generation. Example: keyGen.init(new SecureRandom());"
+  }
+]
+```

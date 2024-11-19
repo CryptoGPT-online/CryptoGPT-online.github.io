@@ -1,0 +1,36 @@
+```json
+[
+    {
+        "misuse": "Trust Manager that does not validate certificate chains",
+        "vulnerable_code": [
+            "new BareboneTrustManagerExt() { ... public void checkClientTrusted(java.security.cert.X509Certificate[] arg0, java.lang.String arg1) ... }",
+            "new BareboneTrustManagerExt() { ... public void checkServerTrusted(java.security.cert.X509Certificate[] arg0, java.lang.String arg1) ... }"
+        ],
+        "description": "The overridden methods checkClientTrusted and checkServerTrusted are empty, meaning they don’t check the validity of the certificate chain, allowing any certificate (including invalid ones) to be accepted. This is a critical security issue commonly known as 'Trust All' or 'Accept All SSL Certificates' which may lead to Man-in-the-Middle attacks.",
+        "recommendation": "Remove the custom TrustManager implementation and use the default trust management or implement proper certificate validation."
+    },
+    {
+        "misuse": "Empty getAcceptedIssuers method",
+        "vulnerable_code": [
+            "public X509Certificate[] getAcceptedIssuers() { ... return EMPTY_X509CERTIFICATE_ARRAY; }"
+        ],
+        "description": "The getAcceptedIssuers method returns an empty array, which means no CA issuers are trusted. In a proper SSL/TLS validation scenario, this method should return a list of acceptable CA issuer certificates.",
+        "recommendation": "Implement the getAcceptedIssuers method to return a valid array of trusted CA certificates or use a default trust manager which includes the system/default CA certificates."
+    },
+    {
+        "misuse": "Broken error handling",
+        "vulnerable_code": [
+            "catch (NoSuchAlgorithmException e) { ... }",
+            "catch (KeyManagementException e) { ... }"
+        ],
+        "description": "The catch blocks for NoSuchAlgorithmException and KeyManagementException are empty. In the case of critical security operations like setting up SSL/TLS contexts, swallowing exceptions may hide configuration or environment issues that should be addressed.",
+        "recommendation": "Implement proper error handling in the catch blocks. Logging the exception at minimum is advisable and take corrective action as required depending on the context."
+    },
+    {
+        "misuse": "Use of SecureRandom without seed",
+        "vulnerable_code": "context.init(null, trustAll, new SecureRandom());",
+        "description": "Using SecureRandom without providing a seed could possibly make the resulting random numbers less random, depending on the underlying implementation of the SecureRandom instance. This may not be a security issue per se in this context, as seeding is useful when predictability of the random number generator is critical, and SecureRandom implementations should be secure even when not explicitly seeded.",
+        "recommendation": "Unless there's a specific requirement for seeding SecureRandom for predictability purposes, it's typically safe to use without a seed. If determinism is required for testing or similar purposes, seed SecureRandom."
+    }
+]
+```

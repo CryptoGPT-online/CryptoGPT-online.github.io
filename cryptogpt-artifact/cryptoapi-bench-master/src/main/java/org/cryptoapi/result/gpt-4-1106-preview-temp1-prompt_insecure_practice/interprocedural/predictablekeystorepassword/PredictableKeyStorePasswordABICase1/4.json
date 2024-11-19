@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Hardcoded Key",
+        "vulnerable_code": "String key = \"changeit\";",
+        "description": "The password for the KeyStore is hardcoded into the application, making it easy to extract and exploit.",
+        "recommendation": "Avoid hardcoding passwords. Instead, use a secure method to store and retrieve passwords."
+    },
+    {
+        "misuse": "Insecure KeyStore Type",
+        "vulnerable_code": "String type = \"JKS\";",
+        "description": "The JKS (Java KeyStore) is less secure than other available types such as PKCS12. It’s known for its weak cryptographic strength.",
+        "recommendation": "Migrate to a more secure KeyStore type such as \"PKCS12\"."
+    },
+    {
+        "misuse": "Improper Certificate Validation",
+        "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");\nks.load(cacerts.openStream(), key.toCharArray());",
+        "description": "Loading a KeyStore from a URL connection can expose the system to man-in-the-middle attacks because it does not explicitly verify the server's certificate chain.",
+        "recommendation": "Ensure proper SSL/TLS certificate validation when opening connections to URL resources."
+    },
+    {
+        "misuse": "Exposing Sensitive Information",
+        "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");",
+        "description": "Storing sensitive information such as the location of the KeyStore (`cacerts`) might allow attackers to target this resource specifically.",
+        "recommendation": "Avoid exposing the location of sensitive resources. Consider obfuscation or other methods to hide such details."
+    }
+]
+```

@@ -1,0 +1,28 @@
+```json
+[
+  {
+    "misuse": "Invalid Key Algorithm",
+    "vulnerable_code": "Cipher.getInstance(\"DES/ECB/PKCS5Padding\");",
+    "description": "An AES key is generated but a DES Cipher instance is created, which is incorrect as they require different key specifications.",
+    "recommendation": "Ensure that the key algorithm matches the cipher algorithm. If AES is intended, use 'Cipher.getInstance(\"AES/CBC/PKCS5Padding\")' or a similar AES cipher."
+  },
+  {
+    "misuse": "Insecure Cipher Mode",
+    "vulnerable_code": "Cipher.getInstance(\"DES/ECB/PKCS5Padding\");",
+    "description": "ECB mode is used for encryption, which is insecure because it does not provide serious message confidentiality and can leak pattern information about the plaintext.",
+    "recommendation": "Use a more secure mode of operation, such as CBC or GCM, which includes an Initialization Vector (IV) to prevent leak of pattern information."
+  },
+  {
+    "misuse": "Missing Initialization Vector (IV) for CBC mode",
+    "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+    "description": "When the cipher is switched to AES/CBC/PKCS5Padding, no IV is specified, leading to a predictable IV which can undermine the security of the encryption.",
+    "recommendation": "Generate a random IV for each encryption operation and use 'cipher.init(Cipher.ENCRYPT_MODE, key, ivSpec);' to initialize the cipher with the IV."
+  },
+  {
+    "misuse": "Broken Crypto Algorithm",
+    "vulnerable_code": "KeyGenerator.getInstance(\"AES\"); \nCipher.getInstance(\"DES/ECB/PKCS5Padding\");",
+    "description": "This includes the generation of an AES key but instantiation of a DES cipher. DES is considered obsolete and broken due to its short key length.",
+    "recommendation": "Replace DES with AES or another secure modern algorithm and ensure compatibility between key and cipher algorithms."
+  }
+]
+```

@@ -1,0 +1,26 @@
+Misuse Type: Insecure Use of Cryptographic Primitives
+
+Misuse Code: 
+```java
+MessageDigest md = MessageDigest.getInstance("MD2");
+if(choice>1)
+    md = MessageDigest.getInstance("SHA-256");
+```
+
+Description: 
+In the code snippet provided, the MessageDigest is instantiated with an insecure hash function ("MD2") and later updated with the secure ("SHA-256") if a certain condition (`choice>1`) is met. While MD2 was developed in the 90s, it is considered weak and has vulnerabilities that make it less secure for new applications. Using weak hash function in cryptographic operations can potentially lead to data compromise or manipulation.
+
+Recommendation: 
+Consider using a stronger cryptographic hash function that is secure. You should always use the latest secure hash function, such as SHA-256.
+
+Response in JSON:
+```json
+[
+    {
+        "misuse": "Insecure Use of Cryptographic Primitives",
+        "vulnerable_code": "md = MessageDigest.getInstance(\"MD2\");\nif(choice>1)\n    md = MessageDigest.getInstance(\"SHA-256\");",
+        "description": "The code uses an insecure hash function (MD2) and then updates it with a stronger hash function (SHA-256) based on a certain condition.",
+        "recommendation": "Use a stronger, secure cryptographic hash function, such as SHA-256, and remove or update the condition that changes the hash function."
+    }
+]
+```

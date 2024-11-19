@@ -1,0 +1,46 @@
+### False Positive Misuse ###
+
+```json
+[
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values.",
+    "vulnerable_code": "passedURL = defURL;",
+    "description": "In the provided code, the URL `defURL` is not random, and it is reused in the `method1` function without any manipulation. This is a problem because if the same URL is used multiple times, it exposes your code to the risk of detecting that the same URL is being used (e.g., for replay attacks).",
+    "recommendation": "Consider making `defURL` random, or ensuring that it is changing each time the method is called."
+  },
+  {
+    "misuse": "CWE-798: Use of Hardcoded Credentials.", 
+    "vulnerable_code": "defURL",
+    "description": "The defURL field in the C1 class is hardcoded with a string representing a URL. This could potentially be a problem if the URL changes or if it's sensitive data.",
+    "recommendation": "Avoid hardcoding sensitive data. Use environment variables or configuration files to store URLs and other sensitive data."
+  }
+]
+```
+
+### Optimized Misuse JSON###
+
+```json
+[
+    {
+        "misuse": "CWE-918: Server-Side Request Forgery (SSRF)",
+        "vulnerable_method": "C1.method1(String passedURL)",
+        "vulnerable_code": "new URL(passedURL)",
+        "description": "The 'passedURL' variable is used to create a URL object in 'method1'. This could potentially allow an attacker to perform a SSRF attack.",
+        "recommendation": "Validate 'passedURL' to ensure it's a valid and safe URL before creating a URL object from it."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_method": "C1.method1(String passedURL)",
+        "vulnerable_code": "System.out.println(new URL(passedURL));",
+        "description": "The URL class in Java does not validate the SSL certificate of a host by default, which can lead to man-in-the-middle attacks. You should use a trust manager or a custom SSLSocketFactory to validate the server's certificate.",
+        "recommendation": "You can use javax.net.ssl.HttpsURLConnection class or javax.net.ssl.SSLContext to establish a secure connection."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.", 
+        "vulnerable_method": "C1.method1(String passedURL)",
+        "vulnerable_code": "passedURL",
+        "description": "The passedURL argument passed to the method method1 is used in a URL object creation without any encryption or hashing, which could potentially lead to an insecure URL object creation.",
+        "recommendation": "Use a secure encryption/hashing algorithm to encrypt or hash the passedURL before it is used in URL creation. Use the library recommended for URL creation, which is able to prevent injection attacks."
+    }
+]
+```

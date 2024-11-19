@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(String.valueOf(crypto));",
+    "description": "The code uses the user-provided string `crypto` to construct a `KeyGenerator`, which is then used to generate a secret key for encryption. If the user can control the value of `crypto`, they could specify a weak encryption algorithm, resulting in inadequate encryption strength.",
+    "recommendation": "Use a strong encryption algorithm with a large key size. Consider using a key derivation function (KDF) to generate the encryption key from a user-provided password or passphrase, which adds an additional layer of security."
+  },
+  {
+    "misuse": "CWE-256: Plaintext Exposure",
+    "vulnerable_code": "CRYPTO = DEFAULT_CRYPTO.toCharArray();",
+    "description": "The code stores the default crypto algorithm, `DEFAULT_CRYPTO`, as a char array in the static variable `CRYPTO`. This exposes the plaintext algorithm in memory, which could be accessed by an attacker if they gain access to the running program.",
+    "recommendation": "Avoid storing sensitive information, such as encryption keys or algorithms, in plaintext. Consider using a secure storage mechanism, such as the Java KeyStore, to store cryptographic keys."
+  },
+  {
+    "misuse": "CWE-256: Plaintext Exposure",
+    "vulnerable_code": "crypto = CRYPTO;",
+    "description": "The code assigns the value of the static variable `CRYPTO` to the instance variable `crypto`. This means that the plaintext algorithm is now stored in an instance variable, which is accessible to other instances of the `B6` class.",
+    "recommendation": "Avoid storing sensitive information, such as encryption keys or algorithms, in plaintext. Consider using a secure storage mechanism, such as the Java KeyStore, to store cryptographic keys."
+  }
+]
+```

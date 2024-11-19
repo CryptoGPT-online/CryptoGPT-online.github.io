@@ -1,0 +1,35 @@
+### False Positive Misuses
+--- False Positive Misuse #1:
+```json
+{
+    "misuse category": "Hostname Validation",
+    "vulnerable_method": "I1.C1.encrypt(String,int)",
+    "vulnerable_code": "if(passedHostname.isEmpty())",
+    "description": "An empty hostname is not valid for a socket creation. It's a misuse of the API.",
+    "recommendation": "Validate the hostname before passing it to the method. Ensure it is not empty and is a valid hostname."
+}
+```
+Explanation: In the given code, there is no check to ensure that the hostname is not empty before connecting to it. 
+
+### Optimized Misuse JSON
+
+After removing the false positive misuse, here is the optimized JSON list:
+
+```json
+[
+    {
+        "misuse": "Improper Default",
+        "vulnerable_method": "I1.C1(String, int)",
+        "vulnerable_code": "C1(String hostname, int soc)",
+        "description": "Default values are hardcoded in the constructor of the C1 class. If the hostname or port are empty or incorrect, the code will still use these hardcoded values, which may cause a security risk. For instance, if the default hostname is set to a malicious server, the code will still connect to it instead of the intended server.",
+        "recommendation": "Replace the hardcoded default values with user-supplied values or set them to null if they should be optional. Then check whether the values are set before using them in the SSLSocket creation."
+    },
+    {
+        "misuse": "Insecure SSLSocketFactory Usage",
+        "vulnerable_method": "I1.C1.encrypt(String,int)",
+        "vulnerable_code": "SSLSocketFactory ssf = (SSLSocketFactory) SSLSocketFactory.getDefault();\nSSLSocket socket = (SSLSocket) ssf.createSocket(passedHostname,passedSoc);",
+        "description": "This code uses default SSLSocketFactory. This could lead to SSL/TLS handshake failures and potential security vulnerabilities. It doesn't provide any configuration options and it relies on the default configuration of the JVM.",
+        "recommendation": "Use a custom SSLSocketFactory which allows to configure SSLContext and TrustManager. Additionally, you should set hostname verification to true. See examples in https://docs.oracle.com/javase/8/docs/technotes/guides/security/jsse/JSSERefGuide.html#SSLHostnameVerification."
+    }
+]
+```

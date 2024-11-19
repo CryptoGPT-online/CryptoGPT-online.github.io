@@ -1,0 +1,8 @@
+[
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength.",
+    "vulnerable_code": "byte[] keyBytes = key.getBytes();\n keyBytes = Arrays.copyOf(keyBytes,16);\n SecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES\");\n",
+    "description": "The key used for AES encryption is derived from a string by calling 'getBytes()' method. However, the resulting key length is fixed to 16 bytes by using 'Arrays.copyOf()' method. This means that regardless of the length of the original key, the resulting AES key will always have a length of 16 bytes, which reduces the encryption strength.",
+    "recommendation": "To ensure adequate encryption strength, it is recommended to use a key derivation function, such as PBKDF2 or bcrypt, to derive a key of the desired length from the input string. Additionally, it is important to use a secure random number generator to generate the salt or IV (Initialization Vector)."
+  }
+]

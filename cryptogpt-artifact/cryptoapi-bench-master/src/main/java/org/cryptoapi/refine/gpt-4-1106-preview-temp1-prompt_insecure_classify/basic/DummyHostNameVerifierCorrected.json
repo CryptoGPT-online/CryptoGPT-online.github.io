@@ -1,0 +1,18 @@
+### False Positive Misuse ###
+
+The misuse reports listed are technically correct; each report points out that for a specific IP address (`192.168.0.10`), proper certificate validation is bypassed, which is indeed a classic example of CWE-295. There are no false positives in the reports themselves, as they correctly identify the security issue in the snippet. However, there is unnecessary duplication in the misuse reports, as all the reports virtually communicate the same misuse with slightly different textual descriptions.
+
+### Optimized Misuse JSON###
+
+To optimize the list and remove duplicate entries, a single misuse report is sufficient to describe the risk:
+
+```json
+[
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "if (\"192.168.0.10\".equals(hostname)) {\n    return true;\n}",
+        "description": "The verify() method compromises security by returning true for the hardcoded IP address '192.168.0.10', which bypasses proper SSL/TLS certificate validation for this host. This may enable man-in-the-middle attacks if an attacker can control network traffic to that address.",
+        "recommendation": "Remove the hardcoded IP address check to ensure that the SSL/TLS certificate is validated properly regardless of the hostname."
+    }
+]
+```

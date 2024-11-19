@@ -1,0 +1,14 @@
+```json
+[
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": [
+            "public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException { }",
+            "public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException { }",
+            "public java.security.cert.X509Certificate[] getAcceptedIssuers() { return null; }"
+        ],
+        "description": "The custom X509TrustManager implementation does not perform any validation, thus trusting any client and server certificates, which can lead to Man-in-the-Middle (MITM) attacks.",
+        "recommendation": "Implement proper certificate chain validation inside the 'checkClientTrusted' and 'checkServerTrusted' methods, and return a list of accepted issuers instead of null in 'getAcceptedIssuers'."
+    }
+]
+```

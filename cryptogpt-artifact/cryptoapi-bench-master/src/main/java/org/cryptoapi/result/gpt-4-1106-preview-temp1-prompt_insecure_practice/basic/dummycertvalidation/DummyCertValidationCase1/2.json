@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "TrustManager That Doesn't Check Anything (CWE-295: Improper Certificate Validation)",
+    "vulnerable_code": "checkServerTrusted(X509Certificate[] x509Certificates, String s)",
+    "description": "The overridden method 'checkServerTrusted' does not perform any validation on the provided certificates. This means it will trust any server certificate, including self-signed and expired certificates, making it vulnerable to man-in-the-middle attacks.",
+    "recommendation": "Implement a proper certificate validation that checks the validity of the server's certificate chain and throws a CertificateException if the chain does not pass validation."
+  },
+  {
+    "misuse": "Empty Trust Method (CWE-757: Selection of Less-Secure Algorithm During Negotiation ('Algorithm Downgrade'))",
+    "vulnerable_code": "checkServerTrusted(X509Certificate[] x509Certificates, String s)",
+    "description": "The 'checkServerTrusted' method is empty and does not call its corresponding trustManager method or perform any action, which could lead to algorithm downgrade attacks.",
+    "recommendation": "The 'checkServerTrusted' method should call the corresponding method from a properly initialized trust manager that enforces certificate verification."
+  },
+  {
+    "misuse": "Improper Certificate Issuers Returning (CWE-295: Improper Certificate Validation)",
+    "vulnerable_code": "getAcceptedIssuers()",
+    "description": "Returning an empty array from getAcceptedIssuers() could cause the method's callers to assume there are no restrictions on the certificate authorities, thus accepting any certificate authority as valid.",
+    "recommendation": "Return a proper set of accepted issuers or throw UnsupportedOperationException if this TrustManager should not be used to initiate SSL contexts by itself."
+  }
+]
+```

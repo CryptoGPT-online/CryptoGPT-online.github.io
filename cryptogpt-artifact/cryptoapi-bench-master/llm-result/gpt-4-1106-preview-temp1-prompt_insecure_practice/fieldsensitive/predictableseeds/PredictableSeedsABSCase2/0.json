@@ -1,0 +1,28 @@
+```json
+[
+  {
+    "misuse": "Insecure Randomness",
+    "vulnerable_code": "SecureRandom sr = new SecureRandom(new byte[]{passedSeed});",
+    "description": "The use of a fixed seed value when constructing the SecureRandom instance may lead to predictable output from the SecureRandom instance.",
+    "recommendation": "Remove the manual seeding or use a more complex and unpredictable seed value that is not hard-coded."
+  },
+  {
+    "misuse": "Insufficient Entropy",
+    "vulnerable_code": "int v = sr.nextInt();",
+    "description": "SecureRandom is initialized with a fixed seed (defSeed), which can cause insufficient entropy and predictability in the generated random number.",
+    "recommendation": "Ensure that SecureRandom is provided with sufficient entropy that cannot be easily predicted or influenced by an attacker."
+  },
+  {
+    "misuse": "Insecure Cryptographic Storage",
+    "vulnerable_code": "byte seed = 100;",
+    "description": "Using hard-coded cryptographic keys can lead to encryption that is easily reversible, and compromising the confidentiality of data.",
+    "recommendation": "Use a securely generated random number or key derivation functions to generate cryptographic keys."
+  },
+  {
+    "misuse": "Improper Restriction of Excessive Authentication Attempts",
+    "vulnerable_code": "crypto.method1((byte) 20);",
+    "description": "The method1 function uses a deterministic approach by always setting the passedSeed to defSeed. An attacker could potentially use this to make repeated guesses without proper limitations.",
+    "recommendation": "Implement a mechanism that limits the number of authentication attempts to prevent brute force attacks."
+  }
+]
+```

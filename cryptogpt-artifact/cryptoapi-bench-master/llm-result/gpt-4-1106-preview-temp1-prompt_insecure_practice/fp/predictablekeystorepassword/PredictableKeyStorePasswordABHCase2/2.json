@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Predictable Key Store Password",
+        "vulnerable_code": [
+            "String key = hm.get(\"aaa\");",
+            "ks.load(cacerts.openStream(), key.toCharArray());"
+        ],
+        "description": "The code is retrieving a key store password from a hard-coded map of strings, which means the password is predictable and can be easily discovered by inspecting the code.",
+        "recommendation": "Use a secure method to obtain the key store password, such as obtaining it from an environment variable, a securely managed configuration file, or prompting the user for input, and make sure to not store passwords in the source code."
+    },
+    {
+        "misuse": "Inadequate SSL/TLS Trust Management",
+        "vulnerable_code": [
+            "cacerts = new URL(\"https://www.google.com\");",
+            "ks.load(cacerts.openStream(), key.toCharArray());"
+        ],
+        "description": "While this code snippet does not directly provide evidence of insecure SSL/TLS trust management, the fact that it connects to a URL and loads a keystore could suggest potential misuse. If the validation of the certificate chain is not performed correctly elsewhere in the program, this can lead to insecure trust management where the application might trust malicious certificates.",
+        "recommendation": "Ensure that the proper SSL/TLS certificate validation is in place. If custom trust management is used, make sure it is done securely by validating certificate chains against trusted CAs."
+    }
+]
+```

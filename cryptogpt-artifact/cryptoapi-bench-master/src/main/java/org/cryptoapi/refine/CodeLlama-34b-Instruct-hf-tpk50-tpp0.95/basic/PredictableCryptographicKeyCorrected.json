@@ -1,0 +1,68 @@
+ {
+"misuses": [
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "cipher.getInstance(\"AES/CBC/PKCS5PADDING\")",
+"description": "The specified cryptographic algorithm is vulnerable to attacks and should not be used in a production environment.",
+"recommendation": "Use a secure cryptographic algorithm such as AES/GCM/NoPadding or AES/CTR/NoPadding."
+},
+{
+"misuse": "Insufficient Key Size",
+"vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+"description": "The key size of 16 bytes is too small and can be easily brute-forced. The recommended minimum key size is 32 bytes.",
+"recommendation": "Generate a key with a secure random number generator and use a key size of at least 32 bytes."
+},
+{
+"misuse": "Lack of Key Stretching",
+"vulnerable_code": "String defaultKey = String.valueOf(random.ints());",
+"description": "The default key is generated without proper key stretching, making it vulnerable to brute-force attacks.",
+"recommendation": "Use a secure key stretching function such as PBKDF2 or bcrypt to generate the key."
+},
+{
+"misuse": "Insecure Initialization Vector",
+"vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, keySpec);",
+"description": "The initialization vector (IV) is not properly generated and may not be random, which can lead to vulnerabilities in the encryption process.",
+"recommendation": "Generate a secure random IV for each encryption operation."
+},
+{
+"misuse": "Lack of Authentication",
+"vulnerable_code": "String encrypt = Base64.getEncoder().encodeToString(cipher.doFinal(originalString.getBytes(\"UTF-8\")));",
+"description": "The encryption process does not include authentication, which can lead to tampering of the encrypted data.",
+"recommendation": "Use an authenticated encryption mode such as AES/GCM/NoPadding or AES/CTR/NoPadding to ensure authentication of the encrypted data."
+},
+{
+"misuse": "Lack of Exception Handling",
+"vulnerable_code": "main(String [] args) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IOException, IllegalBlockSizeException, BadPaddingException, ClassNotFoundException {",
+"description": "The code does not handle exceptions properly, which can lead to vulnerabilities in the encryption process.",
+"recommendation": "Implement proper exception handling to ensure that the encryption process is not compromised by unexpected errors."
+}
+]
+}
+{
+"misuses": [
+{
+"misuse": "Insecure Initialization Vector",
+"vulnerable_code": "byte[] iv = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};",
+"description": "The initialization vector (IV) is not securely generated. The use of a static and predictable IV may lead to vulnerabilities in the encryption process.",
+"recommendation": "Use a secure random number generator to generate the IV."
+},
+{
+"misuse": "Insecure Key Size",
+"vulnerable_code": "byte[] key = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F};",
+"description": "The key size of 16 bytes is too small and can be easily brute-forced. The recommended minimum key size is 32 bytes.",
+"recommendation": "Generate a key with a secure random number generator and use a key size of at least 32 bytes."
+},
+{
+"misuse": "Lack of Authentication",
+"vulnerable_code": "String encrypt = Base64.getEncoder().encodeToString(cipher.doFinal(originalString.getBytes(\"UTF-8\")));",
+"description": "The encryption process does not include authentication, which can lead to tampering of the encrypted data.",
+"recommendation": "Use an authenticated encryption mode such as AES/GCM/NoPadding or AES/CTR/NoPadding to ensure authentication of the encrypted data."
+},
+{
+"misuse": "Lack of Exception Handling",
+"vulnerable_code": "main(String [] args) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IOException, IllegalBlockSizeException, BadPaddingException, ClassNotFoundException {",
+"description": "The code does not handle exceptions properly, which can lead to vulnerabilities in the encryption process.",
+"recommendation": "Implement proper exception handling to ensure that the encryption process is not compromised by unexpected errors."
+}
+]
+}

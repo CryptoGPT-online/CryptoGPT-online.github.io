@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Key Reuse",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();\n",
+        "description": "Using the same key for encrypting different data can expose patterns in the data. This can lead to data leakage and other serious security issues.",
+        "recommendation": "Generate a new key for each encryption operation."
+    },
+    {
+        "misuse": "Initialization Vector (IV) Reuse",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(bytes);\ncipher.init(Cipher.ENCRYPT_MODE,key,ivSpec);\n",
+        "description": "The same Initialization Vector (IV) is being used for multiple encryptions, which may leak information about the plaintext in some cases.",
+        "recommendation": "Generate a new IV for each encryption operation."
+    }
+]
+```

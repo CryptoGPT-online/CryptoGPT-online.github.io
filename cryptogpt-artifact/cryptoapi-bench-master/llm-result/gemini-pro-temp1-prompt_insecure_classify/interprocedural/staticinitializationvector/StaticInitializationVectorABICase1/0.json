@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values.",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+    "description": "The code uses `KeyGenerator.generateKey()` to generate a key for AES encryption without specifying a source of randomness. This is insecure because the generated key may be predictable, making it easier for an attacker to break the encryption.",
+    "recommendation": "To fix this issue, a cryptographically secure pseudorandom number generator (CSPRNG) should be used to generate a random key. This can be achieved by using `SecureRandom` class provided by Java."
+  },
+  {
+    "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation.",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+    "description": "The code uses the CBC mode of operation for AES encryption, which is vulnerable to padding oracle attacks. This mode of operation should not be used for encrypting sensitive data.",
+    "recommendation": "To fix this issue, a more secure mode of operation, such as GCM, should be used instead."
+  }
+]
+```

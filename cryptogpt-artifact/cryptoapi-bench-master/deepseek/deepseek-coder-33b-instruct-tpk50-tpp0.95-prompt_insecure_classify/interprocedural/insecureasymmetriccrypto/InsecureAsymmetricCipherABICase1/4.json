@@ -1,0 +1,21 @@
+CWE-327: Use of a Broken or Risky Cryptographic Algorithm.
+
+Misused code:
+
+KeyPairGenerator kgp = KeyPairGenerator.getInstance("RSA");
+kgp.initialize(keySize);
+KeyPair kp = kgp.generateKeyPair();
+
+Cipher cipher = Cipher.getInstance("RSA");
+cipher.init(Cipher.ENCRYPT_MODE, kp.getPublic());
+
+Decryption code:
+
+Cipher dec = Cipher.getInstance("RSA");
+dec.init(Cipher.DECRYPT_MODE, kp.getPrivate());
+
+Description: 
+The code uses RSA as a cryptographic algorithm, but RSA is not secure and has been broken. It is possible to recover the original message with the right mathematical resources. Therefore, it should not be used in real-world applications.
+
+Recommendation: 
+Replace RSA with a secure algorithm like AES (Advanced Encryption Standard). You can use AES/GCM/NoPadding to ensure integrity and authentication while encryption, and make sure you use a key size of at least 256 bits for AES.

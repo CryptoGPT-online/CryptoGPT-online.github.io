@@ -1,0 +1,42 @@
+```json
+[
+  {
+    "misuse": "Weak Password-Based Encryption (PBE)",
+    "vulnerable_code": [
+      "private PBEKeySpec pbeKeySpec = null;",
+      "String defaultKey = \"saagar\";",
+      "pbeKeySpec = new PBEKeySpec(defaultKey.toCharArray(),salt,iterationCount,keyLength);"
+    ],
+    "description": "Utilizing a simple string 'saagar' as a PBE key is insecure because it is likely to be a weak password that is susceptible to dictionary attacks.",
+    "recommendation": "Use a strong, randomly-generated password or passphrase and store it securely."
+  },
+  {
+    "misuse": "Key Length Mismatch",
+    "vulnerable_code": [
+      "int keyLength = 16;",
+      "pbeKeySpec = new PBEKeySpec(defaultKey.toCharArray(),salt,iterationCount,keyLength);"
+    ],
+    "description": "The keyLength specified in PBEKeySpec constructor represents the length of the key in bits, while PBE algorithms expect a key of at least 64 bits or higher depending on the algorithm. However, without specifying the algorithm used, ensuring the security strength cannot be ascertained.",
+    "recommendation": "Ensure the key length is sufficient for the desired cryptographic algorithm and matches the length required by the algorithm specification."
+  },
+  {
+    "misuse": "Inadequate Iteration Count",
+    "vulnerable_code": [
+      "int iterationCount = 11010;",
+      "pbeKeySpec = new PBEKeySpec(defaultKey.toCharArray(),salt,iterationCount,keyLength);"
+    ],
+    "description": "The iteration count of 11010 might not be sufficient to protect against brute-force attacks, depending on the PBE algorithm in use.",
+    "recommendation": "Use a higher iteration count that is considered safe by current cryptographic standards, typically at least 10000, and ensure the count is adjusted to factor in advancements in attack methodologies and increases in computing power."
+  },
+  {
+    "misuse": "Static Salt",
+    "vulnerable_code": [
+      "byte [] salt = new byte[16];",
+      "SecureRandom sr = new SecureRandom();",
+      "sr.nextBytes(salt);"
+    ],
+    "description": "The use of a static salt value, as determined by a fixed-size byte array with values filled by SecureRandom, could potentially lead to vulnerabilities because if the salt isn't persisted or shared properly across instances where the key is used, it may result in deterministically generated keys from the same password.",
+    "recommendation": "Persist the randomly-generated salt securely so it can be reused for subsequent operations involving the same password. Also ensure the salt is unique per user to prevent reuse across different instances."
+  }
+]
+```

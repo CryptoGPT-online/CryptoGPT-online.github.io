@@ -1,0 +1,39 @@
+```json
+[
+    {
+        "misuse": "Hardcoded Crypto Algorithm",
+        "vulnerable_code": [
+            "String crypto = \"Blowfish\";",
+            "method2(crypto);"
+        ],
+        "description": "The algorithm Blowfish is hardcoded which reduces the flexibility to change algorithms and could become a security risk if the algorithm is found to be weak or vulnerable in the future.",
+        "recommendation": "Use a configuration setting for the crypto algorithm so it can be easily changed without modifying the source code."
+    },
+    {
+        "misuse": "Insecure Crypto Algorithm",
+        "vulnerable_code": [
+            "String crypto = \"Blowfish\";",
+            "method2(crypto);"
+        ],
+        "description": "Blowfish is an older cipher and may not be as secure as newer algorithms like AES. Its block size is 64 bits, which makes it susceptible to birthday attacks more so than ciphers with a larger block size.",
+        "recommendation": "Replace Blowfish with a more modern and secure cipher such as AES with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "Unspecified Mode of Operation and Padding",
+        "vulnerable_code": [
+            "Cipher.getInstance(crypto);"
+        ],
+        "description": "By not specifying the mode of operation and padding scheme in Cipher.getInstance, the code relies on the default of the underlying Java security provider. This might result in using non-secure modes or padding schemes.",
+        "recommendation": "Always specify a secure mode of operation (like CBC, GCM) and a secure padding scheme (like PKCS5Padding or NoPadding for AES) when getting an instance of Cipher."
+    },
+    {
+        "misuse": "Potential Weak Key Generation",
+        "vulnerable_code": [
+            "KeyGenerator.getInstance(crypto);",
+            "keyGen.generateKey();"
+        ],
+        "description": "The code does not specify the key size for key generation. Depending on the underlying security provider, this may result in a weak key if the default size is not sufficiently strong.",
+        "recommendation": "Specify an explicit key size that is known to be secure for the algorithm being used, like 128 bits or higher for AES."
+    }
+]
+```

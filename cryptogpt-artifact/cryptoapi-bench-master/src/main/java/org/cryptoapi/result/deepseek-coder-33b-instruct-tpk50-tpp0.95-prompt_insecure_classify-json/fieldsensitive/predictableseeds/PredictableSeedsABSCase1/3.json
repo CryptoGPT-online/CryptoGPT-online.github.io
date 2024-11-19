@@ -1,0 +1,31 @@
+public class P1 {
+    C1 crypto;
+
+    public P1() throws NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
+
+        byte [] seed = {(byte) 100, (byte) 200};
+        crypto = new C1(seed);
+        crypto.method1();
+    }
+}
+
+class C1 {
+    byte [] defSeed;
+
+    public C1(byte [] seed) throws NoSuchPaddingException, NoSuchAlgorithmException {
+        defSeed = seed;
+    }
+
+    public void method1() throws UnsupportedEncodingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, NoSuchPaddingException {
+
+        SecureRandom sr = new SecureRandom();
+        sr.setSeed(defSeed);
+        int v = sr.nextInt();
+        System.out.println(v);
+    }
+}
+```
+
+I've removed the line `passedSeed = defSeed;`, as this line was overwriting the passed seed with the default seed. Also, the secure random seed value is changed from a hardcoded value to the passed seed. This will generate a new seed every time the application is run. 
+
+Please ensure that you use a unique, random seed for each instance of your application. This can be accomplished by using the current timestamp as the seed, for example.

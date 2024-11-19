@@ -1,0 +1,29 @@
+```json
+[
+    {
+        "misuse": "Incompatible Key and Algorithm",
+        "vulnerable_code": [
+            "KeyGenerator.getInstance(\"AES\")",
+            "Cipher.getInstance(\"Blowfish\")"
+        ],
+        "description": "A key is being generated for the AES algorithm while the Cipher instance is initialized with the Blowfish algorithm. This mismatch can lead to runtime errors because the key generated is not suitable for the cipher's algorithm.",
+        "recommendation": "Ensure that the same algorithm is used for key generation and cipher initialization. For instance, if you generate an AES key, initialize the cipher with an AES-compatible algorithm."
+    },
+    {
+        "misuse": "Unspecified Cipher Mode and Padding",
+        "vulnerable_code": [
+            "Cipher.getInstance(\"Blowfish\")"
+        ],
+        "description": "The cipher is being instantiated with the Blowfish algorithm without specifying the mode of operation and padding scheme. Defaulting to a potentially weak mode and padding can risk the cryptographic strength of the encryption.",
+        "recommendation": "Specify a mode of operation (e.g., CBC, GCM) and padding scheme (e.g., PKCS5Padding) when initializing the cipher instance for Blowfish. For example, use 'Blowfish/CBC/PKCS5Padding' if applicable."
+    },
+    {
+        "misuse": "Use of Unrecommended Cipher Algorithm",
+        "vulnerable_code": [
+            "Cipher.getInstance(\"Blowfish\")"
+        ],
+        "description": "The code attempts to use the Blowfish algorithm, which may not be recommended due to its block size (64 bits) limitations. Modern applications typically use algorithms with larger block sizes (like AES with 128-bit blocks) to withstand birthday attacks and meet current security standards.",
+        "recommendation": "Switch to using a more secure and recommended cipher algorithm such as AES with a proper mode like GCM to benefit from authenticated encryption."
+    }
+]
+```

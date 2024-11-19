@@ -1,0 +1,21 @@
+False Positive Misuse
+1. User Defined Key Size:
+The key size is set by the user input and is different in different methods in the code. There is no potential misuse here, as the key size is not used without modification.
+
+Optimized Misuse List:
+```json
+[
+    {
+        "misuse_category": "Key Management",
+        "vulnerable_code": "KeyPairGenerator kgp = KeyPairGenerator.getInstance(\"RSA\"); kgp.initialize(key); KeyPair kp = kgp.generateKeyPair();",
+        "description": "The key size is not fixed, and is generated from user input without any check on minimum or maximum allowed sizes. This could lead to weak encryption and security vulnerabilities.",
+        "recommendation": "The key size should be fixed or a predefined value should be used instead of the user input, and it should be checked against minimum and maximum allowed sizes."
+    },
+    {
+        "misuse_category": "Algorithm",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"RSA\");",
+        "description": "The use of RSA algorithm is not considered secure for encrypting data and should not be used for new projects or for encrypting sensitive information.",
+        "recommendation": "It is better to use AES or RSA/ECB/OAEPWithSHA-256AndMGF1Padding algorithm instead."
+    }
+]
+```

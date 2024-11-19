@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Broken Cryptography",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(defaultAlgo);",
+        "description": "The algorithm specified for the cipher instance (DES/ECB/PKCS5Padding) is not considered secure and is not recommended for encryption in modern applications. DES is a weak block cipher and has known security flaws such as effective key search attacks and differential cryptanalysis. ECB mode is also not recommended for encryption as it lacks diffusion which may lead to patterns in the encrypted message that can be exploited. PKCS5Padding is vulnerable to padding oracle attacks.",
+        "recommendation": "Consider using a more secure algorithm for encryption. AES is a strong, current algorithm and operates in CBC mode. PKCS7Padding should be used instead of PKCS5Padding. Additionally, a secure key management solution should be in place to manage and protect the keys used for encryption."
+    },
+    {
+        "misuse": "Weak Key",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo); SecretKey key = keyGen.generateKey();",
+        "description": "In this code, a key is generated using the default algorithm (DES), which is weak. AES is a stronger algorithm and considered more secure for key generation.",
+        "recommendation": "Generate keys with a secure algorithm such as AES. For example, use KeyGenerator.getInstance(\"AES\")."
+    }
+]
+```

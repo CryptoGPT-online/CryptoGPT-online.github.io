@@ -1,0 +1,39 @@
+### False Positive Misuse
+```json
+[
+  {
+    "misuse category": "CWE-798",
+    "vulnerable_method": "I2.main",
+    "vulnerable_code": "\"my.host.name\"",
+    "description": "The code hardcodes the host name as \"my.host.name\". This can be a security threat if the name or IP address is sensitive or can be guessed.",
+    "recommendation": "Use configuration files or environment variables to store sensitive data."
+  }
+]
+```
+
+### Optimized Misuse JSON
+```json
+[
+    {
+        "misuse category": "CWE-327",
+        "vulnerable_method": "I2.go2",
+        "vulnerable_code": "HOST_NAME = DEFAULT_HOST_NAME.toCharArray();",
+        "description": "The host name is converted into a char array. This might not be cryptographically relevant, but using a string to represent the host name can make the code clearer and easier to read.",
+        "recommendation": "If the host name is used as a string, make sure it's validated or sanitized to prevent any misuse."
+    },
+    {
+        "misuse category": "CWE-798",
+        "vulnerable_method": "I2.go3",
+        "vulnerable_code": "hostName = HOST_NAME;",
+        "description": "The host name is copied to another variable. This might not be cryptographically relevant, but using a separate variable can help ensure the host name is used correctly.",
+        "recommendation": "Make sure that hostName is correctly used in the rest of the program."
+    },
+    {
+        "misuse category": "CWE-326",
+        "vulnerable_method": "I2.go",
+        "vulnerable_code": "SSLSocketFactory ssf = (SSLSocketFactory) SSLSocketFactory.getDefault();",
+        "description": "The default SSLSocketFactory is used, which might not provide the best encryption strength. It's better to use a custom SSLContext that has been configured with stronger cipher suites.",
+        "recommendation": "Consider using a custom SSLContext with stronger cipher suites."
+    }
+]
+```

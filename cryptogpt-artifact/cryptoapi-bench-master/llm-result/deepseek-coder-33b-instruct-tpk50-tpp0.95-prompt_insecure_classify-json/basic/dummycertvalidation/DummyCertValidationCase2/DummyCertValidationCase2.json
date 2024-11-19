@@ -1,0 +1,14 @@
+### False Positive Misuse ###
+The misuse about "CWE-295: Improper Certificate Validation" in the misuse list is a false positive. The code provided implements the checkServerTrusted() method in X509TrustManager which is responsible for server-side certificate validation. The misuse description and recommendation given in the list do not correspond with the actual implementation.
+
+### Optimized Misuse JSON###
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {\n}\n\npublic void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {\n}",
+        "description": "The methods 'checkClientTrusted' and 'checkServerTrusted' are left blank, which means the trust manager will accept all certificates without any validation.",
+        "recommendation": "You should implement proper certificate validation. You can use the CertificateFactory and X509Certificate classes to do this."
+    }
+]
+```

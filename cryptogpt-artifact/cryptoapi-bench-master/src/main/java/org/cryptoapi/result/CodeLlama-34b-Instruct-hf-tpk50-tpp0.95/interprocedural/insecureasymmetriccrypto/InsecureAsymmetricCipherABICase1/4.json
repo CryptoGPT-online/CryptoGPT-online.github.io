@@ -1,0 +1,34 @@
+ {
+"misuses": [
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "KeyPairGenerator kgp = KeyPairGenerator.getInstance(\"RSA\");\nkgp.initialize(keySize);\nKeyPair kp = kgp.generateKeyPair();\n\nCipher cipher = Cipher.getInstance(\"RSA\");\ncipher.init(Cipher.ENCRYPT_MODE, kp.getPublic());",
+"description": "The RSA algorithm is vulnerable to a variety of attacks, including factoring, side-channel attacks, and weak keys. The key size is also small, which can lead to a vulnerability. It's recommended to use a more secure algorithm like AES or elliptic curve cryptography.",
+"recommendation": "Use a more secure algorithm like AES or elliptic curve cryptography, and ensure that the key size is large enough to be secure."
+},
+{
+"misuse": "Insecure Key Generation",
+"vulnerable_code": "KeyPairGenerator kgp = KeyPairGenerator.getInstance(\"RSA\");\nkgp.initialize(keySize);\nKeyPair kp = kgp.generateKeyPair();",
+"description": "The key generation is not secure, as the key size is small and the algorithm is vulnerable to attacks. It's recommended to use a more secure algorithm like AES or elliptic curve cryptography, and ensure that the key size is large enough to be secure.",
+"recommendation": "Use a more secure algorithm like AES or elliptic curve cryptography, and ensure that the key size is large enough to be secure."
+},
+{
+"misuse": "Insecure Key Exchange",
+"vulnerable_code": "Cipher cipher = Cipher.getInstance(\"RSA\");\ncipher.init(Cipher.ENCRYPT_MODE, kp.getPublic());",
+"description": "The key exchange is not secure, as the algorithm is vulnerable to attacks. It's recommended to use a more secure algorithm like AES or elliptic curve cryptography.",
+"recommendation": "Use a more secure algorithm like AES or elliptic curve cryptography."
+},
+{
+"misuse": "Insecure IV",
+"vulnerable_code": "SealedObject encryptedMessage = new SealedObject(myMessage,cipher);",
+"description": "The IV is not secure, as it's generated using the key pair. It's recommended to use a secure method to generate the IV, such as using a random number generator.",
+"recommendation": "Use a secure method to generate the IV, such as using a random number generator."
+},
+{
+"misuse": "Insecure Storage of Private Key",
+"vulnerable_code": "String myMessage = new String(\"Secret Message\");\nSealedObject encryptedMessage = new SealedObject(myMessage,cipher);\n\nCipher dec = Cipher.getInstance(\"RSA\");\ndec.init(Cipher.DECRYPT_MODE, kp.getPrivate());",
+"description": "The private key is stored in cleartext, which is insecure. It's recommended to store the private key in a secure location, such as a hardware security module or a secure storage location.",
+"recommendation": "Store the private key in a secure location, such as a hardware security module or a secure storage location."
+}
+]
+}

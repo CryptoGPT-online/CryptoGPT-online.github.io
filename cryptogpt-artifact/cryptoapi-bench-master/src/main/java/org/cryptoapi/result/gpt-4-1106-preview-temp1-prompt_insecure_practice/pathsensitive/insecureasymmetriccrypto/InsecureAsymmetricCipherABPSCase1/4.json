@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "Insecure Asymmetric Encryption Mode",
+    "vulnerable_code": "Cipher.getInstance(\"RSA\")",
+    "description": "The code uses RSA encryption without specifying padding, relying on the default padding scheme. Historically, Java defaults to 'RSA/ECB/PKCS1Padding' which is secure, but might differ across providers and versions. Unpadded RSA ('RSA/None/NoPadding') is insecure and should not be used.",
+    "recommendation": "Use a secure padding mechanism like OAEP when initializing the Cipher instance. For example, use 'RSA/ECB/OAEPWithSHA-256AndMGF1Padding'."
+  },
+  {
+    "misuse": "Weak Key Size",
+    "vulnerable_code": "keysize = 1024",
+    "description": "The code allows the use of a 1024-bit RSA key, which is considered weak and could potentially be broken with sufficient computational resources.",
+    "recommendation": "Use key lengths of at least 2048 bits for RSA to ensure sufficient security against modern cryptographic attacks."
+  }
+]
+```

@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "Use of Hard-Coded Cryptographic Key",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+    "description": "The code is generating a new AES key for each operation which is not a hardcoded key; however, the concern is that the key is not managed, stored, or protected after its generation. In a real-world scenario, it should be securely stored or derived from a passphrase with a key derivation function.",
+    "recommendation": "Implement a secure key management system or derive keys from passphrases using key derivation functions such as PBKDF2."
+  },
+  {
+    "misuse": "Insecure Initialization Vector (IV)",
+    "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+    "description": "The code uses an IV that is not random or not sufficiently unpredictable which may compromise confidentiality. The IV should be generated using a secure random number generator.",
+    "recommendation": "Replace the static IV with a securely generated random value, and ensure it is unique for each encryption operation."
+  },
+  {
+    "misuse": "Insufficient IV Length",
+    "vulnerable_code": "byte [] bytes = \"abcde\".getBytes();",
+    "description": "The IV should be the same size as the block size of the cipher (for AES, this is 128 bits, or 16 bytes). In this case, the 'bytes' used for the IV is derived from a String \"abcde\" which is less than 16 bytes, thus not meeting the required length for AES.",
+    "recommendation": "Generate an IV using a cryptographic secure random number generator with the proper length (16 bytes for AES)."
+  }
+]
+```

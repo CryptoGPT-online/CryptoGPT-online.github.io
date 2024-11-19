@@ -1,0 +1,34 @@
+```json
+[
+  {
+    "misuse": "Insufficiently Random Values",
+    "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(new byte[]{Byte.parseByte(String.valueOf(initialization))});",
+    "description": "The initialization vector (IV) for AES/CBC mode is not randomly generated, instead it is derived from a static, non-random string, leading to predictable IVs. Using a predictable IV undermines the security of the encryption by making it vulnerable to certain types of attacks.",
+    "recommendation": "Use a SecureRandom instance to generate a sufficiently random IV for each encryption operation."
+  },
+  {
+    "misuse": "Improper Initialization",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+    "description": "The encryption algorithm parameter is not fully qualified. 'AES' will default to using 'AES/ECB/PKCS5Padding' in some Java implementations, which is not secure because ECB mode does not use an IV and is not semantically secure.",
+    "recommendation": "Specify the mode and padding (e.g., AES/CBC/PKCS5Padding) to ensure that the correct algorithm is used."
+  },
+  {
+    "misuse": "Weak IV Generation",
+    "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(new byte[]{Byte.parseByte(String.valueOf(initialization))});",
+    "description": "The IV generation method is weak. Parsing a single byte from a static string does not create a sufficiently large IV for AES/CBC, and as such, it does not provide the necessary security guarantees for a strong IV. Typically, an IV should be as large as the AES block size (16 bytes).",
+    "recommendation": "Generate a random IV using a SecureRandom instance with a size equal to the block size of the cipher (16 bytes for AES)."
+  },
+  {
+    "misuse": "Insecure Key Generation",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+    "description": "The key generator does not specify a key size, which may lead to generating weak keys if the default size is not adequate. For AES, key sizes of 128, 192, and 256 bits are considered secure, but the default size may vary depending on the Java implementation.",
+    "recommendation": "Specify the key size explicitly when generating the key. For example, use 'keyGen.init(256);' for a 256-bit key."
+  },
+  {
+    "misuse": "Static Initialization Vector",
+    "vulnerable_code": "private static char[] INITIALIZATION;",
+    "description": "The static keyword suggests that the initialization vector might be reused across encryptions. This practice defeats the purpose of an IV, which should be unique per encryption (nonce) to ensure the security of the cryptographic operation.",
+    "recommendation": "Remove the static keyword from the INITIALIZATION array declaration and ensure that a unique IV is used for every encryption operation."
+  }
+]
+```

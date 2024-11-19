@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Weak/Insufficient Randomness",
+        "vulnerable_code": "BigInteger i = BigInteger.valueOf(sr.nextInt());\nbyte [] bytes = i.toByteArray();",
+        "description": "The initialization vector (IV) is derived from 'sr.nextInt()', which does not guarantee the IV is cryptographically strong.",
+        "recommendation": "Use SecureRandom.nextBytes(byte[] bytes) to generate a random IV of the correct length."
+    },
+    {
+        "misuse": "Invalid IV Length",
+        "vulnerable_code": "BigInteger i = BigInteger.valueOf(sr.nextInt());\nbyte [] bytes = i.toByteArray();",
+        "description": "The IV generated can be less than the required 16 bytes (128 bits) for the AES block size, leading to possible security issues.",
+        "recommendation": "Ensure that the IV is exactly 16 bytes by using a dedicated method 'sr.nextBytes(bytes)' with a pre-sized byte array."
+    },
+    {
+        "misuse": "Insecure Key Generation",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+        "description": "Without specifying a key size, the code may use a weaker key than intended.",
+        "recommendation": "Explicitly specify the key size when generating an AES key, preferable to be 256 bits."
+    }
+]
+```

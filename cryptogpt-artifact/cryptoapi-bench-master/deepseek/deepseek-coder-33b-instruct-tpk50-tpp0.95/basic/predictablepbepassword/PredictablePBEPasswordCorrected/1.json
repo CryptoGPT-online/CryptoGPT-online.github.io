@@ -1,0 +1,40 @@
+There are two main misuses in the provided code:
+
+1. Password as String:
+The password is generated as a string from a `SecureRandom` instance and it is very insecure because the `SecureRandom` instance generates random numbers and these are converted to a String which is not considered a secure practice. It can be resolved by using a `char[]` array directly.
+
+2. Small iteration count and fixed salt:
+The iteration count is quite small (11010) which is not recommended for security purposes. Small iterations count makes the hash computation faster, but it also makes it easier to guess. 
+Also, the salt is always the same. If the salt is known, an attacker can use precomputed tables to attempt dictionary attacks.
+
+Here is the corrected version of the code:
+
+```java
+import java.security.SecureRandom;
+import javax.crypto.spec.PBEKeySpec;
+
+public class Pd {
+    private PBEKeySpec pbeKeySpec = null;
+    
+    public static void main(String [] args){
+        Pd ckp = new Pd();
+        ckp.key();
+    }
+    public void key() {
+        SecureRandom random = new SecureRandom();
+        byte[] password = new byte[16];
+        random.nextBytes(password);
+        byte [] salt = new byte[16];
+        random.nextBytes(salt);
+        int iterationCount = 10000; // increased to 10000 for security
+        int keyLength = 16;
+        pbeKeySpec = new PBEKeySpec(password, salt, iterationCount, keyLength);
+    }
+}
+```
+
+Please note that this is just an example. The code is still vulnerable because the password is still converted to a `String` which is considered an anti-pattern.
+
+Also, the `PBEKeySpec` should not be stored in the instance variable. It should be used locally within a method and discarded immediately after use.
+
+Lastly, the iteration count should be chosen based on the requirements of the application. The suggested number 10000 is only for demonstration purposes.

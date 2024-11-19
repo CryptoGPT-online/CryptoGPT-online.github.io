@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Insecure Random Salt",
+        "vulnerable_code": "byte[] salt = {(byte) 0xa2}; \n if(choice>1) \n sr2.nextBytes(salt);",
+        "description": "The salt value is deterministically chosen based on the constant byte value, meaning it is not secure enough for cryptographic purposes. If the choice is greater than 1, the salt is overwritten with a new, random value, which could be insecure if the choice value is predictable or controlled by an attacker.",
+        "recommendation": "If salt is meant to be secure, use a cryptographically secure random number generator (RNG) to generate it. Also, always validate and sanitize user input to avoid potential security issues."
+    },
+    {
+        "misuse": "Insecure Iteration Count",
+        "vulnerable_code": "int count = 1020;",
+        "description": "The iteration count is set to a low value, which is less secure than higher values. Smaller numbers of iterations greatly reduce the difficulty of brute-forcing passwords. For most real-world applications, at least 1000 iterations are recommended.",
+        "recommendation": "Set the iteration count to a higher value based on the expected use case. For applications requiring a high level of security, consider using a larger number, such as 10000 or more."
+    }
+]
+```

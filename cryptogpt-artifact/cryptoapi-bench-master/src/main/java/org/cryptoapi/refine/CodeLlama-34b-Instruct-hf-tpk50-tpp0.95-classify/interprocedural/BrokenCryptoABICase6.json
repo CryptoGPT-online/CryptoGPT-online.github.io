@@ -1,0 +1,45 @@
+ ### False Positive Misuse JSON
+
+{
+"misuses": [
+{
+"misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+"vulnerable_code": "KeyGenerator.getInstance(String.valueOf(crypto))",
+"description": "The cryptographic algorithm used in the code is a weak algorithm, Blowfish, which is known to be insecure.",
+"recommendation": "Use a secure cryptographic algorithm, such as AES, and ensure that the key size is at least 256 bits."
+},
+{
+"misuse": "CWE-798: Use of Hardcoded Credentials",
+"vulnerable_code": "private static char[] CRYPTO;",
+"description": "The cryptographic algorithm used in the code is hardcoded, which can lead to vulnerabilities if the algorithm is known.",
+"recommendation": "Do not hardcode cryptographic algorithms and use a secure method to store and retrieve them."
+},
+{
+"misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+"vulnerable_code": "Cipher cipher = Cipher.getInstance(String.valueOf(crypto))",
+"description": "The cipher algorithm used in the code is negotiated based on the cryptographic algorithm used, which can lead to less secure cipher algorithms being used.",
+"recommendation": "Use a secure method to negotiate the cipher algorithm and ensure that the selected algorithm is secure."
+}
+]
+}
+
+### Optimized Misuse JSON
+
+{
+"misuses": [
+{
+"misuse": "CWE-326: Inadequate Encryption Strength",
+"vulnerable_code": "SecretKey key = keyGen.generateKey()",
+"description": "The key generation algorithm used in the code is a weak algorithm, which can generate a key of inadequate strength.",
+"recommendation": "Use a strong key generation algorithm, such as PBKDF2, and ensure that the key size is at least 256 bits."
+},
+{
+"misuse": "CWE-330: Use of Insufficiently Random Values",
+"vulnerable_code": "CRYPTO = DEFAULT_CRYPTO.toCharArray()",
+"description": "The use of a constant value for the cryptographic algorithm is not secure. It is recommended to use a random value for each encryption operation.",
+"recommendation": "Use a random value for each encryption operation instead of a constant value."
+}
+]
+}
+
+Note: The "Optimized Misuse JSON" is the result of removing the false positive misuses and keeping the optimized misuses only.

@@ -1,0 +1,28 @@
+public class P1 {
+    public static void main(String [] args) throws NoSuchAlgorithmException {
+        KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+        keyGen.init(256); // for AES, key size must be 128, 192 or 256
+        SecretKey secretKey = keyGen.generateKey();
+    }
+}
+```
+This code uses KeyGenerator to generate a secure random key with a key size of 256 bits, which is a recommended and secure key length for AES. The generated SecretKey object can then be used directly to create SecretKeySpec or other cryptographic operations.
+
+This is a more secure way to generate a random AES key than what you were using before. CWE-330: Use of Insufficiently Random Values
+
+Misuse: CWE-330: Use of Insufficiently Random Values.
+Misuse Code:
+```java
+String defaultKey = String.valueOf(random.ints());
+```
+Description: The `SecureRandom` class is used to generate random numbers for cryptographic operations, but here it is used to generate a sequence of random integers, which is not secure.
+Recommendation: You can generate a random string and convert it to a byte array to use as a secret key, but the `SecureRandom` class is better suited for this purpose.
+
+CWE-327: Use of a Broken or Risky Cryptographic Algorithm.
+Misuse: CWE-327: Use of a Broken or Risky Cryptographic Algorithm.
+Misuse Code:
+```java
+SecretKeySpec keySpec = new SecretKeySpec(keyBytes, "AES");
+```
+Description: The "AES" is a standard cryptographic algorithm but here it is used with a less secure key size.
+Recommendation: AES should only be used with a key size of 128, 192 or 256 bits, and a more secure key should be used.

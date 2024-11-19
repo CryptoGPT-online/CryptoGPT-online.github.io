@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "crypto = new C4(\"MD2\");",
+        "description": "The code uses the MD2 algorithm, which is broken and no longer recommended for security purposes. Using insecure or weak cryptographic algorithms can expose sensitive data to attackers.",
+        "recommendation": "It is recommended to use a strong, up-to-date algorithm such as SHA-256, SHA-3, or RSA with 2048 or 4096 bit key length. Always choose strong encryption algorithms which are not known to be weak or broken."
+    },
+    {
+        "misuse": "CWE-780: Use of RSA Algorithm without OAEP",
+        "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(crypto);",
+        "description": "The code uses the MessageDigest class, which is a part of the Java Cryptography Extension (JCE). The MessageDigest class is used to apply a hash function to a byte array. However, it should not be used for cryptographic signing. If used for cryptographic signing, it is necessary to use an asymmetric cryptographic algorithm such as RSA with Optimal Asymmetric Encryption Padding (OAEP).",
+        "recommendation": "If the MD2 algorithm is used for cryptographic signing, switch to RSA with OAEP."
+    }
+]
+```

@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "SSLSocket socket = (SSLSocket) ssf.createSocket(hostName.toString(),soc);",
+        "description": "The code snippet provided does not show any implementation of certificate validation for the SSL connection. This can lead to man-in-the-middle attacks because the client may trust any certificate presented to it without verification.",
+        "recommendation": "Implement proper hostname verification and certificate chain validation according to your organization's security policy. Use a custom X509TrustManager to check the server's certificate against a list of trusted certificates or certificate authorities."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "\"my.host.name\"",
+        "description": "The hostname is hardcoded into the application, which is not a direct security vulnerability in the context of cryptographic operations, but can be considered a bad practice from a configuration management perspective.",
+        "recommendation": "Externalize the hostname configuration to a configurable property file or environment variable, allowing for more flexibility and security in deployment without needing to recompile the code."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "hostName = HOST_NAME;",
+        "description": "Although not directly related to cryptographic operations, the use of a static value for the hostname might be part of a larger security concern if used in cryptographic contexts, such as for seed values or nonces.",
+        "recommendation": "Ensure that any value that should be random or unpredictable is generated using a secure random number generator."
+    }
+]
+```

@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insecure Random Number Generation",
+        "vulnerable_code": "SecureRandom sr = new SecureRandom(new byte[]{passedSeed});",
+        "description": "Using a static seed value for SecureRandom can lead to predictable output, which is insecure for cryptographic operations where randomness is crucial.",
+        "recommendation": "Remove the seed or use a more secure source to generate it, such as actual entropy sources available in the OS."
+    },
+    {
+        "misuse": "Use of a Weak Seed",
+        "vulnerable_code": "byte seed = 100;\ncrypto = new C2(seed);",
+        "description": "The seed for SecureRandom is very weak (a single, static byte), leading to insufficient entropy and predictable randomness.",
+        "recommendation": "Use a stronger, ideally unpredictable, seed for initializing SecureRandom."
+    },
+    {
+        "misuse": "Insufficient Exception Handling",
+        "vulnerable_code": "public P2() throws NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException",
+        "description": "The constructor of P2 class throws a wide range of exceptions, which signals that proper exception handling is not in place. Exception handling should not be delegated to the constructor caller in secure coding.",
+        "recommendation": "Implement proper exception handling inside the class to manage errors securely."
+    },
+    {
+        "misuse": "Static Initialization Vector (IV)",
+        "vulnerable_code": "SecureRandom sr = new SecureRandom(new byte[]{passedSeed});",
+        "description": "Even though it's not explicitly shown that an IV is in use, the SecureRandom is often used to generate an IV for cryptographic operations. If such is the case and the IV is static or predictable, it can lead to issues such as CWE-329.",
+        "recommendation": "If used for IV generation, ensure that SecureRandom is seeded in a secure manner or better yet, allow SecureRandom to self-seed, which typically collects entropy from the OS."
+    }
+]
+```

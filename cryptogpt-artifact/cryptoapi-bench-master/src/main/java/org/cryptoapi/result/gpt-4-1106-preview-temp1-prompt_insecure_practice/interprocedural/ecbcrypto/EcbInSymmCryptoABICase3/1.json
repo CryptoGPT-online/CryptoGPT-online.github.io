@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "ECB Mode Usage",
+    "vulnerable_code": "Cipher.getInstance(\"AES/ECB/PKCS5Padding\");",
+    "description": "The code snippet uses ECB mode for encryption, which is considered insecure because it does not provide serious message confidentiality. It encrypts identical plaintext blocks into identical ciphertext blocks, thus it does not sufficiently hide data patterns.",
+    "recommendation": "Use a more secure mode of operation, such as CBC (Cipher Block Chaining) or GCM (Galois/Counter Mode) with a unique initialization vector (IV) for each encryption."
+  },
+  {
+    "misuse": "Static crypto algorithm specification",
+    "vulnerable_code": "String crypto = \"AES/ECB/PKCS5Padding\";",
+    "description": "The encryption algorithm, mode, and padding scheme are hardcoded and passed to the method 'method1'. This is not directly a security issue, but it might become one if 'crypto' is controlled by an attacker, it is prone to misuse.",
+    "recommendation": "Make sure that configurations for cryptographic operations are not influenced by untrusted input or through external control."
+  },
+  {
+    "misuse": "Lack of secure random IV for CBC mode",
+    "vulnerable_code": "keyGen.generateKey();",
+    "description": "If CBC mode is used as a recommendation to solve the ECB mode issue, then the lack of an initialization vector (IV) for this mode is insecure. The code currently does not use an IV for CBC mode and this would make the encryption weak.",
+    "recommendation": "Ensure that when using CBC mode, a secure random IV is generated for each encryption operation."
+  }
+]
+```

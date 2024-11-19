@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insecure Cryptographic Algorithm",
+        "vulnerable_code": "String crypto = \"Blowfish\";",
+        "description": "Blowfish is a legacy cryptographic algorithm, and although not fundamentally broken, its block size (64 bits) is not considered secure against modern threats. As such, it may not be reliably secure for highly sensitive data.",
+        "recommendation": "Use a more modern algorithm like AES with a block size of at least 128 bits."
+    },
+    {
+        "misuse": "Key Generation without Secure Random",
+        "vulnerable_code": "keyGen.generateKey();",
+        "description": "The key generator does not explicitly use a secure random instance for key generation which might result in weak keys if the default is not secure enough.",
+        "recommendation": "Explicitly initialize the KeyGenerator with a SecureRandom instance to guarantee a strong key."
+    },
+    {
+        "misuse": "ECB Mode of Operation",
+        "vulnerable_code": "Cipher.getInstance(crypto);",
+        "description": "If the default mode of operation is ECB (Electronic Codebook), it is insecure as it doesn't provide serious message confidentiality, and patterns present in the plaintext could be visible in the ciphertext.",
+        "recommendation": "Specify a secure mode of operation like CBC (Cipher Block Chaining) with an appropriate padding scheme like PKCS5Padding."
+    },
+    {
+        "misuse": "Insufficient Error Handling",
+        "vulnerable_code": "public static void main (String [] args) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException",
+        "description": "The method declarations are simply throwing exceptions, which means any cryptographic error will cause the program to terminate or behave unpredictably without proper handling.",
+        "recommendation": "Implement proper error handling to manage exceptions and maintain application stability and security."
+    }
+]
+```

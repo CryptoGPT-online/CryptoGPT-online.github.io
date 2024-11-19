@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "Insufficient Entropy",
+    "vulnerable_code": "String.valueOf(random.ints())",
+    "description": "The random.ints() method returns an IntStream that could potentially provide more than 32 bits of entropy, yet the conversion to a String without specifying a range or limit could result in a key with insufficient entropy for encryption.",
+    "recommendation": "Use a secure method for key generation, such as KeyGenerator for AES keys, with a secure random source. Avoid creating keys from a random stream without ensuring sufficient entropy."
+  },
+  {
+    "misuse": "Static Initialization Vector (IV)",
+    "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, keySpec);",
+    "description": "An Initialization Vector (IV) for CBC mode is not being explicitly set, which means that the same default IV may be reused across encryptions with the same key, leading to security issues such as enabling ciphertext attacks.",
+    "recommendation": "Always use a securely generated random IV for each encryption. The IV should be transmitted along with the ciphertext."
+  },
+  {
+    "misuse": "Insecure Key Derivation",
+    "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+    "description": "The key derivation technique used here is insecure because it is directly truncating or padding the bytes from a converted integer string to create a key, which may not result in a uniformly distributed key space and could produce weak cryptographic keys.",
+    "recommendation": "Use a proper key derivation function (KDF) like PBKDF2 or Argon2 to derive the key from a password or use KeyGenerator for generating a key directly."
+  }
+]
+```

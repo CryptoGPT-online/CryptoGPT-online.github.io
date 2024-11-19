@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Cipher Mode",
+        "vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5Padding\")",
+        "description": "The AES algorithm is being used with CBC mode without specifying an Initialization Vector (IV), which can lead to vulnerabilities if the same IV is used by default for different encryption operations.",
+        "recommendation": "Always explicitly specify a random IV for CBC mode and ensure that it is unique for every encryption operation."
+    },
+    {
+        "misuse": "Class Name Typo",
+        "vulnerable_code": "EcbInSymmCryptoBBCase1 bc = new EcbInSymmCryptoBBCase1();",
+        "description": "The class name in the main method is incorrect, and it seems to suggest using ECB mode which is insecure, but the actual 'go' method uses CBC mode. This confusion could lead to maintainability issues or potentially insecure use if the class were to be renamed or the code changed to match the class name.",
+        "recommendation": "Rename the class to correctly reflect the encryption mode being used and make sure the actual implementation matches the intended secure mode."
+    },
+    {
+        "misuse": "Uninitialized KeyGenerator",
+        "vulnerable_code": "KeyGenerator.getInstance(\"AES\")",
+        "description": "The KeyGenerator for AES does not specify a key size; thus, it may default to a lower key size than recommended for strong security.",
+        "recommendation": "Specify a key size when initializing the KeyGenerator to ensure strong encryption, e.g., KeyGenerator.getInstance(\"AES\").init(256);"
+    }
+]
+```

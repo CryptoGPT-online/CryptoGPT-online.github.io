@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "int keyLength = 16;",
+        "description": "The keyLength variable represents the length of the key in bits and is set to 16, which is too short to be secure. Modern encryption standards usually require at least 128 bits (16 bytes) for symmetric keys.",
+        "recommendation": "Increase the key length to a minimum of 128 bits (16 bytes)."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "pbeKeySpec = new PBEKeySpec(password.toCharArray(),salt,iterationCount,keyLength);",
+        "description": "The PBEKeySpec is used without specifying a secure algorithm, which may default to weaker algorithms like PBEWithMD5AndDES. Usage of MD5 and DES is considered insecure.",
+        "recommendation": "Specify a secure cryptographic algorithm when initializing PBEKeySpec, such as 'PBEWithHmacSHA256AndAES_256'."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "String password = String.valueOf(random.ints());",
+        "description": "Using the method ints() of Random without specifying a range or length can lead to a weak password as it may not provide sufficient entropy.",
+        "recommendation": "Generate a sufficiently long random password using a secure random number generator, ensuring high entropy and adequate length."
+    }
+]
+```

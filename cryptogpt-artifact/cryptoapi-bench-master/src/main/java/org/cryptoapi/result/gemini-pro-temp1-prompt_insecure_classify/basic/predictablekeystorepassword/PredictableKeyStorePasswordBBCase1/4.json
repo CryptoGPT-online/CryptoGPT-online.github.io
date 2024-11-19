@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+    "vulnerable_code": "KeyStore ks = KeyStore.getInstance(type);",
+    "description": "The code uses a default KeyStore type (\"JKS\") without specifying the security parameters or considering other more secure options.",
+    "recommendation": "Use a more secure KeyStore type, such as \"PKCS12\" or \"BKS\", and specify appropriate security parameters when creating the KeyStore instance."
+  },
+  {
+    "misuse": "CWE-798: Use of Hardcoded Credentials",
+    "vulnerable_code": "String defaultKey = \"changeit\";",
+    "description": "The code uses a hardcoded password (\"changeit\") to load the KeyStore, which is insecure and can be easily compromised.",
+    "recommendation": "Avoid hardcoding credentials in the code. Instead, use a secure method to store and retrieve credentials, such as a password manager or a secrets management system."
+  },
+  {
+    "misuse": "CWE-295: Improper Certificate Validation",
+    "vulnerable_code": "ks.load(cacerts.openStream(), defaultKey.toCharArray());",
+    "description": "The code loads the KeyStore from a URL without performing any certificate validation. This can allow an attacker to impersonate the trusted certificate authority and compromise the security of the application.",
+    "recommendation": "Validate the certificate of the URL before loading the KeyStore. This can be done using the \"HttpsURLConnection\" class or a third-party library."
+  }
+]
+```

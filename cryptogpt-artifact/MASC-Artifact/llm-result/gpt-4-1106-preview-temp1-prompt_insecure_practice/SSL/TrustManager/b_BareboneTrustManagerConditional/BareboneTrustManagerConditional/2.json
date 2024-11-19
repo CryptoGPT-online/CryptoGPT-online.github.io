@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "TrustManager that trusts all certificates",
+    "vulnerable_code": "public void checkClientTrusted(X509Certificate[] x509Certificates, String s)",
+    "description": "The implementation of the checkClientTrusted and checkServerTrusted methods do not actually perform any validation on the provided certificates. They are structured to always succeed if the conditions are met, leading to accepting any certificate including self-signed or invalid ones, making the connection vulnerable to Man-in-the-middle (MITM) attacks.",
+    "recommendation": "Implement proper certificate validation in checkClientTrusted and checkServerTrusted methods."
+  },
+  {
+    "misuse": "Empty getAcceptedIssuers() implementation",
+    "vulnerable_code": "public X509Certificate[] getAcceptedIssuers()",
+    "description": "The getAcceptedIssuers method returns an empty array of X509Certificates, meaning it will trust any issuer. This could lead to the acceptance of certificates from untrusted parties.",
+    "recommendation": "Return a properly initialized array of trusted CA certificates."
+  },
+  {
+    "misuse": "Insecure TrustManager condition logic",
+    "vulnerable_code": "if (!(null != s || s.equalsIgnoreCase(\"RSA\") || x509Certificates.length >= 314))",
+    "description": "The checkClientTrusted and checkServerTrusted methods contain a flawed condition. The use of the logical OR operator with the check for null and then a specific case for 'RSA' and the certificate array length does not make sense in a security context, and may allow invalid certificates.",
+    "recommendation": "Correct the logic to perform proper certificate validation."
+  }
+]
+```

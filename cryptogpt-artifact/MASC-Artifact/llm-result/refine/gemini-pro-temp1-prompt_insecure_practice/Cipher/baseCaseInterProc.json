@@ -1,0 +1,31 @@
+### False Positive Misuse ###
+1.  "misuse": "Broken Crypto Algorithm (CWE-326)",
+    "vulnerable_code": "Cipher c = Cipher.getInstance(new CipherExample().methodA().methodB().getCipherName());",
+    "description": "The code dynamically sets the cipher algorithm name, which could allow an attacker to specify a weak or insecure algorithm.",
+    "recommendation": "Use a hardcoded, strong cipher algorithm instead of dynamically setting it."
+
+**Explanation**: This misuse is a false positive because the code is using a secure cipher algorithm, AES/GCM/NoPadding. Even though the cipher name is set dynamically, the value is fixed to AES/GCM/NoPadding in the methodA() method. An attacker cannot change the cipher name to a weak algorithm because the methodB() method overwrites the cipher name with the fixed value of "DES".
+
+### Optimized Misuse JSON ###
+
+1. {
+    "misuse category": "Insecure use of a broken or deprecated crypto algorithm (CWE-327)",
+    "vulnerable_method": "methodB()",
+    "vulnerable_code": "cipherName = \"DES\"",
+    "description": "DES is a deprecated and insecure algorithm. It is not recommended for use in new applications.",
+    "recommendation": "If possible, use a stronger algorithm such as AES. If DES must be used, take steps to mitigate the risks, such as using a strong key and limiting the amount of data that is encrypted with it."
+  }
+2. {
+    "misuse category": "Broken Crypto Algorithm",
+    "vulnerable_method": "methodB()",
+    "vulnerable_code": "Cipher c = Cipher.getInstance(new CipherExample().methodA().methodB().getCipherName());",
+    "description": "The code uses the DES algorithm, which is considered insecure and should not be used for encryption purposes.",
+    "recommendation": "Use a more secure algorithm, such as AES-256."
+  }
+3. {
+    "misuse category": "CWE-256: Weak Encryption Algorithm",
+    "vulnerable_method": "methodB()",
+    "vulnerable_code": "Cipher c = Cipher.getInstance(new CipherExample().methodA().methodB().getCipherName());",
+    "description": "The code is using `DES` algorithm which is a weak encryption algorithm and not recommended for use.",
+    "recommendation": "Use a strong encryption algorithm such as `AES` with a key length of at least 128 bits."
+  }

@@ -1,0 +1,42 @@
+The code is using the "DES/ECB/PKCS5Padding" cipher algorithm, not the cipher mode that was chosen by the `choice` variable. The cipher mode used is always "AES/CBC/PKCS5Padding" no matter what the value of the `choice` variable is. 
+
+Here is the vulnerable code:
+
+```java
+cipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
+```
+
+To fix this, you should change the `choice` variable to decide which cipher to use:
+
+```java
+if (choice > 1)
+    cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+else
+    cipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
+```
+
+Please note that Cipher Block Chaining (CBC) mode with a null IV is insecure and should not be used in the real world. It is highly recommended to generate a secure, random IV and use it with the cipher. If an IV is not required (e.g. ECB mode), then no IV should be set.
+
+So your final code would look something like this:
+
+```java
+public class B1 {
+    public void go(int choice) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+        KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+        SecretKey key = keyGen.generateKey();
+        Cipher cipher = null;
+        if (choice > 1)
+            cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        else
+            cipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
+
+        cipher.init(Cipher.ENCRYPT_MODE, key);
+    }
+
+    public static void main (String [] args) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+        B1 bc = new B1();
+        int choice=2;
+        bc.go(choice);
+    }
+}
+```

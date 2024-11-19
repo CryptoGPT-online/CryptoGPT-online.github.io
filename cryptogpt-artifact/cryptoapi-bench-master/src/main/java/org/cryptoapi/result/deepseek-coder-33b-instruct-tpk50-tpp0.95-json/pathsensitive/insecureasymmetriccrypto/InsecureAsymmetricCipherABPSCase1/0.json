@@ -1,0 +1,20 @@
+[
+  {
+    "misuse": "Lack of Key Randomness",
+    "vulnerable_code": "kgp.initialize(keysize);",
+    "description": "The RSA key pair is generated with a static keysize, which might make the encryption or decryption process less secure since the keysize isn't randomly chosen. This can be exploited by attackers with a known plaintext or ciphertext to narrow down the search space and potentially find the key by trying various keysizes.",
+    "recommendation": "Generate the keys with randomly-chosen keysizes to make the process less predictable and more difficult for attackers to crack."
+  },
+  {
+    "misuse": "Insufficient Key Size",
+    "vulnerable_code": "kgp.initialize(keysize);",
+    "description": "The keysize is not set appropriately. RSA requires at least a 2048-bit key for secure encryption and decryption. Using shorter keys will make the encryption weak and susceptible to attacks.",
+    "recommendation": "Increase the keysize from 2048 bits to at least 3072 bits."
+  },
+  {
+    "misuse": "Insufficient Entropy",
+    "vulnerable_code": "SealedObject encryptedMessage = new SealedObject(myMessage,cipher);",
+    "description": "The SealedObject class is used with public keys. Public keys should never be used to encrypt or decrypt data because anyone with the public key can decrypt data encrypted with it. This creates an information leak, which can be exploited to reveal information or allow impersonation.",
+    "recommendation": "Consider using a different approach for secure data encryption. Use private keys for encryption and public keys for decryption."
+  }
+]

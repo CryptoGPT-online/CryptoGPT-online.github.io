@@ -1,0 +1,10 @@
+```json
+[{"misuse": "Insecure Randomness", 
+  "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+  "description": "The KeyGenerator will use a system default source of randomness, which may not be suitable for cryptographic purposes. It's recommended to use a cryptographically strong random number generator, such as SecureRandom, and specify the desired key size.",
+  "recommendation": "Use SecureRandom to generate random bytes for key and specify the key size explicitly to ensure the strength of the generated key."}, 
+ {"misuse": "Weak Cryptographic Algorithm", 
+  "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+  "description": "Using PKCS5Padding for AES can lead to padding oracle attacks. It's recommended to use PKCS7Padding (or better, the default padding for AES in the platform) to avoid such attacks.",
+  "recommendation": "Use AES/CBC/PKCS7Padding or simply AES/CBC, depending on the default padding for the platform."}]
+```

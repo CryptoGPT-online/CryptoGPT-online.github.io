@@ -1,0 +1,40 @@
+```json
+[
+    {
+        "misuse": "Weak Encryption Algorithm",
+        "vulnerable_code": "\"DES/ECB/PKCS5Padding\"",
+        "description": "DES is an outdated encryption algorithm that is considered to be insecure because it uses a 56-bit key which is vulnerable to brute-force attacks.",
+        "recommendation": "Use a more secure algorithm like AES with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "ECB Mode of Operation",
+        "vulnerable_code": "\"DES/ECB/PKCS5Padding\"",
+        "description": "ECB (Electronic Codebook) is an insecure block cipher mode of operation because identical plaintext blocks are encrypted into identical ciphertext blocks, which can leak data patterns.",
+        "recommendation": "Use a more secure mode of operation like CBC (Cipher Block Chaining) or GCM (Galois/Counter Mode) which provide better data confidentiality."
+    },
+    {
+        "misuse": "Insecure Random Key Generation",
+        "vulnerable_code": [
+            "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);",
+            "SecretKey key = keyGen.generateKey();"
+        ],
+        "description": "The use of a default key generator without specifying the key size can result in generating weak keys that may be susceptible to brute-force attacks.",
+        "recommendation": "When using KeyGenerator, explicitly set the key size to a sufficient length that is recommended for the encryption algorithm."
+    },
+    {
+        "misuse": "Hardcoded Encryption Algorithm Usage",
+        "vulnerable_code": [
+            "public C2(String defAlgo)",
+            "defaultAlgo = defAlgo;"
+        ],
+        "description": "The encryption algorithm is hardcoded and does not allow for easy updates or changes to more secure algorithms as they become available.",
+        "recommendation": "Use a configuration setting or another method that allows for easy updates to the encryption algorithm."
+    },
+    {
+        "misuse": "Improper Initialization Vector",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "When using CBC or similar modes that require IV, initializing the cipher without an initialization vector (IV) is insecure as it defaults to a predictable IV or no IV.",
+        "recommendation": "Always initialize Cipher instances with a secure and random IV for modes that require it."
+    }
+]
+```

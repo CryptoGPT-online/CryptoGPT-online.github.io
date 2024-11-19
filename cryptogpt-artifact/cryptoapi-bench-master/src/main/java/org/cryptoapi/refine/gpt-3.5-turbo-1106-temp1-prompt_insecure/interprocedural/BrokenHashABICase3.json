@@ -1,0 +1,18 @@
+### False Positive Misuse ###
+None
+
+### Optimized Misuse JSON ###
+```json
+{
+  "misuse": "Broken Crypto Algorithm",
+  "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(crypto);\nmd.update(str.getBytes());\nSystem.out.println(md.digest());",
+  "description": "The code uses the MD4 cryptographic hash function which is known to be broken and insecure. It should not be used for any cryptographic operations.",
+  "recommendation": "Use a secure cryptographic algorithm such as SHA-256 or SHA-3 instead of MD4."
+},
+{
+  "misuse": "Unsalted Hash",
+  "vulnerable_code": "md.update(str.getBytes());",
+  "description": "The 'update' method is called with unsalted input, which can weaken the hash function's security by making it easier for attackers to use precomputed tables to crack the hashed values.",
+  "recommendation": "Always use a unique and random salt when hashing sensitive information."
+}
+```

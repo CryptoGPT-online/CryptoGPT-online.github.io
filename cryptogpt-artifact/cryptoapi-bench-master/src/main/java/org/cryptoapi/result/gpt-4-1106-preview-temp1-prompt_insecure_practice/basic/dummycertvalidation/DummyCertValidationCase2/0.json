@@ -1,0 +1,18 @@
+```json
+[
+    {
+        "misuse": "Incomplete Certificate Validation",
+        "vulnerable_code": 
+        "public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {\n\n}\n\npublic void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {\n}",
+        "description": "The implementation of `checkClientTrusted` and `checkServerTrusted` is empty, which means it does not perform any certificate validation. The application will thus trust all clients and servers, which can lead to man-in-the-middle (MITM) attacks.",
+        "recommendation": "Implement proper certificate validation logic in `checkClientTrusted` and `checkServerTrusted` methods to ensure the identity of the clients and servers."
+    },
+    {
+        "misuse": "TrustManager That Accepts Any Certificate",
+        "vulnerable_code": 
+        "public X509Certificate[] getAcceptedIssuers() {\n    return new X509Certificate[0];\n}",
+        "description": "The method `getAcceptedIssuers` returns an empty array of certificates, which signifies that any certificate, regardless of the issuing authority, could be accepted. This can result in the application accepting certificates from untrusted Certificate Authorities (CAs).",
+        "recommendation": "Return a list of accepted issuers that are trusted by the application or implement a more rigorous check to ensure that the presented certificate chains are from trusted CAs."
+    }
+]
+```

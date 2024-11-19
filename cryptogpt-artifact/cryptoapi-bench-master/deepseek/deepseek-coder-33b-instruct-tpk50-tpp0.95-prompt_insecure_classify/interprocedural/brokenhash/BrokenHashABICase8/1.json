@@ -1,0 +1,23 @@
+Misuse Type: CWE-327: Use of a Broken or Risky Cryptographic Algorithm.
+
+Vulnerable Code: 
+```java
+MessageDigest md = MessageDigest.getInstance(String.valueOf(crypto));
+```
+
+Description: The algorithm chosen for the MessageDigest is "MD2", which is a cryptographic hash function that is proven to have weaknesses. The cryptanalysis community is still not fully comfortable using this algorithm due to its known vulnerabilities. The NIST in 2008 has recommended not to use MD2 any more for any new application and to migrate existing applications to stronger hash functions as soon as possible.
+
+Recommendation: It is recommended to use stronger, more secure hash algorithms, such as SHA-256 or SHA-3. This should be applied during the initial setup of the algorithm instance. If the cryptographic algorithm is determined at runtime, an exception handler should be implemented that catches the "NoSuchAlgorithmException" when the specified algorithm doesn't exist in the environment.
+
+```java
+public static void go (String str) {
+    MessageDigest md;
+    try {
+        md = MessageDigest.getInstance("SHA-256");
+        md.update(str.getBytes());
+        System.out.println(md.digest());
+    } catch (NoSuchAlgorithmException e) {
+        e.printStackTrace();
+    }
+}
+```

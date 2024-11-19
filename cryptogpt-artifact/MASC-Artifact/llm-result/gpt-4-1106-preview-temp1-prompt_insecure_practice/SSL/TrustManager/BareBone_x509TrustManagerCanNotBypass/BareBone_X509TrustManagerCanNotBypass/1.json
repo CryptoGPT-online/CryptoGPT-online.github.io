@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "TrustManager that accepts any SSL certificate",
+    "vulnerable_code": "public void checkClientTrusted(X509Certificate[] chain, String authType) {...}\npublic void checkServerTrusted(X509Certificate[] chain, String authType) {...}",
+    "description": "The X509TrustManager implementation shown does not validate certificate chains which can allow any SSL certificate to be accepted (even if it's invalid or issued by an untrusted CA).",
+    "recommendation": "Implement proper certificate validation inside the checkClientTrusted and checkServerTrusted methods."
+  },
+  {
+    "misuse": "Returning an empty trust store",
+    "vulnerable_code": "public java.security.cert.X509Certificate[] getAcceptedIssuers() { return null; }",
+    "description": "Returning null or an empty array from getAcceptedIssuers indicates that the trust manager does not use any trusted CAs for deciding which certificate chains to accept. This may allow any certificate to be accepted, effectively disabling certificate checking.",
+    "recommendation": "Return a non-empty array of acceptable CA issuer certificates."
+  }
+]
+```

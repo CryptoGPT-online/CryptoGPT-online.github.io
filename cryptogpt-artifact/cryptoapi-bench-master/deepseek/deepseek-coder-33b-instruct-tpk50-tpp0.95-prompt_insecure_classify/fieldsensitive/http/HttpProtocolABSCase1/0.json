@@ -1,0 +1,38 @@
+The code is creating a new URL object from a string. This operation is unsafe because it does not handle exceptions. 
+
+In your case, if the passedURL is not a valid URL, an instance of MalformedURLException will be thrown. However, there is no catch block in your method1, which will make your program terminate abruptly instead of handling the exception.
+
+So, here is how you can modify your code to handle this exception:
+
+```java
+public class H1 {
+    C1 crypto;
+    public H1() {
+        String url = "http://gmail.com";
+        crypto = new C1(url);
+        crypto.method1("");
+    }
+}
+
+class C1 {
+    String defURL;
+
+    public C1(String url){
+        defURL = url;
+    }
+
+    public void method1(String passedURL) {
+        try {
+            if(passedURL.isEmpty()){
+                passedURL = defURL;
+            }
+            System.out.println(new URL(passedURL));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            // or handle the exception in some other way
+        }
+    }
+}
+```
+
+This is a "CWE-395: Improper Handling of Exceptional Conditions". Always remember to handle your exceptions to prevent your programs from terminating abruptly.

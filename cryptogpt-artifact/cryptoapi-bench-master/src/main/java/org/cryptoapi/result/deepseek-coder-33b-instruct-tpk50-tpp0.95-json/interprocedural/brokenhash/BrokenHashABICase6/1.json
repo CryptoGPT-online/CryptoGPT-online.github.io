@@ -1,0 +1,14 @@
+[
+  {
+    "misuse": "Insecure Cryptographic Storage",
+    "vulnerable_code": "crypto = CRYPTO;",
+    "description": "The crypto variable is storing a value that is provided at runtime, and it is set equal to the char array CRYPTO. This array CRYPTO is hardcoded, which allows anyone to view it at runtime. If CRYPTO were to contain sensitive information, it may be possible for an attacker to access it. This is a security risk because it may compromise the security of the system.",
+    "recommendation": "Instead of storing sensitive information in cryptographic variables, they should be retrieved securely from a secure storage or a secure vault system. Secrets should not be hardcoded in code."
+  },
+  {
+    "misuse": "Insecure Cryptographic Algorithm Use",
+    "vulnerable_code": "MessageDigest.getInstance(String.valueOf(crypto));",
+    "description": "The cryptographic algorithm for this program is dynamically determined, and its value is determined at runtime from the 'crypto' variable. Since the crypto variable holds the value 'MD5', the program uses the MD5 cryptographic algorithm. MD5 is a weak hash algorithm and should not be used for secure applications. It's also broken and does not provide collision resistance when used with the full message.",
+    "recommendation": "Use a secure cryptographic algorithm that provides necessary properties for secure hash functions, like SHA-256 or a modern hash function like Blake2b. Never use cryptographic algorithms that are no longer considered secure."
+  }
+]

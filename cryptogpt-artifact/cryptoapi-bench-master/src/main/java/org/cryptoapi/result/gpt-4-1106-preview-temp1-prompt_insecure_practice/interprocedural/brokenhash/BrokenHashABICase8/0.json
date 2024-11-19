@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "public static final String DEFAULT_CRYPTO = \"MD2\";",
+        "description": "MD2 is an outdated cryptographic hash function that is considered weak and unsuitable for further use. MD2 is not collision-resistant, which is a basic security feature expected from cryptographic hash functions.",
+        "recommendation": "Replace MD2 with a secure hash function like SHA-256 or SHA-3."
+    },
+    {
+        "misuse": "Insecure Encoding of Output",
+        "vulnerable_code": "System.out.println(md.digest());",
+        "description": "The code attempts to print the raw binary data of the cryptographic hash. This can lead to misinterpretation of the bytes as character encoding could change the output when printing.",
+        "recommendation": "Encode the hash output in a proper format such as hex or Base64 before printing or storing."
+    },
+    {
+        "misuse": "Use of Potentially Dangerous Function",
+        "vulnerable_code": "md.update(str.getBytes());",
+        "description": "The use of String.getBytes() without specifying an explicit character set can lead to unpredictability in the behavior of the cryptographic operation across different platforms. The crypto operation may produce different outputs if the platform default character encoding varies.",
+        "recommendation": "Always provide a Charset when calling getBytes, such as getBytes(StandardCharsets.UTF_8)."
+    }
+]
+```

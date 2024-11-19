@@ -1,0 +1,13 @@
+```json
+[{
+  "misuse": "Insecure Seed",
+  "vulnerable_code": "sr.setSeed(bytes);",
+  "description": "Setting a fixed seed based on previous output from the SecureRandom instance can predict future outputs.",
+  "recommendation": "Avoid setting a seed right after seed material is generated from the same SecureRandom instance. Let the SecureRandom instance self-seed from system entropy."
+}, {
+  "misuse": "Insufficient Entropy",
+  "vulnerable_code": "byte [] bytes = {(byte) 100, (byte) 200};\nif(choice>1)\n    sr.nextBytes(bytes);",
+  "description": "Although SecureRandom is used to generate random bytes, the entropy is limited by setting it manually to a known value which can make the SecureRandom predictable if the same seed is used again.",
+  "recommendation": "Do not manually set known values as seeds. Use the SecureRandom without manually setting a seed, or securely generate a seed that provides sufficient entropy."
+}]
+```

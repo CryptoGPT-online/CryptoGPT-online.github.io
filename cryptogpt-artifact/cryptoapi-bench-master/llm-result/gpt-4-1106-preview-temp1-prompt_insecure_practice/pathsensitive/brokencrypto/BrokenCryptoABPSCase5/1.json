@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Invalid Algorithm Parameter",
+        "vulnerable_code": "Cipher.getInstance(\"IDEA\")",
+        "description": "The program requests the IDEA cipher algorithm which is not initialized properly when 'choice' is not greater than 1. The IDEA cipher should not be used without specifying the mode and padding.",
+        "recommendation": "Specify the mode of operation and padding when initializing ciphers, such as 'IDEA/CBC/PKCS5Padding'. Additionally, find out if the IDEA algorithm is suitable for the purpose since it may be subject to patents and is less commonly used."
+    },
+    {
+        "misuse": "Hardcoded Encryption Key",
+        "vulnerable_code": "keyGen.generateKey()",
+        "description": "The SecretKey is generated without a secure random source and is not stored or used securely.",
+        "recommendation": "Use a secure random source for key generation and ensure that any generated keys are stored securely. For example, use SecureRandom for key generation and store the keys securely using a KeyStore."
+    },
+    {
+        "misuse": "Inadequate Exception Handling",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "The code lacks proper exception handling for potential errors during encryption initialization, such as InvalidKeyException.",
+        "recommendation": "Properly handle exceptions that might be thrown during the encryption process, including InvalidKeyException, and respond accordingly."
+    },
+    {
+        "misuse": "Missing Initialization Vector",
+        "vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "When using CBC mode for AES encryption, an Initialization Vector (IV) must be specified to ensure strong encryption. The code does not specify an IV, which could weaken the cryptographic strength.",
+        "recommendation": "Use a randomly generated IV for each encryption operation, pass it to the init method using IvParameterSpec, and transmit the IV with the encrypted data."
+    }
+]
+```

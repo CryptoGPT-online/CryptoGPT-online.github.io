@@ -1,0 +1,31 @@
+The provided code is using RSA for both encryption and decryption which is not secure. It also encrypts and decrypts the data using a SealedObject, which is usually not necessary for RSA. A simple String encryption and decryption using RSA can be done with the following lines of code:
+
+```java
+cipher.init(Cipher.ENCRYPT_MODE, kp.getPublic());
+byte[] encryptedMessage = cipher.doFinal(myMessage.getBytes());
+
+cipher.init(Cipher.DECRYPT_MODE, kp.getPrivate());
+byte[] decryptedMessage = cipher.doFinal(encryptedMessage);
+
+String message = new String(decryptedMessage);
+System.out.println(message);
+```
+
+In the original code, the SealedObject is being used to encrypt the message which is not needed. Also, RSA is a symmetric encryption algorithm, not asymmetric. Asymmetric encryption algorithms like RSA are used for exchanging keys, not for encrypting messages. AES is a better choice for symmetric encryption.
+
+```json
+[
+  {
+    "misuse": "Use of SealedObject with RSA",
+    "vulnerable_code": "SealedObject encryptedMessage = new SealedObject(myMessage,cipher);",
+    "description": "SealedObject is not needed for RSA encryption. It is used when the key is shared between multiple parties, which is not the case here.",
+    "recommendation": "Remove the usage of SealedObject and directly encrypt the message using RSA."
+  },
+  {
+    "misuse": "Use of RSA for symmetric encryption",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance("RSA");",
+    "description": "RSA is a asymmetric encryption algorithm, not a symmetric one. It is not used for encrypting confidential data.",
+    "recommendation": "Use a symmetric algorithm like AES for encrypting and decrypting the confidential data."
+  }
+]
+```

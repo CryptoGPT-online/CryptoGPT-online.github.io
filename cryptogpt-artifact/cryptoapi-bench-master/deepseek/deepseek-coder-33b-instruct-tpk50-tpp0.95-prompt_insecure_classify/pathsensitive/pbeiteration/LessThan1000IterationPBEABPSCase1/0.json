@@ -1,0 +1,18 @@
+Misuse: CWE-330: Use of Insufficiently Random Values
+
+Misuse Code Snippet:
+
+```java
+PBEParameterSpec pbeParamSpec = new PBEParameterSpec(salt, count);
+```
+
+Description: The iteration count used to derive the PBE key from the password is less than the default recommended value of 10,000. Using such a small iteration count increases the risk of brute force attacks.
+
+Recommendation: Increase the iteration count to a value of at least 10,000, or better yet, use the recommended default value.
+
+```java
+int count = 10000; // recommended default
+PBEParameterSpec pbeParamSpec = new PBEParameterSpec(salt, count);
+```
+
+Keep in mind that increasing the iteration count will also increase the time it takes to derive the PBE key from the password, which could be a concern depending on your use case.

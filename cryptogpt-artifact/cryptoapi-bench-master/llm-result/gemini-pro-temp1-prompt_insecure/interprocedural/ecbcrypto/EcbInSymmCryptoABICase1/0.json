@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "Insecure or Broken Cryptographic Algorithm",
+    "vulnerable_code": "`Cipher cipher = Cipher.getInstance(crypto);`",
+    "description": "The code uses Cipher.getInstance() to create a Cipher object without specifying a provider, which may result in using an insecure or broken cryptographic algorithm. It's recommended to specify a secure provider explicitly.",
+    "recommendation": "Specify a secure provider explicitly when creating the Cipher object, if not using the default JCE provider. For example, `Cipher cipher = Cipher.getInstance(crypto, \"SunJCE\");`"
+  },
+  {
+    "misuse": "Insecure or Broken Padding",
+    "vulnerable_code": "`cipher.init(Cipher.ENCRYPT_MODE, key);`",
+    "description": "The code uses the `PKCS5Padding` padding scheme, which is vulnerable to padding oracle attacks. It's recommended to use a more secure padding scheme like `OAEPPadding`.",
+    "recommendation": "Use a more secure padding scheme like `OAEPPadding` instead of `PKCS5Padding`. For example, `cipher.init(Cipher.ENCRYPT_MODE, key, OAEPPadding.getInstance(\"SHA-256\", MGF1Padding.getInstance(\"SHA-1\")));`"
+  }
+]
+```

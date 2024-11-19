@@ -1,0 +1,30 @@
+### False Positive Misuse
+```json
+[{
+  "misuse": "Broken Crypto Algorithm",
+  "vulnerable_code": "Cipher cipher = Cipher.getInstance(crypto);",
+  "description": "The code is using the crypto algorithm provided by user without checking the validity. An attacker can exploit it by providing a crypto algorithm that is considered weak or vulnerable. This can allow an attacker to decrypt the encrypted data.",
+  "recommendation": "Before instantiating the cipher, validate the crypto algorithm provided by user. The crypto algorithm should be chosen from the approved list only."
+}]
+```
+The above misuse is a false positive as the crypto algorithm is hardcoded to "Blowfish" and not provided by user input. Therefore, it cannot be manipulated by an attacker.
+
+### Optimized Misuse JSON
+```json
+[
+  {
+    "misuse": "Usage of hardcoded cryptographic keys",
+    "vulnerable_method": "method1",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(crypto); SecretKey key = keyGen.generateKey();",
+    "description": "In the provided code snippet, a cryptographic key is generated based on an input string which could potentially be manipulated by an attacker to use a different algorithm. This makes the encryption/decryption process vulnerable to attacks.",
+    "recommendation": "Consider using a key management solution that generates, stores and protects cryptographic keys. The use of KeyGenerator is generally not recommended due to potential security risks."
+  },
+  {
+    "misuse": "Usage of weak cryptographic algorithm",
+    "vulnerable_method": "method1",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(crypto);",
+    "description": "The cipher instance is created using a cryptographic algorithm based on the input string. The usage of 'Blowfish' as a cryptographic algorithm is generally considered weak. 'Blowfish' was designed as a Feistel network and is vulnerable to brute-force attacks and is no longer considered secure.",
+    "recommendation": "Consider using a stronger cryptographic algorithm such as 'AES'. AES (Advanced Encryption Standard) is currently the gold standard in encryption and is considered unbreakable."
+  }
+]
+```

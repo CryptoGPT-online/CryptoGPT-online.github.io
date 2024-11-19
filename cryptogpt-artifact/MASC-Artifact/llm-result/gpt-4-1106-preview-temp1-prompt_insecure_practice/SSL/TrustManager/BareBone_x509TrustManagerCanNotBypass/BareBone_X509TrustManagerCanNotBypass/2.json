@@ -1,0 +1,19 @@
+```json
+[
+    {
+        "misuse": "TrustManager that accepts any certificates",
+        "vulnerable_code": [
+            "public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {}",
+            "public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {}"
+        ],
+        "description": "The implementation of checkClientTrusted and checkServerTrusted is empty, which means that it doesn't perform any validation on the certificate chain, effectively accepting any certificate including those which are self-signed or invalid. This creates an opportunity for man-in-the-middle attacks.",
+        "recommendation": "Implement proper certificate validation logic within checkClientTrusted and checkServerTrusted methods or use the default TrustManager provided by the JVM."
+    },
+    {
+        "misuse": "Incorrect implementation of getAcceptedIssuers",
+        "vulnerable_code": "public java.security.cert.X509Certificate[] getAcceptedIssuers() { return null; }",
+        "description": "Returning null from getAcceptedIssuers can cause issues with some SSL/TLS implementations as this method is supposed to return a list of acceptable CA issuer certificates. When null is returned, it might be interpreted as 'trust all' or could cause a NullPointerException.",
+        "recommendation": "Return an empty array instead of null, or provide a valid array of accepted issuers."
+    }
+]
+```

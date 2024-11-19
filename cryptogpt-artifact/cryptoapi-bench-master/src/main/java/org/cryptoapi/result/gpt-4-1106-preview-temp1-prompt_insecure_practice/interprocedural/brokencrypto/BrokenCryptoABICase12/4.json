@@ -1,0 +1,34 @@
+```json
+[
+    {
+        "misuse": "Hardcoded Crypto Algorithm",
+        "vulnerable_code": "\"Blowfish\"",
+        "description": "The use of a hardcoded cryptographic algorithm such as 'Blowfish' limits the flexibility to change algorithms and may use an algorithm that is not considered secure.",
+        "recommendation": "Use a configurable mechanism to specify the cryptographic algorithm, and choose a secure algorithm that is widely recommended."
+    },
+    {
+        "misuse": "Weak Crypto Algorithm",
+        "vulnerable_code": "\"Blowfish\"",
+        "description": "Blowfish is an older symmetric encryption algorithm that may not be secure against modern threats due to its small block size (64 bits).",
+        "recommendation": "Replace Blowfish with a stronger algorithm such as AES with a block size of 128 bits."
+    },
+    {
+        "misuse": "Missing Algorithm Mode and Padding Scheme",
+        "vulnerable_code": "Cipher.getInstance(crypto)",
+        "description": "Not specifying the algorithm mode and padding can lead to the use of defaults that might not be secure, like ECB mode, which has well-known weaknesses, or padding schemes that may be vulnerable to padding oracle attacks.",
+        "recommendation": "Explictly specify a secure mode of operation (e.g., CBC, GCM) and a secure padding scheme (e.g., PKCS5Padding or NoPadding for AES) when obtaining a Cipher instance."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "KeyGenerator.getInstance(crypto)",
+        "description": "It is not specified what key size is being used for the KeyGenerator instance. Some algorithms default to key sizes that may not be secure.",
+        "recommendation": "Specify a key size that is considered secure for the chosen algorithm. For AES, a minimum of 128 bits is recommended."
+    },
+    {
+        "misuse": "No SecureRandom for Key Generation",
+        "vulnerable_code": "keyGen.generateKey()",
+        "description": "By not specifying an instance of SecureRandom when generating the key, the default implementation is used, which might not provide sufficient randomness on all platforms.",
+        "recommendation": "Pass a SecureRandom instance to the KeyGenerator to ensure a securely random key."
+    }
+]
+```

@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "defKey = key;",
+        "description": "The key used for the KeyStore is hard-coded and not randomly generated, which can lead to a less secure system.",
+        "recommendation": "Use a secure random number generator to generate the key. A SecureRandom instance can be used for this purpose."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": "String type = "JKS";",
+        "description": "The KeyStore instance is created using JKS, a weak format. JKS uses a proprietary format that is limited in terms of cryptographic strength and cannot accommodate advanced management features.",
+        "recommendation": "Use a stronger format for the KeyStore. Some popular options include PKCS12 and BKS, which support more advanced features and stronger encryption algorithms."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "String key = "changeit";",
+        "description": "The key used for the KeyStore is hard-coded in the code. This can be a serious security risk as it makes it easy for an attacker to discover the key if the code is compromised.",
+        "recommendation": "Do not hard-code credentials in the code. Instead, use a secure configuration management system to store and retrieve the key."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "ks.load(cacerts.openStream(), passedKey.toCharArray());",
+        "description": "The code is loading a KeyStore from a URL. The URL is specified as a string, so there is no validation performed to ensure the URL is valid or secure. This could allow an attacker to load a malicious KeyStore.",
+        "recommendation": "Implement proper URL validation to ensure the URL is secure. Avoid loading KeyStores from URLs that can be controlled by an attacker."
+    }
+]
+```

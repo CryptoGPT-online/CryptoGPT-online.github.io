@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure PBE Key Specification",
+        "vulnerable_code": "pbeKeySpec = new PBEKeySpec(password.toCharArray(),salt,iterationCount,keyLength);",
+        "description": "The PBEKeySpec is not being used securely because it appears to instantiate a PBE key of length 16 bits, which is inadequate for strong security. Keys should be at least 128 bits long to provide a minimal level of security.",
+        "recommendation": "Increase the key length to at least 128 bits (16 bytes). Moreover, ensure that the key specification is used with a secure PBE algorithm."
+    },
+    {
+        "misuse": "Potentially Weak PBE Algorithm",
+        "vulnerable_code": "pbeKeySpec = new PBEKeySpec(password.toCharArray(),salt,iterationCount,keyLength);",
+        "description": "The actual PBE algorithm isn't specified in the given code, but the PBEKeySpec is usually used with PBEWith<digest>And<encryption> type of algorithms. Some of these algorithms can be inherently weak depending on the digest and encryption algorithm being used. It's important to use strong encryption algorithms like AES and secure hashing algorithms like SHA-256.",
+        "recommendation": "Ensure that PBEKeySpec is used with a secure algorithm. It is best to explicitly specify a strong cipher algorithm when creating PBE keys, such as PBE with SHA256 and AES encryption."
+    },
+    {
+        "misuse": "Hardcoded Salt",
+        "vulnerable_code": "byte [] salt = new byte[16];\nSecureRandom sr = new SecureRandom();\nsr.nextBytes(salt);",
+        "description": "While the salt is generated securely using SecureRandom, if this same code pattern is used every time it runs, it could lead to using the same salt for different users or sessions. This is a probable misuse because the salt should be unique for each user or password instance to prevent rainbow table attacks.",
+        "recommendation": "Ensure that the salt is stored and associated with the user's password securely such that the same salt is used each time the user's password is checked, but make sure that every user or password instance has a unique salt."
+    }
+]
+```

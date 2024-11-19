@@ -1,0 +1,37 @@
+```json
+[
+    {
+        "misuse": "Insecure Default Encryption Key",
+        "vulnerable_code": [
+            "public static final String DEFAULT_ENCRYPT_KEY = \"changeit\";"
+        ],
+        "description": "The encryption key is set to a known default value which could be easily guessed by an attacker.",
+        "recommendation": "Use a strong, randomly generated key and store it in a secure manner."
+    },
+    {
+        "misuse": "Static Encryption Key",
+        "vulnerable_code": [
+            "private static char[] ENCRYPT_KEY;",
+            "ENCRYPT_KEY = DEFAULT_ENCRYPT_KEY.toCharArray();"
+        ],
+        "description": "Using a static encryption key that doesn't change makes the application susceptible to attacks if the key is discovered.",
+        "recommendation": "Dynamically generate encryption keys and rotate them regularly."
+    },
+    {
+        "misuse": "Improper Certificate Validation",
+        "vulnerable_code": [
+            "\"https://www.google.com\""
+        ],
+        "description": "The code blindly trusts the certificate presented by the URL without any validation, potentially leaving it vulnerable to man-in-the-middle attacks if the HTTPS connection is intercepted with a fraudulent certificate.",
+        "recommendation": "Implement proper certificate validation to ensure that connections are made to the intended server."
+    },
+    {
+        "misuse": "Sensitive Data Exposure",
+        "vulnerable_code": [
+            "ks.load(cacerts.openStream(), encryptKey);"
+        ],
+        "description": "Exposing a keystore password in code risks the security of the keystore contents if the code is compromised.",
+        "recommendation": "Encrypt keystore passwords and/or load them securely from protected external sources that do not expose them in code or logs."
+    }
+]
+```

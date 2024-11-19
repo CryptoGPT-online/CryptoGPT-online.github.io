@@ -1,0 +1,24 @@
+### False Positive Misuse ###
+None
+
+### Optimized Misuse JSON###
+[
+  {
+    "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+    "vulnerable_code": "SSLSocketFactory.getDefault()",
+    "description": "The code is using the getDefault() method of SSLSocketFactory, which may result in the selection of a less secure algorithm during the SSL/TLS negotiation process.",
+    "recommendation": "Use a custom SSLSocketFactory that explicitly sets the desired SSL/TLS protocols and cipher suites."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_code": "SSLSocketFactory ssf = (SSLSocketFactory) SSLSocketFactory.getDefault();\nSSLSocket socket = (SSLSocket) ssf.createSocket(hostname, soc);",
+    "description": "The code is using the default SSL socket factory, which may not provide sufficient encryption strength.",
+    "recommendation": "Use a custom SSL socket factory to specify the desired encryption algorithm and key strength."
+  },
+  {
+    "misuse": "CWE-295: Improper Certificate Validation",
+    "vulnerable_code": "SSLSocket socket = (SSLSocket) ssf.createSocket(hostname,soc);",
+    "description": "The code is creating an SSL socket without performing any certificate validation.",
+    "recommendation": "Implement proper certificate validation by specifying a TrustManager that performs certificate checking and validation."
+  }
+]

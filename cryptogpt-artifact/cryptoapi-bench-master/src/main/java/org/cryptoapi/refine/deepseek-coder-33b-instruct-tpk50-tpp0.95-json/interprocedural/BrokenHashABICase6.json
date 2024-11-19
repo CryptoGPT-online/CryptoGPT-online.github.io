@@ -1,0 +1,33 @@
+### False Positive Misuse ###
+There are some misuses that are false positives:
+
+1. The misuse "Insecure Cryptographic Storage" is false positive as crypto variable is not storing any sensitive information and it's not being used for storing/retrieving sensitive information. The crypto variable is initialized with a static value 'MD5'.
+
+2. The misuse "Insecure Cryptographic Algorithm Use" is also false positive as the cryptographic algorithm (MD5) is not insecure per se, as long as it's used correctly (i.e., not for secure purposes). MD5 is considered to be broken and not suitable for further use, but not insecure for general purposes.
+
+### Optimized Misuse JSON###
+```json
+[
+    {
+        "misuse category": "Incorrect Use of Cryptographic API",
+        "vulnerable_method": "MessageDigest md = MessageDigest.getInstance(String.valueOf(crypto));",
+        "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(String.valueOf(crypto));",
+        "description": "The 'crypto' variable is an array of characters and it is not guaranteed to hold the name of any recognized cryptographic algorithm by MessageDigest.getInstance(). In the current code, it holds the characters of the string 'DEFAULT_CRYPTO', which is 'MD5'. However, if 'DEFAULT_CRYPTO' is changed to a string that does not represent a recognized cryptographic algorithm, the code will throw a NoSuchAlgorithmException at runtime.",
+        "recommendation": "To avoid this misuse, it is recommended to avoid relying on string constants representing cryptographic algorithms. Instead, use the MessageDigest constants that represent the supported algorithms, such as MessageDigest.getInstance(\"MD5\")."
+    },
+    {
+        "misuse category": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_method": "MessageDigest md = MessageDigest.getInstance(String.valueOf(crypto));",
+        "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(String.valueOf(crypto));",
+        "description": "The code uses a default cryptographic algorithm (MD5) that is considered insecure. Using a cryptographic algorithm that is no longer considered secure can expose applications to a wide range of vulnerabilities, including attacks that could allow a potential attacker to decrypt and manipulate data or gain unauthorized access.",
+        "recommendation": "It's recommended to use more secure hash functions such as SHA-256 or SHA-3. To implement it, replace 'MD5' with 'SHA-256' or 'SHA-3'. However, you need to make sure the hashing algorithm chosen suits your specific use case."
+    },
+    {
+        "misuse category": "Null Pointer Exception",
+        "vulnerable_method": "MessageDigest md = MessageDigest.getInstance(String.valueOf(crypto));",
+        "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(String.valueOf(crypto));",
+        "description": "The crypto variable is not initialized before it is used. This can lead to a NullPointerException at runtime.",
+        "recommendation": "Initialize the crypto variable before using it. This can be done by calling the go2() and go3() methods in the main method."
+    }
+]
+```

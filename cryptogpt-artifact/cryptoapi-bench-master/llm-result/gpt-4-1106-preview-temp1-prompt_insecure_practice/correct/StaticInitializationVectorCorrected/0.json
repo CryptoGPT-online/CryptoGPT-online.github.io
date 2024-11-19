@@ -1,0 +1,24 @@
+```json
+[
+    {
+        "misuse": "Insecure IV Generation",
+        "vulnerable_code": [
+            "BigInteger i = BigInteger.valueOf(sr.nextInt());",
+            "byte [] bytes = i.toByteArray();",
+            "IvParameterSpec ivSpec = new IvParameterSpec(bytes);"
+        ],
+        "description": "The generation of the initialization vector (IV) uses a single random integer conversion which may not provide an adequately sized IV for AES (128-bit IV is required). This approach could lead to insufficient entropy in the IV and weaken the cryptographic strength.",
+        "recommendation": "Replace the existing IV generation code with 'sr.nextBytes(bytes);' where 'bytes' is a properly sized byte array for AES (i.e., 16 bytes)."
+    },
+    {
+        "misuse": "Static IV",
+        "vulnerable_code": [
+            "byte [] bytes = new byte[16];",
+            "sr.nextBytes(bytes);",
+            "IvParameterSpec ivSpec = new IvParameterSpec(bytes);"
+        ],
+        "description": "The initialization vector (IV) should be unique for each encryption operation to ensure security. Using a static IV in multiple encryption processes can lead to pattern leakage and is not secure.",
+        "recommendation": "Ensure that a new, securely-generated random IV is used for each encryption operation."
+    }
+]
+```

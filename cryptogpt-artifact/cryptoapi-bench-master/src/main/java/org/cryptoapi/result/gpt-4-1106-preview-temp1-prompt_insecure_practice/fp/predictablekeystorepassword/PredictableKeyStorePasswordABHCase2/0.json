@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Hardcoded KeyStore Password",
+        "vulnerable_code": "hm.put(\"aaa\", \"afix\");\nks.load(cacerts.openStream(), key.toCharArray());",
+        "description": "The password for the KeyStore is hardcoded and retrieved from a map, making it predictable and easily discoverable within the source code.",
+        "recommendation": "Use a secure way to manage passwords, such as a password manager or environment variables, and avoid hardcoding sensitive information."
+    },
+    {
+        "misuse": "Insecure Protocol",
+        "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");",
+        "description": "While the URL uses HTTPS, the trust manager and hostname verifier are not explicitly set, relying on the default ones. This could potentially be insecure if custom trust management or verification is needed.",
+        "recommendation": "Explicitly set a trust manager and hostname verifier that adequately validate SSL/TLS certificates if the application's context requires it."
+    },
+    {
+        "misuse": "KeyStore Type",
+        "vulnerable_code": "String type = \"JKS\";",
+        "description": "JKS is Java's standard keystore type, but it does not provide cryptographic strength as strong as PKCS12, which is now considered the standard.",
+        "recommendation": "Use 'PKCS12' as the keystore type for improved security."
+    },
+    {
+        "misuse": "Resource Management",
+        "vulnerable_code": "ks.load(cacerts.openStream(), key.toCharArray());",
+        "description": "The stream opened to the KeyStore file is not properly managed and may result in resource leaks if not closed.",
+        "recommendation": "Use a try-with-resources statement to ensure that the stream is closed properly after use."
+    }
+]
+```

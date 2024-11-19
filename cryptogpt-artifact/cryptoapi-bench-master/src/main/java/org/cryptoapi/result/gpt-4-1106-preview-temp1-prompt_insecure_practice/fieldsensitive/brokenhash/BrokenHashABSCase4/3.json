@@ -1,0 +1,39 @@
+```json
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": [
+            "crypto = new C4(\"MD2\");"
+        ],
+        "description": "MD2 is considered to be a broken hash function and should not be used for any cryptographic purposes.",
+        "recommendation": "Use a secure hashing algorithm such as SHA-256 or SHA-3."
+    },
+    {
+        "misuse": "Inadequate Encryption",
+        "vulnerable_code": [
+            "public void encrypt(String str, String passedAlgo)",
+            "MessageDigest.getInstance(crypto);",
+            "md.update(str.getBytes());",
+            "System.out.println(md.digest());"
+        ],
+        "description": "The method named 'encrypt' is misleading as it only generates a hash value but does not perform any encryption. Hashing is not encryption, as it does not allow for the original data to be obtained even if the hash is known.",
+        "recommendation": "Implement actual encryption by using a Cipher class with a secure algorithm such as AES, and ensure proper key management."
+    },
+    {
+        "misuse": "Use of default character encoding",
+        "vulnerable_code": [
+            "md.update(str.getBytes());"
+        ],
+        "description": "Using the no-argument String.getBytes method depends on the platform's default charset, which can lead to unpredictable results when the code is run in different environments.",
+        "recommendation": "Specify a character set encoding like UTF-8 when calling getBytes. For example, use str.getBytes(StandardCharsets.UTF_8);"
+    },
+    {
+        "misuse": "Lack of Output Confidentiality",
+        "vulnerable_code": [
+            "System.out.println(md.digest());"
+        ],
+        "description": "Printing sensitive hash output to the console can leak potentially sensitive information.",
+        "recommendation": "Avoid outputting sensitive cryptographic material to logging or standard outputs. Only use secure mechanisms to handle such data."
+    }
+]
+```

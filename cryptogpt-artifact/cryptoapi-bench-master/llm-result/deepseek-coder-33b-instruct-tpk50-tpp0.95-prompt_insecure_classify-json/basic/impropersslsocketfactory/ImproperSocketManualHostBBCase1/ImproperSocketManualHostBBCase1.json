@@ -1,0 +1,32 @@
+### False Positive Misuse
+
+```json
+[{
+    "misuse category": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_method": "SSLSocketFactory.getDefault()",
+    "vulnerable_code": "SSLSocketFactory ssf = (SSLSocketFactory) SSLSocketFactory.getDefault();",
+    "description": "This is a false positive. The reported misuse is not applicable to the provided code. SSLSocketFactory.getDefault() retrieves the default SSLSocketFactory. The misuse applies to the SSLSocket object created from this factory.",
+    "recommendation": "N/A"
+}]
+```
+
+### Optimized Misuse JSON
+
+```json
+[
+    {
+        "misuse category": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_method": "SSLSocketFactory.getDefault()",
+        "vulnerable_code": "SSLSocketFactory ssf = (SSLSocketFactory) SSLSocketFactory.getDefault();",
+        "description": "The default SSLSocketFactory that is used in your code might not support the latest and most secure cryptographic algorithms that have been evaluated by the community. The old and insecure algorithms could expose the system to attacks.",
+        "recommendation": "Use a custom SSLSocketFactory that is explicitly configured with the latest and most secure cryptographic algorithms."
+    },
+    {
+        "misuse category": "CWE-295: Improper Certificate Validation",
+        "vulnerable_method": "SSLSocketFactory.createSocket()",
+        "vulnerable_code": "SSLSocket socket = (SSLSocket) ssf.createSocket(\"my.host.name\", 443);",
+        "description": "The code doesn't verify the server certificate and accepts any server with a trusted certificate.",
+        "recommendation": "Always perform certificate validation. You can use hostname verification by implementing a custom HostnameVerifier or accept all certificates by installing a trust manager."
+    }
+]
+```

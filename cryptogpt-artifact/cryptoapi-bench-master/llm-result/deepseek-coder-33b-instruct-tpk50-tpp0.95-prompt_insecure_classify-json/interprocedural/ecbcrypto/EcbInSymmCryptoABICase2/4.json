@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(String.valueOf(crypto));",
+        "description": "The code uses ECB mode for encryption which is not secure for most use-cases. ECB is susceptible to patterns in the data, and is easily broken if the key is leaked. In this specific code, it is being used without any encryption transformation.",
+        "recommendation": "Consider using a more secure mode like CBC (Cipher Block Chaining) or GCM (Galois/Counter Mode)."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values.",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "description": "The code uses a fixed key generator for AES, which is not secure because it uses a fixed seed to generate the keys. This makes it possible for an attacker to guess the keys and decrypt the data.",
+        "recommendation": "Consider using a method to generate the keys that provides sufficient randomness, such as the SecureRandom class."
+    }
+]
+```

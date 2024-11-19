@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insecure key derivation",
+        "vulnerable_code": "byte [] keyBytes = key.getBytes();\nkeyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "Directly deriving a key from a string without using a secure key derivation function can lead to weak keys that are vulnerable to attacks.",
+        "recommendation": "Use a key derivation function (like PBKDF2, bcrypt, or scrypt) to safely convert a password into a key."
+    },
+    {
+        "misuse": "Hardcoded key",
+        "vulnerable_code": "String key = hm.get(\"aaa\");",
+        "description": "Hardcoding keys within the source code is insecure as it makes the encryption predictable and easier to breach.",
+        "recommendation": "Keys should be externally managed, securely stored, and rotated regularly."
+    },
+    {
+        "misuse": "Improper Key Size",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The fixed key size may not match the requirements for safe encryption and does not support key sizes larger than the AES-128 bit. Using stronger encryption like AES-256 may be necessary depending on the context.",
+        "recommendation": "Ensure that the key size is chosen based on the necessary level of encryption security. If AES-256 is required, make sure it is supported by the key management scheme."
+    },
+    {
+        "misuse": "Using default charset",
+        "vulnerable_code": "byte [] keyBytes = key.getBytes();",
+        "description": "Using the default charset when converting the string to bytes can lead to different outputs on different platforms and may result in errors when transferring data across different systems.",
+        "recommendation": "Always specify a charset when converting strings to bytes, for example: key.getBytes(\"UTF-8\");"
+    }
+]
+```

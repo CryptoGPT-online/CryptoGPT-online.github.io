@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_code": "String password = String.valueOf(random.ints());",
+    "description": "The password used to protect the keystore is generated using `SecureRandom.ints()`, which generates a sequence of pseudorandom ints. This method is not suitable for generating cryptographically strong passwords, as it does not generate a cryptographically secure random sequence.",
+    "recommendation": "Use a cryptographically secure random number generator to generate the password, such as `SecureRandom.generateSeed(int numBytes)`. Additionally, consider using a strong password policy to enforce the use of passwords that are difficult to guess."
+  },
+  {
+    "misuse": "CWE-760: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_code": "KeyStore ks = KeyStore.getInstance(type);",
+    "description": "The code uses `KeyStore.getInstance(String type)` to create a keystore instance with the specified type. The `type` variable is set to `JKS`, which is a legacy keystore format that is known to be vulnerable to various attacks.",
+    "recommendation": "Use a more secure keystore type, such as `PKCS12` or `JCEKS`. Additionally, consider using a hardware security module (HSM) to store the keys."
+  }
+]
+```

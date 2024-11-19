@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Weak Random Number Generation",
+        "vulnerable_code": "String password = String.valueOf(random.ints());",
+        "description": "Using SecureRandom to generate a password is insecure because it produces a predictable value that can be easily brute-forced. This instance also lacks length specification and a proper encoding which could lead to a very weak password.",
+        "recommendation": "Use a strong, cryptographic random number generator with sufficient length and complexity for password generation."
+    },
+    {
+        "misuse": "Insecure KeyStore Password Handling",
+        "vulnerable_code": "ks.load(cacerts.openStream(), password.toCharArray());",
+        "description": "The generated password for the KeyStore is both insecure (due to previous misuse) and transmitted over a connection without protection against potential interception or eavesdropping.",
+        "recommendation": "Use a secure method to transmit the KeyStore password and ensure the KeyStore password is strong and securely stored."
+    },
+    {
+        "misuse": "Insecure Trust Management",
+        "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");",
+        "description": "Loading certificates from an arbitrary URL (especially if not relating to a known certificate authority) could lead to trusting certificates that are not secure or allowing an attacker to intercept and provide their own malicious certificates",
+        "recommendation": "Only load certificates from trusted, secure sources and ensure proper validation of certificates."
+    },
+    {
+        "misuse": "Improper Certificate Validation",
+        "vulnerable_code": "ks.load(cacerts.openStream(), password.toCharArray());",
+        "description": "This code does not appear to validate the certificate received from the URL, which could expose it to man-in-the-middle attacks.",
+        "recommendation": "Implement proper certificate validation to ensure trusted communication with the URL source."
+    }
+]
+```

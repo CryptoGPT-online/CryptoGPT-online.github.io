@@ -1,0 +1,16 @@
+The code is attempting to use a cryptographic algorithm based on a string input `crypto`. The string `crypto` is being passed to `MessageDigest.getInstance()` which is intended to return an instance of the specified cryptographic algorithm. The problem with the current code is that the `crypto` string is assigned from a static char array `CRYPTO`, which is then filled with the characters from a default string `DEFAULT_CRYPTO`. This will always be "MD5" as it is declared as such. The `go2()` method does the assignment and the `go3()` method is just copying the reference of the static array.
+
+This code is at risk of using a weak cryptographic algorithm, which is "MD5" in this case. The MD5 algorithm is considered broken and not secure for most purposes due to its collision vulnerability. It's possible for an attacker to generate an existing MD5 hash.
+
+Also, the code is at risk of a hard-coded cryptographic algorithm which could allow an attacker to use the same algorithm, which could reduce the security of the algorithm.
+
+Here's the JSON response to the misuse:
+
+```json
+[{
+"misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+"vulnerable_code": "MessageDigest md = MessageDigest.getInstance(String.valueOf(crypto));",
+"description": "The code is using the MD5 algorithm which is considered broken and not secure for most purposes due to its collision vulnerability.",
+"recommendation": "Don't use hard-coded cryptographic algorithm. Make it configurable, and use strong and up-to-date cryptographic algorithms."
+}]
+```

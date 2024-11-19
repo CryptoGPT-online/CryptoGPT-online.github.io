@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "ECB Mode Use",
+        "vulnerable_code": "String cryptoAlgo = \"AES/ECB/PKCS5Padding\";",
+        "description": "ECB (Electronic Codebook) mode is an insecure block cipher mode of operation, as it does not provide serious message confidentiality. It can expose patterns in data, and is not recommended for use in cryptographic protocols.",
+        "recommendation": "Use a more secure mode of operation like CBC, CFB, OFB, or GCM with a unique initialization vector (IV) for each encryption."
+    },
+    {
+        "misuse": "Static Initialization Vector (IV)",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "In the ECB mode and some other modes, an IV is not used, and if used repetitively with the same key, it could lead to vulnerabilities. For modes that use an IV, the IV should be unique and unpredictable for each encryption.",
+        "recommendation": "When using modes other than ECB, generate a new, random IV for each encryption and provide it explicitly when initializing the Cipher instance. Store the IV along with the ciphertext and ensure it is available for decryption."
+    },
+    {
+        "misuse": "Insecure Key Generation",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+        "description": "The KeyGenerator instance does not specify a key size. Therefore, it might use a default key size that could be less secure, such as a 128-bit key.",
+        "recommendation": "Explicitly define a key size when generating a key to ensure a proper security level, such as 256 bits for AES."
+    }
+]
+```

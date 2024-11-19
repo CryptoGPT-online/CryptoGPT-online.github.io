@@ -1,0 +1,14 @@
+[
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values.",
+    "vulnerable_code": "String str = String.valueOf(random.ints());\nbyte[] seed = str.getBytes();",
+    "description": "The code is generating a random seed by converting a stream of random integers to a string and then converting the string to a byte array. This approach is not secure as it does not provide sufficient randomness.",
+    "recommendation": "Use the SecureRandom.nextBytes() method to generate a random seed directly as a byte array."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength.",
+    "vulnerable_code": "SecureRandom sr = new SecureRandom(new byte[]{b});\nint v = sr.nextInt();",
+    "description": "The code is using a single byte from the HashMap as the seed for a new SecureRandom instance. A single byte seed is not sufficient and may lead to weak encryption.",
+    "recommendation": "Generate a random seed of sufficient length (e.g. 16 bytes) using SecureRandom.nextBytes() method."
+  }
+]

@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "String password = String.valueOf(random.ints());",
+        "description": "The use of SecureRandom with ints() method generates a stream of random numbers, which is being improperly converted to a String, reducing its randomness and potentially making the generated password weak.",
+        "recommendation": "Use a more secure method to generate a password, such as SecureRandom's nextBytes method, and ensure that the length and character set of the password are sufficient for security requirements."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "ks.load(cacerts.openStream(), password.toCharArray());",
+        "description": "The password generated for the KeyStore is derived from a random number and not stored or managed securely, which can be considered as using hardcoded credentials because it is not retrievable and not handled like typical user-managed passwords.",
+        "recommendation": "Passwords should not be generated on the fly. Instead, use a secure method of password management, such as prompting the user, using environment variables, or securely retrieving them from a configuration file or secret management system."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");\nks.load(cacerts.openStream(), password.toCharArray());",
+        "description": "The code is loading certificates from a URL without any validation of the server's SSL certificate, which could make it vulnerable to man-in-the-middle attacks.",
+        "recommendation": "Properly validate the server's SSL certificate using a trust manager that checks the certificate chain and hostname. You may also need to configure a custom SSL context if the default is not secure enough."
+    }
+]
+```

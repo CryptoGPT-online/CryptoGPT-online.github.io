@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Cipher Transformation",
+        "vulnerable_code": "Cipher.getInstance(\"AES\".replace(\"A\", \"D\"));",
+        "description": "The cipher transformation in this code is intended to be AES but it's modified by a replace operation which changes it to 'DES', which is an outdated and insecure algorithm.",
+        "recommendation": "Use 'AES/CBC/PKCS5Padding' or 'AES/GCM/NoPadding' as the transformation string for a secure AES operation."
+    },
+    {
+        "misuse": "Hardcoded Key",
+        "vulnerable_code": "Cipher.getInstance(\"AES\".replace(\"A\", \"D\"));",
+        "description": "The code snippet lacks the specification of a key, implying that somewhere in the system there could be a hardcoded key in use, leading to security risks.",
+        "recommendation": "Do not hardcode keys in the source code. Instead, use a secure way to manage keys like a hardware security module (HSM), Trusted Platform Module (TPM), or a key management service."
+    },
+    {
+        "misuse": "Missing Mode and Padding",
+        "vulnerable_code": "Cipher.getInstance(\"AES\".replace(\"A\", \"D\"));",
+        "description": "Cipher transformations should always specify the Encryption mode and Padding scheme. Without these specified, the Java crypto API uses the default ECB (Electronic Codebook) mode and PKCS5Padding which may not be secure.",
+        "recommendation": "Always specify the encryption mode and padding scheme. For example, 'AES/CBC/PKCS5Padding' or 'AES/GCM/NoPadding'."
+    }
+]
+```

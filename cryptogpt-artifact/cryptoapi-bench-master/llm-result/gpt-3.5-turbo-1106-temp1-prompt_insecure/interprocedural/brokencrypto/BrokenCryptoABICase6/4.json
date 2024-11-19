@@ -1,0 +1,21 @@
+{
+  "misuse": "Insecure Randomness",
+  "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(String.valueOf(crypto));",
+  "description": "Using String.valueOf(crypto) as the algorithm for KeyGenerator.getInstance() is not a secure way to generate a key. It's recommended to use a strong, secure random number generator to generate the key.",
+  "recommendation": "Use a secure random number generator such as SecureRandom to generate the key."
+},
+{
+  "misuse": "Insecure Key Generation",
+  "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(String.valueOf(crypto));\n SecretKey key = keyGen.generateKey();",
+  "description": "The KeyGenerator is not being initialized with a specified key size or with a secure random number generator. This can lead to weak keys being generated.",
+  "recommendation": "Initialize the KeyGenerator with a specific key size and use a secure random number generator to generate the key."
+},
+{
+  "misuse": "Hardcoded Crypto Key",
+  "vulnerable_code": "private static char[] CRYPTO;",
+  "\nprivate static char[] crypto;",
+  "\nprivate static void go2(){CRYPTO = DEFAULT_CRYPTO.toCharArray();}",
+  "\nprivate static void go3(){crypto = CRYPTO;}",
+  "description": "The crypto key is being hardcoded which can lead to security vulnerabilities. Hardcoded keys can be easily extracted from the code and can compromise the security of the encryption.",
+  "recommendation": "Use a secure, random key generation mechanism or a key management system to store and retrieve the crypto key."
+}

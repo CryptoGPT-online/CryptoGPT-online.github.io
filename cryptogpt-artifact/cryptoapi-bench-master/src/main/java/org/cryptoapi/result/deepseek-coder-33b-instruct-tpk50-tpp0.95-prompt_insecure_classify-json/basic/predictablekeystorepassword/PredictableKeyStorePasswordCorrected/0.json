@@ -1,0 +1,20 @@
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values.",
+        "vulnerable_code": "String password = String.valueOf(random.ints());",
+        "description": "The password used for the KeyStore is generated using a SecureRandom, which is a good practice. However, it is using ints(), which will generate a random int. This is insufficiently random for use as a password. Instead of using random ints, one should use a secure random generator to generate a sufficiently long password.",
+        "recommendation": "Use a proper password generating function that generates a long, complex, and random password."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation.",
+        "vulnerable_code": "URL cacerts = new URL(\"https://www.google.com\");",
+        "description": "This is likely to lead to a NoSuchAlgorithmException since www.google.com is not an actual URL. The URL used here is just for the sample, which is a URL pointing to a Google search page. Using a secure URL for loading KeyStore is necessary.",
+        "recommendation": "Replace the URL with a secure one pointing to a KeyStore file."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials.",
+        "vulnerable_code": "ks.load(cacerts.openStream(), password.toCharArray());",
+        "description": "The KeyStore is loaded with a password which is hardcoded in the source code. This is a major security flaw because the password can be found and misused by anyone who has access to the source code.",
+        "recommendation": "Do not hardcode passwords in source code, instead, store them securely, such as in a configuration file or environment variable."
+    }
+]

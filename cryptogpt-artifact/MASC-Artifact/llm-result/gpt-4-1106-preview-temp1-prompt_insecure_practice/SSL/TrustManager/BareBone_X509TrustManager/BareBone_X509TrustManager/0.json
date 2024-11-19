@@ -1,0 +1,21 @@
+```json
+[
+    {
+        "misuse": "Trust Manager that doesn't check anything",
+        "vulnerable_code": [
+            "public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException { }",
+            "public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException { }"
+        ],
+        "description": "The implemented methods checkServerTrusted and checkClientTrusted are empty, meaning they don't perform any certificate validation. This can allow malicious parties to perform man-in-the-middle attacks.",
+        "recommendation": "Implement proper certificate validation in these methods."
+    },
+    {
+        "misuse": "X509TrustManager.getAcceptedIssuers returns null",
+        "vulnerable_code": [
+            "public X509Certificate[] getAcceptedIssuers() { return null; }"
+        ],
+        "description": "Returning null from getAcceptedIssuers means that no trusted certificate authorities are being used. This can compromise the secure TLS connection by accepting any certificate.",
+        "recommendation": "Return a list of trusted CAs."
+    }
+]
+```

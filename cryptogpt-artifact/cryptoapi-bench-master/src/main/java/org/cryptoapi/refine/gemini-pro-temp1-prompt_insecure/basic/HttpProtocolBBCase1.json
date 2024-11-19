@@ -1,0 +1,36 @@
+### False Positive Misuse ###
+
+1. **Misuse**: CWE-256: Plaintext Data Exposure in a URL
+**Vulnerable Code**: `System.out.println(new URL(url));`
+**Description**: This misuse is reported because the URL class in Java can be used to create a URL object from a string. However, it does not provide any protection against plaintext data exposure. This means that any sensitive data, such as passwords or credit card numbers, that are included in the URL can be easily intercepted and stolen.
+**Recommendation**: Use the URLDecoder class to decode the URL before using it. This will help to protect against plaintext data exposure.
+
+**Reasoning**: This misuse is a false positive because the code is not creating a URL object from a string that contains sensitive data. The code is simply creating a URL object from a string that contains the address of a website.
+
+2. **Misuse**: CWE-256: Plaintext Storage in a File or Database
+**Vulnerable Code**: `System.out.println(new URL(url));`
+**Description**: This misuse is reported because the code is creating a URL object from a string without sanitizing the input. This could allow an attacker to inject malicious code into the URL, which could be executed when the URL is opened.
+**Recommendation**: Use a URL parser to sanitize the input before creating the URL object. For example, the following code uses the `java.net.URI` class to parse the URL and extract the host and path components:
+
+```java
+URI uri = new URI(url);
+String host = uri.getHost();
+String path = uri.getPath();
+System.out.println(host);
+System.out.println(path);
+```
+
+**Reasoning**: This misuse is a false positive because the code is not creating a URL object from a string that contains malicious code. The code is simply creating a URL object from a string that contains the address of a website.
+
+3. **Misuse**: CWE-256: Plaintext Storage in a File or Database
+**Vulnerable Code**: `System.out.println(new URL(url));`
+**Description**: This misuse is reported because the code creates a `java.net.URL` object from the given URL string. This object contains the URL in plaintext, which can be easily intercepted and read by an attacker.
+**Recommendation**: Do not store plaintext URLs in variables, files, or databases. Instead, use a secure storage mechanism, such as encryption, to protect the URLs from unauthorized access.
+
+**Reasoning**: This misuse is a false positive because the code is not storing the URL in a file or database. The code is simply printing the URL to the console.
+
+### Optimized Misuse JSON ###
+
+```json
+[]
+```

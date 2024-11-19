@@ -1,0 +1,28 @@
+```json
+[
+  {
+    "misuse": "Insecure Key Generation",
+    "vulnerable_code": "key.getBytes()",
+    "description": "The key is derived from a string without a secure random source or a proper key derivation function.",
+    "recommendation": "Use a KeyGenerator or a secure Key Derivation Function (KDF) to generate a strong key."
+  },
+  {
+    "misuse": "Hardcoded Encryption Key",
+    "vulnerable_code": "\"defaultkey\"",
+    "description": "Using a hardcoded encryption key in source code can lead to vulnerabilities as the key can be easily extracted and is the same in every deployment.",
+    "recommendation": "Ensure keys are derived dynamically and securely, possibly using environment variables or a secure key management system."
+  },
+  {
+    "misuse": "Insufficient Key Size",
+    "vulnerable_code": "Arrays.copyOf(keyBytes,16)",
+    "description": "The AES key is only secure if it is 16 bytes (128 bits) for AES-128, 24 bytes (192 bits) for AES-192, or 32 bytes (256 bits) for AES-256. Constant truncation or padding to a 16-byte key without proper validation may result in weak encryption.",
+    "recommendation": "Ensure key size matches the desired level of AES encryption and handle keys properly."
+  },
+  {
+    "misuse": "Use of ECB Mode",
+    "vulnerable_code": "new SecretKeySpec(keyBytes, \"AES\")",
+    "description": "AES is used without specifying a mode of operation. By default, Java may use ECB, which is insecure because it does not provide serious message confidentiality.",
+    "recommendation": "Specify a secure mode of operation like AES/GCM/NoPadding."
+  }
+]
+```

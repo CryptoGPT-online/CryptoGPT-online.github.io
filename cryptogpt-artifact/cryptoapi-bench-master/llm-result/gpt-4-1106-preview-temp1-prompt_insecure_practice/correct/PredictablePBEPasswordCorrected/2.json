@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Weak Key Generation",
+        "vulnerable_code": "pbeKeySpec = new PBEKeySpec(password.toCharArray(),salt,iterationCount,keyLength);",
+        "description": "The key specification uses a password generated from a random int stream converted to a string, which might not provide sufficient entropy for secure key generation. Moreover, keyLength is 16, which if interpreted as bits is very small and insecure.",
+        "recommendation": "Use a cryptographically strong passphrase or generate a random key using a secure algorithm. Ensure the keyLength is specified in bits and typical AES key sizes are 128, 192, or 256 bits."
+    },
+    {
+        "misuse": "Insufficient Iteration Count",
+        "vulnerable_code": "int iterationCount = 11010;",
+        "description": "The iteration count of 11010 may not provide enough work factor to prevent against brute-force attacks. The iteration count should be as high as possible without impacting application performance.",
+        "recommendation": "Increase the iteration count to a higher value that balances security and performance, ideally at least 100,000."
+    },
+    {
+        "misuse": "Ambiguous Key Length",
+        "vulnerable_code": "int keyLength = 16;",
+        "description": "It is unclear whether the keyLength variable represents bits or bytes. If in bits, it is too short, leading to an insecure key. If in bytes, it should typically be set to 128, 192, or 256 bits for AES keys.",
+        "recommendation": "Ensure the keyLength is defined in bits and use a standard key size such as 128, 192, or 256 bits."
+    },
+    {
+        "misuse": "Static Salt",
+        "vulnerable_code": "byte [] salt = new byte[16]; random.nextBytes(salt);",
+        "description": "If the same salt is used whenever the application is run (and potentially for every user if deployed), this reduces the effectiveness of the salt. Salts must be unique to each use to effectively prevent rainbow table attacks.",
+        "recommendation": "Ensure a unique salt is used for each encryption operation. If it is intended to run once and the salt is randomly generated each time, this is not an issue."
+    }
+]
+```

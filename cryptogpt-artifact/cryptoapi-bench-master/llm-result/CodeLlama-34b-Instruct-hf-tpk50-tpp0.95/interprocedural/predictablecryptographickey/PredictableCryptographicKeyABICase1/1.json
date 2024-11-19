@@ -1,0 +1,20 @@
+ [
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "SecretKeySpec(keyBytes, \"AES\")",
+        "description": "The AES algorithm is being used with a default key, which is insecure. The key should be randomly generated and kept secret.",
+        "recommendation": "Use a secure key generation method, such as the SecureRandom class, to generate a random key. Also, make sure to keep the key secret and never hardcode it in the source code."
+    },
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "Arrays.copyOf(keyBytes, 16)",
+        "description": "The Arrays.copyOf method is being used to truncate the key to a fixed length of 16 bytes. This can lead to a vulnerability known as a 'key collapse', where two different keys can be reduced to the same 16-byte length.",
+        "recommendation": "Use a secure randomness generation method, such as the SecureRandom class, to generate a random key of the desired length."
+    },
+    {
+        "misuse": "Insecure Key Derivation",
+        "vulnerable_code": "SecretKeySpec(keyBytes, \"AES\")",
+        "description": "The SecretKeySpec constructor is being used to derive a secret key from a password. This is insecure because it does not use a secure key derivation function, such as PBKDF2 or Argon2.",
+        "recommendation": "Use a secure key derivation function, such as PBKDF2 or Argon2, to derive the secret key from the password."
+    }
+]

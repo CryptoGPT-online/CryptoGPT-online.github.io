@@ -1,0 +1,41 @@
+There are two significant cryptographic misuses in this code:
+
+1. The MD4 cryptographic hash function has been deprecated by the NIST as of 2010. It is now recommended to use SHA-2 or SHA-3 families for security sensitive applications.
+
+2. The use of a static salt or password in encryption. In the given code, a blank string is used as salt, which is very insecure and may lead to dictionary attacks or rainbow table attacks. A random salt, or a key, should always be used in an encryption process.
+
+The code snippet for these misuses are as follows:
+
+In the class C3:
+
+```
+public void encrypt(String str, String passedAlgo) throws UnsupportedEncodingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, NoSuchPaddingException {
+    if(passedAlgo.isEmpty()){
+        passedAlgo = crypto;
+    }
+
+    MessageDigest md = MessageDigest.getInstance(crypto); // The crypto hash function used here is MD4
+    md.update(str.getBytes());
+    System.out.println(md.digest());
+
+}
+```
+
+Here is the JSON response:
+
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "MessageDigest.getInstance(crypto);",
+        "description": "MD4 cryptographic hash function has been deprecated by the NIST as of 2010. It is now recommended to use SHA-2 or SHA-3 families for security sensitive applications.",
+        "recommendation": "Use a cryptographic hash function that is currently secure and recommended, such as SHA-256."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values.",
+        "vulnerable_code": "if(passedAlgo.isEmpty()){ passedAlgo = crypto; }",
+        "description": "The use of a static salt or password in encryption is insecure. A random salt, or a key, should always be used in an encryption process.",
+        "recommendation": "Always use a random salt or key for encryption. Java provides the SecureRandom class for generating random numbers."
+    }
+]
+```

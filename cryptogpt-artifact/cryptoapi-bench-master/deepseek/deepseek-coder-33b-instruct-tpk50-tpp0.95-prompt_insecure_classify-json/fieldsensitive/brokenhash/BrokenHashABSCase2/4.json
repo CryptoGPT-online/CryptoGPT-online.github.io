@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(crypto);",
+        "description": "The code uses the MD5 algorithm for cryptographic purposes. MD5 is a broken algorithm as it is susceptible to hash collisions and has a small digest size, which makes it not suitable for cryptographic applications like storing passwords. In the case of this code, it's used with a single line of input 'abc', which makes the hash irreversible, and makes it even more susceptible to attacks.",
+        "recommendation": "Use a secure algorithm for hashing like SHA-256. Also, in the specific case of storing passwords, use bcrypt, or a similar salted hash function."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials.",
+        "vulnerable_code": "crypto = new C2(\"MD5\");",
+        "description": "The cryptographic algorithm \"MD5\" is hardcoded into the constructor of the C2 class. This can lead to inconsistencies and reduce maintainability if different parts of the codebase use different algorithms.",
+        "recommendation": "Consider making the algorithm selection more flexible and secure, possibly by storing the algorithm name in a configuration file or environment variable."
+    }
+]
+```

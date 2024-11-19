@@ -1,0 +1,16 @@
+```
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(\"MD5\");",
+        "description": "The MD5 algorithm is considered cryptographically broken and was not designed to be secure for further use. It can be easily broken and does not produce a strong hash. It also uses a 128-bit hash, which is no longer considered secure.",
+        "recommendation": "Consider using a more secure hash function like SHA-256 or SHA-3. You can update the code to use SHA-256 with MessageDigest.getInstance(\"SHA-256\");"
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(\"MD5\"); if(choice>1) md = MessageDigest.getInstance(\"SHA-256\");",
+        "description": "The code dynamically decides the cryptographic algorithm to use based on the value of the variable 'choice'. If the value of 'choice' is greater than 1, the SHA-256 algorithm is used. SHA-256 should only be used if necessary due to its collision resistance. For most common purposes, SHA-256 is more than adequate.",
+        "recommendation": "Consider limiting the options for the cryptographic algorithm. Unless necessary, limit the cryptographic algorithm to its most secure option."
+    }
+]
+```

@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insecure Hash Function (MD2)",
+        "vulnerable_code": "crypto = new C4(\"MD2\");",
+        "description": "MD2 is an outdated and insecure hashing algorithm that is prone to collision attacks, and it should not be used for any cryptographic purposes.",
+        "recommendation": "Switch to a secure hashing algorithm such as SHA-256 or SHA-3."
+    },
+    {
+        "misuse": "Message Digest Instead of Encryption",
+        "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(crypto);",
+        "description": "The class name C4 and the method name 'encrypt' imply encryption, but the code actually generates a hash digest, not encrypted data. This misuse could lead to confusion about the security properties of the data processing done by the class.",
+        "recommendation": "Use a proper encryption algorithm (like AES) with a secure mode of operation and padding, and ensure that the method name reflects the actual operation performed (e.g., 'hash' instead of 'encrypt')."
+    },
+    {
+        "misuse": "Hardcoded Parameter",
+        "vulnerable_code": "crypto = new C4(\"MD2\");",
+        "description": "The cryptographic algorithm is hardcoded, which does not allow flexibility and might make it harder to replace the algorithm when it becomes obsolete or compromised.",
+        "recommendation": "Avoid hardcoding cryptographic algorithms. Instead, make the algorithm a configurable parameter that can easily be updated."
+    },
+    {
+        "misuse": "Lack of Output Encoding",
+        "vulnerable_code": "System.out.println(md.digest());",
+        "description": "The hash output is converted directly into a string and printed, which might result in an incorrect representation of the byte array. This is a misuse in terms of encoding rather than a security flaw.",
+        "recommendation": "Encode the output using Base64 or HEX encoding before printing or storing it."
+    }
+]
+```

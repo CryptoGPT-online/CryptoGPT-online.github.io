@@ -1,0 +1,13 @@
+```json
+[
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_code": [
+      "byte[] keyBytes = encryptKey.toString().getBytes();",
+      "SecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES\");"
+    ],
+    "description": "The AES encryption algorithm is commonly used but with the right keys, any encryption can be broken. In this code, the encryption key is very weak because it's only 11 characters long, which is very short for the AES-128 encryption. AES-128 requires a 16 byte (128 bit) encryption key, but the current key is only 11 characters long which means that the strength of the encryption is weakened.",
+    "recommendation": "Consider using a longer key for the AES encryption. You could use a key that is derived from a password and a salt using a secure algorithm such as PBKDF2."
+  }
+]
+```

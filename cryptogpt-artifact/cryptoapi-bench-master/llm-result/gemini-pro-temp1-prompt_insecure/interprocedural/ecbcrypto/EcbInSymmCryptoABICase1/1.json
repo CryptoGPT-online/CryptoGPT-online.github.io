@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+    "description": "The code is using AES without specifying the key length. For AES, a key length of at least 128 bits is recommended, but the code is not enforcing this.",
+    "recommendation": "Always specify a key length when generating keys for symmetric encryption algorithms. For AES, a key length of at least 128 bits is recommended."
+  },
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(crypto);",
+    "description": "The code is using `Cipher.getInstance` to get an instance of the cipher, but it is not checking the algorithm name before using it. This could allow an attacker to specify a weak or insecure algorithm.",
+    "recommendation": "Always check the algorithm name before using `Cipher.getInstance`. For example, you could check if the algorithm name is one of the following: `AES/CBC/PKCS5Padding`, `AES/GCM/NoPadding`, or `RSA/ECB/PKCS1Padding`. If it is not, you should throw an exception or otherwise handle the error."
+  }
+]
+```

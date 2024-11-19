@@ -1,0 +1,14 @@
+[
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+    "vulnerable_code": "KeyGenerator.getInstance(\"AES\")",
+    "description": "The code uses the AES algorithm for key generation, which is not a broken or risky cryptographic algorithm. However, it is important to note that the strength of the encryption depends on the key size. If the key size is too small, it may be susceptible to attacks. This code does not specify the key size, so it is recommended to use a key size of at least 128 bits.",
+    "recommendation": "Specify the key size when generating the AES key using KeyGenerator.init(int keySize). For example, KeyGenerator.getInstance(\"AES\").init(128) to use a 128-bit key size."
+  },
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+    "vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5Padding\")",
+    "description": "The code uses AES in CBC mode with PKCS5Padding, which are not broken or risky algorithms. However, it is important to note that the security of AES-CBC depends on the proper use of initialization vectors (IVs) and the prevention of padding oracle attacks. This code uses a hardcoded IV instead of generating a random IV for each encryption operation, which can weaken the security. ",
+    "recommendation": "Generate a random IV for each encryption operation using a secure random number generator and update the code to use the dynamically generated random IV. For example, generate a random IV using SecureRandom: byte[] iv = new byte[16]; SecureRandom.getInstanceStrong().nextBytes(iv); and use iv as the IV parameter in cipher.init()."
+  }
+]

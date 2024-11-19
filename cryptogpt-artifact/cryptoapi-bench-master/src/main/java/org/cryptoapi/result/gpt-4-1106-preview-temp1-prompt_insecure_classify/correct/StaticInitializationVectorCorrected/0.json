@@ -1,0 +1,10 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "BigInteger i = BigInteger.valueOf(sr.nextInt());\nbyte [] bytes = i.toByteArray();\nIvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+        "description": "Using 'nextInt()' for generating an IV can lead to an insufficiently random value because it generates a 32-bit integer, which is then converted to a byte array. This may not provide the necessary 128 bits (16 bytes) of randomness required for the IV in AES/CBC encryption.",
+        "recommendation": "Use 'SecureRandom.nextBytes(byte[] bytes)' with a properly sized byte array (e.g., 16 bytes for AES) to ensure sufficient randomness."
+    }
+]
+```

@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "String password = String.valueOf(random.ints());",
+        "description": "Even though a `SecureRandom` is used to generate the password, the way it is being converted to a String could result in predictable or non-secure passwords due to insufficient randomness in the conversion process.",
+        "recommendation": "Use a more secure and standard way to generate passwords, such as using `SecureRandom` to generate a byte array and then encoding it with Base64 or a similar mechanism that preserves randomness."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "String.valueOf(random.ints())",
+        "description": "The `ints()` method returns an effectively infinite stream of pseudorandom `int` values, and converting this to a String does not provide a proper way to generate a random password. The conversion can result in a non-random appearance in the String representation, leading to insufficient entropy for the password.",
+        "recommendation": "Generate a fixed number of random bytes (e.g., 16 bytes for a 128-bit key) and encode them using a method that does not lose randomness, such as Base64 encoding."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "\"JKS\"",
+        "description": "JKS (Java KeyStore) is considered less secure than other available types, such as PKCS12 (`\"PKCS12\"`), due to its weaker cryptographic strength.",
+        "recommendation": "Use a more secure KeyStore type, such as PKCS12 (`\"PKCS12\"`)."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "ks.load(cacerts.openStream(), new String(keyBytes).toCharArray());",
+        "description": "The code is loading a keystore from a hard-coded URL without validating the SSL/TLS certificate, which could make it vulnerable to man-in-the-middle attacks.",
+        "recommendation": "Ensure proper SSL/TLS certificate validation is implemented when connecting to a URL. If using custom trust management, make sure to check certificate validity, issuer, and hostname."
+    }
+]
+```

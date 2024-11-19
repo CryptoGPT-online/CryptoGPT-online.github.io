@@ -1,0 +1,37 @@
+```json
+[
+    {
+        "misuse": "Untrusted Certificate Acceptance",
+        "vulnerable_code": [
+            "new X509TrustManager() { ... }"
+        ],
+        "description": "The implemented X509TrustManager does not perform any certificate validation, effectively trusting any certificate. This could allow a man-in-the-middle attack.",
+        "recommendation": "Replace this custom X509TrustManager with one that properly checks the certificate chain and validates certificates against a set of trusted CAs."
+    },
+    {
+        "misuse": "Weak Hostname Verification",
+        "vulnerable_code": [
+            "checkClientTrusted(X509Certificate[] x509Certificates, String s)",
+            "checkServerTrusted(X509Certificate[] x509Certificates, String s)"
+        ],
+        "description": "Hostname verification is not performed within the X509TrustManager. The verification solely relies on checking if the AuthType is 'RSA', which does not guarantee the hostname matches the certificate.",
+        "recommendation": "Ensure hostname verification is properly implemented, usually by calling HostnameVerifier on the SSLSession."
+    },
+    {
+        "misuse": "Insecure TrustManager",
+        "vulnerable_code": [
+            "context.init(null, trustAll, new SecureRandom());"
+        ],
+        "description": "The SSLContext is initialized with the insecure TrustManager which does not validate certificate chains, making the application vulnerable to various attacks.",
+        "recommendation": "Use a TrustManager that properly checks the authenticity and validity of certificates."
+    },
+    {
+        "misuse": "Empty getAcceptedIssuers",
+        "vulnerable_code": [
+            "public X509Certificate[] getAcceptedIssuers()"
+        ],
+        "description": "The getAcceptedIssuers method returns an empty array, indicating no trusted certificate authorities. This, combined with the rest of the implementation, can expose the application to security issues.",
+        "recommendation": "Return a non-empty list of acceptable CA issuer certificates."
+    }
+]
+```

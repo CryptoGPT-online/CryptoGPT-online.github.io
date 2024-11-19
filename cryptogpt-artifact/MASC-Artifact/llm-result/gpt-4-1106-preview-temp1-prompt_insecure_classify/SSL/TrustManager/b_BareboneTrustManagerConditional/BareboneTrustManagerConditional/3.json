@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "CWE-295: Improper Certificate Validation",
+    "vulnerable_code": [
+      "public void checkClientTrusted(X509Certificate[] x509Certificates, String s)",
+      "public void checkServerTrusted(X509Certificate[] x509Certificates, String s)"
+    ],
+    "description": "The trust manager implemented here does not adequately verify the credentials of the client or the server. It only checks if 's' is not null or if its value is 'RSA' and if the certificate array length is at least 314, which is an arbitrary and incorrect check.",
+    "recommendation": "Implement proper X509Certificate checking and ensure that the certificate chain is validated against trusted root CAs."
+  },
+  {
+    "misuse": "CWE-295: Improper Certificate Validation",
+    "vulnerable_code": [
+      "public X509Certificate[] getAcceptedIssuers()",
+      "return EMPTY_X509CERTIFICATE_ARRAY;"
+    ],
+    "description": "The getAcceptedIssuers method returns an empty array, which implies that no CA is trusted implicitly. Any certificate will be accepted without any verification against trusted Certificate Authorities.",
+    "recommendation": "Return a list of trusted CA certificates or implement proper CA verification logic."
+  }
+]
+```

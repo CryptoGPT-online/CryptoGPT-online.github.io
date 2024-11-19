@@ -1,0 +1,28 @@
+### False Positive Misuse ###
+
+- CWE-798: Use of Hardcoded Credentials - The key is created based on a randomly generated `ints()` stream, hence it is not hardcoded in the traditional sense of the term; the key material is derived from a non-deterministic source (i.e., `SecureRandom`). This differs from hardcoded credentials, which are often static and never change. Hence, both instances of CWE-798 in the lists are false positives.
+
+### Optimized Misuse JSON###
+
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "String defaultKey = String.valueOf(random.ints());",
+        "description": "The method 'ints()' from SecureRandom is used without specifying the size of the random number array, which may lead to insufficient entropy for the cryptographic key when converted to a String.",
+        "recommendation": "Use 'random.generateSeed(int numBytes)' to generate a random seed of a specific length, and then use a key derivation function (KDF) to derive a key from it."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The cryptographic key is truncated or padded to fit 16 bytes, which corresponds to an AES-128 key. Depending on the context, AES-128 may not provide adequate encryption strength.",
+        "recommendation": "Consider using AES with a larger key size such as AES-256 for stronger encryption, if deemed necessary by the security requirements."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5PADDING\")",
+        "description": "While AES itself is not broken, the CBC mode of operation without specifying an unpredictable IV is risky as it can lead to certain types of attacks if the same key is used to encrypt multiple plaintexts without a unique, unpredictable IV for each operation.",
+        "recommendation": "Use a secure mode of operation like GCM which also provides authentication, and always use a unique, unpredictable IV for each encryption operation."
+    }
+]
+```

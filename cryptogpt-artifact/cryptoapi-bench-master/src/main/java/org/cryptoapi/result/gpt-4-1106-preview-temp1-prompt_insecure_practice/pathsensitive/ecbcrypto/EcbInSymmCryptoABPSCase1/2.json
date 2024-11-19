@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Cipher Mode",
+        "vulnerable_code": "Cipher.getInstance(\"AES/ECB/PKCS5Padding\");",
+        "description": "ECB mode is insecure because it doesn't provide serious message confidentiality. It divides input plaintext into blocks and encrypts them separately, leading to patterns being visible in the ciphertext when there are repetitions in the plaintext.",
+        "recommendation": "Use a more secure mode of operation like CBC (with a proper Initialization Vector), CFB, OFB, or GCM."
+    },
+    {
+        "misuse": "Missing Initialization Vector (IV) for CBC mode",
+        "vulnerable_code": "cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\"); cipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "When using CBC mode, an Initialization Vector (IV) should be provided during encryption. Without an IV, CBC mode is susceptible to certain attacks, such as issues with padding oracle attacks.",
+        "recommendation": "Generate a random IV before encryption and use it with 'cipher.init(Cipher.ENCRYPT_MODE, key, ivParameterSpec);'. Ensure that the same IV is used for decryption."
+    },
+    {
+        "misuse": "Key Generator without Randomness Source",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "description": "The KeyGenerator.getInstance doesn't specify a secure randomness source, which can lead to predictable keys if the underlying default source is weak.",
+        "recommendation": "Ensure that you initialize the KeyGenerator with a SecureRandom instance that is properly seeded."
+    }
+]
+```

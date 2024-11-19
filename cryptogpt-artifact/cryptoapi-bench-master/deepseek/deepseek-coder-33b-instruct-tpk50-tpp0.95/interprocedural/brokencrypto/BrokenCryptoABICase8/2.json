@@ -1,0 +1,14 @@
+[
+    {
+        "misuse": "Hard-coded cryptographic algorithm",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(String.valueOf(crypto)); Cipher cipher = Cipher.getInstance(String.valueOf(crypto));",
+        "description": "The cryptographic algorithm is hard-coded in the code, which makes it impossible to change the algorithm without changing the code. This can be dangerous if the algorithm is not secure or is deprecated. In this case, the algorithm is 'RC2' which is considered insecure.",
+        "recommendation": "Don't hard-code the cryptographic algorithm. Use configuration files or environment variables to let the system know which algorithm to use. Be aware that not all algorithms are secure."
+    },
+    {
+        "misuse": "Non-Random Key for Symmetric Encryption",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(String.valueOf(crypto));",
+        "description": "In symmetric encryption, the same key is used for encryption and decryption. If the key is known, the encryption is worthless. KeyGenerator.getInstance(String.valueOf(crypto)) generates a key that could be hard-coded or predictable. So, the encryption will be weak.",
+        "recommendation": "Always use secure random number generators to generate encryption keys. Never use hard-coded or predictable keys."
+    }
+]

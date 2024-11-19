@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "String.valueOf(random.ints())",
+        "description": "The use of SecureRandom.ints() directly converted to a String does not ensure sufficient randomness for cryptographic purposes and can lead to weak cryptographic keys. This code appears to be generating a password from a random number without proper encoding, reducing the entropy of the key.",
+        "recommendation": "Use a securely generated random array and convert it to a proper Base64-encoded string if human-readable format is required."
+    },
+    {
+        "misuse": "Inadequate Key Size",
+        "vulnerable_code": "new PBEKeySpec(defaultKey.toCharArray(),salt,iterationCount,keyLength)",
+        "description": "The keyLength argument in PBEKeySpec constructor is set to 16 bits, which is too short for secure encryption. Calling PBEKeySpec with keyLength argument is meant to specify key length in bits. Here, it mistakenly assumes the length is in bytes which might lead to using an inadequate key size for encryption.",
+        "recommendation": "Ensure to specify a key length appropriate for the cryptographic operation. For AES, typical key sizes are 128, 192, or 256 bits. Adjust the keyLength to reflect the bit length instead of byte length."
+    },
+    {
+        "misuse": "Insufficient Iteration Count",
+        "vulnerable_code": "int iterationCount = 11010;",
+        "description": "The iteration count of 11010 may not be sufficient for modern standards. A higher iteration count significantly increases the time required to brute-force the resulting key, thus providing better resistance against attacks.",
+        "recommendation": "Increase the iteration count to a value that offers a better trade-off between security and performance, typically at least 100000 iterations as recommended by modern security guidelines."
+    }
+]
+```

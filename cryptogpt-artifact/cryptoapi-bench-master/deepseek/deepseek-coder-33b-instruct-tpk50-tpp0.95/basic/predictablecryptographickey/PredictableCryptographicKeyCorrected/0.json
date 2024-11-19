@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "Insufficient Key Size for AES",
+    "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);\nSecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES\");",
+    "description": "AES algorithm requires a key size of 128 bits, 192 bits, or 256 bits. Your code is creating a random key of 16 bytes which is not sufficient and could potentially open up for attacks.",
+    "recommendation": "You should choose a proper key size for your key generation. For instance, you could use 128 bits for AES."
+  },
+  {
+    "misuse": "Insecure Random String for Key",
+    "vulnerable_code": "String defaultKey = String.valueOf(random.ints());",
+    "description": "Creating a secure random string with the SecureRandom class is not enough to generate a secure key. This random string might contain characters that are not valid for an AES key.",
+    "recommendation": "Generate a secure random byte array and convert it into a hex or base64 encoded string for use as a key. Do not use random string as key."
+  }
+]
+```

@@ -1,0 +1,43 @@
+### False Positive Misuse ###
+
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"RC2\");",
+        "description": "The cryptographic algorithm RC2 is considered a risky choice because it is weak and has been broken. It is vulnerable to a variety of attacks.",
+        "recommendation": "Use a stronger and more secure algorithm, such as AES, which has been widely tested and is considered secure."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values.",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "description": "The key size for AES is 256 bits, but 128 bits is the recommended key length for AES. This is an insecure configuration.",
+        "recommendation": "Always use secure key lengths for your chosen cryptographic algorithms."
+    }
+]
+```
+
+---
+
+### Optimized Misuse JSON###
+
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"RC2\");",
+        "description": "The code uses the RC2 algorithm, which is considered weak.",
+        "recommendation": "Use a stronger algorithm like AES."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": "if (choice > 1) cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "The cipher is chosen based on the runtime variable. This might lead to accidental use of weak ciphers.",
+        "recommendation": "Choose a strong cipher during compilation time. Never choose a cipher on the runtime based on a variable."
+    }
+]
+```
+
+---
+
+The false positive misuse lists suggest that the algorithm is not secure (RC2) and the key size is not secure (AES with default 256 bit key size). The optimized misuses list is more focused on the selection of less secure algorithm during negotiation. Other identified weak spots in the misuse lists such as using hard-coded seed value to generate keys in AES are also taken care of in the optimized misuses list.

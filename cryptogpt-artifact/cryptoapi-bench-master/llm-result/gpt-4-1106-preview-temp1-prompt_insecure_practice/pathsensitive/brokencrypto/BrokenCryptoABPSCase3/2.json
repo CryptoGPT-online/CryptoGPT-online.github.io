@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Incompatible Key and Cipher Algorithm",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"RC4\");",
+        "description": "The key generated is for AES algorithm, but the 'Cipher' instance is created for the RC4 algorithm without checking the 'choice' parameter. This can lead to runtime exceptions due to the incompatibility between key algorithm and cipher algorithm.",
+        "recommendation": "Ensure that the key algorithm is compatible with the cipher algorithm. Check the 'choice' parameter before generating the key and creating the 'Cipher' instance."
+    },
+    {
+        "misuse": "Weak Crypto Algorithm",
+        "vulnerable_code": "Cipher.getInstance(\"RC4\")",
+        "description": "RC4 is considered to be a weak cryptographic algorithm and should not be used as it has several well-known vulnerabilities.",
+        "recommendation": "Replace RC4 with a stronger, modern cipher like 'AES/GCM/NoPadding' for better security."
+    },
+    {
+        "misuse": "Missing Initialization Vector (IV) for CBC mode",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key)",
+        "description": "Using AES in CBC mode without specifying an initialization vector (IV) means that the same plaintext will always generate the same ciphertext when using the same key, which makes the encryption scheme deterministic and vulnerable to various attacks.",
+        "recommendation": "Use a securely generated, random IV each time you initialize the cipher for encryption in CBC mode."
+    },
+    {
+        "misuse": "Deterministic Key Generation",
+        "vulnerable_code": "SecretKey key = keyGen.generateKey()",
+        "description": "The KeyGenerator is not explicitly seeded, which means it relies on the underlying platform's default seeding mechanism that might not be secure enough.",
+        "recommendation": "Securely seed the KeyGenerator with a source of randomness (e.g., 'SecureRandom')."
+    }
+]
+```

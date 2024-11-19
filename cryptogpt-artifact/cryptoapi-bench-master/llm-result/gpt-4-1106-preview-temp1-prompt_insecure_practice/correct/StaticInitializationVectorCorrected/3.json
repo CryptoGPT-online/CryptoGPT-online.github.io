@@ -1,0 +1,14 @@
+```json
+[{
+    "misuse": "Insufficient IV Size for CBC Mode",
+    "vulnerable_code": "BigInteger i = BigInteger.valueOf(sr.nextInt());\nbyte [] bytes = i.toByteArray();",
+    "description": "The method 'nextInt()' generates a 32-bit integer, which is then converted into a byte array. This can result in an IV that is shorter than the required 128 bits (16 bytes) for the AES/CBC encryption mode.",
+    "recommendation": "Replace the 'nextInt()' method with 'nextBytes(byte[] bytes)' where 'bytes' is a properly sized array (e.g., byte[16] for AES) to ensure the IV is the correct size."
+},
+{
+    "misuse": "Weak Key Generation",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+    "description": "The default key size for AES might not be sufficient for strong security. If the default key size used by the JCA provider is less than 256 bits, it might not provide a strong enough level of encryption.",
+    "recommendation": "Explicitly specify the key size when generating an AES key, for example by calling 'keyGen.init(256);' to ensure a 256-bit AES key is generated."
+}]
+```

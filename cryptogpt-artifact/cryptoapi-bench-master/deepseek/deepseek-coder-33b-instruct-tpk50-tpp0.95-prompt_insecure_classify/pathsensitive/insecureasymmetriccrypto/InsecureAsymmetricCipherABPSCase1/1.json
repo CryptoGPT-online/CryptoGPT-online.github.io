@@ -1,0 +1,16 @@
+```
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "KeyPairGenerator kgp = KeyPairGenerator.getInstance(\"RSA\");\n...\nkgp.initialize(keysize);",
+        "description": "The keysize is determined by a user choice. It can be either 1024 or 2048, depending on the 'choice' variable. This can lead to insecure configurations.",
+        "recommendation": "A secure configuration would be to use the appropriate key size based on the level of security required for the application."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "kgp.initialize(keysize);\n...\nKeyPair kp = kgp.generateKeyPair();",
+        "description": "The RSA key pair generation is not seeded with a CSPRNG. Relying on the default SecureRandom implementation without a proper seed can lead to weaker encryption.",
+        "recommendation": "Use a cryptographically secure random number generator for seeding the key generation."
+    }
+]
+```

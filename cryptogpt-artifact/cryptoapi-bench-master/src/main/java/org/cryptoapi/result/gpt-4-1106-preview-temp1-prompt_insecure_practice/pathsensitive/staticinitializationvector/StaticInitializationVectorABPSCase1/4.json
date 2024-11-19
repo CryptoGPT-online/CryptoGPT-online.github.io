@@ -1,0 +1,16 @@
+[{
+    "misuse": "Insufficient Entropy",
+    "vulnerable_code": "sr.nextBytes(bytes);",
+    "description": "The code uses a SecureRandom generator to create an IV, but only when choice is greater than 1. Otherwise, it uses a static IV which is composed of string 'abcde'. Using a predictable or static IV in CBC mode is insecure as it does not provide semantic security.",
+    "recommendation": "Always generate a random IV using SecureRandom before encryption, regardless of the 'choice' value."
+}, {
+    "misuse": "Insecure Key Generation",
+    "vulnerable_code": "KeyGenerator.getInstance(\"AES\");",
+    "description": "The KeyGenerator is not initialized with a specific key size. Default key size for AES might be inadequate (e.g., some JCE providers default to 128-bit keys).",
+    "recommendation": "Specify key size explicitly when generating keys, such as keyGen.init(256); for a 256-bit AES key."
+}, {
+    "misuse": "Static IV",
+    "vulnerable_code": "byte [] bytes = \"abcde\".getBytes();",
+    "description": "Using a static IV 'abcde' which is a constant string, can lead to patterns in the encrypted output when the same plaintext blocks are encrypted multiple times with the same key.",
+    "recommendation": "Use a securely generated random IV for each encryption operation."
+}]

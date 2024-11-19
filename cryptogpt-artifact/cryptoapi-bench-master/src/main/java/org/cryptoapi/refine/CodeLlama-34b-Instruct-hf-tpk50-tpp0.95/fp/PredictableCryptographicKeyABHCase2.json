@@ -1,0 +1,56 @@
+ ### False Positive Misuse JSON
+
+[
+{
+"misuse": "Insecure Key Size",
+"vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+"description": "The key size is set to 16 bytes, which is too small for the AES algorithm. The key size should be at least 256 bits.",
+"recommendation": "Use a larger key size, such as 256 bits, to improve the security of the encryption."
+}
+]
+
+### Optimized Misuse JSON
+
+[
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "hm.get(\"aaa\")",
+"description": "The code uses a hardcoded key for encryption, which can be easily discovered by an attacker and used to decrypt the data.",
+"recommendation": "Use a random key generated at runtime for encryption, and store the key securely for decryption."
+}
+
+{
+"misuse": "Crypto API Misuse",
+"vulnerable_code": "Arrays.copyOf(keyBytes,16)",
+"description": "The code uses a hardcoded length for the key, which can cause the key to be truncated or padded with random data, potentially leading to decryption errors or data tampering.",
+"recommendation": "Use a random key length for encryption, and store the key securely for decryption."
+}
+
+{
+"misuse": "Insecure Key Derivation",
+"vulnerable_code": "key.getBytes()",
+"description": "The code uses the getBytes() method to convert the key to a byte array, which can cause the key to be encoded in a platform-specific way, potentially leading to interoperability issues.",
+"recommendation": "Use a standardized key derivation function such as PBKDF2 or bcrypt to derive the key from a passphrase or other input."
+}
+
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "new SecretKeySpec(keyBytes, \"AES\")",
+"description": "The AES algorithm is used with a weak key. The key is generated from a string, which is not secure. A secure key should be generated using a secure random number generator.",
+"recommendation": "Use a secure key generation method such as SecureRandom.getInstanceStrong() to generate a secure key."
+}
+
+{
+"misuse": "Insecure Cipher Mode",
+"vulnerable_code": "SecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES\");",
+"description": "The AES algorithm is being used in ECB mode, which is not secure. ECB mode does not provide semantic security, meaning that if the same block is encrypted twice, the resulting ciphertext blocks will be the same.",
+"recommendation": "Use a secure cipher mode, such as CBC or GCM mode, to provide both confidentiality and integrity."
+}
+
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "String key = hm.get(\"aaa\");\nbyte [] keyBytes = key.getBytes();\nkeyBytes = Arrays.copyOf(keyBytes,16);\nSecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES\");",
+"description": "The provided key for the AES algorithm is too short and can be easily guessed. A longer, random key should be used instead.",
+"recommendation": "Use a longer, random key for the AES algorithm. Consider using a password hashing algorithm, such as bcrypt or PBKDF2, to generate a secure key from the user's password."
+}
+]

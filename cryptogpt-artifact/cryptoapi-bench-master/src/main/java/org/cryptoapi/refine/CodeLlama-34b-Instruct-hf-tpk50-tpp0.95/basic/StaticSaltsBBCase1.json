@@ -1,0 +1,33 @@
+ ### False Positive Misuse JSON ###
+
+[
+{
+"misuse": "Insecure Randomness",
+"vulnerable_code": "byte[] salt = {(byte) 0xa2};",
+"description": "The provided salt is a single byte with a low entropy value, which can be easily guessed by an attacker. It is recommended to use a larger and more random salt to increase the security of the cryptographic algorithm.",
+"recommendation": "Use a larger and more random salt, such as a 16-byte or 32-byte value, and use a secure random number generator to generate the salt. This will make it more difficult for an attacker to guess the salt and compromise the cryptographic algorithm."
+}
+]
+
+### Optimized Misuse JSON ###
+
+[
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "PBEParameterSpec pbeParamSpec = new PBEParameterSpec(salt, count);",
+"description": "The PBEParameterSpec constructor is using a static salt value, which can be easily guessed and used to attack the encryption. This is a violation of the CWE-297: Improper Validation of Initialization Vector (IV) vulnerability.",
+"recommendation": "Use a dynamic salt value or a secure random number generator to generate the salt for each encryption operation."
+},
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "byte[] salt = {(byte) 0xa2};",
+"description": "The provided salt is a single byte with a low entropy value, which can be easily guessed by an attacker. It is recommended to use a larger and more random salt to increase the security of the cryptographic algorithm.",
+"recommendation": "Use a larger and more random salt, such as a 16-byte or 32-byte value, and use a secure random number generator to generate the salt. This will make it more difficult for an attacker to guess the salt and compromise the cryptographic algorithm."
+},
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "PBEParameterSpec pbeParamSpec = new PBEParameterSpec(salt, count);",
+"description": "The PBEParameterSpec constructor is being used to create a PBEParameterSpec object with a small iteration count, which can make the encryption vulnerable to brute force attacks.",
+"recommendation": "Increase the iteration count to a higher value to make the encryption more secure."
+}
+]

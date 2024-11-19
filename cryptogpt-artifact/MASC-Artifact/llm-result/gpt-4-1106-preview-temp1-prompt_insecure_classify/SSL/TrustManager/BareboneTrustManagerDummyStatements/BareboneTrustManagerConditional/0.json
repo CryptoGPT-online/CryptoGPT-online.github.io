@@ -1,0 +1,29 @@
+```json
+[
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": [
+            "public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException",
+            "public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException"
+        ],
+        "description": "The code does not properly check the validity of the certificate. It only checks for the use of the RSA algorithm type, without verifying the actual certificate chain of trust and without ensuring the certificate is either not expired or otherwise not revoked.",
+        "recommendation": "Implement proper certificate chain validation using Certificate Authority (CA) and consider checking expiration, revocation status and hostname verification."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": [
+            "context = SSLContext.getInstance(\"SSL\");"
+        ],
+        "description": "The use of SSL (especially older versions like SSLv2 or SSLv3) is considered unsafe. More secure protocols like TLS should be used to ensure secure connections.",
+        "recommendation": "Use TLS protocol instead of SSL, for example 'TLSv1.2' or 'TLSv1.3'."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": [
+            "context = SSLContext.getInstance(\"SSL\");"
+        ],
+        "description": "The SSL protocol has multiple vulnerabilities and should not be used. It's recommended to use TLS which is the successor to SSL.",
+        "recommendation": "Replace 'SSL' with a specific and secure version of the TLS protocol, such as 'TLSv1.2' or 'TLSv1.3'."
+    }
+]
+```

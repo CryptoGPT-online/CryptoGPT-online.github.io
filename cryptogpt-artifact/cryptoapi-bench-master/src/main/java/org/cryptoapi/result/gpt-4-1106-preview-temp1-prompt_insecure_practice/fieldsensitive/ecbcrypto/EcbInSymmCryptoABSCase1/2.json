@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insecure Cipher Mode",
+        "vulnerable_code": "Cipher.getInstance(passedAlgo)",
+        "description": "ECB mode is used for AES encryption, which is considered insecure because it doesn't provide serious message confidentiality. In ECB mode, identical plaintext blocks are encrypted to identical ciphertext blocks, making it susceptible to various attacks.",
+        "recommendation": "Use a more secure mode like CBC, CFB, OFB or GCM with an IV (Initialization Vector)."
+    },
+    {
+        "misuse": "Static IV/No IV",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key)",
+        "description": "No IV (Initialization Vector) is specified in Cipher.init when using an encryption mode that should be using an IV (such as CBC). Using a static IV or not using an IV may lead to the same plaintext being encrypted to the same ciphertext, leading to pattern leakage.",
+        "recommendation": "Use a securely generated random IV for each encryption operation."
+    },
+    {
+        "misuse": "Unspecified Key Size",
+        "vulnerable_code": "KeyGenerator.getInstance(\"AES\")",
+        "description": "The key size for AES encryption is not explicitly defined and Java defaults to a lower key size which may be insecure. By default, Java might use a key size of 128 bits for AES which is considered secure, but if older platforms or configurations are used, they might default to even lower key sizes.",
+        "recommendation": "Explicitly specify a secure key size (e.g., 256 bits) when generating the key."
+    },
+    {
+        "misuse": "Insufficient Key Generation",
+        "vulnerable_code": "keyGen.generateKey()",
+        "description": "SecureRandom is not explicitly specified for key generation. Default implementations may vary and could potentially be weak.",
+        "recommendation": "Use a strong instance of SecureRandom when generating the key."
+    }
+]
+```

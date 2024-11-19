@@ -1,0 +1,33 @@
+ ### False Positive Misuse JSON
+
+[
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "String.valueOf(crypto)",
+"description": "The vulnerability is caused by the use of a broken crypto algorithm (SHA1) in the code.",
+"recommendation": "Use a more secure algorithm, such as SHA-256 or SHA-512, instead of the broken SHA-1 algorithm."
+}
+]
+
+### Optimized Misuse JSON
+
+[
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "MessageDigest.getInstance(String.valueOf(crypto))",
+"description": "The code uses the SHA1 algorithm, which is considered broken and should not be used for cryptographic purposes. It is recommended to use a more secure algorithm, such as SHA-256 or SHA-512, instead.",
+"recommendation": "Use a more secure algorithm, such as SHA-256 or SHA-512, for cryptographic purposes. Consider using a well-established and widely-used library for cryptographic operations, such as the Bouncy Castle library."
+},
+{
+"misuse": "Insecure Key Management",
+"vulnerable_code": "crypto = CRYPTO;",
+"description": "The cryptographic key is not properly managed. The use of a static key, such as the default SHA1 algorithm, can result in a vulnerability known as 'key escrow', where an attacker can access the key and use it to encrypt or decrypt messages.",
+"recommendation": "Use a secure key management system, such as a hardware security module or a key management service, to store and manage the cryptographic key securely."
+},
+{
+"misuse": "Insufficient Entropy",
+"vulnerable_code": "CRYPTO = DEFAULT_CRYPTO.toCharArray();",
+"description": "The default cryptographic algorithm, SHA1, has a fixed size of 160 bits, which is too small for secure use. The use of a fixed-size algorithm can result in a vulnerability known as 'entropy collapse', where the same output is produced for different input values.",
+"recommendation": "Increase the size of the cryptographic algorithm by using a larger algorithm such as SHA-256 or SHA-512. Additionally, use a random initialization vector to improve the security of the encryption."
+}
+]

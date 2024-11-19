@@ -1,0 +1,40 @@
+Misuse Type: CWE-327: Use of a Broken or Risky Cryptographic Algorithm.
+Vulnerable Code: 
+```
+MessageDigest md = MessageDigest.getInstance(crypto);
+md.update(str.getBytes());
+System.out.println(md.digest());
+```
+Description: The code is using the MessageDigest class to compute the hash of a string. However, it's using the cryptographic algorithm "MD5" which is considered broken or risky, and it can be exploited by an attacker. MD5 produces a 128-bit hash value which is not suitable for most cryptographic purposes due to the possibility of hash collisions. It's recommended to use a stronger cryptographic algorithm like SHA-256, SHA-3 or even better, a keyed hash like HMAC.
+Recommendation: Change the hardcoded crypto algorithm to a stronger one in the constructor and in the `encrypt()` function.
+
+Here's a corrected version:
+```java
+public class B2 {
+    C2 crypto;
+    public B2() throws NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
+        crypto = new C2("SHA-256");
+        crypto.encrypt("abc","");
+    }
+}
+
+class C2 {
+    String crypto;
+
+    public C2(String defCrypto) throws NoSuchPaddingException, NoSuchAlgorithmException {
+        crypto = defCrypto;
+    }
+
+    public void encrypt(String str, String passedAlgo) throws UnsupportedEncodingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, NoSuchPaddingException {
+        if(passedAlgo.isEmpty()){
+            passedAlgo = crypto;
+        }
+
+        MessageDigest md = MessageDigest.getInstance(passedAlgo);
+        md.update(str.getBytes());
+        System.out.println(md.digest());
+
+    }
+}
+```
+In this version, "SHA-256" is used as the crypto algorithm.

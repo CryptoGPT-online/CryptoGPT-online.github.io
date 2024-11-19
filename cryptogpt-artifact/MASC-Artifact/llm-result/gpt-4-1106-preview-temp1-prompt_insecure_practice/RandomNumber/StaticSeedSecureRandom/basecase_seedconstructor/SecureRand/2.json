@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "Insecure Seed",
+    "vulnerable_code": "SecureRandom rand1 = new SecureRandom(seedBytes);SecureRandom rand2 = new SecureRandom(seedBytes);",
+    "description": "Using a static seed for SecureRandom results in the generation of predictable random numbers, which can compromise security in applications where randomness is important, such as in the generation of cryptographic keys, tokens or nonces.",
+    "recommendation": "Remove the static seed to allow SecureRandom to self-seed with entropy from the operating environment or use a more unpredictable source for seeding."
+  },
+  {
+    "misuse": "Deterministic Random",
+    "vulnerable_code": "System.out.println(rand1.nextInt()==rand2.nextInt());",
+    "description": "If two instances of SecureRandom are created with the same seed and same algorithm, they will produce the same sequence of numbers. This behavior is demonstrated in the code, which can compromise the randomness expected in security-critical applications.",
+    "recommendation": "Ensure that SecureRandom instances are properly seeded with secure, non-deterministic seed values or remove the seed to allow the instance to seed itself securely."
+  }
+]
+```

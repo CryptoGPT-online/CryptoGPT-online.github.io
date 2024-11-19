@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Weak Encryption Algorithm",
+        "vulnerable_code": "String crypto = \"IDEA\";",
+        "description": "IDEA, although not broken, is considered less secure than more modern encryption algorithms like AES. It offers a smaller key size and is no longer recommended for use in secure communications.",
+        "recommendation": "Switch to a more secure and recommended algorithm, such as AES with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "KeyGenerator.getInstance(crypto);",
+        "description": "The KeyGenerator does not specify the key size, which may result in a weak key if the default size is not strong enough for the encryption algorithm used.",
+        "recommendation": "Specify a key size when generating keys to ensure that they are of sufficient length for the intended algorithm. For example, use `keyGen.init(128);` for AES."
+    },
+    {
+        "misuse": "Insecure Cipher Mode",
+        "vulnerable_code": "Cipher.getInstance(crypto);",
+        "description": "By specifying only the encryption algorithm (IDEA) without a mode of operation and padding, the code may default to ECB mode, which is not secure for encrypting more than one block of data because identical plaintext blocks result in identical ciphertext blocks.",
+        "recommendation": "Specify a secure mode of operation and padding when obtaining a Cipher instance, such as 'AES/CBC/PKCS5Padding'."
+    },
+    {
+        "misuse": "Ambiguous Encryption Algorithm and Mode Specification",
+        "vulnerable_code": "Cipher.getInstance(crypto);",
+        "description": "The encryption algorithm and mode are indirectly specified through the 'crypto' string. This can lead to confusion or mismatches between the intended algorithm/mode and what is actually used.",
+        "recommendation": "Specify the encryption algorithm, mode, and padding explicitly to avoid ambiguity and ensure that the intended methods are used, for example 'AES/CBC/PKCS5Padding'."
+    }
+]
+```

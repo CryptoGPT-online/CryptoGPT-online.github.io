@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "SecureRandom sr = new SecureRandom(new byte[]{passedSeed});",
+        "description": "Initializing SecureRandom with a predictable seed (only 256 possibilities) makes the output predictable, which is insecure for any cryptographic operations.",
+        "recommendation": "Do not manually seed SecureRandom; allow it to self-seed using system entropy."
+    },
+    {
+        "misuse": "Hardcoded Cryptographic Key",
+        "vulnerable_code": "byte seed = 100;",
+        "description": "Using a hardcoded seed value for crypto operations is insecure as it does not offer sufficient entropy and can be easily discovered through reverse engineering.",
+        "recommendation": "Use a secure and unpredictable source for cryptographic seeds or keys."
+    },
+    {
+        "misuse": "Use of a Non-standard Algorithm",
+        "vulnerable_code": "new SecureRandom(new byte[]{passedSeed});",
+        "description": "Manually seeding SecureRandom may cause the use of a non-standard, potentially less secure algorithm.",
+        "recommendation": "Do not manually seed SecureRandom; instead rely on its default mechanism to ensure the use of a standard secure algorithm."
+    },
+    {
+        "misuse": "Unused Parameter",
+        "vulnerable_code": "public void method1(byte passedSeed)",
+        "description": "The parameter 'passedSeed' in method1 is overwritten and not used, which could be misleading in the context of a security-related function.",
+        "recommendation": "Avoid overwriting parameters that are supposed to configure security settings without clearly documenting the behavior."
+    }
+]
+```

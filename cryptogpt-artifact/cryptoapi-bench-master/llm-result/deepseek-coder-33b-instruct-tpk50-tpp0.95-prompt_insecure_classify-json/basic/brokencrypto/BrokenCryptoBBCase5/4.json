@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"IDEA\");",
+    "description": "IDEA is a strong encryption algorithm and is recognized for its performance in software. However, IDEA keys can be 128 bits long. The recommended minimum length for IDEA is 128 bits but this is a weak and outdated standard which was used in older applications. Due to the small key size, it's susceptible to brute force attacks and it's not strong enough to meet modern security standards.",
+    "recommendation": "For symmetric encryption keys, it is recommended to use stronger algorithms, like AES, with a key size of at least 192 bits. If the IDEA algorithm is absolutely necessary for your use case, you should increase the key size to at least 128 bits."
+  },
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"IDEA\");",
+    "description": "IDEA algorithm requires a secret key. The KeyGenerator is not using a secure seed to generate random keys. This can lead to predictable keys, which is a security risk.",
+    "recommendation": "KeyGenerator should be seeded with a secure random value using SecureRandom. It's also worth noting that IDEA is a weak algorithm and it's recommended to use a stronger algorithm with a key size of at least 192 bits for symmetric encryption."
+  }
+]
+```

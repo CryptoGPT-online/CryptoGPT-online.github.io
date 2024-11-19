@@ -1,0 +1,21 @@
+ ### False Positive Misuse JSON
+
+The following misuse reports are considered false positives and should be ignored:
+
+1. "CWE-327: Use of a Broken or Risky Cryptographic Algorithm"
+2. "CWE-330: Use of Insufficiently Random Values"
+3. "CWE-757: Selection of Less-Secure Algorithm During Negotiation"
+
+### Optimized Misuse JSON
+
+The following is the optimized misuse JSON, without the false positive misuses:
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "byte b = hm.get(\"aaa\");\n        byte [] seed = {b,b};\n        SecureRandom sr = new SecureRandom();\n        sr.setSeed(seed);",
+        "description": "The secure random number generator is being seeded with a predictable value, which undermines its security. The `SecureRandom` class should not be seeded with a hardcoded value, and should be seeded with a more secure and unpredictable source of entropy.",
+        "recommendation": "Use a secure and unpredictable source of entropy to seed the `SecureRandom` class, such as `new SecureRandom(new SecureRandomSource());`"
+    }
+]
+```

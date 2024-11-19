@@ -1,0 +1,20 @@
+The misuse is: "CWE-326: Inadequate Encryption Strength." 
+
+The misuse code snippets:
+
+```java
+KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+SecretKey key = keyGen.generateKey();
+```
+
+The description: The code is using the AES encryption algorithm, which has a key length of 128 bits. While this is sufficient for some applications, it's recommended to use a key size of 256 bits for better security. Using smaller key sizes can make the encryption less secure and more susceptible to attacks.
+
+The recommendation: To fix this misuse, you should generate an AES key with a key size of 256 bits. You can do this by calling the `init` method of the KeyGenerator instance with a key size of 256. Here's how to do it:
+
+```java
+KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+keyGen.init(256);
+SecretKey key = keyGen.generateKey();
+```
+
+By doing so, you're increasing the security of your encryption process.

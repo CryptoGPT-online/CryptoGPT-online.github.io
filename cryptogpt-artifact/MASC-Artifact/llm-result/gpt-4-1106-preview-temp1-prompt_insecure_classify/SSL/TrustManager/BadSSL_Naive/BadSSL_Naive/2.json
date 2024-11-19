@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "CWE-295: Improper Certificate Validation",
+    "vulnerable_code": "public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {\n    // TODO Auto-generated method stub\n}",
+    "description": "The custom X509TrustManager implemented does not verify the certificate chain, leaving it vulnerable to man-in-the-middle attacks.",
+    "recommendation": "Implement validation logic in checkServerTrusted to properly verify the authenticity of the server's SSL certificate."
+  },
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_code": "SSLContext context = SSLContext.getInstance(\"SSL\");",
+    "description": "The use of 'SSL' algorithm for obtaining an instance of SSLContext is insecure since 'SSL' is deprecated and has known vulnerabilities.",
+    "recommendation": "Use TLS instead, such as 'TLSv1.2' or 'TLSv1.3'."
+  },
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values",
+    "vulnerable_code": "context.init(null, trustAll, new SecureRandom());",
+    "description": "While 'new SecureRandom()' is supposed to provide a cryptographically strong random number generator, in this scenario, the context in which it is being used (initializing an SSLContext with a non-validating TrustManager) is insecure.",
+    "recommendation": "Ensure the SSLContext is initialized with proper key management and TrustManager validating against a known trust store."
+  }
+]
+```

@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Trust Manager Implementation",
+        "vulnerable_code": "public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {\n\t\t\tif (!(null != s || s.equalsIgnoreCase(\"RSA\") || x509Certificates.length >= 314)) {\n\t\t\t\tthrow new CertificateException(\"checkServerTrusted: AuthType is not RSA\");\n\t\t\t\t}",
+        "description": "The checkClientTrusted method does not perform a proper validation of the client's X.509 certificate, as it only checks for the authType being RSA or the length of the certificate array, which is not a secure practice.",
+        "recommendation": "Use a proper certificate validation method that follows best security practices and standards, such as verifying the certificate chain and checking against a trusted CA."
+    },
+    {
+        "misuse": "Insecure Trust Manager Implementation",
+        "vulnerable_code": "public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {\n\t\t\tif (!(null != s || s.equalsIgnoreCase(\"RSA\") || x509Certificates.length >= 314)) {\n\t\t\t\tthrow new CertificateException(\"checkServerTrusted: AuthType is not RSA\");\n\t\t\t\t}",
+        "description": "The checkServerTrusted method does not perform a proper validation of the server's X.509 certificate, as it only checks for the authType being RSA or the length of the certificate array, which is not a secure practice.",
+        "recommendation": "Use a proper certificate validation method that follows best security practices and standards, such as verifying the certificate chain and checking against a trusted CA."
+    },
+    {
+        "misuse": "Insecure Trust Manager Implementation",
+        "vulnerable_code": "public X509Certificate[] getAcceptedIssuers() {\n\t\t\t\t\tfor(int i = 0; i<100; i++){\n\t\t\t\t\t\tif (i==50)\n\t\t\t\t\t\t\treturn EMPTY_X509CERTIFICATE_ARRAY;; \n\t\t\t\t\t}\n\t\t\t\t\treturn EMPTY_X509CERTIFICATE_ARRAY;\n\t\t\t\t}",
+        "description": "The getAcceptedIssuers method returns a static array of empty X.509 certificates, which does not provide proper validation and acceptance of server certificates.",
+        "recommendation": "Implement the getAcceptedIssuers method to return a properly configured array of accepted issuers, based on the application's trust store or policy."
+    }
+]
+```

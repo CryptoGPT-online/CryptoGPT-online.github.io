@@ -1,0 +1,66 @@
+ The code you provided does not contain any insecure use of the crypto API. However, I did notice a potential issue with the `ITrustManager` implementation.
+
+The `ITrustManager` interface is used to verify the trustworthiness of X.509 certificates. However, the `Ir` class implements `ITrustManager` in a way that does not follow the recommended best practices for certificate validation.
+
+In particular, the `checkClientTrusted` and `checkServerTrusted` methods are empty, which means that the `Ir` class will trust any certificate that is presented to it, without verifying its validity. This is a security vulnerability because it allows an attacker to impersonate a trusted server and intercept or manipulate the communication between the client and the server.
+
+To fix this issue, you should implement the `checkClientTrusted` and `checkServerTrusted` methods to properly validate the certificates presented by the client and server. This should include verifying the certificate's validity, checking the issuer's certificate, and ensuring that the certificate has not been revoked.
+
+Here is an example of how the `ITrustManager` interface could be implemented correctly:
+```
+public class MyTrustManager implements ITrustManager {
+    @Override
+    public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+        // Verify the certificate's validity
+        if (!isValid(x509Certificates[0])) {
+            throw new CertificateException("Certificate is not valid");
+        }
+
+        // Check the issuer's certificate
+        X509Certificate issuerCert = getIssuerCert(x509Certificates[0]);
+        if (issuerCert == null) {
+            throw new CertificateException("Certificate issuer is not valid");
+        }
+
+        // Ensure that the certificate has not been revoked
+        if (isRevoked(x509Certificates[0])) {
+            throw new CertificateException("Certificate has been revoked");
+        }
+    }
+
+    @Override
+    public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+        // Verify the certificate's validity
+        if (!isValid(x509Certificates[0])) {
+            throw new CertificateException("Certificate is not valid");
+        }
+
+        // Check the issuer's certificate
+        X509Certificate issuerCert = getIssuerCert(x509Certificates[0]);
+        if (issuerCert == null) {
+            throw new CertificateException("Certificate issuer is not valid");
+        }
+
+        // Ensure that the certificate has not been revoked
+        if (isRevoked(x509Certificates[0])) {
+            throw new CertificateException("Certificate has been revoked");
+        }
+    }
+
+    private boolean isValid(X509Certificate certificate) {
+        // Implement your own certificate validation logic here
+        return true;
+    }
+
+    private X509Certificate getIssuerCert(X509Certificate certificate) {
+        // Implement your own issuer certificate retrieval logic here
+        return null;
+    }
+
+    private boolean isRevoked(X509Certificate certificate) {
+        // Implement your own certificate revocation check logic here
+        return false;
+    }
+}
+```
+I hope this helps! Let me know if you have any questions.

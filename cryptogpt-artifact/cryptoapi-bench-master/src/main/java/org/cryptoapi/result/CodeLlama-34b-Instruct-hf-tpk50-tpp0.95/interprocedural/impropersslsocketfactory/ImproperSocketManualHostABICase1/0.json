@@ -1,0 +1,20 @@
+ [
+    {
+        "misuse": "Weak Cipher Suites",
+        "vulnerable_code": "SSLSocketFactory.getDefault()",
+        "description": "The `SSLSocketFactory.getDefault()` method returns an instance of `SSLSocketFactory` with a set of weak cipher suites enabled by default, which can be exploited by attackers to perform a downgrade attack. This can happen if the application is running on a version of Java prior to 8u151, which included a fix for this vulnerability.",
+        "recommendation": "Use the `SSLSocketFactory.getDefault(StandardConstants.SOCKET_FACTORY_ALGORITHM)` method to create a `SSLSocketFactory` instance with a secure set of cipher suites enabled by default. This method is available in Java 8u151 and later versions."
+    },
+    {
+        "misuse": "Insecure Protocols",
+        "vulnerable_code": "SSLSocketFactory.createSocket(String, int)",
+        "description": "The `SSLSocketFactory.createSocket(String, int)` method creates an SSL socket with an insecure protocol, such as SSLv2 or SSLv3, which can be exploited by attackers to perform a downgrade attack. This can happen if the application is running on a version of Java prior to 8u151, which included a fix for this vulnerability.",
+        "recommendation": "Use the `SSLSocketFactory.createSocket(String, int, SSLContext)` method to create an SSL socket with a secure protocol, such as TLSv1.2. This method is available in Java 8u151 and later versions."
+    },
+    {
+        "misuse": "Insecure Keys",
+        "vulnerable_code": "SSLSocketFactory.createSocket(String, int, SSLContext)",
+        "description": "The `SSLSocketFactory.createSocket(String, int, SSLContext)` method creates an SSL socket with an insecure key exchange, such as RSA, which can be exploited by attackers to perform a man-in-the-middle attack. This can happen if the application is running on a version of Java prior to 8u151, which included a fix for this vulnerability.",
+        "recommendation": "Use the `SSLSocketFactory.createSocket(String, int, SSLContext, boolean)` method to create an SSL socket with a secure key exchange, such as Diffie-Hellman. This method is available in Java 8u151 and later versions."
+    }
+]

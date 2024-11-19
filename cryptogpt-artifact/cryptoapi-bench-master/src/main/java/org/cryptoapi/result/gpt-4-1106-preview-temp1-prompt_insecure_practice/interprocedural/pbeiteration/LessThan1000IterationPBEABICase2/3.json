@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "Insecure Randomness",
+    "vulnerable_code": "random.nextBytes(salt);",
+    "description": "The variable count (iteration count) is derived from a public constant DEFAULT_COUNT and indirectly used as iteration parameter which might result in an inadequate iteration count for PBEParameterSpec.",
+    "recommendation": "Use a sufficiently large iteration count (at least 10,000 as of current best practices) for key derivation that is not derived from a predictable source."
+  },
+  {
+    "misuse": "Inadequate Salt Size",
+    "vulnerable_code": "byte[] salt = new byte[32];",
+    "description": "Using a salt of 32 bytes might be considered less than ideal for some cryptographic operations where a larger salt could be more beneficial, although 32 bytes is generally adequate for most use cases, hence this is not a critical security issue.",
+    "recommendation": "Ensure the salt size is appropriate for the cryptographic operation being performed."
+  },
+  {
+    "misuse": "Exposing Sensitive Information",
+    "vulnerable_code": "public static final String DEFAULT_COUNT = \"20\";",
+    "description": "The DEFAULT_COUNT variable that holds iteration count is public and static, potentially exposing sensitive information.",
+    "recommendation": "Store sensitive information such as iteration counts in a secure manner, not as publicly accessible constants."
+  }
+]
+```

@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Insufficient Iteration Count",
+        "vulnerable_code": "pbeParamSpec = new PBEParameterSpec(salt, count);",
+        "description": "The iteration count 'count' provided to PBEParameterSpec is controlled by the variable 'int count', which is set to 20. This number of iterations is too low for modern standards and can lead to quick brute-force attacks.",
+        "recommendation": "Increase the iteration count to a minimum of 10,000 iterations to make password hashing more secure."
+    },
+    {
+        "misuse": "Use of a Non-constant Salt",
+        "vulnerable_code": "byte[] salt = new byte[32];\nrandom.nextBytes(salt);",
+        "description": "The salt is generated at runtime, which is good for security, but if it's not stored or associated with the user account, the generated hashes cannot be verified against future login attempts.",
+        "recommendation": "Ensure that the generated salt is stored securely and can be retrieved to verify password hashes during user authentication."
+    }
+]
+```

@@ -1,0 +1,40 @@
+ {
+"misuses": [
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "Cipher.getInstance(\"RSA\")",
+"description": "The code uses the RSA algorithm without any additional settings, which can lead to vulnerabilities such as RSA blindness and RSA manipulation attacks. It is recommended to use a more secure algorithm such as AES with a secure mode of operation such as GCM.",
+"recommendation": "Use a more secure algorithm such as AES with a secure mode of operation such as GCM."
+},
+{
+"misuse": "Hardcoded Keysize",
+"vulnerable_code": "private static int KEY_SIZE = 1024;",
+"description": "The key size is hardcoded to 1024, which is insecure. It is recommended to use a key size of at least 2048 bits.",
+"recommendation": "Use a key size of at least 2048 bits."
+},
+{
+"misuse": "Insecure Key Generation",
+"vulnerable_code": "KeyPairGenerator kgp = KeyPairGenerator.getInstance(\"RSA\");\nkgp.initialize(keysize);",
+"description": "The key generation method used is insecure. It is recommended to use a secure key generation method such as RSA key generation with a secure padding scheme such as OAEP.",
+"recommendation": "Use a secure key generation method such as RSA key generation with a secure padding scheme such as OAEP."
+},
+{
+"misuse": "Missing Encryption Mode",
+"vulnerable_code": "Cipher cipher = Cipher.getInstance(\"RSA\");\ncipher.init(Cipher.ENCRYPT_MODE, kp.getPublic());",
+"description": "The encryption mode is not specified, which can lead to insecure encryption. It is recommended to specify the encryption mode explicitly.",
+"recommendation": "Specify the encryption mode explicitly."
+},
+{
+"misuse": "Missing Decryption Mode",
+"vulnerable_code": "Cipher dec = Cipher.getInstance(\"RSA\");\ndec.init(Cipher.DECRYPT_MODE, kp.getPrivate());",
+"description": "The decryption mode is not specified, which can lead to insecure decryption. It is recommended to specify the decryption mode explicitly.",
+"recommendation": "Specify the decryption mode explicitly."
+},
+{
+"misuse": "Insecure Object Serialization",
+"vulnerable_code": "SealedObject encryptedMessage = new SealedObject(myMessage,cipher);",
+"description": "The SealedObject class is used to serialize and encrypt an object, but it is not secure. It is recommended to use a secure serialization and encryption method such as JSON Web Token (JWT) with a secure encryption algorithm such as AES-256.",
+"recommendation": "Use a secure serialization and encryption method such as JSON Web Token (JWT) with a secure encryption algorithm such as AES-256."
+}
+]
+}

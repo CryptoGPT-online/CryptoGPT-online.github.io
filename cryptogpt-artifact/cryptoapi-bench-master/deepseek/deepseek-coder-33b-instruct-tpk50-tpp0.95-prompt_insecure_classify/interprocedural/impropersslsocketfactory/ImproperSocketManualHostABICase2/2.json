@@ -1,0 +1,34 @@
+The code you provided does not have any misuses per se, but there are two things worth noting:
+
+1. The `toString()` method is not used correctly in the line `socket = (SSLSocket) ssf.createSocket(hostName.toString(),soc);`. The `toString()` method in Java converts a character array into a string, but in this case, it is not necessary because the `createSocket()` method expects a `String` as the first argument, not a character array. 
+
+2. This code is hardcoding the host name to "my.host.name". It would be better to make it a configurable parameter rather than hardcoding it.
+
+Here is the corrected code:
+
+```java
+public class I2 {
+    private static String DEFAULT_HOST_NAME = "my.host.name";
+    private static String hostName;
+
+    public static void main(String [] args) throws IOException {
+        int soc = 443;
+        go2();
+        go3();
+        go(soc);
+    }
+    private static void go2(){
+        DEFAULT_HOST_NAME = "my.host.name";
+    }
+    private static void go3(){
+        hostName = DEFAULT_HOST_NAME;
+    }
+
+    private static void go(int soc) throws IOException {
+        SSLSocketFactory ssf = (SSLSocketFactory) SSLSocketFactory.getDefault();
+        SSLSocket socket = (SSLSocket) ssf.createSocket(hostName, soc);
+    }
+}
+```
+
+Please note that `hostName` is still hardcoded here, you should make it a configurable parameter or get it from user input. If you have a reason to keep `DEFAULT_HOST_NAME` as a field, you should use it instead of `hostName` in the `createSocket()` method.

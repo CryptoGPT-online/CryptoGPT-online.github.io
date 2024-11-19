@@ -1,0 +1,12 @@
+Misuse: CWE-326: Inadequate Encryption Strength
+Misuse Code:
+```
+byte[] keyBytes = defaultKey.getBytes();
+keyBytes = Arrays.copyOf(keyBytes,16);
+SecretKeySpec keySpec = new SecretKeySpec(keyBytes, "AES");
+```
+Description: 
+The encryption strength of AES is not sufficient. The standard for AES is AES-128 and AES-192, but this code uses a 16-byte key which is too short to be secure. AES-256 is recommended as it provides more security.
+
+Recommendation:
+Modify the code to use a 32-byte key for AES-256, or for maximum security, use a longer key, depending on your specific needs. If AES-256 is sufficient, then you could use a 32-byte key.

@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "SecureRandom random = new SecureRandom();\nrandom.nextBytes(salt);",
+        "description": "SecureRandom is used to generate a random salt. However, SecureRandom uses the underlying OS's native RNG which can be easily predictable by a potential attacker. This makes the salt not cryptographically secure.",
+        "recommendation": "Use java.security.SecureRandom instead of java.util.Random to generate a secure random number. Alternatively, use java.util.Random with a SecureRandom seed if you don't need a strong RNG."
+    },
+    {
+        "misuse": "Small Iteration Count",
+        "vulnerable_code": "int count = 1020;\nPBEParameterSpec pbeParamSpec = new PBEParameterSpec(salt, count);",
+        "description": "A small iteration count can be used as a defense against brute force attack, but 1020 is very small and may lead to slower encryption, thus making it weaker.",
+        "recommendation": "Use a iteration count of at least 100,000 or more."
+    }
+]
+```

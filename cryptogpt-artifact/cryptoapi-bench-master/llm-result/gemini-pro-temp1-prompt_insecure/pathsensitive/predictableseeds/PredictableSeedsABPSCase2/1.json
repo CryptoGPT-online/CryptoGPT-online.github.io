@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "Weak SecureRandom Seeding (CWE-326)",
+    "vulnerable_code": "SecureRandom sr2 = new SecureRandom();\nint choice=2;\nbyte [] seed = {(byte) 100, (byte) 200};\nif(choice>1)\nsr2.nextBytes(seed);",
+    "description": "The SecureRandom object `sr2` is created without a cryptographically strong seed. The `nextBytes()` method is used to seed the generator with a weak seed, which can be easily guessed or brute-forced.",
+    "recommendation": "Use a cryptographically strong random number generator (CSPRNG) such as `java.security.SecureRandom` and seed it with a strong seed, such as `/dev/urandom` on Linux or `CryptGenRandom()` on Windows."
+  },
+  {
+    "misuse": "Weak SecureRandom Seeding (CWE-326)",
+    "vulnerable_code": "SecureRandom sr = new SecureRandom(new byte[]{seed});",
+    "description": "The SecureRandom object `sr` is created with a weak seed. The seed is a single byte, which is not cryptographically strong and can be easily guessed or brute-forced.",
+    "recommendation": "Use a cryptographically strong random number generator (CSPRNG) such as `java.security.SecureRandom` and seed it with a strong seed, such as `/dev/urandom` on Linux or `CryptGenRandom()` on Windows."
+  },
+  {
+    "misuse": "Weak SecureRandom Seeding (CWE-326)",
+    "vulnerable_code": "SecureRandom sr = new SecureRandom(seed);",
+    "description": "The SecureRandom object `sr` is created with a weak seed. The seed is a byte array of length 2, which is not cryptographically strong and can be easily guessed or brute-forced.",
+    "recommendation": "Use a cryptographically strong random number generator (CSPRNG) such as `java.security.SecureRandom` and seed it with a strong seed, such as `/dev/urandom` on Linux or `CryptGenRandom()` on Windows."
+  }
+]
+```

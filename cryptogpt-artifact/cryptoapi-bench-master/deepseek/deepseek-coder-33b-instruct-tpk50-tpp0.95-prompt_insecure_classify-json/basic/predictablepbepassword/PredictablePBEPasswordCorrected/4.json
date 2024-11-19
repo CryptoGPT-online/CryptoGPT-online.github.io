@@ -1,0 +1,30 @@
+public class Pd {
+    private PBEKeySpec pbeKeySpec = null;
+
+    public static void main(String [] args){
+        Pd ckp = new Pd();
+        ckp.key();
+    }
+
+    public void key() {
+        SecureRandom random = new SecureRandom();
+        String password = generateRandomPassword(random);
+        byte [] salt = new byte[16]; // Increase the length of salt
+        random.nextBytes(salt);
+        int iterationCount = 1000000; // Increase the iteration count
+        int keyLength = 32; // Increase the key length
+        pbeKeySpec = new PBEKeySpec(password.toCharArray(), salt, iterationCount, keyLength * 8);
+    }
+
+    private static String generateRandomPassword(SecureRandom random) {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~`@#$%^&*()-_=+[{]};:',<.>/?";
+        String password = "";
+        for (int i = 0; i < 16; i++) { // Increase the length of password
+            password += characters.charAt(random.nextInt(characters.length()));
+        }
+        return password;
+    }
+}
+```
+
+Please note, the exact values for salt length, iteration count, and key length could vary depending on the specific cryptographic requirements and resources of the system. This is just a general recommendation. Always consider your specific needs and constraints when choosing these parameters.

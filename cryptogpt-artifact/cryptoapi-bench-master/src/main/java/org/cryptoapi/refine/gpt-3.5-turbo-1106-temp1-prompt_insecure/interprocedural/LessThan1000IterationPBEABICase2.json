@@ -1,0 +1,24 @@
+### False Positive Misuse ###
+N/A
+
+### Optimized Misuse JSON###
+[
+    {
+        "misuse": "Insecure use of SecureRandom",
+        "vulnerable_code": "SecureRandom random = new SecureRandom();",
+        "description": "Using SecureRandom without specifying a specific cryptographic algorithm may lead to insecurity. It's important to specify a strong cryptographic algorithm for SecureRandom.",
+        "recommendation": "Specify a strong cryptographic algorithm when creating the SecureRandom instance, such as SecureRandom.getInstanceStrong()"
+    },
+    {
+        "misuse": "Hardcoded Initialization Vector (IV)",
+        "vulnerable_code": "PBEParameterSpec pbeParamSpec = new PBEParameterSpec(salt, Integer.parseInt(String.valueOf(count)));",
+        "description": "The salt is used as the IV for the PBE parameter specification without any additional measures for secrecy or randomness.",
+        "recommendation": "Use a cryptographically secure random number generator to generate a secret initialization vector (IV) instead of using a hardcoded value."
+    },
+    {
+        "misuse": "Insecure Cryptographic Key",
+        "vulnerable_code": "pbeParamSpec = new PBEParameterSpec(salt, Integer.parseInt(String.valueOf(count)));",
+        "description": "Using a primitive type as a cryptographic key could result in weak or predictable keys being used in encryption.",
+        "recommendation": "Generate a strong and unpredictable cryptographic key using a secure key derivation function like PBKDF2."
+    }
+]

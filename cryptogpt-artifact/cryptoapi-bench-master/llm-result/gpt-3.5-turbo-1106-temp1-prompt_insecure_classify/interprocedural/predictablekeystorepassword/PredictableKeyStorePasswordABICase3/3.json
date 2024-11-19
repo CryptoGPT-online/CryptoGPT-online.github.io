@@ -1,0 +1,20 @@
+[
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_code": "ks.load(cacerts.openStream(), key.toCharArray());",
+    "description": "The code is using a weak encryption algorithm (JKS) with a low encryption strength. Additionally, the key used for encryption is a hardcoded value.",
+    "recommendation": "Use stronger encryption algorithms (e.g., AES) with recommended key sizes. Avoid using hardcoded keys, instead, store them securely or use dynamically generated keys."
+  },
+  {
+    "misuse": "CWE-798: Use of Hardcoded Credentials",
+    "vulnerable_code": "String key = \"changeit\";",
+    "description": "The code is using a hardcoded password for the encryption process. Hardcoded passwords are insecure because they can be easily discovered and exploited.",
+    "recommendation": "Avoid using hardcoded passwords. Use secure mechanisms to store and retrieve passwords, such as using environment variables or reading from a secure configuration file."
+  },
+  {
+    "misuse": "CWE-295: Improper Certificate Validation",
+    "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");\nks.load(cacerts.openStream(), key.toCharArray());",
+    "description": "The code is loading the certificate from a URL (https://www.google.com) without properly validating the certificate. This can lead to potential security vulnerabilities, such as man-in-the-middle attacks.",
+    "recommendation": "Use a trusted certificate store and verify the server's certificate before establishing a connection. Additionally, consider using certificate pinning to further enhance security."
+  }
+]

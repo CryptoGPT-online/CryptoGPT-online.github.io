@@ -1,0 +1,47 @@
+Here are the findings:
+
+1. Usage of IDEA Algorithm:
+The use of IDEA Algorithm is a misuse which violates the principle of not using insecure or weak cryptographic algorithm (CWE-321). IDEA is considered weak now and it's no longer recommended to use it in new designs. Its successor is Blowfish.
+
+```java
+// Vulnerable Code
+KeyGenerator keyGen = KeyGenerator.getInstance(crypto);
+SecretKey key = keyGen.generateKey();
+Cipher cipher = Cipher.getInstance(crypto);
+cipher.init(Cipher.ENCRYPT_MODE, key);
+```
+
+Description: IDEA (International Data Encryption Algorithm) is a symmetric-key block cipher, but it's not recommended for use because it's considered weak. The U.S. National Institute of Standards and Technology (NIST) has formally deprecated it in favor of Blowfish.
+
+Recommendation: Use a secure cryptographic algorithm such as AES (Advanced Encryption Standard) instead of IDEA.
+
+2. Key Generation:
+The code generated a key in method1 but the key is never used. This is a misuse of CWE-327, which is about generating keys without any specific uses. 
+
+```java
+// Vulnerable Code
+KeyGenerator keyGen = KeyGenerator.getInstance(crypto);
+SecretKey key = keyGen.generateKey();
+```
+
+Description: Key generation without specific uses can lead to potential misuse of the keys.
+
+Recommendation: Use the key for encrypting or decrypting messages.
+
+JSON Format Reponse:
+```json
+[
+    {
+        "misuse": "CWE-321",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(crypto);\nSecretKey key = keyGen.generateKey();\nCipher cipher = Cipher.getInstance(crypto);\n",
+        "description": "Use of IDEA (International Data Encryption Algorithm) which is a weak cryptographic algorithm. It's recommended to use secure cryptographic algorithm such as AES (Advanced Encryption Standard) instead.",
+        "recommendation": "Use AES as the cryptographic algorithm."
+    },
+    {
+        "misuse": "CWE-327",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(crypto);\nSecretKey key = keyGen.generateKey();",
+        "description": "Generating key without any specific uses can lead to potential misuse of the keys.",
+        "recommendation": "Use the key for encrypting or decrypting messages."
+    }
+]
+```

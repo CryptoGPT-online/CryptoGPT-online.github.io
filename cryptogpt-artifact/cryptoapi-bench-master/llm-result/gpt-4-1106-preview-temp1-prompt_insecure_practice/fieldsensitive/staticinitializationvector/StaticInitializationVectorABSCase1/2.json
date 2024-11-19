@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Hardcoded IV",
+        "vulnerable_code": "byte [] defIV;",
+        "description": "Using a hardcoded IV in CBC mode is insecure as it should be random and unpredictable for every encryption operation to ensure the cryptographic strength of the encryption.",
+        "recommendation": "Generate a new random IV for each encryption operation using a secure random number generator."
+    },
+    {
+        "misuse": "Short IV Length",
+        "vulnerable_code": "byte [] bytes = \"abcde\".getBytes();",
+        "description": "The IV length for AES should be 16 bytes (128 bits) in CBC mode, but the provided IV is shorter, which can lead to weak cryptography.",
+        "recommendation": "Ensure the IV is the correct length (16 bytes for AES) and is generated securely."
+    },
+    {
+        "misuse": "Weak Key Generation",
+        "vulnerable_code": "SecretKey key = keyGen.generateKey();",
+        "description": "A key is being generated without specifying the key strength. The default key size could be less than the recommended strength, making it easier to break the encryption.",
+        "recommendation": "Explicitly set the key size to a secure level such as 128, 192, or 256 bits when generating the key."
+    },
+    {
+        "misuse": "Static IV Assignment",
+        "vulnerable_code": "passedIV = defIV;",
+        "description": "The IV should not be static and predictable, but this code directly assigns a fixed IV to the passedIV, making it predictable and reducing the security of the encryption.",
+        "recommendation": "Use a securely generated random IV for each encryption instance."
+    }
+]
+```

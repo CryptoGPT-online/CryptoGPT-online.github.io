@@ -1,0 +1,17 @@
+ ### Optimized Misuse JSON ###
+
+The following is the optimized misuse JSON entry:
+```json
+{
+    "misuse": "Insecure Use of Cryptographically Weak Pseudo-Random Number Generation",
+    "vulnerable_code": "SecureRandom sr = new SecureRandom();
+        long l = sr.nextLong();
+        sr.setSeed(l);
+        int v = sr.nextInt();
+        System.out.println(v);",
+    "description": "The code uses SecureRandom class to generate random numbers, but in this code, it is being used to set the seed for the random number generator. This is a broken crypto algorithm, as it is deterministic and can be predicted. It can also introduce a bias in the random number generation.",
+    "recommendation": "Replace the SecureRandom class with a cryptographically secure random number generator, such as the CTRDRBG or the HMAC-DRBG, and use the generate() method to generate random numbers."
+}
+```
+
+This misuse JSON entry is not a false positive because it highlights the use of `SecureRandom` to set the seed for the random number generator, which can introduce a bias in the random number generation.

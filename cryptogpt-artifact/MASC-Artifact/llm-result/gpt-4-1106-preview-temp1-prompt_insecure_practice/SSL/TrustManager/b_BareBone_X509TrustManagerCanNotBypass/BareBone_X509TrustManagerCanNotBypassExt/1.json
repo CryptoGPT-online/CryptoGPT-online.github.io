@@ -1,0 +1,21 @@
+```json
+[
+  {
+    "misuse": "Trust Manager that Trusts All Certificates",
+    "vulnerable_code": [
+      "public void checkClientTrusted(X509Certificate[] chain, String authType)",
+      "public void checkServerTrusted(X509Certificate[] chain, String authType)"
+    ],
+    "description": "The overridden methods do not implement any validation logic which makes the trust manager trust all certificates. This is dangerous as it could easily lead to man-in-the-middle attacks.",
+    "recommendation": "Implement proper verification of X509 certificates using Certificate Authorities or a list of trusted certificates."
+  },
+  {
+    "misuse": "Empty X509Certificate Chain",
+    "vulnerable_code": [
+      "public X509Certificate[] getAcceptedIssuers()"
+    ],
+    "description": "Returning `null` from this method may cause NullPointerExceptions in some SSL/TLS implementations or could be treated as trusting no certificates, depending on the implementation.",
+    "recommendation": "Return an array of acceptable CA issuer certificates instead of null."
+  }
+]
+```

@@ -1,0 +1,15 @@
+### False Positive Misuse ###
+
+Looking at the code provided, it seems that SHA1 is indeed used as a hashing algorithm, which is generally considered a bad practice because it's vulnerable to collision attacks. However, the given code does have logic to upgrade the hash function to SHA-256 if `choice` is greater than 1, which is the case in the provided `main` method. Therefore, the SHA1 algorithm is not actually used since `choice` is set to 2, and the `MessageDigest.getInstance("SHA1")` call is replaced with `MessageDigest.getInstance("SHA-256")` before any hashing operation occurs.
+
+Thus, while it's true that the code snippet includes a potentially risky cryptographic API call with SHA1, it’s not applicable in the given context because an adequate safeguard—checking `choice` and subsequently using a more secure algorithm (SHA-256)—is in place.
+
+The misuse reports are false positives because they report the mere presence of the "SHA1" string in the code, without considering the surrounding logic and control flow. It would be erroneous to flag such usage without acknowledging the conditional logic that prevents the actual execution of the vulnerable code path.
+
+### Optimized Misuse JSON###
+
+Given the false positive nature of the misuse reports, the optimized list would be empty, as no actual cryptographic API misuse is present:
+
+```json
+[]
+```

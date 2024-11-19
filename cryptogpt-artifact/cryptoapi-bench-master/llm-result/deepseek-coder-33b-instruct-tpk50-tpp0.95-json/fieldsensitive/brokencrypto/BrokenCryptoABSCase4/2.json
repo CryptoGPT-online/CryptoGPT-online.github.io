@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);",
+        "description": "The KeyGenerator class is used to generate keys and this method may not provide secure randomness as it is inherited from java.security.SecureRandom. The keys generated using KeyGenerator are not suitable for encryption purposes as the keys generated may be easily predicted or brute forced. It's better to use a SecureRandom instance for generating keys.",
+        "recommendation": "Use SecureRandom for generating keys instead of KeyGenerator. Also, it's recommended to keep the algorithm keys safe and secret. They should not be hard coded within the application."
+    },
+    {
+        "misuse": "Weak Encryption Algorithm",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(defaultAlgo);",
+        "description": "The encryption algorithm being used (RC2) is considered weak. RC2 is a block cipher with a block size of 64 bits. It was developed by RSA Data Security, Inc. This cipher has been proven to have design weaknesses that make it susceptible to a number of attacks. It's recommended to use a stronger encryption algorithm.",
+        "recommendation": "Consider using a stronger encryption algorithm such as AES (Advanced Encryption Standard). It's a symmetric encryption algorithm that has been extensively tested and is secure. For example, use Cipher.getInstance(\"AES\") instead."
+    }
+]
+```

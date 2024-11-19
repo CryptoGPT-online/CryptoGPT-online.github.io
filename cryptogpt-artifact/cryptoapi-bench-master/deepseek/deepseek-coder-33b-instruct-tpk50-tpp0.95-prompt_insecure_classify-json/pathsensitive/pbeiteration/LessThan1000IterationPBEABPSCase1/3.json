@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values.",
+        "vulnerable_code": "byte[] salt = new byte[32];\nSecureRandom random = new SecureRandom();\nrandom.nextBytes(salt);",
+        "description": "A salt of 32 bytes is often used, but it can lead to insecure behavior because it relies on the strength of the SecureRandom class, which is known to have weaknesses.",
+        "recommendation": "Use a larger salt, ideally at least 64 bytes long. This will increase the complexity of the hash and thus make it harder for attackers to guess the password."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "PBEParameterSpec pbeParamSpec = null;\npbeParamSpec = new PBEParameterSpec(salt, count);",
+        "description": "The iteration count is a key component of PBE algorithms. An attacker can exploit a weakness in the algorithm (like PBKDF2 or bcrypt) by trying lower iteration counts until they find a value that works. This can be exploited if the count is set too high.",
+        "recommendation": "Limit the maximum iteration count to a value that makes sense for your use case. The standard recommendation for PBKDF2 is between 1000 and 10,000. For bcrypt, the value should be as large as possible, but less than about 2^16 to avoid integer overflow problems."
+    }
+]
+```

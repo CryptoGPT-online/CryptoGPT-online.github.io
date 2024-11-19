@@ -1,0 +1,14 @@
+[
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();\nCipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+    "description": "This code uses AES algorithm which is not considered secure anymore.",
+    "recommendation": "Replace AES algorithm with a more secure algorithm like AES-GCM or ChaCha20-Poly1305."
+  },
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values.",
+    "vulnerable_code": "String name = \"abcdef\";\nMap<String, String> hm = new HashMap<String, String>();\nhm.put(\"aaa\", \"abcde\");\nhm.put(\"bbb\", \"fghij\");\nhm.put(\"ccc\", \"klmno\");\nhm.put(\"ddd\", \"pqrst\");\nString str = hm.get(\"aaa\");\nbyte [] bytes = str.getBytes();\nIvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+    "description": "This code uses a static string ('abcdef') as the IV (Initialization Vector), which is not random and can weaken the encryption.",
+    "recommendation": "Use a cryptographically secure random number generator to generate the IV. Do not use static values."
+  }
+]

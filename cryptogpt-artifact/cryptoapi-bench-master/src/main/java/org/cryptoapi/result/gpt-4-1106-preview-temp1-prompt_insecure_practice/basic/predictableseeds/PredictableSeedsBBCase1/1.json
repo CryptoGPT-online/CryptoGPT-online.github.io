@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Insufficient Entropy",
+        "vulnerable_code": "sr.setSeed(bytes);",
+        "description": "The code manually seeds the SecureRandom instance with a preset, static byte array, which may lead to insufficient entropy if used for cryptographic purposes.",
+        "recommendation": "Remove the setSeed line to allow SecureRandom to self-seed with entropy from the underlying operating system, or ensure that the seed is both unpredictable and has sufficient entropy."
+    },
+    {
+        "misuse": "Use of Constant Seed",
+        "vulnerable_code": "byte [] bytes = {(byte) 100, (byte) 200};",
+        "description": "Using a constant seed can make SecureRandom predictable, as the same seed will produce the same sequence of numbers, which can be exploited by an attacker especially in a cryptographic context.",
+        "recommendation": "Do not use a constant seed. Instead, allow SecureRandom to seed itself using platform-provided randomness sources."
+    }
+]
+```

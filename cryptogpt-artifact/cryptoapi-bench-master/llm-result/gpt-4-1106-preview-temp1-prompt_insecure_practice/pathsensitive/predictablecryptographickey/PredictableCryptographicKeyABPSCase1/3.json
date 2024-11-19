@@ -1,0 +1,28 @@
+```json
+[
+  {
+    "misuse": "Inadequate Key Generation",
+    "vulnerable_code": "keyBytes = String.valueOf(random.ints()).getBytes();",
+    "description": "The key is generated from a SecureRandom ints stream without proper encoding. Converting a stream of random integers to a string then to bytes is not cryptographically sound.",
+    "recommendation": "Use SecureRandom to generate a byte array directly for cryptographic keys."
+  },
+  {
+    "misuse": "Key Length not Checked",
+    "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+    "description": "The key byte array is being resized without validation of its length. If the initial keyBytes is shorter than 16 bytes, this will produce a weak key.",
+    "recommendation": "Ensure that the key has the correct length before resizing. For AES, valid key sizes are typically 128, 192, or 256 bits."
+  },
+  {
+    "misuse": "Default Key Usage",
+    "vulnerable_code": "String defaultKey = \"defaultkey\";",
+    "description": "A hardcoded default key is present in the code, which could be easily discovered through code analysis and is the same across multiple installations.",
+    "recommendation": "Avoid hardcoded keys. Always generate secure random keys for each installation."
+  },
+  {
+    "misuse": "Improper Initialization Vector (IV) Usage",
+    "vulnerable_code": "SecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES\");",
+    "description": "The code is missing the initialization vector (IV) for AES in CBC mode (if used afterwards), which is critical for security. Using a static IV or not providing one at all can lead to predictability in cipher texts.",
+    "recommendation": "Always use a securely generated random IV for each encryption operation when using AES in CBC mode."
+  }
+]
+```

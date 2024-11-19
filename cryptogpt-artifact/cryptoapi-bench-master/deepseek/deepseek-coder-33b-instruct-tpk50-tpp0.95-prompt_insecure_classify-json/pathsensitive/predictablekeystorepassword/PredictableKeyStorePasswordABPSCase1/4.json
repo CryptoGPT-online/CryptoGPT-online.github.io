@@ -1,0 +1,28 @@
+```json
+[
+  {
+    "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+    "vulnerable_code": "KeyStore ks = KeyStore.getInstance(type);",
+    "description": "The code is using the JKS (Java Keystore) which is okay but it allows for negotiation between client and server during SSL/TLS handshake. However, by default, JKS uses a lower-grade algorithm called DES for encryption and MD5 for integrity checks. This makes JKS a less secure choice and may pose a risk during negotiation.",
+    "recommendation": "Consider using stronger algorithms or updating to Java 9 or later versions which allow stronger algorithms such as AES."
+  },
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_code": "ks.load(cacerts.openStream(), defaultKey.toCharArray());",
+    "description": "This code is using a key which is generated randomly, potentially resulting in a weaker key.",
+    "recommendation": "It's not recommended to use random key for encryption. Use a strong key and keep it safely."
+  },
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values",
+    "vulnerable_code": "SecureRandom random = new SecureRandom(); defaultKey = String.valueOf(random.ints());",
+    "description": "The code is using SecureRandom to generate a random key, which can be insecure depending on the Java version being used.",
+    "recommendation": "Java versions before Java 8 could use the current time as a seed, which can be predictable. Use a cryptographically secure random number generator for stronger randomness."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_code": "if(choice>1){ ... }",
+    "description": "In this code, defaultKey is being replaced with a random string if choice > 1. This can lead to weaker encryption and may make it easier for attackers to crack the encryption.",
+    "recommendation": "It's recommended to use a secure method for key generation that provides enough entropy to be hard to guess or brute-force."
+  }
+]
+```

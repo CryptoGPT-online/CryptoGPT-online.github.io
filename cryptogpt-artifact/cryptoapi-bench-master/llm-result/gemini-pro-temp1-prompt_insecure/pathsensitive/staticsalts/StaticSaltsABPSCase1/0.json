@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "Insufficient Entropy PBE Key Derivation",
+    "vulnerable_code": "SecureRandom sr2 = new SecureRandom();\nsr2.nextBytes(salt);",
+    "description": "The code uses `SecureRandom` to generate salt for PBE key derivation. However, it only generates 1 byte of salt, which is insufficient entropy and can lead to weak keys.",
+    "recommendation": "Use a cryptographically secure random number generator and generate a sufficient amount of salt (e.g. 128 bits). Consider using a library that handles key derivation securely, such as `java.security.KeyGenerator`."
+  },
+  {
+    "misuse": "Weak Iteration Count for PBKDF2",
+    "vulnerable_code": "int count = 1020;",
+    "description": "The code uses a low iteration count (1020) for PBKDF2. This makes it easier for an attacker to brute-force the password.",
+    "recommendation": "Use a higher iteration count (e.g. 100,000 or more) to make it more difficult for an attacker to crack the password."
+  }
+]
+```

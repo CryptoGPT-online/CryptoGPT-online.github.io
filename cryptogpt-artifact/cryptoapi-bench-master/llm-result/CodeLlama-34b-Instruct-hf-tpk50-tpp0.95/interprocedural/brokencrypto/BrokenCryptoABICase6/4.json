@@ -1,0 +1,22 @@
+ {
+"misuses": [
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(String.valueOf(crypto));\nSecretKey key = keyGen.generateKey();\nCipher cipher = Cipher.getInstance(String.valueOf(crypto));\ncipher.init(Cipher.ENCRYPT_MODE, key);",
+"description": "The code uses a weak crypto algorithm, specifically Blowfish, which is a 64-bit cipher and is considered to be insecure. It is recommended to use a more secure algorithm such as AES, which is a 128-bit cipher.",
+"recommendation": "Change the crypto algorithm to a more secure one, such as AES."
+},
+{
+"misuse": "Crypto API Misuse",
+"vulnerable_code": "Cipher.getInstance(String.valueOf(crypto));",
+"description": "The code uses the Cipher class to initialize a cipher object without specifying a provider. This can lead to potential security vulnerabilities, such as the use of a weak or insecure provider.",
+"recommendation": "Always specify a provider when initializing a cipher object, either by calling Cipher.getInstance(String, String) or Cipher.getInstance(String, Provider)."
+},
+{
+"misuse": "Crypto API Misuse",
+"vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+"description": "The code uses the Cipher class to initialize a cipher object without specifying the encryption mode. This can lead to potential security vulnerabilities, such as the use of a weak or insecure encryption mode.",
+"recommendation": "Always specify the encryption mode when initializing a cipher object, either by calling Cipher.init(int, Key) or Cipher.init(int, Key, SecureRandom)."
+}
+]
+}

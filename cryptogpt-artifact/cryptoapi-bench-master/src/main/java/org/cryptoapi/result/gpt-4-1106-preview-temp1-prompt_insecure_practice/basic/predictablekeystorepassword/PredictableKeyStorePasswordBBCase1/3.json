@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Hardcoded Cryptographic Key",
+        "vulnerable_code": "String defaultKey = \"changeit\";",
+        "description": "Using a hardcoded key can allow an attacker who is able to read the code to access any data protected by that key.",
+        "recommendation": "Use a dynamic and confidential method for managing cryptographic keys, such as a secure vault system or environment variables."
+    },
+    {
+        "misuse": "Insecure Transmission of Key",
+        "vulnerable_code": "ks.load(cacerts.openStream(), defaultKey.toCharArray());",
+        "description": "Loading KeyStore from a URL may expose the KeyStore contents to interception during transmission if a secure scheme (HTTPS) is not guaranteed.",
+        "recommendation": "Ensure that the URL is over a secure scheme such as HTTPS and that the server at the URL is properly validating TLS certificates to prevent Man-In-The-Middle (MITM) attacks."
+    },
+    {
+        "misuse": "Certificate Validation Over HTTP",
+        "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");",
+        "description": "While the code snippet shows an HTTPS URL being used to load certificates, the variable is misleadingly named 'cacerts' which suggests it might be intended to hold CA certificates to establish trust. Loading such crucial certificates from an HTTP source could lead to a MITM attack.",
+        "recommendation": "Verify that URL used to load a KeyStore or certificates is intended and validated as secure. Confirm that the KeyStore source is trustworthy and secure, or consider loading certificates from a local file path after securely obtaining them."
+    }
+]
+```

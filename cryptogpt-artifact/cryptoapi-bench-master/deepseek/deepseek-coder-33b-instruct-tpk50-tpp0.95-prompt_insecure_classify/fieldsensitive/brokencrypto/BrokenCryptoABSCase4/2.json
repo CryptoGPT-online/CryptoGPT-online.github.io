@@ -1,0 +1,57 @@
+Misuses:
+
+1) Use of a Broken or Risky Cryptographic Algorithm (CWE-327)
+Vulnerable code:
+```
+public C5(String defAlgo) throws NoSuchPaddingException, NoSuchAlgorithmException {
+    defaultAlgo = defAlgo;
+}
+
+public byte[] encrypt(String txt, String passedAlgo) throws UnsupportedEncodingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, NoSuchPaddingException {
+    if(passedAlgo.isEmpty()){
+        passedAlgo = defaultAlgo;
+    }
+
+    KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);
+    SecretKey key = keyGen.generateKey();
+    Cipher cipher = Cipher.getInstance(defaultAlgo);
+    cipher.init(Cipher.ENCRYPT_MODE, key);
+
+    byte [] txtBytes = txt.getBytes();
+    return cipher.doFinal(txtBytes);
+}
+```
+Description: The "RC2" algorithm is a risky cryptographic algorithm because it is considered vulnerable and can be broken. "RC2" is no longer considered secure as it has been a part of a breach and can potentially be broken. This means it can be subject to attacks that can potentially decrypt the encrypted data.
+
+Recommendation: Use a more secure and updated algorithm like AES (Advanced Encryption Standard).
+
+2) Insufficient Key Size (CWE-330)
+Vulnerable code:
+```
+KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);
+SecretKey key = keyGen.generateKey();
+```
+Description: The KeyGenerator generates a key with the default key size for the specified algorithm. The key size is typically a parameter of the encryption algorithm and it should be chosen based on the security needs. The default key size for RC2 is too small (64 bits) and can easily be brute-forced.
+
+Recommendation: Specify the key size explicitly in the KeyGenerator for the algorithm. For example, for AES you should use a 128, 192, or 256 bit key size.
+
+3) Low Initialization Vector (IV) (CWE-330)
+Vulnerable code:
+```
+Cipher cipher = Cipher.getInstance(defaultAlgo);
+cipher.init(Cipher.ENCRYPT_MODE, key);
+```
+Description: Not specifying an explicit Initialization Vector (IV) can lead to security vulnerabilities as CBC (Cipher Block Chaining) mode of operation can be susceptible to IV reuse attacks.
+
+Recommendation: Always specify an explicit IV. Use a different IV for each encryption operation.
+
+4) Static or Weak Passwords or Salts (CWE-798, CWE-330)
+Vulnerable code:
+```
+SecretKey key = keyGen.generateKey();
+Cipher cipher = Cipher.getInstance(defaultAlgo);
+cipher.init(Cipher.ENCRYPT_MODE, key);
+```
+Description: The KeyGenerator does not require any parameters to be specified for "RC2". If you do not specify parameters, you're using the default parameters. These default parameters might be weak, leading to security vulnerabilities.
+
+Recommendation: Always specify the key size and other parameters explicitly. For "RC2", a 128-bit key is sufficient, but larger key sizes may provide stronger security.

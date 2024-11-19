@@ -1,0 +1,32 @@
+The following are the Optimized Misuse JSON:
+```json
+[
+    {
+        "misuse_category": "Cryptographic API Misuse",
+        "vulnerable_method": "SecureRandom sr = new SecureRandom(new byte[]{b});",
+        "vulnerable_code": "byte b = hm.get(\"aaa\");\nSecureRandom sr = new SecureRandom(new byte[]{b});",
+        "description": "The seed is derived from a hashed value, making it vulnerable to attacks.",
+        "recommendation": "Do not use a seed that is predictable or guessable. Use a cryptographically secure method to generate the seed."
+    },
+    {
+        "misuse_category": "Cryptographic API Misuse",
+        "vulnerable_method": "byte[] seed = str.getBytes();",
+        "vulnerable_code": "byte[] seed = str.getBytes();\nSecureRandom sr = new SecureRandom(new byte[]{b});",
+        "description": "The seed is generated from a string that is derived from a hashed value, making it easy to predict and weak to generate a real random seed.",
+        "recommendation": "Use `SecureRandom` to generate the seed."
+    }
+]
+```
+
+False Positive Misuse:
+```json
+[
+    {
+        "misuse_category": "Cryptographic API Misuse",
+        "vulnerable_method": "SecureRandom sr = new SecureRandom(new byte[]{b});",
+        "vulnerable_code": "byte b = hm.get(\"aaa\");\nSecureRandom sr = new SecureRandom(new byte[]{b});",
+        "description": "The usage of a byte value from a hashmap as a seed for the SecureRandom constructor can lead to an insecurely random generator.",
+        "recommendation": "Always use a random source when seeding the SecureRandom instance, or check if a seed has already been set before setting a new seed."
+    }
+]
+```

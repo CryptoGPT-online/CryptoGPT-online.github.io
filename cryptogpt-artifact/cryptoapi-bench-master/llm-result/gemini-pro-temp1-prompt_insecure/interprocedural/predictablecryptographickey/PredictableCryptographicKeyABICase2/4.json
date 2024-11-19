@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_code": "byte[] keyBytes = encryptKey.toString().getBytes();\nkeyBytes = Arrays.copyOf(keyBytes,16);",
+    "description": "The encryption key is derived from a string, which is not secure. An attacker could easily guess or brute-force the key.",
+    "recommendation": "Use a strong, randomly generated encryption key. Consider using a key derivation function (KDF) to derive the encryption key from a password or passphrase."
+  },
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_code": "SecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES\");",
+    "description": "The AES algorithm is used in ECB mode, which is not secure. An attacker could exploit this weakness to recover plaintext data.",
+    "recommendation": "Use a strong encryption algorithm, such as AES, in a secure mode of operation, such as CBC or GCM."
+  }
+]
+```

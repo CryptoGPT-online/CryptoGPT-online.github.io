@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Hardcoded Cryptographic Key",
+        "vulnerable_code": "String key = \"defaultkey\";",
+        "description": "Using a hardcoded key for cryptographic operations is insecure because it can be discovered by reverse engineering the binary or code analysis.",
+        "recommendation": "Replace the hardcoded key with a securely generated, random key or retrieve the key from a secure location that is not hard-coded."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The keyBytes are created with the length of the default key provided, which may not match the key size required for secure AES operations if the input key is smaller than expected.",
+        "recommendation": "Ensure that the key is of adequate length. AES requires keys of lengths 128, 192, or 256 bits. It is better to use a cryptographic provider to generate a key of the correct size."
+    },
+    {
+        "misuse": "Use of a Non-random Key",
+        "vulnerable_code": "byte[] keyBytes = key.getBytes();",
+        "description": "The conversion of a string to byte array directly for key material is insecure as it doesn't provide enough entropy and the resulting key can be guessable.",
+        "recommendation": "Use a secure random key generator like KeyGenerator or SecureRandom to generate the key."
+    },
+    {
+        "misuse": "Default Character Encoding",
+        "vulnerable_code": "byte[] keyBytes = key.getBytes();",
+        "description": "Use of default character encoding to convert string to bytes can lead to platform-dependent behavior and potential security flaws if not using a uniform encoding.",
+        "recommendation": "Specify the character set encoding, preferable to use UTF-8, while getting bytes from strings."
+    }
+]
+```

@@ -1,0 +1,20 @@
+ [
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\n SecretKey key = keyGen.generateKey();",
+        "description": "The key length of the AES algorithm used here is not specified, which means it will use the default length of 128 bits. This is not sufficient for modern security requirements. The key length should be increased to at least 256 bits to provide adequate encryption strength.",
+        "recommendation": "Use a higher key length for the AES algorithm, such as 256 bits, to ensure adequate encryption strength."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(crypto);",
+        "description": "The `Cipher` class is used to encrypt and decrypt data, but the `getInstance` method is used to specify the algorithm to use. The `crypto` variable is passed as a parameter to this method, but the value it is passed is not explicitly checked for validity. This could allow an attacker to specify a weak or broken algorithm, such as ECB mode, which is not secure for encrypting data. Additionally, the `crypto` variable could be changed by an attacker to specify a different algorithm altogether, which could lead to unexpected and potentially insecure behavior.",
+        "recommendation": "Use a secure and recommended algorithm, such as AES in GCM mode, to encrypt data. Additionally, ensure that the `crypto` variable is properly validated to prevent attackers from specifying a weak or broken algorithm, or changing it to specify a different algorithm altogether."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "String crypto = \"AES/ECB/PKCS5Padding\";",
+        "description": "The `crypto` variable is initialized with a hardcoded value of \"AES/ECB/PKCS5Padding\". This could allow an attacker to predict the encryption algorithm and parameters used, which could potentially weaken the encryption and enable them to decrypt the data. Additionally, hardcoded credentials can make it difficult to rotate keys and passwords when they are compromised.",
+        "recommendation": "Use a secure and recommended algorithm, such as AES in GCM mode, to encrypt data. Additionally, do not hardcode credentials or encryption parameters, instead, use a secure and recommended configuration mechanism, such as a configuration file or environment variables, to specify them."
+    }
+]

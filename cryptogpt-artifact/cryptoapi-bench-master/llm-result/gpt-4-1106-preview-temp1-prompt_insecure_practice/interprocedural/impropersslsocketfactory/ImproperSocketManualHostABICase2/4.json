@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Improper Certificate Validation",
+        "vulnerable_code": "SSLSocketFactory ssf = (SSLSocketFactory) SSLSocketFactory.getDefault();\nSSLSocket socket = (SSLSocket) ssf.createSocket(hostName.toString(),soc);",
+        "description": "The code retrieves the default SSLSocketFactory without customizing its TrustManager, which means it uses the default trusting behavior that is included with Java. If this code is meant to connect to a server with a self-signed or otherwise untrusted certificate, it wouldn't properly at validating the identity of the server, leading to potential Man-In-The-Middle (MITM) attacks.",
+        "recommendation": "Consider creating a custom TrustManager that properly checks server certificates or uses a well-implemented certificate pinning mechanism."
+    },
+    {
+        "misuse": "Insecure Hostname Verification",
+        "vulnerable_code": "SSLSocketFactory ssf = (SSLSocketFactory) SSLSocketFactory.getDefault();\nSSLSocket socket = (SSLSocket) ssf.createSocket(hostName.toString(),soc);",
+        "description": "By default, some versions of SSLSocket do not verify that the server hostname matches the domain name in the server's certificate which can expose the data to MITM attacks.",
+        "recommendation": "Ensure that you enable and properly configure hostname verification. This could involve calling setEndpointIdentificationAlgorithm(\"HTTPS\") on an SSLParameters object or similar depending on the context and version of Java."
+    },
+    {
+        "misuse": "String Conversion of char Array",
+        "vulnerable_code": "HOST_NAME = DEFAULT_HOST_NAME.toCharArray();\n...\nhostName = HOST_NAME;\n...\nss.createSocket(hostName.toString(), soc);",
+        "description": "When calling toString() on a char array, it does not produce a String representation of the array's contents, but a String object representing the array's memory address. This misuse will result in an incorrect hostname being used when attempting to create the socket.",
+        "recommendation": "Directly use the string DEFAULT_HOST_NAME when creating the socket or use new String(hostName) to convert the char array to a proper String object."
+    }
+]
+```

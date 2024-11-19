@@ -1,0 +1,13 @@
+ [
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": "new HostnameVerifier(){
+            @Override
+            public boolean verify(String hostname, SSLSession session) {
+                return true;
+            }
+        };",
+        "description": "The code uses a custom `HostnameVerifier` that always returns `true`, which allows the connection to be established with any SSL/TLS server, regardless of the hostname. This creates a vulnerability to man-in-the-middle attacks, where an attacker could intercept the communication and impersonate the server.",
+        "recommendation": "Use a secure `HostnameVerifier` implementation, such as the one provided by the Java Secure Socket Extension (JSSE), to ensure that the connection is established with the expected server."
+    }
+]

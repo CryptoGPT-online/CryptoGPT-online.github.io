@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Trust Manager that does not validate certificate chains",
+        "vulnerable_code": "public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {} public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {}",
+        "description": "The implementation of checkClientTrusted and checkServerTrusted are empty, meaning that they do not check whether the presented certificate chains from the client or the server are trusted, which makes the connection vulnerable to MITM (Man-in-The-Middle) attacks.",
+        "recommendation": "Implement validation logic inside checkClientTrusted and checkServerTrusted methods that checks the certificate chain against a list of trusted Certificate Authorities (CAs). Consider using the default trust manager provided by the Java runtime or a custom trust manager that properly validates certificate chains."
+    },
+    {
+        "misuse": "X509TrustManager.getAcceptedIssuers() returning null",
+        "vulnerable_code": "public X509Certificate[] getAcceptedIssuers() { return null; }",
+        "description": "Returning null from getAcceptedIssuers may bypass some checks for the trust manager, leading to accepting any certificate chain or failing to provide a list of trusted CAs.",
+        "recommendation": "Return a non-null array from getAcceptedIssuers, which contains a list of trusted CA certificates."
+    }
+]
+```

@@ -1,0 +1,27 @@
+### False Positive Misuse ###
+- ["misuse": "CWE-295: Improper Certificate Validation",
+    "vulnerable_code": "new HostNameVerifier(){ ... }",
+    "description": "The code disables hostname verification, which means that the server's certificate will not be validated.",
+    "recommendation": "Use a proper hostname verifier that validates the server's certificate."]
+
+- ["misuse": "CWE-295: Improper Certificate Validation",
+    "vulnerable_code": "if (true || session == null) {
+                    return true;
+                }",
+    "description": "The code snippet above is vulnerable to CWE-295: Improper Certificate Validation because it unconditionally returns true, bypassing the certificate validation process.",
+    "recommendation": "The code should be modified to properly validate the certificate before returning true."]
+
+### Optimized Misuse JSON ###
+- {"misuse category": "CWE-295: Improper Certificate Validation",
+   "vulnerable_method": "new HostNameVerifier(){ ... }",
+   "vulnerable_code": "if (true || session == null) {
+                return true;
+            }",
+   "description": "The code overrides the `verify` method of `HostnameVerifier` and unconditionally returns `true` when `session` is `null`. This can lead to accepting untrusted certificates and potential man-in-the-middle attacks.",
+   "recommendation": "Implement proper hostname verification by checking the certificate chain and hostname against a trusted source."}
+
+- {"misuse category": "CWE-295: Improper Certificate Validation",
+   "vulnerable_method": "new HostNameVerifier(){ ... }",
+   "vulnerable_code": null,
+   "description": "The code disables hostname verification for HTTPS connections, which means that the server's identity will not be verified. This can allow a malicious server to impersonate a legitimate server and intercept or modify traffic.",
+   "recommendation": "Use a proper hostname verifier that checks the server's certificate against a list of trusted certificates."}

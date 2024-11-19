@@ -1,0 +1,26 @@
+```json
+[
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": [
+            "public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {",
+            "public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {",
+            "return null;"
+        ],
+        "description": "The implemented TrustManager does not perform any certificate validation, allowing any certificate to be trusted which can make the application vulnerable to man-in-the-middle attacks.",
+        "recommendation": "Implement proper certificate validation in checkClientTrusted and checkServerTrusted methods and do not return null in the getAcceptedIssuers method."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "\"SSL\"",
+        "description": "The code uses 'SSL' which is an outdated cryptographic protocol with known security flaws. 'SSL' should not be used, as it is considered to be insecure.",
+        "recommendation": "Use 'TLS' instead of 'SSL' for secure connections. If necessary, specify the exact version of TLS (e.g., 'TLSv1.2')."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": "\"SSL\"",
+        "description": "By using 'SSL', a less-secure algorithm might be negotiated for the SSL/TLS handshake, which could make the connection vulnerable to various attacks.",
+        "recommendation": "Use 'TLS', possibly with an explicit secure version (e.g., 'TLSv1.2' or 'TLSv1.3')."
+    }
+]
+```

@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Hardcoded Cryptographic Key",
+        "vulnerable_code": "String key = \"changeit\";",
+        "description": "The cryptographic key is hardcoded and thus vulnerable to being extracted from the application code. This could allow attackers to compromise the cryptographic operations secured with this key.",
+        "recommendation": "Rather than hardcoding the cryptographic key in the source code, use a secure method of managing keys, such as a secure key management service or environment variables, and ensure they are stored securely using encryption and access controls."
+    },
+    {
+        "misuse": "Insecure Trust Management",
+        "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");\nks.load(cacerts.openStream(), key.toCharArray());",
+        "description": "Loading certificates directly from a URL without proper validation can lead to Man-In-The-Middle (MITM) attacks if an attacker can intercept and modify the certificate at transit.",
+        "recommendation": "Certificate validation should occur using a proper Certificate Authority (CA) and revocation checks. Also, certificates should not be loaded directly from untrusted sources."
+    },
+    {
+        "misuse": "Weak Cryptography Algorithm",
+        "vulnerable_code": "String type = \"JKS\";",
+        "description": "JKS (Java Key Store) is a proprietary keystore format specific to Java and is considered less secure than other available formats, such as PKCS12 (Public Key Cryptography Standards #12) due to weak cryptography and being less robust against brute-force attacks.",
+        "recommendation": "Consider replacing JKS with a more secure keystore format, such as PKCS12."
+    }
+]
+```

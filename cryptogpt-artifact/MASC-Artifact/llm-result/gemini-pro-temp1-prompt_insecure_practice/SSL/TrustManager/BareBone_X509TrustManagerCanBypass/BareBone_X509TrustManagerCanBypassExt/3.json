@@ -1,0 +1,45 @@
+```java
+import javax.net.ssl.X509TrustManager;
+
+public abstract class BareBone_X509TrustManagerCanBypassExt implements X509TrustManager {
+}
+
+public class Bs {
+    static X509TrustManager getTrustManager(){
+        return new BareBone_X509TrustManagerCanBypassExt(){
+
+            @Override
+            public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public X509Certificate[] getAcceptedIssuers() {
+                // TODO Auto-generated method stub
+                return null;
+            }
+
+        };
+    }
+    public static void main(String[] args) {
+        getTrustManager();
+        System.out.println("Hello World");
+    }
+}
+```
+
+The code above is vulnerable to the following crypto API misuse:
+
+{
+"misuse": "CWE-295: Improper Certificate Validation",
+"vulnerable_code": "This code creates a custom X509TrustManager that does not perform any certificate validation, making the application vulnerable to man-in-the-middle attacks.",
+"description": "The code uses the custom `BareBone_X509TrustManagerCanBypassExt` class to bypass all certificate validation, which is a security risk. An attacker can intercept the communication and impersonate the server, allowing them to access sensitive information or perform malicious actions.",
+"recommendation": "The code should use a proper X509TrustManager implementation that validates certificates according to the desired security policy."
+}

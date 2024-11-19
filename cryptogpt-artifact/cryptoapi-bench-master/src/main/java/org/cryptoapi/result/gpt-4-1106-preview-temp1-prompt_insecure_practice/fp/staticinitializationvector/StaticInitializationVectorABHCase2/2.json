@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Initialization Vector (IV) Misuse",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+        "description": "The IV should be random and unpredictable. Using fixed or predictable IV can allow attackers to derive keys or plaintext data in some modes of operation.",
+        "recommendation": "Generate a random IV using a secure random number generator and ensure it is the same length as the block size."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "description": "The default size of the AES key may not be explicitly set, potentially causing it to be less than the recommended 256 bits. If the default is 128 bits, it may be considered less secure for certain environments.",
+        "recommendation": "Explicitly set the key size to 256 bits using keyGen.init(256);"
+    },
+    {
+        "misuse": "Missing Secure Random Number Generator",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "description": "The KeyGenerator should be initialized with a source of randomness to ensure that the generated key is not predictable.",
+        "recommendation": "Initialize KeyGenerator with a SecureRandom instance to ensure a secure key."
+    }
+]
+```

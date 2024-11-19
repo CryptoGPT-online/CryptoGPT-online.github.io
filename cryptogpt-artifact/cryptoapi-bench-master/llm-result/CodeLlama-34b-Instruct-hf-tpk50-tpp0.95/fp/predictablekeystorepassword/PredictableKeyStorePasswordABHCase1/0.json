@@ -1,0 +1,20 @@
+ [
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "ks.load(cacerts.openStream(), new String(keyBytes).toCharArray());",
+        "description": "The `load` method of `KeyStore` class is vulnerable to broken crypto algorithm when the password is not properly generated. The password is generated using `SecureRandom` class, but it is not properly seeded, which makes the password predictable.",
+        "recommendation": "Use a properly seeded `SecureRandom` instance to generate the password. You can also use a more secure password generation mechanism, such as `java.security.SecureRandom.getSeed()` method."
+    },
+    {
+        "misuse": "Insecure Password Storage",
+        "vulnerable_code": "String password = String.valueOf(random.ints());",
+        "description": "The password is stored in plaintext in the `password` variable. It is not recommended to store passwords in plaintext as it can lead to unauthorized access to the system.",
+        "recommendation": "Use a more secure password storage mechanism, such as a hashed and salted password."
+    },
+    {
+        "misuse": "Insecure Random Number Generation",
+        "vulnerable_code": "SecureRandom random = new SecureRandom();",
+        "description": "The `SecureRandom` class is not properly seeded, which can lead to predictable random number generation. This can compromise the security of the system.",
+        "recommendation": "Use a properly seeded `SecureRandom` instance, such as `java.security.SecureRandom.getSeed()` method."
+    }
+]

@@ -1,0 +1,10 @@
+```JSON
+[
+  {
+    "misuse": "CWE-295: Improper Certificate Validation",
+    "vulnerable_code": "new HostNameVerifier(){  \n            @Override\n            public boolean verify(String hostname, SSLSession session) {\n                return true;\n            }\n        };",
+    "description": "The code overrides the `verify` method of the `HostnameVerifier` class to always return `true`, which means that any SSL certificate will be accepted. This is insecure because it can allow attackers to spoof websites and intercept communications.",
+    "recommendation": "The code should be changed to properly validate the SSL certificate. This can be done by using the `SSLSocketFactory.getDefault()` method to obtain a default SSL socket factory, which will use the system's default trust manager to validate certificates."
+  }
+]
+```

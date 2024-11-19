@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "String password = String.valueOf(random.ints());",
+        "description": "The use of a dynamically generated password to open a keystore does not make sense. Keystores are protected by a password that must be known and provided at runtime by the user or securely managed by the application. Using a random password here would prevent the successful opening of the keystore as the password would be unknown.",
+        "recommendation": "Use a secure method to manage and provide the keystore password, such as prompting the user for the password, securely retrieving it from a configuration file, or using a secure credential storage service."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "String password = String.valueOf(random.ints());",
+        "description": "Even though SecureRandom is used, the way the password is generated using random ints without specifying the length or character set does not ensure sufficient randomness or complexity for a secure password. Moreover, this use case is not suitable for a keystore which requires a pre-defined password.",
+        "recommendation": "Ensure passwords are generated using a secure mechanism with adequate length and complexity, and are used appropriately according to the application's requirements. However, for keystores, a pre-defined password should be used instead of a random one."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");",
+        "description": "The code is retrieving a certificate from a URL but does not show any implementation of certificate validation to ensure the certificate is trusted. The absence of proper validation could leave the application vulnerable to man-in-the-middle attacks.",
+        "recommendation": "Implement proper certificate validation by using a TrustManager that checks the server's certificate chain against trusted root certificates. Avoid accepting self-signed certificates unless they are explicitly trusted for a particular use case."
+    }
+]
+```

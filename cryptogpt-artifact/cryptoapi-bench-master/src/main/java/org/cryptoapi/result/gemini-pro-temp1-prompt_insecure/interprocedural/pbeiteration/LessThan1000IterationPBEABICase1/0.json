@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "CWE-326: Inadequate Entropy",
+    "vulnerable_code": "SecureRandom random = new SecureRandom();",
+    "description": "Using `SecureRandom` without a cryptographically strong random number generator (CSPRNG) can lead to weak keys and compromise the security of the application.",
+    "recommendation": "Use a CSPRNG that is suitable for cryptographic purposes, such as `SecureRandom.getInstance(\"SHA1PRNG\")` or `SecureRandom.getInstanceStrong()`. Alternatively, consider using a hardware-based random number generator (HRNG) for even stronger security."
+  },
+  {
+    "misuse": "CWE-759: Use of Hard-Coded Cryptographic Key",
+    "vulnerable_code": "byte[] salt = new byte[32];\nrandom.nextBytes(salt);",
+    "description": "Hard-coding the salt value makes it easier for attackers to guess the encryption key, compromising the security of the encrypted data.",
+    "recommendation": "Generate a random salt value for each encryption operation using a CSPRNG. The salt value should be sufficiently long (e.g., 128 bits or more) and unpredictable."
+  }
+]
+```

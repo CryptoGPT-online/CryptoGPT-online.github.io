@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Hardcoded Initialization Vector",
+        "vulnerable_code": "new IvParameterSpec(new byte[]{Byte.parseByte(String.valueOf(initialization))});",
+        "description": "The initialization vector (IV) for AES CBC encryption is hardcoded and can be predicted, which undermines the security of the encryption.",
+        "recommendation": "Use a securely generated random IV for each encryption operation."
+    },
+    {
+        "misuse": "Static Key Generation",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "description": "The code generates a new AES key for each operation without specifying the key size, potentially resulting in the use of a weak key size by default.",
+        "recommendation": "Specify the key size when generating a new AES key to ensure a strong key size is used (e.g., 256 bits)."
+    },
+    {
+        "misuse": "Poor Error Handling",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "The application does not handle exceptions that could be thrown by this method, which may lead to unexpected crashes and unsuitable handling of sensitive data. Though this is not directly a cryptographic issue, it relates to the resilience of the encryption process.",
+        "recommendation": "Implement proper error handling and exception catching for cryptographic operations."
+    },
+    {
+        "misuse": "Invalid Initialization Vector",
+        "vulnerable_code": "new IvParameterSpec(new byte[]{Byte.parseByte(String.valueOf(initialization))});",
+        "description": "The IV is being created from a String which does not ensure the proper size or randomness of the IV, and Byte.parseByte(String.valueOf(initialization)) is likely to throw an exception as this conversion is not valid.",
+        "recommendation": "Ensure that a proper IV is generated of the correct size (16 bytes for AES) and that it is generated using a secure random number generator."
+    }
+]
+```

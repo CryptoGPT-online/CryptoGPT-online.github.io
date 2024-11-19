@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Use of Static Key",
+        "vulnerable_code": "hm.put(\"aaa\", \"afix\");\nString key = hm.get(\"aaa\");",
+        "description": "The key is hard-coded and static, making it predictable and easier to guess. Static keys can lead to repeatable encryption, which can be exploited by attackers.",
+        "recommendation": "Use a secure method to generate a random, strong key each time it is needed or securely retrieve it from a safe storage."
+    },
+    {
+        "misuse": "Weak Key Derivation",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The key derivation method is weak. The bytes of the key are simply copied up to a certain length without any cryptographic strengthening. This can lead to weak keys if the original password is not complex enough.",
+        "recommendation": "Use a Key Derivation Function (KDF) such as PBKDF2, bcrypt, or scrypt to derive the encryption key from the password."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "Assuming 'afix' is the provided key material, the final key length will just be 16 after padding. If 'afix' is shorter than 16 characters, it does not provide enough entropy for a strong key.",
+        "recommendation": "Ensure that the key material provided has a high entropy and is at least the minimum length recommended for the encryption algorithm used."
+    }
+]
+```

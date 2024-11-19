@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "KeyGenerator.getInstance(algo)",
+        "description": "The default KeyGenerator does not specify a secure random source and may rely on a weak source of randomness depending on the JCA provider's implementation.",
+        "recommendation": "Explicitly initialize the KeyGenerator with a SecureRandom instance that provides a strong source of randomness."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "keygen.generateKey()",
+        "description": "The key generator does not specify the key size, which by default can be inadequate, e.g., 128 bits if the JCA provider's default is used rather than a stronger key size like 256 bits.",
+        "recommendation": "Specify the key size when initializing the KeyGenerator instance, ensuring it is of adequate strength (e.g., keygen.init(256))."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "Cipher.getInstance(keygen.getAlgorithm())",
+        "description": "The Cipher API usage does not define the mode of operation and padding scheme, which could result in a weak default mode or padding (like ECB mode or no padding), making the encryption susceptible to certain attacks.",
+        "recommendation": "Use a strong mode of operation and padding scheme, such as AES/GCM/NoPadding."
+    }
+]
+```

@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "Incorrect Salt Handling",
+    "vulnerable_code": "pbe = new PBEParameterSpec(salt, count);",
+    "description": "The generated salt for PBEParameterSpec is not shared or stored, rendering the salt useless for its purpose of ensuring that encryption keys are unique even when the same password is used.",
+    "recommendation": "Ensure that the generated salt is securely stored or transmitted alongside the encrypted data, so that it can be used for the decryption process."
+  },
+  {
+    "misuse": "Unintended Data Disclosure",
+    "vulnerable_code": "byte[] salt = new byte[32];",
+    "description": "The code generates a new salt but does not use it outside of the method where it's defined. It suggests that the salt may not be used in the cryptographic operation intended, which could lead to weak encryption if the salt is not correctly applied.",
+    "recommendation": "Ensure that the salt is applied in the cryptographic operation for which it was intended and verify that it is not unintentionally exposed or discarded."
+  }
+]
+```

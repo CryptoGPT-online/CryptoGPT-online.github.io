@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "Insecure Use of Cryptographic Algorithm (CWE-326)",
+    "vulnerable_code": "String cryptoAlgo = \"AES/ECB/PKCS5Padding\";",
+    "description": "The use of ECB (Electronic Codebook) mode is insecure. ECB mode is deterministic, meaning that identical blocks of plaintext will always produce identical blocks of ciphertext. This makes it vulnerable to attacks such as block substitution and frequency analysis.",
+    "recommendation": "Use a secure block cipher mode such as CBC (Cipher Block Chaining) or CTR (Counter mode). For example:\nString cryptoAlgo = \"AES/CBC/PKCS5Padding\";"
+  },
+  {
+    "misuse": "Empty String Comparison (CWE-760)",
+    "vulnerable_code": "if(passedAlgo.isEmpty()){\n            passedAlgo = defAlgo;\n        }",
+    "description": "The comparison of an empty string is error-prone. In Java, the `isEmpty()` method returns `true` for an uninitialized string, which may not be the intended behavior.",
+    "recommendation": "Use `Objects.requireNonNull()` or `String.isBlank()` to check for an empty string. For example:\nif (Objects.requireNonNull(passedAlgo).isBlank()) {\n            passedAlgo = defAlgo;\n        }"
+  }
+]
+```

@@ -1,0 +1,21 @@
+```json
+[
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": [
+            "public void checkClientTrusted(X509Certificate[] x509Certificates, String s)",
+            "public void checkServerTrusted(X509Certificate[] x509Certificates, String s)"
+        ],
+        "description": "The custom TrustManager implemented does not properly verify the certificate chain. It only checks the authType to be 'RSA' and doesn't actually validate the certificate, making it vulnerable to man-in-the-middle attacks.",
+        "recommendation": "Implement proper certificate validation by checking the validity of the certificate chain against trusted CAs."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": [
+            "if (!(null != s && s.equalsIgnoreCase(\"RSA\")))"
+        ],
+        "description": "The check for RSA authentication type without further context might lead to the selection of a less-secure algorithm during the SSL/TLS negotiation, depending primarily on other security measures applied or not applied elsewhere in the code.",
+        "recommendation": "Ensure that the authentication type checking is part of a secure default configuration or involves a secure negotiation process."
+    }
+]
+```

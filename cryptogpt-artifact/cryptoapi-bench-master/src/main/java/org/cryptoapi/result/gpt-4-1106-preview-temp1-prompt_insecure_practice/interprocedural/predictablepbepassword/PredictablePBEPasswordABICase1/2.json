@@ -1,0 +1,28 @@
+```json
+[
+  {
+    "misuse": "Weak Password-Based Encryption (PBE) Algorithm",
+    "vulnerable_code": [
+      "pbeKeySpec = new PBEKeySpec(password.toCharArray(),salt,iterationCount,keyLength);"
+    ],
+    "description": "The code constructs a PBEKeySpec but does not specify which PBE algorithm to use. Default algorithms usually are not secure e.g., PBEWithMD5AndDES, which is weak due to the use of MD5 hash function and DES encryption algorithm.",
+    "recommendation": "Use a strong PBE algorithm by specifying it in the SecretKeyFactory.getInstance(e.g., 'PBKDF2WithHmacSHA256'). Make sure that the algorithm is appropriate for the key length."
+  },
+  {
+    "misuse": "Insufficient Key Length",
+    "vulnerable_code": [
+      "int keyLength = 16;"
+    ],
+    "description": "The specified key length is 128 bits (16 bytes), which may not be sufficient for all security contexts, especially given advancements in computing power that could enable brute-force attacks against smaller key sizes.",
+    "recommendation": "Use a larger key length where appropriate, commonly at least 256 bits (32 bytes) if the algorithm supports it."
+  },
+  {
+    "misuse": "Weak Iteration Count",
+    "vulnerable_code": [
+      "int iterationCount = 11010;"
+    ],
+    "description": "The iteration count (11010) for PBEKeySpec might be too low for current standards, reducing the difficulty of brute-force attacks.",
+    "recommendation": "Increase the iteration count significantly to a number that represents a good trade-off between security and performance, often 100000 or higher."
+  }
+]
+```

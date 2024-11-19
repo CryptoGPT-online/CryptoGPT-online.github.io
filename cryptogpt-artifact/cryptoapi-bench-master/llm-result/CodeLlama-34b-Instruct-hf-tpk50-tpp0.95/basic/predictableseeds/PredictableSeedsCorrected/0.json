@@ -1,0 +1,6 @@
+ {
+"misuse": "Insecure use of SecureRandom",
+"vulnerable_code": "SecureRandom sr = new SecureRandom();\nlong l = sr.nextLong();\nsr.setSeed(l);\nint v = sr.nextInt();",
+"description": "The SecureRandom class is used to generate cryptographically secure random numbers. However, in this code, the seed is being set using a long value obtained from the nextLong() method. This is an insecure practice, as it is predictable and can be easily guessed. Additionally, the use of nextInt() after setting the seed with a predictable value may lead to non-random output.",
+"recommendation": "Use a secure source of randomness, such as the SecureRandom.getInstanceStrong() method, to generate the seed. Do not use predictable values, such as the output of nextLong(), to set the seed."
+}

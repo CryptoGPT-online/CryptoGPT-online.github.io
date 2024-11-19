@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+    "description": "The code uses `AES` algorithm which is considered insecure and should not be used.",
+    "recommendation": "Replace the use of `AES` with a more secure algorithm such as `AES-256` or `ChaCha20`."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/ECB/PKCS5Padding\");",
+    "description": "The code uses `AES` with an effective key length of 128 bits, which is considered insecure.",
+    "recommendation": "Use a key length of at least 256 bits."
+  },
+  {
+    "misuse": "CWE-256: Plaintext Exposure",
+    "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+    "description": "The code does not perform any integrity protection on the plaintext before encryption, which can lead to plaintext exposure.",
+    "recommendation": "Use an authenticated encryption mode such as `AES/GCM/NoPadding`."
+  }
+]
+```

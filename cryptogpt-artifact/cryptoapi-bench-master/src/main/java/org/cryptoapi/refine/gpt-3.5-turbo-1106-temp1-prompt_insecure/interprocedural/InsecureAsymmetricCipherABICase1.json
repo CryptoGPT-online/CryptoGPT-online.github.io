@@ -1,0 +1,50 @@
+### False Positive Misuse ###
+None
+
+### Optimized Misuse JSON###
+```json
+[
+    {
+        "misuse": "Weak Crypto Algorithm",
+        "vulnerable_code": "KeyPairGenerator kgp = KeyPairGenerator.getInstance(\"RSA\");",
+        "description": "Using key size of 1024 bits can be considered weak and vulnerable to brute force attacks. It is recommended to use key sizes of 2048 bits or larger for RSA encryption.",
+        "recommendation": "Use a key size of 2048 bits or larger for RSA encryption to improve security."
+    },
+    {
+        "misuse": "Insecure Mode",
+        "vulnerable_code": "Cipher.getInstance(\"RSA\");",
+        "description": "The code is using the default mode for RSA which may not provide the necessary security guarantees. It is recommended to specify the mode and padding explicitly to ensure secure encryption and decryption.",
+        "recommendation": "Specify the mode and padding for RSA explicitly, for example Cipher.getInstance(\"RSA/ECB/OAEPWithSHA-256AndMGF1Padding\");"
+    },
+    {
+        "misuse": "Weak Key Generation",
+        "vulnerable_code": "kgp.initialize(keySize);",
+        "description": "Using a small key size (e.g. 1024 bits) for RSA may be insecure and susceptible to attacks. Key sizes of 2048 bits or more are recommended for RSA encryption.",
+        "recommendation": "Use a key size of at least 2048 bits for RSA encryption."
+    },
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "KeyPairGenerator kgp = KeyPairGenerator.getInstance(\"RSA\");\nkgp.initialize(keySize);",
+        "description": "The KeyPairGenerator is not provided with a SecureRandom instance, which may result in using a predictable or weak random number generator.",
+        "recommendation": "Use KeyPairGenerator.getInstance(\"RSA\", \"SUN\"); instead and provide a SecureRandom instance in the initialize method"
+    },
+    {
+        "misuse": "Insecure Encryption Algorithm",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"RSA\");",
+        "description": "The code uses the default RSA mode/padding, which may result in insecure encryption.",
+        "recommendation": "Specify a secure mode/padding (e.g. Cipher.getInstance(\"RSA/ECB/OAEPWithSHA-256AndMGF1Padding\"))"
+    },
+    {
+        "misuse": "Insecure Encryption Operation",
+        "vulnerable_code": "String myMessage = new String(\"Secret Message\");\nSealedObject encryptedMessage = new SealedObject(myMessage,cipher);",
+        "description": "The SealedObject is used to directly serialize and encrypt a string, which does not provide integrity and authentication protection.",
+        "recommendation": "Consider using a proper encryption operation with integrity and authentication protection such as encrypt-then-MAC"
+    },
+    {
+        "misuse": "Weak Key Strength",
+        "vulnerable_code": "int keySize = 1024;",
+        "description": "The key size of 1024 bits is considered weak and vulnerable to attacks.",
+        "recommendation": "Use a minimum key size of 2048 bits for RSA encryption."
+    }
+]
+```

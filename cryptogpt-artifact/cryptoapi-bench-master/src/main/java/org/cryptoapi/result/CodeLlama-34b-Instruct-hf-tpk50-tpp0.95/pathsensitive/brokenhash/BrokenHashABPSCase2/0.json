@@ -1,0 +1,18 @@
+ {
+"misuse": "Insecure Crypto Algorithm",
+"vulnerable_code": "MessageDigest.getInstance(\"MD5\")",
+"description": "The code uses the MD5 hash function, which is considered insecure and should not be used for any security-related operations. It is recommended to use more secure hash functions like SHA-256 or SHA-3 instead.",
+"recommendation": "Replace MessageDigest.getInstance(\"MD5\") with MessageDigest.getInstance(\"SHA-256\") or MessageDigest.getInstance(\"SHA-3\")"
+},
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "if(choice>1) md = MessageDigest.getInstance(\"SHA-256\")",
+"description": "The code uses the SHA-256 hash function only when the user inputs a choice greater than 1. This is a broken crypto algorithm because it relies on user input to determine the hash function used. An attacker could easily manipulate the input to choose a weak hash function like MD5, which is not secure.",
+"recommendation": "Use a secure hash function like SHA-256 or SHA-3 for all inputs, regardless of user input."
+},
+{
+"misuse": "Insecure Crypto Algorithm",
+"vulnerable_code": "System.out.println(md.digest())",
+"description": "The code prints the raw digest bytes, which may not be secure. It is recommended to use a hex or base64 encoding to print the digest bytes.",
+"recommendation": "Replace System.out.println(md.digest()) with System.out.println(md.digest().hex()) or System.out.println(md.digest().base64())"
+}

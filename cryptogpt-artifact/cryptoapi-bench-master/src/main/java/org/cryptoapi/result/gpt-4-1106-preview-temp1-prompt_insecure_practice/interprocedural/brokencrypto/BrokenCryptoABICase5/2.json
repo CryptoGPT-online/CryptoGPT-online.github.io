@@ -1,0 +1,28 @@
+```json
+[
+  {
+    "misuse": "Weak Encryption Algorithm",
+    "vulnerable_code": "public static final String DEFAULT_CRYPTO = \"DES/ECB/PKCS5Padding\";",
+    "description": "DES is considered weak due to its small key size, and ECB mode does not provide serious protection against pattern attacks, making it inappropriate for use in modern security contexts.",
+    "recommendation": "Use a stronger algorithm such as 'AES/GCM/NoPadding' with a key size of at least 128 bits."
+  },
+  {
+    "misuse": "Insecure Randomness",
+    "vulnerable_code": "KeyGenerator.getInstance(String.valueOf(crypto_algo))",
+    "description": "There is no explicit secure random source specified for key generation. By default, the KeyGenerator could end up using a less secure source of randomness on some platforms.",
+    "recommendation": "Use SecureRandom with a strong source of randomness when generating keys."
+  },
+  {
+    "misuse": "Improper Cipher Mode",
+    "vulnerable_code": "Cipher.getInstance(String.valueOf(crypto));",
+    "description": "ECB mode cannot securely encrypt data larger than the block size, leading to vulnerabilities like pattern leakage in encrypted data.",
+    "recommendation": "Switch to a more secure mode like CBC with an initialization vector (IV) or GCM for both confidentiality and integrity."
+  },
+  {
+    "misuse": "Inadequate Padding Scheme",
+    "vulnerable_code": "public static final String DEFAULT_CRYPTO = \"DES/ECB/PKCS5Padding\";",
+    "description": "PKCS5Padding is susceptible to padding oracle attacks. When using CBC mode, this can be a significant vulnerability.",
+    "recommendation": "If using CBC mode, consider using an authenticated encryption mode like GCM which does not require padding."
+  }
+]
+```

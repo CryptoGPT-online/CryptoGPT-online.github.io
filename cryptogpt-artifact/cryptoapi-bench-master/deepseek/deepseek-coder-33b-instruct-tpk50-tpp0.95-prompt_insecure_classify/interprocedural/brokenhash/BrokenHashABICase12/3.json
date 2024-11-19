@@ -1,0 +1,31 @@
+CWE-327: Use of a Broken or Risky Cryptographic Algorithm.
+
+The code uses the MessageDigest.getInstance() method to get an instance of the MessageDigest class, but it uses a hash algorithm (MD2) that is considered as insecure. MD2 is reported to have an intrinsic weakness related to collision resistance, which means an attacker could construct two different messages that produce the same hash output.
+
+The MD2 cryptographic hash function can be insecure because it was designed for the 1990s and is not considered safe for the 21st century.
+
+```java
+MessageDigest md = MessageDigest.getInstance(crypto);
+```
+
+To fix this, you should use stronger cryptographic algorithms that are currently considered safe, such as SHA-256, SHA-384, or SHA-512. You should also avoid using any cryptographic function whose use is deprecated in the latest versions of the Java Development Kit (JDK). Here's how to fix the problem:
+
+```java
+public class B2 {
+    public static void main (String [] args) throws NoSuchAlgorithmException {
+        String str = "abcdef";
+        String crypto = "SHA-256";  // changed from MD2 to SHA-256
+        method2(str,crypto);
+    }
+    public static void method2 (String s, String cryptoHash) throws NoSuchAlgorithmException {
+        String str2 = s;
+        String hashAlgo = cryptoHash;
+        method1(str2,hashAlgo);
+    }
+    public static void method1 (String str, String crypto) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance(crypto);
+        md.update(str.getBytes());
+        System.out.println(md.digest());
+    }
+}
+```

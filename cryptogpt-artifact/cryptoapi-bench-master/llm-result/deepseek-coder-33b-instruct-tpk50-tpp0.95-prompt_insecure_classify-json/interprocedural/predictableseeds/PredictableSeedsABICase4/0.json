@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "SEED = DEFAULT_SEED.toCharArray();",
+        "description": "The seed is hardcoded as \"100\" which is a weak seed. The seed should be a large enough random number to generate a secure random number.",
+        "recommendation": "Use a random number generator to generate a large seed."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "byte[] seedByte = new byte[]{Byte.parseByte(seed.toString())}; SecureRandom sr = new SecureRandom(seedByte);",
+        "description": "The byte array used to generate a secure random number is from a single digit byte, which is insufficiently random.",
+        "recommendation": "Use a random number generator to generate a large byte array."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "int v = sr.nextInt();",
+        "description": "The `nextInt` method generates a random integer. This integer does not necessarily need to be encrypted or encoded in any way, so it might be a false positive in terms of crypto misuses.",
+        "recommendation": "Depending on the context of the code, you might not need any further cryptographic measures."
+    }
+]
+```

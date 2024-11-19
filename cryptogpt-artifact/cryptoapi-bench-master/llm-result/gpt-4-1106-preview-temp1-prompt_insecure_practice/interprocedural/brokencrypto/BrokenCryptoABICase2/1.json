@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Incomplete/Insecure Cipher Initialization",
+        "vulnerable_code": "Cipher.getInstance(crypto)",
+        "description": "The Cipher.getInstance() method is being called with a single argument, which means it does not explicitly specify a mode of operation or padding. This may result in the use of a default mode or padding, which could be ECB mode and PKCS5Padding. ECB mode, for instance, is not semantically secure because identical plaintext blocks are encrypted to identical ciphertext blocks.",
+        "recommendation": "Specify a secure mode of operation and padding scheme explicitly, such as 'Cipher.getInstance(\"Blowfish/CBC/PKCS5Padding\")'."
+    },
+    {
+        "misuse": "Weak Encryption Algorithm",
+        "vulnerable_code": "\"Blowfish\"",
+        "description": "Blowfish is considered a weak algorithm due to the small block size (64 bits), which makes it susceptible to birthday attacks and other block cipher issues. Moreover, without a specified key length, it may use a default which could be insufficient for security.",
+        "recommendation": "Use a stronger encryption algorithm with a larger block size, such as AES (Advanced Encryption Standard) with a key length of at least 128 bits. Replace 'Blowfish' with 'AES' or another secure algorithm."
+    },
+    {
+        "misuse": "Key Generation without Secure Random",
+        "vulnerable_code": "keyGen.generateKey()",
+        "description": "The KeyGenerator does not explicitly specify a secure random number generator. It's relying on the default implementation, which might not be secure or could potentially become insecure in future updates or different JVM implementations.",
+        "recommendation": "Use KeyGenerator's init method with a specified SecureRandom instance: 'keyGen.init(keySize, new SecureRandom())', where 'keySize' is the desired key size."
+    }
+]
+```

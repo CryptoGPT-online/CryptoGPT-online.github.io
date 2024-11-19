@@ -1,0 +1,10 @@
+```json
+[
+    {
+        "misuse": "Key Generation without Secure Random",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+        "description": "The default KeyGenerator implementation in Java uses a seed that is the concatenation of the system time in milliseconds and a sequence number that is incremented each time a new KeyGenerator is created. This means that multiple KeyGenerator instances created in quick succession will have the same seed, which can lead to predictable keys. This is a misuse because it can make it easier to brute-force or otherwise crack the encryption key.",
+        "recommendation": "To fix this, you should provide a SecureRandom instance with a secure seed. Here is an example: SecureRandom sr = new SecureRandom(); KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\"); keyGen.init(sr); SecretKey key = keyGen.generateKey();"
+    }
+]
+```

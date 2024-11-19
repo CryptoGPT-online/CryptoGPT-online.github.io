@@ -1,0 +1,20 @@
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The encryption key is being copied to exactly 16 bytes, which is too short for AES encryption. The proper length for AES is 16 bytes for AES-128, 24 bytes for AES-192, and 32 bytes for AES-256.",
+        "recommendation": "You should use a properly sized encryption key. For AES-128, it should be 16 bytes."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "ENCRYPT_KEY = DEFAULT_ENCRYPT_KEY.toCharArray();",
+        "description": "The encryption key is being created from a string which is not random. If this string is leaked, the encryption key will also be leaked.",
+        "recommendation": "Generate a random encryption key instead of using a default or hard-coded string."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": "new SecretKeySpec(keyBytes, \"AES\");",
+        "description": "In this code, AES algorithm is used which is a block cipher standard. The block cipher standard is a cryptographic protocol for the encryption of electronic data, and it has a 128-bit block size which is less than the recommended 192 or 256 bits.",
+        "recommendation": "It is recommended to use AES-192 or AES-256 instead of AES due to the smaller key size."
+    }
+]

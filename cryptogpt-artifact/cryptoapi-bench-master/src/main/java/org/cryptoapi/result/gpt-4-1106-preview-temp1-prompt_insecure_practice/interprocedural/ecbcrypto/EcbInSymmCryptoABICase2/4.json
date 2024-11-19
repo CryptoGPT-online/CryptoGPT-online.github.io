@@ -1,0 +1,18 @@
+```json
+[{
+    "misuse": "Insecure Encryption Mode",
+    "vulnerable_code": "Cipher.getInstance(String.valueOf(crypto));",
+    "description": "The code uses AES with ECB mode which is not semantically secure. This mode of operation does not provide serious message confidentiality, and it could lead to patterns visible in ciphertext for similar blocks of plaintext.",
+    "recommendation": "Use a more secure mode of operation like CBC, CFB, OFB, or GCM with a unique, randomly generated IV for each encryption."
+}, {
+    "misuse": "Key Generation without SecureRandom",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+    "description": "The AES key generator does not explicitly specify a SecureRandom instance. While this will use the default SecureRandom, it may lead to weak keys if the default is not a strong source of randomness.",
+    "recommendation": "Explicitly specify a SecureRandom instance when generating a key."
+}, {
+    "misuse": "Type Confusion",
+    "vulnerable_code": "Cipher.getInstance(String.valueOf(crypto));",
+    "description": "The code snippet converts a char array to a String, the use of char arrays for cryptographic parameters might result in type confusion. Additionally, it is unclear whether the 'crypto' variable has been initialized properly before it is used.",
+    "recommendation": "Use a final String variable for the cipher algorithm specification to avoid unnecessary conversions and ensure that the variable is properly initialized before usage."
+}]
+```

@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "Missing Initialization Vector (IV)",
+    "vulnerable_code": "Cipher.getInstance(algorithmName)",
+    "description": "The code uses AES with Cipher's default mode which could be ECB (Electronic Codebook Mode), which is insecure for encrypting multiple blocks of data with the same key (composed of multiple identical plaintext blocks, leading to identical ciphertext blocks).",
+    "recommendation": "Use an appropriate cipher mode with an Initialization Vector (IV), such as AES/CBC/PKCS5Padding and ensure that the IV is random and unique for each encryption operation."
+  },
+  {
+    "misuse": "Insufficient Cipher Algorithm Specification",
+    "vulnerable_code": "Cipher.getInstance(algorithmName)",
+    "description": "The cipher instance is not fully specified which means it relies on the JVM default, potentially leading to portability issues and use of weak paddings such as ECB mode or PKCS#5.",
+    "recommendation": "Specify the transformation string in full (e.g., AES/CBC/PKCS5Padding)."
+  },
+  {
+    "misuse": "Use of Default SecureRandom",
+    "vulnerable_code": "Cipher.getInstance(algorithmName)",
+    "description": "No secure random source is specified for key or IV generation (implicitly or explicitly). This might be an issue if the default SecureRandom does not provide a strong enough source of randomness.",
+    "recommendation": "Explicitly specify a secure random source and check the strength of the default SecureRandom in your environment if used for key or IV generation."
+  }
+]
+```

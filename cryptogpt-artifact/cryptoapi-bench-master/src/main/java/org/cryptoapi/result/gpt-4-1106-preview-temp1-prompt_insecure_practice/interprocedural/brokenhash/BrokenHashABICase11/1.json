@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Weak Hash Function",
+        "vulnerable_code": "MessageDigest.getInstance(crypto)",
+        "description": "The code is using an insecure or weak cryptographic hash function MD4 which is known to be vulnerable to various attacks including collision attacks.",
+        "recommendation": "Replace MD4 with a secure hashing algorithm such as SHA-256 or SHA-3."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "md.digest()",
+        "description": "This code provides no mechanism for ensuring a sufficient hash output size which may lead to weak hashes that could be vulnerable to brute-force attacks, especially if a weak hash function like MD4 is used.",
+        "recommendation": "Use a hash function with an adequate output size such as SHA-256 or SHA-3 with their full output size."
+    },
+    {
+        "misuse": "Unsecure Data Printing",
+        "vulnerable_code": "System.out.println(md.digest())",
+        "description": "Printing raw bytes to the console can result in garbled output and potential information leakage about the structure of the hash. Additionally, depending on the environment, this could be an insecure way to handle sensitive data if logs are not properly secured.",
+        "recommendation": "Convert the hash byte array to a hex string or Base64 encoded string before printing or logging it, and ensure that the logs are secured if they contain sensitive information."
+    }
+]
+```

@@ -1,0 +1,27 @@
+ The following misuses are false positives and can be removed from the misuse list:
+
+* CWE-757: Selection of Less-Secure Algorithm During Negotiation
+* CWE-798: Use of Hardcoded Credentials
+
+The misuse JSON without the false positives is as follows:
+
+[
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(\"MD2\");",
+    "description": "The use of MD2 as a message digest algorithm is considered broken and should not be used. It has been shown to be vulnerable to collision attacks.",
+    "recommendation": "Replace MD2 with a more secure algorithm, such as SHA-256 or SHA-384."
+  },
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_code": "C4(String defCrypto) throws NoSuchPaddingException, NoSuchAlgorithmException { ... }",
+    "description": "The code uses the insecure cryptographic algorithm 'MD2' which is vulnerable to collisions.",
+    "recommendation": "Replace 'MD2' with a secure algorithm such as 'SHA-256' or 'SHA-512'."
+  },
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_code": "MD2",
+    "description": "The MD2 hash algorithm is a broken and risky cryptographic algorithm that should not be used for any purpose. It has been shown to be vulnerable to collisions and other attacks, and it is no longer considered secure. In this code, the `C4` class is using the MD2 algorithm, which is a clear misuse of a broken and risky cryptographic algorithm.",
+    "recommendation": "Replace the use of MD2 with a secure and modern cryptographic algorithm, such as SHA-256 or SHA-512."
+  }
+]

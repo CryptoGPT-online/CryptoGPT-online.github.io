@@ -1,0 +1,20 @@
+ [
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5Padding\")",
+        "description": "The code uses the \"AES/CBC/PKCS5Padding\" cipher, which is a less secure algorithm compared to other modern ciphers such as AES-GCM or ChaCha20-Poly1305.",
+        "recommendation": "Use a more secure algorithm such as AES-GCM or ChaCha20-Poly1305 instead."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "KeyGenerator.getInstance(\"AES\")",
+        "description": "The code uses the \"AES\" key generator, which generates keys that are only 128 bits long. This is considered inadequate for modern cryptography, as it is possible to brute-force attack 128-bit keys.",
+        "recommendation": "Use a key generator that generates keys with at least 256 bits of entropy, such as \"AES-256\"."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "IvParameterSpec(bytes)",
+        "description": "The code uses the \"IvParameterSpec\" class to initialize the cipher with a IV that is generated from a map of strings. The values in the map are not randomly generated, and are therefore not suitable for use as an IV.",
+        "recommendation": "Use a secure random number generator to generate the IV, rather than using a map of strings."
+    }
+]

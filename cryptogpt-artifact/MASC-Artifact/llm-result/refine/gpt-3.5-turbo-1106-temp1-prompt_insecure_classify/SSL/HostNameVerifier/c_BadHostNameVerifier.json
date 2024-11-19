@@ -1,0 +1,12 @@
+### False Positive Misuse ###
+N/A
+
+### Optimized Misuse JSON ###
+[
+  {
+    "misuse": "CWE-295: Improper Certificate Validation",
+    "vulnerable_code": "public class Be {\n    public static void main(String[] args) {\n        new HostNameVerifier(){\n            @Override\n            public boolean verify(String hostname, SSLSession session) {\n                return true;\n            }\n        };\n    }\n}",
+    "description": "The code blindly returns true in the verify method, effectively disabling the SSL/TLS certificate validation and exposing the application to man-in-the-middle attacks.",
+    "recommendation": "Implement proper certificate validation in the verify method to ensure the SSL/TLS connection is secure. Consider using standard HostnameVerifier implementations provided by the Java platform, or implement custom validation logic following best practices for SSL/TLS certificate validation."
+  }
+]

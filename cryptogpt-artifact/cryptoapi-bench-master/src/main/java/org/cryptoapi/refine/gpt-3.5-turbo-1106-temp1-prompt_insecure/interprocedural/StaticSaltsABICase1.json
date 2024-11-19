@@ -1,0 +1,24 @@
+### False Positive Misuse ###
+None
+
+### Optimized Misuse JSON ###
+[
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_code": "PBEParameterSpec pbeParamSpec = null;\n pbeParamSpec = new PBEParameterSpec(salt, count);",
+    "description": "The code uses PBEParameterSpec without specifying the algorithm, mode, and padding, which may lead to the use of a weak or insecure cryptographic algorithm.",
+    "recommendation": "Specify the algorithm, mode, and padding when creating the PBEParameterSpec to ensure a secure cryptographic algorithm is used."
+  },
+  {
+    "misuse": "CWE-256: Unprotected Transport of Credentials",
+    "vulnerable_code": "new PBEParameterSpec(salt, count);",
+    "description": "The `PBEParameterSpec` constructor uses the provided salt and iteration count as is, without any additional protection, which could lead to exposure of sensitive information if these values are transmitted over an insecure channel.",
+    "recommendation": "Use secure communication channels or protocols to transmit sensitive information such as salt and iteration count."
+  },
+  {
+    "misuse": "CWE-745: Multiple Vulnerabilities in PBE Encryption",
+    "vulnerable_code": "pbeParamSpec = new PBEParameterSpec(salt, count);",
+    "description": "The PBEParameterSpec object is being created without providing a secure algorithm, iteration count, or salt.",
+    "recommendation": "Use a secure encryption algorithm, generate a cryptographically secure random salt, and use a high iteration count for strong key derivation."
+  }
+]

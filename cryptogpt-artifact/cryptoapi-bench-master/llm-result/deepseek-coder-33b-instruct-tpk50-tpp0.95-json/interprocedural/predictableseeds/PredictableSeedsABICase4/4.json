@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "CWE-338: Use of Cryptographically Weak PRNG",
+        "vulnerable_code": "SecureRandom sr = new SecureRandom(new byte[]{Byte.parseByte(seed.toString())});",
+        "description": "The code is using a byte array to seed a SecureRandom object. This can lead to insecure randomness, as the byte array is only 1 byte long, leading to a limited possible seed values. This can make the random numbers predictable.",
+        "recommendation": "You should remove the byte array seeding from the SecureRandom constructor and leave it to automatically seed by the system, or provide a better seed if necessary."
+    },
+    {
+        "misuse": "CWE-256: Unprotected Storage of Credentials",
+        "vulnerable_code": "public static final String DEFAULT_SEED = \"100\";",
+        "description": "The constant DEFAULT_SEED is hardcoded in the code. If this value changes over time, it should be stored securely to prevent unauthorized access.",
+        "recommendation": "Store this value in a secure storage, such as an encrypted file or environment variable, and securely retrieve it when needed."
+    }
+]
+```

@@ -1,0 +1,21 @@
+ 
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5Padding\")",
+        "description": "The code uses AES with CBC mode and PKCS5Padding, which is vulnerable to padding oracle attacks. Padding oracle attacks can allow an attacker to decrypt the ciphertext and gain access to the plaintext.",
+        "recommendation": "Use a more secure encryption scheme, such as AES with GCM mode and a secure random IV."
+    },
+    {
+        "misuse": "Insecure Random Number Generation",
+        "vulnerable_code": "SecureRandom sr = new SecureRandom();\nbytes = i.toByteArray();",
+        "description": "The code uses the default SecureRandom class to generate a random IV, which may not be cryptographically secure. An attacker can predict the IV and potentially decrypt the ciphertext.",
+        "recommendation": "Use a secure random number generator, such as SecureRandom.getInstanceStrong(), to generate the IV."
+    },
+    {
+        "misuse": "Insufficient Entropy",
+        "vulnerable_code": "BigInteger i = BigInteger.valueOf(sr.nextInt());\nbyte [] bytes = i.toByteArray();",
+        "description": "The code generates an IV from a low-entropy random number, which can be predicted by an attacker. The IV should be generated using a cryptographically secure random number generator, such as SecureRandom.getInstanceStrong(), to ensure that it has sufficient entropy.",
+        "recommendation": "Use a secure random number generator, such as SecureRandom.getInstanceStrong(), to generate the IV."
+    }
+]

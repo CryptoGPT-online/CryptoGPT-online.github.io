@@ -1,0 +1,30 @@
+### False Positive Misuse ###
+
+**CWE-327: Use of a Broken or Risky Cryptographic Algorithm**
+- vulnerable_code: PBEParameterSpec pbeParamSpec = null;
+  int iteration = hm.get("bbb");
+- description: The code uses a variable iteration as the iteration count for the PBES2 algorithm, which is retrieved from a HashMap. Using a user-controlled value as the iteration count can lead to a denial-of-service attack, as an attacker could provide a very large value to exhaust system resources.
+- recommendation: Use a fixed, secure value for the iteration count, or perform input validation to ensure that the iteration count is within a safe range.
+
+Justification: This misuse is a false positive because the iteration count is not being used in a context where it could lead to a denial-of-service attack. The iteration count is being used to generate a key for a PBE algorithm, which is a secure algorithm that is not susceptible to denial-of-service attacks.
+
+### Optimized Misuse JSON ###
+
+```json
+[
+  {
+    "misuse category": "Inadequate Key Generation",
+    "vulnerable_method": "L1.key2()",
+    "vulnerable_code": "int iteration = hm.get(\"bbb\");",
+    "description": "The iteration count for the PBKDF2 key derivation function is obtained from a HashMap. This is insecure because an attacker could modify the value of the iteration count, allowing them to brute-force the password more easily.",
+    "recommendation": "Use a secure random number generator to generate the iteration count, and store it in a secure location."
+  },
+  {
+    "misuse category": "Inadequate Encryption Strength",
+    "vulnerable_method": "L1.key2()",
+    "vulnerable_code": "int iteration = hm.get(\"bbb\");",
+    "description": "The encryption iteration count is obtained from user input, which could potentially be low, allowing an attacker to brute-force the encryption.",
+    "recommendation": "Use a fixed, strong iteration count, such as 100000, instead of obtaining it from user input."
+  }
+]
+```

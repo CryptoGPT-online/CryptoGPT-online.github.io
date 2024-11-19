@@ -1,0 +1,40 @@
+```json
+[
+    {
+        "misuse": "Insufficient Entropy",
+        "vulnerable_code": "String.valueOf(random.ints())",
+        "description": "The default key is derived from a random integer without specifying the size of the random number, which may lead to insufficient entropy for the key generation.",
+        "recommendation": "Use a proper key derivation mechanism with sufficient entropy for AES key generation."
+    },
+    {
+        "misuse": "Static Initialization Vector (IV)",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, keySpec)",
+        "description": "No initialization vector (IV) is provided when initializing the cipher for encryption. This will result in the use of a predictable IV (likely zeros) which is not secure.",
+        "recommendation": "Generate a random IV for each encryption operation and provide it to the cipher initialization."
+    },
+    {
+        "misuse": "Insecure Key Derivation",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16)",
+        "description": "The key is being truncated or padded to fit the required length for AES encryption without a proper key derivation function (KDF). This could lead to weak keys if the source of the key material is not sufficiently random or has an inadequate length.",
+        "recommendation": "Use a secure key derivation function (KDF) to derive the key from a password or a high-entropy input."
+    },
+    {
+        "misuse": "Hardcoded Key",
+        "vulnerable_code": "String defaultKey = String.valueOf(random.ints())",
+        "description": "The key derivation is insecure and the 'defaultKey' for development might hint at the practice of using a hardcoded key in some instances, which is insecure as well.",
+        "recommendation": "Ensure production keys are securely managed and not hardcoded."
+    },
+    {
+        "misuse": "Missing Encryption Algorithm Mode Specification",
+        "vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5PADDING\")",
+        "description": "Even though 'AES/CBC/PKCS5PADDING' specifies the mode and padding, the way cipher is initialized without an IV explicitly set does not follow best practices and could potentially lead to a default and predictable IV depending on the underlying provider.",
+        "recommendation": "Provide an explicit and secure IV along with the encryption mode when initializing the cipher."
+    },
+    {
+        "misuse": "Poor Error Handling",
+        "vulnerable_code": "public static void main(String [] args) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IOException, IllegalBlockSizeException, BadPaddingException, ClassNotFoundException",
+        "description": "The method signature indicates that exceptions are not handled by the application, rather they are thrown out of the main method. This could lead to unhandled exceptions and may leak information about the encryption process.",
+        "recommendation": "Implement proper error handling within the method and avoid exposing sensitive information."
+    }
+]
+```

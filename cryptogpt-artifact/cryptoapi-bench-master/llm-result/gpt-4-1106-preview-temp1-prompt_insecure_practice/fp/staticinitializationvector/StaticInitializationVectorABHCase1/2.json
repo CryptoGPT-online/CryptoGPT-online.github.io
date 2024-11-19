@@ -1,0 +1,19 @@
+```json
+[
+    {
+        "misuse": "Insufficient Entropy",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+        "description": "The initialization vector (IV) should be random and not predictable. Using a fixed string like \"abcde\", which is then converted into bytes, does not provide the necessary randomness and makes the cipher text more susceptible to certain types of attacks such as dictionary attacks.",
+        "recommendation": "Use a secure random number generator to create a new IV for each encryption operation."
+     },
+     {
+        "misuse": "Use of Insecure or Weak Crypto Algorithm",
+        "vulnerable_code": [
+            "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+            "SecretKey key = keyGen.generateKey();"
+        ],
+        "description": "The KeyGenerator is initialized without specifying a key size, which may result in using a weak default key size for AES (e.g., 128 bits) that might be insufficient for some security requirements.",
+        "recommendation": "Specify a key size by initializing the KeyGenerator with a KeyGenParameterSpec instance that defines a strong key size, such as 256 bits."
+    }
+]
+```

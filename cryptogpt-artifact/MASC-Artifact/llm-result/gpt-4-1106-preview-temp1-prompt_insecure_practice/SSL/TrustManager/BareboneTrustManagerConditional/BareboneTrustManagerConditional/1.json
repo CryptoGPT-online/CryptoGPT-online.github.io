@@ -1,0 +1,34 @@
+```json
+[
+    {
+        "misuse": "Insecure TrustManager",
+        "vulnerable_code": "new X509TrustManager() { ... }",
+        "description": "The implemented trust manager does not validate the certificate chain, effectively trusting all certificates, which makes it vulnerable to man-in-the-middle attacks.",
+        "recommendation": "Replace the trust manager with one that properly validates the certificate chain against a set of trusted CAs."
+    },
+    {
+        "misuse": "Ignoring invalid AuthType",
+        "vulnerable_code": "checkClientTrusted(X509Certificate[] x509Certificates, String s)",
+        "description": "The AuthType is being ignored beyond a simple case-insensitive check against 'RSA'. The code does not enforce any actual cryptographic checks related to the client's authentication type.",
+        "recommendation": "Implement proper AuthType checking that meets the security requirements of the context in which the code is running."
+    },
+    {
+        "misuse": "Ignoring invalid AuthType",
+        "vulnerable_code": "checkServerTrusted(X509Certificate[] x509Certificates, String s)",
+        "description": "The AuthType is being ignored beyond a simple case-insensitive check against 'RSA'. The code does not enforce any actual cryptographic checks related to the server's authentication type.",
+        "recommendation": "Implement proper AuthType checking that meets the security requirements of the context in which the code is running."
+    },
+    {
+        "misuse": "Empty getAcceptedIssuers",
+        "vulnerable_code": "getAcceptedIssuers()",
+        "description": "The getAcceptedIssuers method returns an empty array of X509Certificates. This means the trust manager does not have any trusted authorities, which could lead to accepting any certificate.",
+        "recommendation": "Define a set of trusted CA certificates that the trust manager can use to validate the certificate chains it encounters."
+    },
+    {
+        "misuse": "Improper Random Number Generation",
+        "vulnerable_code": "new SecureRandom()",
+        "description": "Although SecureRandom is being used, which is a good practice, referentially speaking, in some environments or older versions of Java, problems could arise leading to weak random numbers. It is important to ensure that SecureRandom is correctly initialized and that the environment provides strong randomness capabilities.",
+        "recommendation": "If the code is running in an environment with known weaknesses in random number generation, consider explicitly specifying a SecureRandom implementation and seeding it appropriately."
+    }
+]
+```

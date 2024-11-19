@@ -1,0 +1,17 @@
+```json
+[
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": [
+            "public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {}",
+            "public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {}",
+            "public void checkClientTrusted(X509Certificate[] chain, String authType, Socket socket) throws CertificateException {}",
+            "public void checkServerTrusted(X509Certificate[] chain, String authType, Socket socket) throws CertificateException {}",
+            "public void checkClientTrusted(X509Certificate[] chain, String authType, SSLEngine engine) throws CertificateException {}",
+            "public void checkServerTrusted(X509Certificate[] chain, String authType, SSLEngine engine) throws CertificateException {}"
+        ],
+        "description": "The TrustManager provided does not implement any checks, effectively accepting any client or server certificate without validation. This can lead to Man-in-the-middle attacks as any certificate (even invalid ones) will be trusted.",
+        "recommendation": "Implement proper certificate validation within the checkClientTrusted and checkServerTrusted methods, or use a default TrustManager that enforces certificate validation."
+    }
+]
+```

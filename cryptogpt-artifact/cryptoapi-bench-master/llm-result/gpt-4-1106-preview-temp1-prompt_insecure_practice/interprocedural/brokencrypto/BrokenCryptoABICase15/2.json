@@ -1,0 +1,34 @@
+```json
+[
+    {
+        "misuse": "Insecure Cryptographic Algorithm",
+        "vulnerable_code": "String crypto = \"IDEA\";",
+        "description": "IDEA (International Data Encryption Algorithm) is no longer considered a secure algorithm due to its 64-bit block size which makes it vulnerable to birthday attacks.",
+        "recommendation": "Use a more secure algorithm such as AES with a key size of 128 bits or higher."
+    },
+    {
+        "misuse": "Use of a Non-standard Algorithm",
+        "vulnerable_code": "KeyGenerator.getInstance(crypto); Cipher.getInstance(crypto);",
+        "description": "The code does not check if the provided algorithm is standard or secure. A non-standard or deprecated algorithm, or even a typo, may result in using an insecure algorithm.",
+        "recommendation": "Validate input to ensure that a secure and standard cryptographic algorithm is used."
+    },
+    {
+        "misuse": "Weak Key Generation",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(crypto);",
+        "description": "The key generator does not specify a key size, which may result in the default key size that could be insufficient for security, particularly with older algorithms such as IDEA.",
+        "recommendation": "Define and enforce a strong key length policy."
+    },
+    {
+        "misuse": "Missing Initialization Vector (IV)",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "The cipher is initialized without specifying an initialization vector (IV), which means that the same key and plaintext will always produce the same ciphertext, making the encryption deterministic and more vulnerable to certain attacks.",
+        "recommendation": "Always use a secure random IV for CBC mode encryption."
+    },
+    {
+        "misuse": "No Secure Random Source",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(crypto);",
+        "description": "The code does not explicitly specify a secure random source for key generation, which can result in weak key material if the default is not secure.",
+        "recommendation": "Specify a secure random source when generating the key."
+    }
+]
+```

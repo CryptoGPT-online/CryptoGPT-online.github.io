@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "Insufficient Key Size",
+    "vulnerable_code": "\"defaultkey\".toCharArray()",
+    "description": "The key is derived from a static, short, and easily guessable string which does not provide enough entropy for a strong encryption key.",
+    "recommendation": "Use a secure random number generator to generate a key with adequate length and complexity, or derive the key from a passphrase using a key derivation function with a proper work factor."
+  },
+  {
+    "misuse": "Insecure Key Derivation",
+    "vulnerable_code": "encryptKey.toString().getBytes()",
+    "description": "The key is derived by converting a char array to a string and then getting its bytes without considering a secure character encoding or key stretching mechanisim. This might not be safe as different platforms can have different default charsets leading to different keys.",
+    "recommendation": "Use a secure key derivation function like PBKDF2 with HMAC-SHA-256, a salt, and a suitable iteration count instead of an insecure conversion from string to byte[]. Also, make sure to specify a charset when converting strings to bytes, like 'UTF-8'."
+  },
+  {
+    "misuse": "Array.copyOf",
+    "vulnerable_code": "Arrays.copyOf(keyBytes,16)",
+    "description": "This line might lead to an insecure key if the default key is shorter than 16 bytes as 'Arrays.copyOf' does not provide secure padding, leading to the repetition or predictable patterns in the key.",
+    "recommendation": "Ensure the key is of appropriate length according to the cryptographic algorithm's specification."
+  }
+]
+```

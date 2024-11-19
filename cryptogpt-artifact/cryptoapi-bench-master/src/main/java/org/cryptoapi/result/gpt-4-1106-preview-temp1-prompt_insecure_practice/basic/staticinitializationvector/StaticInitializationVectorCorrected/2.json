@@ -1,0 +1,42 @@
+```json
+[
+    {
+        "misuse": "Insufficient IV Size for CBC Mode",
+        "vulnerable_code": [
+            "BigInteger i = BigInteger.valueOf(sr.nextInt());",
+            "byte [] bytes = i.toByteArray();",
+            "IvParameterSpec ivSpec = new IvParameterSpec(bytes);"
+        ],
+        "description": "The initial vector (IV) for CBC mode encryption should be the same size as the block size, which is 16 bytes for AES. However, the code generates the IV using a single random integer which does not guarantee a 16-byte array, leading to an insufficient IV size that can weaken the encryption.",
+        "recommendation": "Change the IV generation to create a properly sized byte array (16 bytes for AES) using SecureRandom."
+    },
+    {
+        "misuse": "KeyGenerator without SecureRandom",
+        "vulnerable_code": [
+            "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+            "SecretKey key = keyGen.generateKey();"
+        ],
+        "description": "The code does not explicitly set a source of randomness when generating an AES key, which could lead to weak keys if the default RNG is predictable or not sufficiently random.",
+        "recommendation": "Initialize the KeyGenerator instance with a SecureRandom instance for better entropy."
+    },
+    {
+        "misuse": "Misuse of SecureRandom",
+        "vulnerable_code": [
+            "SecureRandom sr = new SecureRandom();",
+            "BigInteger i = BigInteger.valueOf(sr.nextInt());",
+            "byte [] bytes = i.toByteArray();"
+        ],
+        "description": "Converting the result of SecureRandom.nextInt() to a BigInteger, then to a byte array, is an unconventional and error-prone way to obtain random bytes. The conversion might not yield a byte array of the required length, leading to potential vulnerabilities, especially when used as an IV for encryption.",
+        "recommendation": "Use SecureRandom.nextBytes(byte[] bytes) directly to generate the required number of random bytes."
+    },
+    {
+        "misuse": "Hardcoded Encryption Algorithm",
+        "vulnerable_code": [
+            "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+            "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");"
+        ],
+        "description": "The encryption algorithm and mode are hardcoded in the code, which does not allow for flexibility in case of algorithm deprecation or the discovery of vulnerabilities in the algorithm or mode used.",
+        "recommendation": "Allow for external configuration of the encryption algorithm, mode, and padding to enable updating these parameters without modifying the source code."
+    }
+]
+```

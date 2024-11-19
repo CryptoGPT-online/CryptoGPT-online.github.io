@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "sr.setSeed(seed);",
+        "description": "Setting a fixed seed in SecureRandom may lead to predictable random number generation, which is insecure for crypto applications. In this case, the seed is derived from a constant array, making it even easier to predict the random numbers.",
+        "recommendation": "Avoid setting a fixed seed with user-defined or known values for cryptographic operations. If the use case requires setting a seed (e.g., for reproducibility in non-security contexts), ensure the source of the seed is secure."
+    },
+    {
+        "misuse": "Potential Insufficient Entropy",
+        "vulnerable_code": "SecureRandom sr = new SecureRandom();",
+        "description": "While the 'SecureRandom' class is designed to provide a cryptographically strong random number generator, it is potentially misused here by manually setting a seed which may compromise the entropy of the generated random numbers.",
+        "recommendation": "Instantiating 'SecureRandom' without manually setting a seed usually ensures a high-entropy, secure random number generator. Removing or modifying the 'setSeed' call could be safer unless the seed is meant to come from a secure, high-entropy source."
+    }
+]
+```

@@ -1,0 +1,29 @@
+### False Positive Misuse ###
+None of the reported misuses are false positives.
+
+### Optimized Misuse JSON###
+```json
+[
+  {
+    "misuse category": "Insufficient Verification",
+    "vulnerable_method": "checkClientTrusted",
+    "vulnerable_code": "trustManager.checkClientTrusted(x509Certificates,s);",
+    "description": "The code trusts any client connecting without performing any certificate validation. This can lead to accepting untrusted or expired certificates, which could allow an attacker to impersonate a legitimate client.",
+    "recommendation": "Implement proper certificate validation by checking the certificate chain and verifying the issuer's certificate."
+  },
+  {
+    "misuse category": "Insufficient Verification",
+    "vulnerable_method": "checkServerTrusted",
+    "vulnerable_code": "//Trust any remote server (no certificate validation)",
+    "description": "The code trusts any remote server without performing any certificate validation. This can lead to accepting untrusted or expired certificates, which could allow an attacker to impersonate a legitimate server.",
+    "recommendation": "Implement proper certificate validation by checking the certificate chain and verifying the issuer's certificate."
+  },
+  {
+    "misuse category": "Improper Trust Manager Configuration",
+    "vulnerable_method": "getAcceptedIssuers",
+    "vulnerable_code": "return new X509Certificate[0];",
+    "description": "Returning an empty array from `getAcceptedIssuers` means that the trust manager will trust any certificate, regardless of its issuer. This can lead to a man-in-the-middle attack, where an attacker can issue a certificate for any domain and the trust manager will accept it.",
+    "recommendation": "Return a non-empty array of trusted certificate issuers. This can be obtained from a trusted certificate authority (CA)."
+  }
+]
+```

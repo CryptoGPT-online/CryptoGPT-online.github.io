@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "Improper Certificate Validation",
+    "vulnerable_code": "public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {\n    // TODO Auto-generated method stub\n    \n}",
+    "description": "The checkServerTrusted method is empty, meaning it does not validate the certificate chain, which can allow man-in-the-middle attacks.",
+    "recommendation": "Implement proper certificate validation by checking the certificate chain and validity against a set of trusted root CAs."
+  },
+  {
+    "misuse": "Improper Certificate Validation",
+    "vulnerable_code": "public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {\n    // TODO Auto-generated method stub\n}",
+    "description": "The checkClientTrusted method is empty, meaning it does not validate the client certificates. This can lead to trust in an unauthenticated client in mutual TLS scenarios.",
+    "recommendation": "Similarly, proper implementation of client certificate validation should be done if mutual TLS is expected."
+  },
+  {
+    "misuse": "Unreliable Return Value",
+    "vulnerable_code": "public X509Certificate[] getAcceptedIssuers() {\n    return null;\n}",
+    "description": "Returning null from the getAcceptedIssuers method may cause issues as some SSL/TLS implementations expect a non-null array of acceptable CA issuers.",
+    "recommendation": "Return a properly initialized array of trusted issuers, or at least an empty array, instead of null."
+  }
+]
+```

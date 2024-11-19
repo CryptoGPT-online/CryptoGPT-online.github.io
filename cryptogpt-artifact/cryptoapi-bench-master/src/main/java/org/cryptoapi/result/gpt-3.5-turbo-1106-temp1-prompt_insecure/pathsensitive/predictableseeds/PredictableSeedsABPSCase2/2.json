@@ -1,0 +1,14 @@
+[{"misuse": "Use of Weak Pseudo-Random Number Generator (PRNG)", 
+  "vulnerable_code": "SecureRandom sr2 = new SecureRandom();",
+  "description": "Using the default constructor for SecureRandom may lead to the use of a weak PRNG algorithm, as the default PRNG algorithm is implementation-dependent. Additionally, the code attempts to reseed the SecureRandom instance using the nextBytes method.",
+  "recommendation": "Explicitly specify a strong PRNG algorithm when constructing SecureRandom, and avoid reseeding the SecureRandom instance with a user-provided seed."},
+
+ {"misuse": "Insecure Seed for PRNG", 
+  "vulnerable_code": "byte [] seed = {(byte) 100, (byte) 200};",
+  "description": "The seed provided to initialize the SecureRandom instance is of insufficient length and does not provide enough entropy for secure random number generation.",
+  "recommendation": "Use a longer, cryptographically secure random seed to initialize the SecureRandom instance for better randomness and security."},
+
+ {"misuse": "Absolute Seed for PRNG", 
+  "vulnerable_code": "SecureRandom sr = new SecureRandom(seed);",
+  "description": "The direct use of a fixed seed for the SecureRandom instance may lead to predictable output, compromising the randomness and security of the generated values.",
+  "recommendation": "Avoid using fixed seeds for SecureRandom and instead use a truly random and unpredictable seed."}]

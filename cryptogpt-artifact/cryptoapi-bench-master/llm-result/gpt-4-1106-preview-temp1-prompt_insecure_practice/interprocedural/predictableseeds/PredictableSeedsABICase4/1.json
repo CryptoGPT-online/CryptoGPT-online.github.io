@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insufficient Entropy",
+        "vulnerable_code": "SecureRandom sr = new SecureRandom(new byte[]{Byte.parseByte(seed.toString())});",
+        "description": "The seed is derived from a fixed and publicly-known string which is insufficient for cryptographic purposes as it makes the output predictable.",
+        "recommendation": "Do not use a hardcoded seed. Instead, allow the SecureRandom instance to self-seed or provide a securely generated seed value."
+    },
+    {
+        "misuse": "Improper Seed Conversion and Usage",
+        "vulnerable_code": "SecureRandom sr = new SecureRandom(new byte[]{Byte.parseByte(seed.toString())});",
+        "description": "The seed is incorrectly converted from a char array to a byte using 'Byte.parseByte(seed.toString())' which may not produce the intended seed bytes. Also, seed.toString() returns a string representation of the memory address of the char array, not the actual content.",
+        "recommendation": "If a seed is required, ensure it is correctly converted into bytes suitable for use with SecureRandom, or even better, avoid seeding manually and use a well-seeded SecureRandom."
+    },
+    {
+        "misuse": "Usage of Static Seed Array",
+        "vulnerable_code": "private static char[] SEED;",
+        "description": "The usage of a static SEED array suggests that there could be a reliance on predictable or fixed seed values, compromising randomness.",
+        "recommendation": "Ensure that each instance of SecureRandom is properly seeded using secure and unpredictable seed values."
+    }
+]
+```

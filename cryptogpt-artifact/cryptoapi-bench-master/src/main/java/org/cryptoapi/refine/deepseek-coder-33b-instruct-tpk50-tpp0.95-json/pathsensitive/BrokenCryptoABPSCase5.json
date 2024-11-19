@@ -1,0 +1,34 @@
+### False Positive Misuse
+
+```json
+[
+    {
+        "misuse category": "Insecure Algorithm: IDEA",
+        "vulnerable_method": "B5.go(int)",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"IDEA\");",
+        "description": "IDEA is a weak encryption algorithm and it's no longer considered secure. It's a key size of 128 bits.",
+        "recommendation": "Switch to a more secure algorithm like AES or use a different library that has higher security standards. Remember that even stronger encryption algorithms like AES also require the use of secure keys."
+    },
+    {
+        "misuse category": "Key Generation Without Entropy",
+        "vulnerable_method": "B5.go(int)",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+        "description": "Key generation without entropy can lead to weak or predictable keys, making it easier for an attacker to guess or predict the key. Using a proper random number generator for key generation can mitigate this issue.",
+        "recommendation": "Use a proper source of entropy for key generation. In particular, for AES key generation, it is recommended to use a SecureRandom instance."
+    }
+]
+```
+
+### Optimized Misuse JSON
+
+```json
+[
+    {
+        "misuse category": "Unsafe Cipher Choice",
+        "vulnerable_method": "B5.go(int)",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"IDEA\");\nif (choice > 1)\n    cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "The code switches between using IDEA and AES based on a user-supplied choice. IDEA is a weak cipher, it is known to be insecure. This can potentially compromise the confidentiality and integrity of the encrypted data.",
+        "recommendation": "Avoid hard-coding the cipher choice. Always use a secure and well-vetted cipher that meets your security requirements. If you want to allow the user to choose the cipher, make sure to validate the chosen cipher against a whitelist of secure and recommended ciphers."
+    }
+]
+```

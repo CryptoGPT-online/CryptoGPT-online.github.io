@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Insecure Key Generation",
+        "vulnerable_code": "KeyGenerator keygen = KeyGenerator.getInstance(algo);\nSecretKey key = keygen.generateKey();",
+        "description": "The code uses a default key size for the AES algorithm, which may not provide sufficient security.",
+        "recommendation": "Specify a key size when generating the key using KeyGenerator.init(int keySize) to ensure an appropriate level of security."
+    },
+    {
+        "misuse": "Insecure Crypto Algorithm",
+        "vulnerable_code": "Cipher c = Cipher.getInstance(keygen.getAlgorithm());",
+        "description": "The code directly uses the algorithm obtained from the KeyGenerator without explicitly specifying a mode and padding, which can lead to insecure defaults being used.",
+        "recommendation": "Specify the mode and padding explicitly when obtaining the Cipher instance using Cipher.getInstance(algorithm/mode/padding) to ensure secure cryptographic operation."
+    }
+]
+```

@@ -1,0 +1,14 @@
+The code is using a static initialization vector (IV) for encryption. IV should be randomly generated and should not be a secret. In this case, the IV is generated from a hardcoded string, which may make the code susceptible to certain attacks.
+
+Here is the JSON response:
+
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "byte [] bytes = \"abcde\".getBytes(\"UTF-8\"); IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+        "description": "The IV used in this code is derived from a hardcoded string, which is insecure. An attacker might be able to guess or manipulate the string, and therefore also the IV, which could allow them to eavesdrop or tamper with the encrypted data.",
+        "recommendation": "Always generate a new random IV for each encryption operation. This can be done by using SecureRandom to generate a random byte array, or by using a cryptographic library that provides an easy way to generate secure random numbers."
+    }
+]
+```

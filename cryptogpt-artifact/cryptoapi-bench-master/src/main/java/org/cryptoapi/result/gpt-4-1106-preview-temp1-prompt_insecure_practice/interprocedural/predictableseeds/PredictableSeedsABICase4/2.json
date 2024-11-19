@@ -1,0 +1,28 @@
+```json
+[
+  {
+    "misuse": "Insufficient Entropy",
+    "vulnerable_code": "SecureRandom sr = new SecureRandom(new byte[]{Byte.parseByte(seed.toString())});",
+    "description": "Using a hardcoded and predictable byte array as the seed reduces the entropy of SecureRandom, making the generated values predictable.",
+    "recommendation": "Use SecureRandom without a seed or with a properly generated random seed to ensure high entropy."
+  },
+  {
+    "misuse": "Incorrect API Usage",
+    "vulnerable_code": "Byte.parseByte(seed.toString())",
+    "description": "Calling toString() on a char array does not convert the array into a proper string representation of its content. Instead, it returns a string representation of the array object reference.",
+    "recommendation": "Use new String(seed) to convert the char array into a string, then process it accordingly to obtain a proper byte array for seeding, if required."
+  },
+  {
+    "misuse": "Static Use of Seed",
+    "vulnerable_code": "private static char[] SEED;",
+    "description": "A static seed value that does not change between program executions can lead to predictable cryptographic operations.",
+    "recommendation": "Avoid static seed values. Instead, generate a secure random seed per instance or for each use."
+  },
+  {
+    "misuse": "Insecure Seed Source",
+    "vulnerable_code": "public static final String DEFAULT_SEED = \"100\";",
+    "description": "Using a constant string as a seed source is insecure because it can be easily predicted and replicated.",
+    "recommendation": "Do not use hardcoded strings as seed; use a secure and unpredictable source for seeding."
+  }
+]
+```

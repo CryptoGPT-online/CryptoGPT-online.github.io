@@ -1,0 +1,24 @@
+### False Positive Misuse ###
+
+**None of the provided misuse reports are false positives.** All of the reported misuses are valid and should be addressed.
+
+### Optimized Misuse JSON ###
+
+```json
+[
+  {
+    "misuse category": "CWE-295: Improper Certificate Validation",
+    "vulnerable_method": "Dr.verify",
+    "vulnerable_code": "HostnameVerifier hv = HttpsURLConnection.getDefaultHostnameVerifier();\nreturn hv.verify(hostname, sslSession);",
+    "description": "The code uses the default hostname verifier which accepts any certificate, regardless of its validity. This can allow man-in-the-middle attacks, where an attacker can intercept the connection and impersonate the server.",
+    "recommendation": "Use a hostname verifier that checks the certificate's validity, such as `SSLContext.getDefault().getSocketFactory().getDefaultHostnameVerifier()`."
+  },
+  {
+    "misuse category": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+    "vulnerable_method": "Dr.verify",
+    "vulnerable_code": "HostnameVerifier hv = HttpsURLConnection.getDefaultHostnameVerifier();",
+    "description": "This code uses the default hostname verifier, which is known to have security vulnerabilities. Attackers can exploit these vulnerabilities to spoof websites and perform man-in-the-middle attacks.",
+    "recommendation": "Use a more secure hostname verifier, such as the `StrictHostnameVerifier` class from the `org.apache.http.conn.ssl` package."
+  }
+]
+```

@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "String crypto = \"IDEA\";",
+        "description": "IDEA (International Data Encryption Algorithm) is considered weak and is less common. It may be susceptible to cryptographic attacks and should not be used in secure contexts.",
+        "recommendation": "Switch to a stronger algorithm like AES (Advanced Encryption Standard)."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(crypto);",
+        "description": "The key size for the IDEA algorithm is not specified, which can lead to the use of a default key size that may be insufficient for a strong security level.",
+        "recommendation": "Specify a key size that is considered strong for the chosen algorithm (e.g., 256 bits for AES)."
+    },
+    {
+        "misuse": "Insecure Crypto Transformation",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(crypto);",
+        "description": "The transformation is specified with just the algorithm name, without specifying the mode of operation and padding, which will let the implementation use defaults that might be insecure (like ECB mode which is vulnerable to certain attacks).",
+        "recommendation": "Use a secure mode of operation like Cipher Block Chaining (CBC) with a secure padding scheme (e.g., PKCS5Padding), resulting in a transformation string such as 'AES/CBC/PKCS5Padding'."
+    },
+    {
+        "misuse": "Unspecified Encoding Mode",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "Without explicitly defining a secure random initialization vector (IV) for modes like CBC, the same plaintext will always encrypt to the same ciphertext when using the same key, which can leak information.",
+        "recommendation": "Specify an IV using SecureRandom for modes that require it or ensure that the encryption mode used does not require an IV and is secure for your use case."
+    }
+]
+```

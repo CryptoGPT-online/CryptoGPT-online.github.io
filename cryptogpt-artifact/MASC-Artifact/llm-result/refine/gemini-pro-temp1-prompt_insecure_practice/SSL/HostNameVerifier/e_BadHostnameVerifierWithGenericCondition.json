@@ -1,0 +1,24 @@
+### False Positive Misuse ###
+1. **Misuse:** CWE-295: Improper Certificate Validation
+**Vulnerable Method:** `new HostNameVerifier(){ ... }`
+**Reason:** The code overrides the default hostname verifier and accepts all hostnames only when the SSL session is null. This is a valid approach to handle cases where SSL sessions are not available, such as when connecting to a local server for development or testing purposes.
+
+### Optimized Misuse JSON ###
+```json
+[
+  {
+    "misuse category": "CWE-295: Improper Certificate Validation",
+    "vulnerable_method": "new HostNameVerifier(){ ... }",
+    "vulnerable_code": "new HostNameVerifier(){ ... }",
+    "description": "The code overrides the default hostname verifier and unconditionally accepts all hostnames, which could lead to man-in-the-middle attacks.",
+    "recommendation": "Use a proper hostname verifier that validates the hostname against a trusted certificate authority."
+  },
+  {
+    "misuse category": "CWE-297: Improper Certificate Validation",
+    "vulnerable_method": "session == null",
+    "vulnerable_code": "session == null",
+    "description": "The code checks if the SSLSession is null and returns true if it is, which means that the hostname will be verified regardless of its validity.",
+    "recommendation": "The code should be changed to check if the SSLSession is not null and if the hostname is valid."
+  }
+]
+```

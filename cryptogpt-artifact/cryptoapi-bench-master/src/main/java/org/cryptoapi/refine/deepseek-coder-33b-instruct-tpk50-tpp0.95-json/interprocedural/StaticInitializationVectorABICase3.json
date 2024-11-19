@@ -1,0 +1,29 @@
+## False Positive Misuse ##
+None
+
+## Optimized Misuse JSON ##
+```json
+[
+  {
+    "misuse_category": "Weak IV",
+    "vulnerable_method": "method1 (S3)",
+    "vulnerable_code": "method1",
+    "description": "The IV is being generated from a byte array which can expose more information than necessary in some cases. This is a false positive as the IV is being generated from a string which is not a cryptographically secure random number.",
+    "recommendation": "A secure way to generate an AES IV is by using a SecureRandom."
+  },
+  {
+    "misuse_category": "Key Reuse",
+    "vulnerable_method": "method2 (S3)",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+    "description": "Key is generated and used for encryption. In the context of the provided code, this is a false positive as the same key is used for the same piece of data, which is not a cryptographic misuse per se but common practice in certain contexts.",
+    "recommendation": "Generate a new key for each encryption operation."
+  },
+  {
+    "misuse_category": "Insecure Randomness",
+    "vulnerable_method": "method2 (S3)",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\"); SecretKey key = keyGen.generateKey();",
+    "description": "The KeyGenerator class provides a mechanism for generating symmetric key material. When an instance of the KeyGenerator class is created, the algorithm random number generators are seeded. The problem here is that not only keyGenerator.generateKey() but also any other instances or static methods which generate random numbers are being seeded. This is not a cryptographic misuse per se but a potential vulnerability if the seeding algorithm is predictable or not secure.",
+    "recommendation": "Instead of using KeyGenerator.getInstance to generate the AES keys, it is recommended to generate the AES keys from a known cryptographically secure random number generator."
+  }
+]
+```

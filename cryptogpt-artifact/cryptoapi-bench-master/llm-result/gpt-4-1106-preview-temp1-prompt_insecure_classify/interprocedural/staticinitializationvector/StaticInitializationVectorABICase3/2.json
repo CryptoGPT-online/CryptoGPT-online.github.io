@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+        "description": "The initialization vector (IV) should be random and not predictable. Using a constant value 'abcde' as an IV is insecure because it makes the encryption more susceptible to certain attacks.",
+        "recommendation": "Use a secure random number generator to generate the IV."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "description": "The key generator does not specify the key size. AES supports 128, 192, or 256 bits key sizes. If not specified, Java defaults to a lower key size (commonly 128 bits), which may not meet certain security requirements.",
+        "recommendation": "Specify the key size by calling keyGen.init(256); to ensure a strong encryption key (assuming the JCE jurisdiction policy files allow 256-bit keys)."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "byte [] bytes = \"abcde\".getBytes();",
+        "description": "This code is using a fixed string 'abcde' to derive the IV bytes, which is not sufficiently random and makes the encryption predictable.",
+        "recommendation": "Replace the fixed string with a securely generated random array of bytes."
+    }
+]
+```

@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "MessageDigest.getInstance(String.valueOf(crypto))",
+        "description": "SHA1 is a deprecated hash function known to have vulnerabilities and should not be used in secure contexts.",
+        "recommendation": "Use a strong hash function like SHA-256 or SHA-3 family."
+    },
+    {
+        "misuse": "Insecure Usage of Crypto API",
+        "vulnerable_code": "md.update(str.getBytes())",
+        "description": "Using default platform encoding for converting the String to bytes can lead to different results on different platforms. This could cause imbalance in hash computations in different environments.",
+        "recommendation": "Specify a character encoding when getting bytes from a string, e.g., str.getBytes(\"UTF-8\")."
+    },
+    {
+        "misuse": "Insecure Direct Object Reference",
+        "vulnerable_code": "crypto = CRYPTO;",
+        "description": "Directly referencing the cryptographic algorithm from a public mutable field can lead to the field being altered by malicious means or accidentally, introducing a security risk.",
+        "recommendation": "Do not use public static mutable fields to store security-related parameters. Use private final fields or enums for maintaining constants."
+    },
+    {
+        "misuse": "Logging Sensitive Data",
+        "vulnerable_code": "System.out.println(md.digest())",
+        "description": "Printing out cryptographic digests or any sensitive data to logs can be a security risk as logs may be accessible by unauthorized users or may be insufficiently protected.",
+        "recommendation": "Do not log sensitive information. If debugging is necessary, ensure that logs are properly secured and sanitized before use."
+    }
+]
+```

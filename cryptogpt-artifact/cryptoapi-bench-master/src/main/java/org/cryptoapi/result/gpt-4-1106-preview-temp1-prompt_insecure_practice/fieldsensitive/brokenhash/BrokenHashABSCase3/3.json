@@ -1,0 +1,38 @@
+```json
+[
+  {
+    "misuse": "Weak Hash Without a Salt",
+    "vulnerable_code": "MessageDigest.getInstance(crypto);",
+    "description": "Using 'MD4' as a cryptographic hash without a salt makes the system vulnerable to dictionary attacks and precomputed hash attacks.",
+    "recommendation": "Use a strong cryptographic hash function like SHA-256 or SHA-3, and always salt your hashes."
+  },
+  {
+    "misuse": "Broken Crypto Algorithm",
+    "vulnerable_code": "crypto = new C3(\"MD4\");",
+    "description": "MD4 is a broken and insecure hash function that should not be used in any secure context.",
+    "recommendation": "Replace MD4 with a secure hash function, such as SHA-256."
+  },
+  {
+    "misuse": "Improper Error Handling",
+    "vulnerable_code": [
+      "public B3() throws ...",
+      "public C3(String defCrypto) throws ...",
+      "public void encrypt(...) throws ..."
+    ],
+    "description": "Throwing generic exceptions such as NoSuchAlgorithmException and NoSuchPaddingException can expose details about the cryptographic algorithm in use, which could help an attacker.",
+    "recommendation": "Catch and handle specific exceptions within the methods, potentially throwing a custom exception that doesn't reveal sensitive information."
+  },
+  {
+    "misuse": "Misleading Method Name",
+    "vulnerable_code": "public void encrypt(String str, String passedAlgo)",
+    "description": "The method name 'encrypt' is misleading as it suggests encryption, but the actual implementation is hashing.",
+    "recommendation": "Rename the method to accurately reflect its purpose, such as 'hash' or 'computeHash'."
+  },
+  {
+    "misuse": "Lack of Output Encoding",
+    "vulnerable_code": "System.out.println(md.digest());",
+    "description": "The output of the digest method is being printed without encoding, which may result in unexpected behavior or character encoding issues.",
+    "recommendation": "Encode the hash output in a format such as hex or base64 before printing or storing."
+  }
+]
+```

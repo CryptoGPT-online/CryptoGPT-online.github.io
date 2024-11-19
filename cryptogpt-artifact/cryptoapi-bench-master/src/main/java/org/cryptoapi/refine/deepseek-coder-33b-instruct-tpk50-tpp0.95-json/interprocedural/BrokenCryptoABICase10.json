@@ -1,0 +1,25 @@
+### False Positive Misuse
+{
+    "misuse": "Hard-coded Cryptographic Algorithm",
+    "vulnerable_method": "B0::go",
+    "vulnerable_code": "KeyGenerator.getInstance(String.valueOf(crypto))",
+    "description": "The crypto algorithm is hard-coded in the code which can be manipulated to use a different algorithm. This can lead to insecure use of cryptographic algorithms.",
+    "recommendation": "Avoid hardcoding cryptographic algorithms. Instead, store them in a configuration file and use the value from there. If they are required to be changed, validate the input to ensure it is a valid algorithm."
+},
+{
+    "misuse": "Hard-coded Cryptographic Algorithm",
+    "vulnerable_method": "B0::go",
+    "vulnerable_code": "Cipher.getInstance(String.valueOf(crypto))",
+    "description": "The crypto algorithm is hard-coded in the code which can be manipulated to use a different algorithm. This can lead to insecure use of cryptographic algorithms.",
+    "recommendation": "Avoid hardcoding cryptographic algorithms. Instead, store them in a configuration file and use the value from there. If they are required to be changed, validate the input to ensure it is a valid algorithm."
+},
+{
+    "misuse": "Non-default cryptographic algorithm used",
+    "vulnerable_method": "B0::go",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(String.valueOf(crypto));\nCipher cipher = Cipher.getInstance(String.valueOf(crypto));",
+    "description": "Using a non-default cryptographic algorithm could lead to compatibility issues between different Java versions or platforms.",
+    "recommendation": "It's recommended to use the default cryptographic algorithm that is recommended for each library or tool. In this case, since the library being used is not specified, the recommendation could vary based on the cryptographic algorithm's recommended settings."
+}
+
+### Optimized Misuse JSON
+None of the misuses in the list is a false positive. The code has hard-coded the crypto algorithm and uses non-default cryptographic algorithm. It violates the security principle of least privilege and potential compatibility issues between different Java versions or platforms. Please review the code carefully and use a flexible configuration to ensure only valid, approved cryptographic algorithms are used.

@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insecure Initialization Vector (IV)",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(new byte[]{Byte.parseByte(String.valueOf(initialization))});",
+        "description": "The IV is not randomly generated and is predictable, which can lead to weak cryptography.",
+        "recommendation": "Use a secure random number generator (e.g., SecureRandom) to generate IV."
+    },
+    {
+        "misuse": "Static Initialization Vector (IV)",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(new byte[]{Byte.parseByte(String.valueOf(initialization))});",
+        "description": "Reusing an IV with CBC mode is insecure and can allow an attacker to deduce information about the plaintext and other ciphertexts that use the same IV.",
+        "recommendation": "Each instance of encryption should use a unique IV."
+    },
+    {
+        "misuse": "Insufficient Entropy in Key Generation",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\"); SecretKey key = keyGen.generateKey();",
+        "description": "No secure random number generator is explicitly set for the KeyGenerator, which could result in a weak key if the default is not secure.",
+        "recommendation": "Set a secure random instance for key generation, using keyGen.init(256, new SecureRandom()); for example."
+    },
+    {
+        "misuse": "Weak Initialization Vector Conversion",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(new byte[]{Byte.parseByte(String.valueOf(initialization))});",
+        "description": "Attempting to parse a character as a byte for the IV will lead to a NumberFormatException and is not the correct way to achieve byte representation of characters.",
+        "recommendation": "Ensure proper byte conversion or obtain bytes using the getBytes() method on a properly generated string."
+    }
+]
+```

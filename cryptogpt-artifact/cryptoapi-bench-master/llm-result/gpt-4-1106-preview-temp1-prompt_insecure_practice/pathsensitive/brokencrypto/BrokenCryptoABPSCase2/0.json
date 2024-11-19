@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Mismatched Crypto Key and Algorithm",
+        "vulnerable_code": "Cipher.getInstance(\"Blowfish\");",
+        "description": "The code generates an AES key but uses it with a Blowfish cipher if `choice` is not greater than 1. This is a programming mistake because the key algorithm must match the cipher algorithm.",
+        "recommendation": "Ensure the cipher instance matches the generated key's algorithm. If the key is for AES, use an AES cipher."
+    },
+    {
+        "misuse": "Insecure Cipher Mode",
+        "vulnerable_code": "Cipher.getInstance(\"Blowfish\");",
+        "description": "The Blowfish cipher is used in ECB mode as it does not specify a mode or padding. ECB mode is not secure because identical plaintext blocks are encrypted into identical ciphertext blocks, which can leak information about the plaintext.",
+        "recommendation": "Use a more secure mode such as CBC with proper padding when initializing the Cipher instance."
+    },
+    {
+        "misuse": "Uninitialized IV for CBC Mode",
+        "vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "The code uses AES in CBC mode without specifying an initialization vector (IV). Using a static or default IV can lead to vulnerabilities as the same IV value will be used across multiple encryptions.",
+        "recommendation": "Generate a secure random IV for each encryption operation and properly transmit it alongside the ciphertext."
+    },
+    {
+        "misuse": "Inconsistent Key Length",
+        "vulnerable_code": "KeyGenerator.getInstance(\"AES\");",
+        "description": "There is no explicit key size defined for the AES key generator. The default key size may not meet the security requirements and can lead to weaker encryption strength.",
+        "recommendation": "Specify a key size when generating the AES key, such as 128, 192, or 256 bits, to ensure a known and adequate level of security."
+    }
+]
+```

@@ -1,0 +1,11 @@
+```json
+[{"misuse": "CWE-295: Improper Certificate Validation", 
+ "vulnerable_code": "public void checkClientTrusted(X509Certificate[] x509Certificates, String s)\n" +
+				 "{\n" +
+				 "	if (!(null != s || s.equalsIgnoreCase(\"RSA\") || x509Certificates.length >= 314)) {\n" +
+				 "		throw new CertificateException(\"checkServerTrusted: AuthType is not RSA\");\n" +
+				 "	}\n" +
+				 "}\n", 
+ "description": "The custom X509TrustManager implementation does not properly validate the certificate. It only checks if the AuthType is RSA and the length of the certificate array is greater than or equal to 314, which is not a valid approach for certificate validation.",
+ "recommendation": "Use a standard approach for certificate validation, such as implementing a proper TrustManager, or using the default system TrustManager in Java."}]
+```

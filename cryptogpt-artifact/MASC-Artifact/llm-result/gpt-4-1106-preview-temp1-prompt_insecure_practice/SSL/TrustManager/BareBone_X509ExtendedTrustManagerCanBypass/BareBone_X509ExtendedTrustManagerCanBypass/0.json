@@ -1,0 +1,10 @@
+```json
+[
+  {
+    "misuse": "TrustManager that does not check certificate chains",
+    "vulnerable_code": "public void checkClientTrusted(X509Certificate[] chain, String authType) {...}\npublic void checkServerTrusted(X509Certificate[] chain, String authType) {...}",
+    "description": "The implemented methods checkClientTrusted and checkServerTrusted are empty, which means they do not perform any validation on the provided certificates. This can lead to accepting any certificate, effectively disabling TLS/SSL checks and making the application vulnerable to man-in-the-middle attacks.",
+    "recommendation": "Implement validation logic in checkClientTrusted and checkServerTrusted methods to check the validity of the certificate chain and throw a CertificateException for invalid certificates as per the X509TrustManager contract."
+  }
+]
+```

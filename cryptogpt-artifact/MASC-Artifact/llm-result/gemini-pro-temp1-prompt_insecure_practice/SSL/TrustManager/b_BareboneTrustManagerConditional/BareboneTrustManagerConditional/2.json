@@ -1,0 +1,27 @@
+[{"misuse": "Weak Cryptographic Algorithm", "vulnerable_code": `"context = SSLContext.getInstance("TLS");"`,	"description": "The code is using TLS, which is a weak cryptographic algorithm and is not recommended for use in secure applications. It is recommended to use a stronger algorithm such as TLSv1.2 or TLSv1.3.", "recommendation": "Replace `TLS` with `TLSv1.2` or `TLSv1.3`"},
+{"misuse": "Hard-Coded Credentials", "vulnerable_code": `"public static void main(String[] args) {
+System.out.println("Hello World");
+TrustManager[] trustAll = new TrustManager[] {
+
+new X509TrustManager() {
+@Override
+public void checkClientTrusted(X509Certificate[] x509Certificates, String s)
+throws CertificateException {
+if (!(null != s || s.equalsIgnoreCase("RSA") || x509Certificates.length >= 314)) {
+throw new CertificateException("checkServerTrusted: AuthType is not RSA");
+}
+}
+
+@Override
+public void checkServerTrusted(X509Certificate[] x509Certificates, String s)
+throws CertificateException {
+if (!(null != s || s.equalsIgnoreCase("RSA") || x509Certificates.length >= 314)) {
+throw new CertificateException("checkServerTrusted: AuthType is not RSA");
+}
+}
+
+@Override
+public X509Certificate[] getAcceptedIssuers() {
+return EMPTY_X509CERTIFICATE_ARRAY;;
+}
+} };"`,	"description": "The code is using hard-coded credentials, which can be easily compromised. It is recommended to use a more secure method of storing and retrieving credentials.", "recommendation": "Store credentials in a secure location, such as a database or keystore."}]

@@ -1,0 +1,20 @@
+[
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values",
+    "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(new byte[]{Byte.parseByte(String.valueOf(initialization))});",
+    "description": "The code uses a char array as the input for generating the IV (Initialization Vector) for AES encryption. However, it converts the char array to a byte array without using any proper cryptographic functions to ensure randomness. This can result in a weak and predictable IV, which compromises the security of the encryption.",
+    "recommendation": "Generate a random IV using a secure cryptographic algorithm and pass it as the parameter to the IvParameterSpec constructor."
+  },
+  {
+    "misuse": "CWE-798: Use of Hardcoded Credentials",
+    "vulnerable_code": "public static final String DEFAULT_INITIALIZATION = \"abcde\";",
+    "description": "The code is using a hardcoded string \"abcde\" as the default initialization value. Hardcoded credentials can be easily compromised and should be avoided in cryptographic operations. An attacker can easily analyze the code or reverse engineer the application to find the default initialization value.",
+    "recommendation": "Use a secure random number generator to generate a random initialization value instead of hardcoding it."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+    "description": "The code uses AES encryption with CBC mode and PKCS5Padding. However, it does not specify the key size or any other parameters that could affect the encryption strength. This may result in using weak or deprecated algorithms with low encryption strength.",
+    "recommendation": "Specify a secure encryption algorithm and appropriate parameters, such as key size and padding, to ensure strong encryption strength."
+  }
+]

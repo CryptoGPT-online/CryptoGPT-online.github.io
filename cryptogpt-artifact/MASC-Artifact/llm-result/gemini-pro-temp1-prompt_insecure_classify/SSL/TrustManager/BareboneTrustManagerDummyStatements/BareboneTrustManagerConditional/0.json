@@ -1,0 +1,60 @@
+```java
+TrustManager[] trustAll = new TrustManager[] { 
+			new X509TrustManager() {
+				@Override
+				public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+					if (!(null != s && s.equalsIgnoreCase("RSA"))) {
+						throw new CertificateException("checkServerTrusted: AuthType is not RSA");
+					}
+				}
+
+				@Override
+				public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+					if (!(null != s && s.equalsIgnoreCase("RSA"))) {
+						throw new CertificateException("checkServerTrusted: AuthType is not RSA");
+					}
+				}
+				@Override
+				public X509Certificate[] getAcceptedIssuers() {
+					return null;
+			}
+		}
+	};
+```
+
+The code trusts all certificates by overriding the default behavior of X509TrustManager. This is insecure because it allows unauthenticated connections and is vulnerable to man-in-the-middle attacks.
+
+**Misuse:** CWE-295: Improper Certificate Validation
+**Vulnerable code:** 
+```java
+TrustManager[] trustAll = new TrustManager[] { 
+			new X509TrustManager() {
+				...
+			}
+		};
+```
+
+**Description:** This code trusts all certificates regardless of their validity or origin. This is a security risk because it allows attackers to impersonate the server and establish an encrypted connection with the client.
+
+**Recommendation:** Use a proper certificate validation mechanism, such as using a trusted certificate authority to verify the server's certificate. For example, you can use the following code to validate certificates against a trusted certificate authority:
+
+```java
+SSLContext context = SSLContext.getInstance("TLS");
+context.init(null, new TrustManager[] { new X509TrustManager() {
+   @Override
+   public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+      // Check if the client certificate is trusted
+   }
+
+   @Override
+   public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+      // Check if the server certificate is trusted
+   }
+
+   @Override
+   public X509Certificate[] getAcceptedIssuers() {
+      // Return the trusted certificate authorities
+      return new X509Certificate[] { /* ... */ };
+   }
+}}, new SecureRandom());
+```

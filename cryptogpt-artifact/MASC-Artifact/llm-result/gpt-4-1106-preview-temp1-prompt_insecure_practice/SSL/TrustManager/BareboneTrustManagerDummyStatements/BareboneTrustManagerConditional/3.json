@@ -1,0 +1,42 @@
+```json
+[
+  {
+    "misuse": "Insecure TrustManager",
+    "vulnerable_code": [
+      "public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {",
+      "public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {"
+    ],
+    "description": "The custom TrustManager implemented accepts any certificate that uses RSA as the authentication type without validating the certificate chain. This TrustManager is insecure as it could trust malicious certificates.",
+    "recommendation": "Implement proper certificate validation in checkClientTrusted and checkServerTrusted methods."
+  },
+  {
+    "misuse": "TrustManager that accepts all certificates",
+    "vulnerable_code": [
+      "public X509Certificate[] getAcceptedIssuers() {",
+      "return null;"
+    ],
+    "description": "The getAcceptedIssuers() method returns null, which indicates that any certificate, including self-signed certificates, will be accepted. This could expose the application to man-in-the-middle attacks.",
+    "recommendation": "Return a proper list of accepted issuers or implement a truststore to validate against."
+  },
+  {
+    "misuse": "Use of Weak Protocol",
+    "vulnerable_code": [
+      "context = SSLContext.getInstance(\"SSL\")"
+    ],
+    "description": "The code specifies 'SSL' as the protocol for SSLContext which is deprecated and insecure. Modern applications should not use SSL as it is vulnerable to various attacks.",
+    "recommendation": "Use 'TLS' as the protocol to ensure secure communication."
+  },
+  {
+    "misuse": "Empty catch blocks",
+    "vulnerable_code": [
+      "catch (NoSuchAlgorithmException e) {",
+      "e.printStackTrace();",
+      "}",
+      "catch (KeyManagementException e) {",
+      "e.printStackTrace();"
+    ],
+    "description": "The exception handling blocks simply print the stack trace to standard error and do not take any action. This is insufficient error handling and may not be secure as it could leave the system in an undefined state after an error occurs.",
+    "recommendation": "Implement adequate error handling that addresses the cause of the exceptions and ensures the system remains secure."
+  }
+]
+```

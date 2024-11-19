@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "Inadequate Key Size",
+    "vulnerable_code": "pbeKeySpec = new PBEKeySpec(defaultKey,salt,iterationCount,keyLength);",
+    "description": "The key size specified is 16 bits, which is too small to ensure cryptographic strength. The PBEKeySpec is configured to generate a PBE key with a length that is not secure for most cryptographic operations.",
+    "recommendation": "Increase the key length to at least 128 bits (16 bytes) for symmetric encryption algorithms, or higher for stronger security."
+  },
+  {
+    "misuse": "Weak Password-Based Encryption",
+    "vulnerable_code": "char [] defaultKey = {'s'};",
+    "description": "The password provided for the PBEKeySpec is extremely weak. Using single-character passwords can easily be brute-forced, compromising the security of the cryptographic operation.",
+    "recommendation": "Use a strong, complex password for password-based encryption, preferably by prompting the user or using a securely generated value stored in a secure manner."
+  },
+  {
+    "misuse": "Static Salt",
+    "vulnerable_code": "byte [] salt = new byte[16];",
+    "description": "While the salt is of adequate length (16 bytes), the salt should be unique and random for each password. Currently, it is initialized with zeros due to the nature of array initialization in Java, then a SecureRandom is called but never used with the salt.",
+    "recommendation": "Ensure the salt is properly randomized using SecureRandom before being used in key specification. Do not use a static salt."
+  }
+]
+```

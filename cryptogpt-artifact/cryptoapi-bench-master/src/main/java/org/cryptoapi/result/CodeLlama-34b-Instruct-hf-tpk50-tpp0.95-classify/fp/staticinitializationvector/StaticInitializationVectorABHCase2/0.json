@@ -1,0 +1,16 @@
+ ```
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "String name = \"abcdef\";\nMap<String, String> hm = new HashMap<String, String>();\nhm.put(\"aaa\", \"abcde\");\nhm.put(\"bbb\", \"fghij\");\nhm.put(\"ccc\", \"klmno\");\nhm.put(\"ddd\", \"pqrst\");\n\nString str = hm.get(\"aaa\");\n\nbyte [] bytes = str.getBytes();\n\nIvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+        "description": "The IV (Initialization Vector) used for the AES encryption is derived from a String object, which may not be random enough to be considered secure.",
+        "recommendation": "Use a secure random value as the IV, such as `SecureRandom.getInstance(\"SHA1PRNG\").generateSeed(16)`."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "The AES encryption algorithm with CBC mode and PKCS5 padding is considered insecure and should not be used in new code. It is recommended to use AES-GCM or AES-CTR instead.",
+        "recommendation": "Use AES-GCM or AES-CTR instead of AES/CBC/PKCS5Padding."
+    }
+]
+```

@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "String.valueOf(random.ints())",
+        "description": "The use of SecureRandom.ints() provides a stream of random integers, but calling String.valueOf on this stream object does not provide a proper random key; it merely calls toString on the IntStream, resulting in a string that represents the type and memory address information of the stream, not actual random data.",
+        "recommendation": "Use a proper method to generate random bytes for the key, such as SecureRandom.nextBytes(byte[] bytes)."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The key is being truncated or padded to fit the required length without ensuring cryptographic strength. This could weaken the encryption if the initial key material is not random or of sufficient length.",
+        "recommendation": "Ensure that the key material is generated with adequate entropy and is of the proper length for the AES key specification (e.g., 128, 192, or 256 bits)."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "String defaultKey = String.valueOf(random.ints());",
+        "description": "While the key is not hardcoded in this case, the misuse pattern is similar in that the key is generated in a predictable or insecure manner. The key should be derived from a secure and unpredictable source.",
+        "recommendation": "Use a cryptographically secure method to generate a key, such as Java's KeyGenerator class."
+    }
+]
+```

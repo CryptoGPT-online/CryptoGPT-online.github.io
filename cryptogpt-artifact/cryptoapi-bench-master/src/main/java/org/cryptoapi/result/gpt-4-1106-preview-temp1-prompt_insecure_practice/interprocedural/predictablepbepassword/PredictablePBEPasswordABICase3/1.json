@@ -1,0 +1,28 @@
+```json
+[
+  {
+    "misuse": "Insecure Algorithm Parameters",
+    "vulnerable_code": [
+      "pbeKeySpec = new PBEKeySpec(password.toCharArray(),salt,iterationCount,keyLength);"
+    ],
+    "description": "PBEKeySpec should be used with an algorithm parameter specifying a secure PBE algorithm, like 'PBEWithHmacSHA256AndAES'. Here it's missing the algorithm information, and keyLength seems to be specifying the derived key length incorrectly; for AES, common key lengths are 128, 192 or 256 bits.",
+    "recommendation": "Specify a secure algorithm when using PBEKeySpec and ensure the key length is correct (128/192/256 bits for AES)."
+  },
+  {
+    "misuse": "Insufficient Salt Size",
+    "vulnerable_code": [
+      "byte [] salt = new byte[16];"
+    ],
+    "description": "The salt size of 16 here refers to the number of bytes, which equates to 128 bits. While this is not inherently insecure, for some PBKDF (Password-Based Key Derivation Function) schemes, having a larger salt (e.g., 32 bytes) could enhance security by making precomputed attacks, such as rainbow tables, more difficult.",
+    "recommendation": "Use a longer salt when possible, such as 32 bytes."
+  },
+  {
+    "misuse": "Insufficient Iteration Count",
+    "vulnerable_code": [
+      "int iterationCount = 11010;"
+    ],
+    "description": "An iteration count of 11010 may be too low depending on the environment and the intended security level. Iteration count is a way to make the password-based key derivation function slower so as to resist brute-force attacks. Modern recommendations often suggest 100,000 iterations or more.",
+    "recommendation": "Increase the iteration count significantly to resist brute-force attacks; typically, at least 100,000 iterations are recommended."
+  }
+]
+```

@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Use of a Hardcoded Cryptographic Key",
+        "vulnerable_code": "byte [] bytes = \"abcde\".getBytes();",
+        "description": "The 'go' function uses a hardcoded byte array as the initialization vector (IV), which can compromise cryptographic strength. Using a fixed IV along with a fixed key for multiple encryptions of different data can allow attackers to deduce patterns between them, breaking the confidentiality the IV is meant to establish.",
+        "recommendation": "Use a securely generated random number for the IV each time you encrypt data and pass it along with the ciphertext."
+    },
+    {
+        "misuse": "Insufficient Randomness",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\n        SecretKey key = keyGen.generateKey();",
+        "description": "The AES key is generated without specifying a secure random number generator or a sufficient key size. The default key size could be 128 bits, which, while still secure, may not meet certain security requirements that require 256 bits.",
+        "recommendation": "Explicitly specify a secure random instance and/or define a key size of 256 bits if stronger security is needed."
+    },
+    {
+        "misuse": "Static IV",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+        "description": "A static IV is used to initialize the cipher, which makes the encryption scheme vulnerable to several types of attacks, such as chosen-plaintext or known-plaintext attacks.",
+        "recommendation": "Generate a random IV for every encryption operation."
+    }
+]
+```

@@ -1,0 +1,28 @@
+```json
+[
+  {
+    "misuse": "Trust Manager that accepts any certificate",
+    "vulnerable_code": "new X509TrustManager() { ... }",
+    "description": "The custom X509TrustManager implementation does not properly verify certificate chains, which can allow man-in-the-middle attacks due to the fact that any certificate will be trusted and no chain validation is performed.",
+    "recommendation": "Implement proper certificate chain validation in `checkClientTrusted` and `checkServerTrusted` methods."
+  },
+  {
+    "misuse": "Insecure SSL/TLS protocol version",
+    "vulnerable_code": "SSLContext.getInstance(\"TLS\")",
+    "description": "Using 'TLS' as a protocol in SSLContext.getInstance() may result in using an insecure version of TLS, depending on the underlying Java Security Provider's default settings.",
+    "recommendation": "Specify a secure TLS version explicitly (e.g., \"TLSv1.2\" or \"TLSv1.3\")."
+  },
+  {
+    "misuse": "Empty trust anchor set",
+    "vulnerable_code": "return EMPTY_X509CERTIFICATE_ARRAY;",
+    "description": "Returning an empty array for `getAcceptedIssuers` indicates no trusted certificate authorities will be accepted, which makes it difficult to validate any certificates and can lead to insecure defaults.",
+    "recommendation": "Return a properly populated array of trusted certificates in `getAcceptedIssuers`."
+  },
+  {
+    "misuse": "Improper check for specific authType 'RSA'",
+    "vulnerable_code": "if (!(null != s && s.equalsIgnoreCase(\"RSA\")))",
+    "description": "The trust manager only checks that the authType is 'RSA', which does not ensure the validity or integrity of the certificate chain.",
+    "recommendation": "Replace the check with a comprehensive certificate validation process."
+  }
+]
+```

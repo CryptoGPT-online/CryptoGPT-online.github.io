@@ -1,0 +1,44 @@
+### False Positive Misuse ###
+
+1. False Positive: "Insecure Cipher Mode"
+   - Misuse Report: 
+     ```json
+     {
+         "misuse": "Insecure Cipher Mode",
+         "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"RSA\");",
+         "description": "Using RSA directly for encryption without a padding scheme (like PKCS#1) is insecure. This opens up the possibility of attacks like raw RSA attacks.",
+         "recommendation": "Use 'RSA/ECB/PKCS1Padding' for the Cipher instance to ensure that a secure padding scheme is applied."
+     }
+     ```
+   - Reason: The provided code uses RSA in conjunction with Java's `SealedObject`, which implicitly uses padding that is secure for RSA encryption in Java. The concern about the padding scheme is relevant in contexts where RSA is used directly without any API that ensures secure padding.
+
+2. False Positive: "Broken Crypto Algorithm"
+   - Misuse Report: 
+     ```json
+     {
+         "misuse": "Broken Crypto Algorithm",
+         "vulnerable_code": "int keysize = 1024; kgp.initialize(keysize);",
+         "description": "RSA key sizes below 2048 bits are considered insecure due to advances in computational power and attack techniques. 1024-bit RSA keys can be broken with enough resources.",
+         "recommendation": "Use a minimum RSA key size of 2048 bits to ensure the security of encrypted data. Change the key size to 2048 or higher in the kgp.initialize(keysize) method."
+     }
+     ```
+   - Reason: This report is actually valid, since the key size of 1024 bits for RSA is considered insecure with the current computational resources.
+
+### Optimized Misuse JSON ###
+
+```json
+[
+    {
+        "misuse": "Inadequate Key Size",
+        "vulnerable_code": "int keysize = 1024;",
+        "description": "The RSA key size of 1024 bits is considered weak and can be broken with sufficient computational resources.",
+        "recommendation": "Use a minimum key size of 2048 bits for RSA to ensure sufficient security against brute-force attacks."
+    },
+    {
+        "misuse": "Insecure RSA Encryption for Data",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"RSA\");",
+        "description": "Using RSA directly for encrypting data is not secure as it does not provide semantic security and can only encrypt small amounts of data.",
+        "recommendation": "Use hybrid encryption – encrypt the data with a symmetric cipher (e.g., AES) and then encrypt the symmetric key with RSA."
+    }
+]
+```

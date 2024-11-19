@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "PBEParameterSpec pbeParamSpec = new PBEParameterSpec(new byte[]{Byte.parseByte(salt.toString())}, count);",
+        "description": "The `PBEParameterSpec` constructor accepts a byte array which represents the salt used during the password-based encryption. When the salt is converted to a string and parsed as a byte, only the first ASCII value of the string is used, which may lead to weak cryptographic keys or insecure results.",
+        "recommendation": "Do not use the string representation of the salt as the salt. Instead, directly use a byte array or a randomly generated salt."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "PBEParameterSpec pbeParamSpec = new PBEParameterSpec(new byte[]{Byte.parseByte(salt.toString())}, count);",
+        "description": "The `PBEParameterSpec` is used to create a cryptographic key, but the actual PBEParameterSpec constructor is not specified in the code. The `PBEParameterSpec` class itself is part of the Java cryptography extension (JCE) API which is considered a risky cryptographic algorithm. Using this might lead to poor encryption.",
+        "recommendation": "Use a trusted and secure cryptographic algorithm that is compliant with current standards. Avoid using deprecated or insecure cryptographic algorithms."
+    }
+]
+```

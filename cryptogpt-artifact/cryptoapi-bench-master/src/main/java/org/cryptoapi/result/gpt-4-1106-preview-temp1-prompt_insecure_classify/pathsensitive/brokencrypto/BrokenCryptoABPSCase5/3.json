@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "Cipher.getInstance(\"IDEA\")",
+        "description": "IDEA (International Data Encryption Algorithm) is considered a weak and outdated encryption algorithm. It is not recommended for modern secure applications.",
+        "recommendation": "Replace the IDEA algorithm with a stronger algorithm such as AES."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "KeyGenerator.getInstance(\"AES\")",
+        "description": "The default key size for AES may not be strong enough for some applications. The code does not specify the key size.",
+        "recommendation": "Specify a key size when generating the AES key. For example, use `keyGen.init(256);` to ensure a 256-bit key size which is considered strong."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "keyGen.generateKey()",
+        "description": "The default SecureRandom instance may not provide a sufficiently random seed for key generation, depending on the underlying provider and platform.",
+        "recommendation": "Explicitly specify a SecureRandom instance with a strong source of entropy when generating keys."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": "if (choice > 1) cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "The choice of encryption algorithm should not be based on a condition that can be externally controlled without proper validation. This can lead to the selection of a weaker algorithm under certain conditions.",
+        "recommendation": "Always use a strong and consistent algorithm for encryption and do not allow it to be selected based on user input or external conditions."
+    }
+]
+```

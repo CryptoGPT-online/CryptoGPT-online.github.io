@@ -1,0 +1,11 @@
+ ```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "byte seed = 100; SecureRandom sr = new SecureRandom(new byte[]{seed});",
+        "description": "The `SecureRandom` class is used with a low-entropy seed value, which can lead to predictable random number generation.",
+        "recommendation": "Use a high-entropy seed value for the `SecureRandom` class, such as a secure random number generated using `SecureRandom.generateSeed(int numBytes)`."
+    }
+]
+```
+Note that the `SecureRandom` class is used to generate random numbers, but the seed value is always the same (100). This can lead to predictable random number generation, which is a security issue. To fix this misuse, you should use a high-entropy seed value, such as a secure random number generated using `SecureRandom.generateSeed(int numBytes)`.

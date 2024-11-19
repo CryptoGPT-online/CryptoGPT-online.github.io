@@ -1,0 +1,31 @@
+### False Positive Misuse ###
+
+```json
+{
+    "misuse": "Insecure Default TrustManager",
+    "vulnerable_code": "public X509Certificate[] getAcceptedIssuers() {\n    return new X509Certificate[0];\n}",
+    "description": "Returning an empty list of accepted issuers means no certificates are considered trusted by default, potentially causing certificate validation to fail or lead to insecure connections if not properly handled elsewhere.",
+    "recommendation": "Ensure getAcceptedIssuers returns a valid array of trusted issuers or is used in combination with a properly configured trust manager that performs robust validation checks."
+}
+```
+
+**Reason:** Returning an empty array from `getAcceptedIssuers()` does not inherently indicate a security risk if the trust manager (`trustManager`) in use is correctly implemented to perform necessary checks when `checkServerTrusted` or `checkClientTrusted` methods are called. The empty array in `getAcceptedIssuers` signifies a lack of an explicit certificate acceptance, but the critical trust decisions are more relevantly handled within the other overridden methods. If these are properly handled, then the impact of an empty list is neutralized.
+
+### Optimized Misuse JSON###
+
+```json
+[
+    {
+        "misuse": "Improper Certificate Validation (CWE-295)",
+        "vulnerable_code": "public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {\n    //Trust any remote server (no certificate validation)\n\n}",
+        "description": "The checkServerTrusted method is overridden without any implementation, leading to no server certificate validation being performed, which makes the application vulnerable to Man-in-the-Middle (MitM) attacks.",
+        "recommendation": "Implement server certificate validation logic in the checkServerTrusted method to ensure the server's certificate chain is valid and trusted."
+    },
+    {
+        "misuse": "Improper Certificate Validation (CWE-295)",
+        "vulnerable_code": "public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {\n    //Trust any client connecting (no certificate validation)\n    trustManager.checkClientTrusted(x509Certificates,s);\n}",
+        "description": "The checkClientTrusted method is overridden but only relies on an underlying trust manager with no additional verification, effectively trusting the client certificates without explicit validation.",
+        "recommendation": "Ensure the checkClientTrusted method performs a detailed verification of client certificates, including checking the certificate validity, chain, and matching specific criteria imposed by the application's security requirements."
+    }
+]
+```

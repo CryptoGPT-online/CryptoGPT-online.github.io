@@ -1,0 +1,56 @@
+### False Positive Misuse ###
+
+1. "Hardcoded Encryption Key" is a false positive because the key is not hardcoded; it is generated at runtime using `KeyGenerator.generateKey()`.
+2. "Insufficient Error Handling" is a false positive in the context of cryptographic API misuse. While proper error handling is important, it is not directly related to the cryptographic operations themselves.
+3. "Use of a Hardcoded Cryptographic Key" is a false positive because the key is not hardcoded; it is dynamically generated.
+4. "Hardcoded Key" is a false positive because the key is generated at runtime, not hardcoded.
+
+### Optimized Misuse JSON###
+
+```json
+[
+    {
+        "misuse": "Insufficient IV Size for Cipher Block Mode",
+        "vulnerable_code": [
+            "byte [] bytes = \"abcde\".getBytes();",
+            "IvParameterSpec ivSpec = new IvParameterSpec(bytes);"
+        ],
+        "description": "The initialization vector (IV) should be the same size as the cipher's block size. For AES, this should be 128 bits (16 bytes). Using a smaller IV can lead to weak cryptography.",
+        "recommendation": "Use a securely generated random IV of the correct size."
+    },
+    {
+        "misuse": "Weak Key Generation",
+        "vulnerable_code": [
+            "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+            "SecretKey key = keyGen.generateKey();"
+        ],
+        "description": "The KeyGenerator is not initialized with a specific key size, which can lead to generating a key with a default size that might not be secure enough for certain applications.",
+        "recommendation": "Specify a key size when initializing the KeyGenerator instance to ensure it is adequately secure, such as 128, 192, or 256 bits."
+    },
+    {
+        "misuse": "Hardcoded IV",
+        "vulnerable_code": [
+            "byte [] bytes = \"abcde\".getBytes();",
+            "IvParameterSpec ivSpec = new IvParameterSpec(bytes);"
+        ],
+        "description": "Using a hardcoded, non-random IV makes the encryption more predictable and vulnerable to certain attacks such as replay attacks.",
+        "recommendation": "Generate a unique, random IV for each encryption request."
+    },
+    {
+        "misuse": "Static IV with CBC Mode",
+        "vulnerable_code": [
+            "IvParameterSpec ivSpec = new IvParameterSpec(bytes);"
+        ],
+        "description": "Using a static initialization vector (IV) with CBC mode encryption is insecure as it does not provide semantic security.",
+        "recommendation": "Use a securely generated random IV for each encryption operation."
+    },
+    {
+        "misuse": "Missing Secure Random for Key Generation",
+        "vulnerable_code": [
+            "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");"
+        ],
+        "description": "KeyGenerator does not explicitly use a SecureRandom instance, and thus may not be adequately seeded in all circumstances, leading to less random keys.",
+        "recommendation": "Instantiate SecureRandom with a strong source of randomness and pass it to KeyGenerator.init method with a given key size."
+    }
+]
+```

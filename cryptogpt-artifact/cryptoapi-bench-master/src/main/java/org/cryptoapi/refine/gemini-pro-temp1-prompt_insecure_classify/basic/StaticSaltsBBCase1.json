@@ -1,0 +1,21 @@
+### False Positive Misuse ###
+
+The initial list contains one false positive:
+
+* CWE-326: Inadequate Encryption Strength (vulnerable code: `int count = 1020;`)
+
+The iteration count of 1020 is not necessarily too low for the PBKDF2 algorithm, depending on the specific context and security requirements of the application. Without additional information, it is not possible to determine whether this is a genuine misuse.
+
+### Optimized Misuse JSON ###
+
+```json
+[
+  {
+    "misuse category": "CWE-330: Use of Insufficiently Random Values",
+    "vulnerable_method": "S1.key2()",
+    "vulnerable_code": "byte[] salt = {(byte) 0xa2};",
+    "description": "The salt value is created using a single byte, which is not sufficiently random and may weaken the encryption.",
+    "recommendation": "Generate a random salt of sufficient length (e.g. 16 bytes) using a secure random number generator."
+  }
+]
+```

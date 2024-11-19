@@ -1,0 +1,52 @@
+ The provided code is a Java implementation of the `X509TrustManager` interface, which is used to handle X.509 certificates. The code includes two methods, `checkClientTrusted` and `checkServerTrusted`, which are meant to check the validity of the client and server certificates, respectively.
+
+However, the current implementation of these methods is not proper, as they do not actually validate the certificates. Instead, they simply return `null`, which means that any certificate will be trusted without any validation. This is a security vulnerability, as it allows for potential attacks such as man-in-the-middle attacks.
+
+To fix this issue, the code should be updated to properly validate the certificates using the `X509Certificate` class. The `checkClientTrusted` and `checkServerTrusted` methods should be implemented to check the validity of the certificates and to verify the trust chain.
+
+Here is an example of how the code could be updated to properly validate the certificates:
+```java
+public class D2 implements X509TrustManager {
+
+    @Override
+    public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+        // Check the validity of the client certificate
+        X509Certificate clientCert = x509Certificates[0];
+        if (!clientCert.isValid()) {
+            throw new CertificateException("Client certificate is invalid");
+        }
+
+        // Check the trust chain of the client certificate
+        if (!isClientCertTrusted(clientCert)) {
+            throw new CertificateException("Client certificate is not trusted");
+        }
+    }
+
+    @Override
+    public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+        // Check the validity of the server certificate
+        X509Certificate serverCert = x509Certificates[0];
+        if (!serverCert.isValid()) {
+            throw new CertificateException("Server certificate is invalid");
+        }
+
+        // Check the trust chain of the server certificate
+        if (!isServerCertTrusted(serverCert)) {
+            throw new CertificateException("Server certificate is not trusted");
+        }
+    }
+
+    private boolean isClientCertTrusted(X509Certificate clientCert) {
+        // Implement the logic to check the trust chain of the client certificate
+        return true;
+    }
+
+    private boolean isServerCertTrusted(X509Certificate serverCert) {
+        // Implement the logic to check the trust chain of the server certificate
+        return true;
+    }
+}
+```
+In this example, the `checkClientTrusted` and `checkServerTrusted` methods are implemented to check the validity of the certificates and to verify the trust chain. The `isClientCertTrusted` and `isServerCertTrusted` methods are used to check the trust chain of the certificates.
+
+By properly validating the certificates and verifying the trust chain, the security vulnerability in the original code is fixed, and the application is made more secure.

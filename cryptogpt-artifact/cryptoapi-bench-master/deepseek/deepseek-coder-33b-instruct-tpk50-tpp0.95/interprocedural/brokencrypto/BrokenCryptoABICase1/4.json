@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "DES usage",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(keyAlgo);\nSecretKey key = keyGen.generateKey();\nCipher cipher = Cipher.getInstance(crypto);",
+    "description": "DES is a weak cryptography algorithm. It has known vulnerabilities. It should not be used for any new development or system. In this code, it's used for generating a cryptographic key and later used for encryption.",
+    "recommendation": "Replace 'DES' with a stronger cryptographic algorithm like AES (AES-256)."
+  },
+  {
+    "misuse": "ECB mode usage",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(crypto);\ncipher.init(Cipher.ENCRYPT_MODE, key);",
+    "description": "ECB is a less secure mode of operation for block cipher. If the input data is divided into blocks and each block is encrypted separately, blocks will encrypt to the same output which can reveal information about the plain text, particularly when identical plaintext blocks repeat in the input. This misuse can lead to information leaks and other vulnerabilities.",
+    "recommendation": "Use a more secure mode of operation. If data needs to be encrypted in multiple blocks, consider using a mode of operation like CBC (Cipher Block Chaining) or CFB (Cipher Feedback)."
+  }
+]
+```

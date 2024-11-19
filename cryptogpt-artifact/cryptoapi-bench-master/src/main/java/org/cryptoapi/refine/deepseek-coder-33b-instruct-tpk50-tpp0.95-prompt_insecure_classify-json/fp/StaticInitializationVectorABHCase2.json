@@ -1,0 +1,24 @@
+## False Positive Misuse 
+
+This list of cryptographic API misuses does not contain any false positives. All issues that appear to be potential security vulnerabilities are indeed misuses of the Java cryptographic APIs.
+
+## Optimized Misuse JSON
+
+```json
+[
+    {
+        "misuse category": "Insufficient Entropy",
+        "vulnerable_method": "S2.go()",
+        "vulnerable_code": "byte [] bytes = str.getBytes();\n\nIvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+        "description": "A string is used to generate the IV, which makes the IV vulnerable to dictionary attacks or brute-force attacks, especially if the string has less than 128 bits of entropy.",
+        "recommendation": "Use a cryptographically secure random number generator to generate a secure IV of at least 128 bits. For example, SecureRandom can be used as follows: `SecureRandom secureRandom = new SecureRandom(); byte[] iv = new byte[16]; secureRandom.nextBytes(iv);`"
+    },
+    {
+        "misuse category": "Weak Encryption Algorithm",
+        "vulnerable_method": "S2.go()",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "The use of the AES encryption algorithm with a block cipher mode of operation (CBC) and PKCS5 padding is generally recommended only if the data to be encrypted is less than a block (16 bytes) in length.",
+        "recommendation": "Consider using a stronger encryption algorithm, such as AES-GCM or AES-CCM, or, even better, an authenticated encryption scheme with an encrypt-then-MAC scheme (AEAD)."
+    }
+]
+```

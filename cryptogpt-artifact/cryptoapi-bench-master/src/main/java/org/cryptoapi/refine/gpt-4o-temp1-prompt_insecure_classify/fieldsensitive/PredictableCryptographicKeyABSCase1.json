@@ -1,0 +1,24 @@
+### False Positive Misuse ###
+
+1. **CWE-326: Inadequate Encryption Strength (first instance)** - This misuse describes the use of a hardcoded default key as failing to provide adequate encryption strength. The description under this item is partially correct but categorizes it under the wrong CWE. The actual problem is using a hardcoded credential, which should be a separate misuse under CWE-798. We will adjust this misuse type accordingly in the optimized misuse list.
+
+2. **CWE-798: Use of Hardcoded Credentials (second instance referencing `String passKey = P1.getKey("pass.key");`)** - The process of retrieving configuration properties (such as keys) through system properties is not inherently a misuse; it’s a common technique for configuration flexibility. While it could lead to issues if the configuration is improperly managed, it does not constitute a hardcoded credential misuse.
+
+### Optimized Misuse JSON ###
+
+```json
+[
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials.",
+        "vulnerable_code": "crypto = new Co(\"defaultkey\");",
+        "description": "A hardcoded default encryption key, 'defaultkey', is being used when a key from 'pass.key' cannot be retrieved.",
+        "recommendation": "Avoid using hardcoded keys. Consider generating a secure random key or deriving one from a user-provided passphrase."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The encryption key is being forced to conform to a 16-byte length, potentially truncating or inadequately padding the key, leading to weaknesses if the original key wasn't appropriately sized.",
+        "recommendation": "Ensure that encryption keys have adequate length and strength before use. Consider using a key management strategy or key derivation functions to guarantee key quality."
+    }
+]
+```

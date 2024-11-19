@@ -1,0 +1,34 @@
+```json
+[
+    {
+        "misuse": "Weak Hash Algorithm",
+        "vulnerable_code": "crypto = new C3(\"MD4\");",
+        "description": "MD4 is a weak hashing algorithm that is vulnerable to collisions and other cryptographic attacks. Using MD4 to hash sensitive data can result in insecure systems that are susceptible to attacks such as hash collisions, pre-image, and second pre-image attacks.",
+        "recommendation": "Replace MD4 with a more secure hashing algorithm such as SHA-256 or SHA-3."
+    },
+    {
+        "misuse": "Hardcoded Crypto Algorithm",
+        "vulnerable_code": "crypto = new C3(\"MD4\");",
+        "description": "The crypto algorithm is hardcoded, which reduces flexibility and can create a single point of failure if the hard-coded algorithm gets compromised or deprecated. Additionally, using MD4 is inherently insecure.",
+        "recommendation": "Use a secure and up-to-date algorithm and avoid hardcoding it. Ensure that the algorithm is configurable and can be updated without changing the source code."
+    },
+    {
+        "misuse": "Improper Error Handling",
+        "vulnerable_code": "public B3() throws NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException",
+        "description": "The constructor of the class B3 is throwing multiple exceptions. This can potentially expose cryptographic implementation details and does not allow for proper error recovery or logging.",
+        "recommendation": "Catch exceptions and handle them properly within the application. Provide error handling that does not expose sensitive details and allows the application to recover securely."
+    },
+    {
+        "misuse": "No error handling in encryption method",
+        "vulnerable_code": "public void encrypt(String str, String passedAlgo)",
+        "description": "The encrypt method does not handle any exceptions internally, which might lead to uncaught exceptions and could expose sensitive stack trace information if the errors propagate.",
+        "recommendation": "Implement proper error handling within the encrypt method to handle and log exceptions in a controlled and secure way that does not expose sensitive information."
+    },
+    {
+        "misuse": "Misleading Method",
+        "vulnerable_code": "public void encrypt(String str, String passedAlgo)",
+        "description": "The method encrypt in the class C3 is misleading as it uses MessageDigest.getInstance to get a digest instance rather than performing encryption. MessageDigest is used for creating a cryptographic hash, not for encryption.",
+        "recommendation": "Rename the 'encrypt' method to a name that accurately describes its behavior such as 'hash' or 'generateHash'. If encryption is intended, then use encryption APIs such as Cipher."
+    }
+]
+```

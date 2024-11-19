@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Potential Null Pointer Exception",
+        "vulnerable_code": "crypto.method1(pass, keyStr);",
+        "description": "`crypto` object may be null if no key is provided in the constructor of `P1`. It will cause a Null Pointer Exception if method1 is called later.",
+        "recommendation": "Initialize `crypto` object with default key before it is used, in order to avoid Null Pointer Exceptions."
+    },
+    {
+        "misuse": "Insecure Key Generation",
+        "vulnerable_code": "byte[] keyBytes = key.getBytes(\"UTF-8\");",
+        "description": "The key is being generated from user provided input, which may not be sufficiently random. This can lead to weak cryptographic keys and potentially weak cryptographic algorithms.",
+        "recommendation": "Use a secure random number generator or a cryptographic key management tool for secure key generation."
+    },
+    {
+        "misuse": "Incorrect Key Size",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The key is being resized to 16 bytes, but AES keys are typically 128, 192, or 256 bits in length, not 16 bytes. This can lead to weak cryptographic keys.",
+        "recommendation": "Use a key length appropriate for the algorithm being used, and consider using key derivation functions (e.g. PBKDF2) for secure key generation."
+    }
+]
+```

@@ -1,0 +1,18 @@
+The provided code and misuse reports all point to the same issue: the use of MD2 as a cryptographic hash function. MD2 is indeed considered insecure and should not be used in any cryptographic context due to its vulnerability to collision attacks. All the reports correctly identify this as a misuse of cryptographic API in Java.
+
+However, the report mentioning "CWE-326: Inadequate Encryption Strength" is a false positive in this context because MD2 is a hashing algorithm, not an encryption algorithm. Hashing and encryption serve different purposes: hashing is used to verify data integrity and uniqueness, while encryption is used to protect data confidentiality. Therefore, the CWE-326 does not apply to the use of a hashing function like MD2.
+
+Here is the renewed list of real cryptographic API misuse, excluding the false positive:
+
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "MessageDigest.getInstance(String.valueOf(crypto))",
+        "description": "MD2 is an outdated and cryptographically broken hash function that should not be used in secure contexts.",
+        "recommendation": "Use a secure hashing algorithm such as SHA-256 or SHA-3."
+    }
+]
+```
+
+The recommendation remains the same: to replace MD2 with a secure hash function such as SHA-256 or SHA-3 to ensure the integrity and security of the hashed data.

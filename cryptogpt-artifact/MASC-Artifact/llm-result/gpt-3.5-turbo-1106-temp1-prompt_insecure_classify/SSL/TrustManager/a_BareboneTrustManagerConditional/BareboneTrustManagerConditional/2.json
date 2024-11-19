@@ -1,0 +1,14 @@
+[
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "public void checkClientTrusted(X509Certificate[] x509Certificates, String s) {...} public void checkServerTrusted(X509Certificate[] x509Certificates, String s) {...}",
+        "description": "The custom X509TrustManager implementation does not perform proper validation of the client and server certificates. It only checks if the authentication type is RSA and if the certificate array length is greater than or equal to 314, which is not a secure or comprehensive validation.",
+        "recommendation": "Use a validated and secure approach to check the client and server certificates. Consider using a standard trust manager implementation such as TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm()) to obtain the default trust manager, which performs proper certificate validation."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "public X509Certificate[] getAcceptedIssuers() {...}",
+        "description": "The getAcceptedIssuers method returns a statically defined EMPTY_X509CERTIFICATE_ARRAY instead of dynamically generating a list of accepted issuers. This could result in insufficient randomness and predictability of the accepted issuers list.",
+        "recommendation": "Generate the list of accepted issuers dynamically based on a secure and random selection of trusted issuers. Avoid using hardcoded or statically defined arrays for such sensitive data."
+    }
+]

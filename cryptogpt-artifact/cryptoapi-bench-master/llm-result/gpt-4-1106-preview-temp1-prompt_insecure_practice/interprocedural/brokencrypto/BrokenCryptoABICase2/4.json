@@ -1,0 +1,31 @@
+```json
+[
+    {
+        "misuse": "Use of Weak or Untrusted Algorithm",
+        "vulnerable_code": "String crypto = \"Blowfish\";",
+        "description": "The code uses the Blowfish algorithm which, while not broken, is considered less secure than newer algorithms such as AES. With a maximum key size of 448 bits, it might be susceptible to brute force attacks if small key sizes are used.",
+        "recommendation": "Replace Blowfish with a more secure algorithm like AES with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": 
+        "KeyGenerator keyGen = KeyGenerator.getInstance(crypto);",
+        "description": "The code does not specify the key size for the Blowfish key generator. This might result in a weak key if the JVM defaults to a smaller key size.",
+        "recommendation": "Explicitly specify a strong key size when generating the key, for example, keyGen.init(256); for AES."
+    },
+    {
+        "misuse": "ECB Mode or Unspecified Cipher Mode",
+        "vulnerable_code":
+        "Cipher cipher = Cipher.getInstance(crypto);",
+        "description": "The code does not specify a cipher mode or padding scheme. Not specifying these parameters causes the cipher to use the default mode (ECB), which can be insecure for certain types of data because identical plaintext blocks are encrypted to the same cipher text block.",
+        "recommendation": "Change the cipher initialization to a more secure mode and padding (if necessary), such as AES/GCM/NoPadding or AES/CBC/PKCS5Padding."
+    },
+    {
+        "misuse": "Missing Initialization Vector (IV)",
+        "vulnerable_code": 
+        "cipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "When using ciphers like CBC, an Initialization Vector (IV) is needed for secure encryption. The code does not provide an IV, which can compromise the encryption's security if a mode that requires an IV is used.",
+        "recommendation": "Generate a secure random IV and use it to initialize the cipher, especially if using CBC mode."
+    }
+]
+```

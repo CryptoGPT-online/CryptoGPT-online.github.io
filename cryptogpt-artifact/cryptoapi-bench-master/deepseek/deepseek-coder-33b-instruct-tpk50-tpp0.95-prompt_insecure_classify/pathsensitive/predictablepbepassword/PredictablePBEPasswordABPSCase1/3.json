@@ -1,0 +1,44 @@
+Misuse: CWE-330: Use of Insufficiently Random Values.
+
+Misuse Code Snippets: 
+
+```java
+SecureRandom random = new SecureRandom();
+defaultKey = String.valueOf(random.ints());
+```
+
+Description: The above code snippet does not generate a truly random string. The SecureRandom class does not return a unique, random string each time it is invoked. Rather, it generates a unique, random int stream each time it is invoked. So, it's highly recommended to use a proper string generator to generate a truly random string instead of using SecureRandom.
+
+Recommendation: Use a proper string generator to generate a truly random string.
+
+Misuse: CWE-326: Inadequate Encryption Strength.
+
+Misuse Code Snippets: 
+
+```java
+int iterationCount = 11010;
+int keyLength = 16;
+```
+
+Description: The iteration count and key length are very high. While iteration counts do affect the security of a password, they also increase the computational cost for an attacker. Moreover, a key length of 16 might be too short for modern standards, which recommend a minimum key length of 256 bits for AES.
+
+Recommendation: Reduce the iteration count and key length to more secure values.
+
+So the JSON response would be:
+
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "SecureRandom random = new SecureRandom();defaultKey = String.valueOf(random.ints());",
+        "description": "The above code snippet does not generate a truly random string.",
+        "recommendation": "Use a proper string generator to generate a truly random string."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "int iterationCount = 11010;int keyLength = 16;",
+        "description": "The iteration count and key length are very high.",
+        "recommendation": "Reduce the iteration count and key length to more secure values."
+    }
+]
+```

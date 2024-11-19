@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\"); SecretKey key = keyGen.generateKey();",
+        "description": "The key length is not specified.",
+        "recommendation": "Use a 256-bit key size for the AES algorithm."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_code": "byte [] bytes = \"abcde\".getBytes(\"UTF-8\"); IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+        "description": "The IV is generated from a short string.",
+        "recommendation": "The IV should be randomly generated for each encryption and should be at least 128 bits long for AES-CBC mode."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values.",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\"); SecretKey key = keyGen.generateKey();",
+        "description": "The key is generated each time.",
+        "recommendation": "The key should be stored securely, preferably in a secure key store, and loaded each time it is needed for encryption or decryption."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values.",
+        "vulnerable_code": "Cipher.init(Cipher.ENCRYPT_MODE,key,ivSpec);",
+        "description": "The Cipher instance is initialized without specifying a secure random number generator.",
+        "recommendation": "Use SecureRandom for key and initialization vector generation."
+    }
+]
+```

@@ -1,0 +1,6 @@
+ {
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "MessageDigest.getInstance(crypto)",
+"description": "The code uses the `MessageDigest` class to perform a cryptographic hash of a string. However, the `crypto` variable is a user-provided input, which means that an attacker could potentially manipulate the value of `crypto` to use a different cryptographic hash algorithm, such as MD5 or SHA-1, which are vulnerable to collision attacks.",
+"recommendation": "To fix this misuse, you should hardcode the specific cryptographic hash algorithm that you want to use, and avoid relying on user-provided input to determine the algorithm. For example, you could replace the line `MessageDigest md = MessageDigest.getInstance(crypto)` with `MessageDigest md = MessageDigest.getInstance(\"SHA-256\");` to use the more secure SHA-256 algorithm."
+}

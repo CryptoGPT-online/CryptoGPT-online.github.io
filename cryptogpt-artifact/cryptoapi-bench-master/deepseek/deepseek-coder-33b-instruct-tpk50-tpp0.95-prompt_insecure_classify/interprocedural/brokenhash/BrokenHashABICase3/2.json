@@ -1,0 +1,10 @@
+Misuse Category: CWE-327: Use of a Broken or Risky Cryptographic Algorithm.
+
+Misuse Code Snippet:
+```java
+MessageDigest md = MessageDigest.getInstance(crypto);
+```
+
+Description: The software uses the MessageDigest API for a cryptographic operation, but it doesn't specify one of the algorithms with sufficient collision resistance (i.e., one that isn't easily broken through a brute-force attack). The specific algorithm that's used can vary based on user input, which may potentially be manipulated or manipulatable (e.g., by a user, an attacker, or another software component).
+
+Recommendation: The code is trying to use "crypto" as the algorithm. It should never be possible to control this user-controlled value completely because MessageDigest.getInstance() is supposed to throw a NoSuchAlgorithmException if the requested algorithm is not available. A best practice is to ensure only algorithms which are known to be secure are allowed, such as "SHA-256", "SHA-3", "SHAKE128", "SHAKE256", etc. If you want to allow arbitrary algorithms, you should always ensure that this list is kept up-to-date with the current best practices.

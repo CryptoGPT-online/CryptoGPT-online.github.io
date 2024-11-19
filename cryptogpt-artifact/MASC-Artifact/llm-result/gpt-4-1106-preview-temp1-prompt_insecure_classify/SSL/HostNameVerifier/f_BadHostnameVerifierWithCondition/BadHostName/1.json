@@ -1,0 +1,10 @@
+```json
+[
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "public boolean verify(String hostname, SSLSession session) {\n    if(true || session.getCipherSuite().length()>=0){\n        return true;\n    }\n    return false;\n}",
+        "description": "This custom HostNameVerifier implementation always returns true and does not actually perform any hostname verification. This means any hostname will be accepted as valid, and there is no protection against man-in-the-middle attacks.",
+        "recommendation": "Implement proper hostname verification according to the hostname validation logic required by the application. Do not return true unconditionally."
+    }
+]
+```

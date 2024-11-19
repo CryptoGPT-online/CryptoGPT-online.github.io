@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "String defaultKey = \"defaultkey\";",
+        "description": "Hardcoding a key in the source code can lead to security vulnerabilities as the key can be discovered by analyzing the code. In this instance, 'defaultkey' is hard-coded and could be easily extracted.",
+        "recommendation": "Use a secure method to load keys from a configuration file or environment variable, and ensure they are adequately protected."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "\"keyBytes = String.valueOf(random.ints()).getBytes();\"",
+        "description": "The method used to convert the SecureRandom output to a byte array may not provide sufficiently random values, as the ints() method returns an IntStream, which is then converted to a String and then to bytes. This can lead to predictable keys if the conversion does not preserve randomness.",
+        "recommendation": "Directly use random.nextBytes(byte[] bytes) to generate a random key, which ensures that the byte array is directly filled with random numbers."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The key length for AES should be either 16 bytes (128 bits), 24 bytes (192 bits), or 32 bytes (256 bits) to maintain strong encryption. While a 16-byte key is the minimum length for AES and is not inherently weak, it is important to ensure that the key generation process is secure and provides adequate entropy. In this context, the key could potentially be weak due to the insecure conversion from SecureRandom to byte array.",
+        "recommendation": "Ensure the key is generated with a secure random number generator and consider using a larger key size for higher security where appropriate."
+    }
+]
+```

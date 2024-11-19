@@ -1,0 +1,36 @@
+```json
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "public static final String DEFAULT_CRYPTO = \"Blowfish\";",
+        "description": "The use of the Blowfish algorithm for encryption is outdated and not recommended, as more secure algorithms like AES are available and widely supported.",
+        "recommendation": "Use a more secure and current algorithm such as AES (Advanced Encryption Standard) with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "Use of a Static, Predictable Key",
+        "vulnerable_code": [
+            "KeyGenerator.getInstance(String.valueOf(crypto))",
+            "keyGen.generateKey()"
+        ],
+        "description": "The KeyGenerator is being fed with a static, predictable crypto algorithm name converted from a character array. It could lead to the generation of a weak, predictable key, which does not ensure strong security.",
+        "recommendation": "Ensure that keys are generated in a secure, unpredictable manner using a cryptographic random number generator or based on sufficiently random and unique user input."
+    },
+    {
+    "misuse": "Improper Initialization of Encryption Cipher",
+    "vulnerable_code": [
+        "Cipher.getInstance(String.valueOf(crypto))",
+        "cipher.init(Cipher.ENCRYPT_MODE, key)"
+    ],
+    "description": "Cipher initialization does not specify the encryption mode explicitly with a secure random IV (initialization vector). ECB mode will be used if the cipher does not specify a block mode, which is not secure for data that requires confidentiality.",
+    "recommendation": "Always use a secure block mode like CBC, and initialize Cipher with an unpredictable IV using IvParameterSpec."
+    },
+    {
+        "misuse": "Insecure Transformation",
+        "vulnerable_code": [
+            "Cipher.getInstance(String.valueOf(crypto))"
+        ],
+        "description": "No specific transformation is specified when getting a cipher instance, which means the code will rely on provider-specific default values for block mode and padding. This could result in the use of insecure defaults, like ECB mode without proper padding.",
+        "recommendation": "Use a complete transformation string when getting an instance of Cipher, including block mode and padding (e.g., 'AES/CBC/PKCS5Padding')."
+    }
+]
+```

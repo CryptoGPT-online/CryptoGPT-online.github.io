@@ -1,0 +1,36 @@
+ {
+"misuse": "Insecure Password Storage",
+"vulnerable_code": "defPassword = password;",
+"description": "The password is stored in a publicly accessible field, which makes it vulnerable to attackers who can access the field.",
+"recommendation": "Use a secure password storage mechanism, such as a one-way hash function, to protect the password."
+},
+{
+"misuse": "Weak Password",
+"vulnerable_code": "String password = \"sagar\";",
+"description": "The password is a hard-coded string, which makes it easily guessable by attackers.",
+"recommendation": "Use a strong password that is randomly generated and not easily guessable."
+},
+{
+"misuse": "Insecure Random Number Generation",
+"vulnerable_code": "SecureRandom sr = new SecureRandom();",
+"description": "The SecureRandom class is not cryptographically secure, and its random numbers can be predicted by attackers.",
+"recommendation": "Use a cryptographically secure random number generation algorithm, such as SHA-512, to generate the salt."
+},
+{
+"misuse": "Lack of Key Derivation",
+"vulnerable_code": "pbeKeySpec = new PBEKeySpec(passedPassword.toCharArray(),salt,iterationCount,keyLength);",
+"description": "The password is used directly as the key, which makes it vulnerable to attacks such as dictionary attacks.",
+"recommendation": "Use a key derivation function, such as PBKDF2, to derive the key from the password and salt."
+},
+{
+"misuse": "Lack of Iteration Count",
+"vulnerable_code": "int iterationCount = 11010;",
+"description": "The iteration count is set to a fixed value, which makes it vulnerable to attacks such as dictionary attacks.",
+"recommendation": "Use a random iteration count that is different for each encryption, and make sure it is high enough to make the encryption computationally expensive."
+},
+{
+"misuse": "Lack of IV",
+"vulnerable_code": "pbeParamSpec = new PBEParameterSpec(salt,iterationCount);",
+"description": "The initialization vector (IV) is not specified, which makes it vulnerable to attacks such as CBC-MAC attacks.",
+"recommendation": "Specify a random IV for each encryption, and make sure it is different for each encryption."
+}

@@ -1,0 +1,14 @@
+The code provided does not use a static IV for every message encryption and also the length of IV is not constant (it is always 5 bytes which is very short), which is a security flaw. This is a CWE-330: Use of Insufficiently Random Values misuse.
+
+Here is the suggested JSON response:
+
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "byte [] bytes = \"abcde\".getBytes(); IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+        "description": "The IV is created with a static string which has very short length (5 bytes). This is extremely insecure because it can easily be brute-forced.",
+        "recommendation": "Generate a cryptographically secure random IV. The length of the IV should match the block size of the cipher, e.g. 16 bytes for AES."
+    }
+]
+```

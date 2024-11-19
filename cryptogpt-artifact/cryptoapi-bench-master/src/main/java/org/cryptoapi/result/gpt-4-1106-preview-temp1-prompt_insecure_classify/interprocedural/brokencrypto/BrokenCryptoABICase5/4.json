@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": [
+            "public static final String DEFAULT_CRYPTO = \"DES/ECB/PKCS5Padding\";",
+            "public static final String DEFAULT_CRYPTO_ALGO = \"DES\";"
+        ],
+        "description": "The DES algorithm is considered insecure because it uses a 56-bit key which can be brute-forced with modern hardware. Additionally, ECB mode does not provide serious message confidentiality.",
+        "recommendation": "Use a stronger encryption algorithm such as AES with a key size of at least 128 bits. Consider using cipher modes like CBC, CFB, or GCM for better security."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": [
+            "KeyGenerator keyGen = KeyGenerator.getInstance(String.valueOf(crypto_algo));",
+            "SecretKey key = keyGen.generateKey();"
+        ],
+        "description": "The KeyGenerator does not specify a secure random number generator or a specific key size, which may result in weak keys if the defaults are not secure.",
+        "recommendation": "Specify a SecureRandom instance and a proper key size when generating a key."
+    }
+]
+```

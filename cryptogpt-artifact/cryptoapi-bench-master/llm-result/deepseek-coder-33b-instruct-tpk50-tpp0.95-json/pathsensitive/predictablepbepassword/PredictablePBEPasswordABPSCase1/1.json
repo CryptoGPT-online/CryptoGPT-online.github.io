@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Key Derivation Function with Insufficient Iterations",
+        "vulnerable_code": "int iterationCount = 11010;",
+        "description": "The PBKDF2 algorithm (used in PBEKeySpec) specifies that the iteration count for key derivation must be at least 1,000. A smaller number may expose the derived key to dictionary attacks and brute force attacks, reducing the security of the key.",
+        "recommendation": "Increase the iteration count to at least 1,000."
+    },
+    {
+        "misuse": "Key Derivation Function with Predictable Salt",
+        "vulnerable_code": "byte [] salt = new byte[16];",
+        "description": "A fixed salt can lead to predictable and therefore less secure keys. A predictable salt can be attacked by pre-computing hashes for common salts. If an attacker knows the salt, they can precompute the hashes and then use the hash table to crack passwords.",
+        "recommendation": "Generate a random salt for each key derivation."
+    },
+    {
+        "misuse": "Default or Predictable Key",
+        "vulnerable_code": "String defaultKey = \"saagar\";",
+        "description": "A default or predictable key makes it easier for an attacker to crack the encryption. The key must be complex enough to make it infeasible to guess.",
+        "recommendation": "Generate a secure random key for each key derivation. The key length should be long enough to provide adequate security (128 bits or more)."
+    }
+]
+```

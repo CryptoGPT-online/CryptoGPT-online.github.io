@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "random.nextBytes(salt);",
+        "description": "The 'SecureRandom' instance is used without proper initialization. It relies on default seeding which may not be secure enough for crypto operations.",
+        "recommendation": "Properly seed 'SecureRandom' using a reliable entropy source or specify the algorithm explicitly."
+    },
+    {
+        "misuse": "Insufficient Iteration Count",
+        "vulnerable_code": "count = 1050;",
+        "description": "Using a low iteration count (1050) for PBEParameterSpec does not provide enough security against brute-force attacks.",
+        "recommendation": "Use a higher iteration count that is currently considered safe by standards (at least 10,000 iterations)"
+    },
+    {
+        "misuse": "Static Salt",
+        "vulnerable_code": "byte[] salt = new byte[32];",
+        "description": "While the salt is generated using a SecureRandom instance, it should be unique for each password. The misuse would be if this code is leading to reuse of the same salt value for different password encryptions.",
+        "recommendation": "Ensure that a new salt is generated for each encryption operation."
+    }
+]
+```

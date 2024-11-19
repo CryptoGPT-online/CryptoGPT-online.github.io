@@ -1,0 +1,23 @@
+public class Ed {
+    public void go() throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeyException {
+        KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+        // Add SecureRandom with strong randomness
+        keyGen.init(256, new SecureRandom());
+        SecretKey key = keyGen.generateKey();
+        Cipher cipher = Cipher.getInstance("AES/CTR/NoPadding");
+        // Generate IV with secure randomness
+        byte[] iv = new byte[cipher.getBlockSize()];
+        SecureRandom randomSecureRandom = new SecureRandom();
+        randomSecureRandom.nextBytes(iv);
+        IvParameterSpec ivSpec = new IvParameterSpec(iv);
+        cipher.init(Cipher.ENCRYPT_MODE, key, ivSpec);
+    }
+
+    public static void main (String [] args) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeyException {
+        Ed bc = new Ed();
+        bc.go();
+    }
+}
+```
+
+This code corrects the issues mentioned above by using 'KeyGenerator.init(256, new SecureRandom())' to use a strong random number generator, 'Cipher.getInstance("AES/CTR/NoPadding")' to use a better cipher mode that is not susceptible to the CBC mode's weaknesses, and 'SecureRandom()' to generate an IV.

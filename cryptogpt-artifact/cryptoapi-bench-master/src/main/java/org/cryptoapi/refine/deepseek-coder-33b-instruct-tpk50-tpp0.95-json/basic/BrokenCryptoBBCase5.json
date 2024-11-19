@@ -1,0 +1,34 @@
+### False Positive Misuse ###
+
+[
+  {
+    "misuse": "Insecure Key Generation",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"IDEA\");\nSecretKey key = keyGen.generateKey();",
+    "description": "IDEA is a weak encryption algorithm and it does not have sufficient strength. It is recommended to use stronger encryption algorithms like AES. Weak encryption algorithms may leave your data vulnerable to attacks.",
+    "recommendation": "Replace \"IDEA\" with a stronger encryption algorithm like AES. Use the KeyGenerator class to generate a secure random key for the chosen encryption algorithm."
+  },
+  {
+    "misuse": "IDEA is Considered Insecure",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"IDEA\");",
+    "description": "IDEA is a weak block cipher. Its key size is too small (128 bits) and it's not recommended for any serious cryptography applications. Its 12 rounds of encryption is considered too small for modern day computers to break within a reasonable amount of time. The algorithm is also vulnerable to differential and linear cryptanalysis.",
+    "recommendation": "Consider using stronger ciphers such as AES which is widely regarded as secure."
+  },
+  {
+    "misuse": "Key Size",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"IDEA\");",
+    "description": "The IDEA encryption algorithm is deprecated and the size of the encryption key is weak (128 bits). This can lead to vulnerabilities and is generally considered insecure.",
+    "recommendation": "Consider using a more secure encryption algorithm like AES (AES-256) instead of IDEA. This will require changing the cipher instance to AES also, but that's a simple find and replace operation."
+  }
+]
+
+### Optimized Misuse JSON ###
+
+[
+  {
+    "misuse": "Usage of Weak Cryptographic Algorithms (IDEA)",
+    "vulnerable_method": "B5.go()",
+    "vulnerable_code": "Cipher.getInstance(\"IDEA\")",
+    "description": "The IDEA algorithm is known to have weaknesses and should not be used for any critical applications. The IDEA algorithm is deprecated and should not be used in new development. It is recommended to use a stronger algorithm, such as AES.",
+    "recommendation": "Replace the IDEA cipher algorithm with a stronger one such as AES, TripleDES, etc."
+  }
+]

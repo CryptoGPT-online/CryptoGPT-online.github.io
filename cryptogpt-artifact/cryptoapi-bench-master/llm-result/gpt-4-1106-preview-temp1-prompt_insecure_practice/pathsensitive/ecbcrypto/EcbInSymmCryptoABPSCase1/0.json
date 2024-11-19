@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "Insecure Cipher Mode",
+    "vulnerable_code": "Cipher.getInstance(\"AES/ECB/PKCS5Padding\");",
+    "description": "Electronic Codebook (ECB) mode is an insecure block cipher mode of operation because equal plaintext blocks get encrypted to equal ciphertext blocks, which can leak information about the plaintext.",
+    "recommendation": "Use a secure mode of operation like Cipher Block Chaining (CBC) mode with an unpredictable Initialization Vector (IV) that is securely generated for each encryption."
+  },
+  {
+    "misuse": "Missing Initialization Vector",
+    "vulnerable_code": "cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+    "description": "When using CBC mode, an Initialization Vector (IV) should be provided and must be random and unique for each encryption operation. The provided code does not specify an IV for CBC mode.",
+    "recommendation": "Generate a random IV for each encryption operation using a secure random number generator and specify it in the init method of the Cipher class."
+  },
+  {
+    "misuse": "Weak Key Generation",
+    "vulnerable_code": "KeyGenerator.getInstance(\"AES\");",
+    "description": "The AES key generator does not specify the key size, which may result in a weak key if the default size is not strong enough.",
+    "recommendation": "Specify a key size when generating the key, e.g., keyGen.init(256); to ensure that a key of sufficient strength is generated."
+  }
+]
+```

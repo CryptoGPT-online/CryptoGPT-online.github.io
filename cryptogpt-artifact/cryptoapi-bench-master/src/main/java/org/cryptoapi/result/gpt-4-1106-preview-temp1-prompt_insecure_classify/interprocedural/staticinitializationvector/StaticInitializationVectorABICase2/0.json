@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(new byte[]{Byte.parseByte(String.valueOf(initialization))});",
+        "description": "The initialization vector (IV) is not randomly generated; it is derived from a static value which can lead to predictable IVs and weaken the encryption strength.",
+        "recommendation": "Use a secure random number generator to create a random IV for each encryption operation."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+        "description": "The code doesn't specify the key size for the AES encryption, which may result in a default key size that may not be strong enough depending on the context.",
+        "recommendation": "Specify a key size that is appropriate for the security context, such as AES-256."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "public static final String DEFAULT_INITIALIZATION = \"abcde\";",
+        "description": "The code contains a hardcoded value used for initialization. Although this is not directly a hardcoded key, it could potentially be part of the cryptographic process and weaken the encryption if used improperly.",
+        "recommendation": "Remove hardcoded values that are used in cryptographic processes and replace them with dynamically generated or securely stored values."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "public static final String DEFAULT_INITIALIZATION = \"abcde\";\nprivate static char[] INITIALIZATION;\nprivate static char[] initialization;",
+        "description": "The static initialization value 'abcde' is not sufficient for cryptographic purposes and could lead to predictable outcomes.",
+        "recommendation": "Ensure that all cryptographic seeds, keys, and initialization vectors are generated using a secure random number generator."
+    }
+]
+```

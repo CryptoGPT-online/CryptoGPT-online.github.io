@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "random.nextBytes(salt);",
+        "description": "While `SecureRandom` is used to generate the salt, which is secure, the initialization and conversion process of the iteration count from `String` to `char[]` and then back to `String` could possibly lead to an incorrect interpretation of the character values as digits, potentially leading to a weak iteration count when parsed. Moreover, public exposure of defaults and direct manipulation allow for potential tampering.",
+        "recommendation": "Ensure the iteration count is safely generated, parsed accurately, and not publicly exposed allowing for potential tampering."
+    },
+    {
+        "misuse": "Hardcoded Security Configuration",
+        "vulnerable_code": "\"20\"",
+        "description": "The DEFAULT_COUNT should not be hardcoded and especially not publicly exposed because doing so limits the flexibility of the security mechanism and it doesn't follow best practices which recommend a higher iteration count for PBKDF2 (1000 iterations as a minimum).",
+        "recommendation": "DEFAULT_COUNT should not be hardcoded, and a higher, configurable value should be used for the iteration count."
+    },
+    {
+        "misuse": "Potential Information Leak",
+        "vulnerable_code": "private static char[] COUNT;",
+        "description": "Exposing the COUNT variable as static can potentially leak information as it may be accessible within the package or through inheritance if the field is accessed by subclasses.",
+        "recommendation": "Avoid using static fields for sensitive information. If this field must exist, limit its scope and make sure it's properly protected."
+    }
+]
+```

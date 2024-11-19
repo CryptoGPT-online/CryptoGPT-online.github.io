@@ -1,0 +1,31 @@
+### False Positive Misuse###
+```json
+[
+    {
+        "misuse category": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_method": "H2.go2(), H2.go3()",
+        "vulnerable_code": "private static void go2(){ URL = DEFAULT_URL.toCharArray(); } private static void go3(){ url = URL; }",
+        "description": "The code converts a String to a char array and stores it in the static variable URL. This is not necessary, as the char array will not be used in any subsequent computations. Furthermore, it stores the char array in another static variable url, which is then used in the function go() to create a URL object. The char array may contain sensitive data, and storing it as a char array could expose this data.",
+        "recommendation": "Instead of converting the URL to a char array and storing it in a variable, the URL should be passed directly to the URL constructor. Moreover, if the char array contains sensitive data, it should be cleared from memory as soon as it is no longer needed."
+    },
+    {
+        "misuse category": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_method": "H2.go2(), H2.go3()",
+        "vulnerable_code": "char[] URL; and char[] url;",
+        "description": "The 'URL' and 'url' variables are not used to generate random values, they are just arrays of characters. Arrays of characters do not inherently produce random values. An attacker can easily predict the values of these arrays based on the code, making them insecure.",
+        "recommendation": "Use random number generators or other secure methods to generate random values."
+    }
+]
+```
+### Optimized Misuse JSON###
+```json
+[
+    {
+        "misuse category": "CWE-295: Improper Certificate Validation",
+        "vulnerable_method": "H2.go()",
+        "vulnerable_code": "new URL(url.toString())",
+        "description": "The URL class in Java uses the HTTP protocol by default. It does not verify the server's certificate, meaning it does not check if the server is who it claims to be. This could potentially lead to a man-in-the-middle attack, where an attacker could intercept and manipulate the communication between the client and server.",
+        "recommendation": "Use HttpsURLConnection instead of URL if you need to verify the server's certificate, or use an established library like OkHttp which has built-in certificate pinning."
+    }
+]
+```

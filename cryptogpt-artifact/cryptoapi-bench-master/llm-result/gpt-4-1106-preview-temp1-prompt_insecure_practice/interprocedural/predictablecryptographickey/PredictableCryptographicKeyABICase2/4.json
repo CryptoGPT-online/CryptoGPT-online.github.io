@@ -1,0 +1,34 @@
+```json
+[
+    {
+        "misuse": "Hardcoded Encryption Key",
+        "vulnerable_code": "public static final String DEFAULT_ENCRYPT_KEY = \"defaultkey\";",
+        "description": "The encryption key should not be hardcoded and publicly accessible, which makes it easier for an attacker to retrieve and use the encryption key.",
+        "recommendation": "Use a secure way to retrieve keys, such as environment variables or a key management system."
+    },
+    {
+        "misuse": "Insecure Key Derivation",
+        "vulnerable_code": "byte[] keyBytes = encryptKey.toString().getBytes();\nkeyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The encryption key is derived from a hardcoded value using a non-cryptographic method, which does not provide sufficient entropy or security.",
+        "recommendation": "Use a key derivation function (KDF) such as PBKDF2, bcrypt or scrypt with proper salt and iteration count to derive the encryption key."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The key size may not be sufficient if the default key is shorter than the required key length. Fixed length without considering the actual length of the key can lead to weak encryption.",
+        "recommendation": "Ensure that the key length matches the algorithm requirements. For AES, acceptable key lengths are 128, 192, or 256 bits."
+    },
+    {
+        "misuse": "Key Material Handling",
+        "vulnerable_code": "private static char[] encryptKey; ... encryptKey = ENCRYPT_KEY;",
+        "description": "Sensitive key material should be handled with care; converting the key material to a String and using it can potentially expose it to logging or memory dumps.",
+        "recommendation": "Avoid converting sensitive key material to String. Use byte arrays to handle encryption keys and overwrite the key material when it's no longer needed."
+    },
+    {
+        "misuse": "Incorrect Key Conversion",
+        "vulnerable_code": "byte[] keyBytes = encryptKey.toString().getBytes();",
+        "description": "The conversion from a character array to byte array by calling 'toString()' on a char array will not return the content of the char array, but will return a String representation of the object (e.g., [C@hashcode).",
+        "recommendation": "Convert the character array to byte array properly by iterating over the characters and casting them to bytes, or use a charset encoding."
+    }
+]
+```

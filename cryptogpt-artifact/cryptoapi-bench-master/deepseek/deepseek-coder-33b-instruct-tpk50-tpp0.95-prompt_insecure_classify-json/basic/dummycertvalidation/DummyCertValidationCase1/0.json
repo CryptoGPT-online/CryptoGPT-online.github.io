@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "CWE-295: Improper Certificate Validation.",
+        "vulnerable_code": "trustManager.checkServerTrusted(x509Certificates,s);",
+        "description": "No certificate validation for server trust is implemented. It means the code trusts any server it connects to, ignoring any potential for it to present a certificate or to provide a valid one.",
+        "recommendation": "You should ensure that the server certificate is validated. It could be done using the method checkServerTrusted or, if there is a need to add your own logic, you should do it in another method."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation.",
+        "vulnerable_code": "trustManager.checkServerTrusted(x509Certificates,s);",
+        "description": "No negotiation of cipher suite during the SSL/TLS handshake could be potentially less secure due to a vulnerability where TLS 1.2 with CBC ciphers is considered insecure. This can be prevented by enforcing a secure cipher suite during handshake.",
+        "recommendation": "Consider using a list of secure cipher suites during the handshake, and reject any connection that does not use one of those suites."
+    }
+]
+```

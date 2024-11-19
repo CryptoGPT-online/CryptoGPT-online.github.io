@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "sr2.nextBytes(seed);",
+        "description": "The 'seed' array is being reused and filled with random data, but its size is small, which might not provide sufficient randomness for security-critical applications.",
+        "recommendation": "Use a larger seed array or let the SecureRandom instance self-seed."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "byte [] seed = {(byte) 100, (byte) 200};",
+        "description": "The seed is static and consists of only 2 bytes, which does not provide sufficient entropy. This can lead to predictable random values.",
+        "recommendation": "Do not hardcode the seed value; instead, allow SecureRandom to generate its own seed or use a more secure source of entropy for the seed."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "SecureRandom sr = new SecureRandom(seed);",
+        "description": "Initializing SecureRandom with a hardcoded, predictable seed may lead to inadequate encryption strength because the output could be more easily predictable.",
+        "recommendation": "Remove the hardcoded seed and allow SecureRandom to self-seed or obtain a high-entropy seed from a reliable source."
+    }
+]
+```

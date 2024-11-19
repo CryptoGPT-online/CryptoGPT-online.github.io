@@ -1,0 +1,28 @@
+```json
+[
+  {
+    "misuse": "Weak Password-Based Encryption Key",
+    "vulnerable_code": "pbeKeySpec = new PBEKeySpec(defaultKey.toCharArray(),salt,iterationCount,keyLength);",
+    "description": "The hardcoded defaultKey 'saagar' is too short and simple which makes it susceptible to brute-force attacks. Moreover, the PBEKeySpec is initialized with an explicitly specified key length of 16 which is not sufficient for strong encryption.",
+    "recommendation": "Use a longer, more complex key and rely on the default key length provided by the encryption algorithm, or specify a key length that conforms to current security standards."
+  },
+  {
+    "misuse": "Insecure Random Number Generation",
+    "vulnerable_code": "defaultKey = String.valueOf(random.ints());",
+    "description": "The method used to generate a defaultKey from a SecureRandom does not guarantee a secure random string suitable as a key because ints() returns a potentially unlimited stream of random integer values, which are then converted to a string representation that might not be cryptographically strong or encoded properly.",
+    "recommendation": "Instead of converting random ints to a string, generate a random array of bytes and use a secure method to convert these bytes into a character array suitable for a key."
+  },
+  {
+    "misuse": "Static Salt",
+    "vulnerable_code": "byte [] salt = new byte[16];\nsr.nextBytes(salt);",
+    "description": "Although the code is generating a new salt each time using SecureRandom, the salt should not be a predictable value and should be stored or communicated securely if used for 'password-based encryption' (PBE), to avoid rainbow table attacks or precomputed hash attacks.",
+    "recommendation": "Ensure that the salt is unique for each instance and securely stored or transmitted. Prefer a larger salt size if it is supported by the PBE algorithm in use."
+  },
+  {
+    "misuse": "Inadequate Iteration Count",
+    "vulnerable_code": "int iterationCount = 11010;",
+    "description": "The iteration count of 11010 may not be sufficient to protect against modern brute-force attacks. Higher values for iteration count increase the computational complexity of deriving keys, which can provide better security.",
+    "recommendation": "Increase the iteration count to a number that represents a better trade-off between security and performance. Usually, a minimum of 100,000 iterations is recommended."
+  }
+]
+```

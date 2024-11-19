@@ -1,0 +1,22 @@
+### False Positive Misuse ###
+There are no false positives in the provided misuse reports. 
+
+### Optimized Misuse JSON ###
+```json
+[
+  {
+    "misuse category": "CWE-295: Improper Certificate Validation",
+    "vulnerable_method": "Be.getX509TrustManager()",
+    "vulnerable_code": "private static X509TrustManager getX509TrustManager(){\n        return new X509TrustManager(){",
+    "description": "The code creates a custom trust manager that trusts all certificates. This means that the client will accept any certificate presented by the server, even if it is invalid or untrusted. This can lead to man-in-the-middle attacks.",
+    "recommendation": "Use a trust manager that checks the certificate against a trusted list or performs other checks to ensure that the certificate is valid and trusted."
+  },
+  {
+    "misuse category": "CWE-321: Use of Hard-Coded Credentials",
+    "vulnerable_method": "Be",
+    "vulnerable_code": "public static final String userURL = \"https://self-signed.badssl.com\";",
+    "description": "The code contains a hard-coded URL that uses a self-signed certificate. This can lead to man-in-the-middle attacks.",
+    "recommendation": "Do not hard-code credentials or use self-signed certificates in production. Instead, use a trusted certificate authority (CA) to sign your certificates."
+  }
+]
+```

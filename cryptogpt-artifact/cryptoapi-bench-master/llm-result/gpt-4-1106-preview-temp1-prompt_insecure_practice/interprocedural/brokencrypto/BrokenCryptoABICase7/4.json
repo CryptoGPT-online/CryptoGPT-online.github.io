@@ -1,0 +1,37 @@
+```json
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "String.valueOf(crypto)",
+        "description": "RC4 is used as the encryption algorithm, which is considered to be weak and insecure due to several vulnerabilities that have been discovered over time.",
+        "recommendation": "Replace RC4 with a more secure algorithm such as AES with a proper key size (e.g., AES/GCM/NoPadding)."
+    },
+    {
+        "misuse": "Hardcoded Crypto Key",
+        "vulnerable_code": [
+            "private static char[] CRYPTO;",
+            "private static char[] crypto;"
+        ],
+        "description": "The encryption key is based on a static value that could be extracted from the code base by an attacker. This reduces the effectiveness of encryption as the security is compromised if the key is known.",
+        "recommendation": "Use a secure method to generate and store cryptographic keys, avoiding hardcoded keys. Consider using KeyStore for securing keys."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "KeyGenerator.getInstance(String.valueOf(crypto));",
+        "description": "The code does not specify the key size for the RC4 algorithm, potentially resulting in the use of a weak key that can be more easily brute-forced.",
+        "recommendation": "Specify an appropriate key size when generating keys for encryption. For algorithms like AES, use a key size of at least 128 bits."
+    },
+    {
+        "misuse": "No Secure Randomness",
+        "vulnerable_code": "KeyGenerator.getInstance(String.valueOf(crypto));",
+        "description": "The KeyGenerator does not explicitly use a secure random source for key generation, which might result in predictable keys if the default is not secure.",
+        "recommendation": "Ensure the use of a secure random number generator by explicitly specifying it when initializing the KeyGenerator."
+    },
+    {
+        "misuse": "Unspecified Cipher Mode and Padding",
+        "vulnerable_code": "Cipher.getInstance(String.valueOf(crypto));",
+        "description": "Only the algorithm name is passed to Cipher.getInstance, without specifying the mode and padding scheme. This could result in the use of insecure defaults like ECB mode, which is not recommended for use because it does not provide serious message confidentiality.",
+        "recommendation": "Always specify the encryption mode and padding scheme for the cipher (e.g., AES/GCM/NoPadding)."
+    }
+]
+```

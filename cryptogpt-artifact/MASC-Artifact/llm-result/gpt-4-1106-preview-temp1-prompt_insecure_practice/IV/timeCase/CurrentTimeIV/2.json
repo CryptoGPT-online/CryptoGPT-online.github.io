@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Weak Initialization Vector (IV)",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(val.getBytes(),0,8);",
+        "description": "Using a human-readable timestamp as an initialization vector provides low entropy and can be predictable, which reduces the security of encryption schemes that rely on IV uniqueness and unpredictability.",
+        "recommendation": "Use a secure random generator for IV creation, such as 'java.security.SecureRandom'."
+    },
+    {
+        "misuse": "Insufficient IV Length",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(val.getBytes(),0,8);",
+        "description": "The length of the IV should match the block size of the cipher being used (e.g., 16 bytes for AES). An 8-byte IV is insufficient for most block cipher modes.",
+        "recommendation": "Ensure the IV is the correct length for the encryption algorithm used, which is typically 128 bits (16 bytes) for AES."
+    },
+    {
+        "misuse": "Potentially Misleading Code",
+        "vulnerable_code": "val = formatter.format(date); ... val.getBytes()",
+        "description": "The code suggests that the formatted date is being used as an IV for a cryptographic operation, even if it's not immediately apparent from the provided snippet. This may be misleading as the formatted string representation of the date does not contribute to cryptographic security.",
+        "recommendation": "Clarify the use of the IV and ensure that proper cryptographic practices are being followed. If this code snippet is indeed related to an encryption operation, review the complete code to correct the treatment of the IV."
+    }
+]
+```

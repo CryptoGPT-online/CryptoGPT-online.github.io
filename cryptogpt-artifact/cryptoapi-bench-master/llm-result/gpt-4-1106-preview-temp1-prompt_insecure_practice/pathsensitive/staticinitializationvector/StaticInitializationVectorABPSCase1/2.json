@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Initialization Vector (IV)",
+        "vulnerable_code": "sr.nextBytes(bytes);",
+        "description": "When 'choice' is greater than 1, a new byte array of size 16 is created, and the SecureRandom fills it with random bytes. This is correct in a general sense. However, the condition on 'choice' is non-standard and might lead to deterministic IVs, which is not secure for CBC mode encryption. Every instance of encryption should use a unique, cryptographically random IV.",
+        "recommendation": "Generate a new, random IV for each encryption operation without conditions based on input."
+    },
+    {
+        "misuse": "Weak Key Generation",
+        "vulnerable_code": "KeyGenerator.getInstance(\"AES\");",
+        "description": "No key size is being specified. By default, this could result in a weak key; for instance, some Java implementations default to 128-bit AES keys, but stronger keys such as 256-bit are recommended.",
+        "recommendation": "Specify key sizes when generating AES keys to ensure strong encryption strength. Use `keyGen.init(256);` to initialize a 256-bit AES key."
+    },
+    {
+        "misuse": "No Secure Random Seed",
+        "vulnerable_code": "SecureRandom sr = new SecureRandom();",
+        "description": "While SecureRandom without explicit seeding is generally secure as it seeds itself from a high-entropy source, in some contexts it may be advisable to provide a seed to ensure randomness, especially if the default entropy sources might not provide sufficient unpredictability.",
+        "recommendation": "Explicitly seed SecureRandom() with a known high-entropy source if required by the application's context."
+    }
+]
+```

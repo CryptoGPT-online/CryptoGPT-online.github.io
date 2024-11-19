@@ -1,0 +1,22 @@
+### False Positive Misuse ###
+
+Upon reviewing the code, the potential misuse regarding the use of MD4 is valid, as the code does initialize a `MessageDigest` with the MD4 algorithm: 
+```java
+MessageDigest md = MessageDigest.getInstance("MD4");
+```
+
+However, this is immediately conditioned to switch to SHA-256 with:
+```java
+if(choice > 1)
+    md = MessageDigest.getInstance("SHA-256");
+```
+
+Given that the `choice` variable is set to `2`, the algorithm used will always be SHA-256 in this context, meaning the misuse conditions are not applicable during execution as written. Thus, this explains that the code currently does not practically engage in risky behavior from the misuse standpoint since MD4 is not actively used during execution.
+
+### Optimized Misuse JSON###
+
+```json
+[]
+```
+
+Here the optimized JSON is empty, as no active misuse is present under the given execution flow. However, it is crucial to still address the presence of MD4 initialization in final code design for potential future modifications and consistency.

@@ -1,0 +1,13 @@
+```json
+[
+  {
+    "misuse": "CWE-295: Improper Certificate Validation",
+    "vulnerable_code": [
+      "public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {\n    //Trust any client connecting (no certificate validation)\n    trustManager.checkClientTrusted(x509Certificates,s);\n}",
+      "public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {\n    //Trust any remote server (no certificate validation)\n\n}"
+    ],
+    "description": "The checkClientTrusted method is supposed to throw an exception if the certificate chain is not trusted, but it does nothing and trusts any client certificate. The checkServerTrusted method is also empty, meaning it does not perform any validation and trusts any server certificate.",
+    "recommendation": "Implement proper certificate validation in both checkClientTrusted and checkServerTrusted methods. Do not allow the trust manager to trust all certificates by default."
+  }
+]
+```

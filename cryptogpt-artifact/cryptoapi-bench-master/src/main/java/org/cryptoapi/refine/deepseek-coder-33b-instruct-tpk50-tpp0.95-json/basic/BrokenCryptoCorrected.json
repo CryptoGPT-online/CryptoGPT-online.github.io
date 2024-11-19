@@ -1,0 +1,23 @@
+ ### False Positive Misuse ###
+[
+    {
+        "misuse": "Key Generation without Secure Random",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+        "description": "The default KeyGenerator implementation in Java uses a seed that is the concatenation of the system time in milliseconds and a sequence number that is incremented each time a new KeyGenerator is created. This means that multiple KeyGenerator instances created in quick succession will have the same seed, which can lead to predictable keys. This is a misuse because it can make it easier to brute-force or otherwise crack the encryption key.",
+        "recommendation": "To fix this, you should provide a SecureRandom instance with a secure seed. Here is an example: SecureRandom sr = new SecureRandom(); KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\"); keyGen.init(sr); SecretKey key = keyGen.generateKey();"
+    }
+]
+ ### Optimized Misuse JSON###
+[
+    {
+        "misuse": "None",
+        "vulnerable_code": "",
+        "description": "There are no misuses in this code. It is using a strong cryptographic algorithm AES and a recommended CBC mode of operation.",
+        "recommendation": "No action required at this moment."
+    },
+    {
+        "misuse": "Crypto Key Reuse Misuse",
+        "description": "AES keys should never be reused. Reusing a key can lead to a serious security vulnerability known as 'key confusion'.",
+        "recommendation": "Do not reuse cryptographic keys. Always generate a new key for each cryptographic operation."
+    }
+]

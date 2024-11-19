@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "int iterationCount = 11010;",
+        "description": "A high number of iterations for a PBE key spec, as seen here, can be a significant vulnerability. It is much more secure to use a large value. The recommended number is at least 10,000 and typically in the range of 100,000 to 1,000,000. Increasing the number of iterations would increase the computational demand for brute force attacks and dictionary attacks.",
+        "recommendation": "Consider changing the iterationCount to at least 10,000."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values.",
+        "vulnerable_code": "byte [] salt = new byte[16];\nSecureRandom sr = new SecureRandom();\nsr.nextBytes(salt);",
+        "description": "Salt is used as a security feature to make two identical passwords (with the same key and the same PBE parameters) produce different keys. It's critical that the salt is randomly generated at the start of each encryption/decryption operation. The recommended salt size is the same size as the output of the underlying hash function (for example, for SHA-1 it would be 20 bytes).",
+        "recommendation": "Consider using SecureRandom.getInstance(\"SHA1PRNG\") to generate the salt."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_code": "int keyLength = 16;",
+        "description": "Inadequate key length can make the encryption weak, less secure and less robust. It can lead to easily deciphered passwords. The size of key should be high, for example 256 bits for AES (Advanced Encryption Standard) or more, depending on the security level required for the application.",
+        "recommendation": "Consider increasing the keyLength to 256 bits or more, considering the security requirements of the application."
+    }
+]
+```

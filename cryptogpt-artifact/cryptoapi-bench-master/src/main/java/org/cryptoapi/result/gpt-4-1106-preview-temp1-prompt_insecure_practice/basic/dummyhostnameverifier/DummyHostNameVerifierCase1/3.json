@@ -1,0 +1,14 @@
+```json
+[
+    {
+        "misuse": "Insecure Hostname Verification (CWE-297)",
+        "vulnerable_code": [
+            "public boolean verify(String s, SSLSession sslSession) {",
+            "    return true;",
+            "}"
+        ],
+        "description": "The `verify` method of the custom `HostnameVerifier` class always returns true, which means it bypasses all hostname verification checks. This will accept any hostname, even if it does not match the certificate presented by the server, leading to severe security risks such as man-in-the-middle attacks.",
+        "recommendation": "Remove this custom implementation and rely on the default hostname verification provided by the Java SSL implementation. If a custom implementation is necessary, ensure that it properly checks that the hostname matches the certificate's common name (CN) or one of the Subject Alternative Names (SANs)."
+    }
+]
+```

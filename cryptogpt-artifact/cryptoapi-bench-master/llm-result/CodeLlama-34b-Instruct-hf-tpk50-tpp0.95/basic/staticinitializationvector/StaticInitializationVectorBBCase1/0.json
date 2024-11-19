@@ -1,0 +1,24 @@
+ {
+"misuse": "Insecure Use of CBC Mode",
+"vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+"description": "The code uses the CBC mode of operation for encryption, which is vulnerable to padding oracle attacks. The attacker can use the information leakage caused by the padding to deduce the plaintext.",
+"recommendation": "Use the GCM or EAX mode of operation instead, or use the CBC mode with a MAC (e.g. HMAC-SHA256) to prevent padding oracle attacks."
+},
+{
+"misuse": "Insecure Use of AES",
+"vulnerable_code": "KeyGenerator.getInstance(\"AES\");",
+"description": "The code uses the AES algorithm, which is vulnerable to attacks that involve the use of the same key for both encryption and decryption. This can lead to the leakage of sensitive information.",
+"recommendation": "Use a secure cryptographic algorithm, such as AES-GCM or AES-SIV, that is resistant to such attacks."
+},
+{
+"misuse": "Insecure Use of IV",
+"vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+"description": "The code uses a fixed initialization vector (IV), which is predictable and can be easily guessed by an attacker. This can lead to the discovery of the encryption key and the plaintext.",
+"recommendation": "Use a randomly generated IV for each encryption operation, or use a secure method to generate the IV, such as the Cipher.getIV() method."
+},
+{
+"misuse": "Insecure Use of Key",
+"vulnerable_code": "SecretKey key = keyGen.generateKey();",
+"description": "The code uses the KeyGenerator.generateKey() method to generate a secret key, which is not secure because it is deterministic and can be easily guessed by an attacker. This can lead to the discovery of the encryption key and the plaintext.",
+"recommendation": "Use a secure method to generate the secret key, such as the KeyGenerator.generateKey(SecretKeySpec) method."
+}

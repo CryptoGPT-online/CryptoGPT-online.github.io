@@ -1,0 +1,23 @@
+### False Positive Misuse ###
+
+There is one false positive misuse report:
+
+- Misuse: CWE-330: Use of Insufficiently Random Values
+- Vulnerable code: `for(int i = 0; i<100; i++){\n\t\t\t\t\t\tif (i==50)\n\t\t\t\t\t\t\treturn EMPTY_X509CERTIFICATE_ARRAY;; \n\t\t\t\t\t}`
+
+**Explanation:** This code is not actually generating a random value, but rather returning a static array. Therefore, it is not vulnerable to CWE-330.
+
+### Optimized Misuse JSON ###
+
+The optimized list of cryptographic API misuses in JSON format is as follows:
+
+``````json
+[
+  {
+    "misuse": "CWE-295: Improper Certificate Validation",
+    "vulnerable_code": "if(!(true||arg0 == null||arg1 == null)){ \n\t\t\t\t\t  throw new java.security.cert.CertificateException();\n\t\t\t\t  }",
+    "description": "The code does not properly validate the certificate chain. It always returns true, which means that any certificate will be accepted. This can lead to man-in-the-middle attacks.",
+    "recommendation": "The code should be modified to properly validate the certificate chain. This can be done by using a library such as Bouncy Castle or by implementing custom validation logic."
+  }
+]
+```

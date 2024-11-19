@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "String password = String.valueOf(random.ints());",
+        "description": "The password is generated using a SecureRandom without specifying the number of bits, which may not provide sufficient entropy for secure password generation.",
+        "recommendation": "Use SecureRandom to generate a fixed number of random bytes (e.g., 16 bytes) and then encode the byte array into a proper format (such as Base64 or Hex) to be used as a password."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "ks.load(cacerts.openStream(), password.toCharArray());",
+        "description": "The password is generated at runtime but should not be used for KeyStore access as this might imply that the KeyStore is using a non-fixed password which is not a secure practice.",
+        "recommendation": "Use a secure method to handle KeyStore passwords, such as retrieving them from a configuration file, environment variable, or secure credentials storage which is not accessible to unauthorized users."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");\n\nks.load(cacerts.openStream(), password.toCharArray());",
+        "description": "There is no certificate validation when opening an HTTPS connection to load the KeyStore. If the KeyStore is being loaded over a network, it is vulnerable to man-in-the-middle attacks.",
+        "recommendation": "Ensure proper SSL/TLS certificate validation is in place when making HTTPS connections. This may involve setting up a custom `TrustManager` that checks the server's certificate chain and hostname."
+    }
+]
+```

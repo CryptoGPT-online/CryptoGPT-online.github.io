@@ -1,0 +1,48 @@
+Misuses:
+1. "Potential Algorithm Confusion",
+Misused Code: new C3("Blowfish"), 
+Description: The Blowfish algorithm is weak and should not be used for encryption. It is often recommended to use stronger algorithms like AES. 
+Recommendation: Use a stronger encryption algorithm like AES for the encryption.
+
+2. "Inadequate Key Length"
+Misused Code: KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo); SecretKey key = keyGen.generateKey();, 
+Description: The Blowfish algorithm recommends a key size of 128-bits while AES requires 128-, 192-, or 256-bit keys.
+Recommendation: Use a stronger encryption algorithm with a key size of at least 128-bits.
+
+3. "Inefficient Mode"
+Misused Code: Cipher cipher = Cipher.getInstance(defaultAlgo);, 
+Description: Cipher block chaining (CBC) mode is not secure and it is recommended to use Authenticated Encryption with Associated Data (AEAD) mode. 
+Recommendation: Use an AEAD mode for encryption like AES/GCM/NoPadding or AES/CCM/NoPadding.
+
+4. "Use of Weak Random Number Generator"
+Misused Code: KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);, 
+Description: The KeyGenerator class does not guarantee a secure random number generator is used. Weak random number generators can lead to weaker encryption and other security issues. 
+Recommendation: Use a secure random number generator for key generation.
+
+5. "No IV in CBC Mode"
+Misused Code: cipher.init(Cipher.ENCRYPT_MODE, key);, 
+Description: CBC mode is susceptible to padding oracle attacks if an Initialization Vector (IV) is not used.
+Recommendation: Use an Initialization Vector (IV) for CBC mode encryption.
+
+6. "No Authentication"
+Misused Code: byte [] txtBytes = txt.getBytes(); return cipher.doFinal(txtBytes);, 
+Description: AEAD mode does not provide message authentication.
+Recommendation: If message authentication is needed, use an AEAD mode.
+
+7. "No Key Derivation Function"
+Misused Code: KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);, 
+Description: Using a simple KeyGenerator without a key derivation function can lead to weak keys.
+Recommendation: Use a key derivation function or hardware security module (HSM) for key generation.
+
+8. "No Encryption Padding"
+Misused Code: Cipher cipher = Cipher.getInstance(defaultAlgo);, 
+Description: Not using an encryption padding can lead to vulnerabilities in the ciphertext if certain attacks are known.
+Recommendation: Use an encryption padding for encryption.
+
+JSON Format:
+```json
+[
+    {"misuse": "Potential Algorithm Confusion", "vulnerable_code": "new C3(\"Blowfish\")", "description": "The Blowfish algorithm is weak and should not be used for encryption.", "recommendation": "Use a stronger encryption algorithm like AES for the encryption."},
+    {"misuse": "Inadequate Key Length", "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo); SecretKey key = keyGen.generateKey();", "description": "The Blowfish algorithm recommends a key size of 128-bits while AES requires 128-, 192-, or 256-bit keys.", "recommendation": "Use a stronger encryption algorithm with a key size of at least 128-bits."},
+    {"misuse": "Inefficient Mode", "vulnerable_code": "Cipher cipher = Cipher.getInstance(defaultAlgo);", "description": "Cipher block chaining (CBC) mode is not secure and it is recommended to use Authenticated Encryption with Associated Data (AEAD) mode.", "recommendation": "Use an AEAD mode for encryption like AES/GCM/NoPadding or AES/CCM/NoPadding."},
+    {"misuse": "Use of Weak Random Number Generator", "vulnerable_code": "KeyGenerator keyGen =

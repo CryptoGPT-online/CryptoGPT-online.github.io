@@ -1,0 +1,29 @@
+```json
+[
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": [
+            "SSLSocketFactory ssf = (SSLSocketFactory) SSLSocketFactory.getDefault();",
+            "SSLSocket socket = (SSLSocket) ssf.createSocket(hostName.toString(),soc);"
+        ],
+        "description": "The code snippet provided does not show any custom implementation of hostname verification or certificate validation. The default SSLSocketFactory does not perform any hostname verification which can lead to Man-in-the-Middle (MITM) attacks.",
+        "recommendation": "Implement a proper hostname verification by setting your own HostnameVerifier in an SSLContext or by using HttpsURLConnection.setDefaultHostnameVerifier(). Also, ensure that you validate server certificates against a list of trusted CAs."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": [
+            "public static final String DEFAULT_HOST_NAME = \"my.host.name\";"
+        ],
+        "description": "While not directly a misuse of a cryptographic API, hardcoding the hostname can be considered a bad practice from a security standpoint, as it makes it less flexible and potentially more prone to being disclosed or misused.",
+        "recommendation": "Consider retrieving the hostname from a configuration file or environment variable instead of hardcoding it."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": [
+            "\"my.host.name\""
+        ],
+        "description": "Again, while not directly related to cryptographic API misuse, the hardcoded value 'my.host.name' suggests a deterministic component rather than a random one. In other contexts, using predictable values can lead to security issues.",
+        "recommendation": "If you need to generate random values for cryptographic operations, use a secure random number generator such as java.security.SecureRandom."
+    }
+]
+```

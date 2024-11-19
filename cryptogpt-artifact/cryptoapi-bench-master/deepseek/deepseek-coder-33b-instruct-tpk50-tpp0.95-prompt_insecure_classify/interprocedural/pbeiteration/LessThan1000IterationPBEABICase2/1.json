@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "new PBEParameterSpec(salt, Integer.parseInt(String.valueOf(count)))",
+        "description": "In this code, the PBEParameterSpec constructor is used with a salt and a repetition count. The repetition count is parsed from the string. If this string is not a valid integer, a NumberFormatException will occur. This could lead to misuses such as negative values or values larger than the Integer.MAX_VALUE.",
+        "recommendation": "To prevent this misuse, ensure that the count is always a valid integer before passing it to the PBEParameterSpec constructor."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values.",
+        "vulnerable_code": "random.nextBytes(salt)",
+        "description": "The salt for password-based encryption is generated using a SecureRandom object. However, if the same SecureRandom instance is used to generate the repetition count as well, it's possible that the same randomness source is used for both, leading to the same salt and count, which decreases the security of the encryption.",
+        "recommendation": "To fix this misuse, make sure that the SecureRandom object is not reused for different purposes or make sure that different salt and count values are used."
+    }
+]
+```

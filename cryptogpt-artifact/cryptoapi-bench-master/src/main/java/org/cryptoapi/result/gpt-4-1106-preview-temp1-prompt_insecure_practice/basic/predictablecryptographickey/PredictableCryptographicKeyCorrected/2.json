@@ -1,0 +1,40 @@
+```json
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "String.valueOf(random.ints());",
+        "description": "The secure random instance is being misused to generate a key through `String.valueOf(random.ints())`. This does not guarantee a cryptographic-strength key as it does not specify the number of bits.",
+        "recommendation": "Use `random.generateSeed(numBytes)` method where `numBytes` corresponds to the key size (e.g., 16 bytes for AES-128)."
+    },
+    {
+        "misuse": "Weak Key Derivation",
+        "vulnerable_code": "byte[] keyBytes = defaultKey.getBytes();",
+        "description": "Deriving a key from a default key without any cryptographic key derivation function is insecure. Directly converting the string representation of random integers to bytes does not ensure proper entropy or key length.",
+        "recommendation": "Use a key derivation function like PBKDF2, scrypt, or Argon2."
+    },
+    {
+        "misuse": "Missing Initialization Vector",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, keySpec);",
+        "description": "The cipher is initialized without specifying an Initialization Vector (IV) for CBC mode, which defaults to using a zero IV. Reusing an IV in CBC mode can lead to vulnerabilities.",
+        "recommendation": "Always generate a random IV for each encryption operation and transmit it along with the ciphertext."
+    },
+    {
+        "misuse": "Improper Exception Handling",
+        "vulnerable_code": "public static void main(String [] args) throws ...",
+        "description": "Catching generic exceptions like IOException without handling or logging them properly might conceal unexpected behaviors or cryptographic issues.",
+        "recommendation": "Catch and handle specific cryptographic exceptions appropriately, logging necessary details for debugging or auditing purposes."
+    },
+    {
+        "misuse": "Insecure Character Encoding",
+        "vulnerable_code": "originalString.getBytes(\"UTF-8\")",
+        "description": "In the context of encryption, using string.getBytes() without specifying a character set may lead to different results on different platforms. When the platform's default charset is not UTF-8, it could lead to cryptographic issues.",
+        "recommendation": "Make sure to always specify the charset to be used, such as UTF-8."
+    },
+    {
+        "misuse": "Insecure Cipher Mode",
+        "vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5PADDING\")",
+        "description": "The code uses ECB mode which is insecure because it does not provide serious message confidentiality. This mode will produce the same ciphertext for identical blocks of plaintext.",
+        "recommendation": "Use a more secure mode like CBC with a proper IV or GCM which provides both privacy and integrity."
+    }
+]
+```

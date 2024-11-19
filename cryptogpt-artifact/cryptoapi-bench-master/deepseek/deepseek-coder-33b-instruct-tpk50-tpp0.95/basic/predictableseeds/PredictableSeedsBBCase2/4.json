@@ -1,0 +1,27 @@
+Your code is using a `SecureRandom` object to generate random numbers, but the `SecureRandom` object is being seeded with a single byte. This is not a secure practice, because a single byte can generate only 256 different numbers, and if the program runs for a long time, it might repeat some numbers, which can be unsafe in some situations.
+
+Here's the code:
+
+```java
+import java.security.SecureRandom;
+
+public class P2 {
+    public static void main (String [] args){
+        byte seed = 100;
+        SecureRandom sr = new SecureRandom(new byte[]{seed});
+        int v = sr.nextInt();
+        System.out.println(v);
+    }
+}
+```
+
+Here's the JSON response:
+
+```json
+[{
+    "misuse": "Insufficient Entropy for SecureRandom",
+    "vulnerable_code": "byte seed = 100;\nSecureRandom sr = new SecureRandom(new byte[]{seed});",
+    "description": "The seed is an array of a single byte, which provides only 256 possible seeds, which is not sufficient for generating secure random numbers. The result is a non-random sequence of numbers.",
+    "recommendation": "Seeding a SecureRandom should use a secure source of entropy, for instance, a sequence of regularly generated or machine-specific values."
+}]
+```

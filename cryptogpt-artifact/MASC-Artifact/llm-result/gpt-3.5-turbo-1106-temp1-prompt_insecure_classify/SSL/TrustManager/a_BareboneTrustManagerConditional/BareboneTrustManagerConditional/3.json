@@ -1,0 +1,10 @@
+```json
+[{"misuse": "CWE-295: Improper Certificate Validation", 
+  "vulnerable_code": "public void checkClientTrusted(X509Certificate[] x509Certificates, String s)\n...\npublic void checkServerTrusted(X509Certificate[] x509Certificates, String s)\n...", 
+  "description": "The custom TrustManager implementation does not perform proper certificate validation. It only checks if the authentication type is RSA and if the certificate chain length is greater than or equal to 314, which are not sufficient validation criteria for ensuring the security of the SSL/TLS connection.", 
+  "recommendation": "Use a more comprehensive validation logic that includes verifying the certificate chain, checking expiration, and matching the hostname to prevent potential man-in-the-middle attacks."},
+ {"misuse": "CWE-330: Use of Insufficiently Random Values",
+  "vulnerable_code": "public X509Certificate[] getAcceptedIssuers() {\n...\n}", 
+  "description": "The getAcceptedIssuers method returns a fixed EMPTY_X509CERTIFICATE_ARRAY without utilizing any random values. This could lead to predictable or non-uniform selection of accepted issuers, reducing the security of the SSL/TLS connections.",
+  "recommendation": "Use a more dynamic and unpredictable method for providing the accepted issuers, such as retrieving them from a trusted keystore or using a secure random selection."}]
+```

@@ -1,0 +1,31 @@
+public class Pd {
+    public static void main(String [] args) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IOException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException, ClassNotFoundException {
+        KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+        keyGen.init(128); // for example, use AES with 128-bit key
+        SecretKey key = keyGen.generateKey();
+
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+        byte[] ivBytes = new byte[cipher.getBlockSize()];
+        SecureRandom random = new SecureRandom();
+        random.nextBytes(ivBytes);
+        IvParameterSpec ivSpec = new IvParameterSpec(ivBytes);
+
+        cipher.init(Cipher.ENCRYPT_MODE, key, ivSpec);
+
+        String originalString = "Testing";
+        byte[] originalBytes = originalString.getBytes(StandardCharsets.UTF_8);
+        byte[] encryptedBytes = cipher.doFinal(originalBytes);
+        
+        System.out.println(Base64.getEncoder().encodeToString(encryptedBytes));
+
+        // To decrypt
+        cipher.init(Cipher.DECRYPT_MODE, key, ivSpec);
+        byte[] decryptedBytes = cipher.doFinal(encryptedBytes);
+        String decryptedString = new String(decryptedBytes, StandardCharsets.UTF_8);
+
+        System.out.println(decryptedString);
+
+    }
+}
+```
+In this code, the KeyGenerator class is used to generate a secure random AES key, and the IvParameterSpec class is used to generate a secure random IV. The original string is converted to bytes using the UTF-8 charset, which provides a reliable encoding for Unicode text.

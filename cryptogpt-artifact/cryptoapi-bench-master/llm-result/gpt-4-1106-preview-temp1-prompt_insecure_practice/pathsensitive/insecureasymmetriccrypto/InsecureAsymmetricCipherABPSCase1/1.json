@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "keysize = 1024",
+        "description": "RSA keys shorter than 2048 bits are considered insecure.",
+        "recommendation": "Increase the RSA key size to at least 2048 bits for all cases."
+    },
+    {
+        "misuse": "ECB Mode usage in RSA",
+        "vulnerable_code": "Cipher.getInstance(\"RSA\")",
+        "description": "Using RSA without specifying padding in the Cipher.getInstance call defaults to using RSA in ECB mode with PKCS1Padding, which could lead to insecure cryptographic operations.",
+        "recommendation": "Specify a secure padding mechanism, such as OAEP, by using Cipher.getInstance(\"RSA/ECB/OAEPWithSHA-256AndMGF1Padding\")."
+    },
+    {
+        "misuse": "String Encoding Assumption",
+        "vulnerable_code": "new String(\"Secret Message\")",
+        "description": "Creating a String without specifying a character encoding can lead to platform-dependent default encoding and possible information loss or misinterpretation.",
+        "recommendation": "Explicitly specify the character encoding using new String(\"Secret Message\").getBytes(\"UTF-8\") or a similar construct."
+    }
+]
+```

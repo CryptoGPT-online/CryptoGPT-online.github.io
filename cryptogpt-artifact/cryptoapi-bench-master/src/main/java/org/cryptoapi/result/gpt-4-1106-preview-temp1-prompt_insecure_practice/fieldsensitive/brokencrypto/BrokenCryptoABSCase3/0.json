@@ -1,0 +1,40 @@
+```json
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "crypto = new C4(\"RC4\");",
+        "description": "RC4 is considered a broken and insecure cryptographic algorithm.",
+        "recommendation": "Replace RC4 with a secure modern algorithm like AES (Advanced Encryption Standard) with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "Weak Encryption Key Generation",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);",
+        "description": "The encryption key is generated using the same algorithm as the encryption, and no key size is specified. This could lead to weak keys if the default key size is not sufficient.",
+        "recommendation": "Specify a key size when generating the key and ensure it is sufficient for the security requirements (e.g., for AES, use a key size of 128, 192, or 256 bits)."
+    },
+    {
+        "misuse": "Encryption Without Secure Randomness",
+        "vulnerable_code": "SecretKey key = keyGen.generateKey();",
+        "description": "The key generation method does not explicitly specify a secure random number generator. By default, it may not use a sufficiently secure source of randomness, posing a risk to the key's security.",
+        "recommendation": "Explicitly provide a secure random instance or specify the random number generator algorithm when generating the key."
+    },
+    {
+        "misuse": "Lack of Algorithm Parameters Specification",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(defaultAlgo);",
+        "description": "Encryption is done without specifying an initialization vector (IV) or other algorithm-specific parameters, which could lead to vulnerable encryption if the algorithm is block-based and requires an IV for security (e.g., CBC mode).",
+        "recommendation": "For algorithms that use block cipher mode (like AES in CBC mode), ensure that the IV is randomly generated and securely passed along with the ciphertext."
+    },
+    {
+        "misuse": "Hardcoded Encryption Algorithm",
+        "vulnerable_code": "public C4(String defAlgo)",
+        "description": "The encryption algorithm is passed and stored as a string, which could be manipulated before being used to instantiate the cipher. This could lead to using an untrusted or insecure algorithm.",
+        "recommendation": "Validate the input for the encryption algorithm against a list of accepted algorithms."
+    },
+    {
+        "misuse": "Missing Charset Encoding",
+        "vulnerable_code": "byte [] txtBytes = txt.getBytes();",
+        "description": "Conversion of the string to bytes for encryption without explicitly specifying the character encoding could lead to different results on different platforms if the platforms have different default charsets.",
+        "recommendation": "Specify the charset encoding (e.g., UTF-8) when converting the string to bytes to ensure portability and predictability of the output."
+    }
+]
+```

@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "Predictable Keystore Password",
+    "vulnerable_code": "String.valueOf(random.ints())",
+    "description": "Using SecureRandom to generate a predictable keystore password can lead to easy brute-forcing because SecureRandom is not designed to generate secure passwords but rather secure random numbers. Additionally, the code turns a stream of ints into a string, which may not be random enough and can reduce the complexity.",
+    "recommendation": "Use a secure method to generate passwords such as a dedicated password generator API that ensures sufficient complexity and unpredictability."
+  },
+  {
+    "misuse": "Insecure TrustStore",
+    "vulnerable_code": "cacerts.openStream(), new String(keyBytes).toCharArray()",
+    "description": "Loading a KeyStore directly from a URL's openStream without verifying the SSL/TLS certificate chain could lead to man-in-the-middle attacks.",
+    "recommendation": "Ensure proper SSL/TLS checks are in place and verify the certificate chain before establishing a secure connection."
+  },
+  {
+    "misuse": "KeyStore Integrity",
+    "vulnerable_code": "String password = ...",
+    "description": "The password for the KeyStore is generated at runtime and not stored or managed securely, which could lead to inability to recover the KeyStore if the application restarts and a new password is generated.",
+    "recommendation": "Store the KeyStore password securely outside the application using a secrets management approach or environment variables, and ensure it is not generated at runtime."
+  }
+]
+```

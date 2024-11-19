@@ -1,0 +1,26 @@
+ [
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, kp.getPublic());",
+        "description": "The encryption algorithm used is RSA, which is considered broken and should not be used for new applications. The RSA algorithm is vulnerable to attacks such as the Cocktail Party Attack and the Wiener Attack.",
+        "recommendation": "Replace the RSA algorithm with a secure algorithm such as AES or elliptic curve cryptography (ECC)."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "KeyPairGenerator kgp = KeyPairGenerator.getInstance(\"RSA\");\nkgp.initialize(keySize);",
+        "description": "The key size used for the RSA algorithm is 1024 bits, which is considered too small and is vulnerable to brute force attacks. The recommended minimum key size for RSA is 2048 bits.",
+        "recommendation": "Increase the key size to at least 2048 bits."
+    },
+    {
+        "misuse": "Insecure Random Number Generation",
+        "vulnerable_code": "KeyPairGenerator kgp = KeyPairGenerator.getInstance(\"RSA\");\nkgp.initialize(keySize);",
+        "description": "The KeyPairGenerator class uses a default random number generator that may not be cryptographically secure. The random number generator should be specified explicitly to ensure that it is secure.",
+        "recommendation": "Specify a secure random number generator explicitly, such as the SecureRandom class, when creating the KeyPairGenerator object."
+    },
+    {
+        "misuse": "Lack of Key Management",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"RSA\");\ncipher.init(Cipher.ENCRYPT_MODE, kp.getPublic());",
+        "description": "The encryption and decryption keys are generated and used without proper key management. The keys should be stored securely and access should be restricted to authorized users only.",
+        "recommendation": "Implement a key management system that generates, stores, and manages encryption and decryption keys securely."
+    }
+]

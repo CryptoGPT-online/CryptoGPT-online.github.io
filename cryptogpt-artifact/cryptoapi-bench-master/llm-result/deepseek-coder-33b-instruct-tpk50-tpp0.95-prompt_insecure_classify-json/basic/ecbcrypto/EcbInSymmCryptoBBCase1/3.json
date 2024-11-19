@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "description": "The AES algorithm is known to have 128-bit keys only. However, it's not sufficient to create an encryption key using AES. The programmer should be able to provide 128-bit or higher keys to encrypt data. The key used by this program has not been validated or sanitized to ensure it meets the required strength.",
+        "recommendation": "Implement code to validate and ensure that only keys of adequate length are used for AES encryption. You could generate AES keys of length 128, 192 or 256 bits, depending on the security requirements."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "Cipher.getInstance(\"AES/ECB/PKCS5Padding\");",
+        "description": "ECB mode does not offer semantic security, because it encrypts identical plaintext blocks into identical ciphertext blocks. There are better modes of operation like CBC or CTR, which are secure against most types of plaintext attacks. The AES/ECB/PKCS5Padding is not secure against most of the attacks and the programmer needs to be informed of its vulnerabilities.",
+        "recommendation": "Use a secure mode of operation like CBC, CTR, GCM or CCM. It's also important to consider the security requirements of the application and choose a cipher that meets those requirements."
+    }
+]
+```

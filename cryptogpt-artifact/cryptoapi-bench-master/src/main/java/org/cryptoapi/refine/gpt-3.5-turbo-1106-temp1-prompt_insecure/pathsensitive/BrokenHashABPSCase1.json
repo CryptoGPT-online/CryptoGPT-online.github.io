@@ -1,0 +1,26 @@
+### False Positive Misuse ###
+None
+
+### Optimized Misuse JSON###
+```json
+[
+    {
+        "misuse": "Insecure Crypto Algorithm",
+        "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(\"SHA1\");",
+        "description": "The code uses the SHA-1 hashing algorithm which is considered weak and deprecated for most security uses.",
+        "recommendation": "Use secure hashing algorithms like SHA-256 or SHA-3 for better collision resistance and security."
+    },
+    {
+        "misuse": "Conditional Crypto Algorithm Selection",
+        "vulnerable_code": "if(choice>1) md = MessageDigest.getInstance(\"SHA-256\");",
+        "description": "The algorithm selection is based on a simple condition, which can lead to inconsistent and unpredictable security outcomes.",
+        "recommendation": "Instead of conditionally selecting the algorithm, explicitly choose a strong algorithm like SHA-256 or SHA-512 for consistent and stronger security."
+    },
+    {
+        "misuse": "Insecure Crypto Algorithm",
+        "vulnerable_code": "md.update(name.getBytes());",
+        "description": "The code updates the MessageDigest with input bytes but does not specify any encoding which can lead to unpredictable behavior.",
+        "recommendation": "Specify the character encoding when getting bytes from the input (e.g. name.getBytes(StandardCharsets.UTF_8))."
+    }
+]
+```

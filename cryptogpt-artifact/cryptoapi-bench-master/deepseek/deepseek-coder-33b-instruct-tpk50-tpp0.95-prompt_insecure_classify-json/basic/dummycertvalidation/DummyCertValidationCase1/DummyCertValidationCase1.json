@@ -1,0 +1,39 @@
+### False Positive Misuse 
+The following are the false positives:
+```json
+[
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "checkServerTrusted(...)",
+        "description": "In this code, the checkServerTrusted(...) method does not perform any certificate validation, which means that it does not verify the server's identity, thereby allowing man-in-the-middle attacks.",
+        "recommendation": "Implement a way to validate the server's certificate, such as using Java's default SSLContext or by creating your own TrustManager and HostnameVerifier."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": "getAcceptedIssuers() method returns an empty array.",
+        "description": "An empty array returned by the getAcceptedIssuers() method suggests that no trusted issuers are being used, which could make the code vulnerable to man-in-the-middle attacks.",
+        "recommendation": "Implement certificate validation and provide a list of trusted issuers to prevent man-in-the-middle attacks."
+    }
+]
+```
+
+### Optimized Misuse JSON 
+The misuse about `getAcceptedIssuers()` returning an empty array can be considered a false positive since the function was actually commented out and returns a new `X509Certificate[0]`. The `checkServerTrusted` method is also technically a false positive due to the code being commented out, and the code snippet is not included in the provided code. The other two misuses, while technically false positives based on the code and comments, are important misuses that should be remediated.
+
+The misuses would look like this:
+```json
+[
+    {
+        "misuse category": "Improper Certificate Validation",
+        "vulnerable_code": "checkClientTrusted(...) and checkServerTrusted(...)",
+        "description": "This code is bypassing SSL/TLS certificate validation by allowing any client and server to connect without certificate validation.",
+        "recommendation": "Always perform certificate validation in real applications. You should never accept a certificate from any client or server without validating it."
+    },
+    {
+        "misuse category": "Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": "getAcceptedIssuers()",
+        "description": "No certificate validation for server trust is implemented. It means the code trusts any server it connects to, ignoring any potential for it to present a certificate or to provide a valid one.",
+        "recommendation": "You should ensure that the server certificate is validated. It could be done using the method checkServerTrusted or, if there is a need to add your own logic, you should do it in another method."
+    }
+]
+```

@@ -1,0 +1,33 @@
+### False Positive Misuse ###
+
+**1. CWE-256: Plaintext Storage**
+>* Vulnerable code: `new SecureRandom()`
+>* Description: The key is generated with SecureRandom without a source of entropy is insecure, the generated key may be weak.
+>* Recommendation: Use a more secure random number generator, such as SecureRandom with a good source of entropy, or a hardware-based random number generator.
+
+This misuse is a **false positive**. `SecureRandom` is initialized without an entropy source, which makes the generated key unpredictable. It is not plaintext storage.
+
+**2. CWE-338: Use of Cryptographically Weak Key**
+>* Vulnerable code: `context.init(null, trustAll, new SecureRandom());`
+>* Description: The SSLContext is initialized with a weak key, which can be easily broken.
+>* Recommendation: Use a strong key, such as a 2048-bit RSA key.
+
+This misuse is a **false positive**. The key strength is not specified in the code. It is possible that a strong key is used, which makes this misuse not applicable.
+
+### Optimized Misuse JSON ###
+```json
+[
+  {
+    "misuse": "Broken Crypto Algorithm",
+    "vulnerable_code": "context = SSLContext.getInstance(\"TLS\")",
+    "description": "Using TLSv1 or SSLv3, which are vulnerable to attacks like BEAST and POODLE.",
+    "recommendation": "Use TLSv1.2 or later, which are more secure."
+  },
+  {
+    "misuse": "Weak Trust Manager",
+    "vulnerable_code": "new X509TrustManager() { ... }",
+    "description": "The custom trust manager accepts all certificates, which can lead to man-in-the-middle attacks.",
+    "recommendation": "Use a more secure trust manager, such as one that validates certificates against a known list of trusted CAs."
+  }
+]
+```

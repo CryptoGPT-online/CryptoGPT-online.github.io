@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Insecure Initialization Vector (IV) usage",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(val.getBytes(),0,8);",
+        "description": "The code uses a timestamp-based value as an IV which is deterministic and predictable, compromising the security of the encryption when used with cipher modes that require a random or non-repeating IV for each encryption operation.",
+        "recommendation": "Use a secure random number generator to generate unique and unpredictable IVs for each encryption operation."
+    },
+    {
+        "misuse": "Insufficient IV size for strong cryptography",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(val.getBytes(),0,8);",
+        "description": "The code is creating an IV of 8 bytes, but strong cipher algorithms (like AES) typically require IVs of 16 bytes (128 bits) to maintain cryptographic strength.",
+        "recommendation": "Ensure the IV size matches the block size of the encryption algorithm being used, typically 16 bytes for AES."
+    }
+]
+```

@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insufficiently Random IV",
+        "vulnerable_code": "byte [] bytes = \"abcde\".getBytes();\nIvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+        "description": "Hardcoded initialization vectors (IV) undermine cryptographic strength. IV should be random and unique for each encryption operation.",
+        "recommendation": "Use a secure random number generator to create an IV that is the proper size for the cipher block size."
+    },
+    {
+        "misuse": "Incorrect IV Length",
+        "vulnerable_code": "byte [] bytes = \"abcde\".getBytes();\nIvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+        "description": "The AES block size is 128 bits (16 bytes) and requires an IV of this size. Using an IV smaller than the block size can lead to cryptographic weaknesses.",
+        "recommendation": "Ensure the IV is the correct length (16 bytes for AES) and is securely generated."
+    },
+    {
+        "misuse": "Uninitialized KeyGenerator",
+        "vulnerable_code": "KeyGenerator.getInstance(\"AES\");",
+        "description": "The AES KeyGenerator is not initialized with a key size which may lead to default key size that might not be secure enough.",
+        "recommendation": "Initialize the KeyGenerator with a specific key size, e.g., keyGen.init(256); for AES-256."
+    }
+]
+```

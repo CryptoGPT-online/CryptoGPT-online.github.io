@@ -1,0 +1,20 @@
+ [
+    {
+        "misuse": "Insecure Defaults",
+        "vulnerable_code": "SSLSocketFactory.getDefault();",
+        "description": "The code uses the default SSL socket factory without specifying the SSL protocol, which may result in the use of insecure protocols like SSLv3 or TLSv1.0.",
+        "recommendation": "Explicitly set the SSL protocol to a secure version, such as TLSv1.2 or TLSv1.3, using the SSLSocketFactory.setEnabledProtocols() method."
+    },
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "char[] HOST_NAME = DEFAULT_HOST_NAME.toCharArray();",
+        "description": "The code uses the default host name without properly checking if it is a valid host name or not. This may result in the use of an incorrect host name, which may lead to security vulnerabilities.",
+        "recommendation": "Use a secure method to obtain the host name, such as using the InetAddress class to validate the host name or using the SSLSocketFactory.getDefaultHost() method to get the default host name."
+    },
+    {
+        "misuse": "Mixed Trust",
+        "vulnerable_code": "SSLSocket socket = (SSLSocket) ssf.createSocket(hostName.toString(),soc);",
+        "description": "The code creates an SSLSocket object without properly setting the trust manager. This may result in the trust manager being set to a trust-all trust manager, which may allow for man-in-the-middle attacks.",
+        "recommendation": "Set the trust manager to a secure trust manager, such as using the SSLSocketFactory.setTrustManager() method, or using a certificate pinning mechanism to ensure the server's certificate is trustworthy."
+    }
+]

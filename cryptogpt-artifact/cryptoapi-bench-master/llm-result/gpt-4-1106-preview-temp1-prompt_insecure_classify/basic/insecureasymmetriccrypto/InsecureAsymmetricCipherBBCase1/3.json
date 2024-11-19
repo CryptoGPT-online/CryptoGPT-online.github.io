@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": [
+            "int keysize = 1024;",
+            "kgp.initialize(keysize);"
+        ],
+        "description": "The RSA key size of 1024 bits is considered to be insecure. Modern standards require a minimum key size of 2048 bits for RSA to maintain security.",
+        "recommendation": "Increase the RSA key size to at least 2048 bits."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": [
+            "Cipher cipher = Cipher.getInstance(\"RSA\");",
+            "Cipher dec = Cipher.getInstance(\"RSA\");"
+        ],
+        "description": "Using RSA without specifying a padding scheme is insecure. It defaults to the RSA algorithm without padding (RSA/ECB/PKCS1Padding should be used instead), which is not secure for encryption and may lead to vulnerabilities.",
+        "recommendation": "Specify a secure padding mechanism such as OAEP with an appropriate hashing algorithm, for example, 'RSA/ECB/OAEPWithSHA-256AndMGF1Padding'."
+    }
+]
+```

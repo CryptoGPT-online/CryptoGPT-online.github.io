@@ -1,0 +1,20 @@
+### False Positive Misuse ###
+N/A
+
+### Optimized Misuse JSON###
+```json
+[
+  {
+    "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+    "vulnerable_code": "MessageDigest.getInstance(\"SHA-256\")",
+    "description": "The code selects the SHA-256 algorithm only if the choice value is greater than 1. This approach of choosing a cryptographic algorithm based on a variable is not recommended, as it can lead to the selection of weaker algorithms.",
+    "recommendation": "Instead of using a condition to select the algorithm, explicitly specify the algorithm to be used, such as MessageDigest.getInstance(\"SHA-256\")."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_code": "md.update(name.getBytes());",
+    "description": "The code updates the MessageDigest with bytes from the 'name' variable, without specifying a salt or any other means of strengthening the encryption.",
+    "recommendation": "To enhance encryption strength, consider using a salt or iteration number when updating the MessageDigest. Example: md.update(name.getBytes(), salt, iterations);"
+  }
+]
+```

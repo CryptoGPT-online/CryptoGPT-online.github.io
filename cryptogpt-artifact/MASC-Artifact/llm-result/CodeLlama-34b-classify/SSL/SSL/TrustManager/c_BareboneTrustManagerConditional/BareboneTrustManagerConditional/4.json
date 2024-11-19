@@ -1,0 +1,34 @@
+ [
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "public void getAcceptedIssuers() {
+    for(int i = 0; i<100; i++){
+        if (i==50)
+            return EMPTY_X509CERTIFICATE_ARRAY;;
+    }
+    return EMPTY_X509CERTIFICATE_ARRAY;
+}",
+        "description": "The method getAcceptedIssuers() in the class Bl is using hardcoded credentials to generate a list of accepted issuers. This is a security vulnerability because if an attacker can access the source code, they will be able to see the hardcoded credentials and use them to access the server.",
+        "recommendation": "Replace the hardcoded credentials with a secure method of storing and retrieving sensitive information, such as using environment variables or a secure configuration file."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "public void checkClientTrusted(java.security.cert.X509Certificate[] arg0, java.lang.String arg1) throws java.security.cert.CertificateException {
+    if(!(true||arg0 == null||arg1 == null)){
+        throw new java.security.cert.CertificateException();
+    }
+}",
+        "description": "The method checkClientTrusted() in the class Bl is not properly validating the client certificate. The code checks if arg0 and arg1 are null, but it does not verify the certificate's validity or check if it is revoked. This is a security vulnerability because it allows an attacker to connect to the server using an invalid or revoked certificate.",
+        "recommendation": "Verify the client certificate's validity and check if it is revoked before establishing the connection. You can use a certificate authority to verify the certificate's validity and check if it is revoked."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "public void checkServerTrusted(java.security.cert.X509Certificate[] arg0, java.lang.String arg1) throws java.security.cert.CertificateException {
+    if(!(true||arg0 == null||arg1 == null)){
+        throw new java.security.cert.CertificateException();
+    }
+}",
+        "description": "The method checkServerTrusted() in the class Bl is not properly validating the server certificate. The code checks if arg0 and arg1 are null, but it does not verify the certificate's validity or check if it is revoked. This is a security vulnerability because it allows an attacker to connect to the server using an invalid or revoked certificate.",
+        "recommendation": "Verify the server certificate's validity and check if it is revoked before establishing the connection. You can use a certificate authority to verify the certificate's validity and check if it is revoked."
+    }
+]

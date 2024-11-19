@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "sr.setSeed(bytes);",
+        "description": "Using a predictable seed with SecureRandom can lead to predictable outputs from the random number generator, which is not secure.",
+        "recommendation": "Do not manually set the seed for SecureRandom with a predictable value; instead, allow the SecureRandom instance to self-seed with entropy from the underlying operating system."
+    },
+    {
+        "misuse": "Insufficient Entropy",
+        "vulnerable_code": "byte [] bytes = {(byte) 100, (byte) 200}; ... sr.setSeed(bytes);",
+        "description": "Setting a hardcoded seed value for a SecureRandom instance reduces its entropy and thus its effectiveness. A SecureRandom instance should be seeded with unpredictable data to ensure cryptographically strong randomness.",
+        "recommendation": "Remove the sr.setSeed(bytes); line to ensure that SecureRandom uses its default, high-entropy seeding mechanism."
+    }
+]
+```

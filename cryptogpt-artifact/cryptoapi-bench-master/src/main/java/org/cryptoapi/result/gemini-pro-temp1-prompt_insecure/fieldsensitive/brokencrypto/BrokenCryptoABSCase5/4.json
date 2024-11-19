@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "CWE-326: Inadequate Key Management",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);",
+    "description": "Fixed key generation using `KeyGenerator.getInstance(defaultAlgo)`. This is insecure, as it generates keys without a secure random source.",
+    "recommendation": "Use a secure random number generator to generate keys, such as `SecureRandom.getInstanceStrong()`. Example: `KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo, SecureRandom.getInstanceStrong());`"
+  },
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_code": "crypto = new C6(\"IDEA\");",
+    "description": "Usage of the IDEA algorithm. IDEA is considered a legacy algorithm and is no longer considered secure. It should not be used for new development.",
+    "recommendation": "Use a more secure algorithm, such as AES or ChaCha20."
+  },
+  {
+    "misuse": "CWE-759: Use of a One-Time Pad",
+    "vulnerable_code": "crypto.encrypt(\"abc\", \"\");",
+    "description": "An empty string (i.e. `\"\"`) is passed as the second argument to the `encrypt` method. This will result in using a one-time pad, which is insecure.",
+    "recommendation": "Always use a secure initialization vector (IV) when encrypting data. The IV should be random and unique for each encryption operation."
+  }
+]
+```

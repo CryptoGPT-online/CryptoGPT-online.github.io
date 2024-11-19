@@ -1,0 +1,21 @@
+```json
+[
+    {
+        "misuse": "Empty Trust Manager Methods",
+        "vulnerable_code": [
+            "public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException",
+            "public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException"
+        ],
+        "description": "The implementation of 'checkClientTrusted' and 'checkServerTrusted' methods are empty, this results in accepting any certificate which is insecure and makes the connection vulnerable to MITM (Man-in-the-middle) attacks.",
+        "recommendation": "Implement proper certificate validation logic in 'checkClientTrusted' and 'checkServerTrusted' methods or use the default certificate validation provided by Java."
+    },
+    {
+        "misuse": "Incomplete Trust Manager",
+        "vulnerable_code": [
+            "public X509Certificate[] getAcceptedIssuers() { return null; }"
+        ],
+        "description": "The 'getAcceptedIssuers' method returns 'null' which could cause issues with some SSL/TLS implementations that expect a non-null array of accepted issuers.",
+        "recommendation": "Return an array of acceptable CA issuer certificates or use the default trust manager implementation."
+    }
+]
+```

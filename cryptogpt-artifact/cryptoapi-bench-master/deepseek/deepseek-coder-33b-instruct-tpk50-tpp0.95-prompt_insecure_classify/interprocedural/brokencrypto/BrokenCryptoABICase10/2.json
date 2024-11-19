@@ -1,0 +1,27 @@
+Misuses detected:
+
+1. CWE-327: Use of a Broken or Risky Cryptographic Algorithm.
+
+   Vulnerable Code:
+   ```java
+   KeyGenerator keyGen = KeyGenerator.getInstance(String.valueOf(crypto));
+   Cipher cipher = Cipher.getInstance(String.valueOf(crypto));
+   ```
+
+   Description: IDEA is a weak cryptographic algorithm that has known vulnerabilities. It is generally not recommended for use due to the risks associated with it. The use of such an algorithm could potentially compromise the security of the data that is being encrypted or decrypted.
+
+   Recommendation: Use stronger algorithms like AES (Cipher.getInstance("AES/CBC/PKCS5Padding")) instead of IDEA.
+
+2. CWE-330: Use of Insufficiently Random Values.
+
+   Vulnerable Code:
+   ```java
+   go2();
+   go3();
+   ```
+
+   Description: In go2(), DEFAULT_CRYPTO is converted to a character array and assigned to CRYPTO. In go3(), CRYPTO is assigned to crypto. While DEFAULT_CRYPTO is a constant, it could have been assigned non-random values in other methods or possibly manipulated. There is no randomness in the assignment of CRYPTO and crypto.
+
+   Recommendation: If crypto is intended to be random, it should be obtained from a cryptographically secure random number generator (RNG). If it is not meant to be random, ensure that DEFAULT_CRYPTO is set to a known and secure value.
+
+Please note that these misuses can lead to serious security vulnerabilities and should be fixed as soon as possible.

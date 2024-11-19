@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Trust All X.509 Certificates",
+        "vulnerable_code": "public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException",
+        "description": "The overridden 'checkServerTrusted' method of the X509TrustManager does nothing, which means it trusts all certificates. This can lead to trusting self-signed or invalid certificates and makes the application vulnerable to man-in-the-middle attacks.",
+        "recommendation": "Implement proper certificate validation ensuring that only trusted certificates are accepted. Do not use a trust manager that trusts all certificates."
+    },
+    {
+        "misuse": "Insecure SSL Context",
+        "vulnerable_code": "SSLContext.getInstance(\"SSL\")",
+        "description": "The code requests an instance of the SSL context which is outdated and insecure. SSL is deprecated and has known vulnerabilities.",
+        "recommendation": "Use 'TLS' instead of 'SSL' for the SSLContext instance to ensure a higher level of security. Preferably 'TLSv1.2' or 'TLSv1.3'."
+    },
+    {
+        "misuse": "Weak Hostname Verifier",
+        "vulnerable_code": "// HttpsURLConnection.setDefaultHostnameVerifier(new DefaultHostnameVerifier());",
+        "description": "Although the hostname verifier is commented out, if enabled, it looks as if it would use a custom verifier which might not securely verify the server's hostname. Invalid hostnames should lead to a connection termination.",
+        "recommendation": "Ensure the hostname verifier properly checks that the server's hostname matches the hostname in the server's SSL certificate. Do not use a weak or non-existent hostname verifier."
+    }
+]
+```

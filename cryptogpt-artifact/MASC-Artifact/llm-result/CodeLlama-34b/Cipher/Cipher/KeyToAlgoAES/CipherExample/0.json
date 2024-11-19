@@ -1,0 +1,20 @@
+ [
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "Cipher.getInstance(keygen.getAlgorithm());",
+        "description": "The `Cipher.getInstance()` method is used to obtain a `Cipher` instance for the specified algorithm, but the algorithm name is not specified in the code. This could allow an attacker to use a broken or weak encryption algorithm, which could potentially be exploited.",
+        "recommendation": "Use a specific algorithm name, such as `Cipher.getInstance(\"AES\")`, instead of using the algorithm name returned by `keygen.getAlgorithm()`. This ensures that the correct and secure algorithm is used for encryption and decryption."
+    },
+    {
+        "misuse": "Insecure Initialization Vector",
+        "vulnerable_code": "c.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "The `Cipher.init()` method is used to initialize a `Cipher` instance with a specific mode and key, but the initialization vector (IV) is not specified. This could allow an attacker to use a weak or predictable IV, which could potentially be exploited.",
+        "recommendation": "Use a secure and random initialization vector, such as `c.init(Cipher.ENCRYPT_MODE, key, new SecureRandom());`, instead of not specifying the IV."
+    },
+    {
+        "misuse": "Padding Oracle Attack",
+        "vulnerable_code": "c.doFinal(\"something\".getBytes());",
+        "description": "The `Cipher.doFinal()` method is used to perform the final encryption or decryption operation, but the input data is not padded to the correct block size. This could allow an attacker to perform a padding oracle attack, which could potentially be exploited.",
+        "recommendation": "Use a secure padding scheme, such as `c.init(Cipher.ENCRYPT_MODE, key, new SecureRandom(), new PKCS5Padding());`, instead of not specifying the padding scheme."
+    }
+]

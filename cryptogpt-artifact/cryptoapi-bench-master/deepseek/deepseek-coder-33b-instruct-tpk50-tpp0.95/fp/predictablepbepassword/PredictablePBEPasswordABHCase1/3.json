@@ -1,0 +1,36 @@
+There are a few cryptographic misuses present in the given code:
+
+1. Use of SecureRandom to generate salt: SecureRandom should be used to generate random bytes, not to generate strings or integers. In this case, it's being used to generate salt but this is not the intended use.
+
+2. Passing salt directly into PBEKeySpec constructor: The salt should never be converted into a string before passing it into the PBEKeySpec constructor. The salt should always be a byte array.
+
+3. Use of insecure iteration count for PBE: The current iteration count (11010) for PBE is relatively low and may be too insecure for some uses. It is generally recommended to use a count of at least 10,000 for PBE.
+
+4. Use of a fixed key length: In this case, the key length is fixed to 16 bytes. This is generally not a good practice as it makes the keys shorter, which reduces their effective strength.
+
+5. Storing the PBEKeySpec: Even though this code doesn't directly expose this to outside, it's a bad practice to directly store sensitive data like PBEKeySpec. 
+
+Here's how you might improve the code:
+
+```java
+public class P1 {
+    private PBEKeySpec pbeKeySpec = null;
+
+    public static void main(String [] args) throws UnsupportedEncodingException {
+        P1 ckp = new P1();
+        SecureRandom random = new SecureRandom();
+        byte [] keyBytes = new byte[16];
+        random.nextBytes(keyBytes);
+        ckp.key(keyBytes);
+    }
+    public void key(byte [] keyBytes) {
+        byte [] salt = new byte[16];
+        SecureRandom sr = new SecureRandom();
+        sr.nextBytes(salt);
+        int iterationCount = 10000;
+        pbeKeySpec = new PBEKeySpec(keyBytes, salt, iterationCount, keyBytes.length * 8);
+    }
+}
+```
+
+This code corrects the aforementioned misuses. The salt is now generated via SecureRandom. The iteration count is increased to a reasonable value. The key length is determined dynamically based on the size of the key. The salt is stored directly as a byte array, without conversion to a string.

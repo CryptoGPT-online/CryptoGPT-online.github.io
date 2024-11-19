@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "String password = String.valueOf(random.ints());",
+        "description": "The random ints generated for the password is not securely random for cryptographic purposes and thus can be predictable.",
+        "recommendation": "Use a strong cryptographic random number generator like SecureRandom.getInstanceStrong().ints()."
+    },
+    {
+        "misuse": "Inadequate Certificate Validation",
+        "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");\nks.load(cacerts.openStream(), password.toCharArray());",
+        "description": "Loading keystores or trust stores from a public URL without any validation may lead to trust store compromise if the URL gets hijacked or is malicious.",
+        "recommendation": "Ensure keystore and trust store files are fetched from a trusted and secure source. Prefer storing them locally or within a secure perimeter that's been validated."
+    },
+    {
+        "misuse": "Hardcoded Keystore Type",
+        "vulnerable_code": "\"JKS\"",
+        "description": "JKS keystore type is less secure than PKCS12, which is the current standard that provides stronger cryptographic algorithms.",
+        "recommendation": "Use 'KeyStore.getInstance(\"PKCS12\")' instead of JKS for enhanced security."
+    },
+    {
+        "misuse": "Insecure Trust Management",
+        "vulnerable_code": "ks.load(cacerts.openStream(), password.toCharArray());",
+        "description": "Implicitly trusting all certificates without performing any certificate chain validation may expose the application to man-in-the-middle attacks.",
+        "recommendation": "Implement proper certificate validation by checking the certificate chain and hostnames."
+    }
+]
+```

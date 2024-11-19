@@ -1,0 +1,29 @@
+```json
+[
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": [
+            "KeyGenerator keygen = KeyGenerator.getInstance(algo);",
+            "SecretKey key = keygen.generateKey();"
+        ],
+        "description": "The code does not specify key size for the AES algorithm, which may lead to using a default size that could be inadequate.",
+        "recommendation": "Specify an explicit key size that meets current security standards, such as 256 bits."
+    },
+    {
+        "misuse": "ECB Mode Usage",
+        "vulnerable_code": [
+            "Cipher c = Cipher.getInstance(keygen.getAlgorithm());"
+        ],
+        "description": "The getInstance method is called with just the algorithm name. It will default to ECB mode, which is insecure because it doesn't provide serious message confidentiality.",
+        "recommendation": "Use Cipher.getInstance with a secure mode and padding scheme, like 'AES/CBC/PKCS5Padding'."
+    },
+    {
+        "misuse": "Default Encoding",
+        "vulnerable_code": [
+            "\"something\".getBytes()"
+        ],
+        "description": "Calling getBytes without specifying a charset can produce different results on different platforms.",
+        "recommendation": "Specify a charset when calling getBytes, such as 'UTF-8'."
+    }
+]
+```

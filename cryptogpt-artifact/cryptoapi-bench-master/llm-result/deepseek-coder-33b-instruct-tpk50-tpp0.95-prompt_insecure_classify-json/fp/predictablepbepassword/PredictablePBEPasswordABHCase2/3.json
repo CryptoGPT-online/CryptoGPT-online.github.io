@@ -1,0 +1,14 @@
+```json
+[{
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_code": "new PBEKeySpec(key.toCharArray(), salt, iterationCount, keyLength)",
+    "description": "The iteration count is set to 11010 and key length is set to 16. These settings are too low for modern applications. Low iteration count can increase the vulnerability to brute force attack and small key size can reduce the security level of encrypted data.",
+    "recommendation": "The recommended iteration count is at least 100000 and key length is at least 128 bits. You may consider using higher values depending on your needs."
+},
+{
+    "misuse": "CWE-330: Use of Insufficiently Random Values",
+    "vulnerable_code": "sr.nextBytes(salt)",
+    "description": "The salt is created using SecureRandom. However, the salt is used for encrypting every password with the same salt. This makes it easy for attackers to brute force the encryption and retrieve the original password if they have the encrypted passwords.",
+    "recommendation": "The salt should be different for each password. You can generate a random salt for each password."
+}]
+```

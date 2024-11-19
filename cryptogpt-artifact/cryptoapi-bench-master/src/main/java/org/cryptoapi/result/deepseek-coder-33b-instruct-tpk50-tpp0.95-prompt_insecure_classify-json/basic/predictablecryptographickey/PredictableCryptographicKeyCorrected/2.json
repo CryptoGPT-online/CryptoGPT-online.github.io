@@ -1,0 +1,28 @@
+public class Pd {
+    public static void main(String [] args) throws Exception {
+        SecureRandom random = SecureRandom.getInstanceStrong();
+        if(random == null) {
+            throw new Exception("No SecureRandom instance available");
+        }
+        byte[] defaultKey = new byte[16];
+        random.nextBytes(defaultKey);
+
+        String originalString = "Testing";
+        SecretKeySpec keySpec = new SecretKeySpec(defaultKey, "AES");
+
+        Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
+        cipher.init(Cipher.ENCRYPT_MODE, keySpec);
+        byte[] encrypt = cipher.doFinal(originalString.getBytes("UTF-8"));
+        String encryptString = Base64.getEncoder().encodeToString(encrypt);
+        System.out.println(encryptString);
+    }
+}
+```
+
+The changes include:
+
+- Using SecureRandom.getInstanceStrong() to get a strong instance of SecureRandom.
+- Generating the key using SecureRandom's `nextBytes()` method.
+- Using a key size of 16 bytes, which is the recommended size for AES.
+- Switching to AES-GCM mode of operation, for both integrity and confidentiality.
+- Using "NoPadding" with GCM, as it removes the padding.

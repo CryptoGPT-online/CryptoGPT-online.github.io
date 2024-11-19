@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insecure Initialization Vector",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(new byte[]{Byte.parseByte(String.valueOf(initialization))});",
+        "description": "The Initialization Vector (IV) should be random and unpredictable. Using a predictable IV, such as a hardcoded one, can lead to vulnerabilities such as ciphertext attacks.",
+        "recommendation": "Use SecureRandom to generate a random IV for each encryption operation."
+    },
+    {
+        "misuse": "Inappropriate Key Generation",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+        "description": "The KeyGenerator does not specify a key size during the generation of an AES key, potentially resulting in a key of insufficient length (default is typically 128-bit which may not meet certain security requirements).",
+        "recommendation": "Specify the desired key size by calling `keyGen.init(256);` for a 256-bit key AES, assuming that Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files are installed."
+    },
+    {
+        "misuse": "Weak Initialization Vector Conversion",
+        "vulnerable_code": "Byte.parseByte(String.valueOf(initialization))",
+        "description": "The conversion method for the IV may lead to exceptions or incorrect values. ParseByte expects a string representing a signed decimal byte, but handing it a character sequence from the 'initialization' array may not conform to this expectation and can throw a NumberFormatException or result in data loss.",
+        "recommendation": "Use a proper conversion method to convert a char array into a byte array, and ensure the IV is randomly generated."
+    },
+    {
+        "misuse": "Static Initialization Vector",
+        "vulnerable_code": "private static char[] INITIALIZATION;",
+        "description": "The static initialization of the variable potentially leads to the reuse of the IV across different encryption operations, which is insecure as it should be unique for each encryption.",
+        "recommendation": "Each instance of encryption should have a unique IV that is not reused. Remove the static declaration and ensure that a new IV is securely generated for each encryption operation."
+    }
+]
+```

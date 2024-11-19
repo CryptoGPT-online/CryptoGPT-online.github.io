@@ -1,0 +1,25 @@
+public class P2 {
+    public static void main(String [] args) throws NoSuchAlgorithmException, InvalidKeyException {
+
+        Map<String,String> hm = new HashMap<String, String>();
+        hm.put("aaa", "afix");
+        hm.put("bbb", "bfix");
+        hm.put("ccc", "cfix");
+        hm.put("ddd", "dfix");
+
+        String key = hm.get("aaa");
+        byte[] iv = new byte[16];
+        SecureRandom random = new SecureRandom();
+        random.nextBytes(iv);
+        IvParameterSpec ivParameterSpec = new IvParameterSpec(iv);
+
+        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+        KeySpec spec = new PBEKeySpec(key.toCharArray(), iv, 65536, 256);
+        SecretKey tmp = factory.generateSecret(spec);
+        SecretKeySpec secretKey = new SecretKeySpec(tmp.getEncoded(), "AES");
+
+        // then you can use this secretKey with AES/CBC/PKCS5Padding
+    }
+}
+```
+In this example, the PBKDF2WithHmacSHA256 is a stronger algorithm to derive keys from passwords, and then this key is used with AES in CBC mode with a random IV. This is a more secure way to use cryptographic APIs.

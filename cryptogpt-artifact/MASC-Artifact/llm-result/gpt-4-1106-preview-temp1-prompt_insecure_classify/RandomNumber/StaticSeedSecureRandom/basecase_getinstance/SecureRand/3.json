@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "rand1.setSeed(seedBytes); \nrand2.setSeed(seedBytes);",
+        "description": "The application sets the same seed for two instances of a SecureRandom, which causes both instances to produce the same sequence of values. This predictability can be exploited if the random values are used in security critical contexts.",
+        "recommendation": "Avoid setting a fixed seed for SecureRandom when high entropy is required, or use a seed source with high entropy, and ensure that each instance of SecureRandom is properly seeded to produce a unique sequence."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "byte[] seedBytes = \"Seed\".getBytes(StandardCharsets.UTF_8);",
+        "description": "The seed for SecureRandom is hardcoded, which reduces the randomness and potentially allows an attacker to predict the output of the random number generator.",
+        "recommendation": "Do not hardcode seeds for SecureRandom. Instead, rely on the default automatic seeding which is designed to be secure or provide a mechanism to generate a random, high-entropy seed."
+    }
+]
+```

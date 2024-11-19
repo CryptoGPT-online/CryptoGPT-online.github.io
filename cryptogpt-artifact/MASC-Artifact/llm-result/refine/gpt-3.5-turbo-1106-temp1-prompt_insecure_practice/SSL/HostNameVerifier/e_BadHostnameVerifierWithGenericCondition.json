@@ -1,0 +1,20 @@
+### False Positive Misuse ###
+None
+
+### Optimized Misuse JSON###
+```json
+[
+  {
+    "misuse": "Incomplete Validation of SSL/TLS Certificate",
+    "vulnerable_code": "if(true || session == null){\n    return true;\n}",
+    "description": "The code does not perform proper validation of SSL/TLS certificate, and the condition \"if(true || session == null)\" always evaluates to true, allowing the hostname to be accepted without proper verification.",
+    "recommendation": "Properly implement the verify method to validate the SSL/TLS certificate and hostname in the SSLSession object before returning true."
+  },
+  {
+    "misuse": "Insecure Hostname Verifier",
+    "vulnerable_code": "public boolean verify(String hostname, SSLSession session) {\nif(true || session == null){\nreturn true;\n}\nreturn false;\n}",
+    "description": "The custom hostname verifier implementation does not perform any hostname verification, making it vulnerable to man-in-the-middle attacks.",
+    "recommendation": "Use a proper hostname verifier implementation that performs hostname verification to prevent man-in-the-middle attacks."
+  }
+]
+```

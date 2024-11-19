@@ -1,0 +1,14 @@
+Misuse: Insecure Initialization of Cipher Mode
+vulnerable_code: `cipher.init(Cipher.ENCRYPT_MODE,key,ivSpec);`
+description: In this snippet, the cipher is initialized with the AES/CBC mode, but without providing a random IV. If an attacker can figure out the contents of the plaintext, the IV can be used to reveal the key, leading to information leakage.
+recommendation: Always use a randomly generated IV for each encryption. You can use `SecureRandom` for this purpose.
+
+```java
+SecureRandom randomSecureRandom = new SecureRandom();
+byte[] iv = new byte[16];
+randomSecureRandom.nextBytes(iv);
+IvParameterSpec ivSpec = new IvParameterSpec(iv);
+cipher.init(Cipher.ENCRYPT_MODE,key,ivSpec);
+```
+
+Please make sure to also store and protect the IV when using it for decryption.

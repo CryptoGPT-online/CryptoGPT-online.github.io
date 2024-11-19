@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure randomness",
+        "vulnerable_code": "SecureRandom random = new SecureRandom();",
+        "description": "The SecureRandom class uses a seed with the current time which may be predictable, and thus can be attacked. This can lead to a weak randomness that can be easily guessed.",
+        "recommendation": "When generating random numbers or strings, don't use a time or date-derived seed, and use a secure seed such as a random number from a hardware random number generator."
+    },
+    {
+        "misuse": "Fixed key length",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The keyBytes array is being fixed to a length of 16 even if the original key is shorter. This can lead to information leakage or padding oracle attacks.",
+        "recommendation": "Do not specify a fixed key length. If a key is too short, it should be hashed to the appropriate length, preferably 16 bytes."
+    },
+    {
+        "misuse": "No cryptographic padding",
+        "vulnerable_code": "SecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES\");",
+        "description": "The keySpec is being used without applying any cryptographic padding. This can lead to problems when encrypting and decrypting data.",
+        "recommendation": "Always apply cryptographic padding to the key before using it."
+    }
+]
+```

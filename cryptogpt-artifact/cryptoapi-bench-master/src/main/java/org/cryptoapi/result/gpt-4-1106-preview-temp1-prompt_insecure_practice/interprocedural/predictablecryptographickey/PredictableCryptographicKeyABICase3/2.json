@@ -1,0 +1,46 @@
+```json
+[
+  {
+    "misuse": "Insufficient Key Size",
+    "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+    "description": "The key 'defaultkey' when encoded to bytes and padded is potentially less than the recommended key length for AES which should be a minimum of 128 bits (16 bytes). Without proper key size, the encryption strength is reduced.",
+    "recommendation": "Ensure the key length is at least 128 bits, and consider key generation techniques that provide sufficient randomness and key strength."
+  },
+  {
+    "misuse": "Hardcoded Encryption Key",
+    "vulnerable_code": "String key = \"defaultkey\";",
+    "description": "The encryption key is hardcoded in the source code, which makes it easier for an attacker to retrieve and exploit. Hardcoded keys present a serious security risk.",
+    "recommendation": "Do not hardcode encryption keys. Instead, use a secure key management system."
+  },
+  {
+    "misuse": "Improper Key Derivation",
+    "vulnerable_code": "byte[] keyBytes = key.getBytes();",
+    "description": "The key is derived directly from a String without using a secure key derivation function. This can result in a weak key if the input string is not sufficiently random or of inadequate length.",
+    "recommendation": "Use a secure key derivation function like PBKDF2, Argon2, or bcrypt with a salt to derive the encryption key from a password."
+  },
+  {
+    "misuse": "Insecure Key Initialization",
+    "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+    "description": "Arrays.copyOf is used to ensure the key is 16 bytes long, but it may truncate or pad the original key in an insecure manner, potentially leading to weak encryption.",
+    "recommendation": "Use a secure key derivation function to generate a key of the correct size instead of truncating or padding bytes."
+  },
+  {
+    "misuse": "Using Default Charset",
+    "vulnerable_code": "byte[] keyBytes = key.getBytes();",
+    "description": "The String method getBytes() without specifying a character encoding uses the platform's default charset, which can produce different outputs on different platforms leading to incompatibility or security issues.",
+    "recommendation": "Always specify a character set encoding, such as UTF-8, when converting a String to bytes."
+  },
+  {
+    "misuse": "Static Initialization Vector (IV)",
+    "vulnerable_code": "SecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES\");",
+    "description": "The code does not define an Initialization Vector (IV), running the risk of using a static IV or no IV, which could result in weak encryption if the same key is reused for multiple encryptions.",
+    "recommendation": "Always use a secure random IV for each encryption operation."
+  },
+  {
+    "misuse": "Missing Encryption/Decryption",
+    "vulnerable_code": "SecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES\");",
+    "description": "The code creates a SecretKeySpec object for AES but never actually performs any encryption or decryption operations. It is incomplete in terms of cryptographic functionality.",
+    "recommendation": "Implement the encryption/decryption logic with proper operational modes (like CBC, GCM, etc.) and padding."
+  }
+]
+```

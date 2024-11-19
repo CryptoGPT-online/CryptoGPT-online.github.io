@@ -1,0 +1,26 @@
+ [
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "description": "The code is using the \"AES\" algorithm, which is a weak and insecure algorithm. It is recommended to use a more secure algorithm such as AES-256.",
+        "recommendation": "Use a more secure algorithm such as AES-256."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "byte[] bytes = \"abcde\".getBytes();\n\n        if(choice>1){\n            bytes = new byte[16];\n            sr.nextBytes(bytes);\n        }",
+        "description": "The code is using a hardcoded initialization vector (IV), which is not recommended. The IV should be generated randomly and securely.",
+        "recommendation": "Generate the IV randomly and securely using a secure random number generator."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "SecureRandom sr = new SecureRandom();\n\n        byte [] bytes = \"abcde\".getBytes();\n\n        if(choice>1){\n            bytes = new byte[16];\n            sr.nextBytes(bytes);\n        }",
+        "description": "The code is using a weak key size (16 bytes) for the IV. It is recommended to use a stronger key size, such as 256 bits.",
+        "recommendation": "Use a stronger key size, such as 256 bits, for the IV."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "The code is using the CBC mode of operation, which is vulnerable to padding oracle attacks. It is recommended to use a more secure mode of operation, such as GCM.",
+        "recommendation": "Use a more secure mode of operation, such as GCM."
+    }
+]

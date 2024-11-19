@@ -1,0 +1,14 @@
+[
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values",
+    "vulnerable_code": "SecureRandom random = new SecureRandom();\nString defaultKey = String.valueOf(random.ints());",
+    "description": "The SecureRandom instance should be properly initialized with a strong seed to generate cryptographically secure random numbers. Generating a key using random.ints() may not provide sufficient entropy for cryptographic operations.",
+    "recommendation": "Use SecureRandom.getInstanceStrong() to obtain a SecureRandom object with a cryptographically strong pseudo-random number generation algorithm."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_code": "byte[] keyBytes = defaultKey.getBytes();\nkeyBytes = Arrays.copyOf(keyBytes,16);",
+    "description": "The key generation process is based on a defaultKey obtained from a potentially insecure source (random.ints()). The length of the key may not be sufficient for strong encryption algorithms.",
+    "recommendation": "Use a cryptographically secure key generation algorithm such as KeyGenerator to generate strong keys for encryption."
+  }
+]

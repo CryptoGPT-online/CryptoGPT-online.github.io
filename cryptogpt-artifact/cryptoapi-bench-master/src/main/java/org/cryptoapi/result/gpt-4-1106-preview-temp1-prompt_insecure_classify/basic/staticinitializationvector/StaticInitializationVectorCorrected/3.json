@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "BigInteger i = BigInteger.valueOf(sr.nextInt());\nbyte [] bytes = i.toByteArray();",
+        "description": "The initialization vector (IV) for AES CBC encryption should be a random 16-byte value. The code snippet uses a single random integer to generate the IV, which is not sufficiently random or the correct length.",
+        "recommendation": "Use SecureRandom to generate a full 16-byte IV directly."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "description": "The code does not specify the key size for AES. By default, it might use a key size of 128 bits, but for stronger security, it is recommended to use 256-bit keys.",
+        "recommendation": "Specify the key size explicitly when generating AES keys, using keyGen.init(256);"
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "SecureRandom sr = new SecureRandom();\nBigInteger i = BigInteger.valueOf(sr.nextInt());",
+        "description": "The use of SecureRandom's nextInt() method does not provide enough randomness for cryptographic operations as it generates a 32-bit value, which is then converted to a byte array for the IV. The IV in AES CBC should be 128 bits (16 bytes).",
+        "recommendation": "Replace the random integer generation with sr.nextBytes(bytes), where 'bytes' is a byte array of the correct size (16 bytes)."
+    }
+]
+```

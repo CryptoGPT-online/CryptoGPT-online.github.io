@@ -1,0 +1,38 @@
+```json
+[
+    {
+        "misuse": "Weak Encryption Algorithm",
+        "vulnerable_code": [
+            "String algo = \"DES\";", 
+            "KeyGenerator.getInstance(algo)", 
+            "Cipher.getInstance(keygen.getAlgorithm())"
+        ],
+        "description": "The code is using 'DES' which is a deprecated and weak encryption algorithm that is vulnerable to brute-force attacks due to its short key length of 56 bits.",
+        "recommendation": "Replace 'DES' with a stronger algorithm like 'AES' with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": [
+            "KeyGenerator.getInstance(algo)"
+        ],
+        "description": "KeyGenerator will generate a default key size if not specified, which might be too small for secure applications, especially when using weak algorithms like DES.",
+        "recommendation": "Specify a key size that is considered secure for the chosen algorithm. For AES, use a key size of 128, 192, or 256 bits."
+    },
+    {
+        "misuse": "No Secure Random for Key Generation",
+        "vulnerable_code": [
+            "KeyGenerator.getInstance(algo)"
+        ],
+        "description": "The KeyGenerator does not explicitly use a secure random source for key generation which might result in weak keys that can be predictable.",
+        "recommendation": "Use a SecureRandom instance with a strong source of randomness for key generation."
+    },
+    {
+        "misuse": "Lack of Error Handling",
+        "vulnerable_code": [
+            "e.printStackTrace();"
+        ],
+        "description": "Printing stack trace for exceptions might reveal sensitive information if the output is not properly controlled. Additionally, the catch block is generic and catches Exception, which may hide underlying issues and make debugging difficult.",
+        "recommendation": "Implement proper exception handling and logging, without revealing sensitive data. Use more specific exception types."
+    }
+]
+```

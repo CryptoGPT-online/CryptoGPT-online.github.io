@@ -1,0 +1,34 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "defaultAlgo = defAlgo; and Cipher cipher = Cipher.getInstance(defaultAlgo);",
+        "description": "The default algorithm is considered insecure (Blowfish) and can be changed by the user. Instead, AES should be used because it has a larger key length and is currently considered secure.",
+        "recommendation": "Replace defaultAlgo = defAlgo; with defaultAlgo = \"AES\";"
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values.",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);",
+        "description": "The key is generated without a randomized seed, which can make the encryption vulnerable to certain types of attacks.",
+        "recommendation": "Use SecureRandom to generate the key."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials.",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);",
+        "description": "The key generation process uses a hardcoded algorithm, which could allow an attacker to use a known attack to predict the key.",
+        "recommendation": "Use randomized methods to generate the key."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);",
+        "description": "The key size used is quite small (128 bits) which is less than recommended for modern security standards.",
+        "recommendation": "Use a key size of 256 bits or more."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation.",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(defaultAlgo);",
+        "description": "The encryption algorithm is selected based on user input, which can lead to less secure encryption practices.",
+        "recommendation": "Remove the use of passedAlgo and instead select the algorithm with sufficient care."
+    }
+]
+```

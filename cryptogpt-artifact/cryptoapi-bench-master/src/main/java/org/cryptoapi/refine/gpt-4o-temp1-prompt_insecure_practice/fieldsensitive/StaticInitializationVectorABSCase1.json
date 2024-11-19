@@ -1,0 +1,30 @@
+### False Positive Misuse ###
+
+1. **Hardcoded Cryptographic Keys and Hardcoded Cryptographic Key or IV**
+
+   Explanation: The misuse reports titled "Hardcoded Cryptographic Keys" and "Hardcoded Cryptographic Key or IV" identify the string "abcde". However, there is a clear distinction in the code that the byte array is being used as an IV, not a cryptographic key. Considering that it is directly related to IV misconfiguration, these can be combined into a single IV-related misuse report. Both are essentially describing the same misconfiguration described thoroughly in other reports.
+
+2. **Hardcoded Initialization Vector (IV)**
+
+   Explanation: Since similar issues related to hardcoded IV have been captured well in the first identified misuse on the list, having another report with almost identical information is redundant. 
+
+Thus, the two reports under (1) and the redundant report under (2) are recognized as false positives due to their repetitive nature considering the context.
+
+### Optimized Misuse JSON ###
+
+```json
+[
+    {
+        "misuse": "Hardcoded IV",
+        "vulnerable_code": "byte [] bytes = \"abcde\".getBytes(); defIV = bytes; passedIV = defIV;",
+        "description": "Using a constant, hardcoded IV is insecure since it can lead to predictable ciphertexts, which can be exploited to reveal information about the encrypted data.",
+        "recommendation": "Use a secure random number generator to create a unique IV for each encryption operation, ensuring that it is unpredictable."
+    },
+    {
+        "misuse": "Weak Key Generation",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\"); SecretKey key = keyGen.generateKey();",
+        "description": "By default, AES keys generated without explicitly specifying a key size might have weaker strength than intended, potentially using a 128-bit key instead of stronger 256-bit key.",
+        "recommendation": "Specify a key size (e.g., 256 bits) when generating the key using keyGen.init(256); to ensure sufficient encryption strength."
+    }
+]
+```

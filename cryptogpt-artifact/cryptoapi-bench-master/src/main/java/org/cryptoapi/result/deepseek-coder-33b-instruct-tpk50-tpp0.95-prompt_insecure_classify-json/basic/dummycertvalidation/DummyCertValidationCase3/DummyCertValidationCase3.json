@@ -1,0 +1,29 @@
+```json
+{
+    "False Positive Misuse": [
+        {
+            "misuse_category": "CWE-295: Improper Certificate Validation",
+            "vulnerable_method": "public X509Certificate[] getAcceptedIssuers()",
+            "vulnerable_code": "return null;",
+            "description": "This implementation returns null which might cause the system to trust any certificate, which could lead to man-in-the-middle attacks.",
+            "recommendation": "Ensure that getAcceptedIssuers() returns an array of accepted issuers instead of null."
+        }
+    ],
+    "Optimized Misuse": [
+        {
+            "misuse_category": "CWE-295: Improper Certificate Validation",
+            "vulnerable_method": "public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {}",
+            "vulnerable_code": "public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {\n        // Perform certificate validation or throw CertificateException if invalid\n    }",
+            "description": "This method currently doesn't validate the client's certificate. As a result, it could lead to man-in-the-middle attacks.",
+            "recommendation": "Implement proper certificate validation in this method. Validate the certificate using the standard Java API or a certificate validation library."
+        },
+        {
+            "misuse_category": "CWE-295: Improper Certificate Validation",
+            "vulnerable_method": "public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {}",
+            "vulnerable_code": "public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {\n        // Perform certificate validation or throw CertificateException if invalid\n    }",
+            "description": "This method currently doesn't validate the server's certificate. As a result, it could lead to man-in-the-middle attacks.",
+            "recommendation": "Implement proper certificate validation in this method. Validate the certificate using the standard Java API or a certificate validation library."
+        }
+    ]
+}
+```

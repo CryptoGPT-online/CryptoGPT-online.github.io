@@ -1,0 +1,28 @@
+ {
+"misuses": [
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "byte [] bytes = \"abcde\".getBytes();",
+"description": "The code uses the getBytes() method to convert a string to a byte array. This method uses the platform's default charset, which can cause compatibility issues if the data is sent to a different platform with a different charset. It is recommended to use a specific charset, such as UTF-8, when converting strings to byte arrays.",
+"recommendation": "Use a specific charset, such as UTF-8, when converting strings to byte arrays."
+},
+{
+"misuse": "Weak IV",
+"vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+"description": "The code uses a weak IV, which can make the encryption vulnerable to attacks. It is recommended to use a secure random number generator to generate the IV, and to use a different IV for each encryption operation.",
+"recommendation": "Use a secure random number generator to generate the IV, and to use a different IV for each encryption operation."
+},
+{
+"misuse": "Incorrect Key Generation",
+"vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+"description": "The code uses the KeyGenerator to generate an AES key, but the key is not properly generated. It is recommended to use the KeyGenerator with the AES algorithm and to use a secure random number generator to generate the key.",
+"recommendation": "Use the KeyGenerator with the AES algorithm and to use a secure random number generator to generate the key."
+},
+{
+"misuse": "Incorrect Cipher Mode",
+"vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+"description": "The code uses the Cipher in the CBC mode with the PKCS5Padding, but the padding is not properly implemented. It is recommended to use the Cipher in the CBC mode with the PKCS7Padding, and to use a secure random number generator to generate the IV.",
+"recommendation": "Use the Cipher in the CBC mode with the PKCS7Padding, and to use a secure random number generator to generate the IV."
+}
+]
+}

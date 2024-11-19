@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "Cipher.getInstance(\"DES/ECB/PKCS5Padding\");",
+        "description": "DES is considered a weak encryption algorithm due to its small key size. ECB mode does not provide serious message confidentiality and can leak information about the plaintext.",
+        "recommendation": "Use AES with a secure mode of operation such as CBC, CFB, or GCM."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_code": "KeyGenerator.getInstance(\"AES\");",
+        "description": "By default, AES may generate a key of 128 bits, which might be considered insufficient in certain contexts.",
+        "recommendation": "Specify the key size explicitly by calling keyGen.init(256); to use a 256-bit key."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values.",
+        "vulnerable_code": "KeyGenerator.getInstance(\"AES\");",
+        "description": "If not properly seeded, KeyGenerator might not produce sufficiently random keys.",
+        "recommendation": "Ensure that the KeyGenerator is properly seeded with a SecureRandom instance initialized with high entropy seed."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_code": "Cipher.getInstance(\"DES/ECB/PKCS5Padding\");",
+        "description": "ECB mode does not use an initialization vector (IV), which makes it deterministic and less secure as identical plaintext blocks result in identical ciphertext blocks.",
+        "recommendation": "Use a secure mode of operation that uses an IV, such as CBC, CFB, or GCM, along with AES instead of DES."
+    }
+]
+```

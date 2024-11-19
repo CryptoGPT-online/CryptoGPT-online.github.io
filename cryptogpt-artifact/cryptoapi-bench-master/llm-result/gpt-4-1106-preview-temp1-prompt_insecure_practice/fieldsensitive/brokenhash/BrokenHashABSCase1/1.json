@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insecure Hash Algorithm",
+        "vulnerable_code": "crypto = new C1(\"SHA1\");",
+        "description": "SHA-1 is a deprecated and insecure hashing algorithm known for vulnerabilities to collision attacks. Using it for cryptographic purposes can compromise the integrity of security measures.",
+        "recommendation": "Use a secure hashing algorithm such as SHA-256 or SHA-3 for cryptographic requirements."
+    },
+    {
+        "misuse": "Use of MessageDigest for Encryption",
+        "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(crypto);",
+        "description": "The MessageDigest class is used for hashing purposes, not encryption. The term 'encrypt' for the function is misleading, and it creates misunderstandings about the provided security level.",
+        "recommendation": "Use Cipher class with a proper encryption algorithm and mode, such as AES/GCM/NoPadding, for encryption purposes."
+    },
+    {
+        "misuse": "Potential Key Disclosure",
+        "vulnerable_code": "crypto.encrypt(\"abc\",\"\");",
+        "description": "The 'encrypt' method seems to be designed for hashing rather than encryption. If it was intended for encryption, there is a potential issue because the key or passphrase appears to be an empty string, which is insecure.",
+        "recommendation": "If encryption is intended, securely generate and manage cryptographic keys, avoid hardcoding or using empty strings as keys."
+    },
+    {
+        "misuse": "Hardcoded Security-sensitive Constant",
+        "vulnerable_code": "crypto = new C1(\"SHA1\");",
+        "description": "The algorithm is hardcoded as a string constant, which makes it difficult to update or configure.",
+        "recommendation": "Define the algorithm through configuration and ensure it is updatable without code changes."
+    }
+]
+```

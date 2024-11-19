@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "throw new CertificateException(\"checkServerTrusted: AuthType is not RSA\");",
+        "description": "The custom X509TrustManager implementation is incorrectly checking the authentication type and the length of the certificate array. The conditions used for validation are not secure and may allow invalid certificates to be trusted.",
+        "recommendation": "Use a more secure validation logic for checking the client and server trust, and consider using a standard TrustManager implementation instead of custom logic."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "context.init(null, trustAll, new SecureRandom());",
+        "description": "The code is using a custom TrustManager implementation that trusts all certificates, which is a broken or risky cryptographic algorithm since it does not perform proper validation of the certificates.",
+        "recommendation": "Use a more secure TrustManager implementation that performs proper certificate validation, or consider using certificate pinning to enhance the security of certificate validation."
+    }
+]
+```

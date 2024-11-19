@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Unpredictable Encryption Mode",
+        "vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "While AES with CBC mode and PKCS5Padding is secure if used correctly, the code does not specify an initialization vector (IV) for CBC mode. Using a static or default IV can allow for pattern recognition in encrypted data - which can lead to plaintext recovery attacks.",
+        "recommendation": "Generate a random IV for each encryption operation and provide it to the Cipher using the IvParameterSpec class."
+    },
+    {
+        "misuse": "Insecure Instantiation",
+        "vulnerable_code": "EcbInSymmCryptoBBCase1 bc = new EcbInSymmCryptoBBCase1();\nbc.go();",
+        "description": "It seems there is a misnomer or typo in the code. Assuming the intent was to instantiate class 'Ed', the code instead tries to create an instance of 'EcbInSymmCryptoBBCase1'. If 'EcbInSymmCryptoBBCase1' uses ECB mode, that would be insecure because ECB mode is not semantically secure.",
+        "recommendation": "If 'EcbInSymmCryptoBBCase1' is intended to be used and if it incorporates ECB encryption mode, it should be replaced with a more secure encryption mode like CBC or GCM. If 'Ed' was the intended class to instantiate, then correct the class name."
+    },
+    {
+        "misuse": "Missing Secure Randomness",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "description": "The cryptographic key is being generated without explicitly specifying a source of secure randomness. While in many implementations the default is to use a secure random source, relying on default behavior can possibly lead to the use of a non-secure random generator.",
+        "recommendation": "Specify a SecureRandom instance when generating keys to ensure a secure source of randomness is always used."
+    }
+]
+```

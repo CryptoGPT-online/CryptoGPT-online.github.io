@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(crypto);",
+        "description": "The code uses MD5 for cryptographic operations, which is a weak hash algorithm and is no longer considered secure for most cryptographic purposes. This algorithm is also known as a collision-resistant hash function, meaning it's computationally infeasible to find two different inputs that hash to the same output. So, it's recommended to use stronger algorithms such as SHA-256 or SHA-3 for hash computations.",
+        "recommendation": "Change 'MD5' to a stronger algorithm like 'SHA-256' or 'SHA-3' in the 'C2' constructor and 'encrypt' method."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation.",
+        "vulnerable_code": "crypto = defCrypto;",
+        "description": "The code allows the cryptographic algorithm to be passed during the creation of the C2 object. This can potentially lead to less secure algorithms being used, as any user of the C2 class would have the ability to set the algorithm.",
+        "recommendation": "Consider hard-coding the cryptographic algorithm instead of letting the users of the class select it, if a specific algorithm must be used."
+    }
+]
+```

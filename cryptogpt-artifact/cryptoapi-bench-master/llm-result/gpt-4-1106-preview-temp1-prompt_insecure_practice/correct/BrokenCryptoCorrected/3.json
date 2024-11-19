@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Missing Initialization Vector (IV)",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "Using CBC mode for encryption without specifying an Initialization Vector (IV) can lead to vulnerabilities because the same plaintext will always result in the same ciphertext when using the same key. This can leak information about the plaintext.",
+        "recommendation": "Always use a secure random IV for CBC mode encryption and pass it to the 'Cipher.init' method."
+    },
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "description": "The code does not specify a secure random number generator (RNG) when generating a key, which could potentially lead to using a non-secure default RNG depending on the JRE default settings.",
+        "recommendation": "Specify a SecureRandom instance when generating the AES key to ensure secure randomness."
+    }
+]
+```

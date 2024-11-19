@@ -1,0 +1,23 @@
+Misuse:
+"Reusing PRNG Seed"
+
+Vulnerable Code:
+```java
+SecureRandom sr = new SecureRandom();
+long l = sr.nextLong();
+sr.setSeed(l);
+int v = sr.nextInt();
+```
+Description:
+
+In the code above, `SecureRandom` instance is created and a long random number `l` is generated. This `l` is then set as the seed for the `SecureRandom` instance. 
+
+This can lead to predictable PRNG behavior, as the same seed will produce the same sequence of pseudo-random numbers. 
+
+If the same seed is used in a secure context, it can expose sensitive information.
+
+Recommendation:
+
+To resolve the misuse, the code should not reuse a seed for the `SecureRandom` instance. Instead, new seeds should be generated each time they are needed. 
+
+For the code provided, the issue can be resolved by just removing the `sr.setSeed(l);` line.

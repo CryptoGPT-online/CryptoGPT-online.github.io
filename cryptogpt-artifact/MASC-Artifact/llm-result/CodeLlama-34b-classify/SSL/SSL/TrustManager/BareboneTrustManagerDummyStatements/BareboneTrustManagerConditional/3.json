@@ -1,0 +1,13 @@
+ {
+"misuse": "CWE-295: Improper Certificate Validation",
+"vulnerable_code": "public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {\n\tif (!(null != s && s.equalsIgnoreCase(\"RSA\"))) {\n\t\tthrow new CertificateException(\"checkServerTrusted: AuthType is not RSA\");\n\t}\n}",
+"description": "The SSL connection is vulnerable to attacks because the certificate validation is not properly implemented. The code only checks if the authentication type is RSA, which is not enough to ensure the security of the connection.",
+"recommendation": "Use a more robust certificate validation mechanism, such as the built-in Java SSL/TLS certificate validation mechanism, or a third-party library that provides secure certificate validation."
+},
+
+{
+"misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+"vulnerable_code": "context = SSLContext.getInstance(\"SSL\");",
+"description": "The SSL connection is using a less secure protocol, SSL, which is outdated and should not be used for new applications. The use of SSL can lead to vulnerabilities such as downgrade attacks, where a malicious attacker can force the use of a less secure protocol.",
+"recommendation": "Use a more secure protocol, such as TLS 1.2 or higher, and consider using the built-in Java SSL/TLS negotiation mechanism to select the most secure protocol available."
+}

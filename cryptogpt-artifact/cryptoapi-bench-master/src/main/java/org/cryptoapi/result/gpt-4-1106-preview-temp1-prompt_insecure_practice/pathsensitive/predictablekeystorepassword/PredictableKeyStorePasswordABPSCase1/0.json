@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Trust Management",
+        "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");",
+        "description": "The code is loading a KeyStore from a hard-coded URL, which can be considered as insecure if the URL is not trusted or if the KeyStore contains trusted certificates for SSL/TLS connections. If this URL is compromised, it could lead to man-in-the-middle attacks.",
+        "recommendation": "Ensure that KeyStores are loaded from trusted and secure sources. Validate certificates against a trust store that contains only trusted certificates."
+    },
+    {
+        "misuse": "Weak Random Number Generation",
+        "vulnerable_code": "defaultKey = String.valueOf(random.ints());",
+        "description": "The way random.ints() is being used suggests an insecure way to generate a KeyStore password. It is converting an IntStream to a String, which might not meet the complexity requirements of a strong password and could result in weak encryption.",
+        "recommendation": "Use a secure method for generating strong passwords. Consider using dedicated password-generation libraries or algorithms that produce a sufficiently random and complex output."
+    },
+    {
+        "misuse": "Exposure of Sensitive Information to an Unauthorized Actor",
+        "vulnerable_code": "ks.load(cacerts.openStream(), defaultKey.toCharArray());",
+        "description": "Since the KeyStore is being loaded with a password that can be determined by the 'choice' variable, it is vulnerable to unauthorized access if the 'choice' is predictable or if an attacker can influence it. The default password 'changeit' is a known default that provides minimal security.",
+        "recommendation": "Always use a secure, randomly generated password for KeyStores, and avoid using known defaults or predictable passwords."
+    }
+]
+```

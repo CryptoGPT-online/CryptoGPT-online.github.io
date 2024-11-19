@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Short Key Length",
+        "vulnerable_code": "kgp.initialize(keySize);",
+        "description": "The chosen key size of 1024 bits for RSA is no longer considered safe against well-funded attackers. Modern standards recommend a minimum of 2048 bits.",
+        "recommendation": "Increase the RSA key size to at least 2048 bits."
+    },
+    {
+        "misuse": "ECB Mode in Cipher Block Chaining",
+        "vulnerable_code": "Cipher.getInstance(\"RSA\")",
+        "description": "Using RSA without specifying a padding scheme in Cipher.getInstance may default to an insecure padding scheme like ECB, which is not recommended for use because it does not provide strong confidentiality guarantees.",
+        "recommendation": "Specify a secure padding scheme such as OAEP with MGF1 (e.g., \"RSA/ECB/OAEPWithSHA-256AndMGF1Padding\")."
+    },
+    {
+        "misuse": "Inappropriate Exception Handling",
+        "vulnerable_code": "public static void main (String [] args)",
+        "description": "The main method throws all exceptions including NoSuchAlgorithmException, NoSuchPaddingException, etc., which is inappropriate as it exposes low-level API details to higher-level methods and may lead to program termination without clear problem indication.",
+        "recommendation": "Catch and appropriately handle or log exceptions to avoid exposing internal cryptography API details."
+    }
+]
+```

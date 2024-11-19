@@ -1,0 +1,10 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "BigInteger i = BigInteger.valueOf(sr.nextInt());\nbyte [] bytes = i.toByteArray();",
+        "description": "The initialisation vector (IV) for the encryption needs to be a random number. However, the current code is generating the IV from a random integer and then converting this to a byte array, which can lead to predictable IVs, making the encryption less secure.",
+        "recommendation": "The initialisation vector (IV) should be a random byte array, preferably of sufficient length, generated using a secure random generator. Replace `BigInteger i = BigInteger.valueOf(sr.nextInt());\nbyte [] bytes = i.toByteArray();` with `byte [] bytes = new byte[16];\nsr.nextBytes(bytes);`."
+    }
+]
+```

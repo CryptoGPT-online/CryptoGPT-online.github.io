@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+        "description": "The KeyGenerator is not securely initialized with a strong source of randomness, which may result in weak keys that could be predictable.",
+        "recommendation": "Ensure that KeyGenerator is initialized with a SecureRandom instance: \"keyGen.init(256, new SecureRandom());\" to generate a strong key."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "description": "The KeyGenerator for AES does not specify the key size. The default key size could be insufficient depending on the JCE provider's implementation, potentially resulting in weaker encryption.",
+        "recommendation": "Specify the key size explicitly when generating an AES key, e.g., \"keyGen.init(256);\" for a key size of 256 bits."
+    }
+]
+```

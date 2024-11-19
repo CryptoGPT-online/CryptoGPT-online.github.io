@@ -1,0 +1,28 @@
+ {
+"misuses": [
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(String.valueOf(crypto));",
+"description": "The use of RC2 algorithm is not secure and should be avoided. It is vulnerable to a variety of attacks, including collision attacks, and should only be used in legacy systems where compatibility is required.",
+"recommendation": "Use a secure encryption algorithm such as AES or RSA instead."
+},
+{
+"misuse": "Improper Key Generation",
+"vulnerable_code": "SecretKey key = keyGen.generateKey();",
+"description": "The use of the `generateKey()` method with the default parameters is not secure. It generates a key of a fixed length, which can be vulnerable to brute force attacks. Instead, use the `generateKey(AlgorithmParameterSpec params)` method with appropriate parameters to generate a key that is resistant to brute force attacks.",
+"recommendation": "Use the `generateKey(AlgorithmParameterSpec params)` method with appropriate parameters to generate a secure key."
+},
+{
+"misuse": "Improper Cipher Initialization",
+"vulnerable_code": "Cipher cipher = Cipher.getInstance(String.valueOf(crypto));",
+"description": "The use of the `getInstance(String crypto)` method with a string that is not a properly formatted cryptographic algorithm is vulnerable to misuse. It can cause the program to use an insecure algorithm, or it can cause the program to crash if the algorithm is not supported. Instead, use the `getInstance(String crypto, String provider)` method with a properly formatted algorithm and a specific provider to ensure that the correct algorithm is used.",
+"recommendation": "Use the `getInstance(String crypto, String provider)` method with a properly formatted algorithm and a specific provider to ensure that the correct algorithm is used."
+},
+{
+"misuse": "Insufficient Key Size",
+"vulnerable_code": "SecretKey key = keyGen.generateKey();",
+"description": "The use of the `generateKey()` method with the default parameters generates a key of a fixed length, which can be vulnerable to brute force attacks. Instead, use the `generateKey(AlgorithmParameterSpec params)` method with appropriate parameters to generate a key that is resistant to brute force attacks.",
+"recommendation": "Use the `generateKey(AlgorithmParameterSpec params)` method with appropriate parameters to generate a secure key."
+}
+]
+}

@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "public void checkClientTrusted(X509Certificate[] x509Certificates, String s)",
+        "description": "The implementation of checkClientTrusted does not actually perform any validation on the certificate, creating a vulnerability that could allow any certificate, including self-signed ones, to be trusted.",
+        "recommendation": "Implement proper certificate validation to ensure that the certificate provided by the client is trusted by a known certificate authority."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "public void checkServerTrusted(X509Certificate[] x509Certificates, String s)",
+        "description": "Similar to checkClientTrusted, the method checkServerTrusted also fails to validate server certificates, creating a vulnerability to man-in-the-middle attacks.",
+        "recommendation": "Implement standard server certificate validation using a trust manager that checks the validity and trust chain of the presented certificates."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "public void checkClientTrusted(X509Certificate[] x509Certificates, String s)\npublic void checkServerTrusted(X509Certificate[] x509Certificates, String s)",
+        "description": "The conditional check for 's.equalsIgnoreCase(\"RSA\")' is misleading in the context of TLS; RSA might refer to both key exchange and signature algorithms, but the validation logic here is broken and does not ensure the security of the connection.",
+        "recommendation": "Ensure both key exchange and certificate signature algorithms are secure, and replace any weak or outdated cryptographic algorithms. Always validate certificates based on the full chain of trust."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "public X509Certificate[] getAcceptedIssuers()",
+        "description": "This method should return a list of acceptable CA issuer certificates. Returning an empty array allows any certificate to be accepted, which can lead to accepting untrusted certificates.",
+        "recommendation": "Return an array of trusted CA certificates from the getAcceptedIssuers method."
+    }
+]
+```

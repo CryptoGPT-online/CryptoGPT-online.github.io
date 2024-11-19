@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Hardcoded Sensitive Data",
+        "vulnerable_code": "\"changeit\"",
+        "description": "The password for the KeyStore is hardcoded and is a well-known default password. This allows for easy unauthorized access to the KeyStore if the code or compiled bytecode is accessible to an attacker.",
+        "recommendation": "Use a secure method to store and retrieve sensitive information such as passwords, such as a password manager, environment variables, or configuration files with appropriate access restrictions."
+    },
+    {
+        "misuse": "Insecure Trust Management",
+        "vulnerable_code": "ks.load(cacerts.openStream(), defaultKey.toCharArray());",
+        "description": "Loading a KeyStore from an untrusted URL (e.g., from the internet) is risky as the data can be intercepted or tampered with during the transfer. This can lead to trusting malicious certificates.",
+        "recommendation": "Only load KeyStores from trusted and secure sources such as local files or secure, authenticated repositories."
+    },
+    {
+        "misuse": "Unvalidated HTTPS Connection",
+        "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");",
+        "description": "The code could be misinterpreted as setting up a certificate validation process by downloading certificates from a hardcoded URL. However, the actual operation merely opens a stream to the URL which is not a proper way to establish a trusted connection or to import certificates into a KeyStore.",
+        "recommendation": "Use a proper certificate management approach such as the Java Secure Socket Extension (JSSE) with properly initialized KeyManager and TrustManager when handling SSL/TLS connections."
+    }
+]
+```

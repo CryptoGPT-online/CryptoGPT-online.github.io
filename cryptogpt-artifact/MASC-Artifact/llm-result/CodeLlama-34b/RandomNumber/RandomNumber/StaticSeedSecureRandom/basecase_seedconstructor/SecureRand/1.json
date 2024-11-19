@@ -1,0 +1,20 @@
+ [
+    {
+        "misuse": "CWE-338: Inadequate Encapsulation",
+        "vulnerable_code": "System.out.println(rand1.nextInt()==rand2.nextInt());",
+        "description": "The result of the random number generation is directly printed to the console, which can potentially leak sensitive information.",
+        "recommendation": "Encapsulate the random number generation in a secure manner, such as using a secure random number generation library or a cryptographic primitive, and then obfuscate the output to prevent it from being leaked."
+    },
+    {
+        "misuse": "CWE-650: Encryption Algorithm Weakness",
+        "vulnerable_code": "SecureRandom rand1 = new SecureRandom(seedBytes);",
+        "description": "The SecureRandom class uses the platform default random number generator, which may be insecure. The entropy pool may also be too small, which can lead to predictable random numbers.",
+        "recommendation": "Use a more secure random number generator, such as the SHA-256 hash function, or a cryptographic primitive, such as AES-GCM, to generate random numbers."
+    },
+    {
+        "misuse": "CWE-256: Lack of Input Validation",
+        "vulnerable_code": "byte[] seedBytes = \"Seed\".getBytes(StandardCharsets.UTF_8);",
+        "description": "The seed used for the random number generation is a hardcoded value, which can be easily discovered and used to predict the random numbers generated.",
+        "recommendation": "Use a cryptographically secure random number generator to generate the seed, and perform proper input validation to ensure that the seed is of sufficient entropy and is not predictable."
+    }
+]

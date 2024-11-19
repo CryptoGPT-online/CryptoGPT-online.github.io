@@ -1,0 +1,56 @@
+This code has a misuse of the Java Cryptography Architecture (JCA) that violates the rule against using weak cryptographic algorithms (CWE-327). The SHA1 algorithm, despite being a hash function, is considered a weak cryptographic algorithm because it is susceptible to various attacks, including length extension and preimage attacks.
+
+The recommendation is to use stronger algorithms, such as SHA-256, SHA-384, or SHA-512, for any encryption and hashing operations in your application.
+
+This code should be fixed as follows:
+
+```java
+import javax.crypto.Cipher;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
+
+public class B1 {
+    C1 crypto;
+    public B1() throws NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
+        crypto = new C1("SHA-256"); // changed the algorithm to a stronger one
+        crypto.encrypt("abc","");
+    }
+}
+
+class C1 {
+    String crypto;
+
+    public C1(String defCrypto) throws NoSuchPaddingException, NoSuchAlgorithmException {
+        crypto = defCrypto;
+    }
+
+    public void encrypt(String str, String passedAlgo) throws UnsupportedEncodingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, NoSuchPaddingException {
+        if(passedAlgo.isEmpty()){
+            passedAlgo = crypto;
+        }
+
+        MessageDigest md = MessageDigest.getInstance(passedAlgo); // changed the instance to the passed algorithm
+        md.update(str.getBytes());
+        System.out.println(md.digest());
+
+    }
+}
+```
+
+The JSON response should be:
+
+```json
+[{
+    "misuse": "Use of a weak cryptographic algorithm", 
+    "vulnerable_code": "crypto = new C1("SHA1"); md = MessageDigest.getInstance(crypto);",
+    "description": "The SHA1 algorithm is considered weak and should not be used for encryption or hash operations.",
+    "recommendation": "Use a stronger cryptographic algorithm like SHA-256, SHA-384, or SHA-512 for encryption and hash operations."
+}]
+```

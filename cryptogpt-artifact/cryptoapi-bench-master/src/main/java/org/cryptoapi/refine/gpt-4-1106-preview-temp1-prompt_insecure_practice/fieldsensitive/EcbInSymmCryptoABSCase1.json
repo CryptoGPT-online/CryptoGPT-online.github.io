@@ -1,0 +1,26 @@
+### False Positive Misuse ###
+
+1. "Missing Initialization Vector" and "Static Initialization Vector (IV)" are false positives in the context of ECB mode, as ECB does not use an IV. However, the recommendation to avoid ECB mode is valid.
+
+2. "Insecure Key Generation" and "Weak Key Generation" are false positives if the default key size used by the `KeyGenerator` is 128 bits or higher, which is considered secure for AES. However, it is still a best practice to explicitly set the key size.
+
+3. "Lack of Secure Random Source" is a false positive because `KeyGenerator` is designed to use a secure random source by default for key generation. Explicitly setting a `SecureRandom` instance is not necessary unless there is a specific requirement to do so.
+
+### Optimized Misuse JSON###
+
+```json
+[
+    {
+        "misuse": "Insecure Cipher Mode",
+        "vulnerable_code": "\"AES/ECB/PKCS5Padding\"",
+        "description": "AES is used in ECB mode. ECB mode is insecure, as it does not provide serious message confidentiality. Identical plaintext blocks will result in identical ciphertext blocks, revealing patterns in the plaintext.",
+        "recommendation": "Use AES with a secure mode of operation such as CBC, CFB, OFB, or GCM, along with an appropriate initialization vector."
+    },
+    {
+        "misuse": "Insecure Key Generation",
+        "vulnerable_code": "keyGen.generateKey();",
+        "description": "The KeyGenerator does not specify a key size upon initialization, which may cause it to use a weak default key size. For AES, anything less than 128 bits is considered insecure.",
+        "recommendation": "Initialize the KeyGenerator with a specific key size using keyGen.init(128), keyGen.init(192) or keyGen.init(256) to ensure a strong key size is used."
+    }
+]
+```

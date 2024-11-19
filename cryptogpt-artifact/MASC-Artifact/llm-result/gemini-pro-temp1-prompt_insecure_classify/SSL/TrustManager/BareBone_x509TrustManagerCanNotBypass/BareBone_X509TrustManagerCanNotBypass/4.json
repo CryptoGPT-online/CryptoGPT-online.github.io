@@ -1,0 +1,61 @@
+```java
+public class Bs {
+
+    public static void main(String[] args) {
+        new BareBone_X509TrustManagerCanNotBypassExt() {
+        };
+        System.out.println("Hello World");
+    }
+}
+
+public abstract class BareBone_X509TrustManagerCanNotBypassExt implements X509TrustManager {
+    public void checkClientTrusted(X509Certificate[] chain, String authType)
+            throws CertificateException {
+    }
+    public void checkServerTrusted(X509Certificate[] chain, String authType)
+            throws CertificateException {
+    }
+    public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+        return null;
+    }
+}
+```
+
+The code above uses a custom `X509TrustManager` that unconditionally trusts all certificates. This is insecure because it could allow an attacker to impersonate a trusted server and intercept or modify sensitive data.
+
+The misuse in the code is:
+
+- **CWE-295: Improper Certificate Validation**
+
+The vulnerable code is:
+
+```java
+new BareBone_X509TrustManagerCanNotBypassExt() {
+};
+```
+
+The description of why there is a misuse is:
+
+The custom `X509TrustManager` does not perform any certificate validation, which means that it will trust any certificate presented by a server. This could allow an attacker to impersonate a trusted server and intercept or modify sensitive data.
+
+The recommendation for fixing the misuse is:
+
+Use a proper `X509TrustManager` that performs proper certificate validation.
+
+The fixed code could be:
+
+```java
+new X509TrustManager() {
+    public void checkClientTrusted(X509Certificate[] chain, String authType)
+            throws CertificateException {
+        // Perform proper certificate validation here
+    }
+    public void checkServerTrusted(X509Certificate[] chain, String authType)
+            throws CertificateException {
+        // Perform proper certificate validation here
+    }
+    public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+        // Return a list of trusted issuers here
+    }
+};
+```

@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insufficiently Secure Cryptographic Algorithm Mode",
+        "vulnerable_code": "Cipher.getInstance(algorithmName)",
+        "description": "Using Cipher.getInstance with just \"AES\" defaults to ECB mode which is not secure for encrypting more than one block of data because identical plaintext blocks are encrypted to identical ciphertext blocks.",
+        "recommendation": "Use AES with a more secure block mode, such as CBC, CFB, OFB, or GCM along with a unique initialization vector (IV) for each encryption."
+    },
+    {
+        "misuse": "Missing Initialization Vector (IV)",
+        "vulnerable_code": "Cipher.getInstance(algorithmName)",
+        "description": "ECB mode (which is being used by default) or any other mode of operation without using a securely generated IV causes cryptographic weaknesses, particularly for data that is saved across multiple cipher blocks.",
+        "recommendation": "If a more secure mode is used, always provide a securely generated IV, for modes like CBC, CFB, OFB, or GCM."
+    },
+    {
+        "misuse": "Missing Secure Random IV Generation",
+        "vulnerable_code": "Cipher.getInstance(algorithmName)",
+        "description": "There is no usage of a secure random number generator to create the IV which is necessary for most block cipher modes to ensure secure encryption.",
+        "recommendation": "Create a randomized IV using a secure random number generator, and ensure it is used properly in the encryption process."
+    },
+    {
+        "misuse": "Missing Key Specification",
+        "vulnerable_code": "Cipher.getInstance(algorithmName)",
+        "description": "There is no key being passed to the encrypting Cipher instance, which leads to unspecified behavior or an error when trying to perform encryption operations.",
+        "recommendation": "Ensure that a key is generated using a secure process and passed to the Cipher instance for encryption."
+    }
+]
+```

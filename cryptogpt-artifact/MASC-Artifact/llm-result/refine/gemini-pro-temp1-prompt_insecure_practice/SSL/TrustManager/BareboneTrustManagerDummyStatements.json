@@ -1,0 +1,35 @@
+### False Positive Misuses ###
+1. **CWE-295: Improper Certificate Validation**
+   - **Reported Code:** `SSLContext.getInstance("SSL")`
+   - **Reason:** This report is a false positive because the code is using the `SSL` protocol string to initialize the SSLContext, which is not the same as using the SSLv3 protocol. SSLv3 is an insecure protocol that should not be used, but the `SSL` protocol string can be used to initialize SSLContext with a more secure protocol, such as TLSv1.2 or TLSv1.3.
+
+2. **CWE-297: Use of a Broken or Risky Cryptographic Algorithm**
+   - **Reported Code:** `SSLContext context = SSLContext.getInstance("SSL");`
+   - **Reason:** This report is a false positive because the code is using the `SSL` protocol string to initialize the SSLContext, which is not the same as using the SSLv3 protocol. SSLv3 is an insecure protocol that should not be used, but the `SSL` protocol string can be used to initialize SSLContext with a more secure protocol, such as TLSv1.2 or TLSv1.3.
+
+### Optimized Misuse JSON###
+```json
+[
+  {
+    "misuse category": "CWE-295: Improper Certificate Validation",
+    "vulnerable_method": "SSLContext.init(null, trustAll, new SecureRandom())",
+    "vulnerable_code": "context.init(null, trustAll, new SecureRandom());",
+    "description": "The code initializes the SSL context with a custom trust manager that does not properly validate the server's certificate. This can lead to man-in-the-middle attacks where an attacker impersonates the server and intercepts the communication.",
+    "recommendation": "Use a proper trust manager that validates the server's certificate against a trusted certificate authority."
+  },
+  {
+    "misuse category": "CWE-297: Improper Validation of Certificate Trust",
+    "vulnerable_method": "TrustManager[] trustAll = new TrustManager[] { ... }",
+    "vulnerable_code": "TrustManager[] trustAll = new TrustManager[] { ... }",
+    "description": "The code trusts all certificates without proper validation, which can lead to man-in-the-middle attacks.",
+    "recommendation": "Use a proper trust manager that validates certificates according to your security requirements."
+  },
+  {
+    "misuse category": "CWE-295: Improper Certificate Validation",
+    "vulnerable_method": "TrustManager[] trustAll = new TrustManager[] { ... }",
+    "vulnerable_code": "TrustManager[] trustAll = new TrustManager[] { ... }",
+    "description": "The code snippet above creates a TrustManager that trusts all certificates with an RSA signature. This is insecure because it does not perform any validation of the certificate's issuer or validity period.",
+    "recommendation": "Use a more secure TrustManager implementation that performs proper certificate validation."
+  }
+]
+```

@@ -1,0 +1,38 @@
+```json
+[
+    {
+        "misuse": "CWE-326: Insecure Cipher Mode",
+        "vulnerable_code": "Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "CBC mode in AES is vulnerable to padding oracle attacks.",
+        "recommendation": "Use an AEAD mode like GCM instead of CBC."
+    },
+    {
+        "misuse": "CWE-338: Use of Cryptographically Weak Pseudo-Random Number Generator (PRNG)",
+        "vulnerable_code": "sr.nextBytes(bytes);",
+        "description": "The random bytes for the IV may not be secure enough due to a weak PRNG.",
+        "recommendation": "Ensure that SecureRandom is properly seeded and consider using getRandomBytes method for secure IV generation."
+    },
+    {
+        "misuse": "CWE-320: Key Management Errors",
+        "vulnerable_code": [
+            "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+            "SecretKey key = keyGen.generateKey();"
+        ],
+        "description": "No secure key management system is implemented. The key is generated and used directly without specifying key size or storage.",
+        "recommendation": "Use a key of at least 128 bits and manage it securely, preferably with a KeyStore."
+    },
+    {
+        "misuse": "CWE-329: Not Using a Random IV with CBC Mode",
+        "vulnerable_code": [
+            "byte [] bytes = \"abcde\".getBytes();",
+            "if(choice>1){",
+            "    bytes = new byte[16];",
+            "    sr.nextBytes(bytes);",
+            "}",
+            "IvParameterSpec ivSpec = new IvParameterSpec(bytes);"
+        ],
+        "description": "An IV should always be random and unique for each encryption. The IV is deterministic when choice <= 1.",
+        "recommendation": "Always generate a new random IV for each encryption operation."
+    }
+]
+```

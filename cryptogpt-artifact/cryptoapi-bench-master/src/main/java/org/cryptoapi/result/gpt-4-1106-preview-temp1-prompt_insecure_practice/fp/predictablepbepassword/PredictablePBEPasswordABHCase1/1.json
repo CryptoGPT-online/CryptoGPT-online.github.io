@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "Weak Encryption Algorithm",
+    "vulnerable_code": "pbeKeySpec = new PBEKeySpec(new String(keyBytes).toCharArray(),salt,iterationCount,keyLength);",
+    "description": "The code is initializing a PBEKeySpec with what appears to be a weak key derived from a random integer without specifying which encryption algorithm is being used. Typically, integer-derived keys are not secure enough for encryption purposes.",
+    "recommendation": "Use a more secure approach to generate the encryption key, such as employing a more robust key derivation function (KDF) algorithm like PBKDF2 with HMAC-SHA-256 or SHA-512, and ensure to specify the encryption algorithm explicitly."
+  },
+  {
+    "misuse": "Insecure Random Number Generation",
+    "vulnerable_code": "String defaultKey = String.valueOf(random.ints());",
+    "description": "The randomness of the key is relying on the SecureRandom.ints() method, which returns an effectively unlimited stream of pseudorandom int values. Converting the int stream directly to a String and then to bytes does not guarantee high entropy, especially since the underlying randomness of the source is not verified.",
+    "recommendation": "Generate the key using a proper key generation technique, ensuring sufficient entropy is present. This usually means using the SecureRandom class to generate a byte array of the desired key length directly, not by starting from a stream of ints."
+  }
+]
+```

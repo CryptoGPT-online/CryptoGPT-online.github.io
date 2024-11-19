@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "Weak Encryption Algorithm (CWE-256)",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+    "description": "The code uses the default AES key size, which is 128 bits. This key size is considered weak and can be broken with moderate effort.",
+    "recommendation": "Use a stronger key size, such as 256 bits, by passing the appropriate parameter to the `KeyGenerator` constructor."
+  },
+  {
+    "misuse": "Unprotected Secret Key (CWE-295)",
+    "vulnerable_code": "SecretKey key = keyGen.generateKey();",
+    "description": "The secret key is stored in a variable without any protection. This makes it vulnerable to theft by attackers who gain access to the system.",
+    "recommendation": "Store the secret key in a secure key store or use a key encryption key (KEK) to encrypt the secret key."
+  },
+  {
+    "misuse": "ECB Mode (CWE-321)",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+    "description": "The code uses the CBC mode with PKCS5 padding, which is a secure mode of operation. However, the ECB mode is considered insecure and should not be used.",
+    "recommendation": "Use a secure mode of operation, such as CBC or GCM, instead of ECB."
+  }
+]
+```

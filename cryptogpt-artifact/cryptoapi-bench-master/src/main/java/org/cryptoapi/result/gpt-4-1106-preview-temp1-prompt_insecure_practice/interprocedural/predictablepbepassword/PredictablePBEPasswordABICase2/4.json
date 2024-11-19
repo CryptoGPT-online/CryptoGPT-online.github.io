@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insufficient Key Length",
+        "vulnerable_code": "public static String KEY = \"sagar\";",
+        "description": "The encryption key derived from the string 'sagar' is too short and not complex enough, which makes it susceptible to brute-force attacks.",
+        "recommendation": "Use a longer and more complex key that is generated using a secure random number generator, and store it securely."
+    },
+    {
+        "misuse": "Static salt",
+        "vulnerable_code": "byte [] salt = new byte[16];\n        sr.nextBytes(salt);",
+        "description": "While the code generates a new salt for each execution, it is not stored or used in subsequent sessions, which means that the same key and salt pair might be reused if the application restarts, weakening the encryption's resistance to certain attacks such as dictionary attacks.",
+        "recommendation": "Ensure that a unique salt is used for each encryption operation and that the salt is stored alongside the encrypted data."
+    },
+    {
+        "misuse": "Weak Password-Based Encryption (PBE) Parameters",
+        "vulnerable_code": "pbeKeySpec = new PBEKeySpec(encryptKey,salt,10000,16);",
+        "description": "The derived key length specified in the constructor of PBEKeySpec (16 bits) is not sufficient for strong encryption, as it does not provide adequate cryptographic strength.",
+        "recommendation": "Use a longer key length when calling the constructor of PBEKeySpec. For AES, for example, the minimum key length should typically be 128 bits."
+    }
+]
+```

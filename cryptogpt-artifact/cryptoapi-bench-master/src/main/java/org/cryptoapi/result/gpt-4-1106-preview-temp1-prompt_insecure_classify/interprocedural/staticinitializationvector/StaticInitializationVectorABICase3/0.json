@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "byte [] bytes = \"abcde\".getBytes();",
+        "description": "The initialization vector (IV) for the cipher is derived from a hardcoded string, which is not sufficiently random or secure for cryptographic operations.",
+        "recommendation": "Use a secure random number generator to generate the IV."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+        "description": "The IV size should match the block size of the cipher (16 bytes for AES), but the provided IV is not of the correct length, which can compromise encryption strength.",
+        "recommendation": "Ensure the IV is 16 bytes long when using AES."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+        "description": "The key size is not specified, and the default key size may not meet the minimum recommended key length, which can lead to inadequate encryption strength.",
+        "recommendation": "Explicitly set the key size to a secure value, such as 128, 192, or 256 bits."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "byte [] bytes = \"abcde\".getBytes();",
+        "description": "The hardcoded string \"abcde\" used for the IV can be considered a form of hardcoded credentials, as it is part of the cryptographic setup and should not be predictable or easily discoverable.",
+        "recommendation": "Do not use hardcoded values for cryptographic parameters; use a secure random number generator instead."
+    }
+]
+```

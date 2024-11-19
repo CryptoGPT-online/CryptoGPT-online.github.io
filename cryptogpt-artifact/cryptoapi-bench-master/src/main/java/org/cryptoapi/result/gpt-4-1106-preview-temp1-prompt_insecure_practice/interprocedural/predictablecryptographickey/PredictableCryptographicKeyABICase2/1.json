@@ -1,0 +1,40 @@
+```json
+[
+    {
+        "misuse": "Insecure Key Generation",
+        "vulnerable_code": "byte[] keyBytes = encryptKey.toString().getBytes();",
+        "description": "The key material is generated from a static string, which is a poor practice because it could be predictable and lack sufficient entropy for cryptographic operations.",
+        "recommendation": "Use a securely generated random key instead of a static string."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "Ensuring that the key length is a specific size may lead to insecure key if the initial byte array is not of the required length already. If the initial array is short, this could lead to insufficient key size and weak encryption.",
+        "recommendation": "Allocate the byte array with the correct size from the beginning or use proper key derivation functions like PBKDF2 when creating keys from passwords or predefined strings."
+    },
+    {
+        "misuse": "String to char[] conversion",
+        "vulnerable_code": [
+            "ENCRYPT_KEY = DEFAULT_ENCRYPT_KEY.toCharArray();",
+            "encryptKey = ENCRYPT_KEY;"
+        ],
+        "description": "Conversion from String to char array doesn't guarantee secure handling of sensitive data since Strings are immutable and cannot be erased from memory.",
+        "recommendation": "Use char arrays for sensitive information and zero them out after use."
+    },
+    {
+        "misuse": "Key Disclosure",
+        "vulnerable_code": "public static final String DEFAULT_ENCRYPT_KEY = \"defaultkey\";",
+        "description": "The secret key is hardcoded in the source code, which could allow an attacker to easily retrieve it by inspecting the application's bytecode.",
+        "recommendation": "Do not hardcode encryption keys in the source code. Use a secure mechanism to load keys at runtime."
+    },
+    {
+        "misuse": "Insecure Key Handling",
+        "vulnerable_code": [
+            "private static char[] ENCRYPT_KEY;",
+            "private static char[] encryptKey;"
+        ],
+        "description": "Static fields are used to store the encryption key, which can reside in memory for an extended period and potentially be accessed by other parts of the application or by malicious actors.",
+        "recommendation": "Avoid storing sensitive keys in static fields. Instead, load them into memory only when required and immediately clear them after use."
+    }
+]
+```

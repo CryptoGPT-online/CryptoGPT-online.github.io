@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insufficient Entropy",
+        "vulnerable_code": "SecureRandom sr = new SecureRandom(new byte[]{Byte.parseByte(seed.toString())});",
+        "description": "The SecureRandom instance is seeded with a predictable byte sequence derived from a static value (DEFAULT_SEED), which makes the generated random numbers predictable.",
+        "recommendation": "Use SecureRandom without a seed or with a truly random seed obtained from a secure source."
+    },
+    {
+        "misuse": "Insecure Use of Randomness",
+        "vulnerable_code": "int v = sr.nextInt();",
+        "description": "If the SecureRandom instance is not properly seeded with sufficient entropy, the resulting random numbers are not cryptographically strong.",
+        "recommendation": "Ensure that SecureRandom is properly seeded as recommended by cryptographic best practices."
+    },
+    {
+        "misuse": "Improper Conversion",
+        "vulnerable_code": "SecureRandom sr = new SecureRandom(new byte[]{Byte.parseByte(seed.toString())});",
+        "description": "The 'seed.toString()' actually invokes the 'Object.toString()' method, which does not return the value of the char array but a string representation of the object reference. As such, the byte array passed to SecureRandom will not contain the intended seed data.",
+        "recommendation": "Do not use 'Object.toString()' to convert a char array to a byte array. Instead, convert the char array to a byte array explicitly, taking character encoding into account."
+    }
+]
+```

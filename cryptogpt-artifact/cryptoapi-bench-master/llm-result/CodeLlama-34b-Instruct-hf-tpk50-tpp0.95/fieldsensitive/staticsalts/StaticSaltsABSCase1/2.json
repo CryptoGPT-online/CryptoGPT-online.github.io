@@ -1,0 +1,16 @@
+ {
+"misuses": [
+{
+"misuse": "Broken Crypto Algorithm",
+"vulnerable_code": "C1.method1(byte[] passedSalt) \n        passedSalt = defSalt;",
+"description": "The method 'method1' uses a fixed salt for the PBEParameterSpec, which is a vulnerability as it makes the encryption predictable.",
+"recommendation": "Use a random salt for each encryption."
+},
+{
+"misuse": "Weak Key Length",
+"vulnerable_code": "int count = 1020; \n        PBEParameterSpec pbeParamSpec = null; \n        pbeParamSpec = new PBEParameterSpec(passedSalt, count);",
+"description": "The method 'method1' uses a small iteration count (1020) for the PBEParameterSpec, which is vulnerable to attacks using precomputed tables of hashes.",
+"recommendation": "Use a larger iteration count (at least 10000) for the PBEParameterSpec."
+}
+]
+}

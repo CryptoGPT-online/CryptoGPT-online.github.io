@@ -1,0 +1,25 @@
+```json
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "public static final int DEFAULT_KEY_SIZE = 1024;",
+        "description": "The key size of 1024 for RSA is no longer considered secure.",
+        "recommendation": "Increase the RSA key size to at least 2048 bits."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "KeyPairGenerator.getInstance(\"RSA\")",
+        "description": "The KeyPairGenerator might not be using a strong source of randomness, as the code does not explicitly specify a SecureRandom instance.",
+        "recommendation": "Specify a SecureRandom instance when initializing the KeyPairGenerator."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": [
+            "Cipher.getInstance(\"RSA\")",
+            "Cipher.getInstance(\"RSA\")"
+        ],
+        "description": "Using RSA without padding is insecure as it is susceptible to attacks, such as the textbook RSA attack.",
+        "recommendation": "Use RSA with OAEP padding (e.g., 'RSA/ECB/OAEPWithSHA-256AndMGF1Padding')."
+    }
+]
+```

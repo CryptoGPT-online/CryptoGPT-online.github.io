@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Insecure TrustManager Configuration",
+        "vulnerable_code": "\"trustManager.checkClientTrusted(x509Certificates,s);\"",
+        "description": "In this code, the TrustManager is configured to trust all clients connecting. This poses a security risk as it disables any form of certificate validation which could be exploited by malicious clients to establish a man-in-the-middle attack or impersonate trusted servers.",
+        "recommendation": "If you want to trust all clients, you should at least perform some sort of basic validation, such as checking if the certificate is in a trusted list or if it's self-signed. Implement a proper chain of trust validation to ensure the client is trustworthy."
+    },
+    {
+        "misuse": "No Implementation for Server Trust",
+        "vulnerable_code": "\"@Override public void checkServerTrusted...\"",
+        "description": "In this code, the method to trust any server is not implemented. While this is not a critical security risk in and of itself, it might lead to potential security issues if you're not expecting any server to be trusted. It might allow connections to potentially malicious servers.",
+        "recommendation": "Implement a proper server trust evaluation, even if you're planning to trust all servers. At the very least, you should perform some form of certificate validation to ensure the server is trustworthy."
+    }
+]
+```

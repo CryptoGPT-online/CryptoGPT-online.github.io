@@ -1,0 +1,6 @@
+ {
+"misuse": "CWE-330: Use of Insufficiently Random Values",
+"vulnerable_code": "SecureRandom sr = new SecureRandom();\n        long l = sr.nextLong();\n        sr.setSeed(l);\n        int v = sr.nextInt();\n        System.out.println(v);",
+"description": "The `SecureRandom` class is used to generate random numbers. However, the `nextLong()` method is not sufficient for generating a cryptographically secure seed. The `setSeed()` method is then used to set the seed, which can be guessed or easily determined by an attacker. This can lead to predictable random numbers, which can compromise the security of the application.",
+"recommendation": "Use a more secure method to generate a random seed, such as `generateSeed(int numBytes)` or `nextBytes(byte[] bytes)`. Additionally, consider using a secure random number generator, such as `java.security.SecureRandom`, to generate the random numbers."
+}

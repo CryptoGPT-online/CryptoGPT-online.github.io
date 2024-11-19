@@ -1,0 +1,14 @@
+```json
+[{
+    "misuse": "Insufficient Initialization Vector (IV) Entropy",
+    "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(val.getBytes(),0,8);",
+    "description": "The IV is not generated using a secure random source, which might make it predictable. This is especially critical when used with a cipher in CBC mode or another mode where the IV's unpredictability is vital to the security of the algorithm.",
+    "recommendation": "Generate a random IV using a secure random number generator, such as java.security.SecureRandom, instead of deterministic or user-controlled values."
+},
+{
+    "misuse": "Incomplete or Incorrect Validation",
+    "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(val.getBytes(),0,8);",
+    "description": "The code does not validate if the IV length matches the block size of the cryptographic algorithm to be used (often 16 bytes for algorithms like AES).",
+    "recommendation": "Validate and ensure that the provided IV matches the required block size of the encryption algorithm, and generate a new IV that is correctly sized if it doesn't."
+}]
+```

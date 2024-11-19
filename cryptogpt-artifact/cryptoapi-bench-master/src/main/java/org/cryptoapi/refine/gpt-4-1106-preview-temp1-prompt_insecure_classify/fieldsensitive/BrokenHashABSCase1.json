@@ -1,0 +1,28 @@
+### False Positive Misuse ###
+
+- CWE-326: Inadequate Encryption Strength. This is reported as a misuse in all places where the `encrypt` method is called. However, this is not a misuse because the `encrypt` method from class `C1` is actually performing hashing, not encryption. The name of the method `encrypt` appears to be misleading as it performs hashing. This would be better off as a recommendation for properly naming the method to represent its actual functionality.
+
+- CWE-330: Use of Insufficiently Random Values. This is reported as a misuse in the case where it mentions the lack of secure random values such as salts or initialization vectors (IV). Given that the operation is actually hashing and not encryption, this misuse report is not applicable. Salts are typically not used in conjunction with simple message digests, but rather, in password hashing scenarios where added security against rainbow table attacks is necessary.
+
+- CWE-798: Use of Hardcoded Credentials. This misuse report is ambiguous and seems to be a false positive. The hardcoded string "abc" in the example is simply a stand-in for data that would be hashed. There's no evidence that this stands for a cryptographic key or a password, hence this report does not apply.
+
+### Optimized Misuse JSON ###
+
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "crypto = new C1(\"SHA1\");",
+        "description": "The SHA-1 algorithm is no longer considered secure for cryptographic purposes. It is vulnerable to collision attacks.",
+        "recommendation": "Use a stronger hashing algorithm such as SHA-256 or SHA-3."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "MessageDigest.getInstance(crypto);",
+        "description": "Using SHA-1 for hashing is insecure due to vulnerabilities that allow for collision attacks.",
+        "recommendation": "Use a more secure hashing algorithm such as SHA-256 or SHA-3."
+    }
+]
+```
+
+Note that the `encrypt` method should be renamed to reflect hashing, not encryption, as one of the recommendations.

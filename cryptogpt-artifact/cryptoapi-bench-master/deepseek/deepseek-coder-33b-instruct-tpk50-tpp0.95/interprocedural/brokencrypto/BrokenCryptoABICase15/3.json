@@ -1,0 +1,50 @@
+CWE-321: Use of Hard-coded Cryptographic Key
+
+The use of hard-coded cryptographic keys is not recommended for security reasons. Cryptographic keys should be kept secret and randomly generated.
+
+Here is the misuse:
+
+```java
+String crypto = "IDEA";
+```
+
+This is hardcoding the crypto algorithm to "IDEA". In the context of cryptographic operations, this algorithm should be chosen based on the context of the application and should not be hardcoded. 
+
+Instead, one can use dynamic ways to choose the algorithm based on the requirement. 
+
+Here is how you can do this:
+
+```java
+Cipher cipher = Cipher.getInstance("AES"); // or PBEWithHmacSHA256, PBKDF2WithHmacSHA256 etc. based on the requirement
+```
+
+Please replace "AES" with the suitable algorithm based on your requirement. 
+
+Moreover, it is important to handle the exceptions properly in your code to avoid potential security risks.
+
+Here is the recommended code:
+
+```java
+public class B5 {
+    public static void method2(String c) {
+        String cryptoAlgo = c;
+        try {
+            method1(cryptoAlgo);
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void method1(String crypto) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+        KeyGenerator keyGen = KeyGenerator.getInstance(crypto);
+        SecretKey key = keyGen.generateKey();
+        Cipher cipher = Cipher.getInstance(crypto);
+        cipher.init(Cipher.ENCRYPT_MODE, key);
+    }
+
+    public static void main (String [] args) {
+        String crypto = "IDEA"; // change it based on the requirement
+        method2(crypto);
+    }
+}
+```

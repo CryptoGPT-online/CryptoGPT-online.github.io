@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "CWE-759: Use of Hard-Coded Cryptographic Key",
+    "vulnerable_code": "SecureRandom random = new SecureRandom();",
+    "description": "Using a hard-coded seed for SecureRandom weakens the randomness of generated values, making them predictable and vulnerable to attack.",
+    "recommendation": "Generate a cryptographically secure random seed using a secure random number generator (such as `java.security.SecureRandom`) and use that seed to initialize the `SecureRandom` instance."
+  },
+  {
+    "misuse": "CWE-321: Use of Cryptographic Key After Secret Compromise",
+    "vulnerable_code": "method2(count,random);",
+    "description": "The `SecureRandom` instance (`random`) is passed as an argument to `method2`, where it is used to generate a salt. However, the value of `random` may have been compromised before it is passed to `method2`, leading to the generation of a predictable salt and weakening the security of the encryption.",
+    "recommendation": "Generate the salt within the `method1` function using a new `SecureRandom` instance, ensuring that the salt is generated using a fresh, uncompromised random number generator."
+  }
+]
+```

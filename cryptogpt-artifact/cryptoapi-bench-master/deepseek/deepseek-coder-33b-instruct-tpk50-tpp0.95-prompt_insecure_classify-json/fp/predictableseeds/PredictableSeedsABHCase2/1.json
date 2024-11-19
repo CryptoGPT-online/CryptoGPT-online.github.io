@@ -1,0 +1,25 @@
+byte [] seed = {b,b};
+SecureRandom sr = new SecureRandom();
+sr.setSeed(seed);
+int v = sr.nextInt();
+System.out.println(v);
+```
+
+Description:
+
+In this code, the use of SecureRandom setSeed function with a small value (b,b) will make it more predictable as it is a small entropy source. A small seed is not enough to create a secure random number generator. A secure random number generator should use a large and random seed to ensure its randomness.
+
+Recommendation:
+
+Use SecureRandom.getInstanceStrong() instead of SecureRandom() which provides a cryptographically strong random number generator. Or you can create a strong seed by using java.security.SecureRandom.getSeed() and use this seed to set the seed of the SecureRandom instance. This approach will generate a seed of default length that is guaranteed to be suitable for a SecureRandom.
+
+Updated Code:
+
+```java
+byte b = hm.get("aaa");
+byte [] seed = {b,b};
+SecureRandom sr = SecureRandom.getInstanceStrong();
+sr.setSeed(seed);
+int v = sr.nextInt();
+System.out.println(v);
+```

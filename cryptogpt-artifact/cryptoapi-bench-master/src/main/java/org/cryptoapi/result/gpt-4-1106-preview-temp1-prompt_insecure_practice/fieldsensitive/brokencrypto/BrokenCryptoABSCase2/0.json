@@ -1,0 +1,28 @@
+```json
+[
+  {
+    "misuse": "Broken Crypto Algorithm",
+    "vulnerable_code": "crypto = new C3(\"Blowfish\");",
+    "description": "Blowfish is an older symmetric encryption algorithm, which can be considered weak due to its short block size. Modern ciphers like AES are generally recommended.",
+    "recommendation": "Replace Blowfish with a more secure algorithm such as AES with a key size of 128 or 256 bits."
+  },
+  {
+    "misuse": "Static Encryption Key",
+    "vulnerable_code": "SecretKey key = keyGen.generateKey();",
+    "description": "Each time the encrypt method is called, it generates a new key using KeyGenerator with a static algorithm. This key is not saved or hardened, which could be easily compromised especially in the case of a weak algorithm like Blowfish.",
+    "recommendation": "Implement key management practices, such as securely storing and reusing strong encryption keys or using a key derivation function with a salt."
+  },
+  {
+    "misuse": "Insufficient Key Size",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);",
+    "description": "The key size is not specified, which might lead to the creation of a key with a default size that could be too small, rendering the encryption weak.",
+    "recommendation": "Specify the key size explicitly when generating keys and ensure it is sufficiently large (e.g., 128 or 256 bits for AES)."
+  },
+  {
+    "misuse": "Unspecified Cipher Mode and Padding",
+    "vulnerable_code": "Cipher cipher = Cipher.getInstance(defaultAlgo);",
+    "description": "By not specifying the cipher mode and padding, the code uses defaults, which could possibly be insecure modes like ECB or padding that is vulnerable to padding oracle attacks.",
+    "recommendation": "Specify a secure mode of operation like CBC, CFB, or GCM and use proper padding (e.g., PKCS5Padding for block ciphers). Ensure to appropriately handle the initialization vector (IV) for modes that require it."
+  }
+]
+```

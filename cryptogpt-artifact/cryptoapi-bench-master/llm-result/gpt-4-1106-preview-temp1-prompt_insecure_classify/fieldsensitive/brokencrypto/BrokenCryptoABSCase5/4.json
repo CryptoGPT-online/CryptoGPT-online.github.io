@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "crypto = new C6(\"IDEA\");",
+        "description": "The IDEA algorithm, while not broken, is considered less secure than more modern algorithms like AES. It is also not recommended for new applications.",
+        "recommendation": "Replace IDEA with a more secure and widely accepted algorithm such as AES with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_code": "KeyGenerator.getInstance(defaultAlgo);",
+        "description": "The key size for the encryption algorithm is not specified, which may lead to using a default key size that could be insufficient for strong security (e.g., IDEA typically uses a 128-bit key, but stronger keys are recommended for high security).",
+        "recommendation": "Specify a key size that is considered strong for the chosen algorithm, such as AES with a 256-bit key."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values.",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);\nSecretKey key = keyGen.generateKey();",
+        "description": "The default random source for key generation may not provide a sufficiently random key, which could lead to predictable keys that can be more easily compromised.",
+        "recommendation": "Use a secure random number generator (RNG) when generating keys, for example, by using SecureRandom to seed the key generator."
+    }
+]
+```

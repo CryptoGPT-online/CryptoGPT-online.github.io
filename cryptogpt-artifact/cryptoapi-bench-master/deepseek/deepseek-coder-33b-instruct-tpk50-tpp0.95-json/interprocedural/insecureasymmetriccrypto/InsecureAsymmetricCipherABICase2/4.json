@@ -1,0 +1,26 @@
+[
+  {
+    "misuse": "Static Key Size",
+    "vulnerable_code": "public static final int DEFAULT_KEY_SIZE = 1024; private static int KEY_SIZE; private static int keysize;",
+    "description": "Key size is set as static and remains constant. It is better to set it dynamically according to the security level requirement.",
+    "recommendation": "Set key size dynamically as per the security requirement."
+  },
+  {
+    "misuse": "Missing SecureRandom",
+    "vulnerable_code": "KeyPairGenerator kgp = KeyPairGenerator.getInstance(\"RSA\"); kgp.initialize(keysize);",
+    "description": "KeyPairGenerator instance is initialized without a secure random instance. This may lead to predictable keys.",
+    "recommendation": "Initialize KeyPairGenerator with a SecureRandom instance."
+  },
+  {
+    "misuse": "Incorrect Use of KeyPairGenerator",
+    "vulnerable_code": "KeyPairGenerator kgp = KeyPairGenerator.getInstance(\"RSA\"); kgp.initialize(keysize); KeyPair kp = kgp.generateKeyPair();",
+    "description": "KeyPairGenerator instance is not used to generate the KeyPair, which may result in different keys being generated.",
+    "recommendation": "Only use the KeyPairGenerator instance to generate the KeyPair."
+  },
+  {
+    "misuse": "SealedObject for Encryption",
+    "vulnerable_code": "SealedObject encryptedMessage = new SealedObject(myMessage,cipher);",
+    "description": "SealedObject is not the best way to encrypt sensitive data. It can lead to other potential misuses like insecure deserialization.",
+    "recommendation": "Use the Cipher class directly for encryption and decryption."
+  }
+]

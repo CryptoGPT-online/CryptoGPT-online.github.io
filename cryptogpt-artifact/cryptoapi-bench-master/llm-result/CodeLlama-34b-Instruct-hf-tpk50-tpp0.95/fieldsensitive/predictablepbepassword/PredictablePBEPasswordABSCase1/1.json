@@ -1,0 +1,14 @@
+ [
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "new PBEKeySpec(passedPassword.toCharArray(),salt,iterationCount,keyLength);",
+        "description": "The password-based encryption (PBE) key spec is generated using a weak iteration count (11010) and a weak key length (16). This can allow for a brute force attack to crack the password.",
+        "recommendation": "Increase the iteration count to at least 100,000 and use a stronger key length, such as 256 bits."
+    },
+    {
+        "misuse": "Insecure Salt Generation",
+        "vulnerable_code": "sr.nextBytes(salt);",
+        "description": "The salt is generated using a SecureRandom instance, which may not be secure in all cases. The salt should be generated using a cryptographically secure pseudo-random number generator (CSPRNG).",
+        "recommendation": "Replace the SecureRandom instance with a CSPRNG, such as the SHA1PRNG."
+    }
+]

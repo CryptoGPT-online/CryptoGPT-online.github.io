@@ -1,0 +1,16 @@
+Misuse: Weak IV generation with KeyGenerator
+vulnerable_code: 
+```java
+KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+SecretKey key = keyGen.generateKey();
+```
+description: Using KeyGenerator to generate key can lead to weak IV generation. It's better to use SecureRandom for IV generation.
+recommendation: Use SecureRandom to generate IV. Here is the corrected code:
+```java
+SecureRandom secureRandom = new SecureRandom();
+byte[] iv = new byte[16];
+secureRandom.nextBytes(iv);
+IvParameterSpec ivSpec = new IvParameterSpec(iv);
+```
+
+Please note that, since this is a simple example, the usage of weak IV is not critical in this case, because no sensitive information is being encrypted. However, in a real world scenario, it is crucial to use a secure way to generate the IV to ensure the security of encryption.

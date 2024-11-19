@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(String.valueOf(crypto));",
+        "description": "The program uses a user-provided string to select a cryptographic algorithm, and it could be an arbitrary algorithm chosen by an attacker, allowing an attacker to perform dictionary attacks, brute force attacks, or other attacks. This could lead to using insecure algorithms.",
+        "recommendation": "It's recommended to define a set of known secure algorithms and use only these. This can be done by adding a check that the crypto algorithm selected is in the whitelist of secure algorithms."
+    },
+    {
+        "misuse": "Hard-coded Cryptographic Key",
+        "vulnerable_code": "SecretKey key = keyGen.generateKey();",
+        "description": "This line generates a cryptographic key. Hard-coded cryptographic keys are not secure because they can be extracted from the code. This opens up the possibility for an attacker to gain access to encrypted data, compromising the security of the application.",
+        "recommendation": "Cryptographic keys should be securely stored and not hard-coded into the application. They can be generated at runtime, possibly using a secure random number generator. This would ensure that each instance of the application has a different key."
+    }
+]
+```

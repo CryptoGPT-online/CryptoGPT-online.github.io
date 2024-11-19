@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "Insecure Randomness",
+    "vulnerable_code": "defaultKey = String.valueOf(random.ints());",
+    "description": "Using SecureRandom to generate a default key for a keystore without specifying the length can result in weak keys due to insufficient entropy. Furthermore, the method 'ints()' generates an effectively unlimited stream of pseudorandom int values that would need to be limited to generate a proper key length.",
+    "recommendation": "Use a cryptographic random number generator designed for key generation that produces strong and properly sized keys."
+  },
+  {
+    "misuse": "Hardcoded Sensitive Defaults",
+    "vulnerable_code": "String defaultKey = \"changeit\";",
+    "description": "The default password 'changeit' is hardcoded and known to be a common default password for Java keystores, making it susceptible to bruteforce attacks.",
+    "recommendation": "Remove hardcoded default passwords and implement a secure method to handle passwords, such as prompting the user for input, or securely retrieving it from a configuration file or environment variable."
+  }
+]
+```

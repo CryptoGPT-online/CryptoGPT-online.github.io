@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Hardcoded Encryption Key",
+        "vulnerable_code": "public static final String DEFAULT_ENCRYPT_KEY = \"changeit\";",
+        "description": "The encryption key is hardcoded and set to a common default value, which poses a severe security risk as it is easily discoverable and not secret.",
+        "recommendation": "Use a secure method to generate and store encryption keys, avoiding hardcoded values. Consider leveraging a secure vault service or environment variables for key management."
+    },
+    {
+        "misuse": "Insecure Trust Management",
+        "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");\nks.load(cacerts.openStream(), encryptKey);",
+        "description": "The code is loading a KeyStore from an arbitrary URL without validation. A malicious actor could intercept this connection or spoof the DNS entry to serve a compromised KeyStore.",
+        "recommendation": "Always use a trusted and securely obtained certificate store for KeyStore loading. If the URL must be used, ensure you are connecting over a secure channel and verify the source's authenticity."
+    },
+    {
+        "misuse": "Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "String type = \"JKS\";\nKeyStore ks = KeyStore.getInstance(type);",
+        "description": "JKS (Java KeyStore) is known for not providing integrity checking for the entire keystore. It uses a proprietary format that is considered less secure than other available types.",
+        "recommendation": "Prefer using PKCS12 over JKS for KeyStores as it is a standard format and more secure."
+    },
+    {
+        "misuse": "Exposure of Sensitive Information",
+        "vulnerable_code": "ENCRYPT_KEY = DEFAULT_ENCRYPT_KEY.toCharArray();\nencryptKey = ENCRYPT_KEY;",
+        "description": "The encryption key is stored in a static variable which could potentially be exposed through memory dumps or runtime introspection.",
+        "recommendation": "Avoid storing sensitive information like encryption keys in static variables. Use secure mechanisms such as KeyStore, and limit the scope of sensitive variables."
+    }
+]
+```

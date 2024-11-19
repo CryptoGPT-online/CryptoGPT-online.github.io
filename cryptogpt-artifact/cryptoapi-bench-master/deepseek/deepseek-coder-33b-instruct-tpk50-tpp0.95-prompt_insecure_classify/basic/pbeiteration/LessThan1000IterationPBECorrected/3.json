@@ -1,0 +1,11 @@
+Misuse Type: CWE-330: Use of Insufficiently Random Values.
+
+Misuse Code Snippets:
+```java
+byte[] salt = new byte[32];
+random.nextBytes(salt);
+```
+
+Description: The random number generator (SecureRandom) is seeded from /dev/random or a similar system-dependent source, which is then used to generate a salt for a PBEParameterSpec. However, this could cause a security weakness as the salt is created using a system-dependent source of randomness.
+
+Recommendation: It would be better to use a platform-independent source of randomness to create the salt. For example, use the SecureRandom.getInstanceStrong() method if it's available to use the /dev/urandom source of randomness. Otherwise, use the SecureRandom.getInstance() method to get a source of randomness from the system's default source. This would ensure a more secure source of randomness.

@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "KeyGenerator.getInstance(\"RC2\");",
+        "description": "The RC2 encryption algorithm is considered weak and insecure due to its small key size and susceptibility to various attacks.",
+        "recommendation": "Use a stronger encryption algorithm such as AES with a key size of 128, 192, or 256 bits."
+    },
+    {
+        "misuse": "No SecureRandom specified",
+        "vulnerable_code": "keyGen.generateKey();",
+        "description": "The KeyGenerator class may use a non-secure random number generator by default, which could lead to the generation of weak keys that are easier to predict or brute force.",
+        "recommendation": "Explicitly specify a secure random number generator when generating keys, such as 'SecureRandom.getInstanceStrong()' or a specific secure instance of SecureRandom."
+    },
+    {
+        "misuse": "ECB Mode / Non-Specified Cipher Mode and Padding",
+        "vulnerable_code": "Cipher.getInstance(\"RC2\");",
+        "description": "Using Cipher.getInstance with just \"RC2\" does not specify a cipher mode or padding scheme. The cipher instance might default to ECB mode, which is insecure for encrypting multiple blocks of data because identical plaintext blocks will result in identical ciphertext blocks.",
+        "recommendation": "Use a more secure mode of operation, like CBC, GCM, or CTR mode, along with an appropriate padding scheme, such as PKCS5Padding or NoPadding for block ciphers."
+    }
+]
+```

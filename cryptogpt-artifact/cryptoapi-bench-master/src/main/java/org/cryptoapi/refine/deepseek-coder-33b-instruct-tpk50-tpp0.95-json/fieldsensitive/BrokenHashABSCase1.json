@@ -1,0 +1,30 @@
+### False Positive Misuse
+{
+    "misuse category": "Use of a weak cryptographic algorithm",
+    "vulnerable_method": "C1(String defCrypto)",
+    "vulnerable_code": "crypto = new C1("SHA1"); md = MessageDigest.getInstance(crypto);",
+    "description": "The SHA1 algorithm is considered weak and should not be used for encryption or hash operations.",
+    "recommendation": "Use a stronger cryptographic algorithm like SHA-256, SHA-384, or SHA-512 for encryption and hash operations."
+}
+
+### Optimized Misuse JSON
+[
+    {
+        "misuse": "Hardcoded Cryptographic Algorithm",
+        "vulnerable_code": "C1(String defCrypto)",
+        "description": "This code is setting a cryptographic algorithm directly in the C1 class without providing any flexibility for users to choose. This can lead to a fixed algorithm being used which might not be secure or up-to-date, thus opening vulnerabilities.",
+        "recommendation": "Consider adding an option for users to specify the cryptographic algorithm. This will make the code more flexible and secure."
+    },
+    {
+        "misuse": "Missing Encoding Option in Crypto Operation",
+        "vulnerable_code": "md.update(str.getBytes());",
+        "description": "The update method of MessageDigest is used with getBytes() method that does not specify the encoding. It could use a different encoding scheme on different platforms which might lead to misinterpretation of data.",
+        "recommendation": "Explicitly specify the encoding format in getBytes() method, for example, use getBytes(\"UTF-8\")."
+    },
+    {
+        "misuse": "Insecure Cryptographic Hash Function",
+        "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(crypto);",
+        "description": "Twhe SHA1 algorithm, which is used in this code, is considered insecure for many reasons. It's no longer considered secure for cryptographic purposes, and it's vulnerable to collision attacks. If this function is used without appropriate precautions, it could lead to security vulnerabilities in your application.",
+        "recommendation": "Instead of using SHA1, it's recommended to use a secure hash function such as SHA-256 or SHA-3. The choice depends on the level of security you want to provide."
+    }
+]

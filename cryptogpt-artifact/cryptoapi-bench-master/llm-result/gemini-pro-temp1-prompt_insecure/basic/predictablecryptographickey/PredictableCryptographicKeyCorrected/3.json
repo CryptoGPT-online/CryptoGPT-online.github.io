@@ -1,0 +1,22 @@
+```
+[
+  {
+    "misuse": "CWE-326: Inadequate Key Management",
+    "vulnerable_code": "SecureRandom random = new SecureRandom();\nString defaultKey = String.valueOf(random.ints());",
+    "description": "The code uses `SecureRandom` to generate a key, but it does not specify any seed value. This means that the generated key may be predictable, making the encryption insecure.",
+    "recommendation": "Use a strong random number generator (RNG) to generate a cryptographically secure key. The RNG should be seeded with a strong seed value, such as a randomly generated number or a securely stored password."
+  },
+  {
+    "misuse": "CWE-321: Use of Hard-coded Cryptographic Key",
+    "vulnerable_code": "String defaultKey = String.valueOf(random.ints());",
+    "description": "The code uses a hard-coded key (`defaultKey`) to encrypt the data. This makes the encryption insecure, as an attacker can easily obtain the key and decrypt the data.",
+    "recommendation": "Generate a unique cryptographic key for each encryption operation. The key should be stored securely and not hard-coded in the code."
+  },
+  {
+    "misuse": "CWE-757: Use of Insecure Randomness",
+    "vulnerable_code": "SecureRandom random = new SecureRandom();\nString defaultKey = String.valueOf(random.ints());",
+    "description": "The code uses `SecureRandom` to generate randomness, but it does not specify any security provider. This means that the underlying RNG may be insecure and may not generate truly random numbers.",
+    "recommendation": "Specify a secure randomness provider when creating the `SecureRandom` instance. For example, `SecureRandom random = new SecureRandom("SHA1PRNG");`."
+  }
+]
+```

@@ -1,0 +1,21 @@
+```json
+[
+    {
+        "misuse": "Trust Manager that trusts all certificates",
+        "vulnerable_code": [
+            "new X509TrustManager() { ... public void checkClientTrusted(X509Certificate[] x509Certificates, String s) { ... }",
+            "new X509TrustManager() { ... public void checkServerTrusted(X509Certificate[] x509Certificates, String s) { ... }"
+        ],
+        "description": "The custom X509TrustManager implementation provided accepts any certificate without performing any real validation, leaving the SSL connection vulnerable to MiTM attacks.",
+        "recommendation": "Replace the custom X509TrustManager implementation that accepts any certificate with one that properly validates the certificate chain against a set of trusted root CAs."
+    },
+    {
+        "misuse": "Empty set of accepted issuers",
+        "vulnerable_code": [
+            "public X509Certificate[] getAcceptedIssuers() { ... return EMPTY_X509CERTIFICATE_ARRAY; }"
+        ],
+        "description": "The getAcceptedIssuers method is returning an empty array, which could contribute to accepting any certificate as trusted.",
+        "recommendation": "Implement getAcceptedIssuers to return a non-empty array of trusted CA certificates."
+    }
+]
+```

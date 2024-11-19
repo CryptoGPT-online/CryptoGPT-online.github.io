@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "Trust Manager that does not validate certificate chains (CWE-295)",
+    "vulnerable_code": "public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {}",
+    "description": "The TrustManager does not verify the certificate chain, which could allow an attacker to perform a man-in-the-middle attack.",
+    "recommendation": "Implement proper validation in checkServerTrusted method."
+  },
+  {
+    "misuse": "Trust Manager that does not validate certificate chains (CWE-295)",
+    "vulnerable_code": "public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {}",
+    "description": "The TrustManager does not verify the client certificate chain, which could allow an attacker with a self-signed certificate to impersonate a client.",
+    "recommendation": "Implement proper validation in checkClientTrusted method."
+  },
+  {
+    "misuse": "Returning null in getAcceptedIssuers (CWE-295)",
+    "vulnerable_code": "public java.security.cert.X509Certificate[] getAcceptedIssuers()",
+    "description": "getAcceptedIssuers should not return null because it is used by the trust manager to determine which certificate authorities are trusted. Returning null could lead to accepting any certificate authority, effectively disabling certificate checks.",
+    "recommendation": "Provide a valid array of certificates representing the acceptable CA issuers."
+  }
+]
+```

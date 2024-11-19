@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "String cryptoAlgo = \"AES/ECB/PKCS5Padding\";",
+        "description": "The code uses AES with ECB mode which is not semantically secure because identical plaintext blocks are encrypted to identical ciphertext blocks. This makes it vulnerable to various attacks, especially when patterns are present in the data.",
+        "recommendation": "Use a more secure mode of operation like CBC, CFB, OFB, or GCM which provide better security properties. Additionally, ensure that IV (for CBC, CFB, OFB modes) or nonce (for GCM) are used properly."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values.",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+        "description": "The KeyGenerator does not seem to be initialized with a secure randomness source or a specific key size, which might result in weak keys if the defaults are not secure.",
+        "recommendation": "Initialize the KeyGenerator with a specific key size and a secure randomness source. For example, 'keyGen.init(256, new SecureRandom());' to ensure a 256-bit key size."
+    }
+]
+```

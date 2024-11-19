@@ -1,0 +1,14 @@
+```json
+[{
+  "misuse": "Trust Manager that trusts all certificates",
+  "vulnerable_code": "public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {}",
+  "description": "The checkServerTrusted method is empty and does not perform any validation. This can allow any certificate to be accepted, including invalid or self-signed certificates, which makes the application vulnerable to man-in-the-middle attacks.",
+  "recommendation": "Implement proper validation of server certificates based on a set of trusted CA or self-signed certificates with pinned public keys."
+},
+{
+  "misuse": "Trust Manager that does not check client certificates",
+  "vulnerable_code": "public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {}",
+  "description": "The checkClientTrusted method is empty and does not perform any validation. Not validating client certificates can compromise the server's trust model and allow unauthorized clients to connect.",
+  "recommendation": "Implement proper validation of client certificates."
+}]
+```

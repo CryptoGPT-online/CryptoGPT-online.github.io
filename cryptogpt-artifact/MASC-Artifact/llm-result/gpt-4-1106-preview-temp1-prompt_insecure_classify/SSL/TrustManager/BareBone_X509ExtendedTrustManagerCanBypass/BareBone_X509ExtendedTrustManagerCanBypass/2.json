@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {\n\t// TODO Auto-generated method stub\n\n}\n\npublic void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {\n\t// TODO Auto-generated method stub\n\n}",
+        "description": "The methods checkClientTrusted and checkServerTrusted are empty, which means they do not perform any validation on the provided certificates. This is an improper Certificate validation, meaning any certificate and hence any server or client will be trusted without any checks.",
+        "recommendation": "Implement proper validation logic in checkClientTrusted and checkServerTrusted methods to ensure that the certificate chains are validated according to trust and validity checks appropriate for the application context."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "public void checkClientTrusted(X509Certificate[] chain, String authType, Socket socket)\n\t\t\t\tthrows CertificateException {\n\t\t\t// TODO Auto-generated method stub\n\t\t\t\n\t\t}\n\n\t\t\t@Override\n\t\t\tpublic void checkServerTrusted(X509Certificate[] chain, String authType, Socket socket)\n\t\t\t\tthrows CertificateException {\n\t\t\t// TODO Auto-generated method stub\n\t\t\t\n\t\t}",
+        "description": "The methods checkClientTrusted and checkServerTrusted with Socket as a parameter are empty. This implies no validation is performed on the client or server certificate when using a Socket, allowing any client or server to be trusted which is a severe security risk.",
+        "recommendation": "Implement proper validation of the certificate chains within the checkClientTrusted and checkServerTrusted methods where Socket information can also be used to help with the validation."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "public void checkClientTrusted(X509Certificate[] chain, String authType, SSLEngine engine)\n\t\t\t\tthrows CertificateException {\n\t\t\t// TODO Auto-generated method stub\n\t\t\t\n\t\t}\n\n\t\t\t@Override\n\t\t\tpublic void checkServerTrusted(X509Certificate[] chain, String authType, SSLEngine engine)\n\t\t\t\tthrows CertificateException {\n\t\t\t// TODO Auto-generated method stub\n\t\t\t\n\t\t}",
+        "description": "The methods checkClientTrusted and checkServerTrusted with SSLEngine as a parameter are also empty. Similar to the above, without any certificate validation, all clients and servers are implicitly trusted, which is insecure.",
+        "recommendation": "The certificate chain validation should be implemented in these methods, taking into account the additional context provided by the SSLEngine argument to perform a secure and context-aware certificate validation."
+    }
+]
+```

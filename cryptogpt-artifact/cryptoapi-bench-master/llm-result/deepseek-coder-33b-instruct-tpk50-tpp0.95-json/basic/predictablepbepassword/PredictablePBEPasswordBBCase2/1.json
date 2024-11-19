@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Insecure Crypto Algorithm",
+        "vulnerable_code": "PBEKeySpec pbeKeySpec = new PBEKeySpec(defaultKey,salt,iterationCount,keyLength);",
+        "description": "PBEKeySpec is used to create a key that is then used with a SecretKeyFactory. An iteration count of 11010 is extremely high, it is recommended to use a value between 1000 and 2000 to mitigate brute force attacks. The defaultKey should never be set to be a character array containing 's' or similar, as it can lead to easily brute forced plaintext.",
+        "recommendation": "The iteration count should be lowered to a more reasonable value. The defaultKey should be set to a value that is generated securely rather than a hard-coded value."
+    },
+    {
+        "misuse": "Insufficient Entropy",
+        "vulnerable_code": "sr.nextBytes(salt);",
+        "description": "The salt for the PBEKeySpec is generated using SecureRandom.nextBytes(). However, the SecureRandom object used is not seeded, which can lead to less secure random number generation.",
+        "recommendation": "Seed the SecureRandom object with a known and hard-to-predict value."
+    }
+]
+```

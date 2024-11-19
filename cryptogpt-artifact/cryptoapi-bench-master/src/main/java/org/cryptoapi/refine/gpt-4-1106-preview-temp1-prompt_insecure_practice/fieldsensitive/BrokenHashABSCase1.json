@@ -1,0 +1,89 @@
+### False Positive Misuse ###
+
+1. "Use of MessageDigest for Encryption" - This is a false positive because the `encrypt` method is indeed using `MessageDigest` for hashing, not encryption, despite the misleading method name.
+2. "Potential Key Disclosure" - This is a false positive because there is no encryption key involved in the hashing process.
+3. "Unnecessary Parameter" - This is a false positive because the `passedAlgo` parameter is used to allow the selection of a different algorithm if it is not empty.
+4. "No Data Validation" - This is a false positive in the context of cryptographic API misuse. While input validation is a good practice, it is not directly related to the cryptographic operation.
+5. "Invalid Cryptographic Operation" - This is a false positive because the code is not attempting to perform encryption; it is hashing, despite the method name suggesting otherwise.
+
+### Optimized Misuse JSON###
+
+```json
+[
+    {
+        "misuse": "Insecure Cryptographic Hash Function",
+        "vulnerable_code": "\"SHA1\"",
+        "description": "SHA1 is an outdated hash function and is no longer considered secure for integrity protection since it is vulnerable to collision attacks.",
+        "recommendation": "Use a secure hashing algorithm such as SHA-256 or SHA-3."
+    },
+    {
+        "misuse": "Message Digests Without Proper Encoding",
+        "vulnerable_code": "System.out.println(md.digest());",
+        "description": "Printing raw binary data without proper encoding may result in data loss or misinterpretation.",
+        "recommendation": "Encode the digest output using Base64 or hexadecimal encoding before printing or storing."
+    },
+    {
+        "misuse": "Ambiguous Cryptographic Operation Naming",
+        "vulnerable_code": "crypto.encrypt(\"abc\",\"\");",
+        "description": "The method 'encrypt' is misleading since it is actually computing a hash digest, not performing any encryption.",
+        "recommendation": "Rename the method to accurately describe its operation, such as 'computeHash' or 'generateDigest'."
+    },
+    {
+        "misuse": "Hardcoded Security-sensitive Constant",
+        "vulnerable_code": "crypto = new C1(\"SHA1\");",
+        "description": "The algorithm is hardcoded as a string constant, which makes it difficult to update or configure.",
+        "recommendation": "Define the algorithm through configuration and ensure it is updatable without code changes."
+    },
+    {
+        "misuse": "Hardcoded Encryption Algorithm",
+        "vulnerable_code": "crypto = defCrypto;",
+        "description": "The way the encryption algorithm is chosen allows an insecure algorithm or weak configuration to be hardcoded without validation.",
+        "recommendation": "Enforce a secure default algorithm and provide the option to choose only from a set of strong algorithms."
+    },
+    {
+        "misuse": "Digest Printed to Standard Output",
+        "vulnerable_code": "System.out.println(md.digest());",
+        "description": "Printing the digest to standard output could expose sensitive data and is not secure practice.",
+        "recommendation": "Ensure sensitive data is not logged or only securely logged if necessary."
+    },
+    {
+        "misuse": "Misleading Method Name",
+        "vulnerable_code": "public void encrypt(String str, String passedAlgo)",
+        "description": "The method name 'encrypt' suggests encryption, but the method actually performs hashing.",
+        "recommendation": "Rename the method to accurately reflect its hashing behavior."
+    },
+    {
+        "misuse": "Hardcoded Default Algorithm",
+        "vulnerable_code": "crypto = new C1(\"SHA1\");",
+        "description": "The default algorithm 'SHA1' is hardcoded, making it difficult to change to a more secure algorithm without modifying the source code.",
+        "recommendation": "Avoid hardcoding the algorithm, and instead, configure the default algorithm using a secure configuration file or secure defaults."
+    },
+    {
+        "misuse": "Insecure Printing of Sensitive Data",
+        "vulnerable_code": "System.out.println(md.digest());",
+        "description": "Printing cryptographic digests (or any sensitive data) to the console can leak information and should be handled securely.",
+        "recommendation": "Avoid printing sensitive cryptographic data to the console. If you must output the result in a secure logging mechanism with controlled access."
+    },
+    {
+        "misuse": "Use of Hard-coded Cryptographic Algorithms",
+        "vulnerable_code": [
+            "crypto = new C1(\"SHA1\");",
+            "MessageDigest md = MessageDigest.getInstance(crypto);"
+        ],
+        "description": "The code allows for use of a predefined (hard-coded) cryptographic algorithm which could lead to security issues if the algorithm is weak or compromised. Additionally, in the 'encrypt' method, 'passedAlgo' does not get used, which is misleading.",
+        "recommendation": "Do not hard-code cryptographic algorithm identifiers and ensure that any algorithm specified can be changed without altering the source code."
+    },
+    {
+        "misuse": "Unhandled Encoding",
+        "vulnerable_code": "str.getBytes()",
+        "description": "String.getBytes() is called without specifying a character encoding, which can result in different outputs on platforms with different default character sets.",
+        "recommendation": "Specify a character encoding (e.g., UTF-8) when converting strings to bytes."
+    },
+    {
+        "misuse": "Digest Print in Log",
+        "vulnerable_code": "System.out.println(md.digest());",
+        "description": "Printing cryptographic digests to logs may inadvertently expose sensitive data or details about the cryptographic mechanisms in use.",
+        "recommendation": "Avoid logging sensitive cryptographic outputs, or ensure they are logged securely."
+    }
+]
+```

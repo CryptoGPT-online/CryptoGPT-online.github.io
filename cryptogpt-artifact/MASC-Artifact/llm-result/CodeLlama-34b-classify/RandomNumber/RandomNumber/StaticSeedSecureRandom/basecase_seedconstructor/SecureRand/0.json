@@ -1,0 +1,16 @@
+ {"misuses": [{
+"misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+"vulnerable_code": "new SecureRandom(seedBytes)",
+"description": "The SecureRandom constructor with a String argument uses the SHA1PRNG algorithm, which is not recommended for new applications. Using this algorithm can make it easier for an attacker to predict the generated random numbers.",
+"recommendation": "Use a more secure algorithm, such as the SHA512PRNG or SHA3PRNG, by specifying the algorithm name and a seed in the SecureRandom constructor. For example: `SecureRandom.getInstanceStrong()` or `SecureRandom.getInstance("SHA3PRNG", new SecureRandomParameters(true));`"
+}, {
+"misuse": "CWE-326: Inadequate Encryption Strength.",
+"vulnerable_code": "new SecureRandom(seedBytes)",
+"description": "The default SecureRandom implementation in the Java Standard Library, which is used in the code, has a weak encryption strength of 160 bits. This is not enough for most security applications, and it can make it easier for an attacker to break the encryption.",
+"recommendation": "Use a stronger encryption strength by specifying a key size in the SecureRandom constructor. For example: `SecureRandom.getInstanceStrong(256)` or `SecureRandom.getInstance("SHA3PRNG", new SecureRandomParameters(true, 256));`"
+}, {
+"misuse": "CWE-330: Use of Insufficiently Random Values.",
+"vulnerable_code": "\"Seed\".getBytes(StandardCharsets.UTF_8)",
+"description": "The seed used to initialize the SecureRandom object is a constant string, which can be easily predicted by an attacker. This can weaken the security of the random number generation.",
+"recommendation": "Use a more random and unpredictable seed, such as a cryptographically secure random number generator, to improve the security of the random number generation."
+}]

@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Insecure Initialization Vector (IV)",
+        "vulnerable_code": "BigInteger i = BigInteger.valueOf(sr.nextInt());\n        byte [] bytes = i.toByteArray();",
+        "description": "The code generates an IV that may not have the correct size for the AES/CBC algorithm or may not be sufficiently random for encryption because of the use of `nextInt` which only provides 32 bits of random data. The IV must be 128-bit for AES.",
+        "recommendation": "Use SecureRandom to generate a random IV of the correct length (16 bytes for AES)."
+    },
+    {
+        "misuse": "Key Generation without Secure Random",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\n        SecretKey key = keyGen.generateKey();",
+        "description": "The code generates an encryption key using the default random source which may not be secure.",
+        "recommendation": "Specify a secure random source when generating keys. For example, keyGen.init(256, secureRandomInstance); where secureRandomInstance is an instance of SecureRandom."
+    }
+]
+```

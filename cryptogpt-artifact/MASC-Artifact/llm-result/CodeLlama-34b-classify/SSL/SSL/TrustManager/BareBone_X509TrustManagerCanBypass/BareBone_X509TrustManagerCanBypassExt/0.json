@@ -1,0 +1,26 @@
+ [
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": "BareBone_X509TrustManagerCanBypassExt",
+        "description": "The use of `BareBone_X509TrustManagerCanBypassExt` class allows for the bypass of certificate validation, which is a security risk.",
+        "recommendation": "Avoid using this class and instead use a more secure X509TrustManager implementation."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "X509TrustManager::getAcceptedIssuers()",
+        "description": "The `getAcceptedIssuers()` method returns null, which means that the trust manager will not check the issuer of the certificate. This is a security risk as it allows for the use of self-signed certificates.",
+        "recommendation": "Implement a more secure `getAcceptedIssuers()` method that checks the issuer of the certificate."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "X509TrustManager::checkClientTrusted() and X509TrustManager::checkServerTrusted()",
+        "description": "The `checkClientTrusted()` and `checkServerTrusted()` methods do not properly validate the certificate, allowing for potential certificate validation bypasses.",
+        "recommendation": "Implement proper certificate validation checks in these methods, including checking the certificate's issuer, expiration date, and other relevant attributes."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "X509TrustManager::getAcceptedIssuers()",
+        "description": "The `getAcceptedIssuers()` method returns a null value, which may be used as a seed for a cryptographic random number generator. This can lead to the use of a weak source of randomness, which can compromise the security of cryptographic operations.",
+        "recommendation": "Use a more secure source of randomness, such as the `java.security.SecureRandom` class, to generate the seed for the random number generator."
+    }
+]

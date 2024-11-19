@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "Trust Management (CWE-295, CWE-297)",
+    "vulnerable_code": "public void checkServerTrusted(X509Certificate[] x509Certificates, String s)",
+    "description": "The method 'checkServerTrusted' is empty, which means it does not validate the certificate chain. This makes the application vulnerable to Man-in-the-Middle (MITM) attacks because it will trust any certificate presented by the server.",
+    "recommendation": "Implement proper validation of the certificate chain to ensure that the server can be trusted. This typically involves checking that the certificate is issued by a trusted Certificate Authority (CA), that it is not expired, and that the hostname matches the certificate's Common Name or Subject Alternative Names."
+  },
+  {
+    "misuse": "Improper Certificate Validation (CWE-295)",
+    "vulnerable_code": "trustManager.checkClientTrusted(x509Certificates,s);",
+    "description": "Although 'checkClientTrusted' calls another trust manager, if this fallback trust manager is not properly initialized or is also improperly implemented, it could result in trusting any client certificate without proper validation.",
+    "recommendation": "Ensure that the delegated 'trustManager' properly validates client certificates according to the application's security requirements."
+  },
+  {
+    "misuse": "Improper Certificate Validation (CWE-295)",
+    "vulnerable_code": "public X509Certificate[] getAcceptedIssuers() { ... return new X509Certificate[0]; }",
+    "description": "Returning an empty array or null from 'getAcceptedIssuers' can be insecure as it implies there are no trusted certificate authorities, which could lead to the TrustManager accepting any certificate. This implementation may cause some SSL/TLS libraries to skip the certificate chain validation step, potentially allowing a MITM attack.",
+    "recommendation": "Return a non-empty array of trusted CA certificates that the trust manager should use to validate certificates."
+  }
+]
+```

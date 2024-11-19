@@ -1,0 +1,20 @@
+ [
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "keyGen.generateKey()",
+        "description": "The `generateKey()` method of `KeyGenerator` generates a random secret key, but it does not specify the length of the key. This can result in a key that is too short for secure encryption.",
+        "recommendation": "Specify the desired key length explicitly when generating a secret key. For example, use `keyGen.generateKey(256)` to generate a 256-bit key."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "Cipher.getInstance(\"AES/ECB/PKCS5Padding\")",
+        "description": "The `ECB` mode of operation does not use an Initialization Vector (IV), which can lead to deterministic encryption and enable attacks such as block confirmation attacks.",
+        "recommendation": "Use a secure mode of operation, such as `Cipher.getInstance(\"AES/CBC/PKCS5Padding\")` or `Cipher.getInstance(\"AES/CTR/NoPadding\")`, which provide additional security features such as authentication and integrity verification."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": "if(choice>1) cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\")",
+        "description": "The `Cipher` instance is conditionally set to use a less secure algorithm (`AES/CBC/PKCS5Padding`) based on a user-provided input (`choice`). This can allow an attacker to influence the encryption algorithm used, which can reduce the security of the encryption.",
+        "recommendation": "Ensure that the encryption algorithm used is deterministic and secure, and does not depend on user-provided input. If necessary, use a secure algorithm such as `AES/GCM/NoPadding` or `AES/CCM/NoPadding`, which provide additional security features such as authentication and integrity verification."
+    }
+]

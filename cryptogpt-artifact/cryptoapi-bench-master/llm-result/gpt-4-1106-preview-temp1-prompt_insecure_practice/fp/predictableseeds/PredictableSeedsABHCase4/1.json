@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "SecureRandom sr = new SecureRandom(new byte[]{b});",
+        "description": "The constructor of SecureRandom is being seeded with a predictable byte, which makes the randomness insecure.",
+        "recommendation": "Do not manually seed SecureRandom when high entropy is required; let the system provide its own seed."
+    },
+    {
+        "misuse": "Improper byte-to-character conversion",
+        "vulnerable_code": "byte[] seed = str.getBytes();",
+        "description": "Converting the string representation of random integers to bytes using the platform's default charset may not provide a uniformly distributed seed.",
+        "recommendation": "Use a reliable byte-oriented representation of random data."
+    },
+    {
+        "misuse": "Improper use of map with cryptography context",
+        "vulnerable_code": "Map<String, Byte> hm = new HashMap<String, Byte>();\nhm.put(\"aaa\", new Byte((byte) 100));\nhm.put(\"bbb\", new Byte((byte) 200));\nhm.put(\"ccc\", new Byte((byte) 300));\nhm.put(\"ddd\", new Byte((byte) 400));",
+        "description": "Storing raw bytes as Byte objects within a map for cryptographic purposes can be seen as misusing cryptographic APIs, as this may mishandle the raw bytes as Byte objects are not meant for high-precision crypto tasks.",
+        "recommendation": "Avoid using Byte objects to handle cryptographic materials; use byte arrays or specialized classes instead."
+    },
+    {
+        "misuse": "Improper Range of Byte Value",
+        "vulnerable_code": "hm.put(\"ddd\", new Byte((byte) 400));",
+        "description": "The cast to byte for the integer value 400 results in overflow, since 'byte' in Java can only contain values from -128 to 127.",
+        "recommendation": "Ensure that byte values are within the valid range."
+    }
+]
+```

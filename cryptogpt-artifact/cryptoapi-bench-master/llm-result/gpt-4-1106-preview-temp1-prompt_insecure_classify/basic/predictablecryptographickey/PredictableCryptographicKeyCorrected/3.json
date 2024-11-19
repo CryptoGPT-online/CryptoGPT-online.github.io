@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "String.valueOf(random.ints())",
+        "description": "The SecureRandom.ints() method returns an IntStream of randomly generated integers, but without specifying the number of integers or the bounds, it is converted to a String which might not provide sufficient randomness and entropy for cryptographic operations, especially for key generation.",
+        "recommendation": "Use SecureRandom to generate a proper random key with sufficient length and entropy. If you need to generate a key, use key generation APIs designed for this purpose."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "By truncating the key to 16 bytes, you are potentially reducing the key's strength. If the original randomly generated key was longer and provided more entropy, truncating it can result in a weaker key than intended.",
+        "recommendation": "Ensure that the key length matches the intended strength for the encryption algorithm (AES-128, AES-192, AES-256). Use cryptographic APIs to generate keys of the proper length."
+    }
+]
+```

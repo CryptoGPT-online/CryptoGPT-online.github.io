@@ -1,0 +1,28 @@
+```json
+[
+  {
+    "misuse": "Inadequate Salt",
+    "vulnerable_code": "byte[] salt = {b,b};",
+    "description": "The salt used in PBEParameterSpec is only 2 bytes long, which is inadequate to protect against rainbow table attacks.",
+    "recommendation": "Use a longer and more random salt value, at least 16 bytes long."
+  },
+  {
+    "misuse": "Weak Iteration Count",
+    "vulnerable_code": "int count = 1020;",
+    "description": "The iteration count of 1020 is relatively low. A low iteration count makes brute-force attacks easier.",
+    "recommendation": "Increase the iteration count to a minimum value of 10000 to make password cracking significantly harder."
+  },
+  {
+    "misuse": "Default value in HashMap",
+    "vulnerable_code": "Map<String,Byte> hm = new HashMap<String, Byte>();",
+    "description": "Storing cryptographic materials like keys or salts directly in a HashMap could lead to unintentional leaks if the map is accidentally printed or logged.",
+    "recommendation": "Avoid storing cryptographic materials in data structures that may be logged or printed. Use secure containers for keys and salts."
+  },
+  {
+    "misuse": "Insecure cryptographic operation",
+    "vulnerable_code": "pbeParamSpec = new PBEParameterSpec(salt, count);",
+    "description": "The actual usage or algorithm is not specified, and therefore it is not possible to evaluate it for things like insecure algorithms. However, some common password-based encryption algorithms are known to be weak. In practice, this can be insecure unless a strong algorithm and secure usage are ensured.",
+    "recommendation": "Use secure algorithms like PBKDF2 with HmacSHA256 or SHA512. Make sure to use a proper algorithm specification when initializing PBEParameterSpec objects."
+  }
+]
+```

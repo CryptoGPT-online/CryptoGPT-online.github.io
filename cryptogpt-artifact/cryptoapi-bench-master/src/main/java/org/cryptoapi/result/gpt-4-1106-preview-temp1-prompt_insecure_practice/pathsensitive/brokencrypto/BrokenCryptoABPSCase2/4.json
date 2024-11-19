@@ -1,0 +1,34 @@
+```json
+[
+    {
+        "misuse": "Inappropriate Encryption Algorithm",
+        "vulnerable_code": "Cipher.getInstance(\"Blowfish\")",
+        "description": "The code initializes a Cipher instance with the Blowfish algorithm, which may not be secure enough for all contexts as it has a block size of 64 bits which is considered insufficient.",
+        "recommendation": "Use AES with a 128-bit block size."
+    },
+    {
+        "misuse": "Insecure Key Generation",
+        "vulnerable_code": "KeyGenerator.getInstance(\"AES\")",
+        "description": "The code uses the default key size for AES, which might not meet the minimum security requirements if it defaults to a key size less than 128 bits.",
+        "recommendation": "Specify the key size explicitly by using keyGen.init(128), keyGen.init(192), or keyGen.init(256)."
+    },
+    {
+        "misuse": "Mismatched Encryption Algorithm and Key",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key)",
+        "description": "The key generated for AES is used to initialize a Blowfish cipher when choice is not greater than 1, causing a mismatch between the encryption algorithm and the key.",
+        "recommendation": "Ensure that the key algorithm matches the cipher algorithm."
+    },
+    {
+        "misuse": "Missing Initialization Vector (IV)",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key)",
+        "description": "When using AES in CBC mode, it requires an initialization vector (IV) which is missing in the code. This could lead to predictable and insecure encryption.",
+        "recommendation": "Use a securely generated IV by using the SecureRandom class and specify it when initializing the Cipher instance."
+    },
+    {
+        "misuse": "Static Decision for Encryption Mode",
+        "vulnerable_code": "if (choice > 1) cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+        "description": "The mode of encryption is chosen at runtime based on the value of 'choice'. If a user can influence 'choice', this could lead to the use of a weaker algorithm (Blowfish in this case) through a control flow based flaw.",
+        "recommendation": "Always use strong encryption algorithms with secure modes and avoid runtime decisions for cryptographic operations based on user input."
+    }
+]
+```

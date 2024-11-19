@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values.",
+    "vulnerable_code": "SecureRandom random = new SecureRandom();\nrandom.nextBytes(salt);",
+    "description": "The SecureRandom class is not properly seeded, which may result in insufficient randomness in the generated salt.",
+    "recommendation": "Use a cryptographically secure random number generator (CSPRNG) that is properly seeded from a secure source of randomness, such as `/dev/urandom` on Linux or `CryptGenRandom` on Windows."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength.",
+    "vulnerable_code": "PBEParameterSpec pbeParamSpec = null;\npbeParamSpec = new PBEParameterSpec(salt, count);",
+    "description": "The number of iterations (`count`) for the PBKDF2 algorithm is set to a low value, which makes the resulting key less resistant to brute-force attacks.",
+    "recommendation": "Increase the number of iterations to a higher value, such as 100,000 or more, to make the key derivation process more computationally expensive and thus more resistant to brute-force attacks."
+  }
+]
+```

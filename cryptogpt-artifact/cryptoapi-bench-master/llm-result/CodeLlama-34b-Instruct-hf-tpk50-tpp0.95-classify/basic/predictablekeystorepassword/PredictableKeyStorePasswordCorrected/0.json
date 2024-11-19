@@ -1,0 +1,14 @@
+ [
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": "SecureRandom random = new SecureRandom();",
+        "description": "The `SecureRandom` class provides a random number generator that is designed to produce secure and unpredictable random values. However, the default constructor used in this code does not specify the algorithm to use, which could potentially lead to the selection of a less secure algorithm. The `getInstance` method should be used to specify the algorithm explicitly, to ensure that the correct and secure algorithm is used.",
+        "recommendation": "Change the code to use the `getInstance` method to specify the algorithm explicitly, and provide a more secure algorithm, such as `SHA1PRNG` or `NativePRNG`."
+    },
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "String password = String.valueOf(random.ints());",
+        "description": "The `ints` method of `SecureRandom` class generates random integers. The use of these random integers as a password is a vulnerability, as it may be possible for an attacker to guess the password, as it is based on a predictable sequence of random numbers. The use of a password that is based on a cryptographically secure random number generator would be more secure.",
+        "recommendation": "Change the code to use a more secure method to generate a password, such as using the `generateSeed` method of the `SecureRandom` class, or a password-derived key (PDK)."
+    }
+]

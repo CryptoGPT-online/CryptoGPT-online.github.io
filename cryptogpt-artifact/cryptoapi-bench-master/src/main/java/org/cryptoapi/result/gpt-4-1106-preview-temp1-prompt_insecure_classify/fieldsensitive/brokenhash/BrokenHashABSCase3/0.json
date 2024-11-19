@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "crypto = new C3(\"MD4\");",
+        "description": "MD4 is a broken and cryptographically insecure hashing algorithm that is susceptible to numerous attacks, including collision and pre-image attacks.",
+        "recommendation": "Replace MD4 with a more secure hashing algorithm, such as SHA-256 or SHA-3."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_code": "md.update(str.getBytes());\nSystem.out.println(md.digest());",
+        "description": "Using MD4 does not provide adequate encryption strength due to its known vulnerabilities and it is being used for hashing here, not encryption. Hashing is not encryption and should not be used as a substitute for encryption.",
+        "recommendation": "If the intent is to hash data, use SHA-256 or SHA-3. If encryption is needed, use AES or another secure encryption algorithm with appropriate key management."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values.",
+        "vulnerable_code": "md.update(str.getBytes());",
+        "description": "The hashing process does not include a random salt, making it susceptible to rainbow table attacks and brute-force attacks.",
+        "recommendation": "Always use a unique and random salt when hashing, and consider using a key derivation function like PBKDF2, bcrypt, or scrypt."
+    }
+]
+```

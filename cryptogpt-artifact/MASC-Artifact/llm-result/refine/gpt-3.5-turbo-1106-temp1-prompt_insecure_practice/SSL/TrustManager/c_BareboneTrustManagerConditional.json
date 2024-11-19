@@ -1,0 +1,44 @@
+### False Positive Misuse ###
+N/A
+
+### Optimized Misuse JSON###
+```json
+[
+    {
+        "misuse": "Insecure Trust Manager Implementation",
+        "vulnerable_code": "new BareboneTrustManagerExt() { ... }",
+        "description": "The custom TrustManager implementation 'BareboneTrustManagerExt' does not perform any actual certificate validation, and the checkClientTrusted, checkServerTrusted, and getAcceptedIssuers methods are not correctly implemented to provide secure validation.",
+        "recommendation": "Use a standard trust manager implementation provided by the Java platform or a reputable library (e.g., X509TrustManager). If custom validation is required, ensure that the implementation follows secure practices for certificate validation."
+    },
+    {
+        "misuse": "Insecure RNG Usage",
+        "vulnerable_code": "new SecureRandom()",
+        "description": "A newly initialized SecureRandom instance may not provide sufficient randomness, leading to insecure cryptographic operations.",
+        "recommendation": "Use a more secure source of randomness, such as SecureRandom.getInstanceStrong(), to create the SecureRandom instance."
+    },
+    {
+        "misuse": "Hardcoded Key",
+        "vulnerable_code": "context.init(null, trustAll, new SecureRandom());",
+        "description": "The code is using a TrustManager with hardcoded acceptance of any certificate, which can lead to insecure communication.",
+        "recommendation": "Use a custom TrustManager implementation that properly validates the server certificate."
+    },
+    {
+        "misuse": "Improper Validation of Certificate with Host Mismatch",
+        "vulnerable_code": "public void checkServerTrusted(java.security.cert.X509Certificate[] arg0, java.lang.String arg1)",
+        "description": "The checkServerTrusted method does not properly validate the server certificate with the expected hostname.",
+        "recommendation": "Use the javax.net.ssl.HostnameVerifier to validate the server certificate with the expected hostname."
+    },
+    {
+        "misuse": "Overly Permissive Trust Manager",
+        "vulnerable_code": "public void checkClientTrusted(java.security.cert.X509Certificate[] arg0, java.lang.String arg1)",
+        "description": "The checkClientTrusted method contains an overly permissive condition that allows any client certificate to be trusted without proper validation.",
+        "recommendation": "Implement proper validation of client certificates based on the specific use case and security requirements."
+    },
+    {
+        "misuse": "Insecure Random Number Generation",
+        "vulnerable_code": "new SecureRandom()",
+        "description": "The use of SecureRandom without specifying a secure source of randomness can lead to insecure random number generation.",
+        "recommendation": "Use a cryptographically secure source of randomness, such as SecureRandom.getInstanceStrong(), to initialize the SSLContext."
+    }
+]
+```

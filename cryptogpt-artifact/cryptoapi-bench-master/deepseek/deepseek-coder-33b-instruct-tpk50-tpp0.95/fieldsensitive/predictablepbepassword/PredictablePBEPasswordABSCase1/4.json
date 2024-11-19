@@ -1,0 +1,36 @@
+Misuse: "Broken Crypto Algorithm"
+
+Vulnerable Code:
+```java
+pbeKeySpec = new PBEKeySpec(passedPassword.toCharArray(),salt,iterationCount,keyLength);
+```
+
+Description: 
+The iteration count specified is not suitable for a secure encryption, and it is a weak value for a PBEKeySpec which is used for the creation of an instance of a PBEKey which is then used to initialize a Cipher object which is used to perform the encryption or decryption operation.
+
+Recommendation: 
+You should use an appropriate secure iteration count for the PBEKeySpec. A common suggestion is to use at least 1,000 iterations for a secure algorithm like PBKDF2. However, the exact count will depend on the requirements of your application.
+
+```java
+int iterationCount = 20000;
+```
+
+Also, make sure that the salt and IV are randomly generated for each encryption and stored alongside the ciphertext. Reusing these can lead to vulnerabilities, especially if the same password is used with the same salt or IV. 
+
+Please note that the iteration count and key length are typically chosen according to the performance and security requirements of the application. In many cases, it is recommended to use a higher iteration count, particularly when using a fast hash function like SHA-256. 
+
+```java
+// Generate a secure random salt
+byte[] salt = new byte[16];
+SecureRandom sr = new SecureRandom();
+sr.nextBytes(salt);
+
+// Use a random Initialization Vector for each encryption
+byte[] iv = new byte[16];
+sr.nextBytes(iv);
+
+// Use a secure iteration count for the PBEKeySpec
+int iterationCount = 20000;
+int keyLength = 16;
+pbeKeySpec = new PBEKeySpec(passedPassword.toCharArray(), salt, iterationCount, keyLength);
+```

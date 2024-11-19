@@ -1,0 +1,30 @@
+Misuse Type: "Broken Crypto Algorithm"
+Misuse Code Snippets:
+```
+KeyGenerator keyGen = KeyGenerator.getInstance(crypto);
+Cipher cipher = Cipher.getInstance(crypto);
+```
+Description: The code uses the obsolete RC2 encryption algorithm which is considered insecure. RC2 is no longer recommended for secure encryption.
+
+Recommendation: Switch to more secure encryption algorithms like AES, RSA, etc.
+
+Here's the fixed code:
+
+```java
+public class B4 {
+    public void go(String crypto) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+        KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+        SecretKey key = keyGen.generateKey();
+        Cipher cipher = Cipher.getInstance("AES");
+        cipher.init(Cipher.ENCRYPT_MODE, key);
+    }
+
+    public static void main (String [] args) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+        B4 bc = new B4();
+        String crypto = "RC2";
+        bc.go(crypto);
+    }
+}
+```
+
+Please note that this is just a demonstration, actual key generation and cipher creation can vary based on your requirements.

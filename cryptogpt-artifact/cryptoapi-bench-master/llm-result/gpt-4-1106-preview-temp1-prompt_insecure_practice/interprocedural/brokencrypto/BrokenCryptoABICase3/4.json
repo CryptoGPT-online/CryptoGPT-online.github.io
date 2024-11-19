@@ -1,0 +1,34 @@
+```json
+[
+    {
+        "misuse": "Weak Encryption Algorithm",
+        "vulnerable_code": "String crypto = \"RC4\";",
+        "description": "RC4 is considered to be a weak encryption algorithm due to various vulnerabilities, including biases in the RC4 keystream which can lead to cryptographic attacks.",
+        "recommendation": "Switch to a more secure encryption algorithm such as AES."
+    },
+    {
+        "misuse": "Hardcoded Crypto Parameter",
+        "vulnerable_code": "String crypto = \"RC4\";",
+        "description": "Hardcoding the cryptographic algorithm limits flexibility and could lead to vulnerabilities if the algorithm needs to be changed or if it becomes outdated and insecure.",
+        "recommendation": "Make the cryptographic algorithm configurable or use a secure default algorithm like AES with a secure mode of operation."
+    },
+    {
+        "misuse": "Missing Secure Mode of Operation",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(crypto);",
+        "description": "The code defaults to ECB mode if no mode or padding is specified. This is insecure as ECB mode doesn't provide serious message confidentiality in the context of regularly structured data.",
+        "recommendation": "Use a mode of operation like CBC, CFB, OFB, or GCM that provides better security guarantees."
+    },
+    {
+        "misuse": "Missing Secure Padding Scheme",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(crypto);",
+        "description": "By not specifying a padding scheme, the code could default to 'NoPadding' which can be problematic for block ciphers. This isn't directly applicable to RC4 as it's a stream cipher, but it's important to specify padding when using other algorithms.",
+        "recommendation": "Use a padding scheme like PKCS#5/PKCS#7 when dealing with block ciphers."
+    },
+    {
+        "misuse": "Insufficient Randomness for Key Material",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(crypto); \nSecretKey key = keyGen.generateKey();",
+        "description": "The code might not be using a sufficiently strong source of randomness for key generation which could make it easier for an attacker to predict or reproduce the key.",
+        "recommendation": "Ensure the KeyGenerator is properly seeded with a secure randomness source."
+    }
+]
+```

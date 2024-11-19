@@ -1,0 +1,28 @@
+```json
+[
+  {
+    "misuse": "TrustManager that trust all certificates",
+    "vulnerable_code": "new X509TrustManager() { ...",
+    "description": "The custom X509TrustManager implementation in checkClientTrusted and checkServerTrusted method is insecure as it does not adequately verify that the presented certificate is valid. It only checks the authType (whether it's RSA), which is insufficient for security.",
+    "recommendation": "Implement proper certificate validation in checkClientTrusted and checkServerTrusted methods."
+  },
+  {
+    "misuse": "Empty getAcceptedIssuers method",
+    "vulnerable_code": "public X509Certificate[] getAcceptedIssuers() { return null; }",
+    "description": "Returning null from getAcceptedIssuers will accept any certificate, which makes the application vulnerable to man-in-the-middle attacks.",
+    "recommendation": "Return a proper list of accepted issuers or throw an exception if the trust manager is not supposed to provide any trusted issuers."
+  },
+  {
+    "misuse": "Weak SSL/TLS Protocol",
+    "vulnerable_code": "SSLContext.getInstance(\"SSL\")",
+    "description": "Using SSL protocol can be vulnerable to multiple attacks and should not be used. TLS should be used instead.",
+    "recommendation": "Use TLS protocol by changing `SSL` to `TLS` when getting an instance of SSContext."
+  },
+  {
+    "misuse": "Insecure Random Number Generator",
+    "vulnerable_code": "new SecureRandom()",
+    "description": "While it may not seem directly insecure to use SecureRandom, if used elsewhere for cryptographic purposes without proper seeding, it could lead to vulnerabilities. Therefore, confirming its secure use is necessary.",
+    "recommendation": "Ensure SecureRandom is properly seeded when used for cryptographic purposes elsewhere in the application."
+  }
+]
+```

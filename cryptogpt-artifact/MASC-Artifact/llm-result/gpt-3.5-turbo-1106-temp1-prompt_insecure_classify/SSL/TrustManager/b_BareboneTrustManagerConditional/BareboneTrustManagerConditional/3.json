@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "public void checkClientTrusted(X509Certificate[] x509Certificates, String s) {...}",
+        "description": "The checkClientTrusted method does not properly validate the client certificate. It only checks if the AuthType is RSA and the certificate length is greater than or equal to 314, which is not a sufficient validation.",
+        "recommendation": "Properly validate the client certificate by implementing appropriate validation checks, such as verifying the certificate chain, expiration, and signature, and comparing the client's distinguished name with a whitelist."
+    },
+    {
+        "misuse": "CWE-295: Improper Certificate Validation",
+        "vulnerable_code": "public void checkServerTrusted(X509Certificate[] x509Certificates, String s) {...}",
+        "description": "The checkServerTrusted method suffers from the same issue as the checkClientTrusted method, as it also does not properly validate the server certificate.",
+        "recommendation": "Properly validate the server certificate by implementing appropriate validation checks, such as verifying the certificate chain, expiration, and signature, and comparing the server's distinguished name with a whitelist."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "context.init(null, trustAll, new SecureRandom());",
+        "description": "The use of SecureRandom without specifying a specific source of randomness may result in insufficiently random values, which can weaken the security of cryptographic operations.",
+        "recommendation": "Provide a properly seeded and cryptographically strong SecureRandom instance to the SSLContext.init method."
+    }
+]
+```

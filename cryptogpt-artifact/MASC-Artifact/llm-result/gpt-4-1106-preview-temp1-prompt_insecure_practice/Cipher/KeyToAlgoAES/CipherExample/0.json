@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Cipher Mode",
+        "vulnerable_code": "Cipher.getInstance(keygen.getAlgorithm())",
+        "description": "The code does not specify a cipher mode or padding scheme, defaulting to possibly insecure ECB mode and PKCS5Padding.",
+        "recommendation": "Change to a more secure mode and padding, e.g., AES/GCM/NoPadding."
+    },
+    {
+        "misuse": "Weak Encryption Key Size",
+        "vulnerable_code": "KeyGenerator.getInstance(algo)",
+        "description": "The code generates a key without specifying its size, which could lead to a weak key if the default size is not strong enough (for AES, less than 128 bits).",
+        "recommendation": "Specify a secure key size when generating the key, for example keygen.init(256); for AES."
+    },
+    {
+        "misuse": "Missing Secure Random for Key Generation",
+        "vulnerable_code": "KeyGenerator.getInstance(algo)",
+        "description": "The code generates an encryption key without specifying a source of secure randomness.",
+        "recommendation": "Provide a SecureRandom instance to the key generator."
+    }
+]
+```

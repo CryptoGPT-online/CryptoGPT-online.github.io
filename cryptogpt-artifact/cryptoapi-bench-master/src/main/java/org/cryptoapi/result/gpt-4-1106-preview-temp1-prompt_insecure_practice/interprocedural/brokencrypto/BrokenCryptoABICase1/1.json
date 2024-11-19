@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Weak Encryption Algorithm",
+        "vulnerable_code": "String crypto = \"DES/ECB/PKCS5Padding\";\nString keyAlgo = \"DES\";",
+        "description": "DES (Data Encryption Standard) is considered insecure due to its short key length of 56 bits, which makes it susceptible to brute-force attacks.",
+        "recommendation": "Use a more secure algorithm such as AES with a key size of at least 128 bits."
+    },
+    {
+        "misuse": "Insecure Mode of Operation",
+        "vulnerable_code": "String crypto = \"DES/ECB/PKCS5Padding\";",
+        "description": "ECB (Electronic Codebook) mode does not provide serious message confidentiality, which allows the patterns of the input to be visible in the output.",
+        "recommendation": "Use a more secure mode such as CBC (Cipher Block Chaining) with proper IV handling or GCM (Galois/Counter Mode) for authenticated encryption."
+    },
+    {
+        "misuse": "Missing Initialization Vector",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "When using a block cipher mode that requires an Initialization Vector (IV), it is a security flaw not to provide an IV. For ECB, it's not applicable, but using ECB itself is not recommended.",
+        "recommendation": "Supply an IV when using modes like CBC. IV should be random and unique for each encryption operation."
+    }
+]
+```

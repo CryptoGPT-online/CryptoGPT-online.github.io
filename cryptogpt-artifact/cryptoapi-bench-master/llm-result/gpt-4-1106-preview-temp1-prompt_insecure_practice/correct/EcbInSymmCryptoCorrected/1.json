@@ -1,0 +1,38 @@
+```json
+[
+    {
+        "misuse": "Missing Initialization Vector (IV)",
+        "vulnerable_code": [
+            "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\");",
+            "cipher.init(Cipher.ENCRYPT_MODE, key);"
+        ],
+        "description": "The code uses AES in CBC mode but does not specify an Initialization Vector (IV). Each time the cipher.init method is called without an IV, a new one is created. This IV should be passed to the decrypting party, or else decryption will fail. Otherwise, if the IV is reused, the encryption is vulnerable to certain attacks.",
+        "recommendation": "Specify an IV using IvParameterSpec class and securely share the IV with parties that need to decrypt the data."
+    },
+    {
+        "misuse": "ECB Mode Reference in Class Name",
+        "vulnerable_code": [
+            "EcbInSymmCryptoBBCase1 bc = new EcbInSymmCryptoBBCase1();"
+        ],
+        "description": "Although the code implementation does not use ECB mode, the reference to ECB in the class name EcbInSymmCryptoBBCase1 is misleading and could cause confusion. ECB mode is insecure and should not be used.",
+        "recommendation": "Rename the class to avoid mentioning ECB if ECB mode is not being used. Omit the ECB-related portions from the class name."
+    },
+    {
+        "misuse": "Lack of Secure Random Source in Key Generation",
+        "vulnerable_code": [
+            "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+            "SecretKey key = keyGen.generateKey();"
+        ],
+        "description": "The KeyGenerator does not specify a secure random source for key generation. While Java can often provide a secure random source by default, specifying one explicitly can ensure a high-quality source of entropy.",
+        "recommendation": "Explicitly initialize the KeyGenerator with a SecureRandom instance (e.g., SecureRandom.getInstanceStrong())."
+    },
+    {
+        "misuse": "Improper Exception Handling",
+        "vulnerable_code": [
+            "public void go() throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException"
+        ],
+        "description": "The method signatures declare exceptions but do not handle them, which could expose the application to uncontrolled behavior if those exceptions occur.",
+        "recommendation": "Add proper exception handling to manage the declared exceptions rather than propagating them."
+    }
+]
+```

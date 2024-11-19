@@ -1,0 +1,18 @@
+```json
+[{
+  "misuse": "CWE-295: Improper Certificate Validation",
+  "vulnerable_code": "new X509TrustManager() {...}",
+  "description": "The implemented X509TrustManager does not actually verify the validity of the presented certificate, defeating the purpose of SSL/TLS authentication.",
+  "recommendation": "Implement proper certificate validation by checking the certificate chain against a trust store of known issuers."
+},{
+  "misuse": "CWE-330: Use of Insufficiently Random Values",
+  "vulnerable_code": "context.init(null, trustAll, new SecureRandom());",
+  "description": "Although SecureRandom is used, the overall construct of the SSLContext is insecure due to the improper implementation of the TrustManager, potentially making random values irrelevant.",
+  "recommendation": "Ensure that SecureRandom is used in a secure context where all aspects of the security implementation are properly addressed."
+},{
+  "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+  "vulnerable_code": "SSLContext.getInstance(\"TLS\")",
+  "description": "Requesting a TLS context without specifying the protocol version will pick any available protocol, which may include less secure versions like TLS 1.0 or SSLv3.",
+  "recommendation": "Specify the most secure and recent protocol version explicitly, for example 'TLSv1.3'."
+}]
+```

@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+        "description": "The code does not specify a key size for AES key generation. The default key size may not meet the minimum security requirements, potentially leading to a weaker than intended encryption strength.",
+        "recommendation": "Specify a key size when generating the AES key. For example, use keyGen.init(256); to generate a key with a size of 256 bits."
+    },
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "BigInteger i = BigInteger.valueOf(sr.nextInt());\nbyte [] bytes = i.toByteArray();",
+        "description": "The use of nextInt() for generating an IV may lead to an IV that is not cryptographically secure. Additionally, when converting the integer to a byte array, it may not provide the proper IV length for AES (which should be 16 bytes) and could cause array length issues.",
+        "recommendation": "Use SecureRandom's nextBytes method to generate a byte array of the proper length (16 bytes for AES) directly."
+    },
+    {
+        "misuse": "Inadequate Exception Handling",
+        "vulnerable_code": "public static void main (String [] args) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, InvalidAlgorithmParameterException",
+        "description": "The main method throws low-level cryptographic exceptions, which is not a best practice for exception handling. This can reveal cryptographic implementation details to callers and should be avoided.",
+        "recommendation": "Catch low-level exceptions and potentially rethrow them as more general application or custom exceptions that do not reveal cryptographic details."
+    },
+    {
+        "misuse": "Default SecureRandom",
+        "vulnerable_code": "SecureRandom sr = new SecureRandom();",
+        "description": "While SecureRandom without a specified algorithm is generally secure, some JVMs may default to non-secure implementations. It is also dependent on the underlying operating system and JVM version.",
+        "recommendation": "Specify a SecureRandom algorithm to guarantee a secure and predictable implementation regardless of the platform. For example, SecureRandom.getInstanceStrong();"
+    }
+]
+```

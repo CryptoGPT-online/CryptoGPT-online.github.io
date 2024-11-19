@@ -1,0 +1,14 @@
+[
+  {
+    "misuse": "Hardcoded cryptography keys",
+    "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, kp.getPublic());",
+    "description": "The cipher is initialized using the public key, which should be hardcoded and shared. The private key should always be kept private. The above line of code may result in key exposure, and thus may compromise the confidentiality of the encrypted data.",
+    "recommendation": "Avoid using hardcoded keys in cryptographic operations. Instead, use keys stored in secure locations and fetched during runtime."
+  },
+  {
+    "misuse": "Weak random number generation for key generation",
+    "vulnerable_code": "kgp.initialize(keysize);",
+    "description": "The KeyPairGenerator uses a fixed keysize of 1024 or 2048, which is a weak form of random number generation. This could lead to the weak keys that may be easy to brute force if the private key is compromised.",
+    "recommendation": "Always use a strong random number generator (RNG) for generating the keysizes for the KeyPairGenerator. If possible, consider using RSA keys of size 2048 or higher."
+  }
+]

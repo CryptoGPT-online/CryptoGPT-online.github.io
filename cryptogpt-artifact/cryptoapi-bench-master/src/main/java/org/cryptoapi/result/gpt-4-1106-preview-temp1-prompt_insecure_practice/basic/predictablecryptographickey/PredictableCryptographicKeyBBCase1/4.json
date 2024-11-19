@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "byte[] keyBytes = defaultKey.getBytes();\nkeyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The code derives a key from a constant string 'defaultkey' which is of insufficient length and not randomly generated. AES requires keys of 128, 192, or 256 bits in length, and constructing a key from a non-random, short, or default string can result in weak encryption.",
+        "recommendation": "Use a properly generated key using a secure random number generator or a cryptographically secure key derivation function."
+    },
+    {
+        "misuse": "Use of a Default Key",
+        "vulnerable_code": "String defaultKey = \"defaultkey\";",
+        "description": "The code uses a hardcoded key 'defaultkey', which is a common string. This makes it trivial for an attacker to guess or brute-force the key, completely undermining the encryption it's used with.",
+        "recommendation": "Instead of a hardcoded key, ensure that keys are properly generated using a secure random number generator or derived from a passphrase with a strong key derivation function."
+    }
+]
+```

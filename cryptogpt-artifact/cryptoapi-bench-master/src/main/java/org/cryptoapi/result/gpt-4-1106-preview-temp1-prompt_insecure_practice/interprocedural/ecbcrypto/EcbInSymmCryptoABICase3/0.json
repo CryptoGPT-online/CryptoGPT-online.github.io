@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Cipher Mode",
+        "vulnerable_code": "Cipher.getInstance(crypto);",
+        "description": "ECB (Electronic Codebook) is insecure because it does not use an initialization vector (IV) and encrypts identical plaintext blocks into identical ciphertext blocks.",
+        "recommendation": "Use a more secure mode like CBC, CFB, OFB, or GCM, and include a unique IV for each encryption operation."
+    },
+    {
+        "misuse": "Hardcoded Cipher Algorithms",
+        "vulnerable_code": "String crypto = \"AES/ECB/PKCS5Padding\";",
+        "description": "Hardcoding the cipher algorithms does not allow for easy updates or changes to stronger algorithms without modifying the source code, and ECB mode is not recommended.",
+        "recommendation": "Use a configurable cipher algorithm, and avoid using ECB mode."
+    },
+    {
+        "misuse": "Missing Initialization Vector (IV)",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "The use of Cipher without specifying an IV makes the encryption predictable and vulnerable to attacks such as replay attacks.",
+        "recommendation": "Always initialize the Cipher instance with an IV when using CBC or other modes that require an IV. The IV should be random and unique."
+    }
+]
+```

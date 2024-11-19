@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "Insecure Seed Initialization",
+    "vulnerable_code": "rand1.setSeed(seedBytes); rand2.setSeed(seedBytes);",
+    "description": "Setting the same seed on two instances of SecureRandom `rand1` and `rand2` will produce the same sequence of pseudo-random numbers. This can reduce the randomness and security of the values produced by the SecureRandom instances in contexts where predictability is a security concern.",
+    "recommendation": "Remove the manual seed initialization to allow SecureRandom to self-seed with a unpredictable value or use a stronger, ideally non-deterministic method to generate a seed."
+  },
+  {
+    "misuse": "Possible Usage of Weak PRNG",
+    "vulnerable_code": "SecureRandom.getInstance('NativePRNG')",
+    "description": "The PRNG 'NativePRNG' can be potentially weak on some platforms. It is not guaranteed to be strong across different operating systems and versions.",
+    "recommendation": "Prefer a more consistently secure random number generator, such as 'SHA1PRNG' when possible, or use the platform's default if it offers adequate security."
+  }
+]
+```

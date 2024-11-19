@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Hardcoded Cryptographic Key",
+        "vulnerable_code": "String defaultKey = \"defaultkey\";",
+        "description": "Using a hardcoded key for cryptography can allow an attacker who decompiles the application to know the key and decrypt sensitive data.",
+        "recommendation": "Use a secure way to manage keys, such as a hardware security module or key management service that provides secure key storage and key rotation capabilities."
+    },
+    {
+        "misuse": "Insufficient Key Size",
+        "vulnerable_code": "byte[] keyBytes = defaultKey.getBytes();\nkeyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The key does not appear to have enough entropy since it's derived from a low-entropy source ('defaultkey') and merely padded to fit the required length, making it susceptible to brute-force attacks.",
+        "recommendation": "Generate keys using a Cryptographically Secure Pseudo-Random Number Generator (CSPRNG) and ensure the key has sufficient entropy according to the encryption algorithm's requirements, typically at least 128 bits for symmetric encryption."
+    },
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The code pads the key with zeros if it's less than the required size. Padded zeros can reduce security because the actual entropy of the key is not increased.",
+        "recommendation": "Always use a cryptographic key of the proper size without padding, and generate it using a CSPRNG."
+    },
+    {
+        "misuse": "Weak Encryption Key",
+        "vulnerable_code": "String defaultKey = \"defaultkey\";",
+        "description": "A weak hardcoded key 'defaultkey' is easily guessable and can be brute-forced. It is not suitable for cryptographic operations where keys must be unpredictable and securely generated.",
+        "recommendation": "Use a strong key generation approach such as Java's KeyGenerator or SecureRandom classes for generating unpredictable keys."
+    }
+]
+```

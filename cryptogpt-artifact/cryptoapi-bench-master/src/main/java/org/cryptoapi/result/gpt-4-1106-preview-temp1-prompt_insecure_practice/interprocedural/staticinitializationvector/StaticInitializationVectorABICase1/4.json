@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insufficient IV Size",
+        "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+        "description": "The IV is shorter than the AES block size. The provided 'bytes' array comes from a hardcoded string ('abcde'), which is neither random nor the appropriate block size (16 bytes for AES).",
+        "recommendation": "Use a cryptographically strong pseudo-random number generator to generate a 16-byte IV for AES."
+    },
+    {
+        "misuse": "Static IV",
+        "vulnerable_code": "byte [] bytes = 'abcde'.getBytes();",
+        "description": "The IV is not only insufficient in size but also static, which can allow attackers to derive information about the plaintext of multiple messages encrypted with the same key.",
+        "recommendation": "Use a securely generated random IV for each encryption operation."
+    },
+    {
+        "misuse": "Weak Key Generation",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance('AES');\nSecretKey key = keyGen.generateKey();",
+        "description": "The key generation process does not specify the key size, so it relies on the provider-specific default, which may not be secure.",
+        "recommendation": "Specify the key size explicitly when generating an AES key. For example, use keyGen.init(256) for a 256-bit AES key."
+    },
+    {
+        "misuse": "Missing Secure Random for Key Generation",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance('AES');",
+        "description": "KeyGenerator does not specify a SecureRandom instance, so it again relies on the provider-specific default, which may not be the most secure option.",
+        "recommendation": "Specify a SecureRandom instance when generating keys, to ensure that a strong source of randomness is used."
+    }
+]
+```

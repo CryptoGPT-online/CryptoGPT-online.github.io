@@ -1,0 +1,24 @@
+public class Pd {
+    private PBEKeySpec pbeKeySpec = null;
+    private PBEParameterSpec pbeParamSpec = null;
+
+    public static void main(String [] args){
+        Pd ckp = new Pd();
+        ckp.key();
+    }
+    public void key() {
+        SecureRandom random = new SecureRandom();
+        byte [] salt = new byte[16];
+        random.nextBytes(salt);
+        int iterationCount = 10000 + random.nextInt(10000); // Use random number between 10000 and 20000.
+        int keyLength = 256; // Use a high key length for security.
+        MessageDigest md = MessageDigest.getInstance("SHA-256"); // Use a hashed password.
+        byte[] password = md.digest(random.generateSeed(16)); // Generate random password.
+        pbeKeySpec = new PBEKeySpec(password,salt,iterationCount,keyLength);
+    }
+}
+```
+
+This version of the code includes more secure random password generation, a random salt, and a random iteration count. It uses `SecureRandom` to generate a random password and use `SHA-256` for hashing the password. The PBEKeySpec uses a high key length for security.
+
+Please note that this is only a general example and the actual security measures may vary based on your specific requirements.

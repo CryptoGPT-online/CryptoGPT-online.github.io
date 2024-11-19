@@ -1,0 +1,29 @@
+ 
+[PYTHON]
+misuses = [
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": ["KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\")", "Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\")"],
+        "description": "The code uses the AES algorithm with the CBC mode of operation, which is vulnerable to attacks that can recover the plaintext. The recommended solution is to use the Galois/Counter Mode (GCM) of operation, which is resistant to such attacks.",
+        "recommendation": "Replace the line 'Cipher cipher = Cipher.getInstance(\"AES/CBC/PKCS5Padding\")' with 'Cipher cipher = Cipher.getInstance(\"AES/GCM/NoPadding\")'."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+        "vulnerable_code": ["KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\")"],
+        "description": "The code uses the AES algorithm, which is a weak algorithm that can be vulnerable to attacks. The recommended solution is to use a stronger algorithm, such as AES-256 or AES-192.",
+        "recommendation": "Replace the line 'KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\")' with 'KeyGenerator keyGen = KeyGenerator.getInstance(\"AES-256\")'."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": ["byte [] bytes = new byte[16];", "sr.nextBytes(bytes);"],
+        "description": "The code generates a random IV using the SecureRandom class, but it only generates 16 bytes of random data, which is not enough for a secure IV. The recommended solution is to use a secure random number generator, such as the 'SecureRandom' class, to generate a larger amount of random data, such as 16 bytes.",
+        "recommendation": "Replace the line 'byte [] bytes = new byte[16];' with 'byte [] bytes = new byte[16];' and replace the line 'sr.nextBytes(bytes);' with 'sr.nextBytes(bytes);'."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": ["IvParameterSpec ivSpec = new IvParameterSpec(bytes)"],
+        "description": "The code uses a hardcoded IV value, which can be vulnerable to attacks that can recover the plaintext. The recommended solution is to use a secure random number generator, such as the 'SecureRandom' class, to generate a random IV value for each encryption operation.",
+        "recommendation": "Replace the line 'IvParameterSpec ivSpec = new IvParameterSpec(bytes)' with 'IvParameterSpec ivSpec = new IvParameterSpec(SecureRandom.getInstance(\"SHA1PRNG\").generateSeed(16));'."
+    }
+]
+[/PYTHON]

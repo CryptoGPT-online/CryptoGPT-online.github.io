@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "CWE-326: Inadequate Entropy",
+    "vulnerable_code": "SecureRandom rand1 = SecureRandom.getInstance(\"NativePRNG\");\nSecureRandom rand2 = SecureRandom.getInstance(\"NativePRNG\");",
+    "description": "The \"NativePRNG\" algorithm is not cryptographically secure and should not be used for generating random numbers. It uses a pseudo-random number generator (PRNG) that is based on a deterministic algorithm, making it predictable.",
+    "recommendation": "Use a cryptographically secure PRNG, such as `SecureRandom.getInstance(\"SHA1PRNG\")` or `SecureRandom.getInstance(\"DRBG\")`."
+  },
+  {
+    "misuse": "CWE-297: Improper Random Number Generation",
+    "vulnerable_code": "rand1.setSeed(seedBytes);\nrand2.setSeed(seedBytes);",
+    "description": "Setting the seed of two different `SecureRandom` instances to the same value makes them generate the same sequence of random numbers, which can be a security risk.",
+    "recommendation": "Use a different seed for each `SecureRandom` instance, such as by using `SecureRandom.generateSeed(seedBytes.length)`."
+  }
+]
+```

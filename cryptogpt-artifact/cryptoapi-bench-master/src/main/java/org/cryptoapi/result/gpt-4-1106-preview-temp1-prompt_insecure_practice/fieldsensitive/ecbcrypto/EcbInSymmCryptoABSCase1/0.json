@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "ECB Mode Usage",
+        "vulnerable_code": "\"AES/ECB/PKCS5Padding\"",
+        "description": "AES is used in ECB mode. ECB mode is insecure, as it does not provide serious message confidentiality. Identical plaintext blocks will result in identical ciphertext blocks, revealing patterns in the plaintext.",
+        "recommendation": "Use AES with a secure mode of operation such as CBC, CFB, OFB, or GCM, along with an appropriate initialization vector."
+    },
+    {
+        "misuse": "Missing Initialization Vector",
+        "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, key);",
+        "description": "The cipher is initialized without an Initialization Vector (IV). For modes such as CBC, an IV is required to ensure that identical plaintext blocks will encrypt to different ciphertext blocks. Missing IV in ECB mode doesn't impact security, but including it for completeness as secure modes should use it.",
+        "recommendation": "Generate a random IV for each encryption operation and use it to initialize the cipher."
+    },
+    {
+        "misuse": "Insecure Key Generation",
+        "vulnerable_code": "keyGen.generateKey();",
+        "description": "The KeyGenerator does not specify a key size upon initialization, which may cause it to use a weak default key size. For AES, anything less than 128 bits is considered insecure.",
+        "recommendation": "Initialize the KeyGenerator with a specific key size using keyGen.init(128), keyGen.init(192) or keyGen.init(256) to ensure a strong key size is used."
+    }
+]
+```

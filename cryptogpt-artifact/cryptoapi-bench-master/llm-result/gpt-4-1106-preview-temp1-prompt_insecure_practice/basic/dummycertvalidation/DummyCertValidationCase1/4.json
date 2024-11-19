@@ -1,0 +1,25 @@
+```json
+[
+    {
+        "misuse": "Trust Manager that doesn't check server certificates",
+        "vulnerable_code": [
+            "public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+                //Trust any remote server (no certificate validation)
+
+            }"
+        ],
+        "description": "The checkServerTrusted method is empty and does not implement any certificate validation. This would allow any server, regardless of its certificate's validity, to be trusted.",
+        "recommendation": "Implement certificate validation logic in the checkServerTrusted method to ensure that only servers with trusted certificates are accepted."
+    },
+    {
+        "misuse": "X509TrustManager getAcceptedIssuers returning an empty array",
+        "vulnerable_code": [
+            "public X509Certificate[] getAcceptedIssuers() {
+                return new X509Certificate[0];
+            }"
+        ],
+        "description": "Returning an empty array of accepted issuers can lead to issues in the SSL handshake, as the trust manager is not signaling any trusted Certification Authorities.",
+        "recommendation": "Return the actual list of accepted issuers."
+    }
+]
+```

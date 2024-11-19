@@ -1,0 +1,37 @@
+The code you provided is not directly related to any of the CWE (Common Weakness Enumerations). However, it's always recommended to sanitize user inputs, especially when interacting with cryptographic functions.
+
+CWE-338: Using Cryptographically Weak PRNGs (Pseudo-Random Number Generators)
+
+The code uses a pseudo-random number generator (PRNG) to update the digest. It's generally considered unsafe to use a PRNG instead of a CSPRNG (Cryptographically Secure Pseudo-Random Number Generator).
+
+CWE-760: Use of a One-Way Hash without a Salt
+
+A cryptographic hash function, like SHA-256, should never be used without a salt. This makes it possible for an attacker to generate a rainbow table to quickly crack the hash.
+
+Your updated code:
+
+```java
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+
+public class B4 {
+    public static void main (String [] args) throws NoSuchAlgorithmException {
+        String name = "abcdef";
+        int choice = 2;
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        if(choice>1)
+            md = MessageDigest.getInstance("SHA-256");
+
+        // Using a salt
+        SecureRandom random = new SecureRandom();
+        byte[] salt = new byte[16];
+        random.nextBytes(salt);
+
+        md.update(name.getBytes());
+        md.update(salt);
+        System.out.println(md.digest());
+    }
+}
+```
+In this updated code, a salt is added to the hash. This makes it harder for an attacker to guess the input. The salt should be unique for each hash, and should be stored with the hash for later use.

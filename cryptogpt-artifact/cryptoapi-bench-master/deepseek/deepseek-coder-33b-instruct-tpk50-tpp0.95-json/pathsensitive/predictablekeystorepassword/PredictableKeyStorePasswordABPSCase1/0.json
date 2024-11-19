@@ -1,0 +1,8 @@
+[
+  {
+    "misuse": "Hardcoded Security Credentials",
+    "vulnerable_code": "defaultKey = \"changeit\";\nif(choice>1){\nSecureRandom random = new SecureRandom();\ndefaultKey = String.valueOf(random.ints());\n}\nks.load(cacerts.openStream(), defaultKey.toCharArray());",
+    "description": "The defaultKey is hardcoded to 'changeit'. If an attacker gets access to this code, they can easily figure out the key and possibly use it to decrypt the keystore. This misuse also happens if the code generates a random string for the defaultKey, which is not a secure practice.",
+    "recommendation": "Remove hardcoded credentials and instead use secure methods to generate and store keys. It's also advisable to avoid the use of the 'changeit' default key for production code."
+  }
+]

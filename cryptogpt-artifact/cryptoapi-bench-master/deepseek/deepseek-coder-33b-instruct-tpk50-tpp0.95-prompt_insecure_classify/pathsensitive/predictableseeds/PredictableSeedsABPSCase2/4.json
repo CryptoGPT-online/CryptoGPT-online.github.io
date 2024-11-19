@@ -1,0 +1,23 @@
+Misuse: CWE-330: Use of Insufficiently Random Values
+
+vulnerable_code:
+```
+byte [] seed = {(byte) 100, (byte) 200};
+if(choice>1)
+    sr2.nextBytes(seed);
+SecureRandom sr = new SecureRandom(seed);
+```
+
+description: 
+The seed is defined as a static array of two bytes (100 and 200), then, if the condition is met (choice>1), the nextBytes method is used to generate a random number using the array seed. It seems like this is misusing the SecureRandom API because the seed is provided by the user, which may not be as random as it could be.
+
+recommendation:
+Avoid providing a static seed when using SecureRandom. If you need a seed, generate it securely. For instance, instead of providing the seed manually, you could use SecureRandom to generate it.
+
+```
+SecureRandom sr2 = new SecureRandom();
+byte [] seed = new byte[16];
+sr2.nextBytes(seed);
+SecureRandom sr = new SecureRandom(seed);
+```
+In the recommended code, we first generate a random seed using SecureRandom (sr2) and then use this generated seed to create our SecureRandom instance (sr). This way, the seed is generated in a way that is considered to be cryptographically strong, which is generally recommended.

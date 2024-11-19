@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "CWE-295: Improper Certificate Validation",
+    "vulnerable_code": "new X509TrustManager() { ... }",
+    "description": "The X509TrustManager implemented does not perform any validation when checkClientTrusted and checkServerTrusted methods are called. This allows any certificate, either valid or not, to be trusted which makes the connection vulnerable to man-in-the-middle attacks.",
+    "recommendation": "Implement proper validation of certificate chains in checkClientTrusted and checkServerTrusted methods."
+  },
+  {
+    "misuse": "CWE-295: Improper Certificate Validation",
+    "vulnerable_code": "public X509Certificate[] getAcceptedIssuers() { return EMPTY_X509CERTIFICATE_ARRAY; }",
+    "description": "The getAcceptedIssuers method returns an empty array, meaning no issuers are trusted, which in practice means that the trust manager does not use any trust anchor to validate the certificate chain.",
+    "recommendation": "Return a non-empty array of trusted CA certificates that the trust manager should use as trust anchors for validating certificate chains."
+  },
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values",
+    "vulnerable_code": "context.init(null, trustAll, new SecureRandom());",
+    "description": "Although the use of SecureRandom as a source of randomness does not constitute a misuse in itself, in the context of an improperly validating TrustManager that does not check certificate chains or issuers, the SecureRandom seed does not add any security.",
+    "recommendation": "Ensure that the TrustManager properly checks certificate chains before considering using a SecureRandom number generator."
+  }
+]
+```

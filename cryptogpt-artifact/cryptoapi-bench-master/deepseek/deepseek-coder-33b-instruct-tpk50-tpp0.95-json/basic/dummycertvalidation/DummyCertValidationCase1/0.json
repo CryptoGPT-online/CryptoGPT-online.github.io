@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "trustManager.checkClientTrusted(x509Certificates,s)",
+        "description": "This line of code allows any client to connect without validating their certificate. This can expose the system to man-in-the-middle attacks.",
+        "recommendation": "Implement proper certificate validation or at least a trust manager that validates the server's certificate."
+    },
+    {
+        "misuse": "No Server Certificate Validation",
+        "vulnerable_code": "trustManager.checkServerTrusted(x509Certificates,s)",
+        "description": "This function call is missing and will not result in any certificate validation for the server's certificate. This can lead to insecure connections.",
+        "recommendation": "Implement server certificate validation in this function call."
+    },
+    {
+        "misuse": "Return of Null or Empty Array",
+        "vulnerable_code": "return new X509Certificate[0]",
+        "description": "The getAcceptedIssuers function returns an empty array which may cause issues if this TrustManager is used in a context where an array of accepted issuers is expected.",
+        "recommendation": "Consider returning the list of trusted issuers or null in case the TrustManager does not manage or allow trust in any certificate."
+    }
+]
+```

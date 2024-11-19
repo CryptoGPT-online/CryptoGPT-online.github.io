@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values",
+    "vulnerable_code": "SecureRandom random = new SecureRandom();\nString password = String.valueOf(random.ints());",
+    "description": "The code uses `SecureRandom.ints()` to generate a password. However, `ints()` generates a stream of pseudorandom ints, which is not suitable for generating cryptographically strong passwords.",
+    "recommendation": "Use a proper random number generator, such as `SecureRandom.generateSeed()` or `SecureRandom.nextBytes()`."
+  },
+  {
+    "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation",
+    "vulnerable_code": "KeyStore ks = KeyStore.getInstance(type);",
+    "description": "The code instantiates a `KeyStore` without specifying a specific algorithm. This may result in a less-secure algorithm being selected by default.",
+    "recommendation": "Specify a strong algorithm for the `KeyStore`, such as `JKS` or `PKCS12`."
+  },
+  {
+    "misuse": "CWE-295: Improper Certificate Validation",
+    "vulnerable_code": "ks.load(cacerts.openStream(), new String(keyBytes).toCharArray());",
+    "description": "The code loads a `KeyStore` from a URL without validating the certificate of the server. This may allow an attacker to impersonate the server and provide a malicious certificate.",
+    "recommendation": "Validate the certificate of the server before loading the `KeyStore`."
+  }
+]
+```

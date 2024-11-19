@@ -1,0 +1,49 @@
+```json
+[
+    {
+        "misuse": "Weak Hash Algorithm",
+        "vulnerable_code": "crypto = new C1(\"SHA1\");",
+        "description": "SHA1 is a weak hashing algorithm that has been compromised and is susceptible to collision attacks.",
+        "recommendation": "Replace SHA1 with a stronger hashing algorithm, such as SHA-256 or SHA-3."
+    },
+    {
+        "misuse": "Insecure Printing of Sensitive Data",
+        "vulnerable_code": "System.out.println(md.digest());",
+        "description": "Printing cryptographic digests (or any sensitive data) to the console can leak information and should be handled securely.",
+        "recommendation": "Avoid printing sensitive cryptographic data to the console. If you must output the result in a secure logging mechanism with controlled access."
+    },
+    {
+        "misuse": "Use of Hard-coded Cryptographic Algorithms",
+        "vulnerable_code": [
+            "crypto = new C1(\"SHA1\");",
+            "MessageDigest md = MessageDigest.getInstance(crypto);"
+        ],
+        "description": "The code allows for use of a predefined (hard-coded) cryptographic algorithm which could lead to security issues if the algorithm is weak or compromised. Additionally, in the 'encrypt' method, 'passedAlgo' does not get used, which is misleading.",
+        "recommendation": "Do not hard-code cryptographic algorithm identifiers and ensure that any algorithm specified can be changed without altering the source code."
+    },
+    {
+        "misuse": "Misleading Method Name",
+        "vulnerable_code": "public void encrypt(String str, String passedAlgo)",
+        "description": "The method name 'encrypt' suggests that it is encrypting the provided string, but it is actually creating a digest, which is a one-way operation and does not encrypt data.",
+        "recommendation": "Rename the method to reflect that it computes a hash digest, such as 'hash' or 'computeDigest', to avoid confusion."
+    },
+    {
+        "misuse": "Unnecessary Parameter",
+        "vulnerable_code": "public void encrypt(String str, String passedAlgo)",
+        "description": "The 'passedAlgo' parameter is accepted but is not being used within the method, which can be misleading and lead to potential misuse if the caller assumes it would specify the algorithm to be used for encryption.",
+        "recommendation": "Either utilize the 'passedAlgo' parameter to select the hashing algorithm or remove it if it's not needed."
+    },
+    {
+        "misuse": "No Data Validation",
+        "vulnerable_code": "md.update(str.getBytes());",
+        "description": "Data being hashed should be validated to ensure its integrity and potentially to meet application-specific policies.",
+        "recommendation": "Perform input validation on 'str' to ensure it meets application requirements before computing its digest."
+    },
+    {
+        "misuse": "Misuse of Encoding",
+        "vulnerable_code": "md.update(str.getBytes());",
+        "description": "Using the default character encoding can result in portability and predictability issues as the encoding may differ between platforms.",
+        "recommendation": "Explicitly specify the character encoding, such as UTF-8 when converting the input string to bytes."
+    }
+]
+```

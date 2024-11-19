@@ -1,0 +1,60 @@
+The misuse in the code is:
+
+```java
+private static void go2(){
+    CRYPTO = DEFAULT_CRYPTO.toCharArray();
+}
+private static void go3(){
+    crypto = CRYPTO;
+}
+```
+
+Misuse Type: `CWE-327: Use of a Broken or Risky Cryptographic Algorithm`
+
+Vulnerable Code Snippet:
+
+```java
+private static void go2(){
+    CRYPTO = DEFAULT_CRYPTO.toCharArray();
+}
+private static void go3(){
+    crypto = CRYPTO;
+}
+```
+
+Description:
+
+In the provided code, the cryptographic algorithm used is hard-coded to "SHA1". However, SHA-1 is now considered a broken and vulnerable cryptographic algorithm due to known vulnerabilities (collision, pre-image resistance attacks, etc.) and it's no longer recommended for secure hash computation.
+
+Recommendation:
+
+Instead of using SHA-1, it is recommended to use a secure and modern cryptographic algorithm such as SHA-256, SHA-3, or even better - the SHA3-256 algorithm with the JCA built-in provider. 
+
+This change should be done by replacing the string "SHA1" with "SHA-256" or another secure cryptographic algorithm in the `go()` method and `go2()` method.
+
+Here is the corrected code:
+
+```java
+private static final String DEFAULT_CRYPTO = "SHA-256";
+private static char[] CRYPTO;
+private static char[] crypto;
+public static void main (String [] args) throws NoSuchAlgorithmException {
+    String str = "abcdef";
+    go2();
+    go3();
+    go(str);
+}
+
+private static void go2(){
+    CRYPTO = DEFAULT_CRYPTO.toCharArray();
+}
+private static void go3(){
+    crypto = CRYPTO;
+}
+
+public static void go (String str) throws NoSuchAlgorithmException {
+    MessageDigest md = MessageDigest.getInstance(String.valueOf(crypto));
+    md.update(str.getBytes());
+    System.out.println(md.digest());
+}
+```

@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Hardcoded Salt",
+        "vulnerable_code": "public static final String DEFAULT_SALT = \"12345\";",
+        "description": "Using a hardcoded salt makes the system vulnerable to dictionary attacks and reduces overall security as it is the same for all users.",
+        "recommendation": "Generate a unique salt for each encryption operation using a secure random number generator."
+    },
+    {
+        "misuse": "Improper Salt Conversion",
+        "vulnerable_code": "pbeParamSpec = new PBEParameterSpec(new byte[]{Byte.parseByte(salt.toString())}, count);",
+        "description": "Converting the salt to a string and then parsing a single byte does not use the salt as intended. It is likely a coding error and results in ineffective salting.",
+        "recommendation": "Properly convert the salt character array into a byte array before using it."
+    },
+    {
+        "misuse": "Weak Password-Based Encryption (PBE) Iteration Count",
+        "vulnerable_code": "int count = 1020;",
+        "description": "An iteration count of 1020 for PBE is below the recommended minimum of 10,000, making brute-force attacks more feasible.",
+        "recommendation": "Increase the iteration count to at least 10,000 to make brute-force attacks more difficult."
+    },
+    {
+        "misuse": "Insecure PBEParameterSpec Use",
+        "vulnerable_code": "pbeParamSpec = new PBEParameterSpec(new byte[]{Byte.parseByte(salt.toString())}, count);",
+        "description": "The code is converting a salt character array to a string and then attempting to parse a single byte for the salt, which will throw an exception at runtime due to an invalid byte format. This makes the salt usage ineffective and also leads to potential runtime failures.",
+        "recommendation": "Convert the salt character array to a byte array correctly and ensure that the entire salt is being used."
+    }
+]
+```

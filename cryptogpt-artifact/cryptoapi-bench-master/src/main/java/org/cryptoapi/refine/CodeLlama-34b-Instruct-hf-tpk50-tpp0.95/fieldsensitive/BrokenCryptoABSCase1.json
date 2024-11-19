@@ -1,0 +1,51 @@
+ ### False Positive Misuse JSON ###
+
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "C2.encrypt()",
+        "description": "The reported misuse suggests that the 'DES/ECB/PKCS5Padding' algorithm is insecure, but it is actually used in a secure way in the code. The algorithm is used for encrypting a hardcoded string, which is a one-time operation, and the key is not hardcoded.",
+        "recommendation": "Use a more secure algorithm, such as AES, with a larger key size and more secure mode of operation, such as CBC or GCM."
+    },
+    {
+        "misuse": "Weak Key Derivation",
+        "vulnerable_code": "C2.encrypt()",
+        "description": "The reported misuse suggests that the key derivation function used is weak, but it is actually a secure function. The function used is 'generateKey()', which is a secure function.",
+        "recommendation": "Use a stronger algorithm, such as AES, for key generation."
+    },
+    {
+        "misuse": "Insecure Random Number Generation",
+        "vulnerable_code": "Cipher.getInstance(defaultAlgo);",
+        "description": "The reported misuse suggests that the random number generator used is insecure, but it is actually a secure function. The function used is 'getInstance()', which is a secure function.",
+        "recommendation": "Use a more secure random number generator, such as the SecureRandom class, to generate the random initialization vector."
+    }
+]
+
+### Optimized Misuse JSON ###
+
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "crypto = new C2(\"DES/ECB/PKCS5Padding\")",
+        "description": "The use of DES algorithm is insecure due to its small key size and vulnerability to brute force attacks.",
+        "recommendation": "Use a more secure algorithm, such as AES, with a larger key size and more secure mode of operation, such as CBC or GCM."
+    },
+    {
+        "misuse": "Weak Key Generation",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(defaultAlgo);",
+        "description": "The use of KeyGenerator with a weak algorithm, such as DES, can result in weak keys that can be easily guessed or reverse-engineered.",
+        "recommendation": "Use a stronger algorithm, such as AES, for key generation."
+    },
+    {
+        "misuse": "Insecure Mode of Operation",
+        "vulnerable_code": "Cipher cipher = Cipher.getInstance(defaultAlgo);",
+        "description": "The use of ECB mode of operation is insecure as it does not use an Initialization Vector (IV) for each block, which can result in patterns in the encrypted data that can be exploited.",
+        "recommendation": "Use a more secure mode of operation, such as CBC or GCM."
+    },
+    {
+        "misuse": "Insecure Padding",
+        "vulnerable_code": "cipher.getInstance(defaultAlgo);",
+        "description": "The use of PKCS5Padding can be insecure as it uses a fixed block size, which can result in padding oracle attacks.",
+        "recommendation": "Use a more secure padding scheme, such as OAEP or RSASSA-PSS."
+    }
+]

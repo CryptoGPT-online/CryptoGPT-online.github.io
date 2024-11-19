@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values",
+    "vulnerable_code": "SecureRandom sr = new SecureRandom(new byte[]{b});",
+    "description": "The code is using a single byte from a predefined set of values as the seed for a SecureRandom instance. This does not provide a sufficiently random seed because the number of possible seeds is very limited (only 4 possible values are defined in the map), which makes the output of SecureRandom predictable.",
+    "recommendation": "Do not use hardcoded or predictable seeds for SecureRandom. Instead, allow SecureRandom to self-seed or provide a sufficiently random seed value, potentially from a reliable entropy source."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_code": "hm.put(\"aaa\", new Byte((byte) 100));\nhm.put(\"bbb\", new Byte((byte) 200));\nhm.put(\"ccc\", new Byte((byte) 300));\nhm.put(\"ddd\", new Byte((byte) 400));",
+    "description": "The code is using hardcoded byte values to seed the SecureRandom, which results in inadequate encryption strength due to the limited number of possible seeds. This can lead to weak cryptographic operations if the SecureRandom instance is used for cryptographic purposes.",
+    "recommendation": "Remove the hardcoded values and allow SecureRandom to generate a strong seed. If a seed is necessary, ensure it is derived from a secure and unpredictable source."
+  }
+]
+```

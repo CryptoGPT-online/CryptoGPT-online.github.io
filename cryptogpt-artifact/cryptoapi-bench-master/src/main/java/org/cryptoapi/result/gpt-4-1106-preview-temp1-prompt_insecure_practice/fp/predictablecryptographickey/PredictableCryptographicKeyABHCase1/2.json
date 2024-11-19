@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "Insecure Generation of Encryption Key",
+    "vulnerable_code": "String.valueOf(random.ints());",
+    "description": "The encryption key is generated insecurely by taking the default string representation of random integers without any control over the size or quality of the key material.",
+    "recommendation": "Use SecureRandom to generate a fixed-size byte[] directly and ensure that the size is appropriate for the chosen algorithm (e.g., 128, 192, or 256 bits for AES)."
+  },
+  {
+    "misuse": "Potential Loss of Key Entropy",
+    "vulnerable_code": "Arrays.copyOf(keyBytes,16);",
+    "description": "When the key is being reduced to fit the right size, it may lose its entropy if the initial byte array is larger than needed size. It may also cause an ArrayIndexOutOfBoundsException if the byte array is smaller than expected.",
+    "recommendation": "Generate a byte array of the correct size for the key initially to avoid the need to copy and potential loss of entropy."
+  }
+]
+```

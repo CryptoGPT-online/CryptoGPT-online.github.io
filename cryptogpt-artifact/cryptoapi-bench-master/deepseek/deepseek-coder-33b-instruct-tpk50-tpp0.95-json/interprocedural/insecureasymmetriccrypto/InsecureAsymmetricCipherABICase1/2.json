@@ -1,0 +1,26 @@
+[
+  {
+    "misuse": "Insecure Cryptographic Algorithm",
+    "vulnerable_code": "KeyPairGenerator kgp = KeyPairGenerator.getInstance(\"RSA\");",
+    "description": "The provided RSA key generation is insecure because the RSA algorithm is only suitable for key sizes greater than 2048 bits. Using RSA with key sizes less than 2048 is considered insecure.",
+    "recommendation": "Use a key size greater than 2048 bits for RSA algorithm."
+  },
+  {
+    "misuse": "Incorrect Use of Cipher Mode",
+    "vulnerable_code": "cipher.init(Cipher.ENCRYPT_MODE, kp.getPublic());",
+    "description": "The code is trying to use the RSA public key as an encryption key. However, RSA is an asymmetric encryption algorithm, and it is only suitable to use the public key for encryption and the private key for decryption. The code is trying to use the public key for decryption, which is not the correct usage.",
+    "recommendation": "Use the private key to encrypt and the public key to decrypt."
+  },
+  {
+    "misuse": "Incorrect Use of Cipher Mode",
+    "vulnerable_code": "dec.init(Cipher.DECRYPT_MODE, kp.getPrivate());",
+    "description": "The code is trying to use the RSA private key as an decryption key. However, RSA is an asymmetric encryption algorithm, and it is only suitable to use the private key for decryption and the public key for encryption. The code is trying to use the private key for encryption, which is not the correct usage.",
+    "recommendation": "Use the public key to encrypt and the private key to decrypt."
+  },
+  {
+    "misuse": "Insecure Key Management",
+    "vulnerable_code": "KeyPairGenerator kgp = KeyPairGenerator.getInstance(\"RSA\"); kgp.initialize(keySize); KeyPair kp = kgp.generateKeyPair();",
+    "description": "The code is using a statically generated key pair which might not be secure. Key pairs should be generated randomly, as the generation process is also security-critical to avoid predictable keys.",
+    "recommendation": "Generate key pairs using a secure random number generator."
+  }
+]

@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "public static final String DEFAULT_SALT = \"12345\";",
+        "description": "The salt is hardcoded and very short, which makes it inadequate for cryptographic purposes.",
+        "recommendation": "Use a longer, randomly generated salt and avoid hardcoding it."
+    },
+    {
+        "misuse": "CWE-798: Use of Hardcoded Credentials",
+        "vulnerable_code": "public static final String DEFAULT_SALT = \"12345\";",
+        "description": "The salt is a hardcoded value, which is a security risk as it could be discovered by an attacker.",
+        "recommendation": "Do not hardcode cryptographic salts. Instead, generate them securely at runtime."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "pbeParamSpec = new PBEParameterSpec(new byte[]{Byte.parseByte(salt.toString())}, count);",
+        "description": "The salt is being converted to a string and then parsed as a byte, which does not provide a sufficiently random value for cryptographic operations.",
+        "recommendation": "Use a secure random number generator to create salts for cryptographic operations."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "int count = 1020;",
+        "description": "The iteration count of 1020 may be too low for PBEKeySpec, potentially leading to inadequate encryption strength.",
+        "recommendation": "Use a higher iteration count for key generation to increase encryption strength."
+    }
+]
+```

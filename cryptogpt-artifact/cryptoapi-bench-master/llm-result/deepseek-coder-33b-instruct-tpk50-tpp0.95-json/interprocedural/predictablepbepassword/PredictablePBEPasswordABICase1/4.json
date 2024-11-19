@@ -1,0 +1,14 @@
+[
+  {
+    "misuse": "Hardcoded Iteration Count",
+    "vulnerable_code": "int iterationCount = 11010;",
+    "description": "The iteration count for key derivation should be based on the security requirements. The code uses a hard-coded value which may not be secure enough. If the key derivation is performed in a less secure environment, using a high value could make the key derivation slower.",
+    "recommendation": "Recommendation is to use a secure value based on the current security standards. The use of OWASP recommendations (https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html#pbkdf2) is a good starting point."
+  },
+  {
+    "misuse": "Unsafe Random Generation for Salt",
+    "vulnerable_code": "SecureRandom sr = new SecureRandom(); sr.nextBytes(salt);",
+    "description": "Generating a secure random salt is very important for cryptographic purposes. Using a predictable random number generator can lead to vulnerabilities such as the same salt being used for multiple passwords and easier brute force attacks.",
+    "recommendation": "Avoid using java.util.Random as it uses an unsafe seed value. Instead, use java.security.SecureRandom, which uses a random seed value from a pool maintained by the JVM and is more difficult to predict."
+  }
+]

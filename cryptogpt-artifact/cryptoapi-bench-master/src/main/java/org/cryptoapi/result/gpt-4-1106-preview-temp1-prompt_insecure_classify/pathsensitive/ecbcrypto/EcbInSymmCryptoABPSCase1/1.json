@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "Cipher.getInstance(\"AES/ECB/PKCS5Padding\");",
+        "description": "The use of ECB mode for AES encryption is insecure because it does not provide serious message confidentiality. The same plaintext block will always encrypt to the same ciphertext block, making it susceptible to pattern analysis.",
+        "recommendation": "Use a stronger encryption mode like CBC, CFB, OFB, or GCM that provides better security by adding an initialization vector to produce different ciphertexts even if the same plaintext is encrypted multiple times."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values.",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();",
+        "description": "The KeyGenerator does not specify a secure random number generator or a seed which might result in a key that is not sufficiently random and may be predictable.",
+        "recommendation": "Use a SecureRandom instance with a strong source of entropy to initialize the KeyGenerator."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength.",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+        "description": "The key size for the AES algorithm is not specified. If the default key size is used, it might be less than the recommended 256 bits, leading to weaker encryption.",
+        "recommendation": "Specify a key size of 256 bits when generating the AES key to ensure strong encryption (e.g., KeyGenerator.getInstance(\"AES\").init(256);)."
+    }
+]
+```

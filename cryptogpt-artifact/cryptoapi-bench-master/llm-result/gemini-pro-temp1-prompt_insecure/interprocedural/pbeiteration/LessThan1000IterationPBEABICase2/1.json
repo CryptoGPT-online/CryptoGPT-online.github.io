@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "CWE-326: Inadequate Entropy for Key Generation",
+    "vulnerable_code": "SecureRandom random = new SecureRandom();",
+    "description": "The `SecureRandom` class is initialized without a cryptographically secure random number generator (CSPRNG). This may result in weak keys being generated, which could compromise the security of the application.",
+    "recommendation": "Use a CSPRNG that is seeded with a secure random source, such as `/dev/urandom` on Linux or `CryptGenRandom()` on Windows."
+  },
+  {
+    "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+    "vulnerable_code": "PBEParameterSpec pbeParamSpec = new PBEParameterSpec(salt, Integer.parseInt(String.valueOf(count)));",
+    "description": "The `PBEParameterSpec` class is used with a weak key derivation function (KDF), which can make it easier for an attacker to guess or brute-force the key. Additionally, the key size is derived from user input, which may not be sufficiently strong.",
+    "recommendation": "Use a strong KDF, such as PBKDF2 or bcrypt, and ensure that the key size is sufficiently large (e.g., at least 256 bits)."
+  }
+]
+```

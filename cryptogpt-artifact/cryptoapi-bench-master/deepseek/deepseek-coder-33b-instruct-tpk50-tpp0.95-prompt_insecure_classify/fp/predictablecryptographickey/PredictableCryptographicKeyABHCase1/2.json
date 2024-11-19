@@ -1,0 +1,30 @@
+
+
+```json
+[
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "String defaultKey = String.valueOf(random.ints());",
+        "description": "The use of SecureRandom.ints() to generate random numbers and convert it to string can limit the entropy of the random numbers.",
+        "recommendation": "Use SecureRandom.nextBytes() instead to directly generate the random byte array."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values",
+        "vulnerable_code": "byte [] keyBytes = defaultKey.getBytes(\"UTF-8\");",
+        "description": "This code converts the string into bytes using UTF-8 encoding which might include null characters.",
+        "recommendation": "Use a different encoding such as ISO-8859-1 which does not include null characters."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+        "description": "The key length of 16 bytes is too short and may be insecure.",
+        "recommendation": "Use a key length of 32 bytes or more."
+    },
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "SecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES\");",
+        "description": "The use of AES in ECB mode which is not secure for many use cases.",
+        "recommendation": "Use a secure mode like CBC, CTR, GCM, etc., for AES encryption."
+    }
+]
+```

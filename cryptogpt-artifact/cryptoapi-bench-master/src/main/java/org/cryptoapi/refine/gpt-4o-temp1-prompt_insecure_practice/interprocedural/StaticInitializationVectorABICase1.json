@@ -1,0 +1,33 @@
+### False Positive Misuse ###
+
+1. **Key Size Issue / Insufficient Key Size**:  
+   The mention that a key size should be specified is valid; however, stating that using a 128-bit key might not be sufficient for strong security is not entirely true. AES-128 is considered secure and is widely used, even though AES-192 and AES-256 provide stronger security for environments requiring enhanced encryption standards.  
+   - Remove: "Insufficient Key Size" with description "The key size for AES is not specified, leading to potentially using a 128-bit key, which might not be sufficient for strong security."
+   - Remove: "Key Size Issue" with similar reasoning and replace with a more accurate description focusing on specifying the key size for desired encryption strength, but removing the implication that AES-128 is insecure.  
+
+### Optimized Misuse JSON###
+
+```json
+[
+    {
+        "misuse": "Predictable Initialization Vector (IV)",
+        "vulnerable_code": "byte [] bytes = \"abcde\".getBytes();",
+        "description": "The IV is set using user-provided bytes 'abcde', which is predictable and static, making it vulnerable to certain cryptographic attacks. An unpredictable and random IV should be used for secure encryption.",
+        "recommendation": "Use a secure random generator to create a random IV, e.g., 'SecureRandom random = new SecureRandom(); byte[] iv = new byte[cipher.getBlockSize()]; random.nextBytes(iv);'"
+    },
+    {
+        "misuse": "Insufficient Initialization Vector (IV) Length",
+        "vulnerable_code": "byte[] bytes = \"abcde\".getBytes();\nIvParameterSpec ivSpec = new IvParameterSpec(bytes);",
+        "description": "The IV should be 16 bytes in length for AES, but here it is initialized with a 5-byte array derived from 'abcde'. Using an IV of incorrect length can lead to predictable encryption outputs for CBC mode.",
+        "recommendation": "Ensure the IV is 16 bytes long for AES. Generate the IV securely using a SecureRandom or ensure it aligns with the block size."
+    },
+    {
+        "misuse": "Unspecified Key Size",
+        "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\"); SecretKey key = keyGen.generateKey();",
+        "description": "The key size is not specified, which results in the default key size. AES supports 128, 192, and 256-bit for enhanced security.",
+        "recommendation": "Specify a key size when generating the key, e.g., 'keyGen.init(256);' for AES-256, to ensure the desired strength of the keys generated and compatibility with the application requirements."
+    }
+]
+```
+
+This optimized version retains the critical misuses related to predictable IV, incorrect IV length, and unspecified key size, emphasizing using specific and recommended secure practices.

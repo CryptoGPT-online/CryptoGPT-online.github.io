@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values",
+    "vulnerable_code": "keyBytes = String.valueOf(random.ints()).getBytes();",
+    "description": "The method 'ints()' generates an infinite stream of random integers, which is then converted to a string and obtained as bytes. This does not ensure cryptographic strength randomness for key material.",
+    "recommendation": "Use 'random.nextBytes(keyBytes)' to directly fill the byte array with random data."
+  },
+  {
+    "misuse": "CWE-798: Use of Hardcoded Credentials",
+    "vulnerable_code": "String defaultKey = \"defaultkey\";",
+    "description": "The hardcoded string 'defaultkey' is used as key material when 'choice' is not greater than 1. This is insecure because it is predictable and could be easily guessed or discovered through reverse engineering.",
+    "recommendation": "Remove hardcoded keys and obtain key material from a secure and unpredictable source."
+  },
+  {
+    "misuse": "CWE-326: Inadequate Encryption Strength",
+    "vulnerable_code": "keyBytes = Arrays.copyOf(keyBytes,16);",
+    "description": "The key is being padded or truncated to a size of 16 bytes, which corresponds to AES-128. While AES-128 is generally considered secure, for highly sensitive information, AES-256 may be preferred to provide a higher level of security.",
+    "recommendation": "Use a longer key (32 bytes for AES-256) if higher encryption strength is required."
+  }
+]
+```

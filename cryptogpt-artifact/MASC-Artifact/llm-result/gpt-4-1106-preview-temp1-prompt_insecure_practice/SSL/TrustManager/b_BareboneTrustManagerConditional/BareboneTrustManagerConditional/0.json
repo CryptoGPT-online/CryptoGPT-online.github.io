@@ -1,0 +1,47 @@
+```json
+[
+  {
+    "misuse": "TrustManager that trusts all certificates",
+    "vulnerable_code": [
+      "new X509TrustManager() { ...",
+      "public void checkClientTrusted(X509Certificate[] x509Certificates, String s)",
+      "public void checkServerTrusted(X509Certificate[] x509Certificates, String s)"
+    ],
+    "description": "Implementing a TrustManager that does nothing (and therefore trusts all certificates) can expose the application to MITM (Man-in-the-Middle) attacks as it does not validate the certificate chain.",
+    "recommendation": "Implement proper checkClientTrusted and checkServerTrusted functions that verify the X509Certificate chain correctly."
+  },
+  {
+    "misuse": "Empty set of accepted issuers",
+    "vulnerable_code": [
+      "public X509Certificate[] getAcceptedIssuers() { ... }"
+    ],
+    "description": "Returning an empty array in getAcceptedIssuers indicates that no CA certificates are trusted, leading to rejecting any connection when this TrustManager is used. However, due to a lack of certificate checks as mentioned above, this is inconsistent and the returned array becomes irrelevant.",
+    "recommendation": "Return a proper list of accepted issuers based on the application's trust store."
+  },
+  {
+    "misuse": "Unreachable code",
+    "vulnerable_code": [
+      "for(int i = 0; i<100; i++){ ... }"
+    ],
+    "description": "The loop inside getAcceptedIssuers always exits when i equals 50, making iterations after 50 unreachable. This is a logical error and it's ineffective in this context. Besides, having a loop in this method is non-standard and unnecessary.",
+    "recommendation": "Remove the loop to ensure clean, readable, and effective code."
+  },
+  {
+    "misuse": "Inappropriate error handling",
+    "vulnerable_code": [
+      "// TODO Auto-generated catch block",
+      "// e.printStackTrace();"
+    ],
+    "description": "Catching exceptions without handling them or logging them is unsafe because it hides potential security issues and other errors that should be dealt with.",
+    "recommendation": "Replace the TODO comment with appropriate error handling and logging mechanisms."
+  },
+  {
+    "misuse": "Unused object",
+    "vulnerable_code": [
+      "SSLContext context;"
+    ],
+    "description": "An SSLContext object is created but never used, which indicates a potential logical error in the code. It is expected to be used to create an SSL socket factory.",
+    "recommendation": "Use the SSLContext object to set up a socket factory and establish secure connections."
+  }
+]
+```

@@ -1,0 +1,15 @@
+ Here is the JSON response:
+[
+{
+"misuse": "CWE-330: Use of Insufficiently Random Values",
+"vulnerable_code": "public void method1(byte passedSeed) throws UnsupportedEncodingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, NoSuchPaddingException {
+
+passedSeed = defSeed;
+SecureRandom sr = new SecureRandom(new byte[]{passedSeed});
+int v = sr.nextInt();
+System.out.println(v);
+}",
+"description": "The passedSeed variable is used as the seed for the SecureRandom constructor. However, the seed is not properly randomized, as it is set to a fixed value (100) in the constructor of class C2. This can lead to predictable outputs from the SecureRandom class, which can be used to compromise the security of the application.",
+"recommendation": "Use a properly randomized seed for the SecureRandom constructor, such as the output of a cryptographically secure random number generator, to ensure unpredictable outputs."
+}
+]

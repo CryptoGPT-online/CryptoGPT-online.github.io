@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insecure Cipher Mode and Padding",
+        "vulnerable_code": "Cipher.getInstance(crypto)",
+        "description": "The code uses 'Blowfish' as the cipher algorithm without specifying the mode of operation and padding scheme. This could lead to using insecure defaults like ECB mode and PKCS#5 padding, which is not secure for sensitive data encryption as it is susceptible to certain attacks like padding oracle attacks.",
+        "recommendation": "Specify a secure mode of operation and padding scheme when calling getInstance(), for instance, 'Cipher.getInstance(\"Blowfish/CBC/PKCS5Padding\")'."
+    },
+    {
+        "misuse": "Use of Broken or Risky Cryptographic Algorithm",
+        "vulnerable_code": "\"Blowfish\"",
+        "description": "Blowfish is a legacy symmetric encryption algorithm which has a block size of 64 bits that makes it susceptible to birthday attacks (such as the Sweet32 vulnerability). It is less preferable compared to more modern algorithms with larger block sizes like AES.",
+        "recommendation": "Use a more secure, modern algorithm such as AES with a 128-bit block size. Replace 'Blowfish' with 'AES'."
+    },
+    {
+        "misuse": "Hardcoded Crypto Algorithm",
+        "vulnerable_code": "String crypto = \"Blowfish\";",
+        "description": "The cryptographic algorithm is hardcoded in the source, which does not allow for easy updates or flexibility in case the algorithm needs to be changed due to advancements in cryptographic attacks or better alternatives becoming available.",
+        "recommendation": "Instead of hardcoding the algorithm, consider making the choice of algorithm configurable or using a standard that is widely accepted and recommended by cryptography experts."
+    },
+    {
+        "misuse": "Insufficient Entropy for Key Generation",
+        "vulnerable_code": "KeyGenerator.getInstance(crypto);",
+        "description": "The code does not specify the key size for Blowfish during the key generation, which could lead to the creation of keys with insufficient entropy and strength. Blowfish supports key sizes from 32 to 448 bits and if not specified, a default size may be chosen which could be less than 128 bits, the generally accepted minimum key length.",
+        "recommendation": "Specify the key size to ensure adequate entropy, for example, 'keyGen.init(128);' for a key size of 128 bits. Note that for AES, the minimum key size should be 128 bits."
+    }
+]
+```

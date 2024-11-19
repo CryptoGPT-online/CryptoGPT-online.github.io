@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Weak Hash Function",
+        "vulnerable_code": "digestName = \"MD5\";",
+        "description": "MD5 is a weak hash function that is considered cryptographically broken and unsuitable for further use because it's vulnerable to hash collisions.",
+        "recommendation": "Replace MD5 with a secure hashing algorithm such as SHA-256 or SHA-3."
+    },
+    {
+        "misuse": "Dynamic Crypto Algorithm Selection",
+        "vulnerable_code": "MessageDigest.getInstance(new MessageDigestComplex().A().B().getName())",
+        "description": "Dynamically selecting a cryptographic algorithm at runtime can lead to the use of a less-secure algorithm unknowingly, as it may be modified by other parts of the code or through external input.",
+        "recommendation": "Explicitly define the cryptographic algorithm required, avoiding dynamic selection."
+    },
+    {
+        "misuse": "Lack of Exception Handling for NoSuchAlgorithmException",
+        "vulnerable_code": "catch (NoSuchAlgorithmException e) { System.out.println(\"Error\"); }",
+        "description": "Swallowing the NoSuchAlgorithmException without any detailed error handling or logging obscures the root cause of the problem, which is critical in a security-sensitive context.",
+        "recommendation": "Handle exceptions appropriately by notifying the user of the precise issue, logging the error, and/or rethrowing as a different exception if it cannot be handled at this level."
+    }
+]
+```

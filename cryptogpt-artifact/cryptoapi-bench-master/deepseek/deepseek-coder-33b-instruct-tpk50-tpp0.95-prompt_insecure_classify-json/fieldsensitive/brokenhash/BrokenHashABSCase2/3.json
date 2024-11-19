@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm.",
+        "vulnerable_code": "crypto = new C2(\"MD5\");",
+        "description": "The cryptographic algorithm is hardcoded as MD5, which is considered broken or risky due to vulnerabilities discovered in earlier versions of the MD5 algorithm.",
+        "recommendation": "You should not hardcode the cryptographic algorithm. It should be configurable and updated as required."
+    },
+    {
+        "misuse": "CWE-757: Selection of Less-Secure Algorithm During Negotiation.",
+        "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(crypto);",
+        "description": "The code is using MessageDigest for hashing instead of Cipher for encryption. MessageDigest should only be used for hashing, not for encryption.",
+        "recommendation": "Use Cipher for encryption and verify the negotiated algorithm."
+    },
+    {
+        "misuse": "CWE-330: Use of Insufficiently Random Values.",
+        "vulnerable_code": "MessageDigest md = MessageDigest.getInstance(crypto);",
+        "description": "The code is using MessageDigest without salt or IV. This makes the encryption process deterministic and easier to crack.",
+        "recommendation": "Add salt or IV for additional randomness in the encryption process."
+    }
+]
+```

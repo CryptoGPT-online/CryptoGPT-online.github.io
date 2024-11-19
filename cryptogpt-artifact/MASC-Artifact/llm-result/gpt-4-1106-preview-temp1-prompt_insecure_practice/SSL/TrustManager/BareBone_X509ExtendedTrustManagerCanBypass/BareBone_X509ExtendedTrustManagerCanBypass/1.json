@@ -1,0 +1,40 @@
+```json
+[
+    {
+        "misuse": "Trust Manager that does not check certificate",
+        "vulnerable_code": [
+            "public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+                // TODO Auto-generated method stub	
+            }",
+            "public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+                // TODO Auto-generated method stub	
+            }",
+            "public void checkClientTrusted(X509Certificate[] chain, String authType, Socket socket) throws CertificateException {
+                // TODO Auto-generated method stub	
+            }",
+            "public void checkServerTrusted(X509Certificate[] chain, String authType, Socket socket) throws CertificateException {
+                // TODO Auto-generated method stub	
+            }",
+            "public void checkClientTrusted(X509Certificate[] chain, String authType, SSLEngine engine) throws CertificateException {
+                // TODO Auto-generated method stub	
+            }",
+            "public void checkServerTrusted(X509Certificate[] chain, String authType, SSLEngine engine) throws CertificateException {
+                // TODO Auto-generated method stub	
+            }"
+        ],
+        "description": "The X509ExtendedTrustManager implementations do nothing to verify the provided certificates. This could allow any certificate, including self-signed ones, to be accepted as trusted without validation, making the application vulnerable to MITM attacks.",
+        "recommendation": "Implement validation logic in each method to ensure the certificates provided are valid, trusted, and otherwise conform to security policies. A trusted CA should be checking that each certificate indeed chains back to that authority."
+    },
+    {
+        "misuse": "Empty getAcceptedIssuers",
+        "vulnerable_code": [
+            "public X509Certificate[] getAcceptedIssuers() {
+                // TODO Auto-generated method stub
+                return null;
+            }"
+        ],
+        "description": "Returning 'null' from getAcceptedIssuers indicates that any certificate will be accepted, which is insecure as it does not perform any trust check.",
+        "recommendation": "Return a non-empty array of acceptable CA issuer certificates, which will be used to verify any peer certificate chain to a trusted CA."
+    }
+]
+```

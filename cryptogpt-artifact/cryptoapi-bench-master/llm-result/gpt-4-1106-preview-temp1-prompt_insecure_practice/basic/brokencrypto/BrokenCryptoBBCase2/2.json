@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "Weak Encryption Algorithm",
+    "vulnerable_code": "Cipher.getInstance(\"Blowfish\")",
+    "description": "Blowfish is considered a weak encryption algorithm due to its small block size. The use of Blowfish presents a risk of weak encryption strength.",
+    "recommendation": "Use a more secure encryption algorithm such as AES with a key size of at least 128 bits."
+  },
+  {
+    "misuse": "ECB Encryption Mode",
+    "vulnerable_code": "Cipher.getInstance(\"Blowfish\")",
+    "description": "By not specifying the encryption mode and padding, the Cipher will default to ECB mode which is insecure for encrypting multiple blocks of data due to pattern preservation.",
+    "recommendation": "Specify a secure mode of operation like CBC, CFB, OFB, or GCM and provide an appropriate padding mechanism, e.g., 'Cipher.getInstance(\"Blowfish/CBC/PKCS5Padding\")'. Also, manage initialization vectors (IVs) appropriately when using modes other than ECB."
+  },
+  {
+    "misuse": "No Secure Random Source",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"Blowfish\")",
+    "description": "The KeyGenerator does not explicitly specify a secure random source which might lead to weak keys if a weak random source is used.",
+    "recommendation": "Explicitly specify a secure random source by using 'keyGen.init(keysize, secureRandom)' where 'secureRandom' is an instance of 'SecureRandom' initialized with a high entropy source."
+  }
+]
+```

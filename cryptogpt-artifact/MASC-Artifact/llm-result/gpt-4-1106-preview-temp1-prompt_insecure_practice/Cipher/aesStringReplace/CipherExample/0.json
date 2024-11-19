@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "Cipher.getInstance(\"AES\".replace(\"A\", \"D\"));",
+        "description": "The transformation AES is being replaced to produce 'DES' which is considerably weaker than AES. DES is an outdated encryption algorithm with a key size of 56 bits, making it susceptible to brute-force attacks.",
+        "recommendation": "Use AES with an appropriate mode and padding, such as 'AES/GCM/NoPadding' or 'AES/CBC/PKCS5Padding', and a key size of at least 128 bits."
+    },
+    {
+        "misuse": "Insecure Cipher Mode",
+        "vulnerable_code": "Cipher.getInstance(\"AES\".replace(\"A\", \"D\"));",
+        "description": "By not specifying the cipher mode and padding, the Java Cryptography Architecture (JCA) uses the default, which for DES is typically 'DES/ECB/PKCS5Padding'. The ECB mode (Electronic Codebook) is not recommended for use in cryptographic protocols because identical plaintext blocks are encrypted into identical ciphertext blocks, leading to data patterns being preserved.",
+        "recommendation": "Specify a secure mode of operation, such as CBC (Cipher Block Chaining) with a unique initialization vector for each encryption, or GCM (Galois Counter Mode) which also provides authentication."
+    }
+]
+```

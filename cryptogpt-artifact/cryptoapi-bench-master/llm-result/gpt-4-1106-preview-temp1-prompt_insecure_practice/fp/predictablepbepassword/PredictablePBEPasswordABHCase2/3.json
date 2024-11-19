@@ -1,0 +1,22 @@
+```json
+[
+    {
+        "misuse": "Insecure Algorithm Parameters",
+        "vulnerable_code": "int keyLength = 16;",
+        "description": "The specified key length is 16 bits which is not secure for encryption. A key length of at least 128 bits is typically considered the minimum for security.",
+        "recommendation": "Increase the key length to at least 128 bits (16 bytes)."
+    },
+    {
+        "misuse": "Weak Password-Based Encryption",
+        "vulnerable_code": "pbeKeySpec = new PBEKeySpec(key.toCharArray(),salt,iterationCount,keyLength);",
+        "description": "Using a low iteration count for PBE (Password-Based Encryption) can make the encryption weak. Good security practice requires a higher iteration count to increase the computation time for brute-force attacks.",
+        "recommendation": "Use a higher iteration count, for example at least 10000, according to OWASP recommendations."
+    },
+    {
+        "misuse": "Missing Encryption Algorithm Specification",
+        "vulnerable_code": "pbeKeySpec = new PBEKeySpec(key.toCharArray(),salt,iterationCount,keyLength);",
+        "description": "The code doesn't specify which encryption algorithm is being used. This can lead to unintended use of weak or deprecated algorithms.",
+        "recommendation": "Specify the encryption algorithm to use, such as PBEWithHmacSHA256AndAES_128."
+    }
+]
+```

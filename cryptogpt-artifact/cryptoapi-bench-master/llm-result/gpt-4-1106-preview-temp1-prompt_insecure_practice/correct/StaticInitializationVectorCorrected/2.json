@@ -1,0 +1,16 @@
+```json
+[
+  {
+    "misuse": "Insecure Randomness",
+    "vulnerable_code": "BigInteger i = BigInteger.valueOf(sr.nextInt());\nbyte [] bytes = i.toByteArray();",
+    "description": "The use of SecureRandom's nextInt() method followed by big integer conversion to generate an IV might not provide sufficiently random values, and also might not produce a byte array of the correct size (16 bytes for AES). An incorrect IV size causes an InvalidAlgorithmParameterException.",
+    "recommendation": "Use SecureRandom's nextBytes() method directly with byte array of proper size."
+  },
+  {
+    "misuse": "Insufficiently Large Space of Keys",
+    "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");",
+    "description": "The key generator is not explicitly initialized with a key size, which may result in using a default key size that could be insufficient (like 128 bits, depending on theenvironment).",
+    "recommendation": "Initialize the KeyGenerator with a specific key size, e.g., keyGen.init(256);"
+  }
+]
+```

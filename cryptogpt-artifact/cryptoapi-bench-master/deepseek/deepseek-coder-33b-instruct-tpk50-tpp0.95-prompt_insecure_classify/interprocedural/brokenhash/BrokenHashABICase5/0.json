@@ -1,0 +1,17 @@
+Misuse type: CWE-330: Use of Insufficiently Random Values.
+
+Misuse code snippets:
+```java
+private static void go2(){
+    CRYPTO = DEFAULT_CRYPTO.toCharArray();
+}
+```
+
+Description: The static field `CRYPTO` is assigned with a string literal "SHA1" which is converted into a char array by the `toCharArray()` method. This string literal is used for creating a message digest instance in the `go` method, which implies that the cryptographic algorithm used is hardcoded. This usage is risky because if the algorithm ever changes or if there is a vulnerability in "SHA1", it will affect all the instances of the `go` method.
+
+Recommendation: Instead of hardcoding the cryptographic algorithm, it is recommended to make this dynamic. Also, it is suggested to use constants for the algorithms, as using hardcoded strings increases the chance of introducing errors during the modification or update of the code.
+
+Code for recommendation:
+```java
+public static final String DEFAULT_CRYPTO = "SHA-256";
+```

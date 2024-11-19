@@ -1,0 +1,10 @@
+```json
+[
+  {
+    "misuse": "CWE-330: Use of Insufficiently Random Values",
+    "vulnerable_code": "SecureRandom sr2 = new SecureRandom();\n        int choice=2;\n        byte [] seed = {(byte) 100, (byte) 200};\n        if(choice>1)\n            sr2.nextBytes(seed);",
+    "description": "The `SecureRandom` instance `sr2` is not properly seeded with a cryptographically strong random seed. The `nextBytes` method is used to seed the `SecureRandom` instance with a user-provided seed. However, the seed used in this case is weak as it is a constant value, `{(byte) 100, (byte) 200}`. This makes the generated random numbers predictable and easy to guess.",
+    "recommendation": "Use a secure random number generator, such as `java.security.SecureRandom`, and seed it with a cryptographically strong random seed. A cryptographically strong random seed can be generated using methods like `SecureRandom.generateSeed` or by reading from a hardware random number generator."
+  }
+]
+```

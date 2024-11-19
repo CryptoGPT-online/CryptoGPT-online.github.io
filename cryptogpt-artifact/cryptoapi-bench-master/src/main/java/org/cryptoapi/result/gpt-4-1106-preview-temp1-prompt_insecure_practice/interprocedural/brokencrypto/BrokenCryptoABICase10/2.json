@@ -1,0 +1,34 @@
+```json
+[
+    {
+        "misuse": "Broken Crypto Algorithm",
+        "vulnerable_code": "Cipher.getInstance(String.valueOf(crypto))",
+        "description": "The code is using IDEA, which is an outdated and not recommended encryption algorithm. It has a 64-bit block size that is no longer considered secure against modern threats.",
+        "recommendation": "Switch to a more secure algorithm like AES with a 128-bit block size or larger."
+    },
+    {
+        "misuse": "Insecure random key generation without specifying secure randomness",
+        "vulnerable_code": "KeyGenerator.getInstance(String.valueOf(crypto))",
+        "description": "The code generates a key without specifying a source of secure randomness, which could lead to predictable keys if a weak source of randomness is used.",
+        "recommendation": "Specify a SecureRandom instance when generating the key."
+    },
+    {
+        "misuse": "Using char array to hold crypto material",
+        "vulnerable_code": "private static char[] CRYPTO;",
+        "description": "Storing cryptographic material in char arrays is insecure because they can't be programmatically cleared from memory, and they may reside in memory longer than necessary, potentially exposing sensitive data to memory dumps.",
+        "recommendation": "Use byte arrays for cryptographic material and explicitly zero them out after use."
+    },
+    {
+        "misuse": "KeyGenerator initialized with insecure or unknown key length",
+        "vulnerable_code": "KeyGenerator.getInstance(String.valueOf(crypto))",
+        "description": "The KeyGenerator is not initialized with a specific key size, which may result in a weak key if the default size is not sufficient.",
+        "recommendation": "Initialize the KeyGenerator with a specific key size that is known to be secure."
+    },
+    {
+        "misuse": "Implicit default cryptographic provider",
+        "vulnerable_code": "Cipher.getInstance(String.valueOf(crypto))",
+        "description": "The code uses the default cryptographic provider without specifying one. This can potentially result in using a weak or non-compliant implementation depending on the JVM defaults and installed providers.",
+        "recommendation": "Specify a cryptographic provider known to be secure and compliant with cryptographic standards."
+    }
+]
+```

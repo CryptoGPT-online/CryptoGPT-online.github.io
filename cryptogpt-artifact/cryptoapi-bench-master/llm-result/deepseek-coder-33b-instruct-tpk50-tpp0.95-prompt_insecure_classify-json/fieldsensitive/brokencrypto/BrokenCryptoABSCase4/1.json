@@ -1,0 +1,6 @@
+{
+  "misuse": "CWE-327: Use of a Broken or Risky Cryptographic Algorithm",
+  "vulnerable_code": "Cipher cipher = Cipher.getInstance(defaultAlgo);\ncipher.init(Cipher.ENCRYPT_MODE, key);\n\nbyte [] txtBytes = txt.getBytes();\nreturn cipher.doFinal(txtBytes);",
+  "description": "The use of a weak encryption algorithm (RC2) can expose sensitive data to a greater risk than desired. RC2 is an outdated cryptographic algorithm and is considered insecure. Additionally, the use of default keys generated from the KeyGenerator is also unsecure and could lead to vulnerability to brute force attacks.",
+  "recommendation": "Replace 'RC2' with a stronger encryption algorithm such as AES. It's also recommended to use user-provided keys instead of generating them on the fly. Alternatively, use key derivation functions with a strong passphrase and salt. Libraries such as 'Bouncy Castle' offer advanced cryptographic functions which can provide a better level of security."
+}

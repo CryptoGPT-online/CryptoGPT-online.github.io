@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "Hardcoded Initialization Vector (IV)",
+    "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(val.getBytes(),0,8);",
+    "description": "The initialization vector (IV) is hardcoded and predictable, which makes the encryption process vulnerable to certain attacks, such as ciphertext attacks, if the same key is used.",
+    "recommendation": "Use a secure random number generator to generate a unique IV for each encryption operation."
+  },
+  {
+    "misuse": "Inadequate IV Size",
+    "vulnerable_code": "IvParameterSpec ivSpec = new IvParameterSpec(val.getBytes(),0,8);",
+    "description": "The IV provided to IvParameterSpec is only 8 bytes long, which is inadequate for algorithms like AES that typically require a 16-byte IV to maintain security.",
+    "recommendation": "Ensure that the IV size matches the block size of the encryption algorithm in use, typically 16 bytes for AES."
+  },
+  {
+    "misuse": "Improper Encoding",
+    "vulnerable_code": "val.getBytes()",
+    "description": "Converting a string to a byte array using the default charset can produce different results on different platforms. This can be a problem when you pass these bytes as cryptographic parameters.",
+    "recommendation": "Specify a charset when converting strings to byte arrays, such as `val.getBytes(StandardCharsets.UTF_8)`."
+  }
+]
+```

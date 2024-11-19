@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "Weak Key Generation",
+    "vulnerable_code": "byte[] keyBytes = key.getBytes();",
+    "description": "The key is generated using a simple conversion of a string to bytes, which is not secure and can be easily guessed or brute-forced.",
+    "recommendation": "Use a secure random number generator to generate a cryptographically strong key. For example, use `SecureRandom.getInstanceStrong()`. Also, consider using a key derivation function (KDF) to strengthen the key."
+  },
+  {
+    "misuse": "Key Hardcoding",
+    "vulnerable_code": "String key = \"defaultkey\";",
+    "description": "The encryption key is hardcoded in the source code, which makes it easy for attackers to obtain and use to decrypt the encrypted data.",
+    "recommendation": "Avoid hardcoding encryption keys in the source code. Instead, store the key securely, such as in a hardware security module (HSM) or a key management service (KMS)."
+  },
+  {
+    "misuse": "Insecure Initialization Vector (IV)",
+    "vulnerable_code": "SecretKeySpec keySpec = new SecretKeySpec(keyBytes, \"AES\");",
+    "description": "The code does not explicitly specify an initialization vector (IV) for the AES cipher. Without a properly generated and used IV, the encryption may be vulnerable to attacks such as cipher-block chaining (CBC) bit-flipping attacks.",
+    "recommendation": "Generate a random and unique IV for each encryption operation. Use a secure random number generator, such as `SecureRandom.getInstanceStrong()`, to generate the IV."
+  }
+]
+```

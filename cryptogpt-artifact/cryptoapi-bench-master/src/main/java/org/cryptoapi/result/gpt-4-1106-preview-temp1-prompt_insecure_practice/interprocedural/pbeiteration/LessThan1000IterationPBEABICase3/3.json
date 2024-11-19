@@ -1,0 +1,16 @@
+```json
+[
+    {
+        "misuse": "Uninitialized Salt",
+        "vulnerable_code": "pbe = new PBEParameterSpec(salt, count);",
+        "description": "The generated PBEParameterSpec instance with the salt is not used outside of the method where it's created. Thus, the method provides an API for PBE which does not actually use the randomly generated salt but leaves the PBEParameterSpec object uninitialized when method1 exits.",
+        "recommendation": "Pass the PBEParameterSpec object to method2 by returning it from method1 and then use it from the calling context."
+    },
+    {
+        "misuse": "Hardcoded Iteration Count",
+        "vulnerable_code": "int count = 20;",
+        "description": "The iteration count for PBE (Password-Based Encryption) is hardcoded to a low value of 20 which makes the encryption less resistant to attacks.",
+        "recommendation": "Increase the iteration count to a higher number, such as 10000 or more, to improve the computational complexity and security of the encryption process."
+    }
+]
+```

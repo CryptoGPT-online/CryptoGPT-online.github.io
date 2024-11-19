@@ -1,0 +1,8 @@
+[{"misuse": "Insecure Randomness", 
+  "vulnerable_code": "KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nSecretKey key = keyGen.generateKey();", 
+  "description": "The KeyGenerator.getInstance() method is used to generate AES keys without specifying a secure random number generator. This may lead to insecure or predictable key generation.", 
+  "recommendation": "Use a secure random number generator when generating cryptographic keys. For example, KeyGenerator keyGen = KeyGenerator.getInstance(\"AES\");\nkeyGen.init(256, new SecureRandom());\nSecretKey key = keyGen.generateKey();"},
+{"misuse": "Weak Cipher Mode", 
+  "vulnerable_code": "String cryptoAlgo = \"AES/ECB/PKCS5Padding\";\nCipher cipher = Cipher.getInstance(passedAlgo);",
+"description": "The code is using Electronic Code Book (ECB) mode which is known to have security vulnerabilities and is not recommended. ECB mode does not provide serious message confidentiality and it is not semantically secure. It should not be used in secure systems.",
+"recommendation": "Use a more secure mode like CBC (Cipher Block Chaining) or GCM (Galois/Counter Mode) instead of ECB."}]

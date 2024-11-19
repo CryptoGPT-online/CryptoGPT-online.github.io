@@ -1,0 +1,28 @@
+```json
+[
+    {
+        "misuse": "Insufficient Entropy (CWE-331)",
+        "vulnerable_code": "byte [] salt = new byte[16];\nSecureRandom sr = new SecureRandom();\nsr.nextBytes(salt);",
+        "description": "Although it uses SecureRandom, the salt should be unique and not reused across encryptions. Storing or reusing the same salt value would reduce the effectiveness of the salt.",
+        "recommendation": "Ensure that a unique salt is used for each encryption operation and is properly stored or communicated to where the decryption will happen."
+    },
+    {
+        "misuse": "Weak Encryption Algorithm (CWE-327)",
+        "vulnerable_code": "pbeKeySpec = new PBEKeySpec(passedPassword.toCharArray(),salt,iterationCount,keyLength);",
+        "description": "The keyLength parameter in PBEKeySpec is set to 16, which implies that the resulting encryption key may be only 128 bits, depending on the default algorithm. Given the increase in computational power, stronger keys such as 256 bits are recommended.",
+        "recommendation": "Increase key length to a more secure value, typically 256 bits or higher, and verify that the encryption algorithm used supports the key size."
+    },
+    {
+        "misuse": "Hardcoded Sensitive Data (CWE-259)",
+        "vulnerable_code": "String password = \"sagar\";",
+        "description": "The password is hardcoded into the source code, which makes it susceptible to being extracted by decompiling the bytecode or by other means.",
+        "recommendation": "Avoid hardcoding sensitive information. Use a mechanism to securely retrieve or store passwords, such as a configuration file with proper access permissions or a dedicated secret management system."
+    },
+    {
+        "misuse": "Broken or Risky Cryptographic Algorithm (CWE-327)",
+        "vulnerable_code": "pbeKeySpec = new PBEKeySpec(passedPassword.toCharArray(),salt,iterationCount,keyLength);",
+        "description": "The PBEKeySpec does not define the specific PBE algorithm to be used, which means it might pick a weak or deprecated default algorithm.",
+        "recommendation": "Explicitly define a strong and currently accepted password-based encryption algorithm when instantiating PBEKeySpec."
+    }
+]
+```

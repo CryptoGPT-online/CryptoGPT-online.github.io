@@ -1,0 +1,22 @@
+```json
+[
+  {
+    "misuse": "Hardcoded Encryption Key",
+    "vulnerable_code": "String key = \"changeit\";",
+    "description": "The encryption key appears to be hardcoded and defaults to 'changeit', which is commonly known and offers no security.",
+    "recommendation": "Avoid hardcoding encryption keys. Use a secure method to provide keys at runtime, such as using a secure vault service, environment variables, or prompting the user."
+  },
+  {
+    "misuse": "Insecure Trust Management",
+    "vulnerable_code": "cacerts = new URL(\"https://www.google.com\");\nks.load(cacerts.openStream(), key.toCharArray());",
+    "description": "The method loads a keystore from a hardcoded URL, which can be manipulated or might not be the intended trust store, leading to potential trust issues.",
+    "recommendation": "Store and reference trust stores locally with integrity checks, or ensure the URL is secure and reliable."
+  },
+  {
+    "misuse": "Insufficient Validation of Certificate",
+    "vulnerable_code": "ks.load(cacerts.openStream(), key.toCharArray());",
+    "description": "The code does not validate the certificate from the URL, potentially allowing the loading of an untrusted or malicious certificate.",
+    "recommendation": "Ensure proper validation of certificates by checking against a trust store or using a secure certificate management process."
+  }
+]
+```

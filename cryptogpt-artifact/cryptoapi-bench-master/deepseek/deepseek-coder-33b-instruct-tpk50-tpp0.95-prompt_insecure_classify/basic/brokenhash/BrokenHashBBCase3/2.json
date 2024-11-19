@@ -1,0 +1,24 @@
+The code uses the MD4 algorithm, which is known to be insecure and may not be available in all JVMs. Furthermore, it uses the getBytes() method without specifying an encoding, which may cause problems when dealing with non-ASCII characters. The misuse of MD4 algorithm is also a CWE-327.
+
+Misuse: 
+
+```java
+MessageDigest md = MessageDigest.getInstance("MD4");
+```
+
+Vulnerable Code:
+
+```java
+String name = "abcdef";
+MessageDigest md = MessageDigest.getInstance("MD4");
+md.update(name.getBytes());
+System.out.println(md.digest());
+```
+
+Description: 
+
+MD4 is a weak hashing function and it is no longer considered secure for most use cases due to research into collisions. Additionally, it is not available by default in all JVMs. If you need to use it, you need to make sure the JVM supports it.
+
+Recommendation:
+
+Consider using a stronger algorithm such as SHA-256, or even better, use an HMAC (Hash-based Message Authentication Code) to avoid using an outdated algorithm in the first place. HMAC is a specific type of message authentication code involving a cryptographic hash function and a secret cryptographic key.

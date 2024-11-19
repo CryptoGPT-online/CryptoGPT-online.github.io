@@ -1,0 +1,18 @@
+### False Positive Misuse ###
+
+1. CWE-330: Use of Insufficiently Random Values - The misuse related to obtaining `COUNT` from the `DEFAULT_COUNT` constant is not applicable here. The value referred to in this context is the iteration count for key derivation and does not need to be random. It should, however, be sufficiently large as indicated by other misuse reports related to CWE-326. Generating a random iteration count is not a standard practice for key derivation functions, as the iteration count is not a secret and is typically stored alongside the encrypted data.
+
+2. CWE-798: Use of Hardcoded Credentials - The term "credentials" typically refers to secret information such as passwords or keys. The iteration count is not inherently a secret value and thus cannot directly be categorized as a "credential." Although using a hardcoded and publicly accessible iteration count is not a best practice, it does not constitute a misuse of hardcoded credentials in the strict sense. A more accurate CWE in this context would be CWE-321: Use of Hard-Coded Cryptographic Key, except that iteration counts are not cryptographic keys and are usually not required to be kept secret.
+
+### Optimized Misuse JSON ###
+
+```json
+[
+    {
+        "misuse": "CWE-326: Inadequate Encryption Strength",
+        "vulnerable_code": "pbeParamSpec = new PBEParameterSpec(salt, Integer.parseInt(String.valueOf(count)));",
+        "description": "The iteration count 'Integer.parseInt(String.valueOf(count))' is parsed from a character array which is derived from a static value ('20'). This iteration count is likely to be inadequate for modern security standards.",
+        "recommendation": "Use a higher iteration count (at least 10,000) for key derivation to ensure adequate encryption strength."
+    }
+]
+```

@@ -1,0 +1,30 @@
+```json
+[
+    {
+        "misuse": "Insecure Randomness",
+        "vulnerable_code": "SecureRandom sr = new SecureRandom(new byte[]{b});",
+        "description": "The code is incorrectly initializing a new SecureRandom instance with a fixed seed. This can compromise randomness because the same seed will produce the same sequence of pseudo-random numbers, which makes the output predictable.",
+        "recommendation": "Do not use a static or predictable seed for SecureRandom. If a seed is necessary, ensure it is unpredictable and appropriately sourced, for example from `SecureRandom.generateSeed`."
+    },
+    {
+        "misuse": "Improper Use of Java Byte Wrapping",
+        "vulnerable_code": [
+            "hm.put(\"aaa\", new Byte((byte) 100));",
+            "hm.put(\"bbb\", new Byte((byte) 200));",
+            "hm.put(\"ccc\", new Byte((byte) 300));",
+            "hm.put(\"ddd\", new Byte((byte) 400));"
+        ],
+        "description": "Using Byte object to store values that exceed Byte's range (-128 to 127) would cause a loss of information because the values wrap around. This can lead to unexpected behavior or security issues if the values are used for cryptographic operations or comparisons.",
+        "recommendation": "Ensure that the values stored within Byte objects are within the valid range for bytes in Java."
+    },
+    {
+        "misuse": "Weak Key Derivation",
+        "vulnerable_code": [
+            "String str = String.valueOf(random.ints());",
+            "byte[] seed = str.getBytes();"
+        ],
+        "description": "Using arbitrary data converted from an integer stream and getting bytes from a string to derive a cryptographic key is insecure. It may lead to a weak key that could be easier to break, as the transformation process does not ensure cryptographic strength.",
+        "recommendation": "Use a key derivation function (KDF) to derive keys from passwords or other secrets."
+    }
+]
+```
